@@ -1,0 +1,92 @@
+<template>
+  <div class="header-menu">
+    <dp-header-nav
+      :menu-items="menuItems"
+      :active-index="activeIndex"
+      @select="handleSelect"
+    ></dp-header-nav>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'HeaderMenu',
+  data() {
+    return {
+      menuItems: [
+        {
+          value: 'value',
+          label: '值域管理'
+        },
+        {
+          value: 'mdm',
+          label: '主索引管理',
+        },
+        {
+          value: 'data_element',
+          label: '数据元管理'
+        },
+        {
+          value: 'DWD',
+          label: '标准事件库管理'
+        },
+        {
+          value: 'BWD',
+          label: '业务明细库管理'
+        },
+        {
+          value: 'docs',
+          label: '文献库管理',
+          children: [
+            {
+              value: 'docs/index',
+              label: '文献库首页'
+            },
+            {
+              value: 'docs/list',
+              label: '文献库明细'
+            },
+             {
+              value: 'docs/summary',
+              label: '文献库摘要'
+            }
+          ]
+        }
+      ],
+      activeIndex: ''
+    }
+  },
+  created() {
+    // console.log(this.$route.name)
+    this.activeIndex = this.$route.name
+  },
+  methods: {
+    handleSelect(idx) {
+      this.$router.push({ name: idx })
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.header-menu {
+  text-align: center;
+}
+// .header-menu {
+// background: rgb(210, 41, 41);
+// }
+
+// .el-menu-item,
+// .el-submenu ::v-deep .el-submenu__title {
+//   width: 120px;
+//   height: 48px;
+//   line-height: 48px;
+//   text-align: center;
+// }
+//
+</style>
+<style lang="scss">
+// .submenu-popper .el-menu--popup {
+//   min-width: auto;
+// }
+</style>
