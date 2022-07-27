@@ -16,27 +16,27 @@ export default {
       menuItems: [
         {
           value: 'value',
-          label: '值域管理'
+          label: '值域'
         },
         {
           value: 'mdm',
-          label: '主索引管理',
+          label: '主索引',
         },
         {
           value: 'data_element',
-          label: '数据元管理'
+          label: '数据元'
         },
         {
           value: 'DWD',
-          label: '标准事件库管理'
+          label: '标准事件库'
         },
         {
           value: 'BWD',
-          label: '业务明细库管理'
+          label: '业务明细库'
         },
         {
           value: 'docs',
-          label: '文献库管理',
+          label: '文献库',
           children: [
             {
               value: 'docs/index',

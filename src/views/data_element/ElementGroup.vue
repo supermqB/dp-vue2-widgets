@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <div>数据元</div>
-    <div>
+  <div class="elegrp_wrapper">
+    <div class="title">数据元</div>
+    <div class="search_container">
       <el-input
         placeholder="请搜索"
         suffix-icon="el-icon-search"
@@ -9,7 +9,7 @@
       >
       </el-input>
     </div>
-    <div>
+    <div class="grouptree">
       <el-tree
         :data="grouptree"
         show-checkbox
@@ -18,7 +18,7 @@
       >
       </el-tree>
     </div>
-    <div>
+    <div class="groupsum">
       <div v-for="item in groupSum">{{ item.key }} : {{ item.value }}</div>
     </div>
   </div>
@@ -68,3 +68,38 @@ export default {
   })
 }
 </script>
+<style lang="scss" scoped>
+.elegrp_wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .title {
+    height: 40px;
+    line-height: 40px;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.65);
+    padding: 6px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+  }
+  .search_container {
+    height: 40px;
+    padding: 6px;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    box-sizing: border-box;
+  }
+  .grouptree {
+    flex-grow: 1;
+  }
+  .groupsum {
+    font-size: 13px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 29px;
+    border-top: 1px solid #e5e5e5;
+  }
+}
+</style>
