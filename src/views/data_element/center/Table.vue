@@ -10,21 +10,20 @@
       </template>
     </el-table-column>
     <el-table-column v-for="col in tableConfig" v-bind="col.elConfig">
-      <template #default="{ $index: idx, row, column }">
-        <div v-if="col.actions != null">
-          <component
-            v-for="action in col.actions"
-            :is="action.type"
-            @click.native.prevent="
-              rowAction({ idx, row, column }, action.callback)
-            "
-            type="text"
-            size="small"
-          >
-            {{ action.name }}
-          </component>
-        </div>
-        <div v-else>{{ row[column.property] }}</div>
+      <template
+        #default="{ $index: idx, row, column }"
+        v-if="col.actions != null"
+      >
+        <component
+          v-for="action in col.actions"
+          :is="action.type"
+          v-bind="action.typeProps"
+          @click.native.prevent="
+            rowAction({ idx, row, column }, action.callback)
+          "
+        >
+          {{ action.name }}
+        </component>
       </template>
     </el-table-column>
   </el-table>
@@ -40,7 +39,7 @@ export default {
           width: 120
         }
       },
-            {
+      {
         elConfig: {
           property: 'code',
           label: '编码',
@@ -56,6 +55,10 @@ export default {
         actions: [
           {
             type: 'el-button',
+            typeProps: {
+              type: 'text',
+              round: false
+            },
             name: '删除',
             callback: (idx, tableData) => {
               console.log(idx)
