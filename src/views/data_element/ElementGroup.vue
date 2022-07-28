@@ -12,9 +12,12 @@
     <div class="grouptree">
       <el-tree
         :data="grouptree"
+        :filter-node-method="filterTreeNode"
         show-checkbox
+        default-expand-all
         node-key="id"
         :props="{ children: 'children', label: 'label' }"
+        ref="grouptree"
       >
       </el-tree>
     </div>
@@ -65,7 +68,19 @@ export default {
         ]
       }
     ]
-  })
+  }),
+  watch: {
+    search(val) {
+      this.$refs.grouptree.filter(val)
+    }
+  },
+  methods: {
+    filterTreeNode(value, data) {
+      console.log(value, data)
+      if (!value) return true
+      return data.label.indexOf(value) !== -1
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

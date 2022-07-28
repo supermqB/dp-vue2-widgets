@@ -35,9 +35,6 @@
           </template>
         </el-table-column>
       </el-table>
-      <EditDialog ref="editdialog" title="编辑数据元" @dialog-complete="completeEditElem">
-        <FormVue/>
-      </EditDialog>
     </div>
     <el-pagination
       @size-change="sizeChangeHandler"
@@ -53,84 +50,79 @@
   </div>
 </template>
 <script>
-import EditDialog from '../dialogs/EditDataElem.vue'
-import FormVue from '@/components/Form.vue';
 export default {
+  props: {
+    tableConfig: {
+      type: Array,
+      default: function () {
+        return [
+          {
+            elConfig: {
+              property: 'index',
+              label: '序号',
+              width: 120
+            }
+          },
+          {
+            elConfig: {
+              property: 'code',
+              label: '编码',
+              width: 120
+            }
+          },
+          {
+            elConfig: {
+              property: '',
+              label: '操作'
+            },
+            actions: [
+              {
+                type: 'el-button',
+                typeProps: {
+                  type: 'text',
+                  round: false
+                },
+                id: 'edit',
+                name: '编辑',
+                callback(idx, tableData) {
+                  //this.$refs.editdialog.toggleOpen()
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    tableData: {
+      type: Array,
+      default: function () {
+        return [
+          {
+            index: 1,
+            code: 'DE01.00.10.001'
+          },
+          {
+            index: 2,
+            code: 'DE01.00.10.002'
+          }
+        ]
+      }
+    },
+    pageInfo: {
+      type: Object,
+      default: function () {
+        return {
+          curPage: 2,
+          pageSize: 40,
+          totalSize: 400,
+          totalPage: 10
+        }
+      }
+    }
+  },
   data() {
     return {
-      tableConfig: [
-        {
-          elConfig: {
-            property: 'index',
-            label: '序号',
-            width: 120
-          }
-        },
-        {
-          elConfig: {
-            property: 'code',
-            label: '编码',
-            width: 120
-          }
-        },
-        {
-          elConfig: {
-            property: '',
-            label: '操作'
-          },
-          actions: [
-            {
-              type: 'el-button',
-              typeProps: {
-                type: 'text',
-                round: false
-              },
-              id: 'edit',
-              name: '编辑',
-              callback(idx, tableData){
-                this.$refs.editdialog.toggleOpen();
-              }
-            }
-          ]
-        }
-      ],
-      tableData: [
-        {
-          index: 1,
-          code: 'DE01.00.10.001'
-        },
-        {
-          index: 2,
-          code: 'DE01.00.10.002'
-        },
-        {
-          index: 3,
-          code: 'DE01.00.10.003'
-        },
-        {
-          index: 4,
-          code: 'DE01.00.10.004'
-        },
-        {
-          index: 5,
-          code: 'DE01.00.10.005'
-        },
-        {
-          index: 6,
-          code: 'DE01.00.10.006'
-        },
-        {
-          index: 7,
-          code: 'DE01.00.10.007'
-        }
-      ],
-      selectedIdx: 0,
-      pageInfo: {
-        curPage: 2,
-        pageSize: 40,
-        totalSize: 400,
-        totalPage: 10
-      }
+      selectedIdx: 0
     }
   },
   methods: {
@@ -147,11 +139,10 @@ export default {
     pageChangeHandler(currentPage) {
       this.pageInfo.curPage = currentPage
     },
-    completeEditElem(){
-        console.log('edit data elem');
+    completeEditElem() {
+      console.log('edit data elem')
     }
-  },
-  components: { EditDialog, FormVue }
+  }
 }
 </script>
 <style lang="scss" scoped>

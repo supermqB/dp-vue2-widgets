@@ -9,4 +9,8 @@ body,
 #app {
   height: 100%;
 }
+* {
+  font-family: 'PingFang SC', 'PingFang SC Bold', Helvetica, 'Microsoft YaHei',
+    Arial, Helvetica;
+}
 </style>
