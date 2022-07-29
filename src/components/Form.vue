@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="formData" :rules="formRule" :inline="true">
+  <el-form ref="el_form" :model="formData" :rules="formRule" :show-message="false" :inline="true">
     <el-form-item v-for="cfg in formCfg" :label="cfg.label" :prop="cfg.id" :key="cfg.id">
       <component
         :is="cfg.type"
@@ -8,9 +8,9 @@
       >
         <el-option
           v-for="opt in cfg.options"
-          :key="opt"
-          :label="opt"
-          :value="opt"
+          :key="opt.value || opt"
+          :label="opt.label || opt"
+          :value="opt.value || opt"
         >
         </el-option>
       </component>

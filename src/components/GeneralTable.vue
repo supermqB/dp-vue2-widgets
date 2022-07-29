@@ -14,8 +14,8 @@
         </el-table-column>
         <el-table-column
           v-for="col in tableConfig"
-          v-bind="col.elConfig"
-          :key="col.elConfig.property"
+          v-bind="col.colConfig"
+          :key="col.colConfig.property"
         >
           <template
             #default="{ $index: rowIdx, row, column }"
@@ -57,21 +57,21 @@ export default {
       default: function () {
         return [
           {
-            elConfig: {
+            colConfig: {
               property: 'index',
               label: '序号',
               width: 120
             }
           },
           {
-            elConfig: {
+            colConfig: {
               property: 'code',
               label: '编码',
               width: 120
             }
           },
           {
-            elConfig: {
+            colConfig: {
               property: '',
               label: '操作'
             },
