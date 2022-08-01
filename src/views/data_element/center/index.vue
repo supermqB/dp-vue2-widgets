@@ -14,7 +14,9 @@
       <Form :formData="formData" :formCfg="formCfg" class="searchForm" />
       <div class="action_area">
         <el-button type="primary" plain>查 询</el-button>
-        <el-link :underline="false" class="advbtn">高级搜索</el-link>
+        <el-link :underline="false" class="advbtn" @click="openAdvSearch"
+          >高级搜索</el-link
+        >
       </div>
     </div>
     <div class="table_area">
@@ -36,6 +38,15 @@
           ref="editElemForm"
         />
       </Dialog>
+
+      <Dialog
+        title="高级搜索"
+        @dialog-complete="completeAdvSearch"
+        ref="advSearchDialog"
+        class="advSearchDialog"
+      >
+        <Form v-bind="advForm" />
+      </Dialog>
     </div>
   </div>
 </template>
@@ -48,9 +59,11 @@ import { getListTableHeader } from './config/listTableHeader'
 import { formFieldsConfig as editElemFormConfig } from './config/editFrom'
 import { keysObject } from '@/utils/lang'
 
+import advSearchFormConfig from './config/advSearchForm'
+
 export default {
   data() {
-    const tableConfig = getListTableHeader.apply(this);
+    const tableConfig = getListTableHeader.apply(this)
 
     return {
       formData: {
@@ -59,7 +72,9 @@ export default {
         status: ''
       },
       formCfg,
+
       tableConfig,
+
       editElemFormConfig,
       editElemFormData: keysObject(editElemFormConfig, 'id'),
       editElemFormRule: {
@@ -75,7 +90,12 @@ export default {
         format: { required: true }
       },
       editElemFormValid: false,
-      editElemDialogTitle: '新增数据元'
+      editElemDialogTitle: '新增数据元',
+
+      advForm: {
+        formData: keysObject(advSearchFormConfig, 'id'),
+        formCfg: advSearchFormConfig
+      }
     }
   },
   components: { Form, Table, Dialog },
@@ -83,11 +103,17 @@ export default {
     completeEdit() {
       console.log(this.editElemFormData)
     },
+    completeAdvSearch() {
+      console.log(this.advForm.formData)
+    },
     createElem() {
       this.editElemDialogTitle = '新增数据元'
       this.$refs.editElemDialog.toggleOpen()
       this.$refs.editElemForm &&
         this.$refs.editElemForm.$refs.el_form.resetFields()
+    },
+    openAdvSearch() {
+      this.$refs.advSearchDialog.toggleOpen()
     }
   },
   watch: {
@@ -185,6 +211,15 @@ export default {
           width: 240px;
         }
       }
+    }
+    &.advSearchDialog{
+        .el-dialog{
+            width: 600px;
+            form{
+                height: 220px;
+                padding-left: 60px;
+            }
+        }
     }
   }
 }
