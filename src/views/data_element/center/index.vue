@@ -6,7 +6,7 @@
         <el-breadcrumb-item>数据元明细</el-breadcrumb-item>
       </el-breadcrumb>
       <div class="btn_area">
-        <el-button type="primary">提 交</el-button>
+        <el-button type="primary" @click="commitElem">提 交</el-button>
         <el-button type="primary" @click="createElem">新 增</el-button>
       </div>
     </div>
@@ -14,7 +14,9 @@
       <Form :formData="formData" :formCfg="formCfg" class="searchForm" />
       <div class="action_area">
         <el-button type="primary" plain>查 询</el-button>
-        <el-link :underline="false" class="advbtn">高级搜索</el-link>
+        <el-link :underline="false" class="advbtn" @click="openAdvSearch"
+          >高级搜索</el-link
+        >
       </div>
     </div>
     <div class="table_area">
@@ -36,6 +38,16 @@
           ref="editElemForm"
         />
       </Dialog>
+
+      <Dialog
+        title="高级搜索"
+        @dialog-complete="completeAdvSearch"
+        ref="advSearchDialog"
+        class="advSearchDialog"
+      >
+        <Form v-bind="advForm" />
+      </Dialog>
+      <CommitDialogVue ref="commitDialog" />
     </div>
   </div>
 </template>
@@ -48,9 +60,12 @@ import { getListTableHeader } from './config/listTableHeader'
 import { formFieldsConfig as editElemFormConfig } from './config/editFrom'
 import { keysObject } from '@/utils/lang'
 
+import advSearchFormConfig from './config/advSearchForm'
+import CommitDialogVue from './CommitDialog.vue'
+
 export default {
   data() {
-    const tableConfig = getListTableHeader.apply(this);
+    const tableConfig = getListTableHeader.apply(this)
 
     return {
       formData: {
@@ -59,7 +74,9 @@ export default {
         status: ''
       },
       formCfg,
+
       tableConfig,
+
       editElemFormConfig,
       editElemFormData: keysObject(editElemFormConfig, 'id'),
       editElemFormRule: {
@@ -75,19 +92,33 @@ export default {
         format: { required: true }
       },
       editElemFormValid: false,
-      editElemDialogTitle: '新增数据元'
+      editElemDialogTitle: '新增数据元',
+
+      advForm: {
+        formData: keysObject(advSearchFormConfig, 'id'),
+        formCfg: advSearchFormConfig
+      }
     }
   },
-  components: { Form, Table, Dialog },
+  components: { Form, Table, Dialog, CommitDialogVue },
   methods: {
     completeEdit() {
       console.log(this.editElemFormData)
+    },
+    completeAdvSearch() {
+      console.log(this.advForm.formData)
     },
     createElem() {
       this.editElemDialogTitle = '新增数据元'
       this.$refs.editElemDialog.toggleOpen()
       this.$refs.editElemForm &&
         this.$refs.editElemForm.$refs.el_form.resetFields()
+    },
+    commitElem() {
+        this.$refs.commitDialog.show();
+    },
+    openAdvSearch() {
+      this.$refs.advSearchDialog.toggleOpen()
     }
   },
   watch: {
@@ -183,6 +214,15 @@ export default {
         .el-input,
         .el-textarea {
           width: 240px;
+        }
+      }
+    }
+    &.advSearchDialog {
+      .el-dialog {
+        width: 600px;
+        form {
+          height: 220px;
+          padding-left: 60px;
         }
       }
     }

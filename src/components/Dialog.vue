@@ -1,9 +1,19 @@
 <template>
-  <el-dialog :title="title" :visible.sync="isOpen" class="dp_dialog" :close-on-click-modal="false">
+  <el-dialog
+    :title="title"
+    :visible.sync="isOpen"
+    class="dp_dialog"
+    :close-on-click-modal="false"
+  >
     <slot>test slot</slot>
     <span slot="footer" class="dialog-footer">
       <el-button @click="isOpen = false">取消</el-button>
-      <el-button type="primary" @click="finishHandler" :disabled="!enableConfirm">确定</el-button>
+      <el-button
+        type="primary"
+        @click="finishHandler"
+        :disabled="!enableConfirm"
+        >确定</el-button
+      >
     </span>
   </el-dialog>
 </template>
@@ -11,7 +21,12 @@
 export default {
   props: {
     title: String,
-    enableConfirm: Boolean
+    enableConfirm: {
+      type: Boolean,
+      default: () => {
+        return true
+      }
+    }
   },
   data() {
     return {
