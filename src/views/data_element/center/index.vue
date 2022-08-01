@@ -44,36 +44,13 @@ import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
 import Dialog from '@/components/Dialog.vue'
 import formCfg from './config/searchForm'
-import listTableHeaderConfig from './config/listTableHeader'
+import { getListTableHeader } from './config/listTableHeader'
 import { formFieldsConfig as editElemFormConfig } from './config/editFrom'
 import { keysObject } from '@/utils/lang'
 
 export default {
   data() {
-    const tableConfig = [
-      ...listTableHeaderConfig,
-      {
-        colConfig: {
-          property: '',
-          label: '操作'
-        },
-        actions: [
-          {
-            type: 'el-button',
-            typeProps: {
-              type: 'text',
-              round: false
-            },
-            id: 'edit',
-            name: '编辑',
-            callback: (idx, tableData) => {
-              this.editElemDialogTitle = '编辑数据元'
-              this.$refs.editElemDialog.toggleOpen()
-            }
-          }
-        ]
-      }
-    ]
+    const tableConfig = getListTableHeader.apply(this);
 
     return {
       formData: {

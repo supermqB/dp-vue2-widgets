@@ -76,12 +76,18 @@ export const formFieldsConfig = [
   {
     type: 'el-input',
     label: '值域标准来源',
-    id: 'val_standard_src'
+    id: 'val_standard_src',
+    elOptions: {
+      disabled: true
+    }
   },
   {
     type: 'el-input',
     label: '校验规则',
-    id: 'validation_pattern'
+    id: 'validation_pattern',
+    elOptions: {
+      disabled: true
+    }
   },
   {
     type: 'el-select',
