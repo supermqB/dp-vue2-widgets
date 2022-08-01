@@ -6,7 +6,7 @@
         <el-breadcrumb-item>数据元明细</el-breadcrumb-item>
       </el-breadcrumb>
       <div class="btn_area">
-        <el-button type="primary">提 交</el-button>
+        <el-button type="primary" @click="commitElem">提 交</el-button>
         <el-button type="primary" @click="createElem">新 增</el-button>
       </div>
     </div>
@@ -47,6 +47,7 @@
       >
         <Form v-bind="advForm" />
       </Dialog>
+      <CommitDialogVue ref="commitDialog" />
     </div>
   </div>
 </template>
@@ -60,6 +61,7 @@ import { formFieldsConfig as editElemFormConfig } from './config/editFrom'
 import { keysObject } from '@/utils/lang'
 
 import advSearchFormConfig from './config/advSearchForm'
+import CommitDialogVue from './CommitDialog.vue'
 
 export default {
   data() {
@@ -98,7 +100,7 @@ export default {
       }
     }
   },
-  components: { Form, Table, Dialog },
+  components: { Form, Table, Dialog, CommitDialogVue },
   methods: {
     completeEdit() {
       console.log(this.editElemFormData)
@@ -111,6 +113,9 @@ export default {
       this.$refs.editElemDialog.toggleOpen()
       this.$refs.editElemForm &&
         this.$refs.editElemForm.$refs.el_form.resetFields()
+    },
+    commitElem() {
+        this.$refs.commitDialog.show();
     },
     openAdvSearch() {
       this.$refs.advSearchDialog.toggleOpen()
@@ -212,14 +217,14 @@ export default {
         }
       }
     }
-    &.advSearchDialog{
-        .el-dialog{
-            width: 600px;
-            form{
-                height: 220px;
-                padding-left: 60px;
-            }
+    &.advSearchDialog {
+      .el-dialog {
+        width: 600px;
+        form {
+          height: 220px;
+          padding-left: 60px;
         }
+      }
     }
   }
 }

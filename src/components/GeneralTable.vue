@@ -7,7 +7,9 @@
         @current-change="rowRowHanlder"
         border
       >
-        <el-table-column width="30">
+        <el-table-column type="selection" width="30" v-if="multipleSelect">
+        </el-table-column>
+        <el-table-column width="30" v-else>
           <template #default="{ $index: idx, row, column }">
             <el-radio v-model="selectedIdx" :label="row.index"></el-radio>
           </template>
@@ -37,6 +39,7 @@
       </el-table>
     </div>
     <el-pagination
+      v-if="pageInfo != null"
       @size-change="sizeChangeHandler"
       @current-change="pageChangeHandler"
       :current-page.sync="pageInfo.curPage"
@@ -109,14 +112,20 @@ export default {
       }
     },
     pageInfo: {
-      type: Object,
-      default: function () {
+      type: Object
+      /* default: function () {
         return {
           curPage: 2,
           pageSize: 40,
           totalSize: 400,
           totalPage: 10
         }
+      } */
+    },
+    multipleSelect: {
+      type: Boolean,
+      default: () => {
+        return false
       }
     }
   },
