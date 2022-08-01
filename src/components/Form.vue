@@ -5,6 +5,9 @@
         :is="cfg.type"
         v-bind="cfg.elOptions"
         v-model="formData[cfg.id]"
+        :style="{
+          width: `${cfg.width}px`
+        }"
       >
         <el-option
           v-for="opt in cfg.options"

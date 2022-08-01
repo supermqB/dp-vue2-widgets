@@ -27,8 +27,8 @@ export default {
           label: '数据元'
         },
         {
-          value: 'DWD',
-          label: '标准事件库'
+          value: 'event_model',
+          label: '事件模型'
         },
         {
           value: 'BWD',
