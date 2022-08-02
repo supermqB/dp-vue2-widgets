@@ -120,3 +120,16 @@ export const formFieldsConfig = [
     id: 'status'
   }
 ]
+
+export const formValidRule = {
+  identifier_seg1: { required: true },
+  identifier_seg2: { required: true },
+  identifier_seg3: { required: true },
+  identifier: { required: true },
+  identifier_prefix: { required: true },
+  cn_name: { required: true },
+  en_name: { required: true },
+  description: { required: true },
+  type: { required: true },
+  format: { required: true }
+}

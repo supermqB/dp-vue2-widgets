@@ -13,7 +13,7 @@
     <div class="search">
       <Form :formData="formData" :formCfg="formCfg" class="searchForm" />
       <div class="action_area">
-        <el-button type="primary" plain>查 询</el-button>
+        <el-button type="primary" plain @click="searchHandler">查 询</el-button>
         <el-link :underline="false" class="advbtn" @click="openAdvSearch"
           >高级搜索</el-link
         >
@@ -52,45 +52,33 @@
   </div>
 </template>
 <script>
+import { keysObject } from '@/utils/lang'
 import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
 import Dialog from '@/components/Dialog.vue'
 import formCfg from './config/searchForm'
 import { getListTableHeader } from './config/listTableHeader'
-import { formFieldsConfig as editElemFormConfig } from './config/editFrom'
-import { keysObject } from '@/utils/lang'
+import { formFieldsConfig as editElemFormConfig, formValidRule as  editElemFormRule} from './config/editFrom'
 
 import advSearchFormConfig from './config/advSearchForm'
 import CommitDialogVue from './CommitDialog.vue'
+
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapMutations, mapActions } =
+  createNamespacedHelpers('dataElem/elemList')
 
 export default {
   data() {
     const tableConfig = getListTableHeader.apply(this)
 
     return {
-      formData: {
-        type: '',
-        wordAttr: '',
-        status: ''
-      },
       formCfg,
 
       tableConfig,
 
       editElemFormConfig,
-      editElemFormData: keysObject(editElemFormConfig, 'id'),
-      editElemFormRule: {
-        identifier_seg1: { required: true },
-        identifier_seg2: { required: true },
-        identifier_seg3: { required: true },
-        identifier: { required: true },
-        identifier_prefix: { required: true },
-        cn_name: { required: true },
-        en_name: { required: true },
-        description: { required: true },
-        type: { required: true },
-        format: { required: true }
-      },
+      //editElemFormData: keysObject(editElemFormConfig, 'id'),
+      editElemFormRule,
       editElemFormValid: false,
       editElemDialogTitle: '新增数据元',
 
@@ -100,8 +88,17 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      formData: state => state.queryCriteria,
+      editElemFormData: state => state.editElemFormData
+    })
+  },
   components: { Form, Table, Dialog, CommitDialogVue },
   methods: {
+    searchHandler() {
+      console.log(this.formData)
+    },
     completeEdit() {
       console.log(this.editElemFormData)
     },
@@ -115,7 +112,7 @@ export default {
         this.$refs.editElemForm.$refs.el_form.resetFields()
     },
     commitElem() {
-        this.$refs.commitDialog.show();
+      this.$refs.commitDialog.show()
     },
     openAdvSearch() {
       this.$refs.advSearchDialog.toggleOpen()
@@ -214,6 +211,9 @@ export default {
         .el-input,
         .el-textarea {
           width: 240px;
+          .el-textarea__inner{
+              padding: 5px 8px;
+          }
         }
       }
     }
@@ -221,7 +221,7 @@ export default {
       .el-dialog {
         width: 600px;
         form {
-          height: 220px;
+          height: auto;
           padding-left: 60px;
         }
       }
