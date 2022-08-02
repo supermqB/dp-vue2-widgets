@@ -25,6 +25,7 @@
         :tableData="tableData"
         :pageInfo="pageInfo"
         @row-changed="selectItemHandler"
+        ref="dp_table"
       />
     </div>
     <div class="dialog_port">
@@ -162,6 +163,9 @@ export default {
       },
       deep: true
     }
+  },
+  mounted() {
+    this.$refs.dp_table.setCurrentRow(this.tableData[0]);
   }
 }
 </script>
