@@ -285,9 +285,9 @@
     js-tokens "^4.0.0"
 
 "@babel/parser@^7.18.4":
-  version "7.18.9"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.18.9.tgz#f2dde0c682ccc264a9a8595efd030a5cc8fd2539"
-  integrity sha512-9uJveS9eY9DJ0t64YbIBZICtJy8a5QrDEVdiLCG97fVLpDTpGX7t8mMSb6OWw6Lrnjqj4O8zwjELX3dhoMgiBg==
+  version "7.18.10"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.18.10.tgz#94b5f8522356e69e8277276adf67ed280c90ecc1"
+  integrity sha512-TYk3OA0HKL6qNryUayb5UUEhM/rkOQozIBEA5ITXh5DWrSp0TlUQXMyZmnWxG/DizSWBeeQ0Zbc5z8UGaaqoeg==
 
 "@babel/parser@^7.18.6", "@babel/parser@^7.18.8":
   version "7.18.8"
@@ -4044,9 +4044,9 @@ lower-case@^2.0.2:
     tslib "^2.0.3"
 
 lrhealth-dp-ui@^0.1.12:
-  version "0.1.15"
-  resolved "https://registry.yarnpkg.com/lrhealth-dp-ui/-/lrhealth-dp-ui-0.1.15.tgz#514e17804f9bb07e6a301a983b3cf0019e722fc7"
-  integrity sha512-usBz3iOg7x4/4BBshvRBvOwCoFXIVkMhSDRMUA5yXnDSTsUoPQGOnk9VUJWTLuEBUSQrkhNp/dmyQGvCj9/vZw==
+  version "0.1.17"
+  resolved "https://registry.yarnpkg.com/lrhealth-dp-ui/-/lrhealth-dp-ui-0.1.17.tgz#26b19f91707acae4bc21c7ea3ceef802ab7f5edf"
+  integrity sha512-afWaYDpeLdlK2AL07fbCVA9lpLoBX4N51k1M2X2bfXn/1lwBK7HuND/EMldvEk7Z9lTzKW7Zk39oFrRYYCj16w==
   dependencies:
     core-js "^3.8.3"
     element-ui "^2.15.9"
