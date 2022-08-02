@@ -88,3 +88,11 @@ service.interceptors.response.use(
 )
 
 export default service
+
+export function get(url, params) {
+  return service({
+    url,
+    params,
+    method: 'get'
+  })
+}

@@ -5,6 +5,8 @@ import tags from './modules/tags' // 底部标签
 
 import task from './modules/task' // 任务分配
 
+import dataElem from './modules/dataElem'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -14,6 +16,7 @@ export default new Vuex.Store({
   // actions: {},
   modules: {
     tags,
-    task
+    task,
+    dataElem
   }
 })
