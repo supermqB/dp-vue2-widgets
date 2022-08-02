@@ -11,21 +11,33 @@ export default [
   {
     type: 'el-input',
     label: '包含全部检索词',
-    id: 'contains'
+    id: 'contains',
+    elOptions: {
+      placeholder: '请输入'
+    }
   },
   {
     type: 'el-input',
     label: '包含精确检索词',
-    id: 'equals'
+    id: 'equals',
+    elOptions: {
+      placeholder: '多个检索词以逗号，分隔'
+    }
   },
   {
     type: 'el-input',
     label: '包含至少一个检索词',
-    id: 'atleast'
+    id: 'atleast',
+    elOptions: {
+      placeholder: '多个检索词以逗号，分隔'
+    }
   },
   {
     type: 'el-input',
     label: '不包含检索词',
-    id: 'exclude'
+    id: 'exclude',
+    elOptions: {
+      placeholder: '多个检索词以逗号，分隔'
+    }
   }
 ]

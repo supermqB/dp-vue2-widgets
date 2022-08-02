@@ -4,7 +4,7 @@
       <el-table
         :data="tableData"
         highlight-current-row
-        @current-change="rowRowHanlder"
+        @current-change="rowChangeHanlder"
         border
       >
         <el-table-column type="selection" width="30" v-if="multipleSelect">
@@ -44,7 +44,7 @@
       @current-change="pageChangeHandler"
       :current-page.sync="pageInfo.curPage"
       :page-sizes="[5, 10, 20, 50]"
-      :page-size="20"
+      :page-size="pageInfo.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="pageInfo.totalSize"
       :style="{ alignSelf: 'end' }"
@@ -59,7 +59,7 @@ export default {
       type: Array,
       default: function () {
         return [
-          {
+         /*  {
             colConfig: {
               property: 'index',
               label: '序号',
@@ -92,7 +92,7 @@ export default {
                 }
               }
             ]
-          }
+          } */
         ]
       }
     },
@@ -100,14 +100,14 @@ export default {
       type: Array,
       default: function () {
         return [
-          {
+         /*  {
             index: 1,
             code: 'DE01.00.10.001'
           },
           {
             index: 2,
             code: 'DE01.00.10.002'
-          }
+          } */
         ]
       }
     },
@@ -138,9 +138,9 @@ export default {
     rowAction({ rowIdx, row, column }, callback) {
       callback(row.index, this.tableData)
     },
-    rowRowHanlder(rowData) {
-      console.log(rowData)
+    rowChangeHanlder(rowData) {
       this.selectedIdx = rowData.index
+      this.$emit('row-changed', rowData)
     },
     sizeChangeHandler(pageSize) {
       this.pageInfo.pageSize = pageSize

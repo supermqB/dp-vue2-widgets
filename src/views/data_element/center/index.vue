@@ -20,7 +20,12 @@
       </div>
     </div>
     <div class="table_area">
-      <Table :tableConfig="tableConfig" />
+      <Table
+        :tableConfig="tableConfig"
+        :tableData="tableData"
+        :pageInfo="pageInfo"
+        @row-changed="selectItemHandler"
+      />
     </div>
     <div class="dialog_port">
       <Dialog
@@ -42,6 +47,7 @@
       <Dialog
         title="高级搜索"
         @dialog-complete="completeAdvSearch"
+        :enableConfirm="enableAdvConfirm"
         ref="advSearchDialog"
         class="advSearchDialog"
       >
@@ -52,13 +58,16 @@
   </div>
 </template>
 <script>
-import { keysObject } from '@/utils/lang'
+import { isEmpty } from '@/utils/lang'
 import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
 import Dialog from '@/components/Dialog.vue'
 import formCfg from './config/searchForm'
 import { getListTableHeader } from './config/listTableHeader'
-import { formFieldsConfig as editElemFormConfig, formValidRule as  editElemFormRule} from './config/editFrom'
+import {
+  formFieldsConfig as editElemFormConfig,
+  formValidRule as editElemFormRule
+} from './config/editFrom'
 
 import advSearchFormConfig from './config/advSearchForm'
 import CommitDialogVue from './CommitDialog.vue'
@@ -77,28 +86,40 @@ export default {
       tableConfig,
 
       editElemFormConfig,
-      //editElemFormData: keysObject(editElemFormConfig, 'id'),
       editElemFormRule,
       editElemFormValid: false,
-      editElemDialogTitle: '新增数据元',
-
-      advForm: {
-        formData: keysObject(advSearchFormConfig, 'id'),
-        formCfg: advSearchFormConfig
-      }
+      editElemDialogTitle: '新增数据元'
     }
   },
   computed: {
     ...mapState({
       formData: state => state.queryCriteria,
-      editElemFormData: state => state.editElemFormData
+      tableData(state) {
+        return state.tableData
+      },
+      pageInfo(state) {
+        return state.pageInfo
+      },
+      editElemFormData: state => state.editElemFormData,
+      advForm: state => ({
+        formData: state.advQueryCriteria,
+        formCfg: advSearchFormConfig
+      }),
+      enableAdvConfirm: state => {
+        let crt = state.advQueryCriteria
+        return !!(
+          crt.cols &&
+          crt.cols.length &&
+          (!isEmpty(crt.contains) ||
+            !isEmpty(crt.equals) ||
+            !isEmpty(crt.atleast) ||
+            !isEmpty(crt.exclude))
+        )
+      }
     })
   },
   components: { Form, Table, Dialog, CommitDialogVue },
   methods: {
-    searchHandler() {
-      console.log(this.formData)
-    },
     completeEdit() {
       console.log(this.editElemFormData)
     },
@@ -116,7 +137,9 @@ export default {
     },
     openAdvSearch() {
       this.$refs.advSearchDialog.toggleOpen()
-    }
+    },
+    ...mapActions({ searchHandler: 'search' }),
+    ...mapMutations({ selectItemHandler: 'setSelectItem' })
   },
   watch: {
     editElemFormData: {
@@ -130,6 +153,12 @@ export default {
         this.$refs.editElemForm.$refs.el_form.validate(valid => {
           this.editElemFormValid = valid
         })
+      },
+      deep: true
+    },
+    pageInfo: {
+      handler(pageinfo) {
+        this.searchHandler()
       },
       deep: true
     }
@@ -211,8 +240,8 @@ export default {
         .el-input,
         .el-textarea {
           width: 240px;
-          .el-textarea__inner{
-              padding: 5px 8px;
+          .el-textarea__inner {
+            padding: 5px 8px;
           }
         }
       }
