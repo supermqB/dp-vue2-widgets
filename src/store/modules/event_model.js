@@ -28,8 +28,13 @@ const mutations = {
       })
       return result
     })
+  },
+  SET_CURRENT_VERSION: (state, version) => {
+    state.currentVersion = version
   }
 }
+
+const actions = {}
 
 export default {
   state
