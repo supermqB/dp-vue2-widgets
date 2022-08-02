@@ -45,7 +45,7 @@ export default {
 }
 </script>
 <style lang="scss">
-.dp_dialog {
+/* .dp_dialog {
   .el-dialog__header {
     padding: 11px 20px 11px;
     .el-dialog__headerbtn {
@@ -61,5 +61,5 @@ export default {
     height: 40px;
     padding: 6px 17px 6px;
   }
-}
+} */
 </style>
