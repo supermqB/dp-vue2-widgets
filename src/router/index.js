@@ -26,6 +26,12 @@ const routes = [
         name: 'data_element',
         meta: { title: '数据元管理' },
         component: () => import('@/views/data_element/')
+      },
+      {
+        path: 'event_model',
+        name: 'event_model',
+        meta: { title: '事件模型' },
+        component: () => import('@/views/event_model/')
       }
     ]
   }
