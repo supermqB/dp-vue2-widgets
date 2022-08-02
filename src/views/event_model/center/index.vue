@@ -5,29 +5,45 @@
         <el-breadcrumb-item>事件模型管理</el-breadcrumb-item>
         <el-breadcrumb-item>E000-卫生事件记录(event_record)</el-breadcrumb-item>
       </el-breadcrumb>
-      <div class="running status" v-if="status === 'running'">已启动</div>
-      <!-- <div class="edit status" v-else>编辑中</div> -->
+      <div class="status" 
+        :class="[ status === 'running' ? 'running' : 'edit' ]">
+        {{ status === 'running' ? '已启动' : '编辑中'  }}
+      </div>
       <div class="buttons">
-        <el-button type="primary">新增</el-button>
+        <el-button type="primary" @click="() => status = 'running'">新增</el-button>
         <el-button type="primary">编辑</el-button>
       </div>
     </div>
     <div class="search">
       <Form class="searchForm" :formData="formData" :formCfg="formCfg"></Form>
+      <div class="buttons">
+        <el-button>查询</el-button>
+        <el-button type="text">高级搜索</el-button>
+      </div>
+    </div>
+    <div class="content">
+      <Table
+        :tableConfig="tableConfig"
+        :tableData="tableData"
+        :pageInfo="pageInfo"
+      ></Table>
     </div>
   </div>
 </template>
 
 <script>
 import Form from '@/components/Form.vue';
+import Table from '@/components/GeneralTable.vue';
 import formCfg from './config/searchForm';
+import tableConfig from './config/tableColumn';
+
 export default {
   components: {
-    Form
+    Form, Table
   },
   data() {
     return {
-      status: 'running',
+      status: '',
       formData: {
         identifier: '',
         field: '',
@@ -35,7 +51,23 @@ export default {
         status: '',
         primary: ''
       },
-      formCfg
+      formCfg,
+      tableConfig,
+      tableData: [
+        {
+          index: 1
+        },{
+          index: 2
+        }, {
+          index: 3
+        }
+      ],
+      pageInfo: {
+        curPage: 1,
+        pageSize: 10,
+        totalSize: 3,
+        totalPage: 1
+      }
     }
   }
 }
@@ -68,7 +100,8 @@ export default {
         background-color: rgba(103,194,58,0.2);
       }
       &.edit {
-
+        color: #EB9E05;
+        background-color: rgba(235,158,5,0.2)
       }
     }
     .buttons {
@@ -82,11 +115,24 @@ export default {
     }
   }
   .search {
+    position: relative;
     width: 100%;
     height: 41px;
     padding-left: 15px;
     box-sizing: border-box;
     border-bottom: 1px solid #E5E5E5;
+    .buttons {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 135px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+  }
+  .content {
+    padding: 0 5px;
   }
 }
 </style>

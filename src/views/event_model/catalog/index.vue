@@ -1,9 +1,10 @@
 <template>
   <div class="wrapper">
     <div class="header">
-      <h3>
-        <span>事件目录</span>
-      </h3>
+      <h3>事件目录</h3>
+      <div class="buttons">
+        <el-button @click="addVersion">+</el-button>
+      </div>
     </div>
     <div class="version">
       <span>版本</span>
@@ -28,6 +29,7 @@
         <div 
           class="treeNode" 
           slot-scope="{ node, data }"
+          @click="(event) => { if (data.theme) { event.stopPropagation() } }"
         >
           <p class="label">
             <i v-if="data.status" class="el-icon-remove" />
@@ -42,15 +44,28 @@
       <p>总数: {{ 74 }}</p>
       <p>字段数: {{ 78 }}</p>
     </div>
+    <Dialog
+      title="新增版本"
+      ref="addVersion"
+    >
+      <Form :formCfg="versionForm"></Form>
+    </Dialog>
   </div>
 </template>
 
 <script>
+import Dialog from '@/components/Dialog.vue';
+import Form from '@/components/Form.vue';
+import versionForm from './config/versionForm';
+import { getCatalogApi, getVersionListApi } from '@/api/event';
 export default {
+  components: {
+    Dialog, Form
+  },
   data() {
     return {
       version: '',
-      current: '1',
+      current: '1-1',
       versionList: [
         '卫生版1.0'
       ],
@@ -59,6 +74,7 @@ export default {
           id: '1',
           label: '事件记录(0)',
           number: '数据源',
+          theme: true,
           children: [
             {
               id: '1-1',
@@ -77,6 +93,7 @@ export default {
         },{
           id: '2',
           label: '摘要信息(B)',
+          theme: true,
           children: [
             {
               id: '2-1',
@@ -85,12 +102,18 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      versionForm
     }
   },
+  mounted() {},
   methods: {
     handleNodeClick(data) {
-      this.current = data.id
+      if (!data.theme) this.current = data.id
+      console.log(this.current)
+    },
+    addVersion() {
+      this.$refs.addVersion.toggleOpen()
     }
   }
 }
@@ -114,6 +137,11 @@ export default {
   h3 {
     font-size: 16px;
     font-weight: normal;
+  }
+  .buttons {
+    display: flex;
+    justify-content: end;
+    align-items: center;
   }
 }
 .version {
@@ -140,6 +168,7 @@ export default {
   overflow: auto;
 }
 .treeNode {
+  position: relative;
   width: 100%;
   height: 28px;
   padding-right: 10px;
@@ -170,6 +199,11 @@ export default {
     width: 80px;
   }
 }
+
+/* ::v-deep .el-tree-node__content {
+  position: relative;
+} */
+
 ::v-deep .el-tree-node__content>.el-tree-node__expand-icon {
   padding: 4px
 }
