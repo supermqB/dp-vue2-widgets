@@ -227,6 +227,9 @@ export default {
     .el-textarea {
       width: 165px;
       margin-left: 23px;
+      .el-textarea__inner {
+        padding: 5px 8px;
+      }
     }
   }
   .btn_area {

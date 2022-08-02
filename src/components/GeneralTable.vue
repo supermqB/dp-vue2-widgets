@@ -6,6 +6,7 @@
         highlight-current-row
         @current-change="rowChangeHandler"
         border
+        ref="el_table"
       >
         <el-table-column type="selection" width="30" v-if="multipleSelect">
         </el-table-column>
@@ -150,6 +151,9 @@ export default {
     },
     completeEditElem() {
       console.log('edit data elem')
+    },
+    setCurrentRow(row){
+        this.$refs.el_table.setCurrentRow(row);
     }
   }
 }
