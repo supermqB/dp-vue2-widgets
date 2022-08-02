@@ -11,23 +11,57 @@
     <CardVue title="类型格式校验">
       <FormVue v-bind="typeCheck" />
     </CardVue>
-    <CardVue title="字段内涵校验">
+    <CardVue title="字段内涵校验" class="fieldContent">
       <el-checkbox v-model="fieldCheck.enableValDomain">值域字典</el-checkbox>
-      <span>选择值域</span>
-      <el-autocomplete
-        class="inline-input"
-        v-model="fieldCheck.valDomain"
-        :fetch-suggestions="searchDomainByList"
-        placeholder="搜索"
-      ></el-autocomplete>
+      <!--span>选择值域</span-->
+      <div class="val_domain_dict">
+        <el-autocomplete
+          class="inline-input"
+          v-model="fieldCheck.valDomain"
+          :fetch-suggestions="searchDomainByList"
+          placeholder="搜索"
+        ></el-autocomplete>
+      </div>
+      <el-checkbox v-model="fieldCheck.enableValRange"
+        >取值范围检验</el-checkbox
+      >
 
-      <el-checkbox v-model="fieldCheck.enableValRange">取值范围检验</el-checkbox>
+      <div class="num_range_area">
+        <div>
+          <el-radio v-model="fieldCheck.valDomainRange.great" label="notequal"
+            >&gt;</el-radio
+          >
+          <el-radio v-model="fieldCheck.valDomainRange.great" label="equal"
+            >&ge;</el-radio
+          >
+        </div>
+        <el-input v-model="fieldCheck.valDomainRange.greatVal"></el-input>
 
-        <el-radio v-model="fieldCheck.valDomainRange.great" label="notequal">&gt;</el-radio>
-        <el-radio v-model="fieldCheck.valDomainRange.great" label="equal"></el-radio>
-      
-      <el-checkbox v-model="fieldCheck.enableRegexp">表达格式规范校验</el-checkbox>
+        <div>
+          <el-radio v-model="fieldCheck.valDomainRange.less" label="notequal"
+            >&lt;</el-radio
+          >
+          <el-radio v-model="fieldCheck.valDomainRange.less" label="equal"
+            >&le;</el-radio
+          >
+        </div>
+        <el-input v-model="fieldCheck.valDomainRange.lessVal"></el-input>
+      </div>
+      <el-checkbox v-model="fieldCheck.enableRegexp"
+        >表达格式规范校验</el-checkbox
+      >
+      <el-input
+        type="textarea"
+        :rows="2"
+        placeholder="输入正则表达式"
+        v-model="fieldCheck.regexpText"
+      >
+      </el-input>
     </CardVue>
+    <div class="btn_area">
+      <el-button>重置</el-button>
+      <el-button type="primary">保存</el-button>
+    </div>
   </div>
 </template>
 <script>
@@ -52,8 +86,8 @@ export default {
           {
             type: 'el-select',
             options: [],
-            label: '类型编码',
-            id: 'data_code'
+            label: '字符类型',
+            id: 'char_type_code'
           },
           {
             type: 'el-input',
@@ -63,12 +97,12 @@ export default {
         ],
         formRule: {
           data_type: { required: true },
-          data_code: { required: true },
+          char_type_code: { required: true },
           data_length: { required: true }
         },
         formData: {
           data_type: '数值型',
-          data_code: 'N',
+          char_type_code: 'N',
           data_length: ''
         }
       },
@@ -78,9 +112,9 @@ export default {
         valDomainList: ['DICT_SEX', 'DICT_NAME'],
         enableValRange: false,
         valDomainRange: {
-          great: 'equal',
+          great: 'notequal',
           greatVal: 0,
-          less: 'equal',
+          less: 'notequal',
           lessVal: 50
         },
         enableRegexp: false,
@@ -112,20 +146,21 @@ export default {
           文本型: ['A', 'N', 'AN']
         }[val.data_type]
         this.typeCheck.formCfg[1].options = [...ops]
-        let curCode = this.typeCheck.formData.data_code
-        ops.indexOf(curCode) == -1 && (this.typeCheck.formData.data_code = '')
+        let curCode = this.typeCheck.formData.char_type_code
+        ops.indexOf(curCode) == -1 &&
+          (this.typeCheck.formData.char_type_code = '')
 
         if (val.data_type == '逻辑型') {
           this.typeCheck.formData.data_length = 1
         }
 
         if (val.data_type == '日期型') {
-          this.typeCheck.formData.data_code = 'D'
+          this.typeCheck.formData.char_type_code = 'D'
           this.typeCheck.formData.data_length = 8
         }
 
         if (val.data_type == '时间型') {
-          this.typeCheck.formData.data_code = 'DT'
+          this.typeCheck.formData.char_type_code = 'DT'
           this.typeCheck.formData.data_length = 15
         }
       },
@@ -135,10 +170,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-::v-deep.checkrule_wrapper * {
-  font-size: 13px;
-  color: #606266;
-  font-weight: normal;
+::v-deep.checkrule_wrapper {
+  * {
+    font-size: 13px;
+    color: #606266;
+    font-weight: normal;
+  }
+
   .el-checkbox,
   .el-radio {
     margin: 5px 0;
@@ -149,6 +187,29 @@ export default {
     .el-input {
       width: 80px;
     }
+  }
+  .fieldContent {
+    .val_domain_dict {
+      margin-left: 23px;
+    }
+    .num_range_area {
+      margin-left: 23px;
+      .el-radio {
+        padding-right: 30px;
+      }
+      .el-input {
+        width: 165px;
+      }
+    }
+    .el-textarea {
+      width: 165px;
+      margin-left: 23px;
+    }
+  }
+  .btn_area {
+    position: fixed;
+    bottom: 35px;
+    right: 10px;
   }
 }
 </style>

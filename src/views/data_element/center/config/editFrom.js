@@ -71,7 +71,10 @@ export const formFieldsConfig = [
   {
     type: 'el-input',
     label: '数据元允许值',
-    id: 'val_range_def'
+    id: 'val_range_def',
+    elOptions: {
+      disabled: true
+    }
   },
   {
     type: 'el-input',
@@ -83,11 +86,32 @@ export const formFieldsConfig = [
   },
   {
     type: 'el-input',
-    label: '校验规则',
+    label: '表示格式规范',
     id: 'validation_pattern',
     elOptions: {
       disabled: true
     }
+  },
+  {
+    type: 'el-select',
+    options: ['是', '否'],
+    label: '长文本标识',
+    id: 'long_text_flag'
+  },
+  {
+    type: 'el-autocomplete',
+    elOptions: {
+      'fetch-suggestions': (queryString, cb) => {
+        let orginOptions = ['人名', '公司名', '量词', '日期']
+        let filteredValues = queryString
+          ? orginOptions.filter(item => item.indexOf(queryString) != -1)
+          : orginOptions
+        cb(filteredValues.map(item => ({ value: item })))
+      },
+      placeholder: '请输入并选择'
+    },
+    label: '词性',
+    id: 'wordAttr'
   },
   {
     type: 'el-select',
