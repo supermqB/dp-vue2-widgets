@@ -4,7 +4,7 @@
       <el-table
         :data="tableData"
         highlight-current-row
-        @current-change="rowChangeHanlder"
+        @current-change="rowChangeHandler"
         border
       >
         <el-table-column type="selection" width="30" v-if="multipleSelect">
@@ -138,7 +138,7 @@ export default {
     rowAction({ rowIdx, row, column }, callback) {
       callback(row.index, this.tableData)
     },
-    rowChangeHanlder(rowData) {
+    rowChangeHandler(rowData) {
       this.selectedIdx = rowData.index
       this.$emit('row-changed', rowData)
     },
