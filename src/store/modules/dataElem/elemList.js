@@ -14,12 +14,14 @@ const state = {
     {
       index: 1,
       code: 'DE01.00.10.001',
-      type: 'S3'
+      type: 'S3',
+      cnName: '性别信息'
     },
     {
       index: 2,
       code: 'DE01.00.10.002',
-      type: 'S1'
+      type: 'S1',
+      cnName: '地址信息'
     }
   ],
   selectedItem: null,
@@ -51,8 +53,6 @@ const actions = {
     console.log(rootState.dataElem.elemGroup.selectedGrps)
     console.log(state.pageInfo)
   },
-  /*   advSearch() {},
-  createDataElem() {}, */
   startCommit({ state, commit }) {
     commit('setCommitData', [])
     commit('setCommitData', [
