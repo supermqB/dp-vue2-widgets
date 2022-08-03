@@ -4,7 +4,7 @@ const state = {
     only: true
   },
   formatCheckData: {
-    data_type: '数值型',
+    data_type: 'S1',
     char_type_code: 'N',
     data_length: ''
   },

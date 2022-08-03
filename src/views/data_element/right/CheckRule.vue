@@ -97,7 +97,15 @@ const _formatCheck = {
   formCfg: [
     {
       type: 'el-select',
-      options: ['数值型', '逻辑型', '日期型', '时间型', '文本型'],
+      options: [
+        { label: '字符型(S1)', value: 'S1' },
+        { label: '字符型(S2)', value: 'S2' },
+        { label: '字符型(S3)', value: 'S3' },
+        { label: '逻辑型(L)', value: 'L' },
+        { label: '数值型(N)', value: 'N' },
+        { label: '日期型(D)', value: 'D' },
+        { label: '时间型(DT)', value: 'DT' }
+      ],
       label: '数据类型',
       id: 'data_type'
     },
@@ -105,12 +113,18 @@ const _formatCheck = {
       type: 'el-select',
       options: [],
       label: '字符类型',
-      id: 'char_type_code'
+      id: 'char_type_code',
+      elOptions: {
+        disabled: false
+      }
     },
     {
       type: 'el-input',
       label: '字符长度',
-      id: 'data_length'
+      id: 'data_length',
+      elOptions: {
+        disabled: false
+      }
     }
   ],
   formRule: {
@@ -119,7 +133,7 @@ const _formatCheck = {
     data_length: { required: true }
   },
   formData: {
-    data_type: '数值型',
+    data_type: 'S1',
     char_type_code: 'N',
     data_length: ''
   }
@@ -146,35 +160,48 @@ export default {
         ? orginOptions.filter(item => item.indexOf(queryString) != -1)
         : orginOptions
       cb(filteredValues.map(item => ({ value: item })))
+    },
+    toggleFormatCheckInput(enable) {
+      let fcCfg = this.formatCheck.formCfg
+      fcCfg[1].elOptions.disabled = !enable
+      fcCfg[2].elOptions.disabled = !enable
     }
   },
   watch: {
     'formatCheck.formData': {
       handler(val) {
         const ops = {
-          数值型: ['N'],
-          逻辑型: ['N'],
-          日期型: ['D'],
-          时间型: ['DT'],
-          文本型: ['A', 'N', 'AN']
-        }[val.data_type]
+          L: ['N'],
+          S1: ['A', 'N', 'AN'],
+          S2: ['A', 'N', 'AN'],
+          S3: ['A', 'N', 'AN']
+        }[val.data_type] || [val.data_type]
         this.formatCheck.formCfg[1].options = [...ops]
         let curCode = val.char_type_code
         ops.indexOf(curCode) == -1 && (val.char_type_code = '')
 
-        if (val.data_type == '逻辑型') {
+        if (val.data_type == 'L') {
+          val.char_type_code = 'N'
           val.data_length = 1
+          this.toggleFormatCheckInput(false)
+          return
         }
 
-        if (val.data_type == '日期型') {
+        if (val.data_type == 'D') {
           val.char_type_code = 'D'
           val.data_length = 8
+          this.toggleFormatCheckInput(false)
+          return
         }
 
-        if (val.data_type == '时间型') {
+        if (val.data_type == 'DT') {
           val.char_type_code = 'DT'
           val.data_length = 15
+          this.toggleFormatCheckInput(false)
+          return
         }
+
+        this.toggleFormatCheckInput(true)
       },
       deep: true
     },
@@ -208,7 +235,7 @@ export default {
     margin: 0;
     .el-select,
     .el-input {
-      width: 80px;
+      width: 105px;
     }
   }
   .fieldContent {

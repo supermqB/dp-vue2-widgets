@@ -6,7 +6,7 @@
         <el-breadcrumb-item>数据元明细</el-breadcrumb-item>
       </el-breadcrumb>
       <div class="btn_area">
-        <el-button type="primary" @click="commitElem">提 交</el-button>
+        <el-button type="primary" @click="startCommit">提 交</el-button>
         <el-button type="primary" @click="createElem">新 增</el-button>
       </div>
     </div>
@@ -66,7 +66,7 @@ import Dialog from '@/components/Dialog.vue'
 import formCfg from './config/searchForm'
 import { getListTableHeader } from './config/listTableHeader'
 import {
-  formFieldsConfig as editElemFormConfig,
+  formFieldsConfig,
   formValidRule as editElemFormRule
 } from './config/editFrom'
 
@@ -86,7 +86,16 @@ export default {
 
       tableConfig,
 
-      editElemFormConfig,
+      editElemFormConfig: formFieldsConfig.filter(
+        item =>
+          [
+            'type',
+            'format',
+            'valueDomainName',
+            'valueDomainSrc',
+            'regexpText'
+          ].indexOf(item.id) == -1
+      ),
       editElemFormRule,
       editElemFormValid: false,
       editElemDialogTitle: '新增数据元'
@@ -133,13 +142,11 @@ export default {
       this.$refs.editElemForm &&
         this.$refs.editElemForm.$refs.el_form.resetFields()
     },
-    commitElem() {
-      this.$refs.commitDialog.show()
-    },
     openAdvSearch() {
       this.$refs.advSearchDialog.toggleOpen()
     },
     ...mapActions({ searchHandler: 'search' }),
+    ...mapActions(['startCommit']),
     ...mapMutations({ selectItemHandler: 'setSelectItem' })
   },
   watch: {
@@ -165,7 +172,7 @@ export default {
     }
   },
   mounted() {
-    this.$refs.dp_table.setCurrentRow(this.tableData[0]);
+    this.$refs.dp_table.setCurrentRow(this.tableData[0])
   }
 }
 </script>
@@ -188,7 +195,6 @@ export default {
     display: flex;
     justify-content: space-between;
     padding: 0 6px;
-    //height: 40px;
     line-height: 40px;
     .action_area {
       .advbtn {
@@ -223,19 +229,24 @@ export default {
   }
   .dialog_port .dp_dialog {
     .el-dialog {
-      width: 920px;
+      width: 850px;
       min-width: 500px;
     }
     form {
       display: flex;
       flex-direction: column;
-      height: 400px;
+      align-content: center;
+      height: 270px;
+      margin-right: 50px;
       flex-wrap: wrap;
       .el-form-item {
-        &.is-error .el-input__inner {
-          border-color: #dcdfe6;
+        &.is-error {
+          .el-input__inner,
+          .el-textarea__inner {
+            border-color: #dcdfe6;
+          }
         }
-        width: 380px;
+        width: 360px;
         display: flex;
         justify-content: flex-end;
         min-height: 44px;

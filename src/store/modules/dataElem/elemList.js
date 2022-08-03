@@ -28,7 +28,8 @@ const state = {
     pageSize: 50,
     totalSize: 200,
     totalPage: 10
-  }
+  },
+  pendingCommitItems: []
 }
 
 const mutations = {
@@ -38,6 +39,9 @@ const mutations = {
   },
   setSelectItem(state, curRow) {
     state.selectedItem = curRow
+  },
+  setCommitData(state, val) {
+    state.pendingCommitItems = val
   }
 }
 
@@ -47,8 +51,28 @@ const actions = {
     console.log(rootState.dataElem.elemGroup.selectedGrps)
     console.log(state.pageInfo)
   },
-  advSearch() {},
-  createDataElem() {}
+  /*   advSearch() {},
+  createDataElem() {}, */
+  startCommit({ state, commit }) {
+    commit('setCommitData', [])
+    commit('setCommitData', [
+      {
+        index: 1,
+        cn_name: '婚姻状况',
+        en_name: 'MARRIGE_STATUS',
+        status: '待提交'
+      },
+      {
+        index: 2,
+        cn_name: '民族',
+        en_name: 'NATION',
+        status: '待提交'
+      }
+    ])
+  },
+  clearCommit({ commit }) {
+    commit('setCommitData', [])
+  }
 }
 
 export default {
