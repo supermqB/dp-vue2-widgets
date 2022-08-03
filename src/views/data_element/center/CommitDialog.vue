@@ -1,6 +1,11 @@
 <template>
-  <DialogVue title="数据元提交" ref="dialog" class="dataElem_commit_dlg">
-    <div style="display:flex; justify-content:end; padding-right: 7px;">
+  <DialogVue
+    title="数据元提交"
+    ref="dialog"
+    class="dataElem_commit_dlg"
+    :isOpen.sync="isOpen"
+  >
+    <div style="display: flex; justify-content: end; padding-right: 7px">
       <FormVue
         :formData="formData"
         :formCfg="formCfg"
@@ -44,23 +49,13 @@
 import DialogVue from '@/components/Dialog.vue'
 import FormVue from '@/components/Form.vue'
 import GeneralTableVue from '@/components/GeneralTable.vue'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapMutations, mapActions } =
+  createNamespacedHelpers('dataElem/elemList')
+
 export default {
   data() {
     return {
-      tableData: [
-        {
-          index: 1,
-          cn_name: '婚姻状况',
-          en_name: 'MARRIGE_STATUS',
-          status: '待提交'
-        },
-        {
-          index: 2,
-          cn_name: '民族',
-          en_name: 'NATION',
-          status: '待提交'
-        }
-      ],
       formCfg: [
         {
           type: 'el-select',
@@ -77,15 +72,27 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      tableData: state => state.pendingCommitItems
+    }),
+    isOpen: {
+      get: function () {
+        return !!this.tableData.length
+      },
+      set: function (opening) {
+        /* clear tableData properly. */
+        !opening && this.clearCommit()
+      }
+    }
+  },
   components: {
     DialogVue,
     FormVue,
     GeneralTableVue
   },
   methods: {
-    show() {
-      this.$refs.dialog.toggleOpen()
-    }
+    ...mapActions(['clearCommit'])
   }
 }
 </script>
