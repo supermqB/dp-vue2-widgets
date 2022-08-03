@@ -1,0 +1,4 @@
+export const ADDSTATE = 'ADDSTATE'
+export const EDITSTATE = 'EDITSTATE'
+export const RUNNINGSTATE = 'RUNNINGSTATE'
+export const EDITINGSTATE = 'EDITINGSTATE'

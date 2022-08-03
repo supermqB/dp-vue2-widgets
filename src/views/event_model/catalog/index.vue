@@ -3,7 +3,9 @@
     <div class="header">
       <h3>事件目录</h3>
       <div class="buttons">
-        <el-button @click="addVersion">+</el-button>
+        <img src="@/assets/images/event/add.png" @click="addCatalog"/>
+        <img src="@/assets/images/event/edit.png"  @click="editCatalog"/>
+        <img src="@/assets/images/event/run.png" />
       </div>
     </div>
     <div class="version">
@@ -15,7 +17,7 @@
           :label="item"
           :value="item"></el-option>
       </el-select>
-      <el-button type="text">新增版本</el-button>
+      <el-button type="text" @click="addVersion">新增版本</el-button>
     </div>
     <div class="tree">
       <el-tree
@@ -32,8 +34,8 @@
           @click="(event) => { if (data.theme) { event.stopPropagation() } }"
         >
           <p class="label">
-            <i v-if="data.status" class="el-icon-remove" />
-            <i v-else class="el-icon-success" />
+            <img v-if="data.state === RUNNINGSTATE" src="@/assets/images/event/running.png" />
+            <img v-else src="@/assets/images/event/editing.png" />
             {{ data.label }}
           </p>
           <p class="number">{{ data.number }}</p>
@@ -46,9 +48,17 @@
     </div>
     <Dialog
       title="新增版本"
-      ref="addVersion"
+      ref="versionDialog"
+      class="versionDialog"
     >
-      <Form :formCfg="versionForm"></Form>
+      <Form :formCfg="versionCfg" :formData="versionData" :formRule="versionRule" ></Form>
+    </Dialog>
+    <Dialog
+      :title="`${catalogState === ADDSTATE ? '新增数据集' : '编辑数据集'}`"
+      ref="catalogDialog"
+      class="catalogDialog"
+    >
+      <Form :formCfg="catalogCfg" :formData="catalogData" :formRule="catalogRule" ></Form>
     </Dialog>
   </div>
 </template>
@@ -56,8 +66,10 @@
 <script>
 import Dialog from '@/components/Dialog.vue';
 import Form from '@/components/Form.vue';
-import versionForm from './config/versionForm';
+import { versionCfg, versionRule } from './config/versionForm';
+import { catalogCfg, catalogRule } from './config/catalogForm';
 import { getCatalogApi, getVersionListApi } from '@/api/event';
+import { ADDSTATE, EDITSTATE, RUNNINGSTATE } from '@/utils/const'
 export default {
   components: {
     Dialog, Form
@@ -103,17 +115,48 @@ export default {
           ]
         }
       ],
-      versionForm
+      versionCfg,
+      versionRule,
+      versionData: {
+        version: '',
+        parVersion: '',
+        state: ''
+      },
+      catalogState: ADDSTATE,
+      catalogCfg, 
+      catalogRule,
+      catalogData: {
+        version: '',
+        theme: '',
+        code: '',
+        nameCn: '',
+        nameEn: '',
+        description: ''
+      }
     }
   },
-  mounted() {},
+  created() {
+    this.ADDSTATE = ADDSTATE
+    this.RUNNINGSTATE = RUNNINGSTATE
+  },
+  async mounted () {
+    // const res = await getVersionListApi()
+  },
   methods: {
     handleNodeClick(data) {
       if (!data.theme) this.current = data.id
-      console.log(this.current)
     },
     addVersion() {
-      this.$refs.addVersion.toggleOpen()
+      this.catalogDialogState = ADDSTATE
+      this.$refs.versionDialog.toggleOpen()
+    },
+    addCatalog() {
+      this.catalogState = ADDSTATE
+      this.$refs.catalogDialog.toggleOpen()
+    },
+    editCatalog() {
+      this.catalogState = EDITSTATE
+      this.$refs.catalogDialog.toggleOpen()
     }
   }
 }
@@ -142,6 +185,11 @@ export default {
     display: flex;
     justify-content: end;
     align-items: center;
+    img {
+      margin: 0 4px;
+      /* font-size: 19px; */
+      cursor: pointer;
+    }
   }
 }
 .version {
@@ -200,15 +248,35 @@ export default {
   }
 }
 
-/* ::v-deep .el-tree-node__content {
-  position: relative;
-} */
-
 ::v-deep .el-tree-node__content>.el-tree-node__expand-icon {
   padding: 4px
 }
 
 ::v-deep .el-tree-node.is-current>.el-tree-node__content {
   background-color: #D8FFFE!important;
+}
+
+::v-deep .el-form-item {
+  margin-bottom: 11px;
+}
+
+::v-deep .versionDialog .el-dialog{
+  width: 535px;
+  form {
+    padding-right: 85px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
+}
+
+::v-deep .catalogDialog .el-dialog{
+  width: 635px;
+  form {
+    padding-right: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
 }
 </style>
