@@ -56,9 +56,20 @@ export const formFieldsConfig = [
   },
   {
     type: 'el-select',
-    options: ['BY', 'D', 'DT', 'LN', 'S1', 'S2', 'S3'],
+    options: [
+      { label: '字符型(S1)', value: 'S1' },
+      { label: '字符型(S2)', value: 'S2' },
+      { label: '字符型(S3)', value: 'S3' },
+      { label: '逻辑型(L)', value: 'L' },
+      { label: '数值型(N)', value: 'N' },
+      { label: '日期型(D)', value: 'D' },
+      { label: '时间型(DT)', value: 'DT' }
+    ],
     label: '类型',
-    id: 'type'
+    id: 'type',
+    elOptions: {
+      disabled: true
+    }
   },
   {
     type: 'el-input',
@@ -66,12 +77,15 @@ export const formFieldsConfig = [
     id: 'format',
     elOptions: {
       placeholder: '格式'
+    },
+    elOptions: {
+      disabled: true
     }
   },
   {
     type: 'el-input',
     label: '数据元允许值',
-    id: 'val_range_def',
+    id: 'valueDomainName',
     elOptions: {
       disabled: true
     }
@@ -79,7 +93,7 @@ export const formFieldsConfig = [
   {
     type: 'el-input',
     label: '值域标准来源',
-    id: 'val_standard_src',
+    id: 'valueDomainSrc',
     elOptions: {
       disabled: true
     }
@@ -87,7 +101,7 @@ export const formFieldsConfig = [
   {
     type: 'el-input',
     label: '表示格式规范',
-    id: 'validation_pattern',
+    id: 'regexpText',
     elOptions: {
       disabled: true
     }
@@ -96,7 +110,7 @@ export const formFieldsConfig = [
     type: 'el-select',
     options: ['是', '否'],
     label: '长文本标识',
-    id: 'long_text_flag'
+    id: 'longTextFlag'
   },
   {
     type: 'el-autocomplete',
@@ -111,13 +125,13 @@ export const formFieldsConfig = [
       placeholder: '请输入并选择'
     },
     label: '词性',
-    id: 'wordAttr'
+    id: 'wordSpeech'
   },
   {
     type: 'el-select',
     options: ['待提交', '已启用'],
     label: '状态标识',
-    id: 'status'
+    id: 'state'
   }
 ]
 
@@ -130,6 +144,6 @@ export const formValidRule = {
   cn_name: { required: true },
   en_name: { required: true },
   description: { required: true },
-  type: { required: true },
-  format: { required: true }
+  longTextFlag: { required: true },
+  state: { required: true }
 }

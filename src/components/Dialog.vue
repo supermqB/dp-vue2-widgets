@@ -26,11 +26,10 @@ export default {
       default: () => {
         return true
       }
-    }
-  },
-  data() {
-    return {
-      isOpen: false
+    },
+    isOpen: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -40,6 +39,11 @@ export default {
     finishHandler() {
       this.$emit('dialog-complete')
       this.toggleOpen()
+    }
+  },
+  watch: {
+    isOpen(opened) {
+      this.$emit('update:isOpen', opened)
     }
   }
 }

@@ -14,12 +14,14 @@ const state = {
     {
       index: 1,
       code: 'DE01.00.10.001',
-      type: 'S3'
+      type: 'S3',
+      cnName: '性别信息'
     },
     {
       index: 2,
       code: 'DE01.00.10.002',
-      type: 'S1'
+      type: 'S1',
+      cnName: '地址信息'
     }
   ],
   selectedItem: null,
@@ -28,7 +30,8 @@ const state = {
     pageSize: 50,
     totalSize: 200,
     totalPage: 10
-  }
+  },
+  pendingCommitItems: []
 }
 
 const mutations = {
@@ -38,6 +41,9 @@ const mutations = {
   },
   setSelectItem(state, curRow) {
     state.selectedItem = curRow
+  },
+  setCommitData(state, val) {
+    state.pendingCommitItems = val
   }
 }
 
@@ -47,8 +53,26 @@ const actions = {
     console.log(rootState.dataElem.elemGroup.selectedGrps)
     console.log(state.pageInfo)
   },
-  advSearch() {},
-  createDataElem() {}
+  startCommit({ state, commit }) {
+    commit('setCommitData', [])
+    commit('setCommitData', [
+      {
+        index: 1,
+        cn_name: '婚姻状况',
+        en_name: 'MARRIGE_STATUS',
+        status: '待提交'
+      },
+      {
+        index: 2,
+        cn_name: '民族',
+        en_name: 'NATION',
+        status: '待提交'
+      }
+    ])
+  },
+  clearCommit({ commit }) {
+    commit('setCommitData', [])
+  }
 }
 
 export default {
