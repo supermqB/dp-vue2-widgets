@@ -15,9 +15,9 @@
         :data="grouptree"
         :filter-node-method="filterTreeNode"
         show-checkbox
-        default-expand-all
-        node-key="id"
-        :props="{ children: 'children', label: 'label' }"
+        node-key="ctlgIdentifier"
+        :props="{ children: 'directoryList', label: 'ctlgName' }"
+        :default-expanded-keys="['0', 'DE01', 'DE02', 'DE02.01']"
         ref="grouptree"
         @check-change="checkedGrpChangeHandler"
       >
@@ -53,10 +53,15 @@ export default {
       return data.label.indexOf(value) !== -1
     },
     checkedGrpChangeHandler() {
-        let checkedKeys = this.$refs.grouptree.getCheckedKeys()
-        this.setSelectedGrps(checkedKeys);
+      let checkedKeys = this.$refs.grouptree.getCheckedKeys()
+      this.setSelectedGrps(checkedKeys)
     },
-    ...mapMutations(['setSearch', 'setSelectedGrps'])
+    ...mapMutations(['setSearch', 'setSelectedGrps']),
+    ...mapActions(['fetchElementGrps'])
+  },
+  mounted() {
+    this.fetchElementGrps()
+    this.$refs.grouptree.setCheckedKeys(['0'])
   }
 }
 </script>

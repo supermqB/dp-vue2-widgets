@@ -89,10 +89,19 @@ service.interceptors.response.use(
 
 export default service
 
-export function get(url, params) {
+export function get(url, params = {}) {
   return service({
     url,
     params,
     method: 'get'
+  })
+}
+
+export function post(url, data = {}, params = {}) {
+  return service({
+    url,
+    params,
+    data,
+    method: 'post'
   })
 }

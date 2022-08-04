@@ -3,6 +3,7 @@
     <div class="table_container">
       <el-table
         :data="tableData"
+        height="100%"
         highlight-current-row
         @current-change="rowChangeHandler"
         border
@@ -60,7 +61,7 @@ export default {
       type: Array,
       default: function () {
         return [
-         /*  {
+          /*  {
             colConfig: {
               property: 'index',
               label: '序号',
@@ -101,7 +102,7 @@ export default {
       type: Array,
       default: function () {
         return [
-         /*  {
+          /*  {
             index: 1,
             code: 'DE01.00.10.001'
           },
@@ -140,6 +141,10 @@ export default {
       callback(row.index, this.tableData)
     },
     rowChangeHandler(rowData) {
+      if (rowData == null) {
+        console.log('no item is selected...')
+        return
+      }
       this.selectedIdx = rowData.index
       this.$emit('row-changed', rowData)
     },
@@ -152,8 +157,8 @@ export default {
     completeEditElem() {
       console.log('edit data elem')
     },
-    setCurrentRow(row){
-        this.$refs.el_table.setCurrentRow(row);
+    setCurrentRow(row) {
+      this.$refs.el_table.setCurrentRow(row)
     }
   }
 }
@@ -173,6 +178,8 @@ export default {
 <style lang="scss">
 .el_table_wrapper {
   .table_container {
+    height: 300px;
+    overflow: auto;
     .el-table {
       &.el-table--border .el-table__cell:first-child .cell {
         padding-left: 0;

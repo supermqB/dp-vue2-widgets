@@ -26,12 +26,12 @@ export default [
       placeholder: '请输入并选择'
     },
     label: '词性',
-    id: 'wordAttr'
+    id: 'wordSpeech'
   },
   {
     type: 'el-select',
     options: ['全部', '已启用', '待提交'],
     label: '状态',
-    id: 'status'
+    id: 'state'
   }
 ]

@@ -1,17 +1,18 @@
 import { keysObject } from '@/utils/lang'
 import { formFieldsConfig } from '@/views/data_element/center/config/editFrom.js'
 import advSearchFormConfig from '@/views/data_element/center/config/advSearchForm'
+import { post } from '@/utils/request'
 
 const state = {
   queryCriteria: {
     type: '',
-    wordAttr: '',
-    status: ''
+    wordSpeech: '',
+    state: ''
   },
   advQueryCriteria: keysObject(advSearchFormConfig, 'id'),
   editElemFormData: keysObject(formFieldsConfig, 'id'),
   tableData: [
-    {
+    /* {
       index: 1,
       code: 'DE01.00.10.001',
       type: 'S3',
@@ -22,7 +23,7 @@ const state = {
       code: 'DE01.00.10.002',
       type: 'S1',
       cnName: '地址信息'
-    }
+    } */
   ],
   selectedItem: null,
   pageInfo: {
@@ -39,6 +40,9 @@ const mutations = {
   setTableData(state, val) {
     state.tableData = val
   },
+  setPageInfo(state, val){
+    Object.assign(state.pageInfo, val)
+  },
   setSelectItem(state, curRow) {
     state.selectedItem = curRow
   },
@@ -48,10 +52,22 @@ const mutations = {
 }
 
 const actions = {
-  search({ state, commit, rootState }) {
-    console.log(state.queryCriteria)
-    console.log(rootState.dataElem.elemGroup.selectedGrps)
-    console.log(state.pageInfo)
+  async search({ state, commit, rootState }) {
+    let {
+      value: { pageInfo, records: tableData }
+    } = await post(
+      'data-element/list',
+      {
+        ctlgIdentifierList: rootState.dataElem.elemGroup.selectedGrps,
+        ...state.queryCriteria
+      },
+      { size: state.pageInfo.pageSize, current: state.pageInfo.curPage }
+    )
+    commit(
+      'setTableData',
+      tableData.map(item => ({ index: item.id, ...item }))
+    )
+    commit('setPageInfo', pageInfo)
   },
   startCommit({ state, commit }) {
     commit('setCommitData', [])

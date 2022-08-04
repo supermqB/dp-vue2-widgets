@@ -18,6 +18,6 @@ import CenterDetail from './center'
 import RightTabs from './right'
 
 export default {
-  components: { ElementGroup, CenterDetail, RightTabs }
+  components: { ElementGroup, CenterDetail, RightTabs },
 }
 </script>

@@ -6,45 +6,15 @@ const state = {
     { key: '总数', value: 2148 }
   ],
   selectedGrps: [],
-  grouptree: [
-    {
-      id: '0',
-      label: '全部',
-      children: [
-        {
-          id: 'DE01',
-          label: '标识类信息',
-          children: [
-            {
-              id: 'DE01.01',
-              label: '标识',
-              children: [{ id: 'DE01.01.01', label: '标识' }]
-            }
-          ]
-        },
-        {
-          id: 'DE02',
-          label: '卫生服务对象信息',
-          children: [
-            {
-              id: 'DE02.01',
-              label: '人口及社会经济学特征',
-              children: [
-                { id: 'DE02.01.01', label: '人口学' },
-                { id: 'DE02.01.02', label: '社会经济学特征' },
-                { id: 'DE02.01.03', label: '区划信息' }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  grouptree: []
 }
 
 const mutations = {
   setSearch(state, val) {
     state.search = val
+  },
+  setGrpTree(state, val) {
+    state.grouptree = val
   },
   setSelectedGrps(state, val) {
     state.selectedGrps = val
@@ -53,11 +23,21 @@ const mutations = {
 
 const actions = {
   async fetchElementGrps({ commit, state }) {
-    /***/
+    const { value: grpData } = await get('/data-element/getClassification')
+    grpData.sort((i1, i2) => i1.ctlgIdentifier.localeCompare(i2.ctlgIdentifier))
+    let treeData = [
+      {
+        ctlgIdentifier: '0',
+        ctlgName: '全部',
+        directoryList: grpData
+      }
+    ]
+    commit('setGrpTree', treeData)
   }
 }
 export default {
   namespaced: true,
   state,
-  mutations
+  mutations,
+  actions
 }

@@ -81,8 +81,8 @@
       </el-input>
     </CardVue>
     <div class="btn_area">
-      <el-button>重置</el-button>
-      <el-button type="primary">保存</el-button>
+      <el-button @click="reset">重置</el-button>
+      <el-button type="primary" @click="save">保存</el-button>
     </div>
   </div>
 </template>
@@ -165,7 +165,8 @@ export default {
       let fcCfg = this.formatCheck.formCfg
       fcCfg[1].elOptions.disabled = !enable
       fcCfg[2].elOptions.disabled = !enable
-    }
+    },
+    ...mapActions(['save','reset'])
   },
   watch: {
     'formatCheck.formData': {
@@ -211,6 +212,9 @@ export default {
         } */
       },
       deep: true
+    },
+    selectedDataElem() {
+      this.reset()
     }
   },
   components: {
