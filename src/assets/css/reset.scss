@@ -9,19 +9,20 @@ img {
   border-style: none
 };
 
-// ::-webkit-scrollbar { 
-//   width: 8px; 
-//   height: 8px; 
-//   background:#b9b9b9; 
-// } 
-// ::-webkit-scrollbar-button { 
-//   display: none; 
-// } 
-// ::-webkit-scrollbar-thumb { 
-//   border-radius: 10px; 
-//   background: #62ceb7; 
-// } 
-// ::-webkit-scrollbar-track { 
-//   border-radius: 10px; 
-//   background: #b9b9b9; 
-// } 
+// ::-webkit-scrollbar {
+//   width:4px;
+// }
+// /* 滚动槽 */
+// ::-webkit-scrollbar-track {
+// -webkit-box-shadow:inset006pxrgba(0,0,0,0.3);
+// border-radius:10px;
+// }
+// /* 滚动条滑块 */
+// ::-webkit-scrollbar-thumb {
+// border-radius:10px;
+// background:rgba(0,0,0,0.1);
+// -webkit-box-shadow:inset006pxrgba(0,0,0,0.5);
+// }
+// ::-webkit-scrollbar-thumb:window-inactive {
+// background:rgba(255,0,0,0.4);
+// }

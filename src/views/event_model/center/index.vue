@@ -3,11 +3,11 @@
     <div class="header">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>事件模型管理</el-breadcrumb-item>
-        <el-breadcrumb-item>E000-卫生事件记录(event_record)</el-breadcrumb-item>
+        <el-breadcrumb-item><b>{{ currentCatalogLabel }}(event_record)</b></el-breadcrumb-item>
       </el-breadcrumb>
-      <div class="status" 
-        :class="[ status === 'running' ? 'running' : 'edit' ]">
-        {{ status === 'running' ? '已启动' : '编辑中'  }}
+      <div>
+        <span v-if="currentCatalogState === RUNNINGSTATE" class="status running">已启动</span>
+        <span v-else-if="currentCatalogState === EDITINGSTATE" class="status editing">编辑中</span>
       </div>
       <div class="buttons">
         <el-button type="primary" @click="addColumn">新增</el-button>
@@ -46,21 +46,21 @@
 </template>
 
 <script>
-import Form from '@/components/Form.vue';
-import Table from '@/components/GeneralTable.vue';
-import formCfg from './config/searchForm';
-import tableConfig from './config/tableColumn';
-import Dialog from '@/components/Dialog.vue';
-import { columnCfg } from './config/columnForm';
-import { adSearchCfg } from './config/adSearchForm';
-import { ADDSTATE, EDITSTATE } from '@/utils/const'
+import Form from '@/components/Form.vue'
+import Table from '@/components/GeneralTable.vue'
+import formCfg from './config/searchForm'
+import tableConfig from './config/tableColumn'
+import Dialog from '@/components/Dialog.vue'
+import { columnCfg } from './config/columnForm'
+import { adSearchCfg } from './config/adSearchForm'
+import { ADDSTATE, EDITSTATE, RUNNINGSTATE, EDITINGSTATE } from '@/utils/const'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Form, Table, Dialog
   },
   data() {
     return {
-      status: '',
       formData: {
         identifier: '',
         field: '',
@@ -106,8 +106,14 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['currentCatalogLabel', 'currentCatalogState'])
+  },
   created() {
     this.ADDSTATE = ADDSTATE
+    this.EDITSTATE = EDITSTATE
+    this.RUNNINGSTATE = RUNNINGSTATE
+    this.EDITINGSTATE = EDITINGSTATE
   },
   methods: {
     addColumn() {
@@ -145,6 +151,7 @@ export default {
     .status {
       width: 46px;
       height: 18px;
+      display: inline-block;
       margin-top: 1px;
       margin-left: 10px;
       line-height: 18px;
@@ -155,7 +162,7 @@ export default {
         color: #67C23A;
         background-color: rgba(103,194,58,0.2);
       }
-      &.edit {
+      &.editing {
         color: #EB9E05;
         background-color: rgba(235,158,5,0.2)
       }
