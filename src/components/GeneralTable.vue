@@ -39,11 +39,19 @@
             </component>
           </template>
           <template v-else #default="{ $index: rowIdx, row, column }">
-            <el-tooltip :content="`${row[column.property]}`" placement="top" :transition="'x'">
-              <div style="text-overflow: ellipsis; overflow: hidden">
-                {{ row[column.property] }}
-              </div>
-            </el-tooltip>
+            <!-- <el-tooltip :content="`${row[column.property]}`" placement="top"> -->
+            <div
+              style="
+                text-overflow: ellipsis;
+                overflow: hidden;
+                word-break: keep-all;
+                white-space: pre;
+              "
+              :title="row[column.property]"
+            >
+              {{ row[column.property] }}
+            </div>
+            <!-- </el-tooltip> -->
           </template>
         </el-table-column>
       </el-table>
