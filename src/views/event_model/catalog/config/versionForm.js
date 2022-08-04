@@ -1,20 +1,39 @@
-export default [
+export const versionCfg = [
   {
     type: 'el-input',
     label: '版本',
-    id: 'field',
-    elOptions: {}
+    id: 'version',
+    labelWidth: '100px',
+    elOptions: {
+      style: {
+        width: '260px'
+      }
+    }
   },
   {
     type: 'el-select',
     label: '继承版本',
-    id: 'type',
-    elOptions: {}
+    id: 'parVersion',
+    elOptions: {
+      style: {
+        width: '260px'
+      }
+    }
   },
   {
     type: 'el-select',
     label: '状态',
-    id: 'status',
-    elOptions: {}
+    id: 'state',
+    elOptions: {
+      style: {
+        width: '260px'
+      }
+    }
   }
 ]
+
+export const versionRule = {
+  version: { required: true },
+  parVersion: { required: true },
+  state: { required: true }
+}
