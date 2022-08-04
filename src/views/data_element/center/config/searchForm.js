@@ -30,7 +30,13 @@ export default [
   },
   {
     type: 'el-select',
-    options: ['全部', '已启用', '待提交'],
+    options: [
+      { label: '全部', value: '' },
+      { label: '停用', value: '0' },
+      { label: '待提交', value: '1' },
+      //{ label: '待审核', value: '2' },
+      { label: '启用', value: '3' }
+    ],
     label: '状态',
     id: 'state'
   }

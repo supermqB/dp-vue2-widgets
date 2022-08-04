@@ -4,6 +4,7 @@
       <el-table
         :data="tableData"
         height="100%"
+        width="100%"
         highlight-current-row
         @current-change="rowChangeHandler"
         border
@@ -36,6 +37,13 @@
             >
               {{ action.name }}
             </component>
+          </template>
+          <template v-else #default="{ $index: rowIdx, row, column }">
+            <el-tooltip :content="`${row[column.property]}`" placement="top" :transition="'x'">
+              <div style="text-overflow: ellipsis; overflow: hidden">
+                {{ row[column.property] }}
+              </div>
+            </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
