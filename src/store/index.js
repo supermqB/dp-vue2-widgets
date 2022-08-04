@@ -7,6 +7,8 @@ import task from './modules/task' // 任务分配
 
 import dataElem from './modules/dataElem'
 
+import event from './modules/event'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -17,6 +19,7 @@ export default new Vuex.Store({
   modules: {
     tags,
     task,
-    dataElem
+    dataElem,
+    event
   }
 })

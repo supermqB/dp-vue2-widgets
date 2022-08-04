@@ -1,25 +1,35 @@
 <template>
   <dp-layout-container>
     <template #asideLeft>
-      <TaskList />
+      <Catalog class="catalog"></Catalog>
+      <Task class="task"></Task>
     </template>
     <template #main>
-      <ValueTable />
+      <!-- <ValueTable /> -->
+      <Center></Center>
     </template>
     <template #asideRight>
-      <ValueDetails />
+      <!-- <ValueDetails /> -->
+      <Suspect></Suspect>
     </template>
   </dp-layout-container>
 </template>
 
 <script>
-import TaskList from '@/components/TaskList'
-import ValueTable from './ValueTable'
-import ValueDetails from './ValueDetails'
+import Task from './task'
+import Catalog from './catalog'
+import Center from './center'
+import Suspect from './suspect'
+// import TaskList from '@/components/TaskList'
+// import ValueTable from './ValueTable'
+// import ValueDetails from './ValueDetails'
 
 export default {
   name: 'ValueExamine',
-  components: { TaskList, ValueTable, ValueDetails },
+  components: { 
+    // TaskList, ValueTable, ValueDetails
+    Catalog, Task, Center, Suspect
+  },
   data() {
     return {
       //选中的值域id
@@ -30,4 +40,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.catalog {
+  height: 47%;
+}
+.task {
+  height: 53%;
+}
+</style>

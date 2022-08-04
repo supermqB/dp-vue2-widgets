@@ -8,6 +8,7 @@ import {
   addCatalogColumnApi,
   updateCatalogColumnApi
 } from '@/api/event'
+import { RUNNINGSTATE, EDITINGSTATE } from '@/utils/const'
 
 const queryCatalog = async () => {
   return await getCatalogApi()
@@ -26,10 +27,23 @@ const state = {
 }
 
 const getters = {
-  currentCatalog(state) {
-    const catalog = state.currentCatalog.find(item => true)
+  currentCatalogLabel(state) {
+    return 'E000-卫生事件记录'
+    const catalog = state.currentCatalog.find(
+      item => state.currentCatalog === item.id
+    )
     if (catalog) {
-      return catalog
+      return `${catalog.label}`
+    }
+    return ''
+  },
+  currentCatalogState(state) {
+    return RUNNINGSTATE
+    const catalog = state.currentCatalog.find(
+      item => state.currentCatalog === item.id
+    )
+    if (catalog) {
+      return `${catalog.state}`
     }
   }
 }
