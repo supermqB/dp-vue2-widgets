@@ -20,27 +20,11 @@
       <el-button type="text" @click="addVersion">新增版本</el-button>
     </div>
     <div class="tree">
-      <el-tree
-        node-key="id"
-        :current-node-key="current"
-        :data="catalogList"
-        :expand-on-click-node="false"
-        default-expand-all
-        :indent="12"
-        @node-click="handleNodeClick">
-        <div 
-          class="treeNode" 
-          slot-scope="{ node, data }"
-          @click="(event) => { if (data.theme) { event.stopPropagation() } }"
-        >
-          <p class="label">
-            <img v-if="data.state === RUNNINGSTATE" src="@/assets/images/event/running.png" />
-            <img v-else src="@/assets/images/event/editing.png" />
-            {{ data.label }}
-          </p>
-          <p class="number">{{ data.number }}</p>
-        </div>
-      </el-tree>
+      <!-- :data="catalogList" -->
+      <Tree
+        :currentNodeKey="current"
+        @onClick="handleNodeClick"
+      ></Tree>
     </div>
     <div class="bottom">
       <p>总数: {{ 74 }}</p>
@@ -64,15 +48,16 @@
 </template>
 
 <script>
-import Dialog from '@/components/Dialog.vue';
-import Form from '@/components/Form.vue';
-import { versionCfg, versionRule } from './config/versionForm';
-import { catalogCfg, catalogRule } from './config/catalogForm';
-import { getCatalogApi, getVersionListApi } from '@/api/event';
+import Dialog from '@/components/Dialog.vue'
+import Form from '@/components/Form.vue'
+import Tree from '@/components/Tree.vue'
+import { versionCfg, versionRule } from './config/versionForm'
+import { catalogCfg, catalogRule } from './config/catalogForm'
 import { ADDSTATE, EDITSTATE, RUNNINGSTATE } from '@/utils/const'
+
 export default {
   components: {
-    Dialog, Form
+    Dialog, Form, Tree
   },
   data() {
     return {
@@ -81,40 +66,7 @@ export default {
       versionList: [
         '卫生版1.0'
       ],
-      catalogList: [
-        {
-          id: '1',
-          label: '事件记录(0)',
-          number: '数据源',
-          theme: true,
-          children: [
-            {
-              id: '1-1',
-              label: 'E000-卫生事件记录',
-              number: 1240
-            }, {
-              id: '1-2',
-              label: 'E001-卫生事件日志',
-              number: 1040
-            }, {
-              id: '1-3',
-              label: 'E002-卫生事件入口hhhhhh',
-              number: 600
-            }
-          ]
-        },{
-          id: '2',
-          label: '摘要信息(B)',
-          theme: true,
-          children: [
-            {
-              id: '2-1',
-              label: 'E000-个人信息表',
-              number: 2398,
-            }
-          ]
-        }
-      ],
+      catalogList: [],
       versionCfg,
       versionRule,
       versionData: {
@@ -137,14 +89,13 @@ export default {
   },
   created() {
     this.ADDSTATE = ADDSTATE
-    this.RUNNINGSTATE = RUNNINGSTATE
   },
   async mounted () {
     // const res = await getVersionListApi()
   },
   methods: {
-    handleNodeClick(data) {
-      if (!data.theme) this.current = data.id
+    handleNodeClick({ id, label }) {
+      this.current = id
     },
     addVersion() {
       this.catalogDialogState = ADDSTATE
@@ -187,7 +138,6 @@ export default {
     align-items: center;
     img {
       margin: 0 4px;
-      /* font-size: 19px; */
       cursor: pointer;
     }
   }
@@ -215,22 +165,6 @@ export default {
   padding-bottom: 30px;
   overflow: auto;
 }
-.treeNode {
-  position: relative;
-  width: 100%;
-  height: 28px;
-  padding-right: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-  .label {
-    width: 130px;
-    overflow: hidden;
-    text-overflow:ellipsis;
-    white-space: nowrap;
-  }
-}
 .bottom {
   width: 100%;
   height: 31px;
@@ -246,14 +180,6 @@ export default {
   p {
     width: 80px;
   }
-}
-
-::v-deep .el-tree-node__content>.el-tree-node__expand-icon {
-  padding: 4px
-}
-
-::v-deep .el-tree-node.is-current>.el-tree-node__content {
-  background-color: #D8FFFE!important;
 }
 
 ::v-deep .el-form-item {

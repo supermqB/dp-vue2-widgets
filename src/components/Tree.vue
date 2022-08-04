@@ -1,21 +1,20 @@
 <template>
   <el-tree
     node-key="id"
-    :current-node-key="current"
-    :data="data"
+    :current-node-key="currentNodeKey"
+    :data="treeList"
     :expand-on-click-node="false"
     default-expand-all
     @node-click="handleNodeClick"
-    :indent="12">
+    :indent="11">
     <div 
       class="treeNode" 
       slot-scope="{ node, data }"
-      @click="(event) => { if (data.theme) { event.stopPropagation() } }"
+      @click="event => data.isTopCannotBeSelected ? event.stopPropagation() : null"
     >
       <p class="label">
-        <img v-if="data.state === RUNNINGSTATE" src="@/assets/images/event/running.png" />
-        <img v-else src="@/assets/images/event/editing.png" />
-        {{ data.label }}
+        <img :src="icon(data.state)" />
+        <span>{{ data.label }}</span>
       </p>
       <p class="number">{{ data.number }}</p>
     </div>
@@ -23,18 +22,80 @@
 </template>
 
 <script>
+import { RUNNINGSTATE, EDITINGSTATE } from '@/utils/const'
 export default {
   props: {
     data: {
       type: Array,
-      default: () => []
+      default: () => [ // id, label, state, number
+        {
+          id: '1',
+          label: '事件记录(0)',
+          number: '数据源',
+          state: RUNNINGSTATE,
+          children: [
+            {
+              id: '1-1',
+              label: 'E000-卫生事件记录',
+              number: 1240,
+              state: EDITINGSTATE
+            }, {
+              id: '1-2',
+              label: 'E001-卫生事件日志',
+              number: 1040,
+              state: EDITINGSTATE
+            }, {
+              id: '1-3',
+              label: 'E002-卫生事件入口hhhhhh',
+              number: 600,
+              state: RUNNINGSTATE
+            }
+          ]
+        },{
+          id: '2',
+          label: '摘要信息(B)',
+          state: RUNNINGSTATE,
+          children: [
+            {
+              id: '2-1',
+              label: 'E000-个人信息表',
+              number: 2398,
+              state: EDITINGSTATE
+            }
+          ]
+        }
+      ]
+    },
+    currentNodeKey: {
+      type: String,
+      default: ''
+    },
+    isTopCannotBeSelected: {
+      type: Boolean,
+      default: true
+    },
+  },
+  computed: {
+    treeList() {
+      const res = this.data.map(item => {
+        return Object.assign({}, item, { isTopCannotBeSelected : this.isTopCannotBeSelected })
+      })
+      return res
     }
   },
-  data() {
-    return {
-      current: ''
+  methods: {
+    handleNodeClick(node) {
+      this.$emit('onClick', node)
+    },
+    icon(state) {
+      switch(state) {
+        case RUNNINGSTATE:
+          return require("@/assets/images/common/icons/running.png")
+        case EDITINGSTATE:
+          return require("@/assets/images/common/icons/editing.png")
+      }
     }
-  },
+  }
 }
 </script>
 
@@ -43,11 +104,15 @@ export default {
   position: relative;
   width: 100%;
   height: 28px;
+  padding-top: 3px;
   padding-right: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 13px;
+  img {
+    padding-right: 3px;
+  }
   .label {
     width: 130px;
     overflow: hidden;
