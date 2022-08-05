@@ -1,24 +1,26 @@
 <template>
-  <el-tree
-    node-key="id"
-    :current-node-key="currentNodeKey"
-    :data="treeList"
-    :expand-on-click-node="false"
-    default-expand-all
-    @node-click="handleNodeClick"
-    :indent="11">
-    <div 
-      class="treeNode" 
-      slot-scope="{ node, data }"
-      @click="event => data.isTopCannotBeSelected ? event.stopPropagation() : null"
-    >
-      <p class="label">
-        <img :src="icon(data.state)" />
-        <span>{{ data.label }}</span>
-      </p>
-      <p class="number">{{ data.number }}</p>
-    </div>
-  </el-tree>
+  <div>
+    <el-tree
+      node-key="id"
+      :current-node-key="currentNodeKey"
+      :data="treeList"
+      :expand-on-click-node="false"
+      default-expand-all
+      @node-click="handleNodeClick"
+      :indent="11">
+      <div 
+        class="treeNode" 
+        slot-scope="{ node, data }"
+        @click="event => data.isTopCannotBeSelected ? event.stopPropagation() : null"
+      >
+        <p class="label">
+          <img :src="icon(data.state)" />
+          <span>{{ data.label }}</span>
+        </p>
+        <p class="number">{{ data.number }}</p>
+      </div>
+    </el-tree>
+  </div>
 </template>
 
 <script>
@@ -27,7 +29,7 @@ export default {
   props: {
     data: {
       type: Array,
-      default: () => [ // id, label, state, number
+      default: () => [ // id, label, state 非必填, number 非必要
         {
           id: '1',
           label: '事件记录(0)',

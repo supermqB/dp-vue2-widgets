@@ -17,14 +17,16 @@
         :tableConfig="config"
         :multipleSelect="true"></Table>
     </div>
+    <Bottom :labelList="['值域', '任务']"></Bottom>
   </div>
 </template>
 
 <script>
 import Table from '@/components/GeneralTable.vue'
+import Bottom from '@/components/bottom/Catalog.vue'
 export default {
   components: {
-    Table
+    Table, Bottom
   },
   data() {
     return {

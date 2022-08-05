@@ -31,8 +31,8 @@ export default {
           label: '事件模型'
         },
         {
-          value: 'BWD',
-          label: '业务明细库'
+          value: 'bwd',
+          label: 'BWD管理'
         },
         {
           value: 'docs',
