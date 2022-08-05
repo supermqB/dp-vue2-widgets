@@ -1,5 +1,5 @@
 import { keysObject } from '@/utils/lang'
-import { formFieldsConfig } from '@/views/data_element/center/config/editFrom.js'
+import { getFormFieldsConfig } from '@/views/data_element/center/config/editFrom.js'
 import advSearchFormConfig from '@/views/data_element/center/config/advSearchForm'
 import { post } from '@/utils/request'
 
@@ -10,7 +10,7 @@ const state = {
     state: ''
   },
   advQueryCriteria: keysObject(advSearchFormConfig, 'id'),
-  editElemFormData: keysObject(formFieldsConfig, 'id'),
+  editElemFormData: keysObject(getFormFieldsConfig(), 'id'),
   tableData: [
     /* {
       index: 1,
@@ -40,7 +40,7 @@ const mutations = {
   setTableData(state, val) {
     state.tableData = val
   },
-  setPageInfo(state, val){
+  setPageInfo(state, val) {
     Object.assign(state.pageInfo, val)
   },
   setSelectItem(state, curRow) {
@@ -68,6 +68,27 @@ const actions = {
       tableData.map(item => ({ index: item.id, ...item }))
     )
     commit('setPageInfo', pageInfo)
+  },
+  presetEditDialog(
+    { state },
+    val = { ...keysObject(formFieldsConfig, 'id'), id: null }
+  ) {
+    Object.assign(state.editElemFormData, val)
+    debugger
+    let segs = val.identifierPrefix.split('.')
+    state.editElemFormData.identifierSeg1 = segs[0]
+    state.editElemFormData.identifierSeg2 = segs[1]
+    state.editElemFormData.identifierSeg3 = segs[2]
+  },
+  async editElem({ state, commit, dispatch }, val) {
+    if (val.id) {
+      post('data-element/edit', val)
+    } else {
+      let data = { ...val }
+      delete data.id
+      post('data-element/add', data)
+    }
+    dispatch('search')
   },
   startCommit({ state, commit }) {
     commit('setCommitData', [])

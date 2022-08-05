@@ -7,7 +7,7 @@
       </el-breadcrumb>
       <div class="btn_area">
         <el-button type="primary" @click="startCommit">提 交</el-button>
-        <el-button type="primary" @click="createElem">新 增</el-button>
+        <el-button type="primary" @click="openCreateDialog">新 增</el-button>
       </div>
     </div>
     <div class="search">
@@ -59,28 +59,30 @@
   </div>
 </template>
 <script>
-import { isEmpty } from '@/utils/lang'
+import { isEmpty, toFixedNumStr } from '@/utils/lang'
+import { get } from '@/utils/request'
 import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
 import Dialog from '@/components/Dialog.vue'
-import formCfg from './config/searchForm'
+import getSearchFormCfg from './config/searchForm'
 import { getListTableHeader } from './config/listTableHeader'
 import {
-  formFieldsConfig,
+  getFormFieldsConfig,
   formValidRule as editElemFormRule
 } from './config/editFrom'
 
 import advSearchFormConfig from './config/advSearchForm'
 import CommitDialogVue from './CommitDialog.vue'
 
-import { createNamespacedHelpers } from 'vuex'
+import { createNamespacedHelpers, mapState as globalMapState } from 'vuex'
 const { mapState, mapMutations, mapActions } =
   createNamespacedHelpers('dataElem/elemList')
 
 export default {
   data() {
     const tableConfig = getListTableHeader.apply(this)
-
+    const formCfg = getSearchFormCfg.apply(this)
+    const formFieldsConfig = getFormFieldsConfig.apply(this)
     return {
       formCfg,
 
@@ -110,6 +112,7 @@ export default {
       pageInfo(state) {
         return state.pageInfo
       },
+      selectedItem: state => state.selectedItem,
       editElemFormData: state => state.editElemFormData,
       advForm: state => ({
         formData: state.advQueryCriteria,
@@ -126,38 +129,121 @@ export default {
             !isEmpty(crt.exclude))
         )
       }
+    }),
+    ...globalMapState({
+      groupTreeData: state => state.dataElem.elemGroup.grouptree
     })
   },
   components: { Form, Table, Dialog, CommitDialogVue },
   methods: {
+    openEditDialog() {
+      setTimeout(() => {
+        this.editElemDialogTitle = '编辑数据元'
+        this.presetEditDialog(this.selectedItem)
+        this.$refs.editElemDialog.toggleOpen()
+      }, 500)
+    },
+    openCreateDialog() {
+      this.editElemDialogTitle = '新增数据元'
+      this.presetEditDialog()
+      this.$refs.editElemDialog.toggleOpen()
+    },
+    setEditDialogIdSegOptions() {
+      let { identifierSeg1, identifierSeg2, identifierSeg3 } =
+        this.editElemFormData
+      let lastSegReg = /.*\.(\d+)$/
+
+      let seg1List = this.groupTreeData[0].directoryList
+      this.editElemFormConfig[0].options = seg1List.map(
+        ({ ctlgIdentifier, ctlgName }) => ({
+          label: ctlgName,
+          value: ctlgIdentifier
+        })
+      )
+
+      let seg2List = seg1List.find(
+        item => item.ctlgIdentifier == identifierSeg1
+      ).directoryList
+      this.editElemFormConfig[1].options = seg2List.map(
+        ({ ctlgIdentifier, ctlgName }) => ({
+          label: ctlgName,
+          value: lastSegReg.exec(ctlgIdentifier)[1]
+        })
+      )
+      /* valule is not in current candidates. */
+      if (
+        this.editElemFormConfig[1].options.find(
+          item => item.value == identifierSeg2
+        ) == null
+      ) {
+        this.editElemFormData.identifierSeg2 = ''
+        this.editElemFormData.identifierSeg3 = ''
+        return
+      }
+
+      let seg3List = seg2List.find(
+        item => lastSegReg.exec(item.ctlgIdentifier)[1] == identifierSeg2
+      ).directoryList
+      this.editElemFormConfig[2].options = seg3List.map(
+        ({ ctlgIdentifier, ctlgName }) => ({
+          label: ctlgName,
+          value: lastSegReg.exec(ctlgIdentifier)[1]
+        })
+      )
+
+      if (
+        this.editElemFormConfig[2].options.find(
+          item => item.value == identifierSeg3
+        ) == null
+      ) {
+        this.editElemFormData.identifierSeg3 = ''
+      }
+    },
     completeEdit() {
       console.log(this.editElemFormData)
+      this.editElem(this.editElemFormData)
     },
     completeAdvSearch() {
       console.log(this.advForm.formData)
     },
-    createElem() {
-      this.editElemDialogTitle = '新增数据元'
-      this.$refs.editElemDialog.toggleOpen()
-      this.$refs.editElemForm &&
-        this.$refs.editElemForm.$refs.el_form.resetFields()
+    getSpeechList(){
+        return this.$store.state.dataElem.wordSpeechList
     },
     openAdvSearch() {
       this.$refs.advSearchDialog.toggleOpen()
     },
     ...mapActions({ searchHandler: 'search' }),
-    ...mapActions(['startCommit']),
+    ...mapActions(['editElem', 'startCommit', 'presetEditDialog']),
     ...mapMutations({ selectItemHandler: 'setSelectItem' })
   },
   watch: {
     editElemFormData: {
-      handler(formData) {
-        formData.identifier_prefix = [
-          formData.identifier_seg1,
-          formData.identifier_seg2,
-          formData.identifier_seg3
-        ].join('.')
-        formData.identifier = formData.identifier_prefix + '.001'
+      async handler(formData) {
+        this.setEditDialogIdSegOptions()
+
+        let segs = [
+          formData.identifierSeg1,
+          formData.identifierSeg2,
+          formData.identifierSeg3
+        ]
+        let tmpIdentifierPrefix = segs.join('.')
+
+        if (
+          segs.some(seg => !seg) ||
+          tmpIdentifierPrefix == formData.identifierPrefix
+        ) {
+          this.$refs.editElemForm.$refs.el_form.validate(valid => {
+            this.editElemFormValid = valid
+          })
+          return
+        }
+        const { value: maxId } = await get('data-element/getEleMaxId', {
+          identifierPrefix: tmpIdentifierPrefix
+        })
+        formData.identifier =
+          tmpIdentifierPrefix + '.' + toFixedNumStr(parseInt(maxId) + 1, 3)
+        formData.identifierPrefix = tmpIdentifierPrefix
+
         this.$refs.editElemForm.$refs.el_form.validate(valid => {
           this.editElemFormValid = valid
         })

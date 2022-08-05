@@ -11,7 +11,7 @@ export function getListTableHeader() {
       colConfig: {
         property: 'identifier',
         label: '数据元标识符',
-        width: 120
+        width: 125
       }
     },
     {
@@ -107,8 +107,7 @@ export function getListTableHeader() {
           id: 'edit',
           name: '编辑',
           callback: (idx, tableData) => {
-            this.editElemDialogTitle = '编辑数据元'
-            this.$refs.editElemDialog.toggleOpen()
+            this.openEditDialog()
           }
         }
       ]

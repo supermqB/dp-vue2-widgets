@@ -19,5 +19,8 @@ import RightTabs from './right'
 
 export default {
   components: { ElementGroup, CenterDetail, RightTabs },
+  mounted(){
+      this.$store.dispatch('dataElem/loadWordSpeechList')
+  }
 }
 </script>
