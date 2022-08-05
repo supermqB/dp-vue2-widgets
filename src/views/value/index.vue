@@ -42,9 +42,9 @@ export default {
 
 <style lang="scss" scoped>
 .catalog {
-  height: 47%;
+  height: 45%;
 }
 .task {
-  height: 53%;
+  height: 55%;
 }
 </style>

@@ -1,13 +1,11 @@
 <template>
   <div class="wrapper">
-    <div class="header">
-      <h3>事件目录</h3>
-      <div class="buttons">
-        <img src="@/assets/images/event/add.png" @click="addCatalog"/>
-        <img src="@/assets/images/event/edit.png"  @click="editCatalog"/>
-        <img src="@/assets/images/event/run.png" />
-      </div>
-    </div>
+    <Header
+      title="事件目录"
+      hasRun
+      @add="addCatalog"
+      @edit="editCatalog"
+    ></Header>
     <div class="version">
       <span>版本</span>
       <el-select v-model="version">
@@ -19,17 +17,12 @@
       </el-select>
       <el-button type="text" @click="addVersion">新增版本</el-button>
     </div>
-    <div class="tree">
-      <!-- :data="catalogList" -->
-      <Tree
-        :currentNodeKey="current"
-        @onClick="handleNodeClick"
-      ></Tree>
-    </div>
-    <div class="bottom">
-      <p>总数: {{ 74 }}</p>
-      <p>字段数: {{ 78 }}</p>
-    </div>
+    <Tree
+      :currentNodeKey="current"
+      @onClick="handleNodeClick"
+      class="tree"
+    ></Tree>
+    <Bottom :labelList="['总数', '字段数']"></Bottom>
     <Dialog
       title="新增版本"
       ref="versionDialog"
@@ -50,14 +43,15 @@
 <script>
 import Dialog from '@/components/Dialog.vue'
 import Form from '@/components/Form.vue'
-import Tree from '@/components/Tree.vue'
+import Tree from '@/components/SideTree.vue'
+import Header from '@/components/header/Catalog.vue' 
+import Bottom from '@/components/bottom/Catalog.vue'
 import { versionCfg, versionRule } from './config/versionForm'
 import { catalogCfg, catalogRule } from './config/catalogForm'
 import { ADDSTATE, EDITSTATE, RUNNINGSTATE } from '@/utils/const'
-
 export default {
   components: {
-    Dialog, Form, Tree
+    Dialog, Form, Tree, Header, Bottom
   },
   data() {
     return {
@@ -120,28 +114,6 @@ export default {
   height: 100%;
   position: relative;
 }
-.header {
-  height: 41px;
-  padding: 0 5px;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #E5E5E5;
-  h3 {
-    font-size: 16px;
-    font-weight: normal;
-  }
-  .buttons {
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    img {
-      margin: 0 4px;
-      cursor: pointer;
-    }
-  }
-}
 .version {
   height: 41px;
   padding: 0 5px;
@@ -151,6 +123,8 @@ export default {
   align-items: center;
   border-bottom: 1px solid #E5E5E5;
   span {
+    width: 30px;
+    display: inline-block;
     font-size: 13px;
   }
   .el-select {
@@ -162,24 +136,7 @@ export default {
 }
 .tree {
   flex: 1;
-  padding-bottom: 30px;
   overflow: auto;
-}
-.bottom {
-  width: 100%;
-  height: 31px;
-  position: absolute;
-  bottom: 0;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  padding-left: 10px;
-  box-sizing: border-box;
-  border-top: 1px solid #E5E5E5;
-  font-size: 12px;
-  p {
-    width: 80px;
-  }
 }
 
 ::v-deep .el-form-item {

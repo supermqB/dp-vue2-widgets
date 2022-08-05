@@ -32,6 +32,12 @@ const routes = [
         name: 'event_model',
         meta: { title: '事件模型' },
         component: () => import('@/views/event_model/')
+      },
+      {
+        path: 'bwd',
+        name: 'bwd',
+        meta: { title: '业务明细库' },
+        component: () => import('@/views/bwd/')
       }
     ]
   }
