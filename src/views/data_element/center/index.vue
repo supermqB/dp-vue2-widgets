@@ -206,8 +206,8 @@ export default {
     completeAdvSearch() {
       console.log(this.advForm.formData)
     },
-    getSpeechList(){
-        return this.$store.state.dataElem.wordSpeechList
+    getSpeechList() {
+      return this.$store.state.dataElem.wordSpeechList
     },
     openAdvSearch() {
       this.$refs.advSearchDialog.toggleOpen()
@@ -255,10 +255,11 @@ export default {
         this.searchHandler()
       },
       deep: true
+    },
+    tableData(val) {
+      let selected = val.find(item => item.id == this.selectedItem?.id)
+      this.$refs.dp_table.setCurrentRow(selected ? this.selectedItem : val[0])
     }
-  },
-  mounted() {
-    this.$refs.dp_table.setCurrentRow(this.tableData[0])
   }
 }
 </script>
@@ -269,6 +270,7 @@ export default {
   flex-direction: column;
   .header {
     display: flex;
+    padding-left: 6px;
     height: 40px;
     align-items: center;
     justify-content: space-between;

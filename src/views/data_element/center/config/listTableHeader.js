@@ -89,6 +89,9 @@ export function getListTableHeader() {
         property: 'state',
         label: '状态标识',
         width: 100
+      },
+      formatter(val) {
+        return { 0: '停用', 1: '待提交', 2: '待审核', 3: '启用' }[val]
       }
     },
     {

@@ -49,7 +49,7 @@ const mutations = {
   }
 }
 const actions = {
-  async save({ state, rootState }) {
+  async save({ state, dispatch, rootState }) {
     let valDomainRange = state.fieldCheck.valDomainRange
     let checkRule = {
       id: rootState.dataElem.elemList.selectedItem.id,
@@ -65,7 +65,7 @@ const actions = {
       regexpText: state.fieldCheck.regexpText
     }
     const saveRe = await post('data-element/checkrule/edit', checkRule)
-    debugger
+    dispatch('dataElem/elemList/search', null, { root: true })
   },
   reset({ commit, rootState }) {
     commit('setDefaultValues', rootState.dataElem.elemList.selectedItem)

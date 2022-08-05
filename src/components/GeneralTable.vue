@@ -47,9 +47,9 @@
                 word-break: keep-all;
                 white-space: pre;
               "
-              :title="row[column.property]"
+              :title="formatCell(row[column.property], col.formatter)"
             >
-              {{ row[column.property] }}
+              {{ formatCell(row[column.property], col.formatter) }}
             </div>
             <!-- </el-tooltip> -->
           </template>
@@ -175,6 +175,9 @@ export default {
     },
     setCurrentRow(row) {
       this.$refs.el_table.setCurrentRow(row)
+    },
+    formatCell(val, formatter) {
+      return formatter ? formatter(val) : val
     }
   }
 }

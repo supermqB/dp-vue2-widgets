@@ -11,20 +11,7 @@ const state = {
   },
   advQueryCriteria: keysObject(advSearchFormConfig, 'id'),
   editElemFormData: keysObject(getFormFieldsConfig(), 'id'),
-  tableData: [
-    /* {
-      index: 1,
-      code: 'DE01.00.10.001',
-      type: 'S3',
-      cnName: '性别信息'
-    },
-    {
-      index: 2,
-      code: 'DE01.00.10.002',
-      type: 'S1',
-      cnName: '地址信息'
-    } */
-  ],
+  tableData: [],
   selectedItem: null,
   pageInfo: {
     curPage: 1,
@@ -53,12 +40,13 @@ const mutations = {
 
 const actions = {
   async search({ state, commit, rootState }) {
+    let selectedGrps = rootState.dataElem.elemGroup.selectedGrps
     let {
       value: { pageInfo, records: tableData }
     } = await post(
       'data-element/list',
       {
-        ctlgIdentifierList: rootState.dataElem.elemGroup.selectedGrps,
+        ctlgIdentifierList: selectedGrps,
         ...state.queryCriteria
       },
       { size: state.pageInfo.pageSize, current: state.pageInfo.curPage }
@@ -68,13 +56,16 @@ const actions = {
       tableData.map(item => ({ index: item.id, ...item }))
     )
     commit('setPageInfo', pageInfo)
+    if (selectedGrps.length == 0) {
+      rootState.dataElem.elemGroup.groupSum[1].value = pageInfo.totalSize
+    }
+    rootState.dataElem.elemGroup.groupSum[0].value = pageInfo.totalSize
   },
   presetEditDialog(
     { state },
-    val = { ...keysObject(formFieldsConfig, 'id'), id: null }
+    val = { ...keysObject(getFormFieldsConfig(), 'id'), id: null }
   ) {
     Object.assign(state.editElemFormData, val)
-    debugger
     let segs = val.identifierPrefix.split('.')
     state.editElemFormData.identifierSeg1 = segs[0]
     state.editElemFormData.identifierSeg2 = segs[1]
