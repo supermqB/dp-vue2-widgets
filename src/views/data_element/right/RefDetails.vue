@@ -9,7 +9,7 @@
     <div class="title">
       <span>数据元:</span
       ><span style="padding-left: 6px">{{
-        selectedDataElem ? selectedDataElem.cnName : ''
+        selectedDataElem ? selectedDataElem.nameCn : ''
       }}</span>
     </div>
     <div class="table_container">
@@ -26,7 +26,7 @@
 </template>
 <script>
 import { createNamespacedHelpers, mapState as globalMapState } from 'vuex'
-const { mapState, mapGetters } = createNamespacedHelpers('dataElem/refDetails')
+const { mapState, mapActions, mapGetters } = createNamespacedHelpers('dataElem/refDetails')
 import Form from '@/components/Form.vue'
 export default {
   data: () => ({
@@ -62,9 +62,14 @@ export default {
   watch: {
     'formData.repo': function () {
       this.formData.version = ''
+    },
+    selectedDataElem(val){
+        this.loadRefs(val.id);
     }
   },
-  methods: {},
+  methods: {
+      ...mapActions(['loadRefs'])
+  },
   components: { Form }
 }
 </script>

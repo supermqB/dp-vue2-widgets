@@ -3,6 +3,7 @@ export default function getFormConfig() {
     {
       type: 'el-select',
       options: [
+        { label: '全部', value: '' },
         { label: '字符型(S1)', value: 'S1' },
         { label: '字符型(S2)', value: 'S2' },
         { label: '字符型(S3)', value: 'S3' },

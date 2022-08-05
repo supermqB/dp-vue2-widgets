@@ -7,6 +7,7 @@
         width="100%"
         highlight-current-row
         @current-change="rowChangeHandler"
+        @selection-change="selChgHandler"
         border
         ref="el_table"
       >
@@ -163,6 +164,9 @@ export default {
       }
       this.selectedIdx = rowData.index
       this.$emit('row-changed', rowData)
+    },
+    selChgHandler(selection) {
+      this.$emit('selection-changed', selection);
     },
     sizeChangeHandler(pageSize) {
       this.pageInfo.pageSize = pageSize

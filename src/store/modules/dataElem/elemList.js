@@ -1,3 +1,4 @@
+import { MessageBox } from 'element-ui'
 import { keysObject } from '@/utils/lang'
 import { getFormFieldsConfig } from '@/views/data_element/center/config/editFrom.js'
 import advSearchFormConfig from '@/views/data_element/center/config/advSearchForm'
@@ -56,7 +57,12 @@ const actions = {
       tableData.map(item => ({ index: item.id, ...item }))
     )
     commit('setPageInfo', pageInfo)
-    if (selectedGrps.length == 0) {
+    if (
+      selectedGrps.length == 0 &&
+      state.queryCriteria.state == '' &&
+      state.queryCriteria.type == '' &&
+      state.queryCriteria.wordSpeech == ''
+    ) {
       rootState.dataElem.elemGroup.groupSum[1].value = pageInfo.totalSize
     }
     rootState.dataElem.elemGroup.groupSum[0].value = pageInfo.totalSize
@@ -73,30 +79,45 @@ const actions = {
   },
   async editElem({ state, commit, dispatch }, val) {
     if (val.id) {
-      post('data-element/edit', val)
+      await post('data-element/edit', val)
+      MessageBox.alert(`数据元 [${val.identifier}] 编辑成功！`)
     } else {
       let data = { ...val }
       delete data.id
-      post('data-element/add', data)
+      await post('data-element/add', data)
+      MessageBox.alert(`数据元 [${val.identifier}] 新增成功！`)
     }
+
     dispatch('search')
   },
-  startCommit({ state, commit }) {
+  async startCommit({ state, commit, rootState }) {
     commit('setCommitData', [])
-    commit('setCommitData', [
+
+    let selectedGrps = rootState.dataElem.elemGroup.selectedGrps
+    let {
+      value: { pageInfo, records: tableData }
+    } = await post(
+      'data-element/list',
       {
-        index: 1,
-        cn_name: '婚姻状况',
-        en_name: 'MARRIGE_STATUS',
-        status: '待提交'
+        ctlgIdentifierList: selectedGrps,
+        state: '1' /* 待提交 */
       },
-      {
-        index: 2,
-        cn_name: '民族',
-        en_name: 'NATION',
-        status: '待提交'
-      }
-    ])
+      { size: 2000, current: 1 }
+    )
+
+    commit(
+      'setCommitData',
+      tableData.map(({ id, nameCn, nameEn, state }) => ({
+        index: id,
+        nameCn,
+        nameEn,
+        state
+      }))
+    )
+  },
+  async completeCommit({ state }, ids) {
+    const result = await post('data-element/commit', ids)
+    MessageBox.alert('数据元提交成功。')
   },
   clearCommit({ commit }) {
     commit('setCommitData', [])
