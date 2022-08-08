@@ -4,20 +4,22 @@
       <Catalog></Catalog>
     </template>
     <template #main>
-      center
+      <Center></Center>
     </template>
     <template #asideRight>
-      映射
+      <Map></Map>
     </template>
   </dp-layout-container>
 </template>
 
 <script>
 import Catalog from './catalog'
+import Center from './center'
+import Map from './map'
 export default {
   name: 'ValueExamine',
   components: {
-    Catalog
+    Catalog, Center, Map
   },
   data() {
     return {

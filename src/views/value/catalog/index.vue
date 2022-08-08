@@ -175,7 +175,7 @@ export default {
     padding-right: 40px;
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
     flex-wrap: wrap;
     .el-form-item {
       margin-bottom: 16px;
@@ -189,7 +189,7 @@ export default {
     padding-right: 60px;
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
     flex-wrap: wrap;
     .el-form-item {
       margin-bottom: 12px;
