@@ -108,18 +108,21 @@ export default {
   computed: {
     ...mapState({
       formData: state => state.queryCriteria,
+      advForm: state => ({
+        formData: state.advQueryCriteria,
+        formCfg: advSearchFormConfig
+      }),
+
       tableData(state) {
         return state.tableData
       },
       pageInfo(state) {
         return state.pageInfo
       },
+
       selectedItem: state => state.selectedItem,
       editElemFormData: state => state.editElemFormData,
-      advForm: state => ({
-        formData: state.advQueryCriteria,
-        formCfg: advSearchFormConfig
-      }),
+
       enableAdvConfirm: state => {
         let crt = state.advQueryCriteria
         return !!(
@@ -133,13 +136,13 @@ export default {
       }
     }),
     ...globalMapState({
-      groupTreeData: state => state.dataElem.elemGroup.grouptree
+      groupTreeData: state => state.dataElem.elemGroup.grouptree,
+      wordSpeechList: state=> state.dataElem.wordSpeechList
     }),
     pageInfoChangeSignal() {
       return this.pageInfo.curPage + ':' + this.pageInfo.pageSize
     }
   },
-  components: { Form, Table, Dialog, CommitDialogVue },
   methods: {
     openEditDialog() {
       setTimeout(() => {
@@ -175,7 +178,7 @@ export default {
           value: lastSegReg.exec(ctlgIdentifier)[1]
         })
       )
-      /* valule is not in current candidates. */
+      /* value is not in current candidates. */
       if (
         this.editElemFormConfig[1].options.find(
           item => item.value == identifierSeg2
@@ -207,9 +210,6 @@ export default {
     completeEdit() {
       console.log(this.editElemFormData)
       this.editElem(this.editElemFormData)
-    },
-    getSpeechList() {
-      return this.$store.state.dataElem.wordSpeechList
     },
     openAdvSearch() {
       this.$refs.advSearchDialog.toggleOpen()
@@ -263,7 +263,8 @@ export default {
       let selected = val.find(item => item.id == this.selectedItem?.id)
       this.$refs.dp_table.setCurrentRow(selected ? this.selectedItem : val[0])
     }
-  }
+  },
+  components: { Form, Table, Dialog, CommitDialogVue }
 }
 </script>
 <style lang="scss" scoped>

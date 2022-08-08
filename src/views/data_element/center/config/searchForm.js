@@ -19,7 +19,7 @@ export default function getFormConfig() {
       type: 'el-autocomplete',
       elOptions: {
         'fetch-suggestions': (queryString, cb) => {
-          let orginOptions = this.getSpeechList() //['人名', '公司名', '量词', '日期']
+          let orginOptions = this.wordSpeechList //['人名', '公司名', '量词', '日期']
           let filteredValues = queryString
             ? orginOptions.filter(item => item.indexOf(queryString) != -1)
             : orginOptions
