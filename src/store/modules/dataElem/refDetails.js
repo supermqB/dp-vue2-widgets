@@ -1,3 +1,4 @@
+import { get } from '@/utils/request'
 const state = {
   details: [
     {
@@ -47,8 +48,20 @@ const getters = {
   }
 }
 
+const actions = {
+  async loadRefs({ state }, id) {
+    const { value: details } = await get(`data-element/getRefDetails/${id}`)
+    state.details = details.map(detail => ({
+      module: detail.module,
+      version: detail.version,
+      refList: detail.elementUsedResponseList
+    }))
+  }
+}
+
 export default {
   namespaced: true,
   state,
-  getters
+  getters,
+  actions
 }

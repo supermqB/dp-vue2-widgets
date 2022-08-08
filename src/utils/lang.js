@@ -13,3 +13,12 @@ export function isEmpty(val) {
   }
   return false
 }
+
+export function toFixedNumStr(num, digits) {
+  let numArr = (num + '').split('')
+  return [...new Array(digits - numArr.length).fill(0), ...numArr].join('')
+}
+
+export function clone(obj) {
+  return JSON.parse(JSON.stringify(obj))
+}

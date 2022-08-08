@@ -1,9 +1,18 @@
+import { getListTableHeader } from './listTableHeader'
 export default [
   {
     type: 'el-select',
-    options: ['全部', '大类', '小类', '细类'],
+    options: [
+      { label: '全部', value: 'all' },
+      ...getListTableHeader()
+        .filter(item => item.colConfig.property)
+        .map(item => ({
+          label: item.colConfig.label,
+          value: item.colConfig.property
+        }))
+    ],
     label: '检索范围',
-    id: 'cols',
+    id: 'colNames',
     elOptions: {
       multiple: true
     }
