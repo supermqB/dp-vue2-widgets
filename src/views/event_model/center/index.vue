@@ -155,7 +155,7 @@ export default {
   }
   .search {
     position: relative;
-    height: 41px;
+    /* height: 41px; */
     padding: 0 15px;
     display: flex;
     justify-content: space-between;
@@ -180,6 +180,9 @@ export default {
       display: flex;
       justify-content: flex-end;
     }
+    .el-select {
+      margin: 0;
+    }
   }
 }
 
@@ -190,10 +193,21 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    .el-select {
+      margin: 0;
+    }
   }
 }
 
-::v-deep .el-form-item {
-  margin-bottom: 15px;
+::v-deep .searchForm {
+  .el-form-item {
+    margin-bottom: 0px;
+  }
+  .el-form-item__label {
+    padding-right: 8px;
+  }
+  .el-select {
+    margin: 0;
+  }
 }
 </style>

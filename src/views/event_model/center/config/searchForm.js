@@ -5,7 +5,7 @@ export default [
     id: 'identifier',
     elOptions: {
       style: {
-        width: '184px'
+        width: '170px'
       }
     }
   },
@@ -15,7 +15,7 @@ export default [
     id: 'field',
     elOptions: {
       style: {
-        width: '184px'
+        width: '170px'
       }
     }
   },

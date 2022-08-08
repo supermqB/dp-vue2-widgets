@@ -150,6 +150,9 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    .el-select {
+      margin: 0;
+    }
   }
 }
 
