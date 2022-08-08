@@ -310,12 +310,15 @@ export default {
       flex-wrap: wrap;
       .el-form-item {
         margin-bottom: 0px;
-        width: 210px;
+        /* width: 210px; */
         display: flex;
         justify-content: end;
         .el-select {
           width: 165px;
         }
+      }
+      .el-form-item__label {
+        width: 45px
       }
     }
   }
