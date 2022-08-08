@@ -170,11 +170,11 @@ export default {
     },
     sizeChangeHandler(pageSize) {
       this.pageInfo.pageSize = pageSize
-      this.$emit('size-changed', pageSize)
+      this.$emit('page-changed', { pageSize, curPage: 1 })
     },
     pageChangeHandler(currentPage) {
       this.pageInfo.curPage = currentPage
-      this.$emit('page-changed', currentPage)
+      this.$emit('page-changed', { curPage: currentPage })
     },
     completeEditElem() {
       console.log('edit data elem')

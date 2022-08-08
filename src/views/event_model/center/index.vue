@@ -25,8 +25,7 @@
         :tableConfig="tableConfig"
         :tableData="columnList"
         :pageInfo="pageInfo"
-        @sizeChanged="val => pageInfoChanged('pageSize', val)"
-        @pageChanged="val => pageInfoChanged('curPage', val)"
+        @page-changed="val => pageInfoChanged(val)"
       ></Table>
     </div>
     <Dialog
@@ -117,10 +116,9 @@ export default {
   methods: {
     ...mapMutations(['setPageInfo']),
     ...mapActions(['queryColumn']),
-    pageInfoChanged(key, value) {
-      console.log(key, value)
-      this.setPageInfo({ [key] : value })
-      this.queryColumn()
+    pageInfoChanged(val) {
+      this.setPageInfo(val)
+      this.queryColumn({})
     },
     addColumn() {
       this.columeState = ADDSTATE
