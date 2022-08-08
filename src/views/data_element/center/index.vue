@@ -13,7 +13,9 @@
     <div class="search">
       <Form :formData="formData" :formCfg="formCfg" class="searchForm" />
       <div class="action_area">
-        <el-button type="primary" plain @click="searchHandler">查 询</el-button>
+        <el-button type="primary" plain @click="searchHandler(false)"
+          >查 询</el-button
+        >
         <el-link :underline="false" class="advbtn" @click="openAdvSearch"
           >高级搜索</el-link
         >
@@ -47,7 +49,7 @@
 
       <Dialog
         title="高级搜索"
-        @dialog-complete="completeAdvSearch"
+        @dialog-complete="searchHandler(true)"
         :enableConfirm="enableAdvConfirm"
         ref="advSearchDialog"
         class="advSearchDialog"
@@ -59,7 +61,7 @@
   </div>
 </template>
 <script>
-import { isEmpty, toFixedNumStr } from '@/utils/lang'
+import { isEmpty, toFixedNumStr, clone } from '@/utils/lang'
 import { get } from '@/utils/request'
 import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
@@ -121,8 +123,8 @@ export default {
       enableAdvConfirm: state => {
         let crt = state.advQueryCriteria
         return !!(
-          crt.cols &&
-          crt.cols.length &&
+          crt.colNames &&
+          crt.colNames.length &&
           (!isEmpty(crt.contains) ||
             !isEmpty(crt.equals) ||
             !isEmpty(crt.atleast) ||
@@ -132,7 +134,10 @@ export default {
     }),
     ...globalMapState({
       groupTreeData: state => state.dataElem.elemGroup.grouptree
-    })
+    }),
+    pageInfoChangeSignal() {
+      return this.pageInfo.curPage + ':' + this.pageInfo.pageSize
+    }
   },
   components: { Form, Table, Dialog, CommitDialogVue },
   methods: {
@@ -203,18 +208,19 @@ export default {
       console.log(this.editElemFormData)
       this.editElem(this.editElemFormData)
     },
-    completeAdvSearch() {
-      console.log(this.advForm.formData)
-    },
     getSpeechList() {
       return this.$store.state.dataElem.wordSpeechList
     },
     openAdvSearch() {
       this.$refs.advSearchDialog.toggleOpen()
     },
-    ...mapActions({ searchHandler: 'search' }),
-    ...mapActions(['editElem', 'startCommit', 'presetEditDialog']),
-    ...mapMutations({ selectItemHandler: 'setSelectItem' })
+    searchHandler(isAdv) {
+      this.setAdvanceMode(isAdv)
+      this.search()
+    },
+    ...mapActions(['search', 'editElem', 'startCommit', 'presetEditDialog']),
+    ...mapMutations({ selectItemHandler: 'setSelectItem' }),
+    ...mapMutations(['setAdvanceMode'])
   },
   watch: {
     editElemFormData: {
@@ -250,11 +256,8 @@ export default {
       },
       deep: true
     },
-    pageInfo: {
-      handler(pageinfo) {
-        this.searchHandler()
-      },
-      deep: true
+    pageInfoChangeSignal() {
+      this.search()
     },
     tableData(val) {
       let selected = val.find(item => item.id == this.selectedItem?.id)
@@ -354,7 +357,10 @@ export default {
         width: 600px;
         form {
           height: auto;
-          padding-left: 60px;
+          padding-left: 50px;
+          .el-form-item {
+            width: 370px;
+          }
         }
       }
     }

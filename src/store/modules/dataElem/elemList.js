@@ -11,6 +11,8 @@ const state = {
     state: ''
   },
   advQueryCriteria: keysObject(advSearchFormConfig, 'id'),
+  isAdvancedOn: false,
+
   editElemFormData: keysObject(getFormFieldsConfig(), 'id'),
   tableData: [],
   selectedItem: null,
@@ -24,6 +26,9 @@ const state = {
 }
 
 const mutations = {
+  setAdvanceMode(state, val) {
+    state.isAdvancedOn = val
+  },
   setTableHeader(state, val) {},
   setTableData(state, val) {
     state.tableData = val
@@ -42,13 +47,15 @@ const mutations = {
 const actions = {
   async search({ state, commit, rootState }) {
     let selectedGrps = rootState.dataElem.elemGroup.selectedGrps
+    let isAdvancedOn = state.isAdvancedOn
+    let criteria = isAdvancedOn ? state.advQueryCriteria : state.queryCriteria
     let {
       value: { pageInfo, records: tableData }
     } = await post(
-      'data-element/list',
+      isAdvancedOn ? 'data-element/advanceSearch' : 'data-element/list',
       {
         ctlgIdentifierList: selectedGrps,
-        ...state.queryCriteria
+        ...criteria
       },
       { size: state.pageInfo.pageSize, current: state.pageInfo.curPage }
     )
@@ -109,11 +116,16 @@ const actions = {
       'setCommitData',
       tableData.map(({ id, nameCn, nameEn, state }) => ({
         index: id,
+        id,
         nameCn,
         nameEn,
         state
       }))
     )
+
+    if (!tableData.length) {
+      MessageBox.alert('没有待提交的数据元，请确认数据元分组。')
+    }
   },
   async completeCommit({ state }, ids) {
     const result = await post('data-element/commit', ids)

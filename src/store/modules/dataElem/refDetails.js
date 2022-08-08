@@ -52,7 +52,7 @@ const actions = {
   async loadRefs({ state }, id) {
     const { value: details } = await get(`data-element/getRefDetails/${id}`)
     state.details = details.map(detail => ({
-      module: detail.moudle,
+      module: detail.module,
       version: detail.version,
       refList: detail.elementUsedResponseList
     }))

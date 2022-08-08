@@ -4,7 +4,7 @@ export function getListTableHeader() {
       colConfig: {
         property: 'id',
         label: '序号',
-        width: 50
+        width: 55
       }
     },
     {

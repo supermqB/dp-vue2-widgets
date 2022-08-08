@@ -39,12 +39,22 @@ const mutations = {
     state.fieldCheck.enableValRange = val.valueRange.indexOf('取值范围：') == 0
     if (val.valueRange.indexOf('取值范围：') == 0) {
       let range = val.valueRange.replace('取值范围：', '')
-      let matchedRe = /^([\(|\[])(\d*),\s*(\d*)(\)|\])/.exec(range)
-      state.fieldCheck.valDomainRange = {
-        great: matchedRe[1] == '[' ? 'equal' : 'notequal',
-        greatVal: matchedRe[2] * 1,
-        less: matchedRe[4] == ']' ? 'equal' : 'notequal',
-        lessVal: matchedRe[3]
+      let matchedRe = /^([\(|\[])(\w*),\s*(\w*)(\)|\])$/.exec(range)
+      if (matchedRe) {
+        state.fieldCheck.valDomainRange = {
+          great: matchedRe[1] == '[' ? 'equal' : 'notequal',
+          greatVal: matchedRe[2],
+          less: matchedRe[4] == ']' ? 'equal' : 'notequal',
+          lessVal: matchedRe[3]
+        }
+      } else {
+        console.log('后端质检规则，不符合要求，' + val.valueRange)
+        state.fieldCheck.valDomainRange = {
+          great: 'equal',
+          greatVal: '',
+          less: 'equal',
+          lessVal: ''
+        }
       }
     }
     state.fieldCheck.enableRegexp = !!val.regexpText

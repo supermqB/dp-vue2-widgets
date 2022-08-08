@@ -43,7 +43,7 @@ export default {
     ...mapGetters(['moduleList', 'curVersionList']),
     ...mapGetters({ tableData: 'curRefList' }),
     formCfg() {
-      return [
+      let formCfg = [
         {
           type: 'el-select',
           options: this.moduleList,
@@ -57,6 +57,8 @@ export default {
           id: 'version'
         }
       ]
+      console.log(formCfg);
+      return formCfg;
     }
   },
   watch: {
