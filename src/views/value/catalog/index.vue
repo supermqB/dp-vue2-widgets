@@ -1,31 +1,48 @@
 <template>
   <div class="wrap">
-    <div class="header">
-      <h3>值域目录</h3>
-      <div class="buttons">
-        <img :src="ADDICON" @click="addCatalog"/>
-        <img :src="EDITICON" @click="editCatalog"/>
-      </div>
-    </div>
+    <Header
+      title="值域目录"
+      @add="addCatalog"
+      @edit="editCatalog"
+    ></Header>
     <div class="search">
       <span>搜索</span>
       <el-input suffix-icon="el-icon-search"></el-input>
     </div>
-    <div class="tree">
-      <Tree
-        :data="catalogs"
-        currentNodeKey="2-1"></Tree>
-    </div>
+    <Tree
+      :data="catalogs"
+      currentNodeKey="2-1"
+      class="tree"
+    ></Tree>
+    <Dialog 
+      title="新增值域字典"
+      ref="addCatalogDialog"
+      class="addCatalogDialog"
+    >
+      <Form :formCfg="addCatalogCfg" :formData="addCatalogData"></Form>
+    </Dialog>
+    <Dialog
+      title="编辑值域字典"
+      ref="editCatalogDialog"
+      class="editCatalogDialog"
+    >
+      <Form :formCfg="editCatalogCfg" :formData="editCatalogData"></Form>
+    </Dialog>
   </div>
 </template>
 
 <script>
-import Tree from '@/components/Tree.vue'
+import Tree from '@/components/SideTree.vue'
+import Dialog from '@/components/Dialog.vue'
+import Form from '@/components/Form.vue'
+import Header from '@/components/header/Catalog.vue'
+import { addCatalogCfg, editCatalogCfg } from './config/catalogForm'
 import { EDITINGSTATE } from '@/utils/const'
-const ADDICON = require("@/assets/images/event/add.png")
-const EDITICON = require("@/assets/images/event/edit.png")
+
 export default {
-  components: {Tree},
+  components: {
+    Tree, Dialog, Form, Header
+  },
   data() {
     return {
       catalogs: [
@@ -57,17 +74,68 @@ export default {
               state: EDITINGSTATE
             }
           ]
+        },{
+          id: '3',
+          label: '国家推荐标准',
+          state: EDITINGSTATE,
+          children: [
+            {
+              id: '3-1',
+              label:'DICT_SEX',
+              state: EDITINGSTATE
+            }, {
+              id: '3-2',
+              label:'DICT_RELIGION',
+              state: EDITINGSTATE
+            }
+          ]
+        },{
+          id: '4',
+          label: '国家推荐标准',
+          state: EDITINGSTATE,
+          children: [
+            {
+              id: '4-1',
+              label:'DICT_SEX',
+              state: EDITINGSTATE
+            }, {
+              id: '4-2',
+              label:'DICT_RELIGION',
+              state: EDITINGSTATE
+            }
+          ]
+        },{
+          id: '5',
+          label: '国家推荐标准',
+          state: EDITINGSTATE,
+          children: [
+            {
+              id: '5-1',
+              label:'DICT_SEX',
+              state: EDITINGSTATE
+            }, {
+              id: '5-2',
+              label:'DICT_RELIGION',
+              state: EDITINGSTATE
+            }
+          ]
         }
-      ]
+      ],
+      addCatalogCfg,
+      editCatalogCfg,
+      addCatalogData: {},
+      editCatalogData: {}
     }
   },
   created() {
-    this.ADDICON = ADDICON
-    this.EDITICON = EDITICON
   },
   methods: {
-    addCatalog() {},
-    editCatalog() {}
+    addCatalog() {
+      this.$refs.addCatalogDialog.toggleOpen()
+    },
+    editCatalog() {
+      this.$refs.editCatalogDialog.toggleOpen()
+    }
   }
 }
 </script>
@@ -77,28 +145,6 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  .header {
-    height: 41px;
-    padding: 0 5px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #E5E5E5;
-    h3 {
-      font-size: 16px;
-      font-weight: normal;
-    }
-    .buttons {
-      display: flex;
-      justify-content: end;
-      align-items: center;
-      img {
-        margin: 0 4px;
-        cursor: pointer;
-      }
-    }
-  }
   .search {
     height: 41px;
     padding: 0 7px 0 15px;
@@ -114,9 +160,40 @@ export default {
     }
   }
   .tree {
-    flex-grow: 1;
+    flex: 1;
+    overflow: auto;
     padding-top: 5px;
     border-bottom: 1px solid #E5E5E5;
+  }
+}
+
+::v-deep .addCatalogDialog .el-dialog{
+  width: 810px;
+  form {
+    height: 400px;
+    padding-left: 20px;
+    padding-right: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    flex-wrap: wrap;
+    .el-form-item {
+      margin-bottom: 16px;
+    }
+  }
+}
+
+::v-deep .editCatalogDialog .el-dialog{
+  width: 500px;
+  form {
+    padding-right: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    flex-wrap: wrap;
+    .el-form-item {
+      margin-bottom: 12px;
+    }
   }
 }
 </style>

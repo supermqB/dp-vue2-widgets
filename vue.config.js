@@ -14,6 +14,13 @@ module.exports = defineConfig({
       }
     }
   },
+  css: {
+    loaderOptions: {
+      scss: {
+        additionalData: `@import "@/assets/css/mixin.scss";`
+      }
+    }
+  },
   devServer: {
     // 代理服务器配置
     proxy: {
