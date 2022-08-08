@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="versionWrapper">
     <div class="header">
       <span>版本</span>
       <el-select v-model="version">
@@ -79,7 +79,7 @@ export default {
 </script>
 
 <sstyle scoped lang="scss">
-.wrapper {
+.versionWrapper {
   font-size: 13px;
   .header {
     display: flex;

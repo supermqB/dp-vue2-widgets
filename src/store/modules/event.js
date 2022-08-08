@@ -10,40 +10,39 @@ import {
 } from '@/api/event'
 import { RUNNINGSTATE, EDITINGSTATE } from '@/utils/const'
 
-const queryCatalog = async () => {
-  return await getCatalogApi()
-}
+// const queryCatalog = async () => {
+//   return await getCatalogApi()
+// }
 
-const queryColumn = async () => {
-  return await getEventInfoApi()
-}
+// const queryColumn = async () => {
+//   return await getEventInfoApi()
+// }
 
 const state = {
   versionList: [],
   catalogList: [],
   columnList: [],
   currentVersion: '',
-  currentCatalog: ''
+  currentCatalog: '',
+  pageInfo: {
+    curPage: 1,
+    pageSize: 20,
+    totalSize: 3,
+    totalPage: 1
+  }
 }
 
 const getters = {
-  currentCatalogLabel(state) {
-    return 'E000-卫生事件记录'
-    const catalog = state.currentCatalog.find(
-      item => state.currentCatalog === item.id
-    )
-    if (catalog) {
-      return `${catalog.label}`
+  currentCatalog(state) {
+    for (let item of state.catalogList) {
+      const res = item.children.find(it => {
+        return state.currentCatalog === it.id
+      })
+      if (res) return res
     }
-    return ''
-  },
-  currentCatalogState(state) {
-    return RUNNINGSTATE
-    const catalog = state.currentCatalog.find(
-      item => state.currentCatalog === item.id
-    )
-    if (catalog) {
-      return `${catalog.state}`
+    return {
+      label: '',
+      state: ''
     }
   }
 }
@@ -53,10 +52,10 @@ const mutations = {
     state.versionList = list
   },
   setCatalogList: (state, list) => {
-    state.catalogList = list.map(item, index => {
+    state.catalogList = list.map((item, index) => {
       const { theme } = item
       const result = {
-        id: index,
+        id: theme,
         label: theme,
         theme: true,
         children: []
@@ -64,7 +63,7 @@ const mutations = {
       item.dataSetCatalogEntiyList.forEach(item => {
         const { id, code, name, number } = item
         result.children.push({
-          id,
+          id: id.toString(),
           label: `${code}-${name}`,
           number
         })
@@ -72,7 +71,7 @@ const mutations = {
       return result
     })
   },
-  setColumeList: (state, list) => {
+  setColumnList: (state, list) => {
     state.columnList = list
   },
   setCurrentVersion: (state, version) => {
@@ -82,23 +81,39 @@ const mutations = {
   },
   setCurrentCatalog: (state, catalog) => {
     if (state.currentCatalog !== catalog) {
-      state.currentCatalog = catalog
+      state.currentCatalog = catalog.toString()
     }
+  },
+  setPageInfo: (state, pageInfo) => {
+    Object.keys(pageInfo).forEach(key => {
+      state.pageInfo[key] = pageInfo[key]
+    })
   }
 }
 
 const actions = {
-  async init({ commit }, { version, catalog }) {
-    const versions = await getVersionListApi()
-    commit('setVersionList', versions)
+  async initEvent({ commit }) {
+    let res = await getVersionListApi()
+    state.versionList = res.value
+    state.currentVersion = res.value[0].versionName
+    res = await getCatalogApi()
+    commit('setCatalogList', res.value)
+    state.currentCatalog = state.catalogList[0].children[0].id
+    const { curPage, pageSize } = state.pageInfo
+    res = await getEventInfoApi(state.currentCatalog, curPage, pageSize)
+    commit('setColumnList', res.value.records)
+    state.pageInfo = res.value.pageInfo
   },
   async queryCatalog({ commit }, {}) {
-    const catalogs = await queryCatalog()
-    commit('setCatalogList', catalogs)
+    const res = await getCatalogApi()
+    commit('setCatalogList', res.value)
   },
-  async queryColumn({ commit }, {}) {
-    const columns = await queryColumn()
-    commit('setColumeList', columns)
+  async queryColumn({ commit }, { id }) {
+    if (id) commit('setCurrentCatalog', id)
+    const { curPage, pageSize } = state.pageInfo
+    const res = await getEventInfoApi(state.currentCatalog, curPage, pageSize)
+    commit('setColumnList', res.value.records)
+    state.pageInfo = res.value.pageInfo
   },
   async addVersion({ commit }, {}) {
     await addVersionApi()
@@ -118,6 +133,7 @@ const actions = {
 }
 
 export default {
+  namespaced: true,
   state,
   getters,
   mutations,

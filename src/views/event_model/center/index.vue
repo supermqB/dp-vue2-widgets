@@ -4,7 +4,7 @@
       <div class="left">
         <Breadcrumb
           baseLabel="事件模型管理"
-          :currentLabel="`${currentCatalogLabel}(event_record)`">
+          :currentLabel="`${currentCatalog ? currentCatalog.label : ''}(event_record)`">
         </Breadcrumb>
         <State></State>
       </div>
@@ -23,8 +23,10 @@
     <div class="content">
       <Table
         :tableConfig="tableConfig"
-        :tableData="tableData"
+        :tableData="columnList"
         :pageInfo="pageInfo"
+        @sizeChanged="val => pageInfoChanged('pageSize', val)"
+        @pageChanged="val => pageInfoChanged('curPage', val)"
       ></Table>
     </div>
     <Dialog
@@ -55,7 +57,8 @@ import State from '@/components/state/IsRunning.vue'
 import { columnCfg } from './config/columnForm'
 import { adSearchCfg } from './config/adSearchForm'
 import { ADDSTATE, EDITSTATE } from '@/utils/const'
-import { mapGetters } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('event')
 export default {
   components: {
     Form, Table, Dialog, Breadcrumb, State
@@ -80,12 +83,6 @@ export default {
           index: 3
         }
       ],
-      pageInfo: {
-        curPage: 1,
-        pageSize: 10,
-        totalSize: 3,
-        totalPage: 1
-      },
       columnState: ADDSTATE,
       columnCfg,
       columnData: {
@@ -108,13 +105,23 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentCatalogLabel', 'currentCatalogState'])
+    ...mapGetters({
+      currentCatalog: 'currentCatalog'
+    }),
+    ...mapState(['columnList', 'pageInfo'])
   },
   created() {
     this.ADDSTATE = ADDSTATE
     this.EDITSTATE = EDITSTATE
   },
   methods: {
+    ...mapMutations(['setPageInfo']),
+    ...mapActions(['queryColumn']),
+    pageInfoChanged(key, value) {
+      console.log(key, value)
+      this.setPageInfo({ [key] : value })
+      this.queryColumn()
+    },
     addColumn() {
       this.columeState = ADDSTATE
       this.$refs.columnDialog.toggleOpen()

@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-tree
+      ref="sideTree"
       node-key="id"
       :current-node-key="currentNodeKey"
       :data="treeList"
@@ -29,44 +30,7 @@ export default {
   props: {
     data: {
       type: Array,
-      default: () => [ // id, label, state 非必填, number 非必要
-        {
-          id: '1',
-          label: '事件记录(0)',
-          number: '数据源',
-          state: RUNNINGSTATE,
-          children: [
-            {
-              id: '1-1',
-              label: 'E000-卫生事件记录',
-              number: 1240,
-              state: EDITINGSTATE
-            }, {
-              id: '1-2',
-              label: 'E001-卫生事件日志',
-              number: 1040,
-              state: EDITINGSTATE
-            }, {
-              id: '1-3',
-              label: 'E002-卫生事件入口hhhhhh',
-              number: 600,
-              state: RUNNINGSTATE
-            }
-          ]
-        },{
-          id: '2',
-          label: '摘要信息(B)',
-          state: RUNNINGSTATE,
-          children: [
-            {
-              id: '2-1',
-              label: 'E000-个人信息表',
-              number: 2398,
-              state: EDITINGSTATE
-            }
-          ]
-        }
-      ]
+      default: () => [] // id, label, state 非必填, number 非必要
     },
     currentNodeKey: {
       type: String,
@@ -96,6 +60,14 @@ export default {
         case EDITINGSTATE:
           return require("@/assets/images/common/icons/editing.png")
       }
+    }
+  },
+  watch: {
+    currentNodeKey: {
+      handler(cur, old) {
+        if (!old)
+          this.$nextTick(() => this.$refs.sideTree.setCurrentKey(cur))
+      },
     }
   }
 }

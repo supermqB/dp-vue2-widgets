@@ -8,17 +8,18 @@
     ></Header>
     <div class="version">
       <span>版本</span>
-      <el-select v-model="version">
+      <el-select v-model="currentVersion">
         <el-option
           v-for="(item, index) in versionList"
           :key="index"
-          :label="item"
-          :value="item"></el-option>
+          :label="item.versionName"
+          :value="item.versionName"></el-option>
       </el-select>
       <el-button type="text" @click="addVersion">新增版本</el-button>
     </div>
     <Tree
-      :currentNodeKey="current"
+      :data="catalogList"
+      :currentNodeKey="currentCatalog"
       @onClick="handleNodeClick"
       class="tree"
     ></Tree>
@@ -49,6 +50,8 @@ import Bottom from '@/components/bottom/Catalog.vue'
 import { versionCfg, versionRule } from './config/versionForm'
 import { catalogCfg, catalogRule } from './config/catalogForm'
 import { ADDSTATE, EDITSTATE, RUNNINGSTATE } from '@/utils/const'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapMutations, mapActions } = createNamespacedHelpers('event')
 export default {
   components: {
     Dialog, Form, Tree, Header, Bottom
@@ -57,10 +60,6 @@ export default {
     return {
       version: '',
       current: '1-1',
-      versionList: [
-        '卫生版1.0'
-      ],
-      catalogList: [],
       versionCfg,
       versionRule,
       versionData: {
@@ -81,6 +80,9 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState(['versionList', 'catalogList', 'currentCatalog', 'currentVersion'])
+  },
   created() {
     this.ADDSTATE = ADDSTATE
   },
@@ -88,8 +90,11 @@ export default {
     // const res = await getVersionListApi()
   },
   methods: {
-    handleNodeClick({ id, label }) {
-      this.current = id
+    ...mapMutations(['setCurrentCatalog']),
+    ...mapActions(['queryColumn']),
+    handleNodeClick({id}) {
+      this.setCurrentCatalog(id)
+      this.queryColumn({id})
     },
     addVersion() {
       this.catalogDialogState = ADDSTATE
