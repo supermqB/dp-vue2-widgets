@@ -66,8 +66,8 @@ const actions = {
     let valDomainRange = state.fieldCheck.valDomainRange
     let checkRule = {
       id: rootState.dataElem.elemList.selectedItem.id,
-      illegalCharGeneral: state.illegalChar.general ? 1 : 0,
-      illegalCharOnly: state.illegalChar.only ? 1 : 0,
+      illegalCharGeneral: state.illegalChar.general ? '1' : '0',
+      illegalCharOnly: state.illegalChar.only ? '1' : '0',
       format: `${state.formatCheckData.char_type_code}${state.formatCheckData.data_length}`,
       valueDomainId: state.fieldCheck.valDomain,
       valueRange: `取值范围：${valDomainRange.great == 'equal' ? '[' : '('}${

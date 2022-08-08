@@ -128,8 +128,8 @@ const actions = {
     }
   },
   async completeCommit({ state }, ids) {
-    const result = await post('data-element/commit', ids)
-    MessageBox.alert('数据元提交成功。')
+    const { success } = await post('data-element/commit', ids)
+    MessageBox.alert(success ? '数据元提交成功。' : '数据元提交失败。')
   },
   clearCommit({ commit }) {
     commit('setCommitData', [])

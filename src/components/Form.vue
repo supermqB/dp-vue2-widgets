@@ -17,10 +17,7 @@
         v-bind="cfg.elOptions"
         v-model="formData[cfg.id]"
       >
-        <el-option
-          v-for="opt in cfg.options"
-          v-bind="prepareOpt(opt)"
-        >
+        <el-option v-for="opt in cfg.options" v-bind="prepareOpt(opt)">
         </el-option>
       </component>
     </el-form-item>
