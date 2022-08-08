@@ -27,8 +27,8 @@ export default {
   width: 100%;
   height: 31px;
   display: flex;
-  justify-content: start;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-center;
   padding-left: 10px;
   box-sizing: border-box;
   border-top: 1px solid #E5E5E5;

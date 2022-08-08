@@ -149,7 +149,7 @@ export default {
     padding-right: 85px;
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
   }
 }
 
@@ -159,7 +159,7 @@ export default {
     padding-right: 110px;
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
   }
 }
 </style>

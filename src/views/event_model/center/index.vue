@@ -1,22 +1,21 @@
 <template>
   <div class="wrapper">
     <div class="header">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item>事件模型管理</el-breadcrumb-item>
-        <el-breadcrumb-item><b>{{ currentCatalogLabel }}(event_record)</b></el-breadcrumb-item>
-      </el-breadcrumb>
-      <div>
-        <span v-if="currentCatalogState === RUNNINGSTATE" class="status running">已启动</span>
-        <span v-else-if="currentCatalogState === EDITINGSTATE" class="status editing">编辑中</span>
+      <div class="left">
+        <Breadcrumb
+          baseLabel="事件模型管理"
+          :currentLabel="`${currentCatalogLabel}(event_record)`">
+        </Breadcrumb>
+        <State></State>
       </div>
-      <div class="buttons">
+      <div>
         <el-button type="primary" @click="addColumn">新增</el-button>
         <el-button type="primary" @click="editColumn">编辑</el-button>
       </div>
     </div>
     <div class="search">
       <Form class="searchForm" :formData="formData" :formCfg="formCfg"></Form>
-      <div class="buttons">
+      <div>
         <el-button>查询</el-button>
         <el-button type="text" @click="advancedSearch">高级搜索</el-button>
       </div>
@@ -51,13 +50,15 @@ import Table from '@/components/GeneralTable.vue'
 import formCfg from './config/searchForm'
 import tableConfig from './config/tableColumn'
 import Dialog from '@/components/Dialog.vue'
+import Breadcrumb from '@/components/header/Breadcrumb.vue'
+import State from '@/components/state/IsRunning.vue'
 import { columnCfg } from './config/columnForm'
 import { adSearchCfg } from './config/adSearchForm'
-import { ADDSTATE, EDITSTATE, RUNNINGSTATE, EDITINGSTATE } from '@/utils/const'
+import { ADDSTATE, EDITSTATE } from '@/utils/const'
 import { mapGetters } from 'vuex'
 export default {
   components: {
-    Form, Table, Dialog
+    Form, Table, Dialog, Breadcrumb, State
   },
   data() {
     return {
@@ -112,8 +113,6 @@ export default {
   created() {
     this.ADDSTATE = ADDSTATE
     this.EDITSTATE = EDITSTATE
-    this.RUNNINGSTATE = RUNNINGSTATE
-    this.EDITINGSTATE = EDITINGSTATE
   },
   methods: {
     addColumn() {
@@ -141,58 +140,26 @@ export default {
   .header {
     position: relative;
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     height: 41px;
-    padding-left: 10px;
+    padding: 0 10px;
     box-sizing: border-box;
     border-bottom: 1px solid #E5E5E5;
-    .status {
-      width: 46px;
-      height: 18px;
-      display: inline-block;
-      margin-top: 1px;
-      margin-left: 10px;
-      line-height: 18px;
-      text-align: center;
-      border-radius: 10px;
-      font-size: 10px;
-      &.running {
-        color: #67C23A;
-        background-color: rgba(103,194,58,0.2);
-      }
-      &.editing {
-        color: #EB9E05;
-        background-color: rgba(235,158,5,0.2)
-      }
-    }
-    .buttons {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 135px;
-      height: 100%;
+    .left {
       display: flex;
+      justify-content: flex-start;
       align-items: center;
     }
   }
   .search {
     position: relative;
-    width: 100%;
     height: 41px;
-    padding-left: 15px;
-    box-sizing: border-box;
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-between;
     border-bottom: 1px solid #E5E5E5;
-    .buttons {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 135px;
-      height: 100%;
-      display: flex;
-      align-items: center;
-    }
   }
   .content {
     flex-grow: 1;
@@ -211,7 +178,7 @@ export default {
     .el-form-item {
       width: 340px;
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
     }
   }
 }
@@ -222,7 +189,7 @@ export default {
     padding-right: 140px;
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
   }
 }
 

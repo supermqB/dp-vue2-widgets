@@ -53,7 +53,7 @@ export default {
   }
   .buttons {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     img {
       margin: 0 4px;
