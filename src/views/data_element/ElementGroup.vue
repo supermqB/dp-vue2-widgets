@@ -30,6 +30,7 @@
 </template>
 <script>
 import { createNamespacedHelpers } from 'vuex'
+const elemGrpLabelName = 'ctlgName'
 const { mapState, mapMutations, mapActions } =
   createNamespacedHelpers('dataElem/elemGroup')
 
@@ -48,9 +49,8 @@ export default {
   },
   methods: {
     filterTreeNode(value, data) {
-      console.log(value, data)
       if (!value) return true
-      return data.label.indexOf(value) !== -1
+      return data[elemGrpLabelName].indexOf(value) !== -1
     },
     checkedGrpChangeHandler() {
       let checkedKeys = this.$refs.grouptree.getCheckedKeys()

@@ -4,14 +4,14 @@ export function getListTableHeader() {
       colConfig: {
         property: 'id',
         label: '序号',
-        width: 50
+        width: 55
       }
     },
     {
       colConfig: {
         property: 'identifier',
         label: '数据元标识符',
-        width: 120
+        width: 125
       }
     },
     {
@@ -89,6 +89,9 @@ export function getListTableHeader() {
         property: 'state',
         label: '状态标识',
         width: 100
+      },
+      formatter(val) {
+        return { 0: '停用', 1: '待提交', 2: '待审核', 3: '启用' }[val]
       }
     },
     {
@@ -107,8 +110,7 @@ export function getListTableHeader() {
           id: 'edit',
           name: '编辑',
           callback: (idx, tableData) => {
-            this.editElemDialogTitle = '编辑数据元'
-            this.$refs.editElemDialog.toggleOpen()
+            this.openEditDialog()
           }
         }
       ]

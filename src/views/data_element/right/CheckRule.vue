@@ -47,6 +47,7 @@
         <el-input
           v-model="fieldCheck.valDomainRange.greatVal"
           :disabled="!fieldCheck.enableValRange"
+          :placeHolder="rangeFormat"
         ></el-input>
 
         <div>
@@ -66,6 +67,7 @@
         <el-input
           v-model="fieldCheck.valDomainRange.lessVal"
           :disabled="!fieldCheck.enableValRange"
+          :placeHolder="rangeFormat"
         ></el-input>
       </div>
       <el-checkbox v-model="fieldCheck.enableRegexp"
@@ -140,6 +142,11 @@ const _formatCheck = {
 }
 
 export default {
+  data() {
+    return {
+      rangeFormat: ''
+    }
+  },
   computed: {
     ...mapState({
       illegalChar: state => state.illegalChar,
@@ -166,7 +173,7 @@ export default {
       fcCfg[1].elOptions.disabled = !enable
       fcCfg[2].elOptions.disabled = !enable
     },
-    ...mapActions(['save','reset'])
+    ...mapActions(['save', 'reset'])
   },
   watch: {
     'formatCheck.formData': {
@@ -181,6 +188,8 @@ export default {
         let curCode = val.char_type_code
         ops.indexOf(curCode) == -1 && (val.char_type_code = '')
 
+        this.rangeFormat = ''
+
         if (val.data_type == 'L') {
           val.char_type_code = 'N'
           val.data_length = 1
@@ -192,6 +201,7 @@ export default {
           val.char_type_code = 'D'
           val.data_length = 8
           this.toggleFormatCheckInput(false)
+          this.rangeFormat = 'YYYYMMDD'
           return
         }
 
@@ -199,6 +209,7 @@ export default {
           val.char_type_code = 'DT'
           val.data_length = 15
           this.toggleFormatCheckInput(false)
+          this.rangeFormat = 'YYYYMMDDThhmmss'
           return
         }
 

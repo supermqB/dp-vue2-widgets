@@ -163,7 +163,6 @@ export default {
   },
   methods: {
     handleOpen(key, keyPath) {
-      // debugger;
       console.log(key, keyPath)
     },
     handleClose(key, keyPath) {

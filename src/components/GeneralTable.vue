@@ -7,6 +7,7 @@
         width="100%"
         highlight-current-row
         @current-change="rowChangeHandler"
+        @selection-change="selChgHandler"
         border
         ref="el_table"
       >
@@ -47,9 +48,9 @@
                 word-break: keep-all;
                 white-space: pre;
               "
-              :title="row[column.property]"
+              :title="formatCell(row[column.property], col.formatter)"
             >
-              {{ row[column.property] }}
+              {{ formatCell(row[column.property], col.formatter) }}
             </div>
             <!-- </el-tooltip> -->
           </template>
@@ -164,6 +165,9 @@ export default {
       this.selectedIdx = rowData.index
       this.$emit('row-changed', rowData)
     },
+    selChgHandler(selection) {
+      this.$emit('selection-changed', selection);
+    },
     sizeChangeHandler(pageSize) {
       this.pageInfo.pageSize = pageSize
     },
@@ -175,6 +179,9 @@ export default {
     },
     setCurrentRow(row) {
       this.$refs.el_table.setCurrentRow(row)
+    },
+    formatCell(val, formatter) {
+      return formatter ? formatter(val) : val
     }
   }
 }
