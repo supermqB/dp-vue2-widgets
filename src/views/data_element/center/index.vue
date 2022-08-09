@@ -97,7 +97,8 @@ export default {
             'format',
             'valueDomainName',
             'valueDomainSrc',
-            'regexpText'
+            'regexpText',
+            'state'
           ].indexOf(item.id) == -1
       ),
       editElemFormRule,
@@ -137,7 +138,7 @@ export default {
     }),
     ...globalMapState({
       groupTreeData: state => state.dataElem.elemGroup.grouptree,
-      wordSpeechList: state=> state.dataElem.wordSpeechList
+      wordSpeechList: state => state.dataElem.wordSpeechList
     }),
     pageInfoChangeSignal() {
       return this.pageInfo.curPage + ':' + this.pageInfo.pageSize
@@ -238,9 +239,17 @@ export default {
           segs.some(seg => !seg) ||
           tmpIdentifierPrefix == formData.identifierPrefix
         ) {
-          this.$refs.editElemForm.$refs.el_form.validate(valid => {
-            this.editElemFormValid = valid
-          })
+          if (
+            !Object.keys(editElemFormRule).some(
+              k => formData[k] == null || formData[k] == ''
+            )
+          ) {
+            this.$refs.editElemForm.$refs.el_form.validate(valid => {
+              this.editElemFormValid = valid
+            })
+          } else {
+              this.editElemFormValid = false
+          }
           return
         }
         const { value: maxId } = await get('data-element/getEleMaxId', {
@@ -318,7 +327,7 @@ export default {
         }
       }
       .el-form-item__label {
-        width: 45px
+        width: 45px;
       }
     }
   }
@@ -336,10 +345,15 @@ export default {
       flex-wrap: wrap;
       .el-form-item {
         &.is-error {
+          //padding-bottom: 10px;
           .el-input__inner,
           .el-textarea__inner {
             border-color: #dcdfe6;
           }
+          /*  .el-form-item__error {
+            padding-top: 0px;
+            top: unset;
+          } */
         }
         width: 360px;
         display: flex;

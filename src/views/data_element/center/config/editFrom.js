@@ -1,3 +1,6 @@
+import { Message } from 'element-ui'
+import { debounce } from 'lodash'
+
 export function getFormFieldsConfig() {
   return [
     {
@@ -110,8 +113,8 @@ export function getFormFieldsConfig() {
     {
       type: 'el-select',
       options: [
-        { label: '是', value: 1 },
-        { label: '否', value: 0 }
+        { label: '是', value: '1' },
+        { label: '否', value: '0' }
       ],
       label: '长文本标识',
       id: 'longTextFlag'
@@ -143,6 +146,14 @@ export function getFormFieldsConfig() {
     }
   ]
 }
+const showEnErr = debounce(() => {
+  Message({
+    message: '英文名称必须小于30个字符, 由小写字母、下划线、数字构成',
+    type: 'error',
+    duration: 2000
+  })
+}, 2000)
+
 export const formValidRule = {
   identifierSeg1: { required: true },
   identifierSeg2: { required: true },
@@ -150,8 +161,21 @@ export const formValidRule = {
   identifier: { required: true },
   identifierPrefix: { required: true },
   nameCn: { required: true },
-  nameEn: { required: true },
+  nameEn: [
+    { required: true },
+    {
+      validator: (rule, value, callback) => {
+        if (!/^[\w+]{1,30}$/.test(value)) {
+          showEnErr()
+          callback('英文名称必须小于30个字符, 由小写字母、下划线、数字构成')
+        } else {
+          callback()
+        }
+      },
+      trigger: 'blur'
+    }
+  ],
   definition: { required: true },
-  longTextFlag: { required: true },
-  state: { required: true }
+  longTextFlag: { required: true }
+  //state: { required: true }
 }

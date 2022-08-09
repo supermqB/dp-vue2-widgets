@@ -69,11 +69,19 @@ const actions = {
       illegalCharGeneral: state.illegalChar.general ? '1' : '0',
       illegalCharOnly: state.illegalChar.only ? '1' : '0',
       format: `${state.formatCheckData.char_type_code}${state.formatCheckData.data_length}`,
-      valueDomainId: state.fieldCheck.valDomain,
-      valueRange: `取值范围：${valDomainRange.great == 'equal' ? '[' : '('}${
-        valDomainRange.greatVal
-      },${valDomainRange.lessVal}${valDomainRange.less == 'equal' ? ']' : ')'}`,
-      regexpText: state.fieldCheck.regexpText
+      valueDomainId: state.fieldCheck.enableValDomain
+        ? state.fieldCheck.valDomain
+        : '',
+      valueRange: state.fieldCheck.enableValRange
+        ? `取值范围：${valDomainRange.great == 'equal' ? '[' : '('}${
+            valDomainRange.greatVal
+          },${valDomainRange.lessVal}${
+            valDomainRange.less == 'equal' ? ']' : ')'
+          }`
+        : '',
+      regexpText: state.fieldCheck.enableRegexp
+        ? state.fieldCheck.regexpText
+        : ''
     }
     const saveRe = await post('data-element/checkrule/edit', checkRule)
     MessageBox.alert('数据元质控规则更新成功！')

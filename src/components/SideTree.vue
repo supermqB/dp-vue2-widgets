@@ -113,7 +113,7 @@ export default {
   align-items: center;
   font-size: 13px;
   img {
-    padding-right: 3px;
+    padding-right: 4px;
   }
   .label {
     width: 130px;

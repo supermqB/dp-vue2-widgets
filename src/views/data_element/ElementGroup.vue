@@ -24,12 +24,12 @@
       </el-tree>
     </div>
     <div class="groupsum">
-      <div v-for="item in groupSum">{{ item.key }} : {{ item.value }}</div>
+      <div v-for="item in groupSum" :key="item.key">{{ item.key }} : {{ item.value }}</div>
     </div>
   </div>
 </template>
 <script>
-import { createNamespacedHelpers } from 'vuex'
+import { createNamespacedHelpers, mapActions as globalMapActions } from 'vuex'
 const elemGrpLabelName = 'ctlgName'
 const { mapState, mapMutations, mapActions } =
   createNamespacedHelpers('dataElem/elemGroup')
@@ -55,9 +55,11 @@ export default {
     checkedGrpChangeHandler() {
       let checkedKeys = this.$refs.grouptree.getCheckedKeys()
       this.setSelectedGrps(checkedKeys)
+      this.listElements()
     },
     ...mapMutations(['setSearch', 'setSelectedGrps']),
-    ...mapActions(['fetchElementGrps'])
+    ...mapActions(['fetchElementGrps']),
+    ...globalMapActions('dataElem/elemList', { listElements: 'search' })
   },
   mounted() {
     this.fetchElementGrps()

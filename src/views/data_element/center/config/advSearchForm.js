@@ -22,7 +22,7 @@ export default [
     label: '包含全部检索词',
     id: 'contains',
     elOptions: {
-      placeholder: '请输入'
+      placeholder: '多个检索词以逗号，分隔'
     }
   },
   {

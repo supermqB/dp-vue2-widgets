@@ -10,7 +10,7 @@
     <CardVue title="字段内涵校验" class="fieldContent">
       <el-checkbox
         v-model="fieldCheck.enableValDomain"
-        :disabled="selectedDataElem.type != 'S3'"
+        :disabled="!hasValDomain"
         >值域字典</el-checkbox
       >
       <!--span>选择值域</span-->
@@ -24,9 +24,7 @@
         ></el-autocomplete>
       </div>
 
-      <el-checkbox
-        v-model="fieldCheck.enableValRange"
-        :disabled="selectedDataElem.type == 'S3'"
+      <el-checkbox v-model="fieldCheck.enableValRange" :disabled="!hasValRange"
         >取值范围检验</el-checkbox
       >
       <div class="num_range_area">
@@ -70,7 +68,7 @@
           :placeHolder="rangeFormat"
         ></el-input>
       </div>
-      <el-checkbox v-model="fieldCheck.enableRegexp"
+      <el-checkbox v-model="fieldCheck.enableRegexp" :disabled="!hasRegexp"
         >表达格式规范校验</el-checkbox
       >
       <el-input
@@ -158,7 +156,23 @@ export default {
     }),
     ...globalMapState({
       selectedDataElem: state => state.dataElem.elemList.selectedItem
-    })
+    }),
+    hasValDomain() {
+      let enable = this.formatCheck.formData.data_type == 'S3'
+      this.fieldCheck.enableValDomain = enable
+      return enable
+    },
+    hasValRange() {
+      let type = this.formatCheck.formData.data_type
+      let enable = type.indexOf('S') == -1 && type != 'L'
+      this.fieldCheck.enableValRange = enable
+      return enable
+    },
+    hasRegexp() {
+      let enable = this.formatCheck.formData.data_type != 'L'
+      this.fieldCheck.enableRegexp = enable
+      return enable
+    }
   },
   methods: {
     searchDomainByList(queryString, cb) {

@@ -4,7 +4,6 @@
     :model="formData"
     :rules="formRule"
     :show-message="false"
-    :inline="true"
   >
     <el-form-item
       v-for="cfg in formCfg"
