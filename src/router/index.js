@@ -22,6 +22,12 @@ const routes = [
         component: ValuePage
       },
       {
+        path: 'mdm',
+        name: 'mdm',
+        meta: { title: '主索引管理' },
+        component: () => import('@/views/mdm/')
+      },
+      {
         path: 'data_element',
         name: 'data_element',
         meta: { title: '数据元管理' },

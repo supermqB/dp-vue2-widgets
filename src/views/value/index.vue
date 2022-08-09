@@ -1,8 +1,11 @@
 <template>
   <dp-layout-container>
     <template #asideLeft>
-      <Catalog class="catalog"></Catalog>
-      <Task class="task"></Task>
+      <div class="left_aside_container">
+        <Catalog class="catalog"></Catalog>
+        <Task class="task"></Task>
+        <Bottom class="bottom" :labelList="['值域', '任务']"></Bottom>
+      </div>
     </template>
     <template #main>
       <!-- <ValueTable /> -->
@@ -18,17 +21,18 @@
 <script>
 import Task from './task'
 import Catalog from './catalog'
+import Bottom from '@/components/bottom/Catalog.vue'
 import Center from './center'
 import Suspect from './suspect'
-// import TaskList from '@/components/TaskList'
-// import ValueTable from './ValueTable'
-// import ValueDetails from './ValueDetails'
 
 export default {
   name: 'ValueExamine',
-  components: { 
-    // TaskList, ValueTable, ValueDetails
-    Catalog, Task, Center, Suspect
+  components: {
+    Catalog,
+    Task,
+    Bottom,
+    Center,
+    Suspect
   },
   data() {
     return {
@@ -41,10 +45,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.catalog {
-  height: 45%;
-}
-.task {
-  height: 55%;
+.left_aside_container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  overflow: hidden;
+  .catalog {
+    flex: 1 1 auto;
+    min-height: 100px;
+  }
+  .task {
+    height: 350px;
+    padding-bottom: 6px;
+  }
+  .bottom {
+    height: 30px;
+  }
 }
 </style>

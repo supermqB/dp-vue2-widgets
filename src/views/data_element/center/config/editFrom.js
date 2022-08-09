@@ -120,7 +120,7 @@ export function getFormFieldsConfig() {
       type: 'el-autocomplete',
       elOptions: {
         'fetch-suggestions': (queryString, cb) => {
-          let orginOptions = this.getSpeechList()
+          let orginOptions = this.wordSpeechList
           let filteredValues = queryString
             ? orginOptions.filter(item => item.indexOf(queryString) != -1)
             : orginOptions

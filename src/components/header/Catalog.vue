@@ -2,32 +2,41 @@
   <div class="catalogTitleWrap">
     <h3>{{ title }}</h3>
     <div class="buttons">
-      <img :src="ADDICON" @click="click('add')"/>
-      <img :src="EDITICON" @click="click('edit')"/>
-      <img v-if="hasRun" :src="RUNICON" @click="click('run')" />
+      <img
+        v-for="action in actions"
+        :src="action.icon"
+        :key="action.type"
+        @click="click(action.type)"
+      />
     </div>
   </div>
 </template>
 
 <script>
-const ADDICON = require("@/assets/images/common/icons/add.png")
-const EDITICON = require("@/assets/images/common/icons/edit.png")
-const RUNICON = require("@/assets/images/common/icons/run.png")
+const ADDICON = require('@/assets/images/common/icons/add.png')
+const EDITICON = require('@/assets/images/common/icons/edit.png')
+const RUNICON = require('@/assets/images/common/icons/run.png')
 export default {
   props: {
     title: {
       type: String,
       default: ''
     },
-    hasRun: {
-      type: Boolean,
-      default: false
+    actionTypes: {
+      type: Array,
+      default: () => {
+        return ['add', 'edit', 'run']
+      }
     }
   },
-  created() {
-    this.ADDICON = ADDICON
-    this.EDITICON = EDITICON
-    this.RUNICON = RUNICON
+  data() {
+    return {
+      actions: [
+        { type: 'add', icon: ADDICON },
+        { type: 'edit', icon: EDITICON },
+        { type: 'run', icon: RUNICON }
+      ].filter(act=> this.actionTypes.indexOf(act.type) != -1)
+    }
   },
   methods: {
     click(type) {
@@ -46,7 +55,7 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #E5E5E5;
+  border-bottom: 1px solid #e5e5e5;
   h3 {
     font-size: 16px;
     font-weight: normal;

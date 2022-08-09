@@ -196,6 +196,7 @@ export default {
   .table_container {
     flex-grow: 1;
     padding: 6px;
+    box-sizing: border-box;
   }
 }
 </style>
