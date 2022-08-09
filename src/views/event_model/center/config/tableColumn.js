@@ -1,7 +1,7 @@
 export default [
   {
     colConfig: {
-      property: 'seqNo',
+      property: 'index',
       label: '序号',
       width: 45
     }
@@ -60,6 +60,9 @@ export default [
       property: 'requiredFlag',
       label: '必填',
       minWidth: 60
+    },
+    formatter(val) {
+      return val ? '是' : '否'
     }
   },
   {
@@ -67,6 +70,9 @@ export default [
       property: 'primaryKeyFlag',
       label: '主键',
       minWidth: 60
+    },
+    formatter(val) {
+      return val ? '是' : '否'
     }
   }
 ]

@@ -1,11 +1,10 @@
 <template>
   <div class="wrap">
     <div class="header">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item>值域管理</el-breadcrumb-item>
-        <el-breadcrumb-item><b>DICT_SEX</b></el-breadcrumb-item>
-      </el-breadcrumb>
-      <div class="buttons">
+      <Breadcrumb
+        baseLabel="值域管理"
+        currentLabel="DICT_SEX"></Breadcrumb>
+      <div>
         <el-button type="primary" @click="editVersion">版本管理</el-button>
         <el-button type="primary" @click="addVersion">新增版本</el-button>
       </div>
@@ -60,13 +59,14 @@ import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
 import Dialog from '@/components/Dialog.vue'
 import Version from './version.vue'
+import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import tableConfig from './config/tableColumn'
 import { addVersionCfg, editVersionCfg } from './config/versionForm'
 import { searchValueCfg, addValueCfg, editValueCfg } from './config/valueForm'
 
 export default {
   components: {
-    Form, Table, Dialog, Version
+    Form, Table, Dialog, Version, Breadcrumb
   },
   data() {
     return {
@@ -122,22 +122,14 @@ export default {
   .header {
     position: relative;
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     height: 41px;
     padding-left: 10px;
+    padding-right: 10px;
     box-sizing: border-box;
     border-bottom: 1px solid #E5E5E5;
-    .buttons {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 190px;
-      height: 100%;
-      display: flex;
-      align-items: center;
-    }
   } 
   .search {
     position: relative;
@@ -172,7 +164,7 @@ export default {
     padding-right: 120px;
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    justify-content: flex-end;
     flex-wrap: wrap;
     .el-form-item {
       margin-bottom: 12px;
@@ -186,7 +178,7 @@ export default {
     padding-right: 120px;
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    justify-content: flex-end;
     flex-wrap: wrap;
     .el-form-item {
       margin-bottom: 12px;
@@ -200,7 +192,7 @@ export default {
     padding-right: 120px;
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    justify-content: flex-end;
     flex-wrap: wrap;
     .el-form-item {
       margin-bottom: 12px;
@@ -214,7 +206,7 @@ export default {
     padding-right: 120px;
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    justify-content: flex-end;
     flex-wrap: wrap;
     .el-form-item {
       margin-bottom: 12px;

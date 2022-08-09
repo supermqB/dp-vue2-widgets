@@ -4,6 +4,7 @@
     :visible.sync="isOpen"
     class="dp_dialog"
     :close-on-click-modal="false"
+    @closed="onClosed"
   >
     <slot>test slot</slot>
     <span slot="footer" class="dialog-footer">
@@ -39,6 +40,9 @@ export default {
     finishHandler() {
       this.$emit('dialog-complete')
       this.toggleOpen()
+    },
+    onClosed() {
+      this.$emit('onClosed')
     }
   },
   watch: {

@@ -33,7 +33,7 @@ export const versionCfg = [
 ]
 
 export const versionRule = {
-  version: { required: true },
-  parVersion: { required: true },
-  state: { required: true }
+  version: { required: true, message: '请输入版本信息！', trigger: 'blur' },
+  parVersion: { required: true, message: '请选择继承版本！', trigger: 'blur' },
+  state: { required: true, message: '请选择状态！', trigger: 'blur' }
 }

@@ -8,23 +8,25 @@
     ></Header>
     <div class="version">
       <span>版本</span>
-      <el-select v-model="version">
+      <el-select v-model="currentVersion" @change="onVersionChanged">
         <el-option
           v-for="(item, index) in versionList"
           :key="index"
-          :label="item"
-          :value="item"></el-option>
+          :label="item.versionName"
+          :value="item.versionName"></el-option>
       </el-select>
       <el-button type="text" @click="addVersion">新增版本</el-button>
     </div>
     <Tree
-      :currentNodeKey="current"
+      :data="catalogTreeList"
+      :currentNodeKey="currentCatalog"
       @onClick="handleNodeClick"
       class="tree"
     ></Tree>
-    <Bottom :labelList="['总数', '字段数']"></Bottom>
+    <Bottom :labelList="['总数', '字段数']" :value="[totalNumber, pageInfo.totalSize]"></Bottom>
     <Dialog
       title="新增版本"
+      :isOpen="versionDialog"
       ref="versionDialog"
       class="versionDialog"
     >
@@ -34,8 +36,14 @@
       :title="`${catalogState === ADDSTATE ? '新增数据集' : '编辑数据集'}`"
       ref="catalogDialog"
       class="catalogDialog"
+      @onClosed="resetCatalogForm"
+      @dialog-complete="submitCatalog"
     >
-      <Form :formCfg="catalogCfg" :formData="catalogData" :formRule="catalogRule" ></Form>
+      <Form 
+        ref="catalogForm"
+        :formCfg="catalogCfg(versionOptions, themeOptions, catalogState)"
+        :formData="catalogData" :formRule="catalogRule"
+      ></Form>
     </Dialog>
   </div>
 </template>
@@ -48,19 +56,16 @@ import Header from '@/components/header/Catalog.vue'
 import Bottom from '@/components/bottom/Catalog.vue'
 import { versionCfg, versionRule } from './config/versionForm'
 import { catalogCfg, catalogRule } from './config/catalogForm'
-import { ADDSTATE, EDITSTATE, RUNNINGSTATE } from '@/utils/const'
+import { ADDSTATE, EDITSTATE } from '@/utils/const'
+import { createNamespacedHelpers } from 'vuex'
+import { updateCatalogApi, addCatalogApi } from '@/api/event'
+const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('event')
 export default {
   components: {
     Dialog, Form, Tree, Header, Bottom
   },
   data() {
     return {
-      version: '',
-      current: '1-1',
-      versionList: [
-        '卫生版1.0'
-      ],
-      catalogList: [],
       versionCfg,
       versionRule,
       versionData: {
@@ -72,37 +77,74 @@ export default {
       catalogCfg, 
       catalogRule,
       catalogData: {
+        id: null,
         version: '',
         theme: '',
         code: '',
         nameCn: '',
         nameEn: '',
         description: ''
-      }
+      },
+      versionDialog: false,
+      catalogDialog: false,
     }
+  },
+  computed: {
+    ...mapState(['versionList', 'currentCatalog', 'currentVersion', 'pageInfo']),
+    ...mapGetters(['versionOptions', 'themeOptions', 'currentCatalogItem', 'catalogTreeList', 'totalNumber'])
   },
   created() {
     this.ADDSTATE = ADDSTATE
   },
-  async mounted () {
-    // const res = await getVersionListApi()
-  },
   methods: {
-    handleNodeClick({ id, label }) {
-      this.current = id
+    ...mapMutations(['setCurrentCatalog', 'setCurrentVersion']),
+    ...mapActions(['queryColumn', 'queryCatalog', 'addCatalog', 'updateCatalog']),
+    onVersionChanged(val) {
+      this.setCurrentVersion(val)
+      this.queryCatalog()
+    },
+    handleNodeClick({id}) {
+      this.setCurrentCatalog(id)
+      this.queryColumn()
     },
     addVersion() {
       this.catalogDialogState = ADDSTATE
       this.$refs.versionDialog.toggleOpen()
     },
+    resetCatalogForm() {
+      this.$refs.catalogForm.resetFields()
+    },
     addCatalog() {
       this.catalogState = ADDSTATE
       this.$refs.catalogDialog.toggleOpen()
+      const { theme } = this.currentCatalogItem
+      this.catalogData.version = this.currentVersion,
+      this.catalogData.theme = theme
+      this.catalogData.code = ''
+      this.catalogData.nameCn = ''
     },
     editCatalog() {
       this.catalogState = EDITSTATE
       this.$refs.catalogDialog.toggleOpen()
-    }
+      const { id, code, nameCn, nameEn, description, theme } = this.currentCatalogItem
+      this.catalogData.id = id
+      this.catalogData.version = this.currentVersion,
+      this.catalogData.theme = theme
+      this.catalogData.code = code
+      this.catalogData.nameCn = nameCn
+      this.catalogData.nameEn = nameEn
+      this.catalogData.description = description
+    },
+    async submitCatalog() {
+      const { id, version, theme, code, nameCn, nameEn, description } = this.catalogData
+      if (this.catalogState === ADDSTATE) {
+        await addCatalogApi(version, theme, code, nameCn, nameEn, description)
+        this.$message.success("新建事件目录成功！")
+      } else {
+        await updateCatalogApi(id, version, theme, code, nameCn, nameEn, description)
+        this.$message.success("编辑事件目录成功！")
+      }
+    },
   }
 }
 </script>
@@ -149,7 +191,10 @@ export default {
     padding-right: 85px;
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
+    .el-select {
+      margin: 0;
+    }
   }
 }
 
@@ -159,7 +204,7 @@ export default {
     padding-right: 110px;
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
   }
 }
 </style>
