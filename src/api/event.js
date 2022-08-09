@@ -84,57 +84,35 @@ export const updateCatalogApi = (
   })
 }
 
-export const addCatalogColumnApi = (
-  id,
-  nameCn,
-  nameEn,
-  definition,
-  primaryKeyFlag,
-  requiredFlag,
-  indexFlag
-) => {
+export const addCatalogColumnApi = data => {
   return request({
     method: 'post',
     url: '/dataset/addColumn',
-    data: {
-      id,
-      nameCn,
-      nameEn,
-      definition,
-      primaryKeyFlag,
-      requiredFlag,
-      indexFlag
-    }
+    data
   })
 }
 
-export const updateCatalogColumnApi = (
-  id,
-  nameCn,
-  nameEn,
-  definition,
-  primaryKeyFlag,
-  requiredFlag,
-  indexFlag
-) => {
+export const updateCatalogColumnApi = data => {
   return request({
     method: 'post',
     url: '/dataset/editColumn',
-    data: {
-      id,
-      nameCn,
-      nameEn,
-      definition,
-      primaryKeyFlag,
-      requiredFlag,
-      indexFlag
-    }
+    data
+    // data: {
+    //   id,
+    //   nameCn,
+    //   nameEn,
+    //   definition,
+    //   primaryKeyFlag,
+    //   requiredFlag,
+    //   indexFlag
+    // }
   })
 }
 
 export const queryDataElementApi = nameCn => {
   return request({
     method: 'post',
+    url: '/data-element/list',
     params: {
       current: 1,
       size: 30

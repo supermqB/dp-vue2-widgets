@@ -8,7 +8,7 @@
     ></Header>
     <div class="version">
       <span>版本</span>
-      <el-select v-model="currentVersion" @change="onVersionChanged">
+      <el-select v-model="curVersion">
         <el-option
           v-for="(item, index) in versionList"
           :key="index"
@@ -18,6 +18,7 @@
       <el-button type="text" @click="addVersion">新增版本</el-button>
     </div>
     <Tree
+      ref="tree"
       :data="catalogTreeList"
       :currentNodeKey="currentCatalog"
       @onClick="handleNodeClick"
@@ -29,6 +30,7 @@
       :isOpen="versionDialog"
       ref="versionDialog"
       class="versionDialog"
+      @dialog-complete="submitVersion"
     >
       <Form :formCfg="versionCfg" :formData="versionData" :formRule="versionRule" ></Form>
     </Dialog>
@@ -58,7 +60,7 @@ import { versionCfg, versionRule } from './config/versionForm'
 import { catalogCfg, catalogRule } from './config/catalogForm'
 import { ADDSTATE, EDITSTATE } from '@/utils/const'
 import { createNamespacedHelpers } from 'vuex'
-import { updateCatalogApi, addCatalogApi } from '@/api/event'
+import { updateCatalogApi, addCatalogApi, addVersionApi } from '@/api/event'
 const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('event')
 export default {
   components: {
@@ -90,7 +92,16 @@ export default {
     }
   },
   computed: {
-    ...mapState(['versionList', 'currentCatalog', 'currentVersion', 'pageInfo']),
+    ...mapState(['versionList', 'currentCatalog', 'pageInfo', 'currentVersion']),
+    curVersion: {
+      get() {
+        return this.currentVersion
+      },
+      set(val) {
+        this.setCurrentVersion(val)
+        this.queryCatalog()
+      }
+    },
     ...mapGetters(['versionOptions', 'themeOptions', 'currentCatalogItem', 'catalogTreeList', 'totalNumber'])
   },
   created() {
@@ -145,6 +156,19 @@ export default {
         this.$message.success("编辑事件目录成功！")
       }
     },
+    async submitVersion() {
+      // const {version, parVersion, state} = 
+      // await addVersionApi('test02', '', '1')
+    }
+  },
+  watch: {
+    currentCatalogItem: {
+      handler() {
+        this.$nextTick(() => {
+          this.$refs.tree.setCurrent()
+        })
+      }
+    }
   }
 }
 </script>
@@ -192,6 +216,10 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    .el-form-item {
+      display: flex;
+      flex-direction: row;
+    }
     .el-select {
       margin: 0;
     }
@@ -205,6 +233,10 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    .el-form-item {
+      display: flex;
+      flex-direction: row;
+    }
   }
 }
 </style>

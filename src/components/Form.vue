@@ -14,9 +14,10 @@
       <component
         :is="cfg.type"
         v-bind="cfg.elOptions"
+        v-on="cfg.elEvents"
         v-model="formData[cfg.id]"
       >
-        <el-option v-for="opt in cfg.options" v-bind="prepareOpt(opt)">
+        <el-option v-for="(opt,index) in cfg.options" v-bind="prepareOpt(opt)" :key="index">
         </el-option>
       </component>
     </el-form-item>

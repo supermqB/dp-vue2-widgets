@@ -147,14 +147,19 @@ export default {
   }
 }
 
-::v-deep .search {
+::v-deep .search .el-form {
+  display: flex;
   .el-form-item {
+    display: flex;
     margin-bottom: 0px;
+  }
+  .el-input {
+    margin-right: 8px;
   }
 
   .el-select {
     margin-left: 0;
-    margin-right: 0
+    margin-right: 8px;
   }
 }
 

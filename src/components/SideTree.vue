@@ -60,13 +60,16 @@ export default {
         case EDITINGSTATE:
           return require("@/assets/images/common/icons/editing.png")
       }
+    },
+    setCurrent() {
+      this.$nextTick(() => this.$refs.sideTree.setCurrentKey(this.currentNodeKey))
     }
   },
   watch: {
     currentNodeKey: {
       handler(cur, old) {
         if (!old)
-          this.$nextTick(() => this.$refs.sideTree.setCurrentKey(cur))
+          this.setCurrent()
       },
     }
   }

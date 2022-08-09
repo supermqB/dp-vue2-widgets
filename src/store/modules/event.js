@@ -38,6 +38,7 @@ const processCatalogList = list => {
 const processColumnList = list => {
   return list.map(item => {
     return Object.assign(item, {
+      id: item.seqNo,
       index: item.seqNo,
       primaryKeyFlag: parseInt(item.primaryKeyFlag),
       requiredFlag: parseInt(item.requiredFlag),

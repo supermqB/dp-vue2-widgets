@@ -34,8 +34,9 @@
       ref="columnDialog"
       class="columnDialog"
       @onClosed="resetColumnForm"
+      @dialog-complete="submitColumn"
     >
-      <Form ref="columnForm" :formCfg="columnCfg" :formData="columnData"></Form>
+      <Form ref="columnForm" :formCfg="columnCfg(queryDataElement, dataElementData, setDataElementInfo)" :formData="columnData"></Form>
     </Dialog>
     <Dialog
       title="高级搜索"
@@ -59,6 +60,7 @@ import { columnCfg } from './config/columnForm'
 import { adSearchCfg } from './config/adSearchForm'
 import { ADDSTATE, EDITSTATE } from '@/utils/const'
 import { createNamespacedHelpers } from 'vuex'
+import { queryDataElementApi, addCatalogColumnApi, updateCatalogColumnApi } from '@/api/event'
 const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('event')
 export default {
   components: {
@@ -71,6 +73,8 @@ export default {
       columnState: '',
       columnCfg,
       columnData: {
+        id: '',
+        elementNameCn: '',
         type: '',
         format: '', // 表示格式
         identifier: '', // 数据元标识
@@ -81,7 +85,9 @@ export default {
         requiredFlag: '',
         indexFlag: '',
         valueRange: '',
-        valueDict: ''
+        valueDomainName: '',
+        dataElementId: '',
+        datasetId: ''
       },
       adSearchCfg,
       adSearchData: {
@@ -90,7 +96,8 @@ export default {
         index3: '',
         index4: '',
         index5: ''
-      }
+      },
+      dataElementData: []
     }
   },
   computed: {
@@ -109,7 +116,7 @@ export default {
       this.queryColumn({})
     },
     resetColumnForm() {
-      this.$refs.columnForm.resetFields()
+      // this.$refs.columnForm.resetFields()
     },
     addColumn() {
       this.columnState = ADDSTATE
@@ -120,9 +127,42 @@ export default {
       this.$refs.columnDialog.toggleOpen()
       Object.assign(this.columnData, this.currentColumnRow)
     },
+    async submitColumn() {
+      if (this.columnState === ADDSTATE) {
+        await addCatalogColumnApi(this.columnData)
+        this.$message.success("新增字段成功！")
+      } else {
+        await updateCatalogColumnApi(this.columnData)
+        this.$message.success("编辑字段成功！")
+      }
+    },
     advancedSearch() {
       this.$refs.searchDialog.toggleOpen()
       this.currentColumnRow
+    },
+    async queryDataElement(val) {
+      const res = await queryDataElementApi(val)
+      this.dataElementData = res.value.records.map(item => {
+        return {
+          id: item.id,
+          value: item.id,
+          label: item.nameCn,
+          obj: item
+        }
+      })
+    },
+    setDataElementInfo(val) {
+      this.dataElementData.forEach(item => {
+        if (item.id === val) {
+          ['valueRange', 'valueDomainName', 'type', 'format', 'identifier' ].forEach(key => {
+            this.columnData[key] = item['obj'][key]
+          })
+          console.log(item.id, this.currentCatalog)
+          this.columnData.dataElementId = item.id
+          this.columnData.datasetId = this.currentCatalog
+          console.log(this.columnData)
+        }
+      })
     }
   },
   watch: {
@@ -198,7 +238,7 @@ export default {
 
 ::v-deep .searchDialog .el-dialog{
   width: 700px;
-  form {
+  .form {
     padding-right: 140px;
     display: flex;
     flex-direction: column;
@@ -209,15 +249,15 @@ export default {
   }
 }
 
-::v-deep .searchForm {
+::v-deep .searchForm{
+  display: flex;
+  flex-direction: row;
   .el-form-item {
+    display: flex;
     margin-bottom: 0px;
   }
   .el-form-item__label {
-    padding-right: 8px;
-  }
-  .el-select {
-    margin: 0;
+    padding: 0 8px;
   }
 }
 </style>
