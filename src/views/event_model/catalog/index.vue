@@ -66,8 +66,6 @@ export default {
   },
   data() {
     return {
-      version: '',
-      current: '1-1',
       versionCfg,
       versionRule,
       versionData: {
@@ -136,14 +134,15 @@ export default {
       this.catalogData.nameCn = nameCn
       this.catalogData.nameEn = nameEn
       this.catalogData.description = description
-      
     },
     async submitCatalog() {
       const { id, version, theme, code, nameCn, nameEn, description } = this.catalogData
       if (this.catalogState === ADDSTATE) {
         await addCatalogApi(version, theme, code, nameCn, nameEn, description)
+        this.$message.success("新建事件目录成功！")
       } else {
         await updateCatalogApi(id, version, theme, code, nameCn, nameEn, description)
+        this.$message.success("编辑事件目录成功！")
       }
     },
   }

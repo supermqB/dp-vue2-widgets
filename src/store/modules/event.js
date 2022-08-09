@@ -155,8 +155,14 @@ const actions = {
       pageSize,
       state.searchForm
     )
-    state.columnList = processColumnList(res.value.records)
-    commit('setCurrentColumn', state.columnList[0].index)
+    const { records, pageInfo } = res.value
+    state.columnList = processColumnList(records)
+    commit(
+      'setCurrentColumn',
+      state.columnList && state.columnList.length
+        ? state.columnList[0].index
+        : ''
+    )
     commit('setPageInfo', res.value.pageInfo)
   },
   async addVersion({ commit }, {}) {

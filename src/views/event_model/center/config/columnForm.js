@@ -4,7 +4,13 @@ export const columnCfg = [
   {
     type: 'el-select',
     label: '数据元',
-    id: 'name'
+    id: 'name',
+    elOptions: {
+      filterable: true,
+      remote: true,
+      reserveKeyword: true
+      // remoteMethod:
+    }
   },
   {
     type: 'el-input',
@@ -46,7 +52,7 @@ export const columnCfg = [
     }
   },
   {
-    type: 'el-select',
+    type: 'el-input',
     label: '数据元允许值',
     id: 'valueRange',
     elOptions: {

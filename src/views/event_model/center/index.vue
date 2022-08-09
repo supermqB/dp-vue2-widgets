@@ -33,8 +33,9 @@
       :title="`${columnState === ADDSTATE ? '新增字段' : '编辑字段'}`"
       ref="columnDialog"
       class="columnDialog"
+      @onClosed="resetColumnForm"
     >
-      <Form :formCfg="columnCfg" :formData="columnData"></Form>
+      <Form ref="columnForm" :formCfg="columnCfg" :formData="columnData"></Form>
     </Dialog>
     <Dialog
       title="高级搜索"
@@ -67,7 +68,7 @@ export default {
     return {
       formCfg,
       tableConfig,
-      columnState: ADDSTATE,
+      columnState: '',
       columnCfg,
       columnData: {
         type: '',
@@ -94,7 +95,7 @@ export default {
   },
   computed: {
     ...mapGetters(['currentCatalogItem', 'currentColumnRow' ]),
-    ...mapState(['columnList', 'pageInfo', 'searchForm', 'currentColumn'])
+    ...mapState(['columnList', 'pageInfo', 'searchForm', 'currentColumn', 'currentCatalog'])
   },
   created() {
     this.ADDSTATE = ADDSTATE
@@ -107,13 +108,17 @@ export default {
       this.setPageInfo(val)
       this.queryColumn({})
     },
+    resetColumnForm() {
+      this.$refs.columnForm.resetFields()
+    },
     addColumn() {
-      this.columeState = ADDSTATE
+      this.columnState = ADDSTATE
       this.$refs.columnDialog.toggleOpen()
     },
     editColumn() {
-      this.columeState = EDITSTATE
+      this.columnState = EDITSTATE
       this.$refs.columnDialog.toggleOpen()
+      Object.assign(this.columnData, this.currentColumnRow)
     },
     advancedSearch() {
       this.$refs.searchDialog.toggleOpen()
@@ -121,10 +126,11 @@ export default {
     }
   },
   watch: {
-    currentColumn: {
-      handler(cur, old) {
-        if (!old)
-          this.$refs.columnTable.setCurrentRow(this.currentColumnRow)
+    currentColumnRow: {
+      handler(cur) {
+        this.$nextTick(() => {
+          this.$refs.columnTable.setCurrentRow(cur)
+        })
       }
     }
   }

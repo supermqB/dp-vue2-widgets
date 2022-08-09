@@ -131,3 +131,16 @@ export const updateCatalogColumnApi = (
     }
   })
 }
+
+export const queryDataElementApi = nameCn => {
+  return request({
+    method: 'post',
+    params: {
+      current: 1,
+      size: 30
+    },
+    data: {
+      nameCn
+    }
+  })
+}
