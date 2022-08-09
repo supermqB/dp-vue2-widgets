@@ -47,6 +47,9 @@ export default {
             label: opt,
             value: opt
           }
+    },
+    resetFields() {
+      this.$refs.el_form.resetFields()
     }
   }
 }

@@ -7,20 +7,14 @@ export const getVersionListApi = () => {
   })
 }
 
-export const getCatalogApi = () => {
+export const getCatalogApi = version => {
   return request({
     method: 'get',
-    url: '/dataset/getCatalog'
+    url: `/dataset/getCatalog/${version}`
   })
 }
 
-export const getEventInfoApi = (
-  id,
-  current,
-  size,
-  identifier = '',
-  nameCn = ''
-) => {
+export const getEventInfoApi = (id, current, size, form = {}) => {
   return request({
     method: 'post',
     url: `/dataset/getInfo`,
@@ -28,11 +22,7 @@ export const getEventInfoApi = (
       current,
       size
     },
-    data: {
-      id,
-      identifier,
-      nameCn
-    }
+    data: Object.assign({ id }, form)
   })
 }
 
@@ -71,6 +61,7 @@ export const addCatalogApi = (
 }
 
 export const updateCatalogApi = (
+  id,
   version,
   theme,
   code,
@@ -82,6 +73,7 @@ export const updateCatalogApi = (
     method: 'post',
     url: '/dataset/editDataSet',
     data: {
+      id,
       version,
       theme,
       code,

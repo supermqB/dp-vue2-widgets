@@ -8,7 +8,7 @@
     ></Header>
     <div class="version">
       <span>版本</span>
-      <el-select v-model="currentVersion">
+      <el-select v-model="currentVersion" @change="onVersionChanged">
         <el-option
           v-for="(item, index) in versionList"
           :key="index"
@@ -18,14 +18,15 @@
       <el-button type="text" @click="addVersion">新增版本</el-button>
     </div>
     <Tree
-      :data="catalogList"
+      :data="catalogTreeList"
       :currentNodeKey="currentCatalog"
       @onClick="handleNodeClick"
       class="tree"
     ></Tree>
-    <Bottom :labelList="['总数', '字段数']"></Bottom>
+    <Bottom :labelList="['总数', '字段数']" :value="[totalNumber, pageInfo.totalSize]"></Bottom>
     <Dialog
       title="新增版本"
+      :isOpen="versionDialog"
       ref="versionDialog"
       class="versionDialog"
     >
@@ -35,8 +36,14 @@
       :title="`${catalogState === ADDSTATE ? '新增数据集' : '编辑数据集'}`"
       ref="catalogDialog"
       class="catalogDialog"
+      @onClosed="resetCatalogForm"
+      @dialog-complete="submitCatalog"
     >
-      <Form :formCfg="catalogCfg" :formData="catalogData" :formRule="catalogRule" ></Form>
+      <Form 
+        ref="catalogForm"
+        :formCfg="catalogCfg(versionOptions, themeOptions, catalogState)"
+        :formData="catalogData" :formRule="catalogRule"
+      ></Form>
     </Dialog>
   </div>
 </template>
@@ -49,9 +56,10 @@ import Header from '@/components/header/Catalog.vue'
 import Bottom from '@/components/bottom/Catalog.vue'
 import { versionCfg, versionRule } from './config/versionForm'
 import { catalogCfg, catalogRule } from './config/catalogForm'
-import { ADDSTATE, EDITSTATE, RUNNINGSTATE } from '@/utils/const'
+import { ADDSTATE, EDITSTATE } from '@/utils/const'
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapMutations, mapActions } = createNamespacedHelpers('event')
+import { updateCatalogApi, addCatalogApi } from '@/api/event'
+const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('event')
 export default {
   components: {
     Dialog, Form, Tree, Header, Bottom
@@ -71,43 +79,73 @@ export default {
       catalogCfg, 
       catalogRule,
       catalogData: {
+        id: null,
         version: '',
         theme: '',
         code: '',
         nameCn: '',
         nameEn: '',
         description: ''
-      }
+      },
+      versionDialog: false,
+      catalogDialog: false,
     }
   },
   computed: {
-    ...mapState(['versionList', 'catalogList', 'currentCatalog', 'currentVersion'])
+    ...mapState(['versionList', 'currentCatalog', 'currentVersion', 'pageInfo']),
+    ...mapGetters(['versionOptions', 'themeOptions', 'currentCatalogItem', 'catalogTreeList', 'totalNumber'])
   },
   created() {
     this.ADDSTATE = ADDSTATE
   },
-  async mounted () {
-    // const res = await getVersionListApi()
-  },
   methods: {
-    ...mapMutations(['setCurrentCatalog']),
-    ...mapActions(['queryColumn']),
+    ...mapMutations(['setCurrentCatalog', 'setCurrentVersion']),
+    ...mapActions(['queryColumn', 'queryCatalog', 'addCatalog', 'updateCatalog']),
+    onVersionChanged(val) {
+      this.setCurrentVersion(val)
+      this.queryCatalog()
+    },
     handleNodeClick({id}) {
       this.setCurrentCatalog(id)
-      this.queryColumn({id})
+      this.queryColumn()
     },
     addVersion() {
       this.catalogDialogState = ADDSTATE
       this.$refs.versionDialog.toggleOpen()
     },
+    resetCatalogForm() {
+      this.$refs.catalogForm.resetFields()
+    },
     addCatalog() {
       this.catalogState = ADDSTATE
       this.$refs.catalogDialog.toggleOpen()
+      const { theme } = this.currentCatalogItem
+      this.catalogData.version = this.currentVersion,
+      this.catalogData.theme = theme
+      this.catalogData.code = ''
+      this.catalogData.nameCn = ''
     },
     editCatalog() {
       this.catalogState = EDITSTATE
       this.$refs.catalogDialog.toggleOpen()
-    }
+      const { id, code, nameCn, nameEn, description, theme } = this.currentCatalogItem
+      this.catalogData.id = id
+      this.catalogData.version = this.currentVersion,
+      this.catalogData.theme = theme
+      this.catalogData.code = code
+      this.catalogData.nameCn = nameCn
+      this.catalogData.nameEn = nameEn
+      this.catalogData.description = description
+      
+    },
+    async submitCatalog() {
+      const { id, version, theme, code, nameCn, nameEn, description } = this.catalogData
+      if (this.catalogState === ADDSTATE) {
+        await addCatalogApi(version, theme, code, nameCn, nameEn, description)
+      } else {
+        await updateCatalogApi(id, version, theme, code, nameCn, nameEn, description)
+      }
+    },
   }
 }
 </script>

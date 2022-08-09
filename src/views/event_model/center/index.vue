@@ -4,9 +4,9 @@
       <div class="left">
         <Breadcrumb
           baseLabel="事件模型管理"
-          :currentLabel="`${currentCatalog ? currentCatalog.label : ''}(event_record)`">
+          :currentLabel="`${currentCatalogItem ? `${currentCatalogItem.nameCn}(${currentCatalogItem.nameEn})` : ''}`">
         </Breadcrumb>
-        <State></State>
+        <State :currentState="currentCatalogItem.state"></State>
       </div>
       <div>
         <el-button type="primary" @click="addColumn">新增</el-button>
@@ -14,14 +14,15 @@
       </div>
     </div>
     <div class="search">
-      <Form class="searchForm" :formData="formData" :formCfg="formCfg"></Form>
+      <Form class="searchForm" :formData="searchForm" :formCfg="formCfg"></Form>
       <div>
-        <el-button>查询</el-button>
+        <el-button @click="queryColumn">查询</el-button>
         <el-button type="text" @click="advancedSearch">高级搜索</el-button>
       </div>
     </div>
     <div class="content">
       <Table
+        ref="columnTable"
         :tableConfig="tableConfig"
         :tableData="columnList"
         :pageInfo="pageInfo"
@@ -64,34 +65,22 @@ export default {
   },
   data() {
     return {
-      formData: {
-        identifier: '',
-        field: '',
-        type: '',
-        status: '',
-        primary: ''
-      },
       formCfg,
       tableConfig,
-      tableData: [
-        {
-          index: 1
-        },{
-          index: 2
-        }, {
-          index: 3
-        }
-      ],
       columnState: ADDSTATE,
       columnCfg,
       columnData: {
-        name: '',
+        type: '',
+        format: '', // 表示格式
+        identifier: '', // 数据元标识
         nameCn: '',
         nameEn: '',
-        definition: '',
-        primaryKeyFlag: '',
+        definition: '', // 字段定义
+        primaryKeyFlag: '', // 
         requiredFlag: '',
-        indexFlag: ''
+        indexFlag: '',
+        valueRange: '',
+        valueDict: ''
       },
       adSearchCfg,
       adSearchData: {
@@ -104,10 +93,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      currentCatalog: 'currentCatalog'
-    }),
-    ...mapState(['columnList', 'pageInfo'])
+    ...mapGetters(['currentCatalogItem', 'currentColumnRow' ]),
+    ...mapState(['columnList', 'pageInfo', 'searchForm', 'currentColumn'])
   },
   created() {
     this.ADDSTATE = ADDSTATE
@@ -130,6 +117,15 @@ export default {
     },
     advancedSearch() {
       this.$refs.searchDialog.toggleOpen()
+      this.currentColumnRow
+    }
+  },
+  watch: {
+    currentColumn: {
+      handler(cur, old) {
+        if (!old)
+          this.$refs.columnTable.setCurrentRow(this.currentColumnRow)
+      }
     }
   }
 }
@@ -175,13 +171,16 @@ export default {
 ::v-deep .columnDialog .el-dialog{
   width: 800px;
   form {
+    height: 400px;
     padding-left: 10px;
     padding-right: 10px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    /* justify-content: space-between; */
     flex-wrap: wrap;
     .el-form-item {
       width: 340px;
+      margin-bottom: 13.5px;
       display: flex;
       justify-content: flex-end;
     }

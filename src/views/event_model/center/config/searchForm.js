@@ -12,7 +12,7 @@ export default [
   {
     type: 'el-input',
     label: '字段名',
-    id: 'field',
+    id: 'nameCn',
     elOptions: {
       style: {
         width: '170px'
@@ -32,10 +32,20 @@ export default [
   },
   {
     type: 'el-select',
-    options: ['是', '否'],
+    options: [
+      {
+        label: '是',
+        value: 1
+      },
+      {
+        label: '否',
+        value: 0
+      }
+    ],
     label: '必填',
-    id: 'status',
+    id: 'requiredFlag',
     elOptions: {
+      clearable: true,
       style: {
         width: '92px'
       }
@@ -43,10 +53,20 @@ export default [
   },
   {
     type: 'el-select',
-    options: ['是', '否'],
+    options: [
+      {
+        label: '是',
+        value: 1
+      },
+      {
+        label: '否',
+        value: 0
+      }
+    ],
     label: '主键',
-    id: 'primary',
+    id: 'primaryKeyFlag',
     elOptions: {
+      clearable: true,
       style: {
         width: '92px'
       }

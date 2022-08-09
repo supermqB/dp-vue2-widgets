@@ -1,12 +1,9 @@
+import { YESORNOOPTIONS } from '@/utils/const'
+
 export const columnCfg = [
   {
     type: 'el-select',
     label: '数据元',
-    id: 'name'
-  },
-  {
-    type: 'el-select',
-    label: '数据元允许值',
     id: 'name'
   },
   {
@@ -16,49 +13,26 @@ export const columnCfg = [
   },
   {
     type: 'el-input',
-    label: '数据元允许值',
-    id: 'nameCn',
-    elOptions: {
-      disabled: true
-    }
-  },
-  {
-    type: 'el-input',
     label: '英文名',
     id: 'nameEn'
   },
   {
-    type: 'el-select',
-    label: '主键',
-    id: 'primaryKeyFlag'
-  },
-  {
     type: 'el-input',
     label: '数据元标识符',
-    id: 'name',
+    id: 'identifier',
     elOptions: {
       disabled: true
     }
   },
   {
-    type: 'el-select',
-    label: '必填',
-    id: 'requiredFlag'
-  },
-  {
     type: 'el-input',
     label: '定义',
-    id: 'name'
-  },
-  {
-    type: 'el-select',
-    label: '主索引',
-    id: 'indexFlag'
+    id: 'definition'
   },
   {
     type: 'el-input',
     label: '类型',
-    id: 'name',
+    id: 'type',
     elOptions: {
       disabled: true
     }
@@ -66,10 +40,44 @@ export const columnCfg = [
   {
     type: 'el-input',
     label: '表示格式',
-    id: 'name',
+    id: 'format',
     elOptions: {
       disabled: true
     }
+  },
+  {
+    type: 'el-select',
+    label: '数据元允许值',
+    id: 'valueRange',
+    elOptions: {
+      disabled: true
+    }
+  },
+  {
+    type: 'el-input',
+    label: '值域标准来源',
+    id: 'valueDict',
+    elOptions: {
+      disabled: true
+    }
+  },
+  {
+    type: 'el-select',
+    options: YESORNOOPTIONS,
+    label: '主键',
+    id: 'primaryKeyFlag'
+  },
+  {
+    type: 'el-select',
+    options: YESORNOOPTIONS,
+    label: '必填',
+    id: 'requiredFlag'
+  },
+  {
+    type: 'el-select',
+    options: YESORNOOPTIONS,
+    label: '主索引',
+    id: 'indexFlag'
   }
 ].map(item => {
   const elOptions = Object.assign({}, item.elOptions, {
