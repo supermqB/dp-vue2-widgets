@@ -7,12 +7,13 @@ import {
   updateCatalogApi,
   addCatalogColumnApi,
   updateCatalogColumnApi,
-  submitCatalogApi
+  submitCatalogApi,
+  getMaxCodeApi,
+  advanceSearchApi
 } from '@/api/event'
 
 import { RUNNINGSTATE, EDITINGSTATE } from '@/utils/const'
-import { keysClone } from '@/utils/lang'
-import e from 'express'
+import { getMax, keysClone } from '@/utils/lang'
 
 const processCatalogList = list => {
   if (!list) return []
@@ -72,6 +73,30 @@ const initState = {
     nameCn: '',
     nameEn: '',
     description: ''
+  },
+  columnForm: {
+    id: '',
+    nameCn: '',
+    nameEn: '',
+    definition: '',
+    primaryKeyFlag: '',
+    requiredFlag: '',
+    indexFlag: '',
+    dataElementId: '',
+    elementNameCn: '',
+    type: '',
+    format: '',
+    identifier: '',
+    valueRange: '',
+    valueDomainName: ''
+    // datasetId: '',
+  },
+  adSearchForm: {
+    colNames: [],
+    contains: '',
+    equals: '',
+    atleast: '',
+    exclude: ''
   }
 }
 
@@ -88,15 +113,11 @@ const state = {
     totalSize: 0,
     totalPage: 0
   },
-  // 正常搜索
   searchForm: Object.assign({}, initState.searchForm),
-  // 高级搜索
-  adSearchForm: {},
-  // 版本form
+  adSearchForm: Object.assign({}, initState.adSearchForm),
   versionForm: Object.assign({}, initState.versionForm),
-  // 目录form
   catalogForm: Object.assign({}, initState.catalogForm),
-  columnForm: {}
+  columnForm: Object.assign({}, initState.columnForm)
 }
 
 const getters = {
@@ -165,19 +186,22 @@ const mutations = {
       state.catalogForm.version = state.currentVersion
     }
   },
+  setColumnForm: (state, item) => {
+    if (item) {
+      keysClone(state.columnForm, item)
+    }
+  },
   resetVersionForm: state => {
     state.versionForm = Object.assign({}, initState.versionForm)
   },
   resetCatalogForm: state => {
     state.catalogForm = Object.assign({}, initState.catalogForm)
   },
-  setColumnForm: (state, item) => {
-    if (item) {
-      keysClone(state.columnForm, item)
-    }
-  },
   resetColumnForm: state => {
-    Object.assign(state.columnForm, initState.columnForm)
+    state.columnForm = Object.assign({}, initState.columnForm)
+  },
+  resetadSearchForm: state => {
+    state.adSearchForm = Object.assign({}, initState.adSearchForm)
   }
 }
 
@@ -210,13 +234,27 @@ const actions = {
     )
     const { records, pageInfo } = res.value
     state.columnList = processColumnList(records)
+    commit('resetadSearchForm')
     commit(
       'setCurrentColumn',
       state.columnList && state.columnList.length
         ? state.columnList[0].index
         : ''
     )
-    commit('setPageInfo', res.value.pageInfo)
+    commit('setPageInfo', pageInfo)
+  },
+  async adQueryColumn({ state }) {
+    const { curPage, pageSize } = state.pageInfo
+    const res = await advanceSearchApi(curPage, pageSize, state.adSearchForm)
+    const { records, pageInfo } = res.value
+    state.columnList = processColumnList(records)
+    commit(
+      'setCurrentColumn',
+      state.columnList && state.columnList.length
+        ? state.columnList[0].index
+        : ''
+    )
+    commit('setPageInfo', pageInfo)
   },
   async addVersion({ dispatch, commit }) {
     const { version, parVersion } = state.versionForm
@@ -228,28 +266,66 @@ const actions = {
     await submitCatalogApi(state.currentCatalog)
     this._vm.$message.success('启动成功！')
   },
-  // async submitCatalog({ dispatch }) {
-  //   const version = state.currentVersion
-  //   const { id, theme, code, nameCn, nameEn, description } = state.catalogForm
-  //   if (id) {
-  //     await addCatalogApi(version, theme, code, nameCn, nameEn, description)
-  //   } else {
-  //     await updateCatalogApi(
-  //       id,
-  //       version,
-  //       theme,
-  //       code,
-  //       nameCn,
-  //       nameEn,
-  //       description
-  //     )
-  //   }
-  //   dispatch('queryCatalog')
-  // },
-  async addColumn({ commit }, {}) {
-    await addCatalogColumnApi()
+  async submitCatalog({ dispatch, state }) {
+    const version = state.currentVersion
+    const { id, theme, code, nameCn, nameEn, description } = state.catalogForm
+    if (!id) {
+      await addCatalogApi(version, theme, code, nameCn, nameEn, description)
+    } else {
+      await updateCatalogApi(
+        id,
+        version,
+        theme,
+        code,
+        nameCn,
+        nameEn,
+        description
+      )
+    }
+    dispatch('queryCatalog')
   },
-  async updateColumn({ commit }, {}) {}
+  async submitColumn({ dispatch, state }) {
+    const {
+      id,
+      dataElementId,
+      nameCn,
+      nameEn,
+      definition,
+      primaryKeyFlag,
+      requiredFlag,
+      indexFlag
+    } = state.columnForm
+    const datasetId = state.currentCatalog
+    if (!id) {
+      await addCatalogColumnApi({
+        datasetId,
+        dataElementId,
+        nameCn,
+        nameEn,
+        definition,
+        primaryKeyFlag,
+        requiredFlag,
+        indexFlag
+      })
+    } else {
+      await updateCatalogColumnApi(
+        id,
+        datasetId,
+        dataElementId,
+        nameCn,
+        nameEn,
+        definition,
+        primaryKeyFlag,
+        requiredFlag,
+        indexFlag
+      )
+    }
+    dispatch('queryColumn')
+  },
+  async getMaxCode({}, { version, theme }) {
+    const res = await getMaxCodeApi(version, theme)
+    state.catalogForm.code = getMax(res.value)
+  }
 }
 
 export default {

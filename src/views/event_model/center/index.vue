@@ -9,13 +9,13 @@
         <State :currentState="currentCatalogItem.state"></State>
       </div>
       <div>
-        <el-button type="primary" @click="addColumn">新增</el-button>
-        <el-button type="primary" @click="editColumn">编辑</el-button>
+        <el-button type="primary" @click="onclickAddColumn">新增</el-button>
+        <el-button type="primary" @click="onclickEditColumn">编辑</el-button>
       </div>
     </div>
     <div class="search">
       <Form class="searchForm" :formData="searchForm" :formCfg="formCfg"></Form>
-      <div>
+      <div class="right">
         <el-button @click="queryColumn">查询</el-button>
         <el-button type="text" @click="advancedSearch">高级搜索</el-button>
       </div>
@@ -26,6 +26,7 @@
         :tableConfig="tableConfig"
         :tableData="columnList"
         :pageInfo="pageInfo"
+        @row-changed="val => setCurrentColumn(val.id)"
         @page-changed="val => pageInfoChanged(val)"
       ></Table>
     </div>
@@ -33,17 +34,23 @@
       :title="`${columnState === ADDSTATE ? '新增字段' : '编辑字段'}`"
       ref="columnDialog"
       class="columnDialog"
-      @onClosed="resetColumnForm"
-      @dialog-complete="submitColumn"
+      @onClosed="onClosedColumnForm"
+      @dialog-complete="onClickSubmitColumn"
     >
-      <Form ref="columnForm" :formCfg="columnCfg(queryDataElement, dataElementData, setDataElementInfo)" :formData="columnData"></Form>
+      <Form
+        ref="columnForm"
+        :formCfg="columnCfg(queryDataElement, dataElementData, setDataElementInfo)"
+        :formData="columnForm"
+        :formRule="columnRule"
+      ></Form>
     </Dialog>
     <Dialog
       title="高级搜索"
       ref="searchDialog"
       class="searchDialog"
+      @dialog-complete="onClickAdvanceSearch"
     >
-      <Form :formCfg="adSearchCfg" :formData="adSearchData"></Form>
+      <Form :formCfg="adSearchCfg" :formData="adSearchForm"></Form>
     </Dialog>
   </div>
 </template>
@@ -56,11 +63,11 @@ import tableConfig from './config/tableColumn'
 import Dialog from '@/components/Dialog.vue'
 import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import State from '@/components/state/IsRunning.vue'
-import { columnCfg } from './config/columnForm'
+import { columnCfg, columnRule } from './config/columnForm'
 import { adSearchCfg } from './config/adSearchForm'
 import { ADDSTATE, EDITSTATE } from '@/utils/const'
 import { createNamespacedHelpers } from 'vuex'
-import { queryDataElementApi, addCatalogColumnApi, updateCatalogColumnApi } from '@/api/event'
+import { queryDataElementApi } from '@/api/event'
 const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('event')
 export default {
   components: {
@@ -72,73 +79,49 @@ export default {
       tableConfig,
       columnState: '',
       columnCfg,
-      columnData: {
-        id: '',
-        elementNameCn: '',
-        type: '',
-        format: '', // 表示格式
-        identifier: '', // 数据元标识
-        nameCn: '',
-        nameEn: '',
-        definition: '', // 字段定义
-        primaryKeyFlag: '', // 
-        requiredFlag: '',
-        indexFlag: '',
-        valueRange: '',
-        valueDomainName: '',
-        dataElementId: '',
-        datasetId: ''
-      },
+      columnRule,
       adSearchCfg,
-      adSearchData: {
-        index1: '',
-        index2: '',
-        index3: '',
-        index4: '',
-        index5: ''
-      },
       dataElementData: []
     }
   },
   computed: {
     ...mapGetters(['currentCatalogItem', 'currentColumnRow' ]),
-    ...mapState(['columnList', 'pageInfo', 'searchForm', 'currentColumn', 'currentCatalog'])
+    ...mapState(['columnList', 'pageInfo', 'searchForm', 'adSearchForm', 'columnForm', 'currentColumn', 'currentCatalog'])
   },
   created() {
     this.ADDSTATE = ADDSTATE
     this.EDITSTATE = EDITSTATE
   },
   methods: {
-    ...mapMutations(['setPageInfo']),
-    ...mapActions(['queryColumn']),
+    ...mapMutations(['setPageInfo', 'resetColumnForm', 'setColumnForm', 'setCurrentColumn']),
+    ...mapActions(['queryColumn', 'submitColumn', 'adQueryColumn']),
     pageInfoChanged(val) {
       this.setPageInfo(val)
-      this.queryColumn({})
+      this.queryColumn()
     },
-    resetColumnForm() {
-      // this.$refs.columnForm.resetFields()
+    onClosedColumnForm() {
+      this.resetColumnForm()
+      this.$refs.columnForm.resetFields()
     },
-    addColumn() {
+    onclickAddColumn() {
       this.columnState = ADDSTATE
       this.$refs.columnDialog.toggleOpen()
+      this.setColumnForm()
     },
-    editColumn() {
+    onclickEditColumn() {
       this.columnState = EDITSTATE
       this.$refs.columnDialog.toggleOpen()
-      Object.assign(this.columnData, this.currentColumnRow)
+      this.setColumnForm(this.currentColumnRow)
     },
-    async submitColumn() {
-      if (this.columnState === ADDSTATE) {
-        await addCatalogColumnApi(this.columnData)
-        this.$message.success("新增字段成功！")
-      } else {
-        await updateCatalogColumnApi(this.columnData)
-        this.$message.success("编辑字段成功！")
-      }
+    onClickSubmitColumn() {
+      this.$refs.columnForm.validate(this.submitColumn)
+    },
+    onClickAdvanceSearch() {
+      this.adQueryColumn()
+      this.$refs.searchDialog.toggleOpen()
     },
     advancedSearch() {
       this.$refs.searchDialog.toggleOpen()
-      this.currentColumnRow
     },
     async queryDataElement(val) {
       const res = await queryDataElementApi(val)
@@ -152,25 +135,19 @@ export default {
       })
     },
     setDataElementInfo(val) {
-      this.dataElementData.forEach(item => {
-        if (item.id === val) {
-          ['valueRange', 'valueDomainName', 'type', 'format', 'identifier' ].forEach(key => {
-            this.columnData[key] = item['obj'][key]
-          })
-          console.log(item.id, this.currentCatalog)
-          this.columnData.dataElementId = item.id
-          this.columnData.datasetId = this.currentCatalog
-          console.log(this.columnData)
-        }
-      })
+      const dataElement = this.dataElementData.find(item => item.id === val)
+      if (dataElement) {
+        const { valueRange, valueDomainName, type, format, identifier, id } = dataElement.obj
+        this.setColumnForm({
+          valueRange, valueDomainName, type, format, identifier, dataElementId: id
+        })
+      }
     }
   },
   watch: {
     currentColumnRow: {
       handler(cur) {
-        this.$nextTick(() => {
-          this.$refs.columnTable.setCurrentRow(cur)
-        })
+        this.$refs.columnTable.setCurrentRow(cur)
       }
     }
   }
@@ -202,11 +179,14 @@ export default {
   }
   .search {
     position: relative;
-    /* height: 41px; */
     padding: 0 15px;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #E5E5E5;
+    .right {
+      display: flex;
+      align-items: center;
+    }
   }
   .content {
     flex-grow: 1;
@@ -237,15 +217,18 @@ export default {
 }
 
 ::v-deep .searchDialog .el-dialog{
-  width: 700px;
-  .form {
-    padding-right: 140px;
+  width: 600px;
+  .el-form {
+    padding-right: 100px
+  }
+  .el-form-item {
+    margin-bottom: 8px;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    .el-select {
-      margin: 0;
-    }
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  .el-select {
+    margin: 0;
   }
 }
 

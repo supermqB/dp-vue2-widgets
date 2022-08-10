@@ -50,6 +50,15 @@ export default {
     },
     resetFields() {
       this.$refs.el_form.resetFields()
+    },
+    validate(func) {
+      this.$refs.el_form.validate(valid => {
+        if (!valid) {
+          this.$message.warning('请完善表单内容！')
+        } else {
+          func()
+        }
+      })
     }
   }
 }

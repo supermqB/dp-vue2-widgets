@@ -4,6 +4,7 @@ export default [
     label: '标识符',
     id: 'identifier',
     elOptions: {
+      clearabled: true,
       style: {
         width: '170px'
       }
@@ -14,6 +15,7 @@ export default [
     label: '字段名',
     id: 'nameCn',
     elOptions: {
+      clearabled: true,
       style: {
         width: '170px'
       }
@@ -25,6 +27,7 @@ export default [
     label: '类型',
     id: 'type',
     elOptions: {
+      clearabled: true,
       style: {
         width: '92px'
       }

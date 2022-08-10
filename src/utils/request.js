@@ -45,12 +45,12 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     if (!res.success) {
-      console.log(res.msg)
       Message({
         message: `[${res.code}]:${res.msg}`,
         type: 'error',
         duration: 3 * 1000
       })
+      return Promise.reject()
     }
     return res
   },

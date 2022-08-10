@@ -32,3 +32,17 @@ export const STATEOPTIONS = [
     value: RUNNINGSTATE
   }
 ]
+export const COLNAMEOPTIONS = [
+  {
+    label: '全部',
+    value: 'all'
+  },
+  {
+    label: '中文名',
+    value: 'nameCn'
+  },
+  {
+    label: '英文名',
+    value: 'nameEn'
+  }
+]

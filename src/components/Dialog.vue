@@ -39,7 +39,7 @@ export default {
     },
     finishHandler() {
       this.$emit('dialog-complete')
-      this.toggleOpen()
+      // this.toggleOpen()
     },
     onClosed() {
       this.$emit('onClosed')

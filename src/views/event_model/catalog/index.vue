@@ -34,6 +34,7 @@
       @dialog-complete="onClickSubmitVersion"
     >
       <Form
+        ref="versionForm"
         :formCfg="versionCfg(versionOptions)"
         :formData="versionForm" 
         :formRule="versionRule"
@@ -65,7 +66,6 @@ import { versionCfg, versionRule } from './config/versionForm'
 import { catalogCfg, catalogRule } from './config/catalogForm'
 import { ADDSTATE, EDITSTATE } from '@/utils/const'
 import { createNamespacedHelpers } from 'vuex'
-import { updateCatalogApi, addCatalogApi } from '@/api/event'
 const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('event')
 export default {
   components: {
@@ -113,7 +113,7 @@ export default {
   },
   methods: {
     ...mapMutations(['setCurrentCatalog', 'setCurrentVersion', 'setCatalogForm', 'resetCatalogForm']),
-    ...mapActions(['queryColumn', 'queryCatalog', 'addVersion', 'runCatalog']),
+    ...mapActions(['queryColumn', 'queryCatalog', 'addVersion', 'runCatalog', 'submitCatalog', 'getMaxCode']),
     onVersionChanged(val) {
       this.setCurrentVersion(val)
       this.queryCatalog()
@@ -144,7 +144,8 @@ export default {
         });          
       });
     },
-    onClickAddCatalog() {
+    async onClickAddCatalog() {
+      this.getMaxCode({ version: this.currentVersion, theme: this.currentCatalogItem.theme})
       this.catalogState = ADDSTATE
       this.$refs.catalogDialog.toggleOpen()
       this.setCatalogForm()
@@ -154,18 +155,18 @@ export default {
       this.$refs.catalogDialog.toggleOpen()
       this.setCatalogForm(this.currentCatalogItem)
     },
-    async onClickSubmitCatalog() {
-      const { id, version, theme, code, nameCn, nameEn, description } = this.catalogData
-      if (this.catalogState === ADDSTATE) {
-        await addCatalogApi(version, theme, code, nameCn, nameEn, description)
-        this.$message.success("新建事件目录成功！")
-      } else {
-        await updateCatalogApi(id, version, theme, code, nameCn, nameEn, description)
-        this.$message.success("编辑事件目录成功！")
-      }
+    onClickSubmitCatalog() {
+      this.$refs.catalogForm.validate(() => {
+        this.submitCatalog()
+        this.$refs.catalogDialog.toggleOpen()
+      })
     },
-    async onClickSubmitVersion() {
-      this.addVersion()
+    onClickSubmitVersion() {
+      this.$refs.versionForm.validate(() => {
+        this.addVersion()
+        this.$refs.versionDialog.toggleOpen()
+      })
+      
     }
   },
   watch: {
