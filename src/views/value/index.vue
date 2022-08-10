@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.left_aside_container {
+::v-deep.left_aside_container {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -56,8 +56,10 @@ export default {
     min-height: 100px;
   }
   .task {
-    height: 350px;
-    padding-bottom: 6px;
+    height: 380px; /* doesn't work */
+    .table_container {
+      height: 300px;
+    }
   }
   .bottom {
     height: 30px;

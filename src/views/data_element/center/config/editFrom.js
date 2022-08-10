@@ -1,5 +1,5 @@
 import { Message } from 'element-ui'
-import { debounce } from 'lodash'
+import { debounce, throttle } from 'lodash'
 
 export function getFormFieldsConfig() {
   return [
@@ -172,7 +172,7 @@ export const formValidRule = {
           callback()
         }
       },
-      trigger: 'blur'
+      trigger: 'change'
     }
   ],
   definition: { required: true },
