@@ -204,17 +204,15 @@ const mutations = {
     state.adSearchForm = Object.assign({}, initState.adSearchForm)
   }
 }
-
 // this._vm.$message.success('2345')
-
 const actions = {
   async initEvent({ dispatch }) {
     await dispatch('queryVersion')
+    commit('setCurrentVersion', state.versionList[0].versionName)
   },
   async queryVersion({ commit, dispatch }) {
     const { value } = await getVersionListApi()
     state.versionList = value
-    commit('setCurrentVersion', state.versionList[0].versionName)
     dispatch('queryCatalog')
   },
   async queryCatalog({ commit, dispatch }) {
@@ -262,9 +260,10 @@ const actions = {
     commit('resetVersionForm')
     dispatch('queryVersion')
   },
-  async runCatalog({ state }) {
+  async runCatalog({ dispatch, state }) {
     await submitCatalogApi(state.currentCatalog)
     this._vm.$message.success('启动成功！')
+    dispatch('queryCatalog')
   },
   async submitCatalog({ dispatch, state }) {
     const version = state.currentVersion
