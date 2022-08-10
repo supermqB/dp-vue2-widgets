@@ -31,6 +31,10 @@ export default {
     isOpen: {
       type: Boolean,
       default: false
+    },
+    closeAfterConfirm: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
@@ -39,10 +43,10 @@ export default {
     },
     finishHandler() {
       this.$emit('dialog-complete')
-      this.toggleOpen()
+      this.closeAfterConfirm && this.toggleOpen()
     },
     onClosed() {
-      this.$emit('onClosed')
+      this.$emit('dialog-closed')
     }
   },
   watch: {
