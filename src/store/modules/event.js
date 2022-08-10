@@ -89,7 +89,6 @@ const initState = {
     identifier: '',
     valueRange: '',
     valueDomainName: ''
-    // datasetId: '',
   },
   adSearchForm: {
     colNames: [],
@@ -205,26 +204,37 @@ const mutations = {
   }
 }
 
-// this._vm.$message.success('2345')
-
 const actions = {
-  async initEvent({ dispatch }) {
-    await dispatch('queryVersion')
+  initEvent({ dispatch }) {
+    dispatch('queryVersion')
   },
-  async queryVersion({ commit, dispatch }) {
+  async queryVersion({ commit, dispatch }, val = {}) {
     const { value } = await getVersionListApi()
     state.versionList = value
-    commit('setCurrentVersion', state.versionList[0].versionName)
+    if (!val.flag) {
+      if (state.versionList.length) {
+        commit('setCurrentVersion', state.versionList[0].versionName)
+      } else {
+        commit('setCurrentVersion', '')
+      }
+    }
     dispatch('queryCatalog')
   },
-  async queryCatalog({ commit, dispatch }) {
+  async queryCatalog({ commit, dispatch }, val = {}) {
     const { value } = await getCatalogApi(state.currentVersion)
     state.catalogList = value
-    const catalog = state.catalogList[0].dataSetCatalogEntiyList[0].id
-    commit('setCurrentCatalog', catalog)
+    if (!val.flag) {
+      commit(
+        'setCurrentCatalog',
+        state.catalogList.length &&
+          state.catalogList[0].dataSetCatalogEntiyList.length
+          ? state.catalogList[0].dataSetCatalogEntiyList[0].id
+          : ''
+      )
+    }
     await dispatch('queryColumn')
   },
-  async queryColumn({ commit }) {
+  async queryColumn({ commit }, val = {}) {
     const { curPage, pageSize } = state.pageInfo
     const res = await getEventInfoApi(
       state.currentCatalog,
@@ -235,15 +245,17 @@ const actions = {
     const { records, pageInfo } = res.value
     state.columnList = processColumnList(records)
     commit('resetadSearchForm')
-    commit(
-      'setCurrentColumn',
-      state.columnList && state.columnList.length
-        ? state.columnList[0].index
-        : ''
-    )
+    if (!val.flag)
+      commit(
+        'setCurrentColumn',
+        state.columnList && state.columnList.length
+          ? state.columnList[0].index
+          : ''
+      )
     commit('setPageInfo', pageInfo)
   },
-  async adQueryColumn({ state }) {
+  async adQueryColumn({ state, commit }) {
+    state.pageInfo.curPage = 1
     const { curPage, pageSize } = state.pageInfo
     const res = await advanceSearchApi(curPage, pageSize, state.adSearchForm)
     const { records, pageInfo } = res.value
@@ -262,9 +274,10 @@ const actions = {
     commit('resetVersionForm')
     dispatch('queryVersion')
   },
-  async runCatalog({ state }) {
+  async runCatalog({ dispatch, state }) {
     await submitCatalogApi(state.currentCatalog)
     this._vm.$message.success('启动成功！')
+    dispatch('queryCatalog', { flag: true })
   },
   async submitCatalog({ dispatch, state }) {
     const version = state.currentVersion
@@ -281,10 +294,10 @@ const actions = {
         nameEn,
         description
       )
+      dispatch('queryCatalog', { flag: true })
     }
-    dispatch('queryCatalog')
   },
-  async submitColumn({ dispatch, state }) {
+  async submitColumn({ dispatch, commit, state }) {
     const {
       id,
       dataElementId,
@@ -295,7 +308,7 @@ const actions = {
       requiredFlag,
       indexFlag
     } = state.columnForm
-    const datasetId = state.currentCatalog
+    const datasetId = parseInt(state.currentCatalog)
     if (!id) {
       await addCatalogColumnApi({
         datasetId,
@@ -307,8 +320,10 @@ const actions = {
         requiredFlag,
         indexFlag
       })
+      this._vm.$message.success('新增字段成功！')
+      dispatch('queryColumn')
     } else {
-      await updateCatalogColumnApi(
+      await updateCatalogColumnApi({
         id,
         datasetId,
         dataElementId,
@@ -318,9 +333,10 @@ const actions = {
         primaryKeyFlag,
         requiredFlag,
         indexFlag
-      )
+      })
+      this._vm.$message.success('编辑字段成功！')
+      dispatch('queryColumn', { flag: true })
     }
-    dispatch('queryColumn')
   },
   async getMaxCode({}, { version, theme }) {
     const res = await getMaxCodeApi(version, theme)
