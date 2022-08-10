@@ -14,3 +14,21 @@ export const YESORNOOPTIONS = [
     value: 0
   }
 ]
+export const STATEOPTIONS = [
+  {
+    label: '停止',
+    value: STOPSTATE
+  },
+  {
+    label: '编辑中',
+    value: EDITINGSTATE
+  },
+  {
+    label: '待审核',
+    value: TOBEREVIEWSTATE
+  },
+  {
+    label: '已启动',
+    value: RUNNINGSTATE
+  }
+]

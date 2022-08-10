@@ -122,3 +122,10 @@ export const queryDataElementApi = nameCn => {
     }
   })
 }
+
+export const submitCatalogApi = id => {
+  return request({
+    method: 'put',
+    url: `/dataset/saveDataSet/${id}`
+  })
+}

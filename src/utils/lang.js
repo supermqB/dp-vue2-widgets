@@ -22,3 +22,12 @@ export function toFixedNumStr(num, digits) {
 export function clone(obj) {
   return JSON.parse(JSON.stringify(obj))
 }
+
+export function keysClone(data, value) {
+  console.log(value)
+  Object.keys(data).forEach(key => {
+    if (key in value) {
+      data[key] = value[key]
+    }
+  })
+}

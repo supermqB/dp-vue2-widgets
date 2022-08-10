@@ -6,9 +6,13 @@ import {
   addCatalogApi,
   updateCatalogApi,
   addCatalogColumnApi,
-  updateCatalogColumnApi
+  updateCatalogColumnApi,
+  submitCatalogApi
 } from '@/api/event'
+
 import { RUNNINGSTATE, EDITINGSTATE } from '@/utils/const'
+import { keysClone } from '@/utils/lang'
+import e from 'express'
 
 const processCatalogList = list => {
   if (!list) return []
@@ -47,6 +51,30 @@ const processColumnList = list => {
   })
 }
 
+const initState = {
+  searchForm: {
+    identifier: '',
+    nameCn: '',
+    type: '',
+    requiredFlag: null,
+    primaryKeyFlag: null
+  },
+  versionForm: {
+    version: '',
+    parVersion: '',
+    state: ''
+  },
+  catalogForm: {
+    id: '',
+    version: '',
+    theme: '',
+    code: '',
+    nameCn: '',
+    nameEn: '',
+    description: ''
+  }
+}
+
 const state = {
   versionList: [],
   catalogList: [],
@@ -60,13 +88,15 @@ const state = {
     totalSize: 0,
     totalPage: 0
   },
-  searchForm: {
-    identifier: '',
-    nameCn: '',
-    type: '',
-    requiredFlag: null,
-    primaryKeyFlag: null
-  }
+  // 正常搜索
+  searchForm: Object.assign({}, initState.searchForm),
+  // 高级搜索
+  adSearchForm: {},
+  // 版本form
+  versionForm: Object.assign({}, initState.versionForm),
+  // 目录form
+  catalogForm: Object.assign({}, initState.catalogForm),
+  columnForm: {}
 }
 
 const getters = {
@@ -128,8 +158,30 @@ const mutations = {
     Object.keys(pageInfo).forEach(key => {
       state.pageInfo[key] = pageInfo[key]
     })
+  },
+  setCatalogForm: (state, item) => {
+    if (item) {
+      keysClone(state.catalogForm, item)
+      state.catalogForm.version = state.currentVersion
+    }
+  },
+  resetVersionForm: state => {
+    state.versionForm = Object.assign({}, initState.versionForm)
+  },
+  resetCatalogForm: state => {
+    state.catalogForm = Object.assign({}, initState.catalogForm)
+  },
+  setColumnForm: (state, item) => {
+    if (item) {
+      keysClone(state.columnForm, item)
+    }
+  },
+  resetColumnForm: state => {
+    Object.assign(state.columnForm, initState.columnForm)
   }
 }
+
+// this._vm.$message.success('2345')
 
 const actions = {
   async initEvent({ dispatch }) {
@@ -139,7 +191,7 @@ const actions = {
     const { value } = await getVersionListApi()
     state.versionList = value
     commit('setCurrentVersion', state.versionList[0].versionName)
-    await dispatch('queryCatalog')
+    dispatch('queryCatalog')
   },
   async queryCatalog({ commit, dispatch }) {
     const { value } = await getCatalogApi(state.currentVersion)
@@ -166,17 +218,36 @@ const actions = {
     )
     commit('setPageInfo', res.value.pageInfo)
   },
-  async addVersion({ commit }, {}) {
-    await addVersionApi()
+  async addVersion({ dispatch, commit }) {
+    const { version, parVersion } = state.versionForm
+    await addVersionApi(version, parVersion, state.versionForm.state)
+    commit('resetVersionForm')
+    dispatch('queryVersion')
   },
-  async addCatalog({ commit }, {}) {
-    await addCatalogApi()
+  async runCatalog({ state }) {
+    await submitCatalogApi(state.currentCatalog)
+    this._vm.$message.success('启动成功！')
   },
+  // async submitCatalog({ dispatch }) {
+  //   const version = state.currentVersion
+  //   const { id, theme, code, nameCn, nameEn, description } = state.catalogForm
+  //   if (id) {
+  //     await addCatalogApi(version, theme, code, nameCn, nameEn, description)
+  //   } else {
+  //     await updateCatalogApi(
+  //       id,
+  //       version,
+  //       theme,
+  //       code,
+  //       nameCn,
+  //       nameEn,
+  //       description
+  //     )
+  //   }
+  //   dispatch('queryCatalog')
+  // },
   async addColumn({ commit }, {}) {
     await addCatalogColumnApi()
-  },
-  async updateCatalog({ commit }, {}) {
-    await updateCatalogApi()
   },
   async updateColumn({ commit }, {}) {}
 }
