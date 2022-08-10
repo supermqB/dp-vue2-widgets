@@ -31,6 +31,8 @@
       :isOpen="versionDialog"
       ref="versionDialog"
       class="versionDialog"
+      :closeAfterConfirm="false"
+      @dialog-closed="onVersionFormClosed"
       @dialog-complete="onClickSubmitVersion"
     >
       <Form
@@ -44,7 +46,8 @@
       :title="`${catalogState === ADDSTATE ? '新增数据集' : '编辑数据集'}`"
       ref="catalogDialog"
       class="catalogDialog"
-      @onClosed="onCatalogFormClosed"
+      :closeAfterConfirm="false"
+      @dialog-closed="onCatalogFormClosed"
       @dialog-complete="onClickSubmitCatalog"
     >
       <Form 
@@ -112,8 +115,21 @@ export default {
     this.ADDSTATE = ADDSTATE
   },
   methods: {
-    ...mapMutations(['setCurrentCatalog', 'setCurrentVersion', 'setCatalogForm', 'resetCatalogForm']),
-    ...mapActions(['queryColumn', 'queryCatalog', 'addVersion', 'runCatalog', 'submitCatalog', 'getMaxCode']),
+    ...mapMutations([
+      'setCurrentCatalog', 
+      'setCurrentVersion', 
+      'setCatalogForm',
+      'resetVersionForm',
+      'resetCatalogForm'
+    ]),
+    ...mapActions([
+      'queryColumn', 
+      'queryCatalog', 
+      'addVersion', 
+      'runCatalog', 
+      'submitCatalog', 
+      'getMaxCode'
+    ]),
     onVersionChanged(val) {
       this.setCurrentVersion(val)
       this.queryCatalog()
@@ -126,11 +142,16 @@ export default {
       this.catalogDialogState = ADDSTATE
       this.$refs.versionDialog.toggleOpen()
     },
+    onVersionFormClosed(){
+      this.resetVersionForm()
+      this.$refs.versionForm.resetFields()
+    },
     onCatalogFormClosed() {
       this.resetCatalogForm()
       this.$refs.catalogForm.resetFields()
     },
     onClickRunCatalog() {
+      if (!this.currentCatalog) return
       this.$confirm(`是否启用【${this.currentCatalogItem.nameCn}】的所有表单信息`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -151,6 +172,7 @@ export default {
       this.setCatalogForm()
     },
     onClickEditCatalog() {
+      if (!this.currentCatalog) return
       this.catalogState = EDITSTATE
       this.$refs.catalogDialog.toggleOpen()
       this.setCatalogForm(this.currentCatalogItem)

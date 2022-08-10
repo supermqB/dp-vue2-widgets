@@ -34,7 +34,8 @@
       :title="`${columnState === ADDSTATE ? '新增字段' : '编辑字段'}`"
       ref="columnDialog"
       class="columnDialog"
-      @onClosed="onClosedColumnForm"
+      :closeAfterConfirm="false"
+      @dialog-closed="onClosedColumnForm"
       @dialog-complete="onClickSubmitColumn"
     >
       <Form
@@ -48,6 +49,7 @@
       title="高级搜索"
       ref="searchDialog"
       class="searchDialog"
+      :closeAfterConfirm="false"
       @dialog-complete="onClickAdvanceSearch"
     >
       <Form :formCfg="adSearchCfg" :formData="adSearchForm"></Form>
@@ -114,7 +116,10 @@ export default {
       this.setColumnForm(this.currentColumnRow)
     },
     onClickSubmitColumn() {
-      this.$refs.columnForm.validate(this.submitColumn)
+      this.$refs.columnForm.validate(() => {
+        this.submitColumn()
+        this.$refs.columnDialog.toggleOpen()
+      })
     },
     onClickAdvanceSearch() {
       this.adQueryColumn()
