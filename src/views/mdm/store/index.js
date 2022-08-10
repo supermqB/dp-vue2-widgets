@@ -1,3 +1,4 @@
+import mdmlist from './mdmlist'
 const state = {
   mdmList: [],
   selectedMDM: { id: 123, name: '药品（中成药西药）' },
@@ -7,5 +8,8 @@ const state = {
 
 export default {
   namespaced: true,
-  state
+  state,
+  modules: {
+    mdmlist
+  }
 }

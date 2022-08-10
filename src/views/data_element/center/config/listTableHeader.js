@@ -35,13 +35,13 @@ export function getListTableHeader() {
         width: 100
       }
     },
-    {
+    /* {
       colConfig: {
         property: 'identifierPrefix',
         label: '数据元分类编码',
         width: 120
       }
-    },
+    }, */
     {
       colConfig: {
         property: 'nameCn',
@@ -53,6 +53,13 @@ export function getListTableHeader() {
       colConfig: {
         property: 'nameEn',
         label: '英文名称',
+        width: 200
+      }
+    },
+    {
+      colConfig: {
+        property: 'definition',
+        label: '定义',
         width: 200
       }
     },

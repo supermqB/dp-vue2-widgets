@@ -7,22 +7,47 @@
           <el-breadcrumb-item>{{ selectedMDM.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <div class="actions">
+      <div class="btn_area">
         <el-button type="primary" @click="startEditMDM">编 辑</el-button>
         <el-button type="primary" @click="startCreateMDM">新 增</el-button>
       </div>
     </div>
     <div class="search">
-      <div v-for="item in mdmprops" :key="item.prop">
-        <span>{{ item.prop }}</span>
-        <span>{{ item.value }}</span>
+      <div class="summary">
+        <div v-for="item in mdmprops" :key="item.prop" class="propItem">
+          <span class="propLabel">{{ item.prop }}</span>
+          <span class="propValue">{{ item.value }}</span>
+        </div>
+      </div>
+      <Form v-bind="searchForm" class="searchForm"></Form>
+      <div class="action_area">
+        <el-button type="primary" plain @click="searchHandler(false)"
+          >查 询</el-button
+        >
+        <el-link :underline="false" class="advbtn" @click="openAdvSearch"
+          >高级搜索</el-link
+        >
       </div>
     </div>
-    <div class="table"></div>
+    <div class="table_area">
+      <Table
+        :tableConfig="mdmTable.tableConfig"
+        :tableData="mdmTable.tableData"
+        :pageInfo="mdmTable.pageInfo"
+        @row-changed="selectItemHandler"
+        ref="mdm_table"
+      />
+    </div>
   </div>
 </template>
 <script>
-import { mapState as globalMapState } from 'vuex'
+import { mapState as globalMapState, createNamespacedHelpers } from 'vuex'
+const { mapState, mapMutations, mapActions } =
+  createNamespacedHelpers('mdm/mdmlist')
+
+import Form from '@/components/Form.vue'
+import Table from '@/components/GeneralTable.vue'
+
 export default {
   data() {
     return {
@@ -34,12 +59,85 @@ export default {
     }
   },
   computed: {
-    ...globalMapState({ selectedMDM: state => state.mdm.selectedMDM })
+    ...globalMapState({ selectedMDM: state => state.mdm.selectedMDM }),
+    ...mapState({
+      searchForm: state => state.searchForm,
+      mdmTable: state => state.mdmTable
+    })
   },
   methods: {
     startEditMDM() {},
-    startCreateMDM() {}
-  }
+    startCreateMDM() {},
+    searchHandler() {},
+    openAdvSearch() {},
+    ...mapMutations({ selectItemHandler: 'setTableSelectItem' })
+  },
+  components: { Form, Table }
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss">
+.mdm_ceter_wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .header {
+    display: flex;
+    padding: 0 6px;
+    height: 40px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .search {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .summary {
+      display: flex;
+      font-size: 13px;
+      height: 36px;
+      line-height: 36px;
+      padding: 0 6px;
+      .propItem {
+        width: 200px;
+        .propLabel {
+          color: #9c9c9c;
+        }
+        .propValue {
+          color: #606266;
+        }
+      }
+    }
+    .searchForm {
+      display: flex;
+      width: 88%;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      .el-form-item {
+        margin-bottom: 0px;
+        /* width: 210px; */
+        display: flex;
+        justify-content: end;
+        .el-select {
+          width: 165px;
+        }
+      }
+      .el-form-item__label {
+        width: 80px;
+      }
+    }
+    .action_area {
+      padding: 6px 0;
+      .advbtn {
+        color: #1890ff;
+        text-decoration: underline;
+        margin: 6px;
+      }
+    }
+  }
+
+  .table_area {
+    flex-grow: 1;
+  }
+}
+</style>

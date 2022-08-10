@@ -7,10 +7,12 @@
         <Bottom class="bottom" :labelList="['数据量', '任务量']"></Bottom>
       </div>
     </template>
-    <template #main> 
-        <Center/>
+    <template #main>
+      <Center />
     </template>
-    <template #asideRight> </template>
+    <template #asideRight>
+      <SuspectList />
+    </template>
   </dp-layout-container>
 </template>
 
@@ -19,13 +21,14 @@ import CatalogVue from './left/Catalog.vue'
 import TaskList from '@/views/value/task'
 import Bottom from '@/components/bottom/Catalog.vue'
 import Center from './center'
+import SuspectList from './right/SuspectList.vue'
 
 export default {
-  components: { CatalogVue, TaskList, Bottom,Center }
+  components: { CatalogVue, TaskList, Bottom, Center, SuspectList }
 }
 </script>
 <style lang="scss" scoped>
-.left_aside_container {
+::v-deep.left_aside_container {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -36,8 +39,10 @@ export default {
     min-height: 100px;
   }
   .task {
-    height: 350px;
-    padding-bottom: 6px;
+    height: 380px; /* doesn't work */
+    .table_container {
+      height: 300px;
+    }
   }
   .bottom {
     height: 30px;

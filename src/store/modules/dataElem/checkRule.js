@@ -25,6 +25,7 @@ const state = {
     regexpText: ''
   }
 }
+
 const mutations = {
   setDefaultValues(state, val) {
     state.illegalChar.general = !!val.illegalCharGeneral
@@ -36,7 +37,6 @@ const mutations = {
       state.formatCheckData.data_length = matchedRe[2]
     }
 
-    state.fieldCheck.enableValRange = val.valueRange.indexOf('取值范围：') == 0
     if (val.valueRange.indexOf('取值范围：') == 0) {
       let range = val.valueRange.replace('取值范围：', '')
       let matchedRe = /^([\(|\[])(\w*),\s*(\w*)(\)|\])$/.exec(range)
@@ -57,7 +57,6 @@ const mutations = {
         }
       }
     }
-    state.fieldCheck.enableRegexp = !!val.regexpText
     state.fieldCheck.regexpText = val.regexpText
   }
 }

@@ -166,7 +166,7 @@ export default {
       this.$emit('row-changed', rowData)
     },
     selChgHandler(selection) {
-      this.$emit('selection-changed', selection);
+      this.$emit('selection-changed', selection)
     },
     sizeChangeHandler(pageSize) {
       this.pageInfo.pageSize = pageSize
@@ -204,7 +204,7 @@ export default {
 <style lang="scss">
 .el_table_wrapper {
   .table_container {
-    height: 300px;
+    height: 300px; /*table default height*/
     overflow: auto;
     .el-table {
       &.el-table--border .el-table__cell:first-child .cell {
