@@ -22,3 +22,17 @@ export function toFixedNumStr(num, digits) {
 export function clone(obj) {
   return JSON.parse(JSON.stringify(obj))
 }
+
+export function keysClone(data, value) {
+  Object.keys(data).forEach(key => {
+    if (key in value) {
+      data[key] = value[key]
+    }
+  })
+}
+
+export function getMax(value) {
+  const prefix = value.slice(0, -2)
+  const code = parseInt(value.slice(-2)) + 1
+  return `${prefix}${code < 10 ? '0' + code.toString() : code}`
+}

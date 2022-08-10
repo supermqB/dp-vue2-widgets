@@ -99,3 +99,14 @@ export const columnCfg = (remoteMethod, dataElementData, setDataElementInfo) =>
     item.elOptions = elOptions
     return item
   })
+
+export const columnRule = {
+  elementNameCn: {
+    required: true,
+    message: '请选择数据元！',
+    trigger: 'blur'
+  },
+  nameCn: { required: true, message: '请填写字段名称！', trigger: 'blur' },
+  nameEn: { required: true, message: '请填写字段英文名称！', trigger: 'blur' },
+  definition: { required: true, message: '请填写字段定义！', trigger: 'blur' }
+}

@@ -34,7 +34,7 @@ export const catalogCfg = (
     label: '数据集编码',
     id: 'code',
     elOptions: {
-      disabled: state === EDITSTATE,
+      disabled: true,
       style: {
         width: '260px'
       }

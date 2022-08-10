@@ -122,3 +122,33 @@ export const queryDataElementApi = nameCn => {
     }
   })
 }
+
+export const submitCatalogApi = id => {
+  return request({
+    method: 'put',
+    url: `/dataset/saveDataSet/${parseInt(id)}`
+  })
+}
+
+export const getMaxCodeApi = (version, theme) => {
+  return request({
+    method: 'get',
+    url: '/dataset/getMaxCode',
+    params: {
+      version,
+      theme
+    }
+  })
+}
+
+export const advanceSearchApi = (current, page, data) => {
+  return request({
+    method: 'post',
+    url: '/dataset/advanceSearch',
+    data,
+    params: {
+      current,
+      page
+    }
+  })
+}

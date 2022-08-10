@@ -3,8 +3,9 @@
     <Header
       title="事件目录"
       hasRun
-      @add="addCatalog"
-      @edit="editCatalog"
+      @add="onClickAddCatalog"
+      @edit="onClickEditCatalog"
+      @run="onClickRunCatalog"
     ></Header>
     <div class="version">
       <span>版本</span>
@@ -15,7 +16,7 @@
           :label="item.versionName"
           :value="item.versionName"></el-option>
       </el-select>
-      <el-button type="text" @click="addVersion">新增版本</el-button>
+      <el-button type="text" @click="newVersion">新增版本</el-button>
     </div>
     <Tree
       ref="tree"
@@ -30,21 +31,26 @@
       :isOpen="versionDialog"
       ref="versionDialog"
       class="versionDialog"
-      @dialog-complete="submitVersion"
+      @dialog-complete="onClickSubmitVersion"
     >
-      <Form :formCfg="versionCfg" :formData="versionData" :formRule="versionRule" ></Form>
+      <Form
+        ref="versionForm"
+        :formCfg="versionCfg(versionOptions)"
+        :formData="versionForm" 
+        :formRule="versionRule"
+      ></Form>
     </Dialog>
     <Dialog
       :title="`${catalogState === ADDSTATE ? '新增数据集' : '编辑数据集'}`"
       ref="catalogDialog"
       class="catalogDialog"
-      @onClosed="resetCatalogForm"
-      @dialog-complete="submitCatalog"
+      @onClosed="onCatalogFormClosed"
+      @dialog-complete="onClickSubmitCatalog"
     >
       <Form 
         ref="catalogForm"
         :formCfg="catalogCfg(versionOptions, themeOptions, catalogState)"
-        :formData="catalogData" :formRule="catalogRule"
+        :formData="catalogForm" :formRule="catalogRule"
       ></Form>
     </Dialog>
   </div>
@@ -60,7 +66,6 @@ import { versionCfg, versionRule } from './config/versionForm'
 import { catalogCfg, catalogRule } from './config/catalogForm'
 import { ADDSTATE, EDITSTATE } from '@/utils/const'
 import { createNamespacedHelpers } from 'vuex'
-import { updateCatalogApi, addCatalogApi, addVersionApi } from '@/api/event'
 const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('event')
 export default {
   components: {
@@ -70,29 +75,22 @@ export default {
     return {
       versionCfg,
       versionRule,
-      versionData: {
-        version: '',
-        parVersion: '',
-        state: ''
-      },
       catalogState: ADDSTATE,
       catalogCfg, 
       catalogRule,
-      catalogData: {
-        id: null,
-        version: '',
-        theme: '',
-        code: '',
-        nameCn: '',
-        nameEn: '',
-        description: ''
-      },
       versionDialog: false,
       catalogDialog: false,
     }
   },
   computed: {
-    ...mapState(['versionList', 'currentCatalog', 'pageInfo', 'currentVersion']),
+    ...mapState([
+      'versionList', 
+      'currentCatalog', 
+      'pageInfo', 
+      'currentVersion', 
+      'versionForm', 
+      'catalogForm'
+    ]),
     curVersion: {
       get() {
         return this.currentVersion
@@ -102,14 +100,20 @@ export default {
         this.queryCatalog()
       }
     },
-    ...mapGetters(['versionOptions', 'themeOptions', 'currentCatalogItem', 'catalogTreeList', 'totalNumber'])
+    ...mapGetters([
+      'versionOptions', 
+      'themeOptions', 
+      'currentCatalogItem', 
+      'catalogTreeList', 
+      'totalNumber'
+    ])
   },
   created() {
     this.ADDSTATE = ADDSTATE
   },
   methods: {
-    ...mapMutations(['setCurrentCatalog', 'setCurrentVersion']),
-    ...mapActions(['queryColumn', 'queryCatalog', 'addCatalog', 'updateCatalog']),
+    ...mapMutations(['setCurrentCatalog', 'setCurrentVersion', 'setCatalogForm', 'resetCatalogForm']),
+    ...mapActions(['queryColumn', 'queryCatalog', 'addVersion', 'runCatalog', 'submitCatalog', 'getMaxCode']),
     onVersionChanged(val) {
       this.setCurrentVersion(val)
       this.queryCatalog()
@@ -118,47 +122,51 @@ export default {
       this.setCurrentCatalog(id)
       this.queryColumn()
     },
-    addVersion() {
+    newVersion() {
       this.catalogDialogState = ADDSTATE
       this.$refs.versionDialog.toggleOpen()
     },
-    resetCatalogForm() {
+    onCatalogFormClosed() {
+      this.resetCatalogForm()
       this.$refs.catalogForm.resetFields()
     },
-    addCatalog() {
+    onClickRunCatalog() {
+      this.$confirm(`是否启用【${this.currentCatalogItem.nameCn}】的所有表单信息`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.runCatalog()
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消启动'
+        });          
+      });
+    },
+    async onClickAddCatalog() {
+      this.getMaxCode({ version: this.currentVersion, theme: this.currentCatalogItem.theme})
       this.catalogState = ADDSTATE
       this.$refs.catalogDialog.toggleOpen()
-      const { theme } = this.currentCatalogItem
-      this.catalogData.version = this.currentVersion,
-      this.catalogData.theme = theme
-      this.catalogData.code = ''
-      this.catalogData.nameCn = ''
+      this.setCatalogForm()
     },
-    editCatalog() {
+    onClickEditCatalog() {
       this.catalogState = EDITSTATE
       this.$refs.catalogDialog.toggleOpen()
-      const { id, code, nameCn, nameEn, description, theme } = this.currentCatalogItem
-      this.catalogData.id = id
-      this.catalogData.version = this.currentVersion,
-      this.catalogData.theme = theme
-      this.catalogData.code = code
-      this.catalogData.nameCn = nameCn
-      this.catalogData.nameEn = nameEn
-      this.catalogData.description = description
+      this.setCatalogForm(this.currentCatalogItem)
     },
-    async submitCatalog() {
-      const { id, version, theme, code, nameCn, nameEn, description } = this.catalogData
-      if (this.catalogState === ADDSTATE) {
-        await addCatalogApi(version, theme, code, nameCn, nameEn, description)
-        this.$message.success("新建事件目录成功！")
-      } else {
-        await updateCatalogApi(id, version, theme, code, nameCn, nameEn, description)
-        this.$message.success("编辑事件目录成功！")
-      }
+    onClickSubmitCatalog() {
+      this.$refs.catalogForm.validate(() => {
+        this.submitCatalog()
+        this.$refs.catalogDialog.toggleOpen()
+      })
     },
-    async submitVersion() {
-      // const {version, parVersion, state} = 
-      // await addVersionApi('test02', '', '1')
+    onClickSubmitVersion() {
+      this.$refs.versionForm.validate(() => {
+        this.addVersion()
+        this.$refs.versionDialog.toggleOpen()
+      })
+      
     }
   },
   watch: {
