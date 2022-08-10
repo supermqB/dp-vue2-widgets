@@ -61,7 +61,7 @@
   </div>
 </template>
 <script>
-import { isEmpty, toFixedNumStr, clone } from '@/utils/lang'
+import { isEmpty, toFixedNumStr } from '@/utils/lang'
 import { get } from '@/utils/request'
 import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
@@ -248,7 +248,7 @@ export default {
               this.editElemFormValid = valid
             })
           } else {
-              this.editElemFormValid = false
+            this.editElemFormValid = false
           }
           return
         }
@@ -345,15 +345,10 @@ export default {
       flex-wrap: wrap;
       .el-form-item {
         &.is-error {
-          //padding-bottom: 10px;
           .el-input__inner,
           .el-textarea__inner {
-            border-color: #dcdfe6;
+            //border-color: #dcdfe6;
           }
-          /*  .el-form-item__error {
-            padding-top: 0px;
-            top: unset;
-          } */
         }
         width: 360px;
         display: flex;

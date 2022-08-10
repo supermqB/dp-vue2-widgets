@@ -1,6 +1,6 @@
 <template>
   <div class="catalogBottomWrap">
-    <p v-for="(label,index) in labelList" :key="index">
+    <p v-for="(label, index) in labelList" :key="index">
       <span>{{ label }}：</span>
       <span>{{ value[index] ? value[index] : '' }}</span>
     </p>
@@ -31,7 +31,7 @@ export default {
   align-items: flex-center;
   padding-left: 10px;
   box-sizing: border-box;
-  border-top: 1px solid #E5E5E5;
+  border-top: 1px solid #e5e5e5;
   font-size: 12px;
   p {
     width: 80px;
