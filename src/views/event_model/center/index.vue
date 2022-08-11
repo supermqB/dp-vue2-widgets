@@ -16,7 +16,7 @@
     <div class="search">
       <Form class="searchForm" :formData="searchForm" :formCfg="formCfg"></Form>
       <div class="right">
-        <el-button @click="queryColumn">查询</el-button>
+        <el-button @click="onClickSearch">查询</el-button>
         <el-button type="text" @click="advancedSearch">高级搜索</el-button>
       </div>
     </div>
@@ -95,11 +95,16 @@ export default {
     this.EDITSTATE = EDITSTATE
   },
   methods: {
-    ...mapMutations(['setPageInfo', 'resetColumnForm', 'setColumnForm', 'setCurrentColumn']),
-    ...mapActions(['queryColumn', 'submitColumn', 'adQueryColumn']),
+    ...mapMutations(['setPageInfo', 'resetColumnForm', 'setColumnForm', 'setCurrentColumn', 'setIsAdvance']),
+    ...mapActions(['submitColumn', 'adQueryColumn', 'columnChanged']),
     pageInfoChanged(val) {
       this.setPageInfo(val)
-      this.queryColumn()
+      this.columnChanged(true)
+    },
+    onClickSearch() {
+      this.setPageInfo({ curPage: 1 })
+      this.setIsAdvance(false)
+      this.columnChanged(true)
     },
     onClosedColumnForm() {
       this.resetColumnForm()
@@ -122,7 +127,9 @@ export default {
       })
     },
     onClickAdvanceSearch() {
-      this.adQueryColumn()
+      this.setPageInfo({ curPage: 1 })
+      this.setIsAdvance(true)
+      this.columnChanged(true)
       this.$refs.searchDialog.toggleOpen()
     },
     advancedSearch() {
@@ -202,16 +209,15 @@ export default {
 ::v-deep .columnDialog .el-dialog{
   width: 800px;
   form {
-    height: 400px;
+    height: 320px;
     padding-left: 10px;
     padding-right: 10px;
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
     flex-wrap: wrap;
     .el-form-item {
       width: 340px;
-      margin-bottom: 13.5px;
+      margin-bottom: 4px;
       display: flex;
       justify-content: flex-end;
     }
