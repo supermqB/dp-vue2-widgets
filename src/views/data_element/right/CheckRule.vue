@@ -303,8 +303,8 @@ export default {
     height: 45px;
   }
   .btn_area {
-    // height: 45px;
-    width: 210px;
+    height: 45px;
+    width: 208px;
     position: fixed;
     bottom: 32px;
     right: 15px;
