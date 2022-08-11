@@ -2,6 +2,9 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
+import Loading from './loading'
+
+const loading = new Loading()
 
 // create an axios instance
 const service = axios.create({
@@ -21,11 +24,12 @@ service.interceptors.request.use(
       // please modify it according to the actual situation
       config.headers['X-Token'] = getToken()
     }
+    // loading.showLoading()
     return config
   },
   error => {
     // do something with request error
-    console.log(error) // for debug
+    // loading.closeLoading()
     return Promise.reject(error)
   }
 )
@@ -50,12 +54,15 @@ service.interceptors.response.use(
         type: 'error',
         duration: 3 * 1000
       })
+      // loading.closeLoading()
       return Promise.reject()
     }
+    // loading.closeLoading()
     return res
   },
   error => {
     console.log('err' + error) // for debug
+    // loading.closeLoading()
     Message({
       message: error.message,
       type: 'error',

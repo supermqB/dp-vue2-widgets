@@ -14,15 +14,20 @@ export const getCatalogApi = version => {
   })
 }
 
-export const getEventInfoApi = (id, current, size, form = {}) => {
+export const getEventInfoApi = (
+  current,
+  size,
+  data = {},
+  isAdvance = false
+) => {
   return request({
     method: 'post',
-    url: `/dataset/getInfo`,
+    url: isAdvance ? '/dataset/advanceSearch' : '/dataset/getInfo',
     params: {
       current,
       size
     },
-    data: Object.assign({ id }, form)
+    data
   })
 }
 
@@ -97,15 +102,6 @@ export const updateCatalogColumnApi = data => {
     method: 'post',
     url: '/dataset/editColumn',
     data
-    // data: {
-    //   id,
-    //   nameCn,
-    //   nameEn,
-    //   definition,
-    //   primaryKeyFlag,
-    //   requiredFlag,
-    //   indexFlag
-    // }
   })
 }
 
@@ -137,18 +133,6 @@ export const getMaxCodeApi = (version, theme) => {
     params: {
       version,
       theme
-    }
-  })
-}
-
-export const advanceSearchApi = (current, page, data) => {
-  return request({
-    method: 'post',
-    url: '/dataset/advanceSearch',
-    data,
-    params: {
-      current,
-      page
     }
   })
 }
