@@ -6,7 +6,7 @@
         <el-breadcrumb-item>数据元明细</el-breadcrumb-item>
       </el-breadcrumb>
       <div class="btn_area">
-        <el-button type="primary" @click="startCommit">提 交</el-button>
+        <el-button type="primary" @click="openCommitDialog">提 交</el-button>
         <el-button type="primary" @click="openCreateDialog">新 增</el-button>
       </div>
     </div>
@@ -36,7 +36,6 @@
         ref="editElemDialog"
         class="elemDialog"
         @dialog-complete="completeEdit"
-        :enableConfirm="editElemFormValid"
       >
         <Form
           :formData="editElemFormData"
@@ -53,6 +52,7 @@
         :enableConfirm="enableAdvConfirm"
         ref="advSearchDialog"
         class="advSearchDialog"
+        closeAfterConfirm
       >
         <Form v-bind="advForm" />
       </Dialog>
@@ -103,7 +103,9 @@ export default {
       ),
       editElemFormRule,
       editElemFormValid: false,
-      editElemDialogTitle: '新增数据元'
+      editElemDialogTitle: '新增数据元',
+      editDlgOpen: false,
+      advDlgOpen: false
     }
   },
   computed: {
@@ -149,12 +151,18 @@ export default {
       setTimeout(() => {
         this.editElemDialogTitle = '编辑数据元'
         this.presetEditDialog(this.selectedItem)
+        this.$nextTick(() => {
+          this.$refs.editElemForm.$refs.el_form.clearValidate()
+        })
         this.$refs.editElemDialog.toggleOpen()
       }, 500)
     },
     openCreateDialog() {
       this.editElemDialogTitle = '新增数据元'
       this.presetEditDialog()
+      this.$nextTick(() => {
+        this.$refs.editElemForm.$refs.el_form.clearValidate()
+      })
       this.$refs.editElemDialog.toggleOpen()
     },
     setEditDialogIdSegOptions() {
@@ -162,6 +170,7 @@ export default {
         this.editElemFormData
       let lastSegReg = /.*\.(\d+)$/
 
+      if (!identifierSeg1) return
       let seg1List = this.groupTreeData[0].directoryList
       this.editElemFormConfig[0].options = seg1List.map(
         ({ ctlgIdentifier, ctlgName }) => ({
@@ -210,7 +219,17 @@ export default {
     },
     completeEdit() {
       console.log(this.editElemFormData)
-      this.editElem(this.editElemFormData)
+      this.$refs.editElemForm.$refs.el_form.validate(valid => {
+        this.editElemFormValid = valid
+
+        if (valid) {
+          this.editElem(this.editElemFormData).then(done => {
+            done && this.$refs.editElemDialog.toggleOpen()
+          })
+        } else {
+          this.$alert('请检查表单中的错误项。')
+        }
+      })
     },
     openAdvSearch() {
       this.$refs.advSearchDialog.toggleOpen()
@@ -218,6 +237,10 @@ export default {
     searchHandler(isAdv) {
       this.setAdvanceMode(isAdv)
       this.search()
+    },
+    openCommitDialog() {
+      this.startCommit()
+      this.$refs.commitDialog.toggleOpen()
     },
     ...mapActions(['search', 'editElem', 'startCommit', 'presetEditDialog']),
     ...mapMutations({ selectItemHandler: 'setSelectItem' }),
@@ -244,9 +267,9 @@ export default {
               k => formData[k] == null || formData[k] == ''
             )
           ) {
-            this.$refs.editElemForm.$refs.el_form.validate(valid => {
+            /*             this.$refs.editElemForm.$refs.el_form.validate(valid => {
               this.editElemFormValid = valid
-            })
+            }) */
           } else {
             this.editElemFormValid = false
           }
@@ -259,9 +282,9 @@ export default {
           tmpIdentifierPrefix + '.' + toFixedNumStr(parseInt(maxId) + 1, 3)
         formData.identifierPrefix = tmpIdentifierPrefix
 
-        this.$refs.editElemForm.$refs.el_form.validate(valid => {
+        /*         this.$refs.editElemForm.$refs.el_form.validate(valid => {
           this.editElemFormValid = valid
-        })
+        }) */
       },
       deep: true
     },

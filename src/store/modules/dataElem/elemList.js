@@ -85,17 +85,21 @@ const actions = {
     state.editElemFormData.identifierSeg3 = segs[2]
   },
   async editElem({ state, commit, dispatch }, val) {
+    let success = false
     if (val.id) {
-      await post('data-element/edit', val)
-      MessageBox.alert(`数据元 [${val.identifier}] 编辑成功！`)
+      const result = await post('data-element/edit', val)
+      success = result.success
+      await MessageBox.alert(`数据元 [${val.identifier}] 编辑成功！`)
     } else {
       let data = { ...val }
       delete data.id
-      await post('data-element/add', data)
-      MessageBox.alert(`数据元 [${val.identifier}] 新增成功！`)
+      const result = await post('data-element/add', data)
+      success = result.success
+      await MessageBox.alert(`数据元 [${val.identifier}] 新增成功！`)
     }
 
-    dispatch('search')
+    success && dispatch('search')
+    return success
   },
   async startCommit({ state, commit, rootState }) {
     commit('setCommitData', [])
@@ -129,7 +133,8 @@ const actions = {
   },
   async completeCommit({ state }, ids) {
     const { success } = await post('data-element/commit', ids)
-    MessageBox.alert(success ? '数据元提交成功。' : '数据元提交失败。')
+    await MessageBox.alert(success ? '数据元提交成功。' : '数据元提交失败。')
+    return success
   },
   clearCommit({ commit }) {
     commit('setCommitData', [])
