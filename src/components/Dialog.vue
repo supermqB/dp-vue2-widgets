@@ -28,14 +28,13 @@ export default {
         return true
       }
     },
-    isOpen: {
-      type: Boolean,
-      default: false
-    },
     closeAfterConfirm: {
       type: Boolean,
-      default: true
+      default: false
     }
+  },
+  data() {
+    return { isOpen: false }
   },
   methods: {
     toggleOpen() {
@@ -47,11 +46,6 @@ export default {
     },
     onClosed() {
       this.$emit('dialog-closed')
-    }
-  },
-  watch: {
-    isOpen(opened) {
-      this.$emit('update:isOpen', opened)
     }
   }
 }

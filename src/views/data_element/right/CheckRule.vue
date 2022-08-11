@@ -46,6 +46,7 @@
           v-model="fieldCheck.valDomainRange.greatVal"
           :disabled="!fieldCheck.enableValRange"
           :placeHolder="rangeFormat"
+          class="rangeInput"
         ></el-input>
 
         <div>
@@ -261,18 +262,45 @@ export default {
 </script>
 <style lang="scss" scoped>
 ::v-deep.checkrule_wrapper {
+  margin-top: 3px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   * {
     font-size: 13px;
     color: #606266;
     font-weight: normal;
   }
 
-  .el-checkbox,
-  .el-radio {
-    margin: 5px 0;
+  .el-input {
+    height: 20px;
+    margin-bottom: 8px;
+    .el-input__suffix{
+        padding-top: 8px;
+    }
+    &.el-input--suffix.is-focus{
+        .el-input__suffix{
+        padding-top: 0px;
+    }
+    }
   }
+  .el-checkbox,
+  .el-autocomplete,
+  .el-radio {
+    margin: 8px 0;
+    height: 20px;
+  }
+
   .el-form-item {
     margin: 0;
+    line-height: 36px;
+    height: 36px;
+    .el-form-item__content,
+    .el-form-item__label {
+      line-height: 36px;
+      height: 36px;
+    }
     .el-select,
     .el-input {
       width: 105px;
@@ -290,6 +318,10 @@ export default {
       .el-input {
         width: 165px;
       }
+      .rangeInput {
+        height: 36px;
+        line-height: 36px;
+      }
     }
     .el-textarea {
       width: 165px;
@@ -303,6 +335,7 @@ export default {
     height: 45px;
   }
   .btn_area {
+<<<<<<< HEAD
     height: 45px;
     width: 208px;
     position: fixed;
@@ -310,6 +343,13 @@ export default {
     right: 15px;
     z-index: 1000;
     background-color: #fff;
+=======
+    flex: 1 1 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 0 6px 6px 0;
+>>>>>>> dev
   }
 }
 </style>

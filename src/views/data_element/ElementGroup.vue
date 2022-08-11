@@ -70,7 +70,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.elegrp_wrapper {
+::v-deep.elegrp_wrapper {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -85,14 +85,16 @@ export default {
     align-items: center;
   }
   .search_container {
-    height: 40px;
+    height: 28px;
     padding: 6px;
     border-top: 1px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
-    box-sizing: border-box;
   }
   .grouptree {
     flex-grow: 1;
+    .el-tree-node__content{
+        height: 36px;
+    }
   }
   .groupsum {
     font-size: 13px;

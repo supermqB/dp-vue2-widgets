@@ -21,7 +21,7 @@ const state = {
     tableConfig: drugTableConfig,
     pageInfo: {
       curPage: 1,
-      pageSize: 50,
+      pageSize: 20,
       totalSize: 200,
       totalPage: 10
     },

@@ -9,6 +9,7 @@
         @current-change="rowChangeHandler"
         @selection-change="selChgHandler"
         border
+        stripe
         ref="el_table"
       >
         <el-table-column type="selection" width="30" v-if="multipleSelect">
@@ -209,6 +210,11 @@ export default {
     .el-table {
       &.el-table--border .el-table__cell:first-child .cell {
         padding-left: 0;
+      }
+      .el-table_1_column_1 {
+        .el-radio__label {
+          display: none;
+        }
       }
       .cell {
         .el-button {

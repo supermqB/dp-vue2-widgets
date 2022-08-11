@@ -31,7 +31,6 @@
       :isOpen="versionDialog"
       ref="versionDialog"
       class="versionDialog"
-      :closeAfterConfirm="false"
       @dialog-closed="onVersionFormClosed"
       @dialog-complete="onClickSubmitVersion"
     >
@@ -43,10 +42,9 @@
       ></Form>
     </Dialog>
     <Dialog
-      :title="`${catalogState === ADDSTATE ? '新增数据集' : '编辑数据集'}`"
+      :title="`${catalogForm.id ? '新增数据集' : '编辑数据集'}`"
       ref="catalogDialog"
       class="catalogDialog"
-      :closeAfterConfirm="false"
       @dialog-closed="onCatalogFormClosed"
       @dialog-complete="onClickSubmitCatalog"
     >
@@ -123,8 +121,8 @@ export default {
       'resetCatalogForm'
     ]),
     ...mapActions([
-      'queryColumn', 
-      'queryCatalog', 
+      'versionChanged',
+      'catalogChanged',
       'addVersion', 
       'runCatalog', 
       'submitCatalog', 
@@ -132,11 +130,11 @@ export default {
     ]),
     onVersionChanged(val) {
       this.setCurrentVersion(val)
-      this.queryCatalog()
+      this.versionChanged()
     },
     handleNodeClick({id}) {
       this.setCurrentCatalog(id)
-      this.queryColumn()
+      this.catalogChanged()
     },
     newVersion() {
       this.catalogDialogState = ADDSTATE
@@ -264,6 +262,7 @@ export default {
     flex-direction: column;
     align-items: flex-end;
     .el-form-item {
+      margin-bottom: 3px;
       display: flex;
       flex-direction: row;
     }
