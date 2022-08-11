@@ -176,7 +176,6 @@ const mutations = {
     if (catalog) {
       state.currentCatalog = catalog.toString()
     } else {
-      console.log(state.catalogList)
       if (
         state.catalogList.length &&
         state.catalogList[0].dataSetCatalogEntiyList.length
