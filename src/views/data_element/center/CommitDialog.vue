@@ -3,7 +3,6 @@
     title="数据元提交"
     ref="dialog"
     class="dataElem_commit_dlg"
-    :isOpen.sync="isOpen"
     :enableConfirm="isFormValid"
     @dialog-complete="completeCommitHandler"
   >
@@ -93,15 +92,6 @@ export default {
     ...mapState({
       tableData: state => state.pendingCommitItems
     }),
-    isOpen: {
-      get: function () {
-        return !!this.tableData.length
-      },
-      set: function (opening) {
-        /* clear tableData properly. */
-        !opening && this.clearCommit()
-      }
-    },
     isFormValid() {
       return !!this.selectedItems.length
     }
@@ -112,7 +102,12 @@ export default {
       this.selectedItems = selection.map(item => item.id)
     },
     completeCommitHandler() {
-      this.completeCommit(this.selectedItems)
+      this.completeCommit(this.selectedItems).then((done)=>{
+          done && this.toggleOpen();
+      })
+    },
+    toggleOpen(){
+        this.$refs.dialog.toggleOpen();
     }
   },
   components: {

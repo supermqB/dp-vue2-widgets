@@ -34,7 +34,6 @@
       :title="`${columnState === ADDSTATE ? '新增字段' : '编辑字段'}`"
       ref="columnDialog"
       class="columnDialog"
-      :closeAfterConfirm="false"
       @dialog-closed="onClosedColumnForm"
       @dialog-complete="onClickSubmitColumn"
     >
@@ -49,7 +48,6 @@
       title="高级搜索"
       ref="searchDialog"
       class="searchDialog"
-      :closeAfterConfirm="false"
       @dialog-complete="onClickAdvanceSearch"
     >
       <Form :formCfg="adSearchCfg" :formData="adSearchForm"></Form>

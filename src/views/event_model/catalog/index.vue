@@ -31,7 +31,6 @@
       :isOpen="versionDialog"
       ref="versionDialog"
       class="versionDialog"
-      :closeAfterConfirm="false"
       @dialog-closed="onVersionFormClosed"
       @dialog-complete="onClickSubmitVersion"
     >
@@ -46,7 +45,6 @@
       :title="`${catalogForm.id ? '新增数据集' : '编辑数据集'}`"
       ref="catalogDialog"
       class="catalogDialog"
-      :closeAfterConfirm="false"
       @dialog-closed="onCatalogFormClosed"
       @dialog-complete="onClickSubmitCatalog"
     >
