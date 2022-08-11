@@ -46,3 +46,12 @@ export const COLNAMEOPTIONS = [
     value: 'nameEn'
   }
 ]
+export const TYPEOPTIONS = [
+  { label: '字符型(S1)', value: 'S1' },
+  { label: '字符型(S2)', value: 'S2' },
+  { label: '字符型(S3)', value: 'S3' },
+  { label: '逻辑型(L)', value: 'L' },
+  { label: '数值型(N)', value: 'N' },
+  { label: '日期型(D)', value: 'D' },
+  { label: '时间型(DT)', value: 'DT' }
+]

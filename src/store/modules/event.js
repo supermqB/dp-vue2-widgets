@@ -8,11 +8,9 @@ import {
   addCatalogColumnApi,
   updateCatalogColumnApi,
   submitCatalogApi,
-  getMaxCodeApi,
-  advanceSearchApi
+  getMaxCodeApi
 } from '@/api/event'
 
-import { RUNNINGSTATE, EDITINGSTATE } from '@/utils/const'
 import { getMax, keysClone } from '@/utils/lang'
 
 const processCatalogList = list => {
@@ -24,7 +22,6 @@ const processCatalogList = list => {
       label: theme,
       theme: true,
       children: []
-      // state: RUNNINGSTATE
     }
     item.dataSetCatalogEntiyList.forEach(item => {
       const { id, code, nameCn, number, state } = item
@@ -34,7 +31,6 @@ const processCatalogList = list => {
         number,
         state
       })
-      if (state === '0') result.state = EDITINGSTATE
     })
     return result
   })
@@ -43,7 +39,6 @@ const processCatalogList = list => {
 const processColumnList = list => {
   return list.map(item => {
     return Object.assign(item, {
-      id: item.seqNo,
       index: item.seqNo,
       primaryKeyFlag: parseInt(item.primaryKeyFlag),
       requiredFlag: parseInt(item.requiredFlag),
@@ -103,6 +98,7 @@ const state = {
   versionList: [],
   catalogList: [],
   columnList: [],
+  isAdvance: false,
   currentVersion: '',
   currentCatalog: '',
   currentColumn: '',
@@ -134,7 +130,7 @@ const getters = {
     return {}
   },
   currentColumnRow(state) {
-    return state.columnList.find(item => item.index === state.currentColumn)
+    return state.columnList.find(item => item.id === state.currentColumn)
   },
   versionOptions(state) {
     return state.versionList.map(item => {
@@ -166,13 +162,46 @@ const getters = {
 
 const mutations = {
   setCurrentVersion: (state, version) => {
-    state.currentVersion = version
+    if (version) {
+      state.currentVersion = version
+    } else {
+      if (state.versionList.length) {
+        state.currentVersion = state.versionList[0].versionName
+      } else {
+        state.currentVersion = ''
+      }
+    }
   },
   setCurrentCatalog: (state, catalog) => {
-    state.currentCatalog = catalog.toString()
+    if (catalog) {
+      state.currentCatalog = catalog.toString()
+    } else {
+      if (
+        state.catalogList.length &&
+        state.catalogList[0].dataSetCatalogEntiyList.length
+      ) {
+        state.currentCatalog =
+          state.catalogList[0].dataSetCatalogEntiyList[0].id.toString()
+      } else {
+        state.currentCatalog = ''
+      }
+    }
   },
   setCurrentColumn: (state, column) => {
-    state.currentColumn = column
+    if (!column) {
+      state.currentColumn =
+        state.columnList && state.columnList.length
+          ? state.columnList[0].id
+          : ''
+    } else {
+      state.currentColumn = column
+    }
+  },
+  setIsAdvance: (state, isAdvance) => {
+    if (state.isAdvance !== isAdvance) {
+      state.isAdvance = isAdvance
+      state.pageInfo.curPage = 1
+    }
   },
   setPageInfo: (state, pageInfo) => {
     Object.keys(pageInfo).forEach(key => {
@@ -198,75 +227,55 @@ const mutations = {
   },
   resetColumnForm: state => {
     state.columnForm = Object.assign({}, initState.columnForm)
-  },
-  resetadSearchForm: state => {
-    state.adSearchForm = Object.assign({}, initState.adSearchForm)
   }
 }
 
 const actions = {
-  initEvent({ dispatch }) {
-    dispatch('queryVersion')
-  },
-  async queryVersion({ commit, dispatch }, val = {}) {
+  async queryVersion() {
     const { value } = await getVersionListApi()
     state.versionList = value
-    if (!val.flag) {
-      if (state.versionList.length) {
-        commit('setCurrentVersion', state.versionList[0].versionName)
-      } else {
-        commit('setCurrentVersion', '')
-      }
-    }
-    dispatch('queryCatalog')
   },
-  async queryCatalog({ commit, dispatch }, val = {}) {
+  async queryCatalog() {
     const { value } = await getCatalogApi(state.currentVersion)
     state.catalogList = value
-    if (!val.flag) {
-      commit(
-        'setCurrentCatalog',
-        state.catalogList.length &&
-          state.catalogList[0].dataSetCatalogEntiyList.length
-          ? state.catalogList[0].dataSetCatalogEntiyList[0].id
-          : ''
-      )
-    }
-    await dispatch('queryColumn')
   },
-  async queryColumn({ commit }, val = {}) {
+  async queryColumn({ commit }) {
     const { curPage, pageSize } = state.pageInfo
-    const res = await getEventInfoApi(
-      state.currentCatalog,
+    const query = Object.assign(
+      { id: state.currentCatalog },
+      state.isAdvance ? state.adSearchForm : state.searchForm
+    )
+    const { value } = await getEventInfoApi(
       curPage,
       pageSize,
-      state.searchForm
+      query,
+      state.isAdvance
     )
-    const { records, pageInfo } = res.value
-    state.columnList = processColumnList(records)
-    commit('resetadSearchForm')
-    if (!val.flag)
-      commit(
-        'setCurrentColumn',
-        state.columnList && state.columnList.length
-          ? state.columnList[0].index
-          : ''
-      )
+    const { records, pageInfo } = value
+    state.columnList = processColumnList(records, curPage, pageSize)
     commit('setPageInfo', pageInfo)
   },
-  async adQueryColumn({ state, commit }) {
-    state.pageInfo.curPage = 1
-    const { curPage, pageSize } = state.pageInfo
-    const res = await advanceSearchApi(curPage, pageSize, state.adSearchForm)
-    const { records, pageInfo } = res.value
-    state.columnList = processColumnList(records)
-    commit(
-      'setCurrentColumn',
-      state.columnList && state.columnList.length
-        ? state.columnList[0].index
-        : ''
-    )
-    commit('setPageInfo', pageInfo)
+  async initEvent({ dispatch, commit }) {
+    await dispatch('queryVersion')
+    commit('setCurrentVersion')
+    await dispatch('queryCatalog')
+    commit('setCurrentCatalog')
+    await dispatch('queryColumn')
+    commit('setCurrentColumn')
+  },
+  async versionChanged({ dispatch, commit }) {
+    await dispatch('queryCatalog')
+    commit('setCurrentCatalog')
+    await dispatch('queryColumn')
+    commit('setCurrentColumn')
+  },
+  async catalogChanged({ dispatch, commit }) {
+    await dispatch('queryColumn')
+    commit('setCurrentColumn')
+  },
+  async columnChanged({ dispatch, commit }, reset) {
+    await dispatch('queryColumn')
+    if (reset) commit('setCurrentColumn')
   },
   async addVersion({ dispatch, commit }) {
     const { version, parVersion } = state.versionForm
@@ -277,13 +286,14 @@ const actions = {
   async runCatalog({ dispatch, state }) {
     await submitCatalogApi(state.currentCatalog)
     this._vm.$message.success('启动成功！')
-    dispatch('queryCatalog', { flag: true })
+    dispatch('queryCatalog')
   },
   async submitCatalog({ dispatch, state }) {
     const version = state.currentVersion
     const { id, theme, code, nameCn, nameEn, description } = state.catalogForm
     if (!id) {
       await addCatalogApi(version, theme, code, nameCn, nameEn, description)
+      this._vm.$message.success('新增目录成功！')
     } else {
       await updateCatalogApi(
         id,
@@ -294,8 +304,9 @@ const actions = {
         nameEn,
         description
       )
-      dispatch('queryCatalog', { flag: true })
+      this._vm.$message.success('编辑目录成功！')
     }
+    dispatch('queryCatalog')
   },
   async submitColumn({ dispatch, commit, state }) {
     const {
@@ -321,7 +332,6 @@ const actions = {
         indexFlag
       })
       this._vm.$message.success('新增字段成功！')
-      dispatch('queryColumn')
     } else {
       await updateCatalogColumnApi({
         id,
@@ -335,11 +345,13 @@ const actions = {
         indexFlag
       })
       this._vm.$message.success('编辑字段成功！')
-      dispatch('queryColumn', { flag: true })
     }
+    await dispatch('queryColumn')
   },
   async getMaxCode({}, { version, theme }) {
     const res = await getMaxCodeApi(version, theme)
+    state.catalogForm.version = version
+    state.catalogForm.theme = theme
     state.catalogForm.code = getMax(res.value)
   }
 }

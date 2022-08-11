@@ -1,10 +1,12 @@
+import { TYPEOPTIONS, YESORNOOPTIONS } from '@/utils/const'
+
 export default [
   {
     type: 'el-input',
     label: '标识符',
     id: 'identifier',
     elOptions: {
-      clearabled: true,
+      clearable: true,
       style: {
         width: '170px'
       }
@@ -15,7 +17,7 @@ export default [
     label: '字段名',
     id: 'nameCn',
     elOptions: {
-      clearabled: true,
+      clearable: true,
       style: {
         width: '170px'
       }
@@ -23,11 +25,11 @@ export default [
   },
   {
     type: 'el-select',
-    options: [],
+    options: TYPEOPTIONS,
     label: '类型',
     id: 'type',
     elOptions: {
-      clearabled: true,
+      clearable: true,
       style: {
         width: '92px'
       }
@@ -35,16 +37,7 @@ export default [
   },
   {
     type: 'el-select',
-    options: [
-      {
-        label: '是',
-        value: 1
-      },
-      {
-        label: '否',
-        value: 0
-      }
-    ],
+    options: YESORNOOPTIONS,
     label: '必填',
     id: 'requiredFlag',
     elOptions: {
@@ -56,16 +49,7 @@ export default [
   },
   {
     type: 'el-select',
-    options: [
-      {
-        label: '是',
-        value: 1
-      },
-      {
-        label: '否',
-        value: 0
-      }
-    ],
+    options: YESORNOOPTIONS,
     label: '主键',
     id: 'primaryKeyFlag',
     elOptions: {
