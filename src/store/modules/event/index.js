@@ -10,8 +10,8 @@ import {
   submitCatalogApi,
   getMaxCodeApi
 } from '@/api/event'
-
 import { getMax, keysClone } from '@/utils/lang'
+import initState from './initState'
 
 const processCatalogList = list => {
   if (!list) return []
@@ -45,53 +45,6 @@ const processColumnList = list => {
       indexFlag: parseInt(item.indexFlag)
     })
   })
-}
-
-const initState = {
-  searchForm: {
-    identifier: '',
-    nameCn: '',
-    type: '',
-    requiredFlag: null,
-    primaryKeyFlag: null
-  },
-  versionForm: {
-    version: '',
-    parVersion: '',
-    state: ''
-  },
-  catalogForm: {
-    id: '',
-    version: '',
-    theme: '',
-    code: '',
-    nameCn: '',
-    nameEn: '',
-    description: ''
-  },
-  columnForm: {
-    id: '',
-    nameCn: '',
-    nameEn: '',
-    definition: '',
-    primaryKeyFlag: 0,
-    requiredFlag: 0,
-    indexFlag: 0,
-    dataElementId: '',
-    elementNameCn: '',
-    type: '',
-    format: '',
-    identifier: '',
-    valueRange: '',
-    valueDomainName: ''
-  },
-  adSearchForm: {
-    colNames: [],
-    contains: '',
-    equals: '',
-    atleast: '',
-    exclude: ''
-  }
 }
 
 const state = {
@@ -204,9 +157,7 @@ const mutations = {
     }
   },
   setPageInfo: (state, pageInfo) => {
-    Object.keys(pageInfo).forEach(key => {
-      state.pageInfo[key] = pageInfo[key]
-    })
+    keysClone(state.pageInfo, pageInfo)
   },
   setCatalogForm: (state, item) => {
     if (item) {
