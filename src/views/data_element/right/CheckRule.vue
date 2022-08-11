@@ -308,6 +308,7 @@ export default {
     position: fixed;
     bottom: 32px;
     right: 15px;
+    z-index: 1000;
     background-color: #fff;
   }
 }

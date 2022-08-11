@@ -24,7 +24,9 @@
       </el-tree>
     </div>
     <div class="groupsum">
-      <div v-for="item in groupSum" :key="item.key">{{ item.key }} : {{ item.value }}</div>
+      <div v-for="item in groupSum" :key="item.key">
+        {{ item.key }} : {{ item.value }}
+      </div>
     </div>
   </div>
 </template>
