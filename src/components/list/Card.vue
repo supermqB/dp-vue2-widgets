@@ -18,12 +18,14 @@ export default {
   color: #606266;
   .title {
     font-size: 13px;
+    height: 36px;
+    line-height: 36px;
     .icon {
       color: #8D8D8D;
       font-size: 12px;
       font-family: element-icons !important;
       display: inline-block;
-      padding: 6px;
+      padding: 0 6px;
       &::before {
         content: '\e791';
       }
