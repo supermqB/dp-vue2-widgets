@@ -4,7 +4,10 @@
       <div class="crumb">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>主索引管理</el-breadcrumb-item>
-          <el-breadcrumb-item>{{ selectedMDM.name }}</el-breadcrumb-item>
+          <el-breadcrumb-item
+            >{{ `${selectedMDM.label}（${selectedMDM.name}）` }}
+            <img :src="icon(selectedMDM.state)"
+          /></el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="btn_area">
@@ -41,6 +44,12 @@
   </div>
 </template>
 <script>
+import {
+  RUNNINGSTATE,
+  EDITINGSTATE,
+  COMPLETESTATE,
+  INCOMESTATE
+} from '@/utils/const'
 import { mapState as globalMapState, createNamespacedHelpers } from 'vuex'
 const { mapState, mapMutations, mapActions } =
   createNamespacedHelpers('mdm/mdmlist')
@@ -66,6 +75,18 @@ export default {
     })
   },
   methods: {
+    icon(state) {
+      switch (state) {
+        case RUNNINGSTATE:
+          return require('@/assets/images/common/icons/running.png')
+        case EDITINGSTATE:
+          return require('@/assets/images/common/icons/editing.png')
+        case COMPLETESTATE:
+          return require('@/assets/images/common/icons/complete.png')
+        case INCOMESTATE:
+          return require('@/assets/images/common/icons/income.png')
+      }
+    },
     startEditMDM() {},
     startCreateMDM() {},
     searchHandler() {},
@@ -110,15 +131,16 @@ export default {
     }
     .searchForm {
       display: flex;
-      width: 88%;
+      width: 80%;
+      flex: 1 1 auto;
       justify-content: flex-start;
       flex-wrap: wrap;
       .el-form-item {
         margin-bottom: 0px;
-        /* width: 210px; */
         display: flex;
         justify-content: end;
-        .el-select {
+        .el-select,
+        .el-input {
           width: 165px;
         }
       }
@@ -127,6 +149,7 @@ export default {
       }
     }
     .action_area {
+        width: 150px;
       padding: 6px 0;
       .advbtn {
         color: #1890ff;

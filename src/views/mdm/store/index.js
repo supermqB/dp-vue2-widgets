@@ -6,9 +6,16 @@ const state = {
   suspectFilter: []
 }
 
+const mutations = {
+  setSelectedMDM(state, value) {
+      debugger;
+    state.selectedMDM = value
+  }
+}
 export default {
   namespaced: true,
   state,
+  mutations,
   modules: {
     mdmlist
   }
