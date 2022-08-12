@@ -10,8 +10,8 @@ import {
   submitCatalogApi,
   getMaxCodeApi
 } from '@/api/event'
-
 import { getMax, keysClone } from '@/utils/lang'
+import initState from './initState'
 
 const processCatalogList = list => {
   if (!list) return []
@@ -45,53 +45,6 @@ const processColumnList = list => {
       indexFlag: parseInt(item.indexFlag)
     })
   })
-}
-
-const initState = {
-  searchForm: {
-    identifier: '',
-    nameCn: '',
-    type: '',
-    requiredFlag: null,
-    primaryKeyFlag: null
-  },
-  versionForm: {
-    version: '',
-    parVersion: '',
-    state: ''
-  },
-  catalogForm: {
-    id: '',
-    version: '',
-    theme: '',
-    code: '',
-    nameCn: '',
-    nameEn: '',
-    description: ''
-  },
-  columnForm: {
-    id: '',
-    nameCn: '',
-    nameEn: '',
-    definition: '',
-    primaryKeyFlag: '',
-    requiredFlag: '',
-    indexFlag: '',
-    dataElementId: '',
-    elementNameCn: '',
-    type: '',
-    format: '',
-    identifier: '',
-    valueRange: '',
-    valueDomainName: ''
-  },
-  adSearchForm: {
-    colNames: [],
-    contains: '',
-    equals: '',
-    atleast: '',
-    exclude: ''
-  }
 }
 
 const state = {
@@ -204,29 +157,29 @@ const mutations = {
     }
   },
   setPageInfo: (state, pageInfo) => {
-    Object.keys(pageInfo).forEach(key => {
-      state.pageInfo[key] = pageInfo[key]
-    })
+    keysClone(state.pageInfo, pageInfo)
   },
-  setCatalogForm: (state, item) => {
-    if (item) {
-      keysClone(state.catalogForm, item)
+  setCatalogForm: (state, form) => {
+    if (form) {
+      keysClone(state.catalogForm, form)
       state.catalogForm.version = state.currentVersion
+    } else {
+      state.catalogForm = Object.assign({}, initState.catalogForm)
     }
   },
-  setColumnForm: (state, item) => {
-    if (item) {
-      keysClone(state.columnForm, item)
+  setColumnForm: (state, form) => {
+    if (form) {
+      keysClone(state.columnForm, form)
+    } else {
+      state.columnForm = Object.assign({}, initState.columnForm)
     }
   },
-  resetVersionForm: state => {
-    state.versionForm = Object.assign({}, initState.versionForm)
-  },
-  resetCatalogForm: state => {
-    state.catalogForm = Object.assign({}, initState.catalogForm)
-  },
-  resetColumnForm: state => {
-    state.columnForm = Object.assign({}, initState.columnForm)
+  setVersionForm: (state, form) => {
+    if (form) {
+      keysClone(state.versionForm, form)
+    } else {
+      state.versionForm = Object.assign({}, initState.versionForm)
+    }
   }
 }
 
@@ -262,20 +215,6 @@ const actions = {
     commit('setCurrentCatalog')
     await dispatch('queryColumn')
     commit('setCurrentColumn')
-  },
-  async versionChanged({ dispatch, commit }) {
-    await dispatch('queryCatalog')
-    commit('setCurrentCatalog')
-    await dispatch('queryColumn')
-    commit('setCurrentColumn')
-  },
-  async catalogChanged({ dispatch, commit }) {
-    await dispatch('queryColumn')
-    commit('setCurrentColumn')
-  },
-  async columnChanged({ dispatch, commit }, reset) {
-    await dispatch('queryColumn')
-    if (reset) commit('setCurrentColumn')
   },
   async addVersion({ dispatch, commit }) {
     const { version, parVersion } = state.versionForm

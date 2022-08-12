@@ -31,7 +31,7 @@
       ></Table>
     </div>
     <Dialog
-      :title="`${columnState === ADDSTATE ? '新增字段' : '编辑字段'}`"
+      :title="`${ !columnForm.id ? '新增字段' : '编辑字段'}`"
       ref="columnDialog"
       class="columnDialog"
       @dialog-closed="onClosedColumnForm"
@@ -65,7 +65,6 @@ import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import State from '@/components/state/IsRunning.vue'
 import { columnCfg, columnRule } from './config/columnForm'
 import { adSearchCfg } from './config/adSearchForm'
-import { ADDSTATE, EDITSTATE } from '@/utils/const'
 import { createNamespacedHelpers } from 'vuex'
 import { queryDataElementApi } from '@/api/event'
 const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('event')
@@ -77,7 +76,6 @@ export default {
     return {
       formCfg,
       tableConfig,
-      columnState: '',
       columnCfg,
       columnRule,
       adSearchCfg,
@@ -85,36 +83,51 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentCatalogItem', 'currentColumnRow' ]),
-    ...mapState(['columnList', 'pageInfo', 'searchForm', 'adSearchForm', 'columnForm', 'currentColumn', 'currentCatalog'])
-  },
-  created() {
-    this.ADDSTATE = ADDSTATE
-    this.EDITSTATE = EDITSTATE
+    ...mapGetters([
+      'currentCatalogItem',
+      'currentColumnRow'
+    ]),
+    ...mapState([
+      'columnList',
+      'pageInfo',
+      'searchForm',
+      'adSearchForm',
+      'columnForm',
+      'currentColumn',
+      'currentCatalog'
+    ])
   },
   methods: {
-    ...mapMutations(['setPageInfo', 'resetColumnForm', 'setColumnForm', 'setCurrentColumn', 'setIsAdvance']),
-    ...mapActions(['submitColumn', 'adQueryColumn', 'columnChanged']),
-    pageInfoChanged(val) {
+    ...mapMutations([
+      'setPageInfo', 
+      'setColumnForm',
+      'setCurrentColumn', 
+      'setIsAdvance'
+    ]),
+    ...mapActions([
+      'submitColumn',
+      'adQueryColumn',
+      'queryColumn'
+    ]),
+    async pageInfoChanged(val) {
       this.setPageInfo(val)
-      this.columnChanged(true)
+      await this.queryColumn()
+      this.setCurrentColumn()
     },
-    onClickSearch() {
-      this.setPageInfo({ curPage: 1 })
+    async onClickSearch() {
       this.setIsAdvance(false)
-      this.columnChanged(true)
+      await this.queryColumn()
+      this.setCurrentColumn()
     },
     onClosedColumnForm() {
-      this.resetColumnForm()
+      this.setColumnForm()
       this.$refs.columnForm.resetFields()
     },
     onclickAddColumn() {
-      this.columnState = ADDSTATE
       this.$refs.columnDialog.toggleOpen()
       this.setColumnForm()
     },
     onclickEditColumn() {
-      this.columnState = EDITSTATE
       this.$refs.columnDialog.toggleOpen()
       this.setColumnForm(this.currentColumnRow)
     },
@@ -124,10 +137,10 @@ export default {
         this.$refs.columnDialog.toggleOpen()
       })
     },
-    onClickAdvanceSearch() {
-      this.setPageInfo({ curPage: 1 })
+    async onClickAdvanceSearch() {
       this.setIsAdvance(true)
-      this.columnChanged(true)
+      await this.queryColumn()
+      this.setCurrentColumn()
       this.$refs.searchDialog.toggleOpen()
     },
     advancedSearch() {

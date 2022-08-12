@@ -10,8 +10,17 @@
       </div>
     </div>
     <div class="version">
-      <Version></Version>
+      <span>版本</span>
+      <el-select v-model="currentVersion">
+        <!-- <el-option value="v1.0"></el-option> -->
+      </el-select>
+      <i class="master">主</i>
+      <span>状态</span>
+      <el-select v-model="state">
+        <!-- <el-option value="v1.0"></el-option> -->
+      </el-select>
     </div>
+    <Detail></Detail>
     <div class="search">
       <Form :formCfg="searchValueCfg" :formData="searchValueData"></Form>
       <div>
@@ -58,7 +67,7 @@
 import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
 import Dialog from '@/components/Dialog.vue'
-import Version from './version.vue'
+import Detail from './detail.vue'
 import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import tableConfig from './config/tableColumn'
 import { addVersionCfg, editVersionCfg } from './config/versionForm'
@@ -66,7 +75,7 @@ import { searchValueCfg, addValueCfg, editValueCfg } from './config/valueForm'
 
 export default {
   components: {
-    Form, Table, Dialog, Version, Breadcrumb
+    Form, Table, Dialog, Detail, Breadcrumb
   },
   data() {
     return {
@@ -92,7 +101,9 @@ export default {
         pageSize: 10,
         totalSize: 3,
         totalPage: 1
-      }
+      },
+      currentVersion: '',
+      state: ''
     }
   },
   mounted() {
@@ -141,6 +152,34 @@ export default {
     padding-left: 10px;
     box-sizing: border-box;
   }
+  .version {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 41px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 13px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #E5E5E5;
+    i.master {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      border-radius: 20px; 
+      border: 1px solid #1890FF;
+      font-style: normal;
+      text-align: center;
+      line-height: 20px;
+      color: #1890FF;
+      background-color: rgba(24,144,255,0.1);
+    }
+    .el-select {
+      margin: 0 10px 0 9px;
+      width: 150px;
+    }
+  }
   .table {
     flex-grow: 1;
     padding-bottom: 5px;
@@ -168,11 +207,11 @@ export default {
   form {
     padding-right: 120px;
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-end;
     .el-form-item {
       margin-bottom: 12px;
+      display: flex;
     }
   }
 }
@@ -180,28 +219,27 @@ export default {
 ::v-deep .editVersionDialog .el-dialog{
   width: 600px;
   form {
-    padding-right: 120px;
+    padding-right: 130px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     flex-wrap: wrap;
     .el-form-item {
       margin-bottom: 12px;
+      display: flex;
     }
   }
 }
 
 ::v-deep .addValueDialog .el-dialog{
   width: 600px;
-  form {
+  .el-form {
     padding-right: 120px;
+  }
+  .el-form-item__content {
+    margin-bottom: 12px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    .el-form-item {
-      margin-bottom: 12px;
-    }
   }
 }
 
@@ -209,10 +247,10 @@ export default {
   width: 600px;
   form {
     padding-right: 120px;
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    flex-wrap: wrap;
+    flex-wrap: wrap; */
     .el-form-item {
       margin-bottom: 12px;
     }

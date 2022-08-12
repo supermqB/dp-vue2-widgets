@@ -3,7 +3,7 @@ import { ADDSTATE, EDITSTATE } from '@/utils/const'
 export const catalogCfg = (
   versionList = [],
   themeList = [],
-  state = ADDSTATE
+  disabled = false
 ) => [
   {
     type: 'el-select',
@@ -11,7 +11,7 @@ export const catalogCfg = (
     options: versionList,
     id: 'version',
     elOptions: {
-      disabled: state === EDITSTATE,
+      disabled,
       style: {
         width: '260px'
       }
@@ -23,7 +23,7 @@ export const catalogCfg = (
     options: themeList,
     id: 'theme',
     elOptions: {
-      disabled: state === EDITSTATE,
+      disabled,
       style: {
         width: '260px'
       }
