@@ -276,13 +276,13 @@ export default {
   .el-input {
     height: 20px;
     margin-bottom: 8px;
-    .el-input__suffix{
-        padding-top: 8px;
+    .el-input__suffix {
+      padding-top: 8px;
     }
-    &.el-input--suffix.is-focus{
-        .el-input__suffix{
+    &.el-input--suffix.is-focus {
+      .el-input__suffix {
         padding-top: 0px;
-    }
+      }
     }
   }
   .el-checkbox,
@@ -335,7 +335,6 @@ export default {
     height: 45px;
   }
   .btn_area {
-<<<<<<< HEAD
     height: 45px;
     width: 208px;
     position: fixed;
@@ -343,13 +342,6 @@ export default {
     right: 15px;
     z-index: 1000;
     background-color: #fff;
-=======
-    flex: 1 1 auto;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    padding: 0 6px 6px 0;
->>>>>>> dev
   }
 }
 </style>
