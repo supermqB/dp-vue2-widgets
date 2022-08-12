@@ -62,7 +62,6 @@ export default {
   },
   methods: {
     handleNodeClick(node) {
-        debugger;
       this.$emit('onClick', node)
     },
     icon(state) {

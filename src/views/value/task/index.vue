@@ -9,7 +9,6 @@
         <el-tree
           show-checkbox
           ref="filterTree"
-          :default-expanded-keys="['1', '2', '3']"
           :data="treeSelectionData"
           @check-change="checkedFilterHandler"
         >
@@ -21,7 +20,7 @@
     </div>
     <div class="list">
       <Table
-        :tableData="[]"
+        :tableData="tableData"
         :tableConfig="tableHeaderConfig"
         :multipleSelect="true"
       ></Table>
@@ -43,9 +42,9 @@ export default {
         return [
           {
             colConfig: {
-              property: 'index',
+              property: 'src',
               label: '来源',
-              minWidth: 55
+              minWidth: 50
             }
           },
           {
@@ -59,51 +58,74 @@ export default {
             colConfig: {
               property: 'state',
               label: '状态',
-              minWidth: 70
+              minWidth: 60
             }
           }
         ]
       }
-    }
-  },
-  data() {
-    return {
-      treeSelectionData: [
-        {
-          id: '1',
-          label: '全选',
-          children: [
-            {
-              id: '2',
-              label: '来源',
-              children: [
-                {
-                  id: 4,
-                  label: '王俊'
-                },
-                {
-                  id: 5,
-                  label: '丁丝丝'
-                }
-              ]
-            },
-            {
-              id: '3',
-              label: '名称',
-              children: [
-                {
-                  id: 6,
-                  label: '药品疑似'
-                },
-                {
-                  id: 7,
-                  label: '地区疑似'
-                }
-              ]
-            }
-          ]
-        }
-      ]
+    },
+    tableData: {
+      type: Array,
+      default: () => {
+        return [
+          {
+            src: '王俊',
+            name: '阿司匹林',
+            state: '待完成'
+          },
+          {
+            src: '王俊',
+            name: '药物A',
+            state: '待完成'
+          },
+          {
+            src: '丁思丝',
+            name: '药物A',
+            state: '待完成'
+          }
+        ]
+      }
+    },
+    treeSelectionData: {
+      type: Array,
+      default: () => {
+        return []/* [
+          {
+            id: '1',
+            label: '全选',
+            children: [
+              {
+                id: '2',
+                label: '来源',
+                children: [
+                  {
+                    id: 4,
+                    label: '王俊'
+                  },
+                  {
+                    id: 5,
+                    label: '丁丝丝'
+                  }
+                ]
+              },
+              {
+                id: '3',
+                label: '名称',
+                children: [
+                  {
+                    id: 6,
+                    label: '药品疑似'
+                  },
+                  {
+                    id: 7,
+                    label: '地区疑似'
+                  }
+                ]
+              }
+            ]
+          } 
+        ]*/
+      }
     }
   },
   methods: {

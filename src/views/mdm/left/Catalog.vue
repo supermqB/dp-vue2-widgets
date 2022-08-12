@@ -1,12 +1,12 @@
 <template>
   <div class="mdmWrap">
-    <Header title="主索引目录" :action-types="['run']"></Header>
+    <Header title="主索引目录" :action-types="[actionType]"></Header>
     <div class="tree_header_row">
       <div>索引类别</div>
       <div class="cell2">数据量</div>
     </div>
     <Tree
-      :data="catalogList"
+      :data="mdmListData"
       currentNodeKey="1-1"
       class="tree"
       @onClick="onSelected"
@@ -30,35 +30,6 @@ export default {
   },
   data() {
     return {
-      catalogList: [
-        {
-          id: '1',
-          label: '',
-          children: [
-            {
-              id: '1-1',
-              label: '药品（中成药/西药）',
-              name: 'mdm_data_drug',
-              number: 2398,
-              state: INCOMESTATE
-            },
-            {
-              id: '1-2',
-              label: '行政区划',
-              number: 23,
-              name: 'mdm_data_region',
-              state: COMPLETESTATE
-            },
-            {
-              id: '1-3',
-              label: '耗材',
-              name: 'mdm_data_mat',
-              number: 298,
-              state: INCOMESTATE
-            }
-          ]
-        }
-      ]
     }
   },
   methods: {
@@ -67,8 +38,26 @@ export default {
     },
     ...mapMutations(['setSelectedMDM'])
   },
+  computed: {
+    actionType() {
+      return this.selectedMDM.state == INCOMESTATE ? 'run' : 'run_disable'
+    },
+    mdmListData(){
+        return  [
+        {
+          id: '1',
+          label: '',
+          children: this.mdmList
+        }
+      ]
+    },
+    ...mapState({
+      selectedMDM: state => state.selectedMDM,
+      mdmList: state => state.mdmList
+    })
+  },
   mounted() {
-    this.onSelected(this.catalogList[0].children[0])
+    this.onSelected(this.mdmListData[0].children[0])
   }
 }
 </script>

@@ -28,6 +28,7 @@ const state = {
 
 const getters = {
   moduleList(state) {
+      debugger;
     return state.details.map(item => item.module)
   },
   curVersionList(state) {
