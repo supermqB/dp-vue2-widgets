@@ -81,9 +81,20 @@
       >
       </el-input>
     </CardVue>
-    <div class="btn_area">
-      <el-button @click="reset">重置</el-button>
-      <el-button type="primary" @click="save">保存</el-button>
+    <div class="btn_box">
+      <div class="btn_area">
+        <el-button
+          @click="reset"
+          style="float: right; margin-right: 3%; margin-top: 3%"
+          >重置</el-button
+        >
+        <el-button
+          type="primary"
+          @click="save"
+          style="float: right; margin-right: 3%; margin-top: 3%"
+          >保存</el-button
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -265,13 +276,13 @@ export default {
   .el-input {
     height: 20px;
     margin-bottom: 8px;
-    .el-input__suffix{
-        padding-top: 8px;
+    .el-input__suffix {
+      padding-top: 8px;
     }
-    &.el-input--suffix.is-focus{
-        .el-input__suffix{
+    &.el-input--suffix.is-focus {
+      .el-input__suffix {
         padding-top: 0px;
-    }
+      }
     }
   }
   .el-checkbox,
@@ -320,12 +331,17 @@ export default {
       }
     }
   }
+  .btn_box {
+    height: 45px;
+  }
   .btn_area {
-    flex: 1 1 auto;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    padding: 0 6px 6px 0;
+    height: 45px;
+    width: 208px;
+    position: fixed;
+    bottom: 32px;
+    right: 15px;
+    z-index: 1000;
+    background-color: #fff;
   }
 }
 </style>

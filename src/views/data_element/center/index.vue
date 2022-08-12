@@ -63,6 +63,7 @@
 <script>
 import { isEmpty, toFixedNumStr } from '@/utils/lang'
 import { get } from '@/utils/request'
+import { alert } from '@/utils/pops'
 import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
 import Dialog from '@/components/Dialog.vue'
@@ -227,7 +228,7 @@ export default {
             done && this.$refs.editElemDialog.toggleOpen()
           })
         } else {
-          this.$alert('请检查表单中的错误项。')
+          alert('请检查表单中的错误项。')
         }
       })
     },
