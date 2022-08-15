@@ -1,6 +1,6 @@
 import { camelCase } from 'lodash'
 
-const drugColumns = [
+export const drugColumns = [
   { property: 'sdrg_inx', label: '药品SBR索引号' },
   { property: 'drug_name', label: '药品注册名称' },
   { property: 'drug_name_en', label: '药品注册名称(英文)' },
@@ -100,13 +100,7 @@ const drugColumns = [
   { property: 'data_validity_flag', label: '数据有效标志' },
   { property: 'data_create_time', label: '数据创建时间' },
   { property: 'data_modify_time', label: '数据修改时间' }
-].map(col => ({
-  colConfig: {
-    property: camelCase(col.property),
-    label: col.label,
-    width: col.label.length * 17
-  }
-}))
+].map(({ property, label }) => ({ property: camelCase(property), label }))
 
 export const drugTableConfig = [
   {
@@ -116,5 +110,11 @@ export const drugTableConfig = [
       width: 55
     }
   },
-  ...drugColumns
+  ...drugColumns.map(({ property, label }) => ({
+    colConfig: {
+      property,
+      label,
+      width: label.length * 17
+    }
+  }))
 ]

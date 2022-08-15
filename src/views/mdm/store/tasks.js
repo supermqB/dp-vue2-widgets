@@ -67,6 +67,9 @@ const mutations = {
   },
   setTaskList(state, value) {
     state.taskList = value
+  },
+  setWorkingTask(state, value) {
+    state.workingTask = value
   }
 }
 

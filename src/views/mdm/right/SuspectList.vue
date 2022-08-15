@@ -49,11 +49,26 @@ const { mapState, mapGetters, mapMutations, mapActions } =
 export default {
   data() {
     return {
-      curTask: '王俊:阿司匹林',
+      curTask: '',
       activeName: 'item0'
     }
   },
-  methods: {},
+  watch: {
+    filteredTask(tasks) {
+      let firstTask = tasks[0]
+      this.curTask = `${firstTask.source}:${firstTask.name}`
+    },
+    curTask(curTask) {
+      this.setWorkingTask(
+        this.filteredTask.filter(
+          task => `${task.source}:${task.name}` == curTask
+        )[0]
+      )
+    }
+  },
+  methods: {
+    ...mapMutations(['setWorkingTask'])
+  },
   computed: {
     ...mapGetters(['filteredTask']),
     curSuspectList() {
@@ -64,7 +79,7 @@ export default {
       return curSusList
         ? curSusList.map(sus => {
             return {
-              title: curTask.name,
+              title: curTask[0].name,
               fields: drugEnvolope.map(item => {
                 return {
                   name: item.title,
