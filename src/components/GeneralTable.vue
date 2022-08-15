@@ -50,9 +50,7 @@
                 white-space: pre;
               "
               :title="formatCell(row[column.property], col.formatter)"
-            >
-              {{ formatCell(row[column.property], col.formatter) }}
-            </div>
+            >{{ formatCell(row[column.property], col.formatter) }}</div>
             <!-- </el-tooltip> -->
           </template>
         </el-table-column>
@@ -208,6 +206,7 @@ export default {
     height: 300px; /*table default height*/
     overflow: auto;
     .el-table {
+        font-size: 13px;
       &.el-table--border .el-table__cell:first-child .cell {
         padding-left: 0;
       }

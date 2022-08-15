@@ -1,20 +1,27 @@
 <template>
   <div class="mdmWrap">
-    <Header title="主索引目录" :action-types="['run']"></Header>
+    <Header title="主索引目录" :action-types="[actionType]"></Header>
     <div class="tree_header_row">
       <div>索引类别</div>
       <div class="cell2">数据量</div>
     </div>
-    <Tree :data="catalogList" class="tree"></Tree>
+    <Tree
+      :data="mdmListData"
+      currentNodeKey="1-1"
+      class="tree"
+      @onClick="onSelected"
+    ></Tree>
   </div>
 </template>
 
 <script>
+import { createNamespacedHelpers, mapState as globalMapState } from 'vuex'
+const { mapState, mapMutations, mapActions } = createNamespacedHelpers('mdm')
 import Header from '@/components/header/Catalog.vue'
 import Bottom from '@/components/bottom/Catalog.vue'
 import Tree from '@/components/SideTree.vue'
 
-import { EDITINGSTATE } from '@/utils/const'
+import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
 export default {
   components: {
     Header,
@@ -23,25 +30,34 @@ export default {
   },
   data() {
     return {
-      catalogList: [
+    }
+  },
+  methods: {
+    onSelected(node) {
+      this.setSelectedMDM(node)
+    },
+    ...mapMutations(['setSelectedMDM'])
+  },
+  computed: {
+    actionType() {
+      return this.selectedMDM.state == INCOMESTATE ? 'run' : 'run_disable'
+    },
+    mdmListData(){
+        return  [
         {
-          id: '1-1',
-          label: '药品（中成药/西药）',
-          number: 2398
-        },
-        {
-          id: '1-2',
-          label: '行政区划',
-          number: 23,
-          state: EDITINGSTATE
-        },
-        {
-          id: '1-3',
-          label: '检查项目',
-          number: 298
+          id: '1',
+          label: '',
+          children: this.mdmList
         }
       ]
-    }
+    },
+    ...mapState({
+      selectedMDM: state => state.selectedMDM,
+      mdmList: state => state.mdmList
+    })
+  },
+  mounted() {
+    this.onSelected(this.mdmListData[0].children[0])
   }
 }
 </script>
@@ -69,9 +85,24 @@ export default {
       align-self: center;
     }
   }
-  .tree {
+  ::v-deep.tree {
     flex-grow: 1;
     overflow: auto;
+    & > .el-tree > .el-tree-node > .el-tree-node__content {
+      display: none;
+    }
+    .el-tree-node__content {
+      height: 36px;
+      padding-left: 0px !important;
+      .el-tree-node__expand-icon {
+        display: none;
+      }
+      .treeNode {
+        .label {
+          padding-left: 10px;
+        }
+      }
+    }
   }
 }
 </style>
