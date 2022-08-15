@@ -94,9 +94,13 @@ export default {
       get() {
         return this.currentVersion
       },
-      set(val) {
+      async set(val) {
         this.setCurrentVersion(val)
-        this.queryCatalog()
+        await this.queryCatalog()
+        this.setCurrentCatalog()
+        this.resetColumnList()
+        await this.queryColumn()
+        this.setCurrentColumn()
       }
     },
     ...mapGetters([
@@ -113,7 +117,8 @@ export default {
       'setCurrentVersion',
       'setCurrentColumn',
       'setVersionForm',
-      'setCatalogForm'
+      'setCatalogForm',
+      'resetColumnList'
     ]),
     ...mapActions([
       'queryCatalog',
@@ -123,13 +128,6 @@ export default {
       'submitCatalog', 
       'getMaxCode'
     ]),
-    async onVersionChanged(val) {
-      this.setCurrentVersion(val)
-      await this.queryCatalog()
-      this.setCurrentCatalog()
-      await this.queryColumn()
-      this.setCurrentColumn()
-    },
     async handleNodeClick({id}) {
       this.setCurrentCatalog(id)
       await this.queryColumn()

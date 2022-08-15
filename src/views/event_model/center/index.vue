@@ -4,11 +4,7 @@
       <div class="left">
         <Breadcrumb
           baseLabel="事件模型管理"
-          :currentLabel="`${
-            currentCatalogItem
-              ? `${currentCatalogItem.nameCn}(${currentCatalogItem.nameEn})`
-              : ''
-          }`"
+          :currentItem="currentCatalogItem"
         >
         </Breadcrumb>
         <State :currentState="currentCatalogItem.state"></State>
@@ -138,9 +134,8 @@ export default {
     },
     onClickSubmitColumn() {
       this.$refs.columnForm.validate((valid) => {
-        console.log(valid, 1111111111)
-        // this.submitColumn()
-        // this.$refs.columnDialog.toggleOpen()
+        this.submitColumn()
+        this.$refs.columnDialog.toggleOpen()
       })
     },
     async onClickAdvanceSearch() {

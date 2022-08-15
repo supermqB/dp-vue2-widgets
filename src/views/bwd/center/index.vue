@@ -45,8 +45,8 @@
         >
       </span>
     </el-dialog>
-    <!-- <Dialog
-      :title="`${!columnForm.id ? '编辑文件字段' : '新增文件字段'}`"
+    <Dialog
+      title="新增文件字段"
       ref="columnDialog"
       class="columnDialog"
       @dialog-closed="onClosedColumnForm"
@@ -54,13 +54,11 @@
     >
       <Form
         ref="columnForm"
-        :formCfg="
-          columnCfg(queryDataElement, dataElementData, setDataElementInfo)
-        "
-        :formData="columnForm"
-        :formRule="columnRule"
+        :formCfg="[]"
+        :formData="{}"
+        :formRule="[]"
       ></Form>
-    </Dialog> -->
+    </Dialog>
   </div>
 </template>
 
@@ -72,7 +70,6 @@ import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import { tableConfig } from './config/tableColumn'
 import { searchCfg } from './config/searchForm'
 import Dialog from '@/components/Dialog.vue'
-import { mapMutations, mapActions } from 'vuex'
 export default {
   components: {
     Breadcrumb,
@@ -85,6 +82,7 @@ export default {
     return {
       searchCfg,
       searchData: {
+        id: '',
         field: '',
         nameEn: '',
         index: ''
@@ -101,8 +99,6 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setColumnForm']),
-    ...mapActions(['submitColumn']),
     onClosedColumnForm() {
       this.setColumnForm()
       this.$refs.columnForm.resetFields()
