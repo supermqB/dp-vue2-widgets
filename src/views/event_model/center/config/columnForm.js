@@ -1,4 +1,5 @@
 import { YESORNOOPTIONS } from '@/utils/const'
+import { validateEnglish } from '@/utils/validator'
 
 export const columnCfg = (remoteMethod, dataElementData, setDataElementInfo) =>
   [
@@ -107,6 +108,9 @@ export const columnRule = {
     trigger: 'blur'
   },
   nameCn: { required: true, message: '请填写字段名称！', trigger: 'blur' },
-  nameEn: { required: true, message: '请填写字段英文名称！', trigger: 'blur' },
+  nameEn: [
+    { required: true, message: '请填写字段英文名称！', trigger: 'blur' },
+    { validator: validateEnglish }
+  ],
   definition: { required: true, message: '请填写字段定义！', trigger: 'blur' }
 }

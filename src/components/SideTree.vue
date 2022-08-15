@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="treeWrap">
     <el-tree
       ref="sideTree"
       node-key="id"
@@ -93,6 +93,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.treeWrap {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
 .treeNode {
   position: relative;
   width: 100%;

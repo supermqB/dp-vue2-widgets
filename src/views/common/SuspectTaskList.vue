@@ -1,41 +1,48 @@
 <template>
   <div class="wrap">
     <div class="header">
-      <h3>任务列表</h3>
+      <h3>
+        <span>任务列表</span>
+        <i 
+          @click="() => visible = !visible"
+          :class="[visible ?  'el-icon-arrow-down' : 'el-icon-arrow-up']"></i>
+      </h3>
       <div :class="['todo', { disabled: !hasItem2Do }]" @click="completeHandler"></div>
     </div>
-    <div class="search">
-      <el-popover placement="right-start" width="200" trigger="click">
-        <el-tree
-          show-checkbox
-          ref="filterTree"
-          :data="treeSelectionData"
-          node-key="id"
-          @check-change="checkedFilterHandler"
-        >
-        </el-tree>
-        <el-button type="text" slot="reference"> 筛选 </el-button>
-      </el-popover>
-      <span>搜索</span>
-      <el-input suffix-icon="el-icon-search"></el-input>
-    </div>
-    <div class="list">
-      <Table
-        :tableData="tableData"
-        :tableConfig="tableHeaderConfig"
-        :multipleSelect="true"
-        @selection-changed="selectionChgHandler"
-      ></Table>
-    </div>
+    <CollapseTransition :visible="visible">
+      <div class="search">
+        <el-popover placement="right-start" width="200" trigger="click">
+          <el-tree
+            show-checkbox
+            ref="filterTree"
+            :data="treeSelectionData"
+            node-key="id"
+            @check-change="checkedFilterHandler"
+          >
+          </el-tree>
+          <el-button type="text" slot="reference"> 筛选 </el-button>
+        </el-popover>
+        <span>搜索</span>
+        <el-input suffix-icon="el-icon-search"></el-input>
+      </div>
+      <div class="list">
+        <Table
+          :tableData="tableData"
+          :tableConfig="tableHeaderConfig"
+          :multipleSelect="true"
+          @selection-changed="selectionChgHandler"
+        ></Table>
+      </div>
+    </CollapseTransition>
   </div>
 </template>
 
 <script>
 import Table from '@/components/GeneralTable.vue'
-
+import CollapseTransition from '@/components/transition/Collapse.vue'
 export default {
   components: {
-    Table
+    Table, CollapseTransition
   },
   props: {
     tableHeaderConfig: {
@@ -134,6 +141,11 @@ export default {
       default: () => false
     }
   },
+  data() {
+    return {
+      visible: true
+    }
+  },
   methods: {
     checkedFilterHandler() {
       let checkedKeys = this.$refs.filterTree.getCheckedKeys()
@@ -154,15 +166,21 @@ export default {
   display: flex;
   flex-direction: column;
   .header {
+    height: 36px;
     padding: 5px;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    /* border-bottom: 1px solid #e5e5e5; */
     h3 {
       font-size: 15px;
       font-weight: normal;
+      i {
+        padding: 6px;
+        cursor: pointer;
+      }
     }
     .todo {
       width: 16px;
@@ -181,6 +199,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-top: 1px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
     .el-button {
       font-size: 15px;
@@ -195,5 +214,12 @@ export default {
   .list {
     flex-grow: 1;
   }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

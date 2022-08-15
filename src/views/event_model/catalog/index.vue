@@ -42,7 +42,7 @@
       ></Form>
     </Dialog>
     <Dialog
-      :title="`${catalogForm.id ? '新增数据集' : '编辑数据集'}`"
+      :title="`${!catalogForm.id ? '新增数据集' : '编辑数据集'}`"
       ref="catalogDialog"
       class="catalogDialog"
       @dialog-closed="onCatalogFormClosed"
@@ -136,7 +136,7 @@ export default {
       this.setCurrentColumn()
     },
     newVersion() {
-      this.catalogDialogState = ADDSTATE
+      // this.catalogDialogState = ADDSTATE
       this.$refs.versionDialog.toggleOpen()
     },
     onVersionFormClosed(){

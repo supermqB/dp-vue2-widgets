@@ -132,9 +132,10 @@ export default {
       this.setColumnForm(this.currentColumnRow)
     },
     onClickSubmitColumn() {
-      this.$refs.columnForm.validate(() => {
-        this.submitColumn()
-        this.$refs.columnDialog.toggleOpen()
+      this.$refs.columnForm.validate((valid) => {
+        console.log(valid, 1111111111)
+        // this.submitColumn()
+        // this.$refs.columnDialog.toggleOpen()
       })
     },
     async onClickAdvanceSearch() {
