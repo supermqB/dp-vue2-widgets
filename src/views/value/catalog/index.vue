@@ -159,11 +159,12 @@ export default {
 <style lang="scss" scoped>
 .wrap {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: auto;
   .search {
-    height: 41px;
-    padding: 0 7px 0 15px;
+    padding: 5px 7px 5px 15px;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -176,7 +177,7 @@ export default {
     }
   }
   .tree {
-    flex: 1;
+    flex: 1 1 auto;
     overflow: auto;
     padding-top: 5px;
     border-bottom: 1px solid #e5e5e5;

@@ -42,7 +42,7 @@
       ></Form>
     </Dialog>
     <Dialog
-      :title="`${catalogForm.id ? '新增数据集' : '编辑数据集'}`"
+      :title="`${!catalogForm.id ? '新增数据集' : '编辑数据集'}`"
       ref="catalogDialog"
       class="catalogDialog"
       @dialog-closed="onCatalogFormClosed"
@@ -94,9 +94,13 @@ export default {
       get() {
         return this.currentVersion
       },
-      set(val) {
+      async set(val) {
         this.setCurrentVersion(val)
-        this.queryCatalog()
+        await this.queryCatalog()
+        this.setCurrentCatalog()
+        this.resetColumnList()
+        await this.queryColumn()
+        this.setCurrentColumn()
       }
     },
     ...mapGetters([
@@ -113,7 +117,8 @@ export default {
       'setCurrentVersion',
       'setCurrentColumn',
       'setVersionForm',
-      'setCatalogForm'
+      'setCatalogForm',
+      'resetColumnList'
     ]),
     ...mapActions([
       'queryCatalog',
@@ -123,20 +128,13 @@ export default {
       'submitCatalog', 
       'getMaxCode'
     ]),
-    async onVersionChanged(val) {
-      this.setCurrentVersion(val)
-      await this.queryCatalog()
-      this.setCurrentCatalog()
-      await this.queryColumn()
-      this.setCurrentColumn()
-    },
     async handleNodeClick({id}) {
       this.setCurrentCatalog(id)
       await this.queryColumn()
       this.setCurrentColumn()
     },
     newVersion() {
-      this.catalogDialogState = ADDSTATE
+      // this.catalogDialogState = ADDSTATE
       this.$refs.versionDialog.toggleOpen()
     },
     onVersionFormClosed(){

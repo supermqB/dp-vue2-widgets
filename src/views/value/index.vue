@@ -19,11 +19,12 @@
 </template>
 
 <script>
-import Task from './task'
+// import Task from './task'
 import Catalog from './catalog'
 import Bottom from '@/components/bottom/Catalog.vue'
 import Center from './center'
 import Suspect from './suspect'
+import Task from '../common/SuspectTaskList.vue'
 
 export default {
   name: 'ValueExamine',
@@ -45,22 +46,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep.left_aside_container {
+::v-deep .left_aside_container {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  justify-content: space-between;
+  justify-content: flex-start;
   overflow: hidden;
   .catalog {
     flex: 1 1 auto;
-    height: 47.5%;
-    /* min-height: 100px; */
   }
   .task {
-    height: 52.5%;
-    // height: 380px; /* doesn't work */
     .table_container {
-      height: calc(100% - 120px)
+      height: 450px;
     }
   }
   .bottom {

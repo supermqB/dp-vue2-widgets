@@ -11,6 +11,7 @@
       <div
         v-for="action in actions"
         :key="action.type"
+        class="icon"
         :class="['action', action.type]"
         @click="click(action.type)"
       ></div>
@@ -68,10 +69,11 @@ export default {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    img {
+    img, .icon {
       margin: 0 4px;
       cursor: pointer;
     }
+
     .action {
       height: 16px;
       width: 16px;
