@@ -5,13 +5,19 @@
       class="task"
       :treeSelectionData="filterTreeData"
       :tableHeaderConfig="taskTableConfig"
+      :tableData="filteredTask"
+      :hasItem2Do="!!selectedTasks.length"
+      @checked-filter-keys="handleFiltered"
+      @selected-items-changed="handleSelectedTasks"
+      @complete-action="handleCompleteAction"
     />
     <Bottom class="bottom" :labelList="['数据量', '任务量']"></Bottom>
   </div>
 </template>
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapGetters } = createNamespacedHelpers('mdm/tasks')
+import { createNamespacedHelpers, mapState as globalMapState } from 'vuex'
+const { mapState, mapGetters, mapMutations, mapActions } =
+  createNamespacedHelpers('mdm/tasks')
 import { taskTableConfig } from './configs'
 import CatalogVue from './Catalog.vue'
 import TaskList from '@/views/value/task'
@@ -28,7 +34,30 @@ export default {
     Bottom
   },
   computed: {
-    ...mapGetters(['filterTreeData'])
+    ...mapState({ selectedTasks: state => state.selectedTasks }),
+    ...mapGetters(['filterTreeData', 'filteredTask']),
+    ...globalMapState({ selectedMDM: state => state.mdm.selectedMDM })
+  },
+  methods: {
+    ...mapMutations(['setCheckedFilters', 'setSelectedTasks']),
+    ...mapActions(['listSuspectTasks', 'completeTasks']),
+    handleFiltered(keys) {
+      this.setCheckedFilters(keys)
+    },
+    handleSelectedTasks(tasks) {
+      this.setSelectedTasks(tasks)
+    },
+    handleCompleteAction() {
+      this.completeTasks()
+    }
+  },
+  watch: {
+    selectedMDM() {
+      this.listSuspectTasks()
+    }
+  },
+  mounted() {
+    //this.listSuspectTasks()
   }
 }
 </script>

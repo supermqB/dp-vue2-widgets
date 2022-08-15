@@ -1,7 +1,7 @@
 export const taskTableConfig = [
   {
     colConfig: {
-      property: 'src',
+      property: 'source',
       label: '来源',
       minWidth: 50
     }

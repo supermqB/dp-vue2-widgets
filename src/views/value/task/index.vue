@@ -2,7 +2,7 @@
   <div class="wrap">
     <div class="header">
       <h3>任务列表</h3>
-      <el-button type="primary">完成</el-button>
+      <div :class="['todo', { disabled: !hasItem2Do }]" @click="completeHandler"></div>
     </div>
     <div class="search">
       <el-popover placement="right-start" width="200" trigger="click">
@@ -10,6 +10,7 @@
           show-checkbox
           ref="filterTree"
           :data="treeSelectionData"
+          node-key="id"
           @check-change="checkedFilterHandler"
         >
         </el-tree>
@@ -23,6 +24,7 @@
         :tableData="tableData"
         :tableConfig="tableHeaderConfig"
         :multipleSelect="true"
+        @selection-changed="selectionChgHandler"
       ></Table>
     </div>
   </div>
@@ -68,7 +70,7 @@ export default {
       type: Array,
       default: () => {
         return [
-          {
+          /* {
             src: '王俊',
             name: '阿司匹林',
             state: '待完成'
@@ -82,14 +84,14 @@ export default {
             src: '丁思丝',
             name: '药物A',
             state: '待完成'
-          }
+          } */
         ]
       }
     },
     treeSelectionData: {
       type: Array,
       default: () => {
-        return []/* [
+        return [] /* [
           {
             id: '1',
             label: '全选',
@@ -126,12 +128,22 @@ export default {
           } 
         ]*/
       }
+    },
+    hasItem2Do: {
+      type: Boolean,
+      default: () => false
     }
   },
   methods: {
     checkedFilterHandler() {
       let checkedKeys = this.$refs.filterTree.getCheckedKeys()
       this.$emit('checked-filter-keys', checkedKeys)
+    },
+    selectionChgHandler(selectedItems) {
+      this.$emit('selected-items-changed', selectedItems)
+    },
+    completeHandler() {
+      this.hasItem2Do && this.$emit('complete-action')
     }
   }
 }
@@ -152,11 +164,14 @@ export default {
       font-size: 15px;
       font-weight: normal;
     }
-    .buttons {
-      display: flex;
-      justify-content: end;
-      align-items: center;
-      font-size: 15px;
+    .todo {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      background-image: url('@/assets/images/common/icons/todo.png');
+      &.disabled {
+        background-image: url('@/assets/images/common/icons/todo_disable.png');
+      }
     }
   }
   .search {
