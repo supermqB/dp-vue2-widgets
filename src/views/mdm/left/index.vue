@@ -20,7 +20,7 @@ const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('mdm/tasks')
 import { taskTableConfig } from './configs'
 import CatalogVue from './Catalog.vue'
-import TaskList from '@/views/value/task'
+import TaskList from '@/views/common/SuspectTaskList.vue'
 import Bottom from '@/components/bottom/Catalog.vue'
 export default {
   data() {
