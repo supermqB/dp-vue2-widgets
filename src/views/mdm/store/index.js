@@ -6,6 +6,7 @@ const state = {
       id: '1-1',
       label: '药品（中成药/西药）',
       name: 'mdm_data_drug',
+      type: 'drg',
       number: 2398,
       state: 'income' /*income*/
     },
@@ -14,17 +15,26 @@ const state = {
       label: '行政区划',
       number: 23,
       name: 'mdm_data_region',
+      type: 'reg',
       state: 'complete'
     },
     {
       id: '1-3',
       label: '耗材',
       name: 'mdm_data_mat',
+      type: 'mat',
       number: 298,
       state: 'income'
     }
   ],
-  selectedMDM: { id: 123, name: '药品（中成药西药）' },
+  selectedMDM: {
+    id: '1-1',
+    label: '药品（中成药/西药）',
+    name: 'mdm_data_drug',
+    type: 'drg',
+    number: 2398,
+    state: 'income' /*income*/
+  },
   suspectList: [],
   suspectFilter: []
 }

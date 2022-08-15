@@ -91,7 +91,13 @@ export default {
     startCreateMDM() {},
     searchHandler() {},
     openAdvSearch() {},
-    ...mapMutations({ selectItemHandler: 'setTableSelectItem' })
+    ...mapMutations({ selectItemHandler: 'setTableSelectItem' }),
+    ...mapMutations(['setSearchFormConfig'])
+  },
+  watch: {
+    selectedMDM(curMDM) {
+      this.setSearchFormConfig(curMDM.type)
+    }
   },
   components: { Form, Table }
 }
@@ -149,7 +155,7 @@ export default {
       }
     }
     .action_area {
-        width: 150px;
+      width: 150px;
       padding: 6px 0;
       .advbtn {
         color: #1890ff;
