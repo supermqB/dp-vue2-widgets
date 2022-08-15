@@ -50,7 +50,7 @@
     >
       <Form 
         ref="catalogForm"
-        :formCfg="catalogCfg(versionOptions, themeOptions, catalogState)"
+        :formCfg="catalogCfg(versionOptions, themeOptions, !!catalogForm.id)"
         :formData="catalogForm" :formRule="catalogRule"
       ></Form>
     </Dialog>
@@ -65,7 +65,6 @@ import Header from '@/components/header/Catalog.vue'
 import Bottom from '@/components/bottom/Catalog.vue'
 import { versionCfg, versionRule } from './config/versionForm'
 import { catalogCfg, catalogRule } from './config/catalogForm'
-import { ADDSTATE, EDITSTATE } from '@/utils/const'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('event')
 export default {
@@ -76,7 +75,6 @@ export default {
     return {
       versionCfg,
       versionRule,
-      catalogState: ADDSTATE,
       catalogCfg, 
       catalogRule,
       versionDialog: false,
@@ -109,43 +107,44 @@ export default {
       'totalNumber'
     ])
   },
-  created() {
-    this.ADDSTATE = ADDSTATE
-  },
   methods: {
     ...mapMutations([
       'setCurrentCatalog', 
-      'setCurrentVersion', 
-      'setCatalogForm',
-      'resetVersionForm',
-      'resetCatalogForm'
+      'setCurrentVersion',
+      'setCurrentColumn',
+      'setVersionForm',
+      'setCatalogForm'
     ]),
     ...mapActions([
-      'versionChanged',
-      'catalogChanged',
+      'queryCatalog',
+      'queryColumn',
       'addVersion', 
       'runCatalog', 
       'submitCatalog', 
       'getMaxCode'
     ]),
-    onVersionChanged(val) {
+    async onVersionChanged(val) {
       this.setCurrentVersion(val)
-      this.versionChanged()
+      await this.queryCatalog()
+      this.setCurrentCatalog()
+      await this.queryColumn()
+      this.setCurrentColumn()
     },
-    handleNodeClick({id}) {
+    async handleNodeClick({id}) {
       this.setCurrentCatalog(id)
-      this.catalogChanged()
+      await this.queryColumn()
+      this.setCurrentColumn()
     },
     newVersion() {
       this.catalogDialogState = ADDSTATE
       this.$refs.versionDialog.toggleOpen()
     },
     onVersionFormClosed(){
-      this.resetVersionForm()
+      this.setVersionForm()
       this.$refs.versionForm.resetFields()
     },
     onCatalogFormClosed() {
-      this.resetCatalogForm()
+      this.setCatalogForm()
       this.$refs.catalogForm.resetFields()
     },
     onClickRunCatalog() {
@@ -165,13 +164,11 @@ export default {
     },
     async onClickAddCatalog() {
       this.getMaxCode({ version: this.currentVersion, theme: this.currentCatalogItem.theme})
-      this.catalogState = ADDSTATE
       this.$refs.catalogDialog.toggleOpen()
       this.setCatalogForm()
     },
     onClickEditCatalog() {
       if (!this.currentCatalog) return
-      this.catalogState = EDITSTATE
       this.$refs.catalogDialog.toggleOpen()
       this.setCatalogForm(this.currentCatalogItem)
     },

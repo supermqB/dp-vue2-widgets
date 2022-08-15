@@ -53,12 +53,14 @@ export default {
   overflow: hidden;
   .catalog {
     flex: 1 1 auto;
-    min-height: 100px;
+    height: 47.5%;
+    /* min-height: 100px; */
   }
   .task {
-    height: 380px; /* doesn't work */
+    height: 52.5%;
+    // height: 380px; /* doesn't work */
     .table_container {
-      height: 300px;
+      height: calc(100% - 120px)
     }
   }
   .bottom {

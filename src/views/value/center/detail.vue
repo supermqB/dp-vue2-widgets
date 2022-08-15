@@ -1,16 +1,5 @@
 <template>
-  <div class="versionWrapper">
-    <div class="header">
-      <span>版本</span>
-      <el-select v-model="version">
-        <el-option value="v1.0"></el-option>
-      </el-select>
-      <i class="master">主</i>
-      <span>状态</span>
-      <el-select v-model="version">
-        <el-option value="v1.0"></el-option>
-      </el-select>
-    </div>
+  <div class="detailWrapper">
     <el-col :span="11">
       <p>
         字典编码:
@@ -79,43 +68,16 @@ export default {
 </script>
 
 <sstyle scoped lang="scss">
-.versionWrapper {
+.detailWrapper {
   font-size: 13px;
-  .header {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 41px;
-    padding-left: 10px;
-    padding-right: 10px;
-    box-sizing: border-box;
-    border-bottom: 1px solid #E5E5E5;
-  }
-  i.master {
-   display: inline-block;
-   width: 20px;
-   height: 20px;
-   margin-right: 5px;
-   border-radius: 20px; 
-   border: 1px solid #1890FF;
-   font-style: normal;
-   text-align: center;
-   line-height: 20px;
-   color: #1890FF;
-   background-color: rgba(24,144,255,0.1);
-  }
   .el-row {
     margin-top: 5px;
   }
   .el-col {
-    height: 35px;
+    height: 32px;
     padding: 5px 10px 2px 10px;
     display: flex;
     align-items: center;
-  }
-  .el-select {
-    margin: 0 10px 0 9px;
-    width: 150px;
   }
   p {
     width: 50%;
