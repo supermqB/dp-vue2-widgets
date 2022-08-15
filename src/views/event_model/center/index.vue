@@ -4,7 +4,12 @@
       <div class="left">
         <Breadcrumb
           baseLabel="事件模型管理"
-          :currentLabel="`${currentCatalogItem ? `${currentCatalogItem.nameCn}(${currentCatalogItem.nameEn})` : ''}`">
+          :currentLabel="`${
+            currentCatalogItem
+              ? `${currentCatalogItem.nameCn}(${currentCatalogItem.nameEn})`
+              : ''
+          }`"
+        >
         </Breadcrumb>
         <State :currentState="currentCatalogItem.state"></State>
       </div>
@@ -31,7 +36,7 @@
       ></Table>
     </div>
     <Dialog
-      :title="`${ !columnForm.id ? '新增字段' : '编辑字段'}`"
+      :title="`${!columnForm.id ? '新增字段' : '编辑字段'}`"
       ref="columnDialog"
       class="columnDialog"
       @dialog-closed="onClosedColumnForm"
@@ -39,7 +44,9 @@
     >
       <Form
         ref="columnForm"
-        :formCfg="columnCfg(queryDataElement, dataElementData, setDataElementInfo)"
+        :formCfg="
+          columnCfg(queryDataElement, dataElementData, setDataElementInfo)
+        "
         :formData="columnForm"
         :formRule="columnRule"
       ></Form>
@@ -67,10 +74,15 @@ import { columnCfg, columnRule } from './config/columnForm'
 import { adSearchCfg } from './config/adSearchForm'
 import { createNamespacedHelpers } from 'vuex'
 import { queryDataElementApi } from '@/api/event'
-const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('event')
+const { mapState, mapGetters, mapMutations, mapActions } =
+  createNamespacedHelpers('event')
 export default {
   components: {
-    Form, Table, Dialog, Breadcrumb, State
+    Form,
+    Table,
+    Dialog,
+    Breadcrumb,
+    State
   },
   data() {
     return {
@@ -83,10 +95,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'currentCatalogItem',
-      'currentColumnRow'
-    ]),
+    ...mapGetters(['currentCatalogItem', 'currentColumnRow']),
     ...mapState([
       'columnList',
       'pageInfo',
@@ -99,16 +108,12 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setPageInfo', 
+      'setPageInfo',
       'setColumnForm',
-      'setCurrentColumn', 
+      'setCurrentColumn',
       'setIsAdvance'
     ]),
-    ...mapActions([
-      'submitColumn',
-      'adQueryColumn',
-      'queryColumn'
-    ]),
+    ...mapActions(['submitColumn', 'adQueryColumn', 'queryColumn']),
     async pageInfoChanged(val) {
       this.setPageInfo(val)
       await this.queryColumn()
@@ -161,9 +166,15 @@ export default {
     setDataElementInfo(val) {
       const dataElement = this.dataElementData.find(item => item.id === val)
       if (dataElement) {
-        const { valueRange, valueDomainName, type, format, identifier, id } = dataElement.obj
+        const { valueRange, valueDomainName, type, format, identifier, id } =
+          dataElement.obj
         this.setColumnForm({
-          valueRange, valueDomainName, type, format, identifier, dataElementId: id
+          valueRange,
+          valueDomainName,
+          type,
+          format,
+          identifier,
+          dataElementId: id
         })
       }
     }
@@ -194,7 +205,7 @@ export default {
     height: 41px;
     padding: 0 10px;
     box-sizing: border-box;
-    border-bottom: 1px solid #E5E5E5;
+    border-bottom: 1px solid #e5e5e5;
     .left {
       display: flex;
       justify-content: flex-start;
@@ -206,7 +217,7 @@ export default {
     padding: 0 15px;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #E5E5E5;
+    border-bottom: 1px solid #e5e5e5;
     .right {
       display: flex;
       align-items: center;
@@ -218,7 +229,7 @@ export default {
   }
 }
 
-::v-deep .columnDialog .el-dialog{
+::v-deep .columnDialog .el-dialog {
   width: 800px;
   form {
     height: 320px;
@@ -239,10 +250,10 @@ export default {
   }
 }
 
-::v-deep .searchDialog .el-dialog{
+::v-deep .searchDialog .el-dialog {
   width: 600px;
   .el-form {
-    padding-right: 100px
+    padding-right: 100px;
   }
   .el-form-item {
     margin-bottom: 8px;
@@ -255,7 +266,7 @@ export default {
   }
 }
 
-::v-deep .searchForm{
+::v-deep .searchForm {
   display: flex;
   flex-direction: row;
   .el-form-item {
