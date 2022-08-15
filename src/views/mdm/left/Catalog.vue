@@ -3,7 +3,7 @@
     <Header title="主索引目录" :action-types="[actionType]"></Header>
     <div class="tree_header_row">
       <div>索引类别</div>
-      <div class="cell2">数据量</div>
+      <div class="cell2">数据源</div>
     </div>
     <Tree
       :data="mdmListData"
