@@ -28,7 +28,7 @@ export default {
         },
         {
           value: 'event_model',
-          label: '事件模型'
+          label: '事件模型管理'
         },
         {
           value: 'bwd',

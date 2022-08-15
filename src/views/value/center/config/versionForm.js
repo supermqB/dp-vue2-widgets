@@ -99,7 +99,17 @@ export const addVersionCfg = [
   {
     type: 'el-select',
     label: '继承版本',
-    id: 'nameEn',
+    id: 'parVersion',
+    elOptions: {
+      style: {
+        width: '260px'
+      }
+    }
+  },
+  {
+    type: 'upload',
+    label: '导入',
+    id: 'file',
     elOptions: {
       style: {
         width: '260px'

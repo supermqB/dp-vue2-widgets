@@ -29,6 +29,19 @@
         <el-button @click="editValue">编辑</el-button>
       </div>
     </div>
+    <!-- <el-upload
+      action=""
+      :multiple="false"
+      :limit="1"
+      :show-file-list="false"
+      :auto-upload="false"
+      :on-change="handleChange"
+      >
+      <el-input v-model="file">
+        <el-button slot="append">导入</el-button>
+      </el-input>
+      <div>请<a>下载导入模板</a>(性别代码.xlsx)</div>
+    </el-upload> -->
     <div class="table">
       <Table
         :tableConfig="tableConfig"
@@ -81,7 +94,12 @@ export default {
     return {
       addVersionCfg,
       editVersionCfg,
-      addVersionData: {},
+      addVersionData: {
+        version: '',
+        nameEn: '',
+        parVersion: '',
+        file: null
+      },
       editVersionData: {},
       addValueCfg,
       editValueCfg,
@@ -103,9 +121,12 @@ export default {
         totalPage: 1
       },
       currentVersion: '',
-      state: ''
+      state: '',
+      fileList: [],
+      file: ''
     }
   },
+  computed: {},
   mounted() {
   },
   methods: {
@@ -120,6 +141,10 @@ export default {
     },
     editValue() {
       this.$refs.editValueDialog.toggleOpen()
+    },
+    handleChange(file) {
+      console.log(file)
+      this.file = file.name
     }
   },
 }
