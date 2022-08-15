@@ -16,6 +16,7 @@
         v-bind="cfg.elOptions"
         v-on="cfg.elEvents"
         v-model="formData[cfg.id]"
+        :file.sync="formData[cfg.id]"
       >
         <el-option v-for="(opt,index) in cfg.options" v-bind="prepareOpt(opt)" :key="index">
         </el-option>
@@ -23,8 +24,13 @@
     </el-form-item>
   </el-form>
 </template>
+
 <script>
+import upload from './form/Upload.vue' 
 export default {
+  components: {
+    upload
+  },
   props: {
     formData: Object,
     formCfg: Array,
