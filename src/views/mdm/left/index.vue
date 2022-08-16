@@ -73,7 +73,6 @@ export default {
     min-height: 100px;
   }
   .task {
-    height: 380px; /* doesn't work */
     .table_container {
       height: 300px;
     }

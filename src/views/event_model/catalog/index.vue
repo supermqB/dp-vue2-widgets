@@ -66,6 +66,7 @@ import Bottom from '@/components/bottom/Catalog.vue'
 import { versionCfg, versionRule } from './config/versionForm'
 import { catalogCfg, catalogRule } from './config/catalogForm'
 import { createNamespacedHelpers } from 'vuex'
+import { RUNNINGSTATE } from '@/utils/const'
 const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('event')
 export default {
   components: {
@@ -145,7 +146,7 @@ export default {
       this.$refs.catalogForm.resetFields()
     },
     onClickRunCatalog() {
-      if (!this.currentCatalog) return
+      if (!this.currentCatalog || this.currentCatalogItem.state === RUNNINGSTATE) return
       this.$confirm(`是否启用【${this.currentCatalogItem.nameCn}】的所有表单信息`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -173,18 +174,23 @@ export default {
       this.$refs.catalogDialog.toggleOpen()
       this.setCatalogForm(this.currentCatalogItem)
     },
-    onClickSubmitCatalog() {
-      this.$refs.catalogForm.validate(() => {
+    async onClickSubmitCatalog() {
+      const { valid } = await this.$refs.catalogForm.validate()
+      if (valid) {
         this.submitCatalog()
         this.$refs.catalogDialog.toggleOpen()
-      })
+      } else {
+        this.$alert('请检查输入项是否完整！')
+      }
     },
-    onClickSubmitVersion() {
-      this.$refs.versionForm.validate(() => {
+    async onClickSubmitVersion() {
+      const { valid } = await this.$refs.versionForm.validate()
+      if (valid) {
         this.addVersion()
         this.$refs.versionDialog.toggleOpen()
-      })
-      
+      } else {
+        this.$alert('请检查输入项是否完整！')
+      }
     }
   },
   watch: {

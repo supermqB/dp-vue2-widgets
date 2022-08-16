@@ -67,6 +67,9 @@ const mutations = {
   },
   setTaskList(state, value) {
     state.taskList = value
+  },
+  setWorkingTask(state, value) {
+    state.workingTask = value
   }
 }
 
@@ -77,7 +80,25 @@ const actions = {
       {
         source: '王俊',
         name: '阿司匹林',
-        state: '待完成'
+        state: '待完成',
+        suspectList: [
+          {
+            id: 1,
+            sdrgInx: 'XC01EBX049B002020104017',
+            drugName: '药物A',
+            drugTradeNameCn: '阿斯匹林',
+            drugTradeNameEn: 'asipingling',
+            drugTypeName: '药品类别'
+          },
+          {
+            id: 2,
+            sdrgInx: 'XC01EBX049B002020104017',
+            drugName: '药物B',
+            drugTradeNameCn: '阿斯匹林',
+            drugTradeNameEn: 'asipingling',
+            drugTypeName: '药品类别'
+          }
+        ]
       },
       {
         source: '王俊',

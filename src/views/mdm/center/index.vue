@@ -41,6 +41,9 @@
         ref="mdm_table"
       />
     </div>
+    <div class="dlg_ports">
+        <edit-dialog ref="editDialog"/>
+    </div>
   </div>
 </template>
 <script>
@@ -56,6 +59,7 @@ const { mapState, mapMutations, mapActions } =
 
 import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
+import EditDialog from './EditDialog.vue' 
 
 export default {
   data() {
@@ -87,13 +91,23 @@ export default {
           return require('@/assets/images/common/icons/income.png')
       }
     },
-    startEditMDM() {},
-    startCreateMDM() {},
+    startEditMDM() {
+        this.$refs.editDialog.startEdit();
+    },
+    startCreateMDM() {
+        this.$refs.editDialog.startCreate();
+    },
     searchHandler() {},
     openAdvSearch() {},
-    ...mapMutations({ selectItemHandler: 'setTableSelectItem' })
+    ...mapMutations({ selectItemHandler: 'setTableSelectItem' }),
+    ...mapMutations(['setSearchFormConfig'])
   },
-  components: { Form, Table }
+  watch: {
+    selectedMDM(curMDM) {
+      this.setSearchFormConfig(curMDM.type)
+    }
+  },
+  components: { Form, Table ,EditDialog}
 }
 </script>
 <style lang="scss">
@@ -149,7 +163,7 @@ export default {
       }
     }
     .action_area {
-        width: 150px;
+      width: 150px;
       padding: 6px 0;
       .advbtn {
         color: #1890ff;

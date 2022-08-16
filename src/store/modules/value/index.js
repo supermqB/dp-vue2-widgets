@@ -9,7 +9,7 @@ const state = {
   valueList: [],
   versionList: [],
   columnList: [],
-  currentValue: '',
+  currentCatalog: '',
   currentVersion: '',
   currentColumn: '',
   pageInfo: {
@@ -26,7 +26,7 @@ const state = {
 }
 
 const getters = {
-  currentValueItem(state) {},
+  currentCatalogItem(state) {},
   currentVersionItem(state) {},
   currentColumnItem(state) {}
 }
@@ -50,8 +50,8 @@ const mutations = {
   setColumnForm(state, form) {
     state.columnForm = !form ? Object.assign({}, columnForm) : form
   },
-  setCurrentValue(state, value) {
-    state.currentValue = value
+  setCurrentCatalog(state, value) {
+    state.currentCatalog = value
   },
   setCurrentVersion(state, version) {
     state.currentVersion = version
@@ -65,10 +65,15 @@ const mutations = {
 }
 
 const actions = {
-  async initValue({ commit, dispatch }) {
+  async init({ commit, dispatch }) {
+    await dispatch('queryCatalog')
+    commit('setCurrentCatalog')
     await dispatch('queryVersion')
-    commit('setVersion')
+    commit('setCurrentVersion')
+    await dispatch('queryColumn')
+    commit('setCurrentColumn')
   },
+  async queryCatalog() {},
   async queryVersion() {},
   async queryColumn() {},
   async submitVersion() {},

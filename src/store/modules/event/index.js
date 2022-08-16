@@ -11,6 +11,7 @@ import {
   getMaxCodeApi
 } from '@/api/event'
 import { getMax, keysClone } from '@/utils/lang'
+import dataElement from './dataElement'
 import initState from './initState'
 
 const processCatalogList = list => {
@@ -182,7 +183,6 @@ const mutations = {
     }
   },
   resetColumnList: state => {
-    console.log(11111111)
     state.columnList = []
     state.pageInfo.totalSize = 0
     state.pageInfo.totalPage = 0
@@ -306,5 +306,8 @@ export default {
   state,
   getters,
   mutations,
-  actions
+  actions,
+  modules: {
+    dataElement
+  }
 }
