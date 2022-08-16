@@ -11,6 +11,7 @@ import {
   getMaxCodeApi
 } from '@/api/event'
 import { getMax, keysClone } from '@/utils/lang'
+import dataElement from './dataElement'
 import initState from './initState'
 
 const processCatalogList = list => {
@@ -182,7 +183,6 @@ const mutations = {
     }
   },
   resetColumnList: state => {
-    console.log(11111111)
     state.columnList = []
     state.pageInfo.totalSize = 0
     state.pageInfo.totalPage = 0
@@ -228,7 +228,10 @@ const actions = {
     commit('resetVersionForm')
     dispatch('queryVersion')
   },
-  async runCatalog({ dispatch, state }) {
+  async runCatalog({ dispatch, state }, val) {
+    // if (!val) {
+
+    // }
     await submitCatalogApi(state.currentCatalog)
     this._vm.$message.success('启动成功！')
     dispatch('queryCatalog')
@@ -253,7 +256,7 @@ const actions = {
     }
     dispatch('queryCatalog')
   },
-  async submitColumn({ dispatch, commit, state }) {
+  async submitColumn({ dispatch, state }) {
     const {
       id,
       dataElementId,
@@ -306,5 +309,8 @@ export default {
   state,
   getters,
   mutations,
-  actions
+  actions,
+  modules: {
+    dataElement
+  }
 }

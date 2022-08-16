@@ -7,8 +7,8 @@
         <State :currentState="currentCatalogItem.state"></State>
       </div>
       <div>
-        <el-button type="primary" @click="onclickAddColumn">新增</el-button>
-        <el-button type="primary" @click="onclickEditColumn">编辑</el-button>
+        <el-button type="primary" @click="onclickAddColumn" :disabled="!currentCatalog">新增</el-button>
+        <el-button type="primary" @click="onclickEditColumn" :disabled="!currentCatalog">编辑</el-button>
       </div>
     </div>
     <div class="search">
@@ -38,7 +38,7 @@
       <Form
         ref="columnForm"
         :formCfg="
-          columnCfg(queryDataElement, dataElementData, setDataElementInfo)
+          columnCfg(queryDataElement, dataElement.dataElementList, setDataElementInfo)
         "
         :formData="columnForm"
         :formRule="columnRule"
@@ -66,7 +66,6 @@ import State from '@/components/state/IsRunning.vue'
 import { columnCfg, columnRule } from './config/columnForm'
 import { adSearchCfg } from './config/adSearchForm'
 import { createNamespacedHelpers } from 'vuex'
-import { queryDataElementApi } from '@/api/event'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('event')
 export default {
@@ -83,22 +82,23 @@ export default {
       tableConfig,
       columnCfg,
       columnRule,
-      adSearchCfg,
-      dataElementData: []
+      adSearchCfg
     }
   },
   computed: {
     ...mapGetters(['currentCatalogItem', 'currentColumnRow']),
-    ...mapState([
-      'columnList',
-      'pageInfo',
-      'searchForm',
-      'adSearchForm',
-      'columnForm',
-      'currentColumn',
-      'currentCatalog'
-    ])
+    ...mapState({
+      columnList: 'columnList',
+      pageInfo: 'pageInfo',
+      searchForm: 'searchForm',
+      adSearchForm: 'adSearchForm',
+      columnForm: 'columnForm',
+      currentColumn: 'currentColumn',
+      currentCatalog: 'currentCatalog',
+      dataElement: 'dataElement'
+    })
   },
+  mounted() {},
   methods: {
     ...mapMutations([
       'setPageInfo',
@@ -106,7 +106,15 @@ export default {
       'setCurrentColumn',
       'setIsAdvance'
     ]),
-    ...mapActions(['submitColumn', 'adQueryColumn', 'queryColumn']),
+    ...mapActions([
+      'submitColumn', 
+      'adQueryColumn', 
+      'queryColumn'
+    ]),
+    ...mapActions({
+      queryDataElement: 'queryDataElement',
+      setDataElementInfo: 'setDataElementInfo'
+    }),
     async pageInfoChanged(val) {
       this.setPageInfo(val)
       await this.queryColumn()
@@ -130,9 +138,13 @@ export default {
       this.setColumnForm(this.currentColumnRow)
     },
     async onClickSubmitColumn() {
-      await this.$refs.columnForm.validate()
-      this.submitColumn()
-      this.$refs.columnDialog.toggleOpen()
+      const { valid } = await this.$refs.columnForm.validate()
+      if (valid) {
+        this.submitColumn()
+        this.$refs.columnDialog.toggleOpen()
+      } else {
+        this.$alert('请检查输入项是否完整！')
+      }
     },
     async onClickAdvanceSearch() {
       this.setIsAdvance(true)
@@ -142,32 +154,6 @@ export default {
     },
     advancedSearch() {
       this.$refs.searchDialog.toggleOpen()
-    },
-    async queryDataElement(val) {
-      const res = await queryDataElementApi(val)
-      this.dataElementData = res.value.records.map(item => {
-        return {
-          id: item.id,
-          value: item.id,
-          label: item.nameCn,
-          obj: item
-        }
-      })
-    },
-    setDataElementInfo(val) {
-      const dataElement = this.dataElementData.find(item => item.id === val)
-      if (dataElement) {
-        const { valueRange, valueDomainName, type, format, identifier, id } =
-          dataElement.obj
-        this.setColumnForm({
-          valueRange,
-          valueDomainName,
-          type,
-          format,
-          identifier,
-          dataElementId: id
-        })
-      }
     }
   },
   watch: {

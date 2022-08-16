@@ -185,32 +185,32 @@ export default {
 }
 
 ::v-deep .addCatalogDialog .el-dialog {
-  width: 900px;
+  width: 590px;
   form {
-    height: 400px;
-    padding-left: 20px;
-    padding-right: 55px;
+    /* height: 400px; */
+    /* padding-left: 20px; */
+    padding-right: 100px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     flex-wrap: wrap;
     .el-form-item {
-      margin-bottom: 16px;
+      margin-bottom: 8px;
       display: inline-flex;
     }
   }
 }
 
 ::v-deep .editCatalogDialog .el-dialog {
-  width: 900px;
+  width: 590px;
   form {
-    padding-right: 30%;
+    padding-right: 100px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     flex-wrap: wrap;
     .el-form-item {
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       display: inline-flex;
     }
   }

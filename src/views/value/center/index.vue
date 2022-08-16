@@ -5,19 +5,19 @@
         baseLabel="值域管理"
         currentLabel="DICT_SEX"></Breadcrumb>
       <div>
-        <el-button type="primary" @click="editVersion">版本管理</el-button>
-        <el-button type="primary" @click="addVersion">新增版本</el-button>
+        <el-button type="primary" @click="editVersion" :disabled="!currentVersion">版本管理</el-button>
+        <el-button type="primary" @click="addVersion" :disabled="!currentValue">新增版本</el-button>
       </div>
     </div>
     <div class="version">
       <span>版本</span>
-      <el-select v-model="currentVersion">
-        <!-- <el-option value="v1.0"></el-option> -->
+      <el-select v-model="curVersion">
+        <el-option v-for="item in versionList"></el-option>
       </el-select>
-      <i class="master">主</i>
+      <IsMaster></IsMaster>
       <span>状态</span>
       <el-select v-model="state">
-        <!-- <el-option value="v1.0"></el-option> -->
+        <el-option v-for="item in STATEOPTIONS"></el-option>
       </el-select>
     </div>
     <Detail></Detail>
@@ -25,27 +25,14 @@
       <Form :formCfg="searchValueCfg" :formData="searchValueData"></Form>
       <div>
         <el-button>查询</el-button>
-        <el-button @click="addValue">新增</el-button>
-        <el-button @click="editValue">编辑</el-button>
+        <el-button @click="addValue" :disabled="!currentVersion">新增</el-button>
+        <el-button @click="editValue" :disabled="!currentColumn">编辑</el-button>
       </div>
     </div>
-    <!-- <el-upload
-      action=""
-      :multiple="false"
-      :limit="1"
-      :show-file-list="false"
-      :auto-upload="false"
-      :on-change="handleChange"
-      >
-      <el-input v-model="file">
-        <el-button slot="append">导入</el-button>
-      </el-input>
-      <div>请<a>下载导入模板</a>(性别代码.xlsx)</div>
-    </el-upload> -->
     <div class="table">
       <Table
         :tableConfig="tableConfig"
-        :tableData="tableData"
+        :tableData="columnList"
         :pageInfo="pageInfo">
       </Table>
     </div>
@@ -62,13 +49,13 @@
       <Form :formCfg="editVersionCfg" :formData="editVersionData"></Form>
     </Dialog>
     <Dialog
-      title="新增值域"
+      title="新增值域字典"
       ref="addValueDialog"
       class="addValueDialog">
       <Form :formCfg="addValueCfg" :formData="addValueData"></Form>
     </Dialog>
     <Dialog
-      title="值域编辑"
+      title="编辑值域字典"
       ref="editValueDialog"
       class="editValueDialog">
       <Form :formCfg="editValueCfg" :formData="editValueData"></Form>
@@ -81,14 +68,19 @@ import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
 import Dialog from '@/components/Dialog.vue'
 import Detail from './detail.vue'
+import IsMaster from '@/components/state/IsMaster.vue'
 import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import tableConfig from './config/tableColumn'
+import { STATEOPTIONS } from '@/utils/const'
 import { addVersionCfg, editVersionCfg } from './config/versionForm'
 import { searchValueCfg, addValueCfg, editValueCfg } from './config/valueForm'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapMutations, mapActions } =
+  createNamespacedHelpers('value')
 
 export default {
   components: {
-    Form, Table, Dialog, Detail, Breadcrumb
+    Form, Table, Dialog, Detail, Breadcrumb, IsMaster
   },
   data() {
     return {
@@ -113,23 +105,33 @@ export default {
         level: ''
       },
       tableConfig,
-      tableData: [{}, {}, {}],
-      pageInfo: {
-        curPage: 1,
-        pageSize: 10,
-        totalSize: 3,
-        totalPage: 1
-      },
-      currentVersion: '',
       state: '',
-      fileList: [],
-      file: ''
+      STATEOPTIONS
     }
   },
-  computed: {},
+  computed: {
+    ...mapState([
+      'currentVersion', 
+      'currentColumn', 
+      'pageInfo', 
+      'columnList',
+      'currentValue'
+    ]),
+    curVersion: {
+      set(value) {
+        this.setCurrentVersion(value)
+      },
+      get() {
+        return this.currentVersion
+      }
+    }
+  },
   mounted() {
   },
   methods: {
+    ...mapMutations([
+      'setCurrentVersion'
+    ]),
     addVersion() {
       this.$refs.addVersionDialog.toggleOpen()
     },
@@ -143,7 +145,6 @@ export default {
       this.$refs.editValueDialog.toggleOpen()
     },
     handleChange(file) {
-      console.log(file)
       this.file = file.name
     }
   },
@@ -187,19 +188,6 @@ export default {
     font-size: 13px;
     box-sizing: border-box;
     border-bottom: 1px solid #E5E5E5;
-    i.master {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      margin-right: 5px;
-      border-radius: 20px; 
-      border: 1px solid #1890FF;
-      font-style: normal;
-      text-align: center;
-      line-height: 20px;
-      color: #1890FF;
-      background-color: rgba(24,144,255,0.1);
-    }
     .el-select {
       margin: 0 10px 0 9px;
       width: 150px;
@@ -234,8 +222,9 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    flex-wrap: wrap;
     .el-form-item {
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       display: flex;
     }
   }
@@ -250,7 +239,7 @@ export default {
     justify-content: flex-end;
     flex-wrap: wrap;
     .el-form-item {
-      margin-bottom: 12px;
+      margin-bottom: 6px;
       display: flex;
     }
   }
@@ -260,9 +249,13 @@ export default {
   width: 600px;
   .el-form {
     padding-right: 120px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-wrap: wrap;
   }
-  .el-form-item__content {
-    margin-bottom: 12px;
+  .el-form-item {
+    margin-bottom: 6px;
     display: flex;
     flex-direction: row;
   }
@@ -272,12 +265,14 @@ export default {
   width: 600px;
   form {
     padding-right: 120px;
-    /* display: flex;
+    display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    flex-wrap: wrap; */
+    flex-wrap: wrap;
     .el-form-item {
-      margin-bottom: 12px;
+      margin-bottom: 6px;
+      display: flex;
+      flex-direction: row;
     }
   }
 }

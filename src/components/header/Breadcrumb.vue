@@ -1,7 +1,7 @@
 <template>
   <el-breadcrumb separator="/">
     <el-breadcrumb-item>{{ baseLabel }}</el-breadcrumb-item>
-    <el-breadcrumb-item v-if="currentItem.nameCn && currentItem.nameEn">
+    <el-breadcrumb-item v-if="currentItem && currentItem.nameCn && currentItem.nameEn">
       <b>{{ `${currentItem.nameCn}(${currentItem.nameEn})` }}</b>
     </el-breadcrumb-item>
   </el-breadcrumb>
