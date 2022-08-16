@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="header">
       <div class="left">
-        <Breadcrumb baseLabel="事件模型管理" :currentItem="currentCatalogItem">
+        <Breadcrumb baseLabel="事件模型管理" :currentLabel="`${currentCatalog ? `${currentCatalogItem.nameCn}(${currentCatalogItem.nameEn})` : ''}`">
         </Breadcrumb>
         <State :currentState="currentCatalogItem.state"></State>
       </div>
