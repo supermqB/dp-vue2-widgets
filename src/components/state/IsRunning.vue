@@ -11,7 +11,7 @@ export default {
   props: {
     currentState: {
       type: String,
-      default: RUNNINGSTATE
+      default: ''
     }
   },
   created() {

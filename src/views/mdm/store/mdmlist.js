@@ -1,21 +1,26 @@
 import { keysObject } from '@/utils/lang'
-import searchFormConfig from '@/views/mdm/center/config/searchFormConfig.js'
+import { generateSearchFormConfig } from '@/views/mdm/center/config/searchFormConfig.js'
 import { drugTableConfig } from '@/views/mdm/center/config/tableConfig.js'
 
+const formConfigs = {
+  drg: generateSearchFormConfig
+}
+
 const state = {
+  drugFormList: ['片剂', '包衣片'],
   searchForm: {
-    formCfg: searchFormConfig,
-    formData: keysObject(searchFormConfig, 'id')
+    formCfg: [],
+    formData: {}
   },
   mdmTable: {
     tableData: [
       {
         id: 1,
-        identifier: 'XC01EBX049B002020104017',
-        name: '药物A',
-        tradeName: '阿斯匹林',
-        tradeNameEn: 'asipingling',
-        type: '药品类别'
+        sdrgInx: 'XC01EBX049B002020104017',
+        drugName: '药物A',
+        drugTradeNameCn: '阿斯匹林',
+        drugTradeNameEn: 'asipingling',
+        drugTypeName: '药品类别'
       }
     ],
     tableConfig: drugTableConfig,
@@ -29,6 +34,14 @@ const state = {
   }
 }
 const mutations = {
+  setSearchFormConfig(state, type) {
+    let generator = formConfigs[type]
+    let cfg =
+      typeof generator == 'function' ? generator.apply(state) : generator
+
+    state.searchForm.formCfg = cfg
+    state.searchForm.formData = keysObject(cfg, 'id')
+  },
   setTableSelectItem(state, curRow) {
     state.mdmTable.selectedItem = curRow
   }

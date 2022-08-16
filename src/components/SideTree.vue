@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="treeWrap">
     <el-tree
       ref="sideTree"
       node-key="id"
@@ -8,15 +8,19 @@
       :expand-on-click-node="false"
       default-expand-all
       @node-click="handleNodeClick"
-      :indent="11">
-      <div 
-        class="treeNode" 
+      :indent="11"
+      highlight-current
+    >
+      <div
+        class="treeNode"
         slot-scope="{ node, data }"
-        @click="event => data.isTopCannotBeSelected ? event.stopPropagation() : null"
+        @click="
+          event => (data.isTopCannotBeSelected ? event.stopPropagation() : null)
+        "
       >
         <p class="label">
           <img :src="icon(data.state)" />
-          <span>{{ data.label }}</span>
+          <span :title="data.label">{{ data.label }}</span>
         </p>
         <p class="number">{{ data.number }}</p>
       </div>
@@ -25,7 +29,12 @@
 </template>
 
 <script>
-import { RUNNINGSTATE, EDITINGSTATE } from '@/utils/const'
+import {
+  RUNNINGSTATE,
+  EDITINGSTATE,
+  COMPLETESTATE,
+  INCOMESTATE
+} from '@/utils/const'
 export default {
   props: {
     data: {
@@ -39,12 +48,14 @@ export default {
     isTopCannotBeSelected: {
       type: Boolean,
       default: true
-    },
+    }
   },
   computed: {
     treeList() {
       const res = this.data.map(item => {
-        return Object.assign({}, item, { isTopCannotBeSelected : this.isTopCannotBeSelected })
+        return Object.assign({}, item, {
+          isTopCannotBeSelected: this.isTopCannotBeSelected
+        })
       })
       return res
     }
@@ -54,29 +65,39 @@ export default {
       this.$emit('onClick', node)
     },
     icon(state) {
-      switch(state) {
+      switch (state) {
         case RUNNINGSTATE:
-          return require("@/assets/images/common/icons/running.png")
+          return require('@/assets/images/common/icons/running.png')
         case EDITINGSTATE:
-          return require("@/assets/images/common/icons/editing.png")
+          return require('@/assets/images/common/icons/editing.png')
+        case COMPLETESTATE:
+          return require('@/assets/images/common/icons/complete.png')
+        case INCOMESTATE:
+          return require('@/assets/images/common/icons/income.png')
       }
     },
     setCurrent() {
-      this.$nextTick(() => this.$refs.sideTree.setCurrentKey(this.currentNodeKey))
+      this.$nextTick(() =>
+        this.$refs.sideTree.setCurrentKey(this.currentNodeKey)
+      )
     }
   },
   watch: {
     currentNodeKey: {
       handler(cur, old) {
-        if (!old)
-          this.setCurrent()
-      },
+        if (!old) this.setCurrent()
+      }
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
+.treeWrap {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
 .treeNode {
   position: relative;
   width: 100%;
@@ -93,15 +114,18 @@ export default {
   .label {
     width: 130px;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
 }
-::v-deep .el-tree-node__content>.el-tree-node__expand-icon {
-  padding: 4px
+::v-deep .el-tree-node__content > .el-tree-node__expand-icon {
+  padding: 4px;
 }
 
-::v-deep .el-tree-node.is-current>.el-tree-node__content {
-  background-color: #D8FFFE!important;
+::v-deep .el-tree-node.is-current > .el-tree-node__content {
+  background-color: #d8fffe !important;
+}
+::v-deep .el-tree-node:focus > .el-tree-node__content {
+  background-color: #d8fffe;
 }
 </style>

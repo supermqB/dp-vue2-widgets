@@ -2,12 +2,19 @@
   <div class="catalogTitleWrap">
     <h3>{{ title }}</h3>
     <div class="buttons">
-      <img
+      <!--img
         v-for="action in actions"
         :src="action.icon"
         :key="action.type"
         @click="click(action.type)"
-      />
+      /-->
+      <div
+        v-for="action in actions"
+        :key="action.type"
+        class="icon"
+        :class="['action', action.type]"
+        @click="click(action.type)"
+      ></div>
     </div>
   </div>
 </template>
@@ -29,18 +36,16 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      actions: [
-        { type: 'add', icon: ADDICON },
-        { type: 'edit', icon: EDITICON },
-        { type: 'run', icon: RUNICON }
-      ].filter(act=> this.actionTypes.indexOf(act.type) != -1)
+  computed: {
+    actions() {
+      return this.actionTypes.map(a => ({ type: a }))
     }
   },
   methods: {
     click(type) {
-      this.$emit(type)
+      if (type.indexOf('disable') == -1) {
+        this.$emit(type)
+      }
     }
   }
 }
@@ -64,9 +69,27 @@ export default {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    img {
+    img, .icon {
       margin: 0 4px;
       cursor: pointer;
+    }
+
+    .action {
+      height: 16px;
+      width: 16px;
+      cursor: pointer;
+      &.run {
+        background-image: url('@/assets/images/common/icons/run.png');
+      }
+      &.run_disable {
+        background-image: url('@/assets/images/common/icons/run_disable.png');
+      }
+      &.add {
+        background-image: url('@/assets/images/common/icons/add.png');
+      }
+      &.edit {
+        background-image: url('@/assets/images/common/icons/edit.png');
+      }
     }
   }
 }

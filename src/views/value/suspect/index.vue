@@ -48,10 +48,11 @@ export default {
   flex-direction: column;
   p {
     height: 30px;
-    margin: 7px 8px 3px 8px;
+    margin: 7px 8px 0px 8px;
+    padding-left: 3px;
     line-height: 30px;
-    text-align: center;
-    border: 1px solid #eee;
+    text-align: left;
+    /* border: 1px solid #eee; */
   }
 }
 </style>

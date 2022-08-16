@@ -2,14 +2,7 @@
   <div class="wrapper">
     <div class="header">
       <div class="left">
-        <Breadcrumb
-          baseLabel="事件模型管理"
-          :currentLabel="`${
-            currentCatalogItem
-              ? `${currentCatalogItem.nameCn}(${currentCatalogItem.nameEn})`
-              : ''
-          }`"
-        >
+        <Breadcrumb baseLabel="事件模型管理" :currentItem="currentCatalogItem">
         </Breadcrumb>
         <State :currentState="currentCatalogItem.state"></State>
       </div>
@@ -136,11 +129,10 @@ export default {
       this.$refs.columnDialog.toggleOpen()
       this.setColumnForm(this.currentColumnRow)
     },
-    onClickSubmitColumn() {
-      this.$refs.columnForm.validate(() => {
-        this.submitColumn()
-        this.$refs.columnDialog.toggleOpen()
-      })
+    async onClickSubmitColumn() {
+      await this.$refs.columnForm.validate()
+      this.submitColumn()
+      this.$refs.columnDialog.toggleOpen()
     },
     async onClickAdvanceSearch() {
       this.setIsAdvance(true)

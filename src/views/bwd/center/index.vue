@@ -78,6 +78,7 @@ export default {
     return {
       searchCfg,
       searchData: {
+        id: '',
         field: '',
         nameEn: '',
         index: ''

@@ -180,6 +180,12 @@ const mutations = {
     } else {
       state.versionForm = Object.assign({}, initState.versionForm)
     }
+  },
+  resetColumnList: state => {
+    console.log(11111111)
+    state.columnList = []
+    state.pageInfo.totalSize = 0
+    state.pageInfo.totalPage = 0
   }
 }
 
