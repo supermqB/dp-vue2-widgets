@@ -1,5 +1,5 @@
 import { post } from '@/utils/request'
-import { MessageBox } from 'element-ui'
+import { Message } from 'element-ui'
 const state = {
   illegalChar: {
     general: true,
@@ -83,7 +83,7 @@ const actions = {
         : ''
     }
     const saveRe = await post('data-element/checkrule/edit', checkRule)
-    MessageBox.alert('数据元质控规则更新成功！')
+    Message.success('数据元质控规则更新成功！')
     dispatch('dataElem/elemList/search', null, { root: true })
   },
   reset({ commit, rootState }) {

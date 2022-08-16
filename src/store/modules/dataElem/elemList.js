@@ -1,4 +1,5 @@
 import { alert } from '@/utils/pops'
+import { Message } from 'element-ui'
 import { keysObject } from '@/utils/lang'
 import { getFormFieldsConfig } from '@/views/data_element/center/config/editFrom.js'
 import advSearchFormConfig from '@/views/data_element/center/config/advSearchForm'
@@ -89,13 +90,13 @@ const actions = {
     if (val.id) {
       const result = await post('data-element/edit', val)
       success = result.success
-      await alert(`数据元 [${val.identifier}] 编辑成功！`)
+      Message.success(`数据元 [${val.identifier}] 编辑成功！`)
     } else {
       let data = { ...val }
       delete data.id
       const result = await post('data-element/add', data)
       success = result.success
-      await alert(`数据元 [${val.identifier}] 新增成功！`)
+      Message.success(`数据元 [${val.identifier}] 新增成功！`)
     }
 
     success && dispatch('search')
@@ -133,7 +134,7 @@ const actions = {
   },
   async completeCommit({ state }, ids) {
     const { success } = await post('data-element/commit', ids)
-    await alert(success ? '数据元提交成功。' : '数据元提交失败。')
+    success ? Message.success('数据元提交成功。') : alert('数据元提交失败。')
     return success
   },
   clearCommit({ commit }) {

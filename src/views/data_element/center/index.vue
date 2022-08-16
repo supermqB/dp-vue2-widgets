@@ -218,19 +218,17 @@ export default {
         this.editElemFormData.identifierSeg3 = ''
       }
     },
-    completeEdit() {
-      console.log(this.editElemFormData)
-      this.$refs.editElemForm.$refs.el_form.validate(valid => {
-        this.editElemFormValid = valid
+    async completeEdit() {
+      const { valid } = await this.$refs.editElemForm.validate()
+      this.editElemFormValid = valid
 
-        if (valid) {
-          this.editElem(this.editElemFormData).then(done => {
-            done && this.$refs.editElemDialog.toggleOpen()
-          })
-        } else {
-          alert('请检查表单中的错误项。')
-        }
-      })
+      if (valid) {
+        this.editElem(this.editElemFormData).then(done => {
+          done && this.$refs.editElemDialog.toggleOpen()
+        })
+      } else {
+        alert('请检查表单中的错误项。')
+      }
     },
     openAdvSearch() {
       this.$refs.advSearchDialog.toggleOpen()

@@ -93,7 +93,7 @@ const actions = {
           {
             id: 2,
             sdrgInx: 'XC01EBX049B002020104017',
-            drugName: '药物A',
+            drugName: '药物B',
             drugTradeNameCn: '阿斯匹林',
             drugTradeNameEn: 'asipingling',
             drugTypeName: '药品类别'
