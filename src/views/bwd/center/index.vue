@@ -1,11 +1,10 @@
 <template>
   <div class="centerWrap">
     <div class="header">
-      <div class="left">
-        <Breadcrumb baseLabel="BWD文件管理" currentLabel="********">
-        </Breadcrumb>
-        <!-- <State :currentState="currentCatalogItem.state"></State> -->
-      </div>
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item>BWD文件管理</el-breadcrumb-item>
+        <el-breadcrumb-item>患者信息记录文件</el-breadcrumb-item>
+      </el-breadcrumb>
       <div>
         <el-button type="primary" @click="open">启用</el-button>
         <el-button type="primary" @click="editFileFields">编辑</el-button>
@@ -14,8 +13,8 @@
     </div>
     <div class="search">
       <Form :formCfg="searchCfg" :formData="searchData"></Form>
-      <div style="line-height: 41px">
-        <el-button type="text" style="font-size: 16px">高级搜索</el-button>
+      <div style="line-height: 36px">
+        <el-button type="text" style="font-size: 13px">高级搜索</el-button>
         <el-button>查询</el-button>
       </div>
     </div>
@@ -95,7 +94,11 @@ export default {
       addFileFieldsCfg,
       editFileFieldsCfg,
       addFileFieldsData: {},
-      editFileFieldsData: {},
+      editFileFieldsData: {
+        index: '11',
+        nameCn: '医疗机构唯一标识',
+        nameEn: 'org_id'
+      },
       fileFieldsRule
     }
   },
@@ -137,7 +140,7 @@ export default {
     border-bottom: 1px solid #e5e5e5;
   }
   .search {
-    height: 41px;
+    height: 36px;
     padding: 0 10px;
     display: flex;
     justify-content: space-between;
@@ -168,10 +171,11 @@ export default {
       display: inline-flex;
     }
     .el-form-item__content {
+      line-height: 36 px;
       padding-right: 50px;
     }
     .el-input__inner {
-      height: 35px;
+      height: 28px;
     }
   }
 }
