@@ -51,3 +51,48 @@ export const generateSearchFormConfig = function () {
     }
   ]
 }
+
+export const generateSearchFormConfig_mat = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'smatInx'
+    },
+    {
+      type: 'el-input',
+      label: '耗材名称',
+      id: 'materialName'
+    },
+
+    {
+      type: 'el-input',
+      label: '注册证号',
+      id: 'registrationNumber'
+    },
+    {
+      type: 'el-input',
+      label: '一级分类',
+      id: 'materialFirstName'
+    },
+    {
+      type: 'el-input',
+      label: '二级分类',
+      id: 'materialSecondName'
+    },
+    {
+      type: 'el-input',
+      label: '三级分类',
+      id: 'materialThirdName'
+    },
+    {
+      type: 'el-input',
+      label: '生产企业',
+      id: 'mnfCompanyName'
+    }
+  ]
+}
+
+export const likeFields = {
+  mat: ['materialName', 'mnfCompanyName']
+}

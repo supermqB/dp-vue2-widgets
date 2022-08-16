@@ -1,5 +1,10 @@
 <template>
-  <Dialog :title="title" ref="editDialog" class="mdm_editDialog">
+  <Dialog
+    :title="title"
+    ref="editDialog"
+    @dialog-complete="completeEdit"
+    class="mdm_editDialog"
+  >
     <Form :formCfg="formCfg" :formData="formData" />
   </Dialog>
 </template>
@@ -7,9 +12,12 @@
 import { keysObject } from '@/utils/lang'
 import Form from '@/components/Form.vue'
 import Dialog from '@/components/Dialog.vue'
-import { drugColumns } from './config/tableConfig'
 
-import { createNamespacedHelpers } from 'vuex'
+import {
+  createNamespacedHelpers,
+  mapState as globalMapState,
+  mapGetters as globalMapGetters
+} from 'vuex'
 const { mapState } = createNamespacedHelpers('mdm/tasks')
 const mdmlistMappers = createNamespacedHelpers('mdm/mdmlist')
 
@@ -21,6 +29,11 @@ export default {
     }
   },
   computed: {
+    ...globalMapState({
+      selectedMDM: state => state.mdm.selectedMDM,
+      selectedMDMDesc: state => state.mdm.selectedMDMDesc
+    }),
+    ...globalMapGetters('mdm', ['curMDMColumns']),
     ...mapState({ workingTask: state => state.workingTask }),
     ...mdmlistMappers.mapState({
       selectedMdmRow: state => state.mdmTable.selectedItem
@@ -30,7 +43,7 @@ export default {
     },
     formCfg() {
       let suspectList = this.workingTask.suspectList
-      return drugColumns.map(({ property, label }) => {
+      return this.curMDMColumns.map(({ property, label }) => {
         return {
           type: 'el-autocomplete',
           elOptions: {
@@ -54,12 +67,15 @@ export default {
   },
   watch: {
     formCfg(cfgs) {
-      this.formData = keysObject(cfgs, 'id')
+      console.log('Form config changed...')
     }
   },
   methods: {
+    ...mdmlistMappers.mapActions(['editMdmItem']),
     open() {
-      this.$refs.editDialog.toggleOpen()
+      this.$nextTick(() => {
+        this.$refs.editDialog.toggleOpen()
+      })
     },
     startEdit() {
       this.mode = 'edit'
@@ -72,8 +88,15 @@ export default {
     },
     startCreate() {
       this.mode = 'create'
-      this.formData = keysObject(this.formCfg, 'id')
+      this.formData = Object.assign(
+        {},
+        keysObject(this.formCfg, 'id'),
+        this.workingTask?.suspectList[0]
+      )
       this.open()
+    },
+    completeEdit() {
+      this.editMdmItem(this.formData)
     }
   },
   components: {

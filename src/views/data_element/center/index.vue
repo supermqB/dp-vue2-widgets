@@ -74,7 +74,7 @@ import {
   formValidRule as editElemFormRule
 } from './config/editFrom'
 
-import advSearchFormConfig from './config/advSearchForm'
+import getAdvFormConfig from './config/advSearchForm'
 import CommitDialogVue from './CommitDialog.vue'
 
 import { createNamespacedHelpers, mapState as globalMapState } from 'vuex'
@@ -114,7 +114,7 @@ export default {
       formData: state => state.queryCriteria,
       advForm: state => ({
         formData: state.advQueryCriteria,
-        formCfg: advSearchFormConfig
+        formCfg: getAdvFormConfig()
       }),
 
       tableData(state) {

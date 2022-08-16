@@ -11,7 +11,11 @@
       @selected-items-changed="handleSelectedTasks"
       @complete-action="handleCompleteAction"
     />
-    <Bottom class="bottom" :labelList="['数据量', '任务量']"></Bottom>
+    <Bottom
+      class="bottom"
+      :labelList="['数据量', '任务量']"
+      :value="bottomValues"
+    ></Bottom>
   </div>
 </template>
 <script>
@@ -36,7 +40,13 @@ export default {
   computed: {
     ...mapState({ selectedTasks: state => state.selectedTasks }),
     ...mapGetters(['filterTreeData', 'filteredTask']),
-    ...globalMapState({ selectedMDM: state => state.mdm.selectedMDM })
+    ...globalMapState({
+      selectedMDM: state => state.mdm.selectedMDM,
+      selectedMDMDesc: state => state.mdm.selectedMDMDesc
+    }),
+    bottomValues() {
+      return [this.selectedMDMDesc.dataCount, '待补充']
+    }
   },
   methods: {
     ...mapMutations(['setCheckedFilters', 'setSelectedTasks']),

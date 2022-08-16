@@ -102,19 +102,82 @@ export const drugColumns = [
   { property: 'data_modify_time', label: '数据修改时间' }
 ].map(({ property, label }) => ({ property: camelCase(property), label }))
 
-export const drugTableConfig = [
-  {
-    colConfig: {
-      property: 'id',
-      label: '序号',
-      width: 55
+export const drugTableConfigGen = function () {
+  return [
+    {
+      colConfig: {
+        property: 'id',
+        label: '序号',
+        width: 55
+      }
+    },
+    ...drugColumns.map(({ property, label }) => ({
+      colConfig: {
+        property,
+        label,
+        width: label.length * 17
+      }
+    })),
+    {
+      colConfig: {
+        property: '',
+        label: '操作',
+        fixed: 'right'
+      },
+      actions: [
+        {
+          type: 'el-button',
+          typeProps: {
+            type: 'text',
+            round: false
+          },
+          id: 'edit',
+          name: '编辑',
+          callback: (idx, tableData) => {
+            this.startEditMDM()
+          }
+        }
+      ]
     }
-  },
-  ...drugColumns.map(({ property, label }) => ({
-    colConfig: {
-      property,
-      label,
-      width: label.length * 17
+  ]
+}
+
+export const tableConfigGen = function (columns) {
+  return [
+    {
+      colConfig: {
+        property: 'id',
+        label: '序号',
+        width: 55
+      }
+    },
+    ...columns.map(({ property, label }) => ({
+      colConfig: {
+        property,
+        label,
+        width: label.length * 17
+      }
+    })),
+    {
+      colConfig: {
+        property: '',
+        label: '操作',
+        fixed: 'right'
+      },
+      actions: [
+        {
+          type: 'el-button',
+          typeProps: {
+            type: 'text',
+            round: false
+          },
+          id: 'edit',
+          name: '编辑',
+          callback: (idx, tableData) => {
+            this.startEditMDM()
+          }
+        }
+      ]
     }
-  }))
-]
+  ]
+}

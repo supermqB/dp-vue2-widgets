@@ -2,7 +2,7 @@ import { alert } from '@/utils/pops'
 import { Message } from 'element-ui'
 import { keysObject } from '@/utils/lang'
 import { getFormFieldsConfig } from '@/views/data_element/center/config/editFrom.js'
-import advSearchFormConfig from '@/views/data_element/center/config/advSearchForm'
+import getAdvFormConfig from '@/views/data_element/center/config/advSearchForm'
 import { post } from '@/utils/request'
 
 const state = {
@@ -11,7 +11,7 @@ const state = {
     wordSpeech: '',
     state: ''
   },
-  advQueryCriteria: keysObject(advSearchFormConfig, 'id'),
+  advQueryCriteria: keysObject(getAdvFormConfig(), 'id'),
   isAdvancedOn: false,
 
   editElemFormData: keysObject(getFormFieldsConfig(), 'id'),

@@ -61,6 +61,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #e5e5e5;
+  flex-shrink: 0;
   h3 {
     font-size: 16px;
     font-weight: normal;
