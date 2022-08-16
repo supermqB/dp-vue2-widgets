@@ -268,4 +268,7 @@ export default {
     padding: 0 8px;
   }
 }
+::v-deep .el-table th.el-table__cell > .cell {
+  padding-right: 0px;
+}
 </style>

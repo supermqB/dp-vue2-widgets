@@ -4,7 +4,6 @@ export const editFileFieldsCfg = [
     label: '顺序号',
     id: 'index',
     elOptions: {
-      placeholder: '11',
       style: {
         width: '260px'
       }
@@ -15,7 +14,6 @@ export const editFileFieldsCfg = [
     label: '字段名称',
     id: 'nameCn',
     elOptions: {
-      placeholder: '医疗机构唯一标识',
       style: {
         width: '260px'
       }
@@ -26,7 +24,6 @@ export const editFileFieldsCfg = [
     label: '字段英文名',
     id: 'nameEn',
     elOptions: {
-      placeholder: 'org_id',
       style: {
         width: '260px'
       }
