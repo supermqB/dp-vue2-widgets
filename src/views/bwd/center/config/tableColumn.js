@@ -1,6 +1,13 @@
 export const tableConfig = [
   {
     colConfig: {
+      property: 'id',
+      label: '序号',
+      width: 70
+    }
+  },
+  {
+    colConfig: {
       property: 'seqNo',
       label: '字段英文名',
       minWidth: 140
@@ -24,14 +31,14 @@ export const tableConfig = [
     colConfig: {
       property: 'nameEn',
       label: '事件库映射字段',
-      minWidth: 185
+      minWidth: 150
     }
   },
   {
     colConfig: {
       property: 'definition',
       label: '主索引映射表',
-      minWidth: 185
+      minWidth: 150
     }
   },
   {
