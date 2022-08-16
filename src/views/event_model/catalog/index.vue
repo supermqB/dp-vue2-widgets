@@ -50,7 +50,7 @@
     >
       <Form 
         ref="catalogForm"
-        :formCfg="catalogCfg(versionOptions, themeOptions, !!catalogForm.id)"
+        :formCfg="catalogCfg(onChangeTheme, versionOptions, themeOptions, !!catalogForm.id)"
         :formData="catalogForm" :formRule="catalogRule"
       ></Form>
     </Dialog>
@@ -134,7 +134,6 @@ export default {
       this.setCurrentColumn()
     },
     newVersion() {
-      // this.catalogDialogState = ADDSTATE
       this.$refs.versionDialog.toggleOpen()
     },
     onVersionFormClosed(){
@@ -159,6 +158,10 @@ export default {
           message: '已取消启动'
         });          
       });
+    },
+    async onChangeTheme(theme) {
+      const version = this.currentVersion
+      this.getMaxCode({ version, theme })
     },
     async onClickAddCatalog() {
       this.getMaxCode({ version: this.currentVersion, theme: this.currentCatalogItem.theme})

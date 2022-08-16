@@ -1,6 +1,7 @@
-import { ADDSTATE, EDITSTATE } from '@/utils/const'
+import { validateEnglish } from '@/utils/validator'
 
 export const catalogCfg = (
+  onChangeTheme,
   versionList = [],
   themeList = [],
   disabled = false
@@ -11,7 +12,7 @@ export const catalogCfg = (
     options: versionList,
     id: 'version',
     elOptions: {
-      disabled,
+      disabled: true,
       style: {
         width: '260px'
       }
@@ -22,6 +23,9 @@ export const catalogCfg = (
     label: '场景',
     options: themeList,
     id: 'theme',
+    elEvents: {
+      change: onChangeTheme
+    },
     elOptions: {
       disabled,
       style: {
@@ -77,5 +81,5 @@ export const catalogRule = {
   theme: { required: true },
   code: { required: true },
   nameCn: { required: true },
-  nameEn: { required: true }
+  nameEn: [{ required: true }, { validator: validateEnglish, trigger: 'blur' }]
 }

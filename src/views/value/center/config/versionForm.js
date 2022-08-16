@@ -36,7 +36,7 @@ export const editVersionCfg = [
     id: 'level',
     elOptions: {
       style: {
-        width: '100px'
+        width: '250px'
       }
     }
   },
@@ -47,7 +47,7 @@ export const editVersionCfg = [
     id: 'level',
     elOptions: {
       style: {
-        width: '100px'
+        width: '250px'
       }
     }
   },

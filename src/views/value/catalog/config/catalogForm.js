@@ -1,12 +1,12 @@
 export const addCatalogCfg = [
-  {
-    type: 'el-select',
-    label: '标准分类',
-    id: 'index',
-    elOptions: {
-      placeholder: '请选择'
-    }
-  },
+  // {
+  //   type: 'el-select',
+  //   label: '标准分类',
+  //   id: 'index',
+  //   elOptions: {
+  //     placeholder: '请选择'
+  //   }
+  // },
   {
     type: 'el-input',
     label: '字典编码',
