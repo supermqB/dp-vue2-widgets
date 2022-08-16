@@ -7,19 +7,15 @@
         <!-- <State :currentState="currentCatalogItem.state"></State> -->
       </div>
       <div>
-        <el-button type="primary" @click="stateDialogVisible = true"
-          >启用</el-button
-        >
-        <el-button type="primary" @click="onclickEditFileColumn"
-          >编辑</el-button
-        >
-        <el-button type="primary" @click="onclickAddFileColumn">新增</el-button>
+        <el-button type="primary" @click="open">启用</el-button>
+        <el-button type="primary" @click="editFileFields">编辑</el-button>
+        <el-button type="primary" @click="addFileFields">新增</el-button>
       </div>
     </div>
     <div class="search">
       <Form :formCfg="searchCfg" :formData="searchData"></Form>
       <div style="line-height: 41px">
-        <el-button type="text">高级搜索</el-button>
+        <el-button type="text" style="font-size: 16px">高级搜索</el-button>
         <el-button>查询</el-button>
       </div>
     </div>
@@ -30,33 +26,28 @@
         :pageInfo="pageInfo"
       ></Table>
     </div>
-    <el-dialog
-      class="bwd_state"
-      title="提示"
-      :visible.sync="stateDialogVisible"
-      width="25%"
-      center
-    >
-      <span>是否启用【患者信息记录文件】？</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="stateDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="stateDialogVisible = false"
-          >确 定</el-button
-        >
-      </span>
-    </el-dialog>
     <Dialog
-      title="新增文件字段"
-      ref="columnDialog"
-      class="columnDialog"
-      @dialog-closed="onClosedColumnForm"
-      @dialog-complete="onClickSubmitColumn"
+      title="编辑文件字段"
+      ref="editFileFieldsDialog"
+      class="editFileFieldsDialog"
     >
       <Form
-        ref="columnForm"
-        :formCfg="[]"
-        :formData="{}"
-        :formRule="[]"
+        ref="fileFieldsForm"
+        :formCfg="editFileFieldsCfg"
+        :formData="editFileFieldsData"
+        :formRule="fileFieldsRule"
+      ></Form>
+    </Dialog>
+    <Dialog
+      title="新增文件字段"
+      ref="addFileFieldsDialog"
+      class="addFileFieldsDialog"
+    >
+      <Form
+        ref="fileFieldsForm"
+        :formCfg="addFileFieldsCfg"
+        :formData="addFileFieldsData"
+        :formRule="fileFieldsRule"
       ></Form>
     </Dialog>
   </div>
@@ -70,6 +61,11 @@ import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import { tableConfig } from './config/tableColumn'
 import { searchCfg } from './config/searchForm'
 import Dialog from '@/components/Dialog.vue'
+import {
+  addFileFieldsCfg,
+  editFileFieldsCfg,
+  fileFieldsRule
+} from './config/fileFieldsForm'
 export default {
   components: {
     Breadcrumb,
@@ -95,27 +91,27 @@ export default {
         totalSize: 3,
         totalPage: 1
       },
-      stateDialogVisible: false
+      stateDialogVisible: false,
+      addFileFieldsCfg,
+      editFileFieldsCfg,
+      addFileFieldsData: {},
+      editFileFieldsData: {},
+      fileFieldsRule
     }
   },
   methods: {
-    onClosedColumnForm() {
-      this.setColumnForm()
-      this.$refs.columnForm.resetFields()
-    },
-    onclickAddFileColumn() {
-      this.$refs.columnDialog.toggleOpen()
-      this.setColumnForm()
-    },
-    onclickEditFileColumn() {
-      this.$refs.columnDialog.toggleOpen()
-      this.setColumnForm(this.currentColumnRow)
-    },
-    onClickSubmitColumn() {
-      this.$refs.columnForm.validate(() => {
-        this.submitColumn()
-        this.$refs.columnDialog.toggleOpen()
+    open() {
+      this.$confirm('是否启用【患者信息记录文件】？', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
+    },
+    editFileFields() {
+      this.$refs.editFileFieldsDialog.toggleOpen()
+    },
+    addFileFields() {
+      this.$refs.addFileFieldsDialog.toggleOpen()
     }
   }
 }
@@ -151,10 +147,32 @@ export default {
     flex: 1;
   }
 }
-::v-deep .bwd_state .el-dialog__footer {
-  text-align: right;
+::v-deep .el-dialog {
+  width: 700px;
+  form {
+    height: 200px;
+    padding-right: 23%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    .el-form-item {
+      margin-bottom: 16px;
+      display: inline-flex;
+    }
+  }
 }
-::v-deep .bwd_state .el-dialog__body {
-  text-align: center;
+::v-deep .search {
+  form {
+    .el-form-item {
+      display: inline-flex;
+    }
+    .el-form-item__content {
+      padding-right: 50px;
+    }
+    .el-input__inner {
+      height: 35px;
+    }
+  }
 }
 </style>
