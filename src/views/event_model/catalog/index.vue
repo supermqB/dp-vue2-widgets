@@ -5,7 +5,7 @@
       hasRun
       @add="onClickAddCatalog"
       @edit="onClickEditCatalog"
-      @run="onClickRunCatalog"
+      @run="onClickRunDialog"
     ></Header>
     <div class="version">
       <span>版本</span>
@@ -54,6 +54,20 @@
         :formData="catalogForm" :formRule="catalogRule"
       ></Form>
     </Dialog>
+    <el-dialog
+      title="提示"
+      :visible="runDialog"
+      class="runDialog">
+      <div>
+        <i class="el-icon-warning warning"/>
+        <span>是否启用【{{currentVersion}}】版本下的所有表单信息</span>
+      </div>
+      <span slot="footer">
+        <el-button @click="runDialog = false">取消</el-button>
+        <el-button @click="onClickRunAllCatalog">启动所有表单信息</el-button>
+        <el-button type="primary" @click="onClickRunCatalog">启动</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -80,6 +94,7 @@ export default {
       catalogRule,
       versionDialog: false,
       catalogDialog: false,
+      runDialog: false
     }
   },
   computed: {
@@ -145,20 +160,23 @@ export default {
       this.setCatalogForm()
       this.$refs.catalogForm.resetFields()
     },
-    onClickRunCatalog() {
+    onClickRunDialog() {
       if (!this.currentCatalog || this.currentCatalogItem.state === RUNNINGSTATE) return
-      this.$confirm(`是否启用【${this.currentCatalogItem.nameCn}】的所有表单信息`, '提示', {
+      this.runDialog = true
+    },
+    onClickRunAllCatalog() {
+      this.$confirm(`是否启用【${this.currentVersion}】版本下的所有表单信息`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         this.runCatalog()
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消启动'
-        });          
-      });
+        this.runDialog = false
+      })  
+    },
+    onClickRunCatalog() {
+      this.runCatalog()
+      this.runDialog = false
     },
     async onChangeTheme(theme) {
       const version = this.currentVersion
@@ -270,6 +288,14 @@ export default {
       display: flex;
       flex-direction: row;
     }
+  }
+}
+
+::v-deep .runDialog {
+  .warning {
+    padding: 5px 5px 0 0;
+    font-size: 20px;
+    color: #e6a23c;
   }
 }
 </style>

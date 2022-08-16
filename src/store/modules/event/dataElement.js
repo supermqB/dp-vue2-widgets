@@ -26,14 +26,22 @@ const actions = {
   setDataElementInfo({ commit, state }, val) {
     const dataElement = state.dataElementList.find(item => item.id === val)
     if (dataElement) {
-      const { valueRange, valueDomainName, type, format, identifier, id } =
-        dataElement.obj
+      const {
+        valueRange,
+        valueDomainName,
+        type,
+        format,
+        identifier,
+        id,
+        definition
+      } = dataElement.obj
       commit('setColumnForm', {
         valueRange,
         valueDomainName,
         type,
         format,
         identifier,
+        definition,
         dataElementId: id
       })
     }
