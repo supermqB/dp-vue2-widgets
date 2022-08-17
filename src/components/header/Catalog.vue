@@ -2,12 +2,6 @@
   <div class="catalogTitleWrap">
     <h3>{{ title }}</h3>
     <div class="buttons">
-      <!--img
-        v-for="action in actions"
-        :src="action.icon"
-        :key="action.type"
-        @click="click(action.type)"
-      /-->
       <div
         v-for="action in actions"
         :key="action.type"

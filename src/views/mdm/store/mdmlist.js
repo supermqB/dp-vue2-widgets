@@ -97,15 +97,16 @@ const actions = {
     }
   },
 
-  async editMdmItem({ state, dispatch }, itemDetail) {
-    const currentId = state.mdmTable.selectedItem.id
+  async editMdmItem({ state, rootState, dispatch }, itemDetail) {
+    const mdmModuleId = rootState.mdm.selectedMDM.id
     const result = await post('sbr/edit', {
-      id: currentId,
+      id: mdmModuleId,
       jsonObject: itemDetail
     })
     if (result.success) {
       Message.success('主数据编辑成功。')
       dispatch('search')
+      dispatch('mdm/loadMDMModules', null, { root: true })
     }
     return result.success
   }

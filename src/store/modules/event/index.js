@@ -182,7 +182,6 @@ const mutations = {
     }
   },
   resetColumnList: state => {
-    console.log(11111111)
     state.columnList = []
     state.pageInfo.totalSize = 0
     state.pageInfo.totalPage = 0

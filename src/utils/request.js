@@ -90,3 +90,11 @@ export function post(url, data = {}, params = {}) {
     method: 'post'
   })
 }
+
+export function put(url, data = {}) {
+  return service({
+    url,
+    data,
+    method: 'put'
+  })
+}

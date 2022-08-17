@@ -38,6 +38,7 @@
     <div class="table_area">
       <Table
         :tableConfig="tableConfig"
+        :key="'tablekey_' + tableConfig.length"
         :tableData="mdmTable.tableData"
         :pageInfo="mdmTable.pageInfo"
         @row-changed="selectItemHandler"

@@ -175,9 +175,6 @@ export default {
       this.pageInfo.curPage = currentPage
       this.$emit('page-changed', { curPage: currentPage })
     },
-    completeEditElem() {
-      console.log('edit data elem')
-    },
     setCurrentRow(row) {
       this.$refs.el_table.setCurrentRow(row)
     },

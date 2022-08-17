@@ -95,8 +95,9 @@ export default {
       )
       this.open()
     },
-    completeEdit() {
-      this.editMdmItem(this.formData)
+    async completeEdit() {
+      const success = await this.editMdmItem(this.formData)
+      success && this.$refs.editDialog.toggleOpen()
     }
   },
   components: {

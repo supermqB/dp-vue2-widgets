@@ -1,8 +1,10 @@
 import { camelCase } from 'lodash'
+import { confirm } from '@/utils/pops'
 import mdmlist from './mdmlist'
 import tasks from './tasks'
-import { get } from '@/utils/request'
+import { get, put } from '@/utils/request'
 import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
+import { Message } from 'element-ui'
 const state = {
   mdmList: [],
   selectedMDM: {
@@ -20,13 +22,9 @@ const state = {
 
 const mutations = {
   setSelectedMDM(state, value) {
-    console.log('current mdm module')
-    console.log(value)
     state.selectedMDM = value
   },
   setSelectedMDMDesc(state, value) {
-    console.log('current mdm module')
-    console.log(value)
     state.selectedMDMDesc = value
   },
   setMDMList(state, value) {
@@ -68,6 +66,21 @@ const actions = {
     const result = await get(`sbr/getOverView/${mdmModuleId}`)
     if (result.success) {
       commit('setSelectedMDMDesc', result.value)
+    }
+  },
+
+  async enableMDMModule({ state, dispatch }) {
+    const selectedMDM = state.selectedMDM
+    debugger
+    const confirmed = await confirm(`是否启用主索引【${selectedMDM.label}】?`)
+    if (confirmed) {
+      const result = await put(`sbr/commit/${selectedMDM.id}`)
+      if (result.success) {
+        Message.success(`启用主索引【${selectedMDM.label}】成功。`)
+        dispatch('loadMDMModules')
+      } else {
+        Message.error(`启用主索引【${selectedMDM.label}】失败。`)
+      }
     }
   }
 }

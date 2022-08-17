@@ -83,10 +83,11 @@ export default {
     }
   },
   watch: {
-    currentNodeKey: {
-      handler(cur, old) {
-        if (!old) this.setCurrent()
-      }
+    currentNodeKey() {
+      this.setCurrent()
+    },
+    data() {
+      this.setCurrent()
     }
   }
 }
