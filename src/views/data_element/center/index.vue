@@ -13,9 +13,7 @@
     <div class="search">
       <Form :formData="formData" :formCfg="formCfg" class="searchForm" />
       <div class="action_area">
-        <el-button type="primary" plain @click="searchHandler(false)"
-          >查 询</el-button
-        >
+        <el-button type="primary" plain @click="searchHandler">查 询</el-button>
         <el-link :underline="false" class="advbtn" @click="openAdvSearch"
           >高级搜索</el-link
         >
@@ -34,7 +32,7 @@
       <Dialog
         :title="editElemDialogTitle"
         ref="editElemDialog"
-        class="elemDialog"
+        class="editElemDialog"
         @dialog-complete="completeEdit"
       >
         <Form
@@ -46,22 +44,17 @@
         />
       </Dialog>
 
-      <Dialog
-        title="高级搜索"
-        @dialog-complete="searchHandler(true)"
-        :enableConfirm="enableAdvConfirm"
+      <adv-search-dialog
         ref="advSearchDialog"
-        class="advSearchDialog"
-        closeAfterConfirm
-      >
-        <Form v-bind="advForm" />
-      </Dialog>
+        :columns="advSearchColumns"
+        @adv-search-action="advSearchHandler"
+      />
       <CommitDialogVue ref="commitDialog" />
     </div>
   </div>
 </template>
 <script>
-import { isEmpty, toFixedNumStr } from '@/utils/lang'
+import { toFixedNumStr } from '@/utils/lang'
 import { get } from '@/utils/request'
 import { alert } from '@/utils/pops'
 import Form from '@/components/Form.vue'
@@ -73,9 +66,8 @@ import {
   getFormFieldsConfig,
   formValidRule as editElemFormRule
 } from './config/editFrom'
-
-import getAdvFormConfig from './config/advSearchForm'
 import CommitDialogVue from './CommitDialog.vue'
+import AdvSearchDialog from '@/components/biz/AdvSearchDialog.vue'
 
 import { createNamespacedHelpers, mapState as globalMapState } from 'vuex'
 const { mapState, mapMutations, mapActions } =
@@ -104,18 +96,12 @@ export default {
       ),
       editElemFormRule,
       editElemFormValid: false,
-      editElemDialogTitle: '新增数据元',
-      editDlgOpen: false,
-      advDlgOpen: false
+      editElemDialogTitle: '新增数据元'
     }
   },
   computed: {
     ...mapState({
       formData: state => state.queryCriteria,
-      advForm: state => ({
-        formData: state.advQueryCriteria,
-        formCfg: getAdvFormConfig()
-      }),
 
       tableData(state) {
         return state.tableData
@@ -123,21 +109,8 @@ export default {
       pageInfo(state) {
         return state.pageInfo
       },
-
       selectedItem: state => state.selectedItem,
-      editElemFormData: state => state.editElemFormData,
-
-      enableAdvConfirm: state => {
-        let crt = state.advQueryCriteria
-        return !!(
-          crt.colNames &&
-          crt.colNames.length &&
-          (!isEmpty(crt.contains) ||
-            !isEmpty(crt.equals) ||
-            !isEmpty(crt.atleast) ||
-            !isEmpty(crt.exclude))
-        )
-      }
+      editElemFormData: state => state.editElemFormData
     }),
     ...globalMapState({
       groupTreeData: state => state.dataElem.elemGroup.grouptree,
@@ -145,6 +118,14 @@ export default {
     }),
     pageInfoChangeSignal() {
       return this.pageInfo.curPage + ':' + this.pageInfo.pageSize
+    },
+    advSearchColumns() {
+      return getListTableHeader()
+        .filter(item => item.colConfig.property)
+        .map(item => ({
+          label: item.colConfig.label,
+          property: item.colConfig.property
+        }))
     }
   },
   methods: {
@@ -231,10 +212,15 @@ export default {
       }
     },
     openAdvSearch() {
-      this.$refs.advSearchDialog.toggleOpen()
+      this.$refs.advSearchDialog.open()
     },
-    searchHandler(isAdv) {
-      this.setAdvanceMode(isAdv)
+    advSearchHandler(advCriteria) {
+      this.setAdvanceMode(true)
+      this.setAdvanceCriteria(advCriteria)
+      this.search()
+    },
+    searchHandler() {
+      this.setAdvanceMode(false)
       this.search()
     },
     openCommitDialog() {
@@ -243,7 +229,7 @@ export default {
     },
     ...mapActions(['search', 'editElem', 'startCommit', 'presetEditDialog']),
     ...mapMutations({ selectItemHandler: 'setSelectItem' }),
-    ...mapMutations(['setAdvanceMode'])
+    ...mapMutations(['setAdvanceMode', 'setAdvanceCriteria'])
   },
   watch: {
     editElemFormData: {
@@ -295,7 +281,7 @@ export default {
       this.$refs.dp_table.setCurrentRow(selected ? this.selectedItem : val[0])
     }
   },
-  components: { Form, Table, Dialog, CommitDialogVue }
+  components: { Form, Table, Dialog, CommitDialogVue, AdvSearchDialog }
 }
 </script>
 <style lang="scss" scoped>
@@ -354,10 +340,10 @@ export default {
       }
     }
   }
-  .dialog_port .dp_dialog {
+  .dialog_port .dp_dialog.editElemDialog {
     .el-dialog {
-      width: 850px;
       min-width: 500px;
+      width: 850px;
     }
     form {
       display: flex;
@@ -384,18 +370,6 @@ export default {
           width: 240px;
           .el-textarea__inner {
             padding: 5px 8px;
-          }
-        }
-      }
-    }
-    &.advSearchDialog {
-      .el-dialog {
-        width: 600px;
-        form {
-          height: auto;
-          padding-left: 50px;
-          .el-form-item {
-            width: 370px;
           }
         }
       }

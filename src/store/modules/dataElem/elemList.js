@@ -2,7 +2,6 @@ import { alert } from '@/utils/pops'
 import { Message } from 'element-ui'
 import { keysObject } from '@/utils/lang'
 import { getFormFieldsConfig } from '@/views/data_element/center/config/editFrom.js'
-import getAdvFormConfig from '@/views/data_element/center/config/advSearchForm'
 import { post } from '@/utils/request'
 
 const state = {
@@ -11,7 +10,7 @@ const state = {
     wordSpeech: '',
     state: ''
   },
-  advQueryCriteria: keysObject(getAdvFormConfig(), 'id'),
+  advQueryCriteria: {},
   isAdvancedOn: false,
 
   editElemFormData: keysObject(getFormFieldsConfig(), 'id'),
@@ -29,6 +28,9 @@ const state = {
 const mutations = {
   setAdvanceMode(state, val) {
     state.isAdvancedOn = val
+  },
+  setAdvanceCriteria(state, val){
+      state.advQueryCriteria = val
   },
   setTableHeader(state, val) {},
   setTableData(state, val) {
