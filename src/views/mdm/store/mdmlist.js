@@ -19,26 +19,7 @@ const state = {
     formData: {}
   },
   mdmTable: {
-    tableData: [
-      {
-        id: 1,
-        index: 1,
-        sdrgInx: 'XC01EBX049B002020104017',
-        drugName: '药物A',
-        drugTradeNameCn: '阿斯匹林',
-        drugTradeNameEn: 'asipingling',
-        drugTypeName: '药品类别'
-      },
-      {
-        id: 2,
-        index: 2,
-        sdrgInx: 'XC01EBX049B002020104018',
-        drugName: '药物B',
-        drugTradeNameCn: '阿斯匹林1',
-        drugTradeNameEn: 'asipingling1',
-        drugTypeName: '药品类别1'
-      }
-    ],
+    tableData: [],
     pageInfo: {
       curPage: 1,
       pageSize: 20,

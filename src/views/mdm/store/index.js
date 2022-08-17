@@ -7,14 +7,7 @@ import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
 import { Message } from 'element-ui'
 const state = {
   mdmList: [],
-  selectedMDM: {
-    id: '1-1',
-    label: '药品（中成药/西药）',
-    name: 'mdm_data_drug',
-    type: 'drg',
-    number: 2398,
-    state: 'income' /*income*/
-  },
+  selectedMDM: {},
   selectedMDMDesc: {},
   suspectList: [],
   suspectFilter: []

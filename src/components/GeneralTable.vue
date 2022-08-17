@@ -15,7 +15,7 @@
         <el-table-column type="selection" width="30" v-if="multipleSelect">
         </el-table-column>
         <el-table-column width="30" v-else>
-          <template #default="{ $index: idx, row, column }">
+          <template #default="{ row }">
             <el-radio v-model="selectedIdx" :label="row.index"></el-radio>
           </template>
         </el-table-column>
@@ -63,76 +63,24 @@ export default {
   props: {
     tableConfig: {
       type: Array,
-      default: function () {
-        return [
-          /*  {
-            colConfig: {
-              property: 'index',
-              label: '序号',
-              width: 120
-            }
-          },
-          {
-            colConfig: {
-              property: 'code',
-              label: '编码',
-              width: 120
-            }
-          },
-          {
-            colConfig: {
-              property: '',
-              label: '操作'
-            },
-            actions: [
-              {
-                type: 'el-button',
-                typeProps: {
-                  type: 'text',
-                  round: false
-                },
-                id: 'edit',
-                name: '编辑',
-                callback(idx, tableData) {
-                  //this.$refs.editdialog.toggleOpen()
-                }
-              }
-            ]
-          } */
-        ]
-      }
+      default: () => []
     },
     tableData: {
       type: Array,
-      default: function () {
-        return [
-          /*  {
-            index: 1,
-            code: 'DE01.00.10.001'
-          },
-          {
-            index: 2,
-            code: 'DE01.00.10.002'
-          } */
-        ]
-      }
+      default: () => []
     },
     pageInfo: {
-      type: Object
-      /* default: function () {
-        return {
-          curPage: 2,
-          pageSize: 40,
-          totalSize: 400,
-          totalPage: 10
-        }
-      } */
+      type: Object,
+      default: () => ({
+        curPage: 1,
+        pageSize: 15,
+        totalSize: 15,
+        totalPage: 1
+      })
     },
     multipleSelect: {
       type: Boolean,
-      default: () => {
-        return false
-      }
+      default: () => false
     }
   },
   data() {
