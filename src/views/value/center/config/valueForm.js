@@ -48,7 +48,9 @@ export const addValueCfg = [
     type: 'el-select',
     label: '当前版本',
     id: 'code',
-    elOptions: {}
+    elOptions: {
+      disabled: true
+    }
   },
   {
     type: 'el-input',
@@ -99,7 +101,9 @@ export const editValueCfg = [
     type: 'el-select',
     label: '当前版本',
     id: 'code',
-    elOptions: {}
+    elOptions: {
+      disabled: true
+    }
   },
   {
     type: 'el-input',

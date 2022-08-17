@@ -1,6 +1,11 @@
 <template>
   <div class="wrap">
-    <Header title="值域目录" @add="addCatalog" @edit="editCatalog"></Header>
+    <Header
+      title="值域目录"
+      :actionTypes="['add', 'edit']"
+      @add="addCatalog"
+      @edit="editCatalog"
+    ></Header>
     <div class="search">
       <span>搜索</span>
       <el-input suffix-icon="el-icon-search"></el-input>
@@ -13,7 +18,7 @@
     >
       <Form
         :formCfg="addCatalogCfg"
-        :formData="addCatalogData"
+        :formData="dictForm"
         :formRule="catalogRule"
       ></Form>
     </Dialog>
@@ -42,6 +47,8 @@ import {
   catalogRule
 } from './config/catalogForm'
 import { EDITINGSTATE } from '@/utils/const'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState } = createNamespacedHelpers('value')
 
 export default {
   components: {
@@ -144,7 +151,9 @@ export default {
       editCatalogData: {}
     }
   },
-  created() {},
+  computed: {
+    ...mapState(['dictForm'])
+  },
   methods: {
     addCatalog() {
       this.$refs.addCatalogDialog.toggleOpen()
@@ -164,9 +173,11 @@ export default {
   flex-direction: column;
   overflow: auto;
   .search {
-    padding: 5px 7px 5px 15px;
+    height: 41px;
+    padding: 0 7px 0 15px;
     box-sizing: border-box;
     display: flex;
+    flex-shrink: 0;
     justify-content: center;
     align-items: center;
     border-bottom: 1px solid #e5e5e5;

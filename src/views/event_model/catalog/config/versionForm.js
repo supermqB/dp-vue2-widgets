@@ -14,7 +14,7 @@ export const versionCfg = (versionOptions = []) => [
   },
   {
     type: 'el-select',
-    label: '继承版本',
+    label: '克隆版本',
     id: 'parVersion',
     options: versionOptions,
     elOptions: {

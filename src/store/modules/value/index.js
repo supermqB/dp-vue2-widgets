@@ -1,9 +1,30 @@
 import { keysClone } from '@/utils/lang'
 import initState from './initState'
 import task from './task'
+import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
 
-const { valueForm, versionForm, columnForm, searchForm, adSearchForm } =
+const { dictForm, versionForm, dictValueForm, searchForm, adSearchForm } =
   initState
+
+const processCatalog = list => {
+  return list.map(item => {
+    const { sourceType, valueDictCatalogEntityList } = item
+    return {
+      id: sourceType,
+      label: sourceType,
+      state: valueDictCatalogEntityList.some(it => it.suspectedState === '1')
+        ? INCOMESTATE
+        : COMPLETESTATE,
+      children: valueDictCatalogEntityList.map(it => {
+        return {
+          id: it.dictName,
+          label: it.dictName,
+          state: it.suspectedState === '1' ? INCOMESTATE : COMPLETESTATE
+        }
+      })
+    }
+  })
+}
 
 const state = {
   valueList: [],
@@ -18,9 +39,9 @@ const state = {
     totalSize: 0,
     totalPage: 0
   },
-  valueForm: Object.assign({}, valueForm),
+  dictForm: Object.assign({}, dictForm),
   versionForm: Object.assign({}, versionForm),
-  columnForm: Object.assign({}, columnForm),
+  dictValueForm: Object.assign({}, dictValueForm),
   searchForm: Object.assign({}, searchForm),
   adSearchForm: Object.assign({}, adSearchForm)
 }
@@ -41,14 +62,14 @@ const mutations = {
   setColumnList(state, list) {
     state.columnList = !list ? [] : list
   },
-  setValueForm(state, form) {
-    state.valueForm = !form ? Object.assign({}, valueForm) : form
+  setdictForm(state, form) {
+    state.dictForm = !form ? Object.assign({}, dictForm) : form
   },
   setVersionForm(state, form) {
     state.versionForm = !form ? Object.assign({}, versionForm) : form
   },
-  setColumnForm(state, form) {
-    state.columnForm = !form ? Object.assign({}, columnForm) : form
+  setdictValueForm(state, form) {
+    state.dictValueForm = !form ? Object.assign({}, dictValueForm) : form
   },
   setCurrentCatalog(state, value) {
     state.currentCatalog = value
