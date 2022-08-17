@@ -47,7 +47,11 @@
     </div>
     <div class="dlg_ports">
       <edit-dialog ref="editDialog" />
-      <adv-search-dialog ref="advSearchDialog" />
+      <adv-search-dialog
+        ref="advSearchDialog"
+        :columns="curMDMColumns"
+        @adv-search-action="advSearchHandler"
+      />
     </div>
   </div>
 </template>
@@ -69,7 +73,7 @@ const { mapState, mapMutations, mapActions } =
 import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
 import EditDialog from './EditDialog.vue'
-import AdvSearchDialog from './AdvSearchDialog.vue'
+import AdvSearchDialog from '@/components/biz/AdvSearchDialog.vue'
 import { drugTableConfigGen, tableConfigGen } from './config/tableConfig'
 
 export default {
@@ -148,6 +152,9 @@ export default {
     },
     openAdvSearch() {
       this.$refs.advSearchDialog.open()
+    },
+    advSearchHandler(criteria) {
+      console.log(criteria)
     },
     ...mapMutations({ selectItemHandler: 'setTableSelectItem' }),
     ...mapMutations(['setSearchFormConfig']),

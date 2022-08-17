@@ -23,6 +23,7 @@
           v-for="col in tableConfig"
           v-bind="col.colConfig"
           :key="col.colConfig.property"
+          show-overflow-tooltip
         >
           <template
             #default="{ $index: rowIdx, row, column }"
@@ -39,19 +40,6 @@
             >
               {{ action.name }}
             </component>
-          </template>
-          <template v-else #default="{ $index: rowIdx, row, column }">
-            <!-- <el-tooltip :content="`${row[column.property]}`" placement="top"> -->
-            <div
-              style="
-                text-overflow: ellipsis;
-                overflow: hidden;
-                word-break: keep-all;
-                white-space: pre;
-              "
-              :title="formatCell(row[column.property], col.formatter)"
-            >{{ formatCell(row[column.property], col.formatter) }}</div>
-            <!-- </el-tooltip> -->
           </template>
         </el-table-column>
       </el-table>
@@ -177,9 +165,6 @@ export default {
     },
     setCurrentRow(row) {
       this.$refs.el_table.setCurrentRow(row)
-    },
-    formatCell(val, formatter) {
-      return formatter ? formatter(val) : val
     }
   }
 }
@@ -203,7 +188,7 @@ export default {
     height: 300px; /*table default height*/
     overflow: auto;
     .el-table {
-        font-size: 13px;
+      font-size: 13px;
       &.el-table--border .el-table__cell:first-child .cell {
         padding-left: 0;
       }
