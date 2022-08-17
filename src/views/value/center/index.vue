@@ -5,7 +5,7 @@
         baseLabel="值域管理"
         currentLabel="DICT_SEX"></Breadcrumb>
       <div>
-        <el-button type="primary" @click="editVersion" :disabled="!currentVersion">版本管理</el-button>
+        <el-button type="primary" @click="editVersion" :disabled="!currentVersion && false">版本管理</el-button>
         <el-button type="primary" @click="addVersion" :disabled="!currentValue">新增版本</el-button>
       </div>
     </div>
@@ -15,10 +15,11 @@
         <el-option v-for="item in versionList"></el-option>
       </el-select>
       <IsMaster></IsMaster>
-      <span>状态</span>
+      <IsRunning :currentState="RUNNINGSTATE"></IsRunning>
+      <!-- <span>状态</span>
       <el-select v-model="state">
         <el-option v-for="item in STATEOPTIONS"></el-option>
-      </el-select>
+      </el-select> -->
     </div>
     <Detail></Detail>
     <div class="search">
@@ -70,8 +71,9 @@ import Dialog from '@/components/Dialog.vue'
 import Detail from './detail.vue'
 import IsMaster from '@/components/state/IsMaster.vue'
 import Breadcrumb from '@/components/header/Breadcrumb.vue'
+import IsRunning from '@/components/state/IsRunning.vue'
 import tableConfig from './config/tableColumn'
-import { STATEOPTIONS } from '@/utils/const'
+import { STATEOPTIONS, RUNNINGSTATE } from '@/utils/const'
 import { addVersionCfg, editVersionCfg } from './config/versionForm'
 import { searchValueCfg, addValueCfg, editValueCfg } from './config/valueForm'
 import { createNamespacedHelpers } from 'vuex'
@@ -80,10 +82,17 @@ const { mapState, mapGetters, mapMutations, mapActions } =
 
 export default {
   components: {
-    Form, Table, Dialog, Detail, Breadcrumb, IsMaster
-  },
+    Form,
+    Table,
+    Dialog,
+    Detail,
+    Breadcrumb,
+    IsMaster,
+    IsRunning
+},
   data() {
     return {
+      RUNNINGSTATE,
       addVersionCfg,
       editVersionCfg,
       addVersionData: {
@@ -113,7 +122,8 @@ export default {
     ...mapState([
       'currentVersion', 
       'currentColumn', 
-      'pageInfo', 
+      'pageInfo',
+      'versionList',
       'columnList',
       'currentValue'
     ]),

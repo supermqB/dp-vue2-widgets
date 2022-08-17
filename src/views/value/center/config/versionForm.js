@@ -14,6 +14,7 @@ export const editVersionCfg = [
     label: '英文名',
     id: 'nameEn',
     elOptions: {
+      disabled: true,
       style: {
         width: '250px'
       }
@@ -24,17 +25,18 @@ export const editVersionCfg = [
     label: '字典名称',
     id: 'nameEn',
     elOptions: {
+      disabled: true,
       style: {
         width: '250px'
       }
     }
   },
   {
-    type: 'el-select',
-    options: [],
-    label: '版本',
+    type: 'el-input',
+    label: '当前版本',
     id: 'level',
     elOptions: {
+      disabled: true,
       style: {
         width: '250px'
       }

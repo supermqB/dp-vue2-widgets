@@ -1,3 +1,5 @@
+import { STATEOPTIONS } from '@/utils/const'
+
 export const addCatalogCfg = [
   // {
   //   type: 'el-select',
@@ -10,10 +12,10 @@ export const addCatalogCfg = [
   {
     type: 'el-input',
     label: '字典编码',
-    id: 'index1',
+    id: 'dictCode',
     elOptions: {
-      disabled: true,
-      placeholder: '自动生成'
+      readonly: true
+      // placeholder: '自动生成'
     }
   },
   {
@@ -33,17 +35,18 @@ export const addCatalogCfg = [
     }
   },
   {
-    type: 'el-select',
+    type: 'el-input',
     label: '版本',
     id: 'version',
     elOptions: {
-      placeholder: 'V1.0'
+      readonly: true
+      // placeholder: 'V1.0'
     }
   },
   {
     type: 'el-select',
     label: '标准来源编码',
-    id: 'index2',
+    id: 'sourceTypeCode',
     elOptions: {
       placeholder: '请选择'
     }
@@ -51,16 +54,16 @@ export const addCatalogCfg = [
   {
     type: 'el-input',
     label: '标准来源名称',
-    id: 'index3',
+    id: 'sourceType',
     elOptions: {
-      disabled: true,
-      placeholder: '根据标准来源编码自动匹配'
+      readonly: true
+      // placeholder: '根据标准来源编码自动匹配'
     }
   },
   {
     type: 'el-input',
     label: '标准依据',
-    id: 'index4',
+    id: 'sourceBasis',
     elOptions: {
       placeholder: '请输入'
     }
@@ -68,17 +71,18 @@ export const addCatalogCfg = [
   {
     type: 'el-input',
     label: '标准代码编号',
-    id: 'index5',
+    id: 'sourceBasis',
     elOptions: {
-      placeholder: 'CV03.00.110'
+      // placeholder: 'CV03.00.110'
     }
   },
   {
     type: 'el-select',
     label: '状态',
     id: 'state',
+    options: STATEOPTIONS,
     elOptions: {
-      placeholder: '待完成'
+      // placeholder: '待完成'
     }
   }
 ].map(item => {

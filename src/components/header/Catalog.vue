@@ -57,6 +57,7 @@ export default {
   padding: 0 5px;
   box-sizing: border-box;
   display: flex;
+  flex-shrink: 0;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
