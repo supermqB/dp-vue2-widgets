@@ -58,9 +58,9 @@ export default {
       this.$refs.el_form.resetFields()
     },
     validate() {
-        return new Promise((resolve)=>{
+        return new Promise((resolve, reject)=>{
             this.$refs.el_form.validate((valid, errObj)=>{
-                resolve({valid, errObj})
+              resolve({valid, errObj})
             })
         }); 
     }

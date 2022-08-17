@@ -9,6 +9,7 @@ import dataElem from './modules/dataElem'
 import mdm from '@/views/mdm/store/'
 
 import event from './modules/event'
+import value from './modules/value'
 
 Vue.use(Vuex)
 
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     task,
     dataElem,
     event,
-    mdm
+    mdm,
+    value
   }
 })

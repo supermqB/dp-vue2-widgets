@@ -5,7 +5,7 @@
       hasRun
       @add="onClickAddCatalog"
       @edit="onClickEditCatalog"
-      @run="onClickRunCatalog"
+      @run="onClickRunDialog"
     ></Header>
     <div class="version">
       <span>版本</span>
@@ -14,8 +14,7 @@
           v-for="(item, index) in versionList"
           :key="index"
           :label="item.versionName"
-          :value="item.versionName"
-        ></el-option>
+          :value="item.versionName"></el-option>
       </el-select>
       <el-button type="text" @click="newVersion">新增版本</el-button>
     </div>
@@ -26,10 +25,7 @@
       @onClick="handleNodeClick"
       class="tree"
     ></Tree>
-    <Bottom
-      :labelList="['总数', '字段数']"
-      :value="[totalNumber, pageInfo.totalSize]"
-    ></Bottom>
+    <Bottom :labelList="['总数', '字段数']" :value="[totalNumber, pageInfo.totalSize]"></Bottom>
     <Dialog
       title="新增版本"
       :isOpen="versionDialog"
@@ -41,7 +37,7 @@
       <Form
         ref="versionForm"
         :formCfg="versionCfg(versionOptions)"
-        :formData="versionForm"
+        :formData="versionForm" 
         :formRule="versionRule"
       ></Form>
     </Dialog>
@@ -52,13 +48,26 @@
       @dialog-closed="onCatalogFormClosed"
       @dialog-complete="onClickSubmitCatalog"
     >
-      <Form
+      <Form 
         ref="catalogForm"
-        :formCfg="catalogCfg(versionOptions, themeOptions, !!catalogForm.id)"
-        :formData="catalogForm"
-        :formRule="catalogRule"
+        :formCfg="catalogCfg(onChangeTheme, versionOptions, themeOptions, !!catalogForm.id)"
+        :formData="catalogForm" :formRule="catalogRule"
       ></Form>
     </Dialog>
+    <el-dialog
+      title="提示"
+      :visible="runDialog"
+      class="runDialog">
+      <div>
+        <i class="el-icon-warning warning"/>
+        <span>是否启用【{{currentVersion}}】版本下的所有表单信息</span>
+      </div>
+      <span slot="footer">
+        <el-button @click="runDialog = false">取消</el-button>
+        <el-button @click="onClickRunAllCatalog">启动所有表单信息</el-button>
+        <el-button type="primary" @click="onClickRunCatalog">启动</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -66,38 +75,35 @@
 import Dialog from '@/components/Dialog.vue'
 import Form from '@/components/Form.vue'
 import Tree from '@/components/SideTree.vue'
-import Header from '@/components/header/Catalog.vue'
+import Header from '@/components/header/Catalog.vue' 
 import Bottom from '@/components/bottom/Catalog.vue'
 import { versionCfg, versionRule } from './config/versionForm'
 import { catalogCfg, catalogRule } from './config/catalogForm'
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapGetters, mapMutations, mapActions } =
-  createNamespacedHelpers('event')
+import { RUNNINGSTATE } from '@/utils/const'
+const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('event')
 export default {
   components: {
-    Dialog,
-    Form,
-    Tree,
-    Header,
-    Bottom
+    Dialog, Form, Tree, Header, Bottom
   },
   data() {
     return {
       versionCfg,
       versionRule,
-      catalogCfg,
+      catalogCfg, 
       catalogRule,
       versionDialog: false,
-      catalogDialog: false
+      catalogDialog: false,
+      runDialog: false
     }
   },
   computed: {
     ...mapState([
-      'versionList',
-      'currentCatalog',
-      'pageInfo',
-      'currentVersion',
-      'versionForm',
+      'versionList', 
+      'currentCatalog', 
+      'pageInfo', 
+      'currentVersion', 
+      'versionForm', 
       'catalogForm'
     ]),
     curVersion: {
@@ -114,16 +120,16 @@ export default {
       }
     },
     ...mapGetters([
-      'versionOptions',
-      'themeOptions',
-      'currentCatalogItem',
-      'catalogTreeList',
+      'versionOptions', 
+      'themeOptions', 
+      'currentCatalogItem', 
+      'catalogTreeList', 
       'totalNumber'
     ])
   },
   methods: {
     ...mapMutations([
-      'setCurrentCatalog',
+      'setCurrentCatalog', 
       'setCurrentVersion',
       'setCurrentColumn',
       'setVersionForm',
@@ -133,21 +139,20 @@ export default {
     ...mapActions([
       'queryCatalog',
       'queryColumn',
-      'addVersion',
-      'runCatalog',
-      'submitCatalog',
+      'addVersion', 
+      'runCatalog', 
+      'submitCatalog', 
       'getMaxCode'
     ]),
-    async handleNodeClick({ id }) {
+    async handleNodeClick({id}) {
       this.setCurrentCatalog(id)
       await this.queryColumn()
       this.setCurrentColumn()
     },
     newVersion() {
-      // this.catalogDialogState = ADDSTATE
       this.$refs.versionDialog.toggleOpen()
     },
-    onVersionFormClosed() {
+    onVersionFormClosed(){
       this.setVersionForm()
       this.$refs.versionForm.resetFields()
     },
@@ -155,32 +160,30 @@ export default {
       this.setCatalogForm()
       this.$refs.catalogForm.resetFields()
     },
+    onClickRunDialog() {
+      if (!this.currentCatalog || this.currentCatalogItem.state === RUNNINGSTATE) return
+      this.runDialog = true
+    },
+    onClickRunAllCatalog() {
+      this.$confirm(`是否启用【${this.currentVersion}】版本下的所有表单信息`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.runCatalog()
+        this.runDialog = false
+      })  
+    },
     onClickRunCatalog() {
-      if (!this.currentCatalog) return
-      this.$confirm(
-        `是否启用【${this.currentCatalogItem.nameCn}】的所有表单信息`,
-        '提示',
-        {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }
-      )
-        .then(() => {
-          this.runCatalog()
-        })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消启动'
-          })
-        })
+      this.runCatalog()
+      this.runDialog = false
+    },
+    async onChangeTheme(theme) {
+      const version = this.currentVersion
+      this.getMaxCode({ version, theme })
     },
     async onClickAddCatalog() {
-      this.getMaxCode({
-        version: this.currentVersion,
-        theme: this.currentCatalogItem.theme
-      })
+      this.getMaxCode({ version: this.currentVersion, theme: this.currentCatalogItem.theme})
       this.$refs.catalogDialog.toggleOpen()
       this.setCatalogForm()
     },
@@ -190,14 +193,22 @@ export default {
       this.setCatalogForm(this.currentCatalogItem)
     },
     async onClickSubmitCatalog() {
-      await this.$refs.catalogForm.validate()
-      this.submitCatalog()
-      this.$refs.catalogDialog.toggleOpen()
+      const { valid } = await this.$refs.catalogForm.validate()
+      if (valid) {
+        this.submitCatalog()
+        this.$refs.catalogDialog.toggleOpen()
+      } else {
+        this.$alert('请检查输入项是否完整！')
+      }
     },
     async onClickSubmitVersion() {
-      await this.$refs.versionForm.validate()
-      this.addVersion()
-      this.$refs.versionDialog.toggleOpen()
+      const { valid } = await this.$refs.versionForm.validate()
+      if (valid) {
+        this.addVersion()
+        this.$refs.versionDialog.toggleOpen()
+      } else {
+        this.$alert('请检查输入项是否完整！')
+      }
     }
   },
   watch: {
@@ -226,7 +237,7 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #E5E5E5;
   span {
     width: 30px;
     display: inline-block;
@@ -248,7 +259,7 @@ export default {
   margin-bottom: 11px;
 }
 
-::v-deep .versionDialog .el-dialog {
+::v-deep .versionDialog .el-dialog{
   width: 535px;
   form {
     padding-right: 85px;
@@ -265,7 +276,7 @@ export default {
   }
 }
 
-::v-deep .catalogDialog .el-dialog {
+::v-deep .catalogDialog .el-dialog{
   width: 635px;
   form {
     padding-right: 110px;
@@ -277,6 +288,14 @@ export default {
       display: flex;
       flex-direction: row;
     }
+  }
+}
+
+::v-deep .runDialog {
+  .warning {
+    padding: 5px 5px 0 0;
+    font-size: 20px;
+    color: #e6a23c;
   }
 }
 </style>

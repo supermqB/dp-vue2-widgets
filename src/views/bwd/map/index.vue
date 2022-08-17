@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-tabs type="card">
+    <el-tabs type="card" stretch @tab-click="tabChanged" class="bwd_ref_tabs">
       <el-tab-pane label="事件库映射">
         <Form :formCfg="searchCfg" :formData="searchData"></Form>
-        <Table :tableConfig="tableConfig" :tableData="[]"></Table>
+        <Table :tableConfig="tableConfig" :tableData="tableData"></Table>
       </el-tab-pane>
       <el-tab-pane label="主索引映射"></el-tab-pane>
     </el-tabs>
@@ -17,7 +17,8 @@ import { searchCfg } from './config/searchForm'
 import { tableConfig } from './config/tableColumn'
 export default {
   components: {
-    Form, Table
+    Form,
+    Table
   },
   data() {
     return {
@@ -26,9 +27,19 @@ export default {
         index1: '',
         index2: ''
       },
-      tableConfig
+      tableConfig,
+      tableData: [
+        {
+          seqNo: '匹配',
+          name: '11',
+          nameCn: '111'
+        }
+      ]
     }
   },
+  methods: {
+    tabChanged() {}
+  }
 }
 </script>
 

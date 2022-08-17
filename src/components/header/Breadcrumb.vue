@@ -1,8 +1,8 @@
 <template>
   <el-breadcrumb separator="/">
     <el-breadcrumb-item>{{ baseLabel }}</el-breadcrumb-item>
-    <el-breadcrumb-item v-if="currentItem.nameCn && currentItem.nameEn">
-      <b>{{ `${currentItem.nameCn}(${currentItem.nameEn})` }}</b>
+    <el-breadcrumb-item v-if="currentLabel">
+      <b>{{ currentLabel }}</b>
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
@@ -14,9 +14,9 @@ export default {
       type: String,
       default: '事件模型管理'
     },
-    currentItem: {
-      type: Object,
-      default: () => {}
+    currentLabel: {
+      type: String,
+      default: ''
     }
   }
 }

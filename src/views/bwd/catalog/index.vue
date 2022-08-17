@@ -6,13 +6,7 @@
       @edit="editFileCatalog"
     ></Header>
     <div class="search">
-      <el-popover
-        placement="right-start"
-        width="150"
-        top="122"
-        style="top: 123px; left: 34px"
-        trigger="click"
-      >
+      <el-popover placement="right-start" width="150" trigger="click">
         <el-tree
           show-checkbox
           ref="filterTree"
