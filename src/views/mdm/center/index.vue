@@ -27,7 +27,7 @@
         :class="['searchForm', selectedMDM.type]"
       ></Form>
       <div class="action_area">
-        <el-button type="primary" plain @click="searchHandler(false)"
+        <el-button type="primary" plain @click="searchHandler()"
           >查 询</el-button
         >
         <el-link :underline="false" class="advbtn" @click="openAdvSearch"
@@ -100,9 +100,10 @@ export default {
       ]
     },
     pageInfoChangeSignal() {
-      return (
+      var signal =
         this.mdmTable.pageInfo.curPage + ':' + this.mdmTable.pageInfo.pageSize
-      )
+      console.log('pagination signal:' + signal)
+      return signal
     }
   },
   watch: {
@@ -145,7 +146,12 @@ export default {
       this.$refs.editDialog.startCreate()
     },
     searchHandler() {
-      this.search()
+      const curPage = this.mdmTable.pageInfo.curPage
+      if (curPage == 1) {
+        this.search()
+      } else {
+        this.mdmTable.pageInfo.curPage = 1
+      }
     },
     openAdvSearch() {
       this.$refs.advSearchDialog.open()
