@@ -30,6 +30,7 @@
           :tableData="tableData"
           :tableConfig="tableHeaderConfig"
           :multipleSelect="true"
+          :pageInfo="null"
           @selection-changed="selectionChgHandler"
         ></Table>
       </div>

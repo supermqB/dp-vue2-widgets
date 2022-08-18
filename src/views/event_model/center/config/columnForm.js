@@ -4,6 +4,24 @@ import { validateEnglish } from '@/utils/validator'
 export const columnCfg = (remoteMethod, dataElementData, setDataElementInfo) =>
   [
     {
+      type: 'el-input',
+      label: '名称',
+      id: 'nameCn'
+    },
+    {
+      type: 'el-input',
+      label: '英文名',
+      id: 'nameEn'
+    },
+    {
+      type: 'el-input',
+      label: '定义',
+      id: 'definition',
+      elOptions: {
+        type: 'textarea'
+      }
+    },
+    {
       type: 'el-select',
       label: '数据元',
       id: 'elementNameCn',
@@ -20,26 +38,11 @@ export const columnCfg = (remoteMethod, dataElementData, setDataElementInfo) =>
     },
     {
       type: 'el-input',
-      label: '名称',
-      id: 'nameCn'
-    },
-    {
-      type: 'el-input',
-      label: '英文名',
-      id: 'nameEn'
-    },
-    {
-      type: 'el-input',
       label: '数据元标识符',
       id: 'identifier',
       elOptions: {
         disabled: true
       }
-    },
-    {
-      type: 'el-input',
-      label: '定义',
-      id: 'definition'
     },
     {
       type: 'el-input',

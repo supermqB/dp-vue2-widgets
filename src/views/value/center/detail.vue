@@ -65,13 +65,12 @@ export default {
 
 <sstyle scoped lang="scss">
 .detailWrapper {
+  margin-top: 4px;
+  margin-bottom: -3px;
   font-size: 13px;
-  .el-row {
-    margin-top: 5px;
-  }
   .el-col {
-    height: 32px;
-    padding: 5px 10px 2px 10px;
+    height: 30px;
+    padding: 0 10px;
     display: flex;
     align-items: center;
   }

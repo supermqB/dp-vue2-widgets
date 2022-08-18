@@ -15,8 +15,9 @@
         <el-table-column type="selection" width="30" v-if="multipleSelect">
         </el-table-column>
         <el-table-column width="30" v-else>
-          <template #default="{ row }">
-            <el-radio v-model="selectedIdx" :label="row.index"></el-radio>
+          <template #default="{ row, $index }">
+            <el-radio v-model="selectedIdx" :label="row.index" v-if="isShowRadio"></el-radio>
+            <span v-else>{{ $index + 1 }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -81,7 +82,11 @@ export default {
     multipleSelect: {
       type: Boolean,
       default: () => false
-    }
+    },
+    isShowRadio: {
+      type: Boolean,
+      default: () => true
+    },
   },
   data() {
     return {

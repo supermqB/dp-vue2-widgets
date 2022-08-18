@@ -15,6 +15,10 @@ const mutations = {
 }
 
 const actions = {
+  async initTask({ commit, dispatch }) {
+    await dispatch('queryTask')
+    await dispatch('querySuspect')
+  },
   async queryTask() {},
   async querySuspect() {},
   async finishTask() {}

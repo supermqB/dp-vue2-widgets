@@ -3,8 +3,14 @@ import initState from './initState'
 import task from './task'
 import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
 
-const { dictForm, versionForm, dictValueForm, searchForm, adSearchForm } =
-  initState
+const {
+  dictForm,
+  versionForm,
+  dictVersionForm,
+  dictValueForm,
+  searchForm,
+  adSearchForm
+} = initState
 
 const processCatalog = list => {
   return list.map(item => {
@@ -27,12 +33,13 @@ const processCatalog = list => {
 }
 
 const state = {
-  valueList: [],
+  dictList: [],
   versionList: [],
-  columnList: [],
-  currentCatalog: '',
+  dictValueList: [],
+  currentDict: '',
   currentVersion: '',
-  currentColumn: '',
+  currentVersionInfo: {},
+  currentDictValue: '',
   pageInfo: {
     curPage: 1,
     pageSize: 20,
@@ -41,26 +48,30 @@ const state = {
   },
   dictForm: Object.assign({}, dictForm),
   versionForm: Object.assign({}, versionForm),
+  dictVersionForm: Object.assign({}, dictVersionForm),
   dictValueForm: Object.assign({}, dictValueForm),
   searchForm: Object.assign({}, searchForm),
   adSearchForm: Object.assign({}, adSearchForm)
 }
 
 const getters = {
-  currentCatalogItem(state) {},
-  currentVersionItem(state) {},
-  currentColumnItem(state) {}
+  currentDictItem(state) {
+    if (!state.currentDict) return null
+  },
+  currentDictValueItem(state) {
+    if (!state.currentDictValue) return null
+  }
 }
 
 const mutations = {
-  setValueList(state, list) {
-    state.valueList = !list ? [] : list
+  setDictList(state, list) {
+    state.dictList = !list ? [] : list
   },
   setVersionList(state, list) {
     state.versionList = !list ? [] : list
   },
-  setColumnList(state, list) {
-    state.columnList = !list ? [] : list
+  setDictValueList(state, list) {
+    state.dictValueList = !list ? [] : list
   },
   setdictForm(state, form) {
     state.dictForm = !form ? Object.assign({}, dictForm) : form
@@ -68,17 +79,17 @@ const mutations = {
   setVersionForm(state, form) {
     state.versionForm = !form ? Object.assign({}, versionForm) : form
   },
-  setdictValueForm(state, form) {
+  setDictValueForm(state, form) {
     state.dictValueForm = !form ? Object.assign({}, dictValueForm) : form
   },
-  setCurrentCatalog(state, value) {
-    state.currentCatalog = value
+  setCurrentDict(state, value) {
+    state.currentDict = value
   },
   setCurrentVersion(state, version) {
     state.currentVersion = version
   },
-  setCurrentColumn(state, column) {
-    state.currentColumn = column
+  setCurrentDictValue(state, column) {
+    state.currentDictValue = column
   },
   setPageInfo(state, pageInfo) {
     keysClone(state.pageInfo, pageInfo)
@@ -86,19 +97,21 @@ const mutations = {
 }
 
 const actions = {
-  async init({ commit, dispatch }) {
-    await dispatch('queryCatalog')
-    commit('setCurrentCatalog')
+  async initValue({ commit, dispatch }) {
+    await dispatch('queryDict')
+    commit('setCurrentDict')
     await dispatch('queryVersion')
     commit('setCurrentVersion')
-    await dispatch('queryColumn')
-    commit('setCurrentColumn')
+    await dispatch('queryDictValue')
+    commit('setCurrentDictValue')
   },
-  async queryCatalog() {},
+  async queryDict() {},
   async queryVersion() {},
-  async queryColumn() {},
+  async queryVersionInfo() {},
+  async queryDictValue() {},
+  async submitDict() {},
   async submitVersion() {},
-  async submitColumn() {}
+  async submitDictValue() {}
 }
 
 export default {
