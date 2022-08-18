@@ -29,15 +29,15 @@ const mutations = {
   setAdvanceMode(state, val) {
     state.isAdvancedOn = val
   },
-  setAdvanceCriteria(state, val){
-      state.advQueryCriteria = val
+  setAdvanceCriteria(state, val) {
+    state.advQueryCriteria = val
   },
-  setTableHeader(state, val) {},
   setTableData(state, val) {
     state.tableData = val
   },
-  setPageInfo(state, val) {
-    Object.assign(state.pageInfo, val)
+  setPageInfo(state, value) {
+    state.pageInfo.totalSize = value.totalSize
+    state.pageInfo.totalPage = value.totalPage
   },
   setSelectItem(state, curRow) {
     state.selectedItem = curRow

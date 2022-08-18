@@ -45,7 +45,9 @@ const mutations = {
     state.mdmTable.selectedItem = curRow
   },
   setPageInfo(state, value) {
-    Object.assign(state.mdmTable.pageInfo, value)
+    const statePageInfo = state.mdmTable.pageInfo
+    statePageInfo.totalSize = value.totalSize
+    statePageInfo.totalPage = value.totalPage
   }
 }
 
@@ -70,6 +72,7 @@ const actions = {
     )
     if (result.success) {
       let { records, pageInfo } = result.value
+
       commit(
         'setTableData',
         records.map(item => ({ ...item, index: item.id }))
