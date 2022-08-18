@@ -27,7 +27,11 @@
           <el-button type="text" slot="reference"> 筛选 </el-button>
         </el-popover>
         <span>搜索</span>
-        <el-input suffix-icon="el-icon-search"></el-input>
+        <el-input
+          v-model="searchKey"
+          @change="searchKeyChanged"
+          suffix-icon="el-icon-search"
+        ></el-input>
       </div>
       <div class="list">
         <Table
@@ -57,7 +61,7 @@ export default {
         return [
           {
             colConfig: {
-              property: 'src',
+              property: 'source',
               label: '来源',
               minWidth: 50
             }
@@ -82,64 +86,13 @@ export default {
     tableData: {
       type: Array,
       default: () => {
-        return [
-          /* {
-            src: '王俊',
-            name: '阿司匹林',
-            state: '待完成'
-          },
-          {
-            src: '王俊',
-            name: '药物A',
-            state: '待完成'
-          },
-          {
-            src: '丁思丝',
-            name: '药物A',
-            state: '待完成'
-          } */
-        ]
+        return []
       }
     },
     treeSelectionData: {
       type: Array,
       default: () => {
-        return [] /* [
-          {
-            id: '1',
-            label: '全选',
-            children: [
-              {
-                id: '2',
-                label: '来源',
-                children: [
-                  {
-                    id: 4,
-                    label: '王俊'
-                  },
-                  {
-                    id: 5,
-                    label: '丁丝丝'
-                  }
-                ]
-              },
-              {
-                id: '3',
-                label: '名称',
-                children: [
-                  {
-                    id: 6,
-                    label: '药品疑似'
-                  },
-                  {
-                    id: 7,
-                    label: '地区疑似'
-                  }
-                ]
-              }
-            ]
-          } 
-        ]*/
+        return []
       }
     },
     hasItem2Do: {
@@ -149,7 +102,8 @@ export default {
   },
   data() {
     return {
-      visible: true
+      visible: true,
+      searchKey: ''
     }
   },
   methods: {
@@ -162,6 +116,9 @@ export default {
     },
     completeHandler() {
       this.hasItem2Do && this.$emit('complete-action')
+    },
+    searchKeyChanged(searchKey) {
+      this.$emit('search-key-change', searchKey)
     }
   }
 }

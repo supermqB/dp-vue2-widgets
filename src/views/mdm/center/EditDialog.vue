@@ -114,7 +114,7 @@ export default {
   .el-form {
     max-height: 650px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     flex-wrap: wrap;
     overflow-y: auto;
     .el-form-item {

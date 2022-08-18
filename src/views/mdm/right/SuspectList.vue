@@ -41,9 +41,8 @@
   </div>
 </template>
 <script>
-import { drugEnvolope } from './envelopeConfig'
-import { camelCase } from 'lodash'
-import { createNamespacedHelpers } from 'vuex'
+import envelopeConfig from './envelopeConfig'
+import { createNamespacedHelpers, mapState as globalMapState } from 'vuex'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('mdm/tasks')
 export default {
@@ -71,7 +70,9 @@ export default {
   },
   computed: {
     ...mapGetters(['filteredTask']),
+    ...globalMapState('mdm', { selectedMDM: state => state.selectedMDM }),
     curSuspectList() {
+      let curMDMType = this.selectedMDM.type
       let curTask = this.filteredTask.filter(
         task => `${task.source}:${task.name}` == this.curTask
       )
@@ -80,12 +81,12 @@ export default {
         ? curSusList.map(sus => {
             return {
               title: curTask[0].name,
-              fields: drugEnvolope.map(item => {
+              fields: envelopeConfig[curMDMType].map(item => {
                 return {
                   name: item.title,
                   value: item.props
                     .map(p => {
-                      return p.f ? p.f(sus[camelCase(p.n)]) : sus[camelCase(p)]
+                      return p.f ? p.f(sus[p.n]) : sus[p]
                     })
                     .filter(v => v != null)
                     .join(',')

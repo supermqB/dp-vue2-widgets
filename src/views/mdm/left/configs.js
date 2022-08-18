@@ -17,7 +17,7 @@ export const taskTableConfig = [
     colConfig: {
       property: 'state',
       label: '状态',
-      minWidth: 60
+      minWidth: 40
     }
   }
 ]
