@@ -10,6 +10,7 @@ import mdm from '@/views/mdm/store/'
 
 import event from './modules/event'
 import value from './modules/value'
+import bwd from './modules/bwd'
 
 Vue.use(Vuex)
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     dataElem,
     event,
     mdm,
-    value
+    value,
+    bwd
   }
 })

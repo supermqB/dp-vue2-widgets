@@ -18,7 +18,11 @@
         v-model="formData[cfg.id]"
         :file.sync="formData[cfg.id]"
       >
-        <el-option v-for="(opt,index) in cfg.options" v-bind="prepareOpt(opt)" :key="index">
+        <el-option
+          v-for="(opt, index) in cfg.options"
+          v-bind="prepareOpt(opt)"
+          :key="index"
+        >
         </el-option>
       </component>
     </el-form-item>
@@ -26,7 +30,7 @@
 </template>
 
 <script>
-import upload from './form/Upload.vue' 
+import upload from './form/Upload.vue'
 export default {
   components: {
     upload
@@ -58,11 +62,11 @@ export default {
       this.$refs.el_form.resetFields()
     },
     validate() {
-        return new Promise((resolve, reject)=>{
-            this.$refs.el_form.validate((valid, errObj)=>{
-              resolve({valid, errObj})
-            })
-        }); 
+      return new Promise((resolve, reject) => {
+        this.$refs.el_form.validate((valid, errObj) => {
+          resolve({ valid, errObj })
+        })
+      })
     }
   }
 }
