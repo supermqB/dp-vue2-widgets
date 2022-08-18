@@ -62,11 +62,15 @@ export default {
     }
   },
   methods: {
+    filter(val) {
+      this.$refs.sideTree.filter(val)
+    },
     handleNodeClick(node) {
       this.$emit('onClick', node)
     },
-    filterNodeMethod(value, data, node) {
-      this.$emit('onFilterNodeMethod', { value, data, node })
+    filterNodeMethod(value, data) {
+      if (!value) return true
+      // this.$emit('onFilterNodeMethod', { value, data, node })
     },
     icon(state) {
       switch (state) {

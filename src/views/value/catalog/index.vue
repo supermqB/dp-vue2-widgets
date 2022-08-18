@@ -8,9 +8,14 @@
     ></Header>
     <div class="search">
       <span>搜索</span>
-      <el-input suffix-icon="el-icon-search"></el-input>
+      <el-input
+        v-model="dictFilter"
+        @change="onDictFilterChange"
+        clearable
+        suffix-icon="el-icon-search"></el-input>
     </div>
     <Tree
+      ref="tree"
       :data="dictList"
       currentNodeKey="currentDict"
       @onClick="handleNodeClick"
@@ -65,6 +70,7 @@ export default {
   },
   data() {
     return {
+      dictFilter: '',
       catalogRule,
       addCatalogCfg,
       editCatalogCfg
@@ -100,11 +106,14 @@ export default {
     editCatalog() {
       this.$refs.editCatalogDialog.toggleOpen()
     },
+    onDictFilterChange(val) {
+      this.$refs.tree.filter(val)
+    },
     async onClickSubmitCatalog() {
       await this.submitDict()
       await this.queryDict()
     }
-  }
+  },
 }
 </script>
 
