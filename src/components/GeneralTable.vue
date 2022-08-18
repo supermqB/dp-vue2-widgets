@@ -71,12 +71,7 @@ export default {
     },
     pageInfo: {
       type: Object,
-      default: () => ({
-        curPage: 1,
-        pageSize: 15,
-        totalSize: 15,
-        totalPage: 1
-      })
+      default: () => null
     },
     multipleSelect: {
       type: Boolean,

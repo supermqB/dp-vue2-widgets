@@ -67,7 +67,7 @@ import {
   formValidRule as editElemFormRule
 } from './config/editFrom'
 import CommitDialogVue from './CommitDialog.vue'
-import AdvSearchDialog from '@/components/biz/AdvSearchDialog.vue'
+import AdvSearchDialog from '@/views/common/AdvSearchDialog'
 
 import { createNamespacedHelpers, mapState as globalMapState } from 'vuex'
 const { mapState, mapMutations, mapActions } =

@@ -73,7 +73,7 @@ const { mapState, mapMutations, mapActions } =
 import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
 import EditDialog from './EditDialog.vue'
-import AdvSearchDialog from '@/components/biz/AdvSearchDialog.vue'
+import AdvSearchDialog from '@/views/common/AdvSearchDialog'
 import { drugTableConfigGen, tableConfigGen } from './config/tableConfig'
 
 export default {
@@ -231,6 +231,9 @@ export default {
     .action_area {
       width: 150px;
       padding: 6px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
       .advbtn {
         color: #1890ff;
         text-decoration: underline;
