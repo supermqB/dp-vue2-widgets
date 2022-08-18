@@ -25,6 +25,8 @@ import Bottom from '@/components/bottom/Catalog.vue'
 import Center from './center'
 import Suspect from './suspect'
 import Task from '../common/SuspectTaskList.vue'
+import { createNamespacedHelpers } from 'vuex'
+const { mapActions } = createNamespacedHelpers('value')
 
 export default {
   name: 'ValueExamine',
@@ -35,12 +37,12 @@ export default {
     Center,
     Suspect
   },
-  data() {
-    return {
-      //选中的值域id
-      // 选中的任务id
-      active: null //选中表里某行待处理数据
-    }
+  mounted() {
+    this.initValue()
+    this.initTask()
+  },
+  methods: {
+    ...mapActions(['initValue', 'initTask'])
   }
 }
 </script>

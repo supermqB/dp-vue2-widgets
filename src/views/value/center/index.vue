@@ -6,7 +6,7 @@
         currentLabel="DICT_SEX"></Breadcrumb>
       <div>
         <el-button type="primary" @click="editVersion" :disabled="!currentVersion && false">版本管理</el-button>
-        <el-button type="primary" @click="addVersion" :disabled="!currentValue">新增版本</el-button>
+        <el-button type="primary" @click="addVersion" :disabled="!currentValue && false">新增版本</el-button>
       </div>
     </div>
     <div class="version">
@@ -15,25 +15,21 @@
         <el-option v-for="item in versionList"></el-option>
       </el-select>
       <IsMaster></IsMaster>
-      <IsRunning :currentState="RUNNINGSTATE"></IsRunning>
-      <!-- <span>状态</span>
-      <el-select v-model="state">
-        <el-option v-for="item in STATEOPTIONS"></el-option>
-      </el-select> -->
+      <IsRunning :currentState="currentVersionItem ? currentVersionItem.state : ''"></IsRunning>
     </div>
     <Detail></Detail>
     <div class="search">
-      <Form :formCfg="searchValueCfg" :formData="searchValueData"></Form>
-      <div>
+      <Form :formCfg="searchValueCfg" :formData="searchForm"></Form>
+      <div class="operation">
         <el-button>查询</el-button>
-        <el-button @click="addValue" :disabled="!currentVersion">新增</el-button>
-        <el-button @click="editValue" :disabled="!currentColumn">编辑</el-button>
+        <el-button @click="addValue" :disabled="!currentVersion && false">新增</el-button>
+        <el-button @click="editValue" :disabled="!currentColumn && false">编辑</el-button>
       </div>
     </div>
     <div class="table">
       <Table
         :tableConfig="tableConfig"
-        :tableData="columnList"
+        :tableData="dictValueList"
         :pageInfo="pageInfo">
       </Table>
     </div>
@@ -41,25 +37,33 @@
       title="新增版本"
       ref="addVersionDialog"
       class="addVersionDialog">
-      <Form :formCfg="addVersionCfg" :formData="addVersionData"></Form>
+      <Form :formCfg="addVersionCfg" :formData="versionForm"></Form>
     </Dialog>
     <Dialog
       title="版本信息管理"
       ref="editVersionDialog"
       class="editVersionDialog">
-      <Form :formCfg="editVersionCfg" :formData="editVersionData"></Form>
+      <Form :formCfg="editVersionCfg" :formData="dictVersionForm"></Form>
     </Dialog>
     <Dialog
       title="新增值域字典"
       ref="addValueDialog"
       class="addValueDialog">
-      <Form :formCfg="addValueCfg" :formData="addValueData"></Form>
+      <Form
+        :formCfg="addValueCfg"
+        :formData="dictValueForm"
+        :formRule="valueRule"
+      ></Form>
     </Dialog>
     <Dialog
       title="编辑值域字典"
       ref="editValueDialog"
       class="editValueDialog">
-      <Form :formCfg="editValueCfg" :formData="editValueData"></Form>
+      <Form 
+        :formCfg="editValueCfg"
+        :formData="dictValueForm"
+        :formRule="valueRule">
+      </Form>
     </Dialog>
   </div>
 </template>
@@ -73,9 +77,8 @@ import IsMaster from '@/components/state/IsMaster.vue'
 import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import IsRunning from '@/components/state/IsRunning.vue'
 import tableConfig from './config/tableColumn'
-import { STATEOPTIONS, RUNNINGSTATE } from '@/utils/const'
 import { addVersionCfg, editVersionCfg } from './config/versionForm'
-import { searchValueCfg, addValueCfg, editValueCfg } from './config/valueForm'
+import { searchValueCfg, addValueCfg, editValueCfg, valueRule } from './config/valueForm'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('value')
@@ -92,40 +95,31 @@ export default {
 },
   data() {
     return {
-      RUNNINGSTATE,
       addVersionCfg,
       editVersionCfg,
-      addVersionData: {
-        version: '',
-        nameEn: '',
-        parVersion: '',
-        file: null
-      },
-      editVersionData: {},
       addValueCfg,
       editValueCfg,
-      addValueData: {},
-      editValueData: {},
       searchValueCfg,
-      searchValueData: {
-        name: '',
-        code: '',
-        parent: '',
-        level: ''
-      },
-      tableConfig,
-      state: '',
-      STATEOPTIONS
+      valueRule,
+      tableConfig
     }
   },
   computed: {
     ...mapState([
       'currentVersion', 
-      'currentColumn', 
+      'currentColumn',
+      'currentValue',
+      'currentVersionItem',
       'pageInfo',
       'versionList',
-      'columnList',
-      'currentValue'
+      'dictValueList',
+      'dictValueForm',
+      'dictVersionForm',
+      'versionForm',
+      'searchForm'
+    ]),
+    ...mapGetters([
+
     ]),
     curVersion: {
       set(value) {
@@ -142,6 +136,7 @@ export default {
     ...mapMutations([
       'setCurrentVersion'
     ]),
+    ...mapActions([]),
     addVersion() {
       this.$refs.addVersionDialog.toggleOpen()
     },
@@ -187,6 +182,12 @@ export default {
     width: 100%;
     padding-left: 10px;
     box-sizing: border-box;
+    .operation {
+      .el-button {
+        border-color: #1890FF;
+        color: #1890FF
+      }
+    }
   }
   .version {
     display: flex;
@@ -286,4 +287,6 @@ export default {
     }
   }
 }
+
+
 </style>

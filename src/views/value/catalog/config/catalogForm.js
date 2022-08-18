@@ -1,21 +1,42 @@
 import { STATEOPTIONS } from '@/utils/const'
+import { validateEnglish } from '@/utils/validator'
 
 export const addCatalogCfg = [
-  // {
-  //   type: 'el-select',
-  //   label: '标准分类',
-  //   id: 'index',
-  //   elOptions: {
-  //     placeholder: '请选择'
-  //   }
-  // },
+  {
+    type: 'el-select',
+    label: '属性',
+    id: 'type',
+    options: [],
+    elOptions: {}
+  },
+  {
+    type: 'el-select',
+    label: '大类',
+    id: 'class',
+    options: [],
+    elOptions: {}
+  },
+  {
+    type: 'el-select',
+    label: '小类',
+    id: 'subClass',
+    options: [],
+    elOptions: {}
+  },
+  {
+    type: 'el-input',
+    label: '卫生信息分类',
+    id: 'ctlgCode',
+    elOptions: {
+      disabled: true
+    }
+  },
   {
     type: 'el-input',
     label: '字典编码',
     id: 'dictCode',
     elOptions: {
-      readonly: true
-      // placeholder: '自动生成'
+      disabled: true
     }
   },
   {
@@ -39,7 +60,7 @@ export const addCatalogCfg = [
     label: '版本',
     id: 'version',
     elOptions: {
-      readonly: true
+      disabled: true
       // placeholder: 'V1.0'
     }
   },
@@ -56,7 +77,7 @@ export const addCatalogCfg = [
     label: '标准来源名称',
     id: 'sourceType',
     elOptions: {
-      readonly: true
+      disabled: true
       // placeholder: '根据标准来源编码自动匹配'
     }
   },
@@ -65,14 +86,15 @@ export const addCatalogCfg = [
     label: '标准依据',
     id: 'sourceBasis',
     elOptions: {
-      placeholder: '请输入'
+      // placeholder: '请输入'
     }
   },
   {
     type: 'el-input',
     label: '标准代码编号',
-    id: 'sourceBasis',
+    id: 'sourceBasisCode',
     elOptions: {
+      // disabled: true
       // placeholder: 'CV03.00.110'
     }
   },
@@ -98,81 +120,64 @@ export const addCatalogCfg = [
 export const editCatalogCfg = [
   {
     type: 'el-input',
-    label: '标准分类',
-    id: 'index',
+    label: '卫生信息分类',
+    id: 'ctlgCode',
     elOptions: {
-      disabled: true,
-      placeholder: '标识',
-      style: {
-        width: '260px'
-      }
+      disabled: true
     }
   },
   {
     type: 'el-input',
     label: '字典编码',
-    id: 'index',
+    id: 'dictCode',
     elOptions: {
-      disabled: true,
-      placeholder: '自动生成',
-      style: {
-        width: '260px'
-      }
+      disabled: true
     }
   },
   {
     type: 'el-input',
     label: '英文名',
     id: 'nameEn',
-    elOptions: {
-      placeholder: 'DICT_SEX',
-      style: {
-        width: '260px'
-      }
-    }
+    elOptions: {}
   },
   {
     type: 'el-input',
     label: '字典名称',
     id: 'index',
-    elOptions: {
-      placeholder: '性别代码',
-      style: {
-        width: '260px'
-      }
-    }
+    elOptions: {}
   },
   {
     type: 'el-select',
     label: '状态',
     id: 'state',
-    elOptions: {
-      placeholder: '已启用',
-      style: {
-        width: '260px'
-      }
-    }
+    options: STATEOPTIONS,
+    elOptions: {}
   }
-]
+].map(item => {
+  const elOptions = Object.assign({}, item.elOptions, {
+    style: {
+      width: '260px'
+    }
+  })
+  item.elOptions = elOptions
+  return item
+})
 
 export const catalogRule = {
-  index: { required: true },
-  index1: { required: true },
-  index2: { required: true },
-  index3: { required: true },
+  type: { required: true },
+  class: { required: true },
+  subClass: { required: true },
+  ctlgCode: { required: true },
+  dictCode: { required: true },
+  version: { required: true },
+  sourceType: { required: true },
+  sourceTypeCode: { required: true },
   nameCn: { required: true },
   nameEn: [
     { required: true },
     {
-      validator: (rule, value, callback) => {
-        if (!/^[\w+]{1,30}$/.test(value)) {
-          showEnErr()
-          callback('英文名称必须小于30个字符, 由小写字母、下划线、数字构成')
-        } else {
-          callback()
-        }
-      },
-      trigger: 'change'
+      validator: validateEnglish,
+      trigger: 'blur'
     }
   ],
   version: { required: true }

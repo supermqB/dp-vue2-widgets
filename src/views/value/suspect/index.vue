@@ -1,49 +1,59 @@
 <template>
-  <div class="wrap">
+  <div class="suspectWrap">
     <p>疑似列表</p>
     <Table
-      :tableData="[]"
-      :tableConfig="config">
+      :tableData="task.suspectList"
+      :tableConfig="config"
+      :pageInfo="null"
+      :isShowRadio="false"
+      class="suspectTable">
     </Table>
   </div>
 </template>
 
 <script>
 import Table from '@/components/GeneralTable.vue'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState } = createNamespacedHelpers('value')
+const config = [
+  {
+    colConfig: {
+      property: 'index1',
+      label: '系统',
+      minWidth: 55
+    }
+  },{
+    colConfig: {
+      property: 'name',
+      label: '代码',
+      minWidth: 55
+    }
+  },{
+    colConfig: {
+      property: 'state',
+      label: '名称',
+      minWidth: 70
+    }
+  }
+]
 export default {
   components: {
     Table
   },
+  computed: {
+    ...mapState(['task'])
+  },
   data() {
     return {
-      config: [
-        {
-          colConfig: {
-            property: 'index1',
-            label: '系统',
-            minWidth: 55
-          }
-        },{
-          colConfig: {
-            property: 'name',
-            label: '代码',
-            minWidth: 55
-          }
-        },{
-          colConfig: {
-            property: 'state',
-            label: '名称',
-            minWidth: 70
-          }
-        },
-      ]
+      config,
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.wrap {
+.suspectWrap {
+  height: 100%;
   display: flex;
   flex-direction: column;
   p {
@@ -52,7 +62,10 @@ export default {
     padding-left: 3px;
     line-height: 30px;
     text-align: left;
-    /* border: 1px solid #eee; */
   }
+}
+
+.suspectTable {
+  flex: 1;
 }
 </style>

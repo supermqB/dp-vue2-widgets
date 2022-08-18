@@ -4,6 +4,7 @@
       ref="sideTree"
       node-key="id"
       :current-node-key="currentNodeKey"
+      :filter-node-method="filterNodeMethod"
       :data="treeList"
       :expand-on-click-node="false"
       default-expand-all
@@ -61,8 +62,15 @@ export default {
     }
   },
   methods: {
+    filter(val) {
+      this.$refs.sideTree.filter(val)
+    },
     handleNodeClick(node) {
       this.$emit('onClick', node)
+    },
+    filterNodeMethod(value, data) {
+      if (!value) return true
+      // this.$emit('onFilterNodeMethod', { value, data, node })
     },
     icon(state) {
       switch (state) {
@@ -124,9 +132,10 @@ export default {
 }
 
 ::v-deep .el-tree-node.is-current > .el-tree-node__content {
-  background-color: #d8fffe !important;
+  background-color: #d8fffe!important;
 }
 ::v-deep .el-tree-node:focus > .el-tree-node__content {
-  background-color: #d8fffe;
+  /* background-color: #d8fffe; */
+  background-color: transparent;
 }
 </style>

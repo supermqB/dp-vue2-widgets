@@ -8,13 +8,24 @@
     ></Header>
     <div class="search">
       <span>搜索</span>
-      <el-input suffix-icon="el-icon-search"></el-input>
+      <el-input
+        v-model="dictFilter"
+        @change="onDictFilterChange"
+        clearable
+        suffix-icon="el-icon-search"></el-input>
     </div>
-    <Tree :data="catalogs" currentNodeKey="2-1" class="tree"></Tree>
+    <Tree
+      ref="tree"
+      :data="dictList"
+      currentNodeKey="currentDict"
+      @onClick="handleNodeClick"
+      class="tree"
+    ></Tree>
     <Dialog
       title="新增值域字典"
       ref="addCatalogDialog"
       class="addCatalogDialog"
+      @dialog-complete="onClickSubmitCatalog"
     >
       <Form
         :formCfg="addCatalogCfg"
@@ -26,10 +37,11 @@
       title="编辑值域字典"
       ref="editCatalogDialog"
       class="editCatalogDialog"
+      @dialog-complete="onClickSubmitCatalog"
     >
       <Form
         :formCfg="editCatalogCfg"
-        :formData="editCatalogData"
+        :formData="dictForm"
         :formRule="catalogRule"
       ></Form>
     </Dialog>
@@ -46,9 +58,8 @@ import {
   editCatalogCfg,
   catalogRule
 } from './config/catalogForm'
-import { EDITINGSTATE } from '@/utils/const'
 import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('value')
+const { mapState, mapActions, mapMutations } = createNamespacedHelpers('value')
 
 export default {
   components: {
@@ -59,109 +70,50 @@ export default {
   },
   data() {
     return {
-      catalogs: [
-        {
-          id: '1',
-          label: '国家强制标准',
-          children: [
-            {
-              id: '1-1',
-              label: 'DICT_SEX',
-              state: EDITINGSTATE
-            },
-            {
-              id: '1-2',
-              label: 'DICT_RELIGION'
-            }
-          ]
-        },
-        {
-          id: '2',
-          label: '国家推荐标准',
-          state: EDITINGSTATE,
-          children: [
-            {
-              id: '2-1',
-              label: 'DICT_SEX',
-              state: EDITINGSTATE
-            },
-            {
-              id: '2-2',
-              label: 'DICT_RELIGION',
-              state: EDITINGSTATE
-            }
-          ]
-        },
-        {
-          id: '3',
-          label: '国家推荐标准',
-          state: EDITINGSTATE,
-          children: [
-            {
-              id: '3-1',
-              label: 'DICT_SEX',
-              state: EDITINGSTATE
-            },
-            {
-              id: '3-2',
-              label: 'DICT_RELIGION',
-              state: EDITINGSTATE
-            }
-          ]
-        },
-        {
-          id: '4',
-          label: '国家推荐标准',
-          state: EDITINGSTATE,
-          children: [
-            {
-              id: '4-1',
-              label: 'DICT_SEX',
-              state: EDITINGSTATE
-            },
-            {
-              id: '4-2',
-              label: 'DICT_RELIGION',
-              state: EDITINGSTATE
-            }
-          ]
-        },
-        {
-          id: '5',
-          label: '国家推荐标准',
-          state: EDITINGSTATE,
-          children: [
-            {
-              id: '5-1',
-              label: 'DICT_SEX',
-              state: EDITINGSTATE
-            },
-            {
-              id: '5-2',
-              label: 'DICT_RELIGION',
-              state: EDITINGSTATE
-            }
-          ]
-        }
-      ],
+      dictFilter: '',
       catalogRule,
       addCatalogCfg,
-      editCatalogCfg,
-      addCatalogData: {},
-      editCatalogData: {}
+      editCatalogCfg
     }
   },
   computed: {
-    ...mapState(['dictForm'])
+    ...mapState([
+      'dictForm', 
+      'dictList', 
+      'currentDict'
+    ])
   },
   methods: {
+    ...mapMutations([
+      'setCurrentVersion',
+      'setCurrentDictValue'
+    ]),
+    ...mapActions([
+      'queryDict',
+      'queryVersion',
+      'queryDictValue',
+      'submitDict'
+    ]),
+    async handleNodeClick({}) {
+      await this.queryVersion()
+      this.setCurrentVersion()
+      await this.queryDictValue()
+      this.setCurrentDictValue()
+    },
     addCatalog() {
       this.$refs.addCatalogDialog.toggleOpen()
     },
     editCatalog() {
       this.$refs.editCatalogDialog.toggleOpen()
+    },
+    onDictFilterChange(val) {
+      this.$refs.tree.filter(val)
+    },
+    async onClickSubmitCatalog() {
+      await this.submitDict()
+      await this.queryDict()
     }
-  }
+  },
 }
 </script>
 
@@ -196,24 +148,23 @@ export default {
 }
 
 ::v-deep .addCatalogDialog .el-dialog {
-  width: 590px;
+  width: 900px;
   form {
-    /* height: 400px; */
-    /* padding-left: 20px; */
-    padding-right: 100px;
+    height: 320px;
+    padding-right: 70px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     flex-wrap: wrap;
     .el-form-item {
-      margin-bottom: 8px;
+      margin-bottom: 4px;
       display: inline-flex;
     }
   }
 }
 
 ::v-deep .editCatalogDialog .el-dialog {
-  width: 590px;
+  width: 570px;
   form {
     padding-right: 100px;
     display: flex;
@@ -221,7 +172,7 @@ export default {
     align-items: flex-end;
     flex-wrap: wrap;
     .el-form-item {
-      margin-bottom: 8px;
+      margin-bottom: 4px;
       display: inline-flex;
     }
   }

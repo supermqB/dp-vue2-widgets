@@ -1,6 +1,8 @@
 export default {
   dictForm: {
     type: '',
+    class: '',
+    subClass: '',
     ctlgCode: '',
     dictCode: '',
     nameEn: '',
@@ -10,6 +12,14 @@ export default {
     sourceBasis: '',
     sourceBasisCode: '',
     state: ''
+  },
+  dictVersionForm: {
+    id: '',
+    masterVersion: '',
+    version: '',
+    state: '',
+    sourceType: '',
+    sourceBasic: ''
   },
   versionForm: {
     version: '',
