@@ -17,7 +17,7 @@
     <Tree
       ref="tree"
       :data="dictList"
-      currentNodeKey="currentDict"
+      :currentNodeKey="currentDict"
       @onClick="handleNodeClick"
       class="tree"
     ></Tree>
@@ -94,7 +94,8 @@ export default {
       'queryDictValue',
       'submitDict'
     ]),
-    async handleNodeClick({}) {
+    async handleNodeClick({id}) {
+      this.setCurrentDict(id)
       await this.queryVersion()
       this.setCurrentVersion()
       await this.queryDictValue()

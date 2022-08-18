@@ -2,6 +2,7 @@ import { keysClone } from '@/utils/lang'
 import initState from './initState'
 import task from './task'
 import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
+import { getCatalogApi } from '@/api/value'
 
 const {
   dictForm,
@@ -83,7 +84,17 @@ const mutations = {
     state.dictValueForm = !form ? Object.assign({}, dictValueForm) : form
   },
   setCurrentDict(state, value) {
-    state.currentDict = value
+    if (value) {
+      state.currentDict = value
+    } else {
+      if (
+        state.dictList &&
+        state.dictList.length &&
+        state.dictList[0].children.length
+      ) {
+        state.currentDict = state.dictList[0].children[0].id
+      }
+    }
   },
   setCurrentVersion(state, version) {
     state.currentVersion = version
@@ -105,7 +116,10 @@ const actions = {
     await dispatch('queryDictValue')
     commit('setCurrentDictValue')
   },
-  async queryDict() {},
+  async queryDict({ commit }) {
+    const { value } = await getCatalogApi()
+    commit('setDictList', processCatalog(value))
+  },
   async queryVersion() {},
   async queryVersionInfo() {},
   async queryDictValue() {},
