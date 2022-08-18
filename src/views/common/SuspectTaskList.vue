@@ -3,11 +3,15 @@
     <div class="header">
       <h3>
         <span>任务列表</span>
-        <i 
-          @click="() => visible = !visible"
-          :class="[visible ?  'el-icon-arrow-down' : 'el-icon-arrow-up']"></i>
+        <i
+          @click="() => (visible = !visible)"
+          :class="[visible ? 'el-icon-arrow-down' : 'el-icon-arrow-up']"
+        ></i>
       </h3>
-      <div :class="['todo', { disabled: !hasItem2Do }]" @click="completeHandler"></div>
+      <div
+        :class="['todo', { disabled: !hasItem2Do }]"
+        @click="completeHandler"
+      ></div>
     </div>
     <CollapseTransition :visible="visible">
       <div class="search">
@@ -29,8 +33,8 @@
         <Table
           :tableData="tableData"
           :tableConfig="tableHeaderConfig"
-          :multipleSelect="true"
-          :pageInfo="null"
+          multiple-select
+          hide-pagination
           @selection-changed="selectionChgHandler"
         ></Table>
       </div>
@@ -43,7 +47,8 @@ import Table from '@/components/GeneralTable.vue'
 import CollapseTransition from '@/components/transition/Collapse.vue'
 export default {
   components: {
-    Table, CollapseTransition
+    Table,
+    CollapseTransition
   },
   props: {
     tableHeaderConfig: {
@@ -217,8 +222,9 @@ export default {
   }
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;

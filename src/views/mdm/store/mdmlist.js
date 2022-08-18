@@ -23,8 +23,8 @@ const state = {
     pageInfo: {
       curPage: 1,
       pageSize: 20,
-      totalSize: 200,
-      totalPage: 10
+      totalSize: 20,
+      totalPage: 1
     },
     selectedItem: {}
   }
