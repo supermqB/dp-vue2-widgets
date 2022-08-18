@@ -30,7 +30,7 @@ const getters = {
       return []
     }
     return state.selectedMDMDesc.columnList.map(col => ({
-      property: camelCase(col.nameEn),
+      property: col.nameEn,
       label: col.nameCn
     }))
   }

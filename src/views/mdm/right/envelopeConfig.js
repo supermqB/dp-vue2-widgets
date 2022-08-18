@@ -50,4 +50,37 @@ const drugEnvolope = [
   }
 ]
 
-export { drugEnvolope }
+const matEnvolope = [
+  {
+    name: 'classific',
+    title: '分类信息',
+    props: [
+      'common_name',
+      'material_other_name',
+      'material_goods',
+      'material_model',
+      'material_spec'
+    ]
+  },
+  {
+    name: 'insur',
+    title: '医保分类信息',
+    props: [
+      'material_first_name',
+      'material_second_name',
+      'material_third_name'
+    ]
+  },
+  {
+    name: 'produce',
+    title: '生产信息',
+    props: ['mnf_company_name', 'registration_number', 'register_info']
+  },
+  {
+    name: 'specific',
+    title: '单件产品信息',
+    props: ['product_name', 'product_spec', 'product_model']
+  }
+]
+
+export default { drg: drugEnvolope, mat: matEnvolope }

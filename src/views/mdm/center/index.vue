@@ -74,14 +74,11 @@ import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
 import EditDialog from './EditDialog.vue'
 import AdvSearchDialog from '@/views/common/AdvSearchDialog'
-import { drugTableConfigGen, tableConfigGen } from './config/tableConfig'
+import { tableConfigGen } from './config/tableConfig'
 
 export default {
   data() {
     return {
-      tableConfigMap: {
-        drg: drugTableConfigGen.apply(this)
-      },
       tableConfig: []
     }
   },

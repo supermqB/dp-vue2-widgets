@@ -1,4 +1,7 @@
+import { post } from '@/utils/request'
+import { Message } from 'element-ui'
 const state = {
+  searchKey: '',
   taskList: [],
   checkedFilters: [],
   selectedTasks: [],
@@ -59,6 +62,9 @@ const getters = {
 }
 
 const mutations = {
+  setSearchKey(state, value) {
+    state.searchKey = value
+  },
   setCheckedFilters(state, value) {
     state.checkedFilters = value
   },
@@ -74,132 +80,41 @@ const mutations = {
 }
 
 const actions = {
-  listSuspectTasks({ commit, rootState }) {
-    console.log(rootState.mdm.selectedMDM.id)
-    commit('setTaskList', [
-      {
-        source: '王俊',
-        name: '阿司匹林',
-        state: '待完成',
-        suspectList: [
-          {
-            commonName: '118-修补材料',
-            versionDesc: '医保医用耗材分类与代码数据库更新（截止2022年2月）',
-            productModel: 'JK50×120-C',
-            dataModifyTime: null,
-            materialOtherName: null,
-            productName: '疝修补补片',
-            miniPackUnit: null,
-            importFlag: null,
-            preRegistrationNo: null,
-            productSeqNo: '1',
-            materialTypeNameCfda68: null,
-            id: 2,
-            mnfCompanyName: '常州市康蒂娜医疗科技有限公司',
-            materialSecondName: '05-疝修补材料',
-            packQuality: null,
-            pictureUrl: null,
-            materialTypeNameCame: null,
-            deviceTypeName: null,
-            smnfInx: null,
-            materialMeasUnit: null,
-            materialTypeNameCfda2018: null,
-            materialName: '疝修补补片',
-            registerInfo: null,
-            materialGoods: '02-合成材料',
-            materialThirdName: '01-腹股沟疝补片',
-            materialModel: null,
-            specModelNo: '138',
-            miniMeasUnit: null,
-            materialBrand: null,
-            dataValidityFlag: '1',
-            implantMaterialFlag: null,
-            materialFirstName: '12-修补材料',
-            packSpec: null,
-            deviceTypeCode: null,
-            productUdiDi: '06954488724511',
-            validExpiryDate: null,
-            fundamentalFactorFlag: null,
-            smatType: null,
-            scopeApplication: null,
-            productSpec: 'JK50×120-C',
-            productNo: null,
-            smatInx: '111',
-            productMnfCompanyName: '常州市康蒂娜医疗科技有限公司',
-            materialSpec: '001-不可吸收/平片/预裁剪',
-            storeUp: null,
-            dataCreateTime: '2022-07-20',
-            interventionMaterialFlag: null,
-            registrationNumber: '国械注准20153131323',
-            packTransitionRatio: null
-          },
-          {
-            commonName: '118-修补材料',
-            versionDesc: '医保医用耗材分类与代码数据库更新（截止2022年2月）',
-            productModel: 'JK50×120-C',
-            dataModifyTime: null,
-            materialOtherName: null,
-            productName: '疝修补补片',
-            miniPackUnit: null,
-            importFlag: null,
-            preRegistrationNo: null,
-            productSeqNo: '1',
-            materialTypeNameCfda68: null,
-            id: 3,
-            mnfCompanyName: '常州市康蒂娜医疗科技有限公司',
-            materialSecondName: '05-疝修补材料',
-            packQuality: null,
-            pictureUrl: null,
-            materialTypeNameCame: null,
-            deviceTypeName: null,
-            smnfInx: null,
-            materialMeasUnit: null,
-            materialTypeNameCfda2018: null,
-            materialName: '疝修补补片',
-            registerInfo: null,
-            materialGoods: '02-合成材料',
-            materialThirdName: '01-腹股沟疝补片',
-            materialModel: null,
-            specModelNo: '138',
-            miniMeasUnit: null,
-            materialBrand: null,
-            dataValidityFlag: '1',
-            implantMaterialFlag: null,
-            materialFirstName: '12-修补材料',
-            packSpec: null,
-            deviceTypeCode: null,
-            productUdiDi: '06954488724511',
-            validExpiryDate: null,
-            fundamentalFactorFlag: null,
-            smatType: null,
-            scopeApplication: null,
-            productSpec: 'JK50×120-C',
-            productNo: null,
-            smatInx: '111',
-            productMnfCompanyName: '常州市康蒂娜医疗科技有限公司',
-            materialSpec: '001-不可吸收/平片/预裁剪',
-            storeUp: null,
-            dataCreateTime: '2022-07-20',
-            interventionMaterialFlag: null,
-            registrationNumber: '国械注准20153131323',
-            packTransitionRatio: null
-          }
-        ]
-      },
-      {
-        source: '王俊',
-        name: '药物A',
-        state: '待完成'
-      },
-      {
-        source: '丁思丝',
-        name: '药物A',
-        state: '待完成'
-      }
-    ])
+  async listSuspectTasks({ commit, state, rootState }) {
+    const type = rootState.mdm.selectedMDM.type
+    const searchKey = state.searchKey
+    const result = await post('suspected/list', { type, searchKey })
+    if (result.success) {
+      const tasks = result.value.map(task => {
+        return {
+          source: task.source,
+          name: task.name,
+          state: ['待完成', '已完成'][task.state * 1],
+          suspectList: task.suspectList.map(suspect => {
+            return {
+              id: suspect.id,
+              ...suspect.suspectObject
+            }
+          })
+        }
+      })
+
+      commit('setTaskList', tasks)
+    }
   },
-  completeTasks({ state }) {
-    console.log(state.selectedTasks)
+  async completeTasks({ state, dispatch }) {
+    const selectedTasks = state.selectedTasks
+    const commitSuspectIds = selectedTasks.reduce((accuSet, curTask) => {
+      curTask.suspectList.forEach(sus => {
+        accuSet.add(sus.id)
+      })
+      return accuSet
+    }, new Set())
+    const result = await post('suspected/commit', [...commitSuspectIds])
+    if (result.success) {
+      Message.success('疑似任务已确认完成。')
+      dispatch('listSuspectTasks')
+    }
   }
 }
 

@@ -34,7 +34,7 @@ export default {
   border-top: 1px solid #e5e5e5;
   font-size: 12px;
   p {
-    width: 80px;
+    width: 50%;
     line-height: 30px;
   }
 }
