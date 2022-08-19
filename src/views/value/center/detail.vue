@@ -13,18 +13,18 @@
     <el-col :span="13">
       <p style="width: 100%">
         标准依据:
-        <span class="value">{{ sourceBasic }}</span>
+        <span class="value">{{ sourceBasis }}</span>
       </p>
     </el-col>
     <el-col :span="11">
       <p>
-        创建日期:
-        <span class="value">{{ createTime }}
+        创建事件:
+        <span class="value">{{ getDate(createTime) }}
         </span>
       </p>
       <p>
         更新日期:
-        <span class="value">{{ updateTime }}
+        <span class="value">{{ getDate(updateTime) }}
       </span>
       </p>
     </el-col>
@@ -36,28 +36,31 @@ export default {
   props: {
     code: {
       type: String,
-      default: 'DE02.01.10.018'
+      default: ''
     },
     sourceType: {
       type: String,
-      default: '国家推荐标准',
+      default: '',
     },
-    sourceBasic: {
+    sourceBasis: {
       type: String,
-      default: 'GB/T 2261.1-2003 个人基本信息分类与代码 第1部分 人的性别代码',
+      default: '',
     },
     createTime: {
       type: String,
-      default: '2022.01.01',
+      default: '',
     },
     updateTime: {
       type: String,
-      default: '2022.05.01'
+      default: ''
     },
   },
-  data() {
-    return {
-      version: ''
+  methods: {
+    getDate(str) {
+      if (!str) return ''
+      const arr = str.split('T')
+      if (arr.length !== 2) return ''
+      return arr[0] 
     }
   },
 }

@@ -39,10 +39,9 @@ export default {
   },
   mounted() {
     this.initValue()
-    this.initTask()
   },
   methods: {
-    ...mapActions(['initValue', 'initTask'])
+    ...mapActions(['initValue'])
   }
 }
 </script>

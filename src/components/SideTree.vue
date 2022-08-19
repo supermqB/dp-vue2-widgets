@@ -70,6 +70,7 @@ export default {
     },
     filterNodeMethod(value, data) {
       if (!value) return true
+      return data.label.indexOf(value) > -1
       // this.$emit('onFilterNodeMethod', { value, data, node })
     },
     icon(state) {

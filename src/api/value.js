@@ -19,9 +19,9 @@ export const getVersionListApi = dictName => {
 
 export const getVersionDetailApi = dictId => {
   return request({
-    url: '',
+    url: '/dict/getVersionDetail',
     method: 'post',
-    data: {
+    params: {
       dictId
     }
   })
@@ -171,5 +171,12 @@ export const editDictValueApi = ({
       note,
       hierarchyRelation
     }
+  })
+}
+
+export const getClassifyCodeApi = () => {
+  return request({
+    url: '/dict/getClassifyCode',
+    method: 'get'
   })
 }

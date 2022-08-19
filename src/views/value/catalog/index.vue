@@ -17,7 +17,7 @@
     <Tree
       ref="tree"
       :data="dictList"
-      currentNodeKey="currentDict"
+      :currentNodeKey="currentDict"
       @onClick="handleNodeClick"
       class="tree"
     ></Tree>
@@ -28,7 +28,7 @@
       @dialog-complete="onClickSubmitCatalog"
     >
       <Form
-        :formCfg="addCatalogCfg"
+        :formCfg="addCatalogCfg(classList, subClassOptions, subClassChange, sourceTypeOptions)"
         :formData="dictForm"
         :formRule="catalogRule"
       ></Form>
@@ -59,7 +59,7 @@ import {
   catalogRule
 } from './config/catalogForm'
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapActions, mapMutations } = createNamespacedHelpers('value')
+const { mapState, mapGetters, mapActions, mapMutations } = createNamespacedHelpers('value')
 
 export default {
   components: {
@@ -79,31 +79,59 @@ export default {
   computed: {
     ...mapState([
       'dictForm', 
-      'dictList', 
-      'currentDict'
-    ])
+      'dictList',
+      'classList',
+      'currentDict',
+      'currentVersionInfo'
+    ]),
+    ...mapGetters([
+      'currentDictItem',
+      'sourceTypeOptions'
+    ]),
+    subClassOptions() {
+      this.dictForm.subClass = ''
+      this.dictForm.ctlgCode = ''
+      const res = this.classList.find(item => item.id === this.dictForm.class)
+      if (res) return res.children
+      return []
+    }
   },
   methods: {
     ...mapMutations([
+      'setCurrentDict',
       'setCurrentVersion',
-      'setCurrentDictValue'
+      'setCurrentDictValue',
+      'setDictForm'
     ]),
     ...mapActions([
       'queryDict',
       'queryVersion',
+      'queryVersionInfo',
       'queryDictValue',
       'submitDict'
     ]),
-    async handleNodeClick({}) {
+    async handleNodeClick({id}) {
+      this.setCurrentDict(id)
       await this.queryVersion()
-      this.setCurrentVersion()
+      await this.queryVersionInfo()
       await this.queryDictValue()
       this.setCurrentDictValue()
+    },
+    subClassChange(val) {
+      this.dictForm.ctlgCode = val
     },
     addCatalog() {
       this.$refs.addCatalogDialog.toggleOpen()
     },
     editCatalog() {
+      const { code, classifyCode } = this.currentVersionInfo
+      const { nameEn, nameCn } = this.currentDictItem
+      this.setDictForm({
+        dictCode: code,
+        ctlgCode: classifyCode,
+        nameCn, 
+        nameEn
+      })
       this.$refs.editCatalogDialog.toggleOpen()
     },
     onDictFilterChange(val) {
