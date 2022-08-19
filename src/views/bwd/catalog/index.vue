@@ -28,7 +28,7 @@
       <span>搜索</span>
       <el-input placeholder="请输入" suffix-icon="el-icon-search"></el-input>
     </div>
-    <Tree :data="catalogList" class="tree"></Tree>
+    <Tree :data="catalogList" class="tree" @onClick="handleNodeClick"></Tree>
     <div class="dialog_port">
       <Dialog
         title="新增文件目录"
@@ -68,6 +68,9 @@ import {
   addFileCatalogCfg,
   fileCatalogRule
 } from './config/fileCatalogForm'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapMutations, mapActions } =
+  createNamespacedHelpers('bwd')
 export default {
   components: {
     Header,
@@ -78,75 +81,41 @@ export default {
   },
   data() {
     return {
-      catalogList: [
-        {
-          id: '1',
-          label: '医疗类',
-          children: [
-            {
-              id: '1-1',
-              label: '患者信息记录文件'
-            },
-            {
-              id: '1-2',
-              label: '挂号记录文件'
-            },
-            {
-              id: '1-3',
-              label: '入院登记文件'
-            },
-            {
-              id: '1-4',
-              label: '患者就诊记录文件'
-            },
-            {
-              id: '1-5',
-              label: '检验报告单主表文件'
-            },
-            {
-              id: '1-6',
-              label: '检验报告单丛表文件'
-            },
-            {
-              id: '1-7',
-              label: '检查报告单主表文件'
-            }
-          ]
-        }
-      ],
-      treeSelectionData: [
-        {
-          id: '1',
-          label: '全选',
-          children: [
-            {
-              id: '2',
-              label: '医疗类'
-            },
-            {
-              id: '3',
-              label: '运营类'
-            },
-            {
-              id: '4',
-              label: '医保类'
-            }
-          ]
-        }
-      ],
       addFileCatalogCfg,
       editFileCatalogCfg,
-      addFileCatalogData: {},
-      editFileCatalogData: {},
-      fileCatalogRule
+      fileCatalogRule,
+      addFileCatalogDialog: false,
+      editFileCatalogDialog: false
     }
   },
+  computed: {
+    ...mapState([
+      'treeSelectionData',
+      'catalogList',
+      'addFileCatalogData',
+      'editFileCatalogData'
+    ]),
+    ...mapGetters(['currentCatalogItem'])
+  },
   methods: {
-    addFileCatalog() {
+    ...mapMutations([
+      'setCatalogForm',
+      'setCurrentCatalog',
+      'setCurrentColumn'
+    ]),
+    ...mapActions(['queryColumn']),
+    async handleNodeClick({ id }) {
+      this.setCurrentCatalog(id)
+      await this.queryColumn()
+      this.setCurrentColumn()
+    },
+    async addFileCatalog() {
       this.$refs.addFileCatalogDialog.toggleOpen()
+      this.setCatalogForm()
     },
     editFileCatalog() {
       this.$refs.editFileCatalogDialog.toggleOpen()
+      this.setCatalogForm(this.currentCatalogItem)
     },
     checkedFilterHandler() {
       let checkedKeys = this.$refs.filterTree.getCheckedKeys()
@@ -190,6 +159,9 @@ export default {
 .task-input-do {
   position: relative;
   left: 32px;
+}
+::v-deep .catalogTitleWrap .buttons .action.run {
+  display: none;
 }
 ::v-deep .addFileCatalogDialog .el-dialog {
   width: 700px;

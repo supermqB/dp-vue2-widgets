@@ -28,6 +28,64 @@ const state = {
       nameEn: '业务系统唯一标识'
     }
   ],
+  treeSelectionData: [
+    {
+      id: '1',
+      label: '全选',
+      children: [
+        {
+          id: '2',
+          label: '医疗类'
+        },
+        {
+          id: '3',
+          label: '运营类'
+        },
+        {
+          id: '4',
+          label: '医保类'
+        }
+      ]
+    }
+  ],
+  catalogList: [
+    {
+      id: '1',
+      label: '医疗类',
+      children: [
+        {
+          id: '1-1',
+          label: '患者信息记录文件'
+        },
+        {
+          id: '1-2',
+          label: '挂号记录文件'
+        },
+        {
+          id: '1-3',
+          label: '入院登记文件'
+        },
+        {
+          id: '1-4',
+          label: '患者就诊记录文件'
+        },
+        {
+          id: '1-5',
+          label: '检验报告单主表文件'
+        },
+        {
+          id: '1-6',
+          label: '检验报告单丛表文件'
+        },
+        {
+          id: '1-7',
+          label: '检查报告单主表文件'
+        }
+      ]
+    }
+  ],
+  addFileCatalogData: {},
+  editFileCatalogData: {},
   searchData: Object.assign({}, initState.searchData),
   adSearchData: Object.assign({}, initState.adSearchData),
   editFileFieldsData: Object.assign({}, initState.editFileFieldsData),
@@ -41,6 +99,8 @@ const getters = {
   }
 }
 const mutations = {
+  setCurrentCatalog: (state, form) => {},
+  setCurrentColumn: (state, form) => {},
   setColumnForm(state, form) {
     if (form) {
       keysClone(state.editFileFieldsData, form)
@@ -70,7 +130,7 @@ const mutations = {
 }
 
 const actions = {
-  async queryColumn({ commit }) {
+  async queryFileFields({ commit }) {
     const { curPage, pageSize } = state.pageInfo
   }
 }
@@ -80,6 +140,5 @@ export default {
   state,
   getters,
   mutations,
-  actions,
-  modules: {}
+  actions
 }

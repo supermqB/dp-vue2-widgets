@@ -2,10 +2,13 @@
   <div>
     <el-tabs type="card" stretch @tab-click="tabChanged" class="bwd_ref_tabs">
       <el-tab-pane label="事件库映射">
-        <Form :formCfg="searchCfg" :formData="searchData"></Form>
-        <Table :tableConfig="tableConfig" :tableData="tableData"></Table>
+        <Form :formCfg="searchCfg" :formData="eventMapData"></Form>
+        <Table :tableConfig="tableConfig" :tableData="eventMapList"></Table>
       </el-tab-pane>
-      <el-tab-pane label="主索引映射"></el-tab-pane>
+      <el-tab-pane label="主索引映射">
+        <Form :formCfg="searchCfg" :formData="mdmMapData"></Form>
+        <Table :tableConfig="tableConfig" :tableData="mdmMapList"></Table>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -23,16 +26,27 @@ export default {
   data() {
     return {
       searchCfg,
-      searchData: {
+      eventMapData: {
+        index1: '',
+        index2: ''
+      },
+      mdmMapData: {
         index1: '',
         index2: ''
       },
       tableConfig,
-      tableData: [
+      eventMapList: [
         {
           seqNo: '匹配',
           name: '11',
           nameCn: '111'
+        }
+      ],
+      mdmMapList: [
+        {
+          seqNo: '匹配',
+          name: '22',
+          nameCn: '222'
         }
       ]
     }

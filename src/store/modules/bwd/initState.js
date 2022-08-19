@@ -14,5 +14,15 @@ export default {
     field: '',
     nameEn: '',
     index: ''
+  },
+  addFileCatalogData: {
+    name: '',
+    index: '',
+    state: ''
+  },
+  editFileCatalogData: {
+    name: '',
+    index: '',
+    state: ''
   }
 }

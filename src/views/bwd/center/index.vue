@@ -3,11 +3,7 @@
     <div class="header">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>BWD文件管理</el-breadcrumb-item>
-        <el-breadcrumb-item
-          ><b>{{
-            `${currentCatalog ? `${currentCatalogItem.name}` : ''}`
-          }}</b></el-breadcrumb-item
-        >
+        <el-breadcrumb-item>患者信息记录文件</el-breadcrumb-item>
         <!-- <State :currentState="currentCatalogItem.state"></State> -->
       </el-breadcrumb>
       <div>
@@ -38,6 +34,8 @@
       title="编辑文件字段"
       ref="editFileFieldsDialog"
       class="editFileFieldsDialog"
+      @dialog-closed="onClosedFieldsForm"
+      @dialog-complete="onClickSubmitFields"
     >
       <Form
         ref="fileFieldsForm"
@@ -50,6 +48,8 @@
       title="新增文件字段"
       ref="addFileFieldsDialog"
       class="addFileFieldsDialog"
+      @dialog-closed="onClosedFieldsForm"
+      @dialog-complete="onClickSubmitFields"
     >
       <Form
         ref="fileFieldsForm"
@@ -127,23 +127,42 @@ export default {
       'setCurrentColumn',
       'setPageInfo'
     ]),
-    ...mapActions(['queryColumn']),
+    ...mapActions(['queryColumn', 'submitColumn']),
     open() {
-      this.$confirm('是否启用【患者信息记录文件】？', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
+      this.$confirm(
+        `是否${this.currentCatalogItem.state}【患者信息记录文件】？`,
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }
+      )
     },
     async pageInfoChanged(val) {
       this.setPageInfo(val)
       await this.queryColumn()
       this.setCurrentColumn()
+      await test1()
+      await test2()
+      await test3()
     },
     async onClickSearch() {
       this.setIsAdvance(false)
       await this.queryColumn()
       this.setCurrentColumn()
+    },
+    // async onClickSubmitColumn() {
+    //   const { valid } = await this.$refs.columnForm.validate()
+    //   if (valid) {
+    //     this.submitColumn()
+    //     this.$refs.columnDialog.toggleOpen()
+    //   } else {
+    //     this.$alert('请检查输入项是否完整！')
+    //   }
+    // },
+    onClosedFieldsForm() {
+      this.setColumnForm()
+      this.$refs.fileFieldsForm.resetFields()
     },
     editFileFields() {
       this.$refs.editFileFieldsDialog.toggleOpen()
