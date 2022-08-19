@@ -7,3 +7,17 @@ export function getParentList(params) {
     params
   })
 }
+
+export const getSuspectListApi = (searchKey, type = 'dic', state = '0') => {
+  return request({
+    url: '/suspected/list',
+    method: 'post',
+    data: {
+      type,
+      state,
+      searchKey
+    }
+  })
+}
+
+export const commitSuspectApi = () => {}

@@ -1,3 +1,5 @@
+import { getSuspectListApi } from '@/api/task'
+
 const state = {
   taskList: [],
   suspectList: []
@@ -15,12 +17,9 @@ const mutations = {
 }
 
 const actions = {
-  async initTask({ commit, dispatch }) {
-    await dispatch('queryTask')
-    await dispatch('querySuspect')
+  async querySuspect({ commit, state }, { searchKey }) {
+    const { value } = await getSuspectListApi(searchKey)
   },
-  async queryTask() {},
-  async querySuspect() {},
   async finishTask() {}
 }
 

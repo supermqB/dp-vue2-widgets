@@ -3,7 +3,7 @@
     <div class="header">
       <Breadcrumb
         baseLabel="值域管理"
-        currentLabel="DICT_SEX"></Breadcrumb>
+        :currentLabel="currentDictItem.label"></Breadcrumb>
       <div>
         <el-button type="primary" @click="editVersion" :disabled="!currentVersion && false">版本管理</el-button>
         <el-button type="primary" @click="addVersion" :disabled="!currentValue && false">新增版本</el-button>
@@ -12,12 +12,19 @@
     <div class="version">
       <span>版本</span>
       <el-select v-model="curVersion">
-        <el-option v-for="item in versionList"></el-option>
+        <el-option
+          v-for="item in versionList"
+          :key="item.id"
+          :value="item.id"
+          :label="item.label"
+        ></el-option>
       </el-select>
-      <IsMaster></IsMaster>
-      <IsRunning :currentState="currentVersionItem ? currentVersionItem.state : ''"></IsRunning>
+      <IsMaster :isMaster="currentVersion ? currentVersionItem.isMaster : false"></IsMaster>
+      <IsRunning :currentState="currentVersion ? currentVersionInfo.state : ''"></IsRunning>
     </div>
-    <Detail></Detail>
+    <Detail
+      :sourceType="currentDictItem.sourceType"
+      v-bind="currentVersionInfo"></Detail>
     <div class="search">
       <Form :formCfg="searchValueCfg" :formData="searchForm"></Form>
       <div class="operation">
@@ -109,7 +116,7 @@ export default {
       'currentVersion', 
       'currentColumn',
       'currentValue',
-      'currentVersionItem',
+      'currentVersionInfo',
       'pageInfo',
       'versionList',
       'dictValueList',
@@ -119,11 +126,13 @@ export default {
       'searchForm'
     ]),
     ...mapGetters([
-
+      'currentVersionItem',
+      'currentDictItem'
     ]),
     curVersion: {
       set(value) {
         this.setCurrentVersion(value)
+        this.queryVersionInfo()
       },
       get() {
         return this.currentVersion
@@ -136,7 +145,9 @@ export default {
     ...mapMutations([
       'setCurrentVersion'
     ]),
-    ...mapActions([]),
+    ...mapActions([
+      'queryVersionInfo'
+    ]),
     addVersion() {
       this.$refs.addVersionDialog.toggleOpen()
     },
