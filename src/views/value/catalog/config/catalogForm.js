@@ -75,7 +75,7 @@ export const addCatalogCfg = (
     },
     {
       type: 'el-select',
-      label: '标准来源编码',
+      label: '标准来源',
       id: 'sourceTypeCode',
       options: sourceTypeOptions,
       elOptions: {

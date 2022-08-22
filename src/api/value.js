@@ -72,12 +72,16 @@ export const downloadTemplateApi = dictName => {
   })
 }
 
-export const getListApi = dictId => {
+export const getListApi = ({ dictId, current, size }) => {
   return request({
     url: '/dict/list',
     method: 'post',
     params: {
-      dictId
+      current,
+      size
+    },
+    data: {
+      id: dictId
     }
   })
 }
@@ -178,5 +182,25 @@ export const getClassifyCodeApi = () => {
   return request({
     url: '/dict/getClassifyCode',
     method: 'get'
+  })
+}
+
+export const getMaxDictCodeApi = classifyCode => {
+  return request({
+    url: '/dict/getMaxDictCode',
+    method: 'post',
+    params: {
+      classifyCode
+    }
+  })
+}
+
+export const getMAxValueCodeApi = id => {
+  return request({
+    url: '/dict/getMaxValueCode',
+    method: 'post',
+    params: {
+      id
+    }
   })
 }

@@ -35,29 +35,42 @@
     </div>
     <div class="table">
       <Table
+        ref="dictValueTable"
         :tableConfig="tableConfig"
         :tableData="dictValueList"
-        :pageInfo="pageInfo">
+        :pageInfo="pageInfo"
+        @row-changed="val => setCurrentDictValue(val)"
+        @page-changed="val => onPageInfoChange(val)">
       </Table>
     </div>
     <Dialog
       title="新增版本"
       ref="addVersionDialog"
-      class="addVersionDialog">
-      <Form :formCfg="addVersionCfg" :formData="versionForm"></Form>
+      class="addVersionDialog"
+      @dialog-complete="onClickAddVersion"
+    >
+      <Form
+        :formCfg="addVersionCfg(versionList)"
+        :formData="versionForm"
+        :formRule="addVersionRule"
+      ></Form>
     </Dialog>
     <Dialog
       title="版本信息管理"
       ref="editVersionDialog"
-      class="editVersionDialog">
-      <Form :formCfg="editVersionCfg" :formData="dictVersionForm"></Form>
+      class="editVersionDialog"
+      @dialog-complete="onClickEditVersion"
+    >
+      <Form
+        :formCfg="editVersionCfg(versionList)"
+        :formData="dictVersionForm"></Form>
     </Dialog>
     <Dialog
       title="新增值域字典"
       ref="addValueDialog"
       class="addValueDialog">
       <Form
-        :formCfg="addValueCfg"
+        :formCfg="dictValueFormCfg"
         :formData="dictValueForm"
         :formRule="valueRule"
       ></Form>
@@ -67,7 +80,7 @@
       ref="editValueDialog"
       class="editValueDialog">
       <Form 
-        :formCfg="editValueCfg"
+        :formCfg="dictValueFormCfg"
         :formData="dictValueForm"
         :formRule="valueRule">
       </Form>
@@ -84,7 +97,7 @@ import IsMaster from '@/components/state/IsMaster.vue'
 import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import IsRunning from '@/components/state/IsRunning.vue'
 import tableConfig from './config/tableColumn'
-import { addVersionCfg, editVersionCfg } from './config/versionForm'
+import { addVersionCfg, editVersionCfg, addVersionRule } from './config/versionForm'
 import { searchValueCfg, addValueCfg, editValueCfg, valueRule } from './config/valueForm'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapMutations, mapActions } =
@@ -104,11 +117,11 @@ export default {
     return {
       addVersionCfg,
       editVersionCfg,
+      addVersionRule,
       addValueCfg,
       editValueCfg,
       searchValueCfg,
-      valueRule,
-      tableConfig
+      valueRule
     }
   },
   computed: {
@@ -117,6 +130,7 @@ export default {
       'currentColumn',
       'currentValue',
       'currentVersionInfo',
+      'currentDictValue',
       'pageInfo',
       'versionList',
       'dictValueList',
@@ -127,12 +141,15 @@ export default {
     ]),
     ...mapGetters([
       'currentVersionItem',
-      'currentDictItem'
+      'currentDictItem',
+      'tableConfig',
+      'dictValueFormCfg'
     ]),
     curVersion: {
-      set(value) {
+      async set(value) {
         this.setCurrentVersion(value)
-        this.queryVersionInfo()
+        await this.queryVersionInfo()
+        await this.queryDictValue()
       },
       get() {
         return this.currentVersion
@@ -143,27 +160,63 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setCurrentVersion'
+      'setCurrentVersion',
+      'setVersionForm',
+      'setDictVersionForm',
+      'setCurrentDictValue',
+      'setDictValueForm'
     ]),
     ...mapActions([
-      'queryVersionInfo'
+      'queryVersionInfo',
+      'queryDictValue',
+      'onPageInfoChange',
+      'addDictVersion',
+      'editDictVersion'
     ]),
     addVersion() {
+      const { nameCn } = this.currentDictItem
+      this.setVersionForm({ nameCn })
       this.$refs.addVersionDialog.toggleOpen()
     },
     editVersion() {
+      const { nameEn, nameCn, sourceType } = this.currentDictItem
+      this.setDictVersionForm({
+        nameCn, 
+        nameEn,
+        sourceType
+      })
+      this.$refs.editVersionDialog.toggleOpen()
+    },
+    async onClickAddVersion() {
+      await this.addDictVersion()
+      this.$message.success('添加版本成功！')
+      this.$refs.addVersionDialog.toggleOpen()
+    },
+    async onClickEditVersion() {
+      const { id } = this.currentVersionItem
+      await this.editDictVersion()
+      this.$message.success('添加版本成功！')
       this.$refs.editVersionDialog.toggleOpen()
     },
     addValue() {
+      this.setDictValueForm()
       this.$refs.addValueDialog.toggleOpen()
     },
     editValue() {
+      this.setDictValueForm(this.currentDictValue)
       this.$refs.editValueDialog.toggleOpen()
     },
     handleChange(file) {
       this.file = file.name
     }
   },
+  watch: {
+    currentDictValue: {
+      handler(cur) {
+        this.$refs.dictValueTable.setCurrentRow(cur)
+      }
+    }
+  }
 }
 </script>
 
