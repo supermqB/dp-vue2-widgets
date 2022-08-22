@@ -96,7 +96,7 @@ export default {
   }
   .task {
     .table_container {
-      height: 300px;
+      height: 236px;
     }
   }
   .bottom {

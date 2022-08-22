@@ -81,14 +81,28 @@ const actions = {
     }
   },
 
-  async editMdmItem({ state, rootState, dispatch }, itemDetail) {
+  async editMdmItem({ rootState, dispatch }, itemDetail) {
     const mdmModuleId = rootState.mdm.selectedMDM.id
     const result = await post('sbr/edit', {
       id: mdmModuleId,
       jsonObject: itemDetail
     })
     if (result.success) {
-      Message.success('主数据编辑成功。')
+      Message.success('主索引编辑成功。')
+      dispatch('search')
+      dispatch('mdm/loadMDMModules', null, { root: true })
+    }
+    return result.success
+  },
+
+  async createMdmItem({ rootState, dispatch }, itemDetail) {
+    const mdmModuleId = rootState.mdm.selectedMDM.id
+    const result = await post('sbr/add', {
+      id: mdmModuleId,
+      jsonObject: itemDetail
+    })
+    if (result.success) {
+      Message.success('主索引新增成功。')
       dispatch('search')
       dispatch('mdm/loadMDMModules', null, { root: true })
     }
