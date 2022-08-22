@@ -25,36 +25,22 @@
       <Table
         ref="columnTable"
         :tableConfig="tableConfig"
-        :tableData="tableData"
+        :tableData="fieldsList"
         :pageInfo="pageInfo"
         @page-changed="val => pageInfoChanged(val)"
       ></Table>
     </div>
     <Dialog
-      title="编辑文件字段"
-      ref="editFileFieldsDialog"
-      class="editFileFieldsDialog"
+      :title="`${fileFieldsData.id ? '编辑文件字段' : '新增文件字段'}`"
+      ref="fileFieldsDialog"
+      class="fileFieldsDialog"
       @dialog-closed="onClosedFieldsForm"
       @dialog-complete="onClickSubmitFields"
     >
       <Form
         ref="fileFieldsForm"
-        :formCfg="editFileFieldsCfg"
-        :formData="editFileFieldsData"
-        :formRule="fileFieldsRule"
-      ></Form>
-    </Dialog>
-    <Dialog
-      title="新增文件字段"
-      ref="addFileFieldsDialog"
-      class="addFileFieldsDialog"
-      @dialog-closed="onClosedFieldsForm"
-      @dialog-complete="onClickSubmitFields"
-    >
-      <Form
-        ref="fileFieldsForm"
-        :formCfg="addFileFieldsCfg"
-        :formData="addFileFieldsData"
+        :formCfg="fileFieldsCfg"
+        :formData="fileFieldsData"
         :formRule="fileFieldsRule"
       ></Form>
     </Dialog>
@@ -82,11 +68,7 @@ import { tableConfig } from './config/tableColumn'
 import { searchCfg } from './config/searchForm'
 import { adSearchCfg } from './config/adSearchForm'
 import Dialog from '@/components/Dialog.vue'
-import {
-  addFileFieldsCfg,
-  editFileFieldsCfg,
-  fileFieldsRule
-} from './config/fileFieldsForm'
+import { fileFieldsCfg, fileFieldsRule } from './config/fileFieldsForm'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('bwd')
@@ -102,32 +84,30 @@ export default {
     return {
       searchCfg,
       tableConfig,
-      addFileFieldsCfg,
-      editFileFieldsCfg,
+      fileFieldsCfg,
       fileFieldsRule,
       adSearchCfg
     }
   },
   computed: {
-    ...mapGetters(['currentCatalogItem', 'currentColumnRow']),
+    ...mapGetters(['currentCatalogItem', 'currentFieldsRow']),
     ...mapState({
       pageInfo: 'pageInfo',
       searchData: 'searchData',
-      tableData: 'tableData',
-      editFileFieldsData: 'editFileFieldsData',
-      addFileFieldsData: 'addFileFieldsData',
+      fieldsList: 'fieldsList',
+      fileFieldsData: 'fileFieldsData',
       adSearchData: 'adSearchData',
       currentColumn: 'currentColumn'
     })
   },
   methods: {
     ...mapMutations([
-      'setColumnForm',
+      'setFieldsForm',
       'setIsAdvance',
-      'setCurrentColumn',
+      'setCurrentField',
       'setPageInfo'
     ]),
-    ...mapActions(['queryColumn', 'submitColumn']),
+    ...mapActions(['queryField', 'submitFields']),
     open() {
       this.$confirm(
         `是否${this.currentCatalogItem.state}【患者信息记录文件】？`,
@@ -140,44 +120,42 @@ export default {
     },
     async pageInfoChanged(val) {
       this.setPageInfo(val)
-      await this.queryColumn()
-      this.setCurrentColumn()
-      await test1()
-      await test2()
-      await test3()
+      await this.queryField()
+      this.setCurrentField()
     },
     async onClickSearch() {
       this.setIsAdvance(false)
-      await this.queryColumn()
-      this.setCurrentColumn()
+      await this.queryField()
+      this.setCurrentField()
     },
-    // async onClickSubmitColumn() {
-    //   const { valid } = await this.$refs.columnForm.validate()
-    //   if (valid) {
-    //     this.submitColumn()
-    //     this.$refs.columnDialog.toggleOpen()
-    //   } else {
-    //     this.$alert('请检查输入项是否完整！')
-    //   }
-    // },
+    async onClickSubmitFields() {
+      const { valid } = await this.$refs.fileFieldsForm.validate()
+      if (valid) {
+        this.submitFields()
+        this.$refs.fileFieldsDialog.toggleOpen()
+      } else {
+        this.$alert('请检查输入项是否完整！')
+      }
+    },
     onClosedFieldsForm() {
-      this.setColumnForm()
+      this.setFieldsForm()
       this.$refs.fileFieldsForm.resetFields()
     },
     editFileFields() {
-      this.$refs.editFileFieldsDialog.toggleOpen()
-      this.setColumnForm(this.currentColumnRow)
+      this.$refs.fileFieldsDialog.toggleOpen()
+      this.setFieldsForm(this.currentFieldsRow)
     },
     addFileFields() {
-      this.$refs.addFileFieldsDialog.toggleOpen()
-      this.setColumnForm()
+      this.$refs.fileFieldsDialog.toggleOpen()
+      this.setFieldsForm()
     },
     advancedSearch() {
       this.$refs.searchDialog.toggleOpen()
-    }
+    },
+    async onClickAdvanceSearch() {}
   },
   watch: {
-    currentColumnRow: {
+    currentFieldsRow: {
       handler(cur) {
         this.$refs.columnTable.setCurrentRow(cur)
       }

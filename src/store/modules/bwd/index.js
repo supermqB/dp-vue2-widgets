@@ -1,4 +1,5 @@
-// import { bwd接口 } from '@/api/bwd'
+import { getBwdInfoApi } from '@/api/bwd'
+
 import { keysClone } from '@/utils/lang'
 import initState from './initState'
 
@@ -12,7 +13,7 @@ const state = {
     totalSize: 3,
     totalPage: 1
   },
-  tableData: [
+  fieldsList: [
     {
       id: '1',
       seqNo: 'org_id',
@@ -84,28 +85,25 @@ const state = {
       ]
     }
   ],
-  addFileCatalogData: {},
-  editFileCatalogData: {},
+  fileCatalogData: Object.assign({}, initState.fileCatalogData),
   searchData: Object.assign({}, initState.searchData),
   adSearchData: Object.assign({}, initState.adSearchData),
-  editFileFieldsData: Object.assign({}, initState.editFileFieldsData),
-  addFileFieldsData: Object.assign({}, initState.addFileFieldsData)
+  fileFieldsData: Object.assign({}, initState.fileFieldsData)
 }
 
 const getters = {
   currentCatalogItem(state) {},
-  currentColumnRow(state) {
-    return state.tableData.find(item => item.id === state.currentColumn)
+  currentFieldsRow(state) {
+    return state.fieldsList.find(item => item.id === state.currentColumn)
   }
 }
 const mutations = {
   setCurrentCatalog: (state, form) => {},
-  setCurrentColumn: (state, form) => {},
-  setColumnForm(state, form) {
+  setFieldsForm(state, form) {
     if (form) {
-      keysClone(state.editFileFieldsData, form)
+      keysClone(state.fileFieldsData, form)
     } else {
-      state.addFileFieldsData = Object.assign({}, initState.addFileFieldsData)
+      state.fileFieldsData = Object.assign({}, initState.fileFieldsData)
     }
   },
   setIsAdvance: (state, isAdvance) => {
@@ -114,11 +112,11 @@ const mutations = {
       state.pageInfo.curPage = 1
     }
   },
-  setCurrentColumn: (state, column) => {
+  setCurrentField: (state, column) => {
     if (!column) {
       state.currentColumn =
-        state.columnList && state.columnList.length
-          ? state.columnList[0].id
+        state.fieldsList && state.fieldsList.length
+          ? state.fieldsList[0].id
           : ''
     } else {
       state.currentColumn = column
@@ -130,8 +128,21 @@ const mutations = {
 }
 
 const actions = {
-  async queryFileFields({ commit }) {
+  async queryField({ commit }) {
     const { curPage, pageSize } = state.pageInfo
+    const query = Object.assign(
+      { id: state.currentCatalog },
+      state.isAdvance ? state.adSearchData : state.searchData
+    )
+    const { value } = await getBwdInfoApi(
+      curPage,
+      pageSize,
+      query,
+      state.isAdvance
+    )
+    const { records, pageInfo } = value
+    state.fieldsList = processColumnList(records, curPage, pageSize)
+    commit('setPageInfo', pageInfo)
   }
 }
 

@@ -1,37 +1,4 @@
-export const editFileFieldsCfg = [
-  {
-    type: 'el-input',
-    label: '顺序号',
-    id: 'index',
-    elOptions: {
-      style: {
-        width: '260px'
-      }
-    }
-  },
-  {
-    type: 'el-input',
-    label: '字段名称',
-    id: 'nameCn',
-    elOptions: {
-      style: {
-        width: '260px'
-      }
-    }
-  },
-  {
-    type: 'el-input',
-    label: '字段英文名',
-    id: 'nameEn',
-    elOptions: {
-      style: {
-        width: '260px'
-      }
-    }
-  }
-]
-
-export const addFileFieldsCfg = [
+export const fileFieldsCfg = [
   {
     type: 'el-input',
     label: '顺序号',

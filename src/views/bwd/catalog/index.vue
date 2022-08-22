@@ -28,27 +28,23 @@
       <span>搜索</span>
       <el-input placeholder="请输入" suffix-icon="el-icon-search"></el-input>
     </div>
-    <Tree :data="catalogList" class="tree" @onClick="handleNodeClick"></Tree>
+    <Tree
+      ref="tree"
+      :data="catalogList"
+      class="tree"
+      :currentNodeKey="currentCatalog"
+      @onClick="handleNodeClick"
+    ></Tree>
     <div class="dialog_port">
       <Dialog
-        title="新增文件目录"
-        ref="addFileCatalogDialog"
-        class="addFileCatalogDialog"
+        :title="`${!fileCatalogData.id ? '新增文件目录' : '编辑文件目录'}`"
+        ref="fileCatalogDialog"
+        class="fileCatalogDialog"
       >
         <Form
-          :formCfg="addFileCatalogCfg"
-          :formData="addFileCatalogData"
-          :formRule="fileCatalogRule"
-        ></Form>
-      </Dialog>
-      <Dialog
-        title="编辑文件目录"
-        ref="editFileCatalogDialog"
-        class="editFileCatalogDialog"
-      >
-        <Form
-          :formCfg="editFileCatalogCfg"
-          :formData="editFileCatalogData"
+          ref="fileCatalogForm"
+          :formCfg="fileCatalogCfg"
+          :formData="fileCatalogData"
           :formRule="fileCatalogRule"
         ></Form>
       </Dialog>
@@ -63,11 +59,7 @@ import Dialog from '@/components/Dialog.vue'
 import Form from '@/components/Form.vue'
 import Bottom from '@/components/bottom/Catalog.vue'
 import Tree from '@/components/SideTree.vue'
-import {
-  editFileCatalogCfg,
-  addFileCatalogCfg,
-  fileCatalogRule
-} from './config/fileCatalogForm'
+import { fileCatalogCfg, fileCatalogRule } from './config/fileCatalogForm'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('bwd')
@@ -81,20 +73,13 @@ export default {
   },
   data() {
     return {
-      addFileCatalogCfg,
-      editFileCatalogCfg,
+      fileCatalogCfg,
       fileCatalogRule,
-      addFileCatalogDialog: false,
-      editFileCatalogDialog: false
+      fileCatalogDialog: false
     }
   },
   computed: {
-    ...mapState([
-      'treeSelectionData',
-      'catalogList',
-      'addFileCatalogData',
-      'editFileCatalogData'
-    ]),
+    ...mapState(['treeSelectionData', 'catalogList', 'fileCatalogData']),
     ...mapGetters(['currentCatalogItem'])
   },
   methods: {
@@ -103,18 +88,18 @@ export default {
       'setCurrentCatalog',
       'setCurrentColumn'
     ]),
-    ...mapActions(['queryColumn']),
+    ...mapActions(['queryFeild']),
     async handleNodeClick({ id }) {
       this.setCurrentCatalog(id)
-      await this.queryColumn()
+      await this.queryFeild()
       this.setCurrentColumn()
     },
     async addFileCatalog() {
-      this.$refs.addFileCatalogDialog.toggleOpen()
+      this.$refs.fileCatalogDialog.toggleOpen()
       this.setCatalogForm()
     },
     editFileCatalog() {
-      this.$refs.editFileCatalogDialog.toggleOpen()
+      this.$refs.fileCatalogDialog.toggleOpen()
       this.setCatalogForm(this.currentCatalogItem)
     },
     checkedFilterHandler() {
@@ -163,21 +148,7 @@ export default {
 ::v-deep .catalogTitleWrap .buttons .action.run {
   display: none;
 }
-::v-deep .addFileCatalogDialog .el-dialog {
-  width: 700px;
-  form {
-    padding-right: 25%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    .el-form-item {
-      margin-bottom: 16px;
-      display: inline-flex;
-    }
-  }
-}
-::v-deep .editFileCatalogDialog .el-dialog {
+::v-deep .fileCatalogDialog .el-dialog {
   width: 700px;
   form {
     padding-right: 25%;
