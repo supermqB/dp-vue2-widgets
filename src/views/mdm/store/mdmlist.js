@@ -2,15 +2,9 @@ import { keysObject } from '@/utils/lang'
 import { post } from '@/utils/request'
 import { Message } from 'element-ui'
 import {
-  generateSearchFormConfig,
-  generateSearchFormConfig_mat,
+  default as formConfigs,
   likeFields
-} from '@/views/mdm/center/config/searchFormConfig.js'
-
-const formConfigs = {
-  drg: generateSearchFormConfig,
-  mat: generateSearchFormConfig_mat
-}
+} from '../center/config/searchFormConfig.js'
 
 const state = {
   drugFormList: ['片剂', '包衣片'],

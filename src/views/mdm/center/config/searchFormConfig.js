@@ -1,4 +1,4 @@
-export const generateSearchFormConfig = function () {
+export const drg = function () {
   return [
     {
       type: 'el-input',
@@ -43,7 +43,7 @@ export const generateSearchFormConfig = function () {
   ]
 }
 
-export const generateSearchFormConfig_mat = function () {
+export const mat = function () {
   return [
     {
       type: 'el-input',
@@ -94,3 +94,5 @@ export const likeFields = {
   ],
   drg: ['drug_name']
 }
+
+export default { drg, mat }

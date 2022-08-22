@@ -1,8 +1,7 @@
-import { camelCase } from 'lodash'
 import { confirm } from '@/utils/pops'
 import mdmlist from './mdmlist'
 import tasks from './tasks'
-import { get, put } from '@/utils/request'
+import { get, post } from '@/utils/request'
 import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
 import { Message } from 'element-ui'
 const state = {
@@ -66,7 +65,7 @@ const actions = {
     const selectedMDM = state.selectedMDM
     const confirmed = await confirm(`是否启用主索引【${selectedMDM.label}】?`)
     if (confirmed) {
-      const result = await put(`sbr/commit/${selectedMDM.id}`)
+      const result = await post('sbr/commit', {}, { id: selectedMDM.id })
       if (result.success) {
         Message.success(`启用主索引【${selectedMDM.label}】成功。`)
         dispatch('loadMDMModules')
