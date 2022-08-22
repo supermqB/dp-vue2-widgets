@@ -1,6 +1,10 @@
 <template>
   <div class="mdmWrap">
-    <Header title="主索引目录" :action-types="[actionType]" @run="enableCtlgHandler"></Header>
+    <Header
+      title="主索引目录"
+      :action-types="[actionType]"
+      @run="enableCtlgHandler"
+    ></Header>
     <div class="tree_header_row">
       <div>索引类别</div>
       <div class="cell2">数据源</div>
@@ -38,8 +42,8 @@ export default {
       this.setSelectedMDM(node)
       this.loadMDMModuleDesc(this.selectedMDM.id)
     },
-    enableCtlgHandler(){
-        this.enableMDMModule()
+    enableCtlgHandler() {
+      this.enableMDMModule()
     },
     ...mapMutations(['setSelectedMDM']),
     ...mapActions(['loadMDMModules', 'loadMDMModuleDesc', 'enableMDMModule'])
@@ -67,13 +71,12 @@ export default {
   },
   watch: {
     mdmList(list) {
-        //debugger
-      let defaultMdm = list.find(mdm => mdm.type == 'mat')
+      /* default selected MDM. */
+      let defaultMdm = list.find(mdm => mdm.type == 'drg')
       this.onSelected(defaultMdm)
-      this.$nextTick(()=>{
+      this.$nextTick(() => {
         this.currentNodeKey = defaultMdm.id
       })
-
     }
   }
 }

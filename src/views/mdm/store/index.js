@@ -31,7 +31,8 @@ const getters = {
     }
     return state.selectedMDMDesc.columnList.map(col => ({
       property: col.nameEn,
-      label: col.nameCn
+      label: col.nameCn,
+      required: col.requiredFlag == '1'
     }))
   }
 }
@@ -42,15 +43,14 @@ const actions = {
     if (result.success) {
       commit(
         'setMDMList',
-        result.value
-          .map(item => ({
-            ...item,
-            id: item.id + '',
-            label: item.name,
-            state: item.state == '1' ? INCOMESTATE : COMPLETESTATE,
-            number: item.refCount
-          }))
-          .sort((i1, i2) => i1.name.localeCompare(i2.name))
+        result.value.map(item => ({
+          ...item,
+          id: item.id + '',
+          label: item.name,
+          state: item.state == '1' ? INCOMESTATE : COMPLETESTATE,
+          number: item.refCount
+        }))
+        //.sort((i1, i2) => i1.name.localeCompare(i2.name))
       )
     }
   },
@@ -64,7 +64,6 @@ const actions = {
 
   async enableMDMModule({ state, dispatch }) {
     const selectedMDM = state.selectedMDM
-    debugger
     const confirmed = await confirm(`是否启用主索引【${selectedMDM.label}】?`)
     if (confirmed) {
       const result = await put(`sbr/commit/${selectedMDM.id}`)
