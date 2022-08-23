@@ -66,9 +66,10 @@
         :formData="dictVersionForm"></Form>
     </Dialog>
     <Dialog
-      title="新增值域字典"
+      title="新增值域字典明细"
       ref="addValueDialog"
-      class="addValueDialog">
+      class="addValueDialog"
+      @dialog-complete="onClickAddValue">
       <Form
         :formCfg="dictValueFormCfg"
         :formData="dictValueForm"
@@ -76,9 +77,10 @@
       ></Form>
     </Dialog>
     <Dialog
-      title="编辑值域字典"
+      title="编辑值域字典明细"
       ref="editValueDialog"
-      class="editValueDialog">
+      class="editValueDialog"
+      @dialog-complete="onClickEditValue">
       <Form 
         :formCfg="dictValueFormCfg"
         :formData="dictValueForm"
@@ -100,6 +102,8 @@ import tableConfig from './config/tableColumn'
 import { addVersionCfg, editVersionCfg, addVersionRule } from './config/versionForm'
 import { searchValueCfg, addValueCfg, editValueCfg, valueRule } from './config/valueForm'
 import { createNamespacedHelpers } from 'vuex'
+import { getMAxValueCodeApi } from '@/api/value'
+import { getMaxNumber } from '@/utils/lang'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('value')
 
@@ -171,7 +175,9 @@ export default {
       'queryDictValue',
       'onPageInfoChange',
       'addDictVersion',
-      'editDictVersion'
+      'editDictVersion',
+      'addDictValue',
+      'editDictValue'
     ]),
     addVersion() {
       const { nameCn } = this.currentDictItem
@@ -193,17 +199,33 @@ export default {
       this.$refs.addVersionDialog.toggleOpen()
     },
     async onClickEditVersion() {
-      const { id } = this.currentVersionItem
       await this.editDictVersion()
-      this.$message.success('添加版本成功！')
+      this.$message.success('版本管理编辑成功！')
       this.$refs.editVersionDialog.toggleOpen()
+      const current = this.versionList.find(
+        item => item.value === this.dictVersionForm.version
+      )
+      this.setCurrentVersion(current.id)
+      await this.queryVersionInfo()
+      await this.queryDictValue()
     },
-    addValue() {
-      this.setDictValueForm()
+    async addValue() {
+      const { value } = await getMAxValueCodeApi(this.currentVersion)
+      this.setDictValueForm({ '术语编码': getMaxNumber(value, 14) })
       this.$refs.addValueDialog.toggleOpen()
     },
     editValue() {
       this.setDictValueForm(this.currentDictValue)
+      this.$refs.editValueDialog.toggleOpen()
+    },
+    async onClickAddValue() {
+      await this.addDictValue()
+      this.$message.success('新增值域字典明细成功！')
+      this.$refs.addValueDialog.toggleOpen()
+    },
+    async onClickEditValue() {
+      await this.editDictValue()
+      this.$message.success('编辑值域字典明细成功！')
       this.$refs.editValueDialog.toggleOpen()
     },
     handleChange(file) {

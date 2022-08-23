@@ -128,53 +128,19 @@ export const editDictApi = ({ id, nameEn, nameCn }) => {
   })
 }
 
-export const addDictValueApi = ({
-  id,
-  name,
-  parCode,
-  type,
-  note,
-  hierarchyRelation,
-  file
-}) => {
+export const addDictValueApi = ({ id, valueObject, file }) => {
   return request({
     url: '/dict/addDictValue',
     method: 'post',
-    data: {
-      id,
-      name,
-      parCode,
-      type,
-      note,
-      hierarchyRelation,
-      file
-    }
+    data: { id, valueObject, file }
   })
 }
 
-export const editDictValueApi = ({
-  id,
-  colId,
-  code,
-  name,
-  parCode,
-  type,
-  note,
-  hierarchyRelation
-}) => {
+export const editDictValueApi = ({ id, colId, valueObject }) => {
   return request({
     url: '/dict/editDictValue',
     method: 'post',
-    data: {
-      id,
-      colId,
-      code,
-      name,
-      parCode,
-      type,
-      note,
-      hierarchyRelation
-    }
+    data: { id, colId, valueObject }
   })
 }
 

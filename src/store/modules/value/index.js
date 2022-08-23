@@ -12,8 +12,8 @@ import {
   getListApi,
   addVersionApi,
   editVersionApi,
-  getMAxValueCodeApi,
-  getMaxDictCodeApi
+  addDictValueApi,
+  editDictValueApi
 } from '@/api/value'
 
 const {
@@ -170,12 +170,6 @@ const mutations = {
     state.dictVersionForm.state = state.currentVersionInfo.state
     state.dictVersionForm.sourceType = sourceType
     state.dictVersionForm.sourceBasis = state.currentVersionInfo.sourceBasis
-    // masterVersion: '',
-    // version: '',
-    // state: '',
-    // sourceType: '',
-    // sourceBasic: ''
-    // id, masterVersion, version, state, sourceTypeCode, basic
   },
   setDictValueForm(state, form) {
     state.dictValueForm = !form ? Object.assign({}, dictValueForm) : form
@@ -241,7 +235,7 @@ const actions = {
     const { value } = await getVersionListApi(state.currentDict)
     state.versionList = value.map(item => {
       const { id, mainlineFlag, version } = item
-      if (mainlineFlag) {
+      if (mainlineFlag === '1') {
         commit('setCurrentVersion', id)
       }
       return {
@@ -336,7 +330,20 @@ const actions = {
       state: state.dictVersionForm.state
     })
   },
-  async submitDictValue() {}
+  async addDictValue({ state, dispatch }) {
+    const id = state.currentVersion
+    await addDictValueApi({ id, valueObject: state.dictValueForm })
+    await dispatch('queryDictValue')
+  },
+  async editDictValue({ state, dispatch }) {
+    const id = state.currentVersion
+    await editDictValueApi({
+      id,
+      colId: state.dictValueForm['术语编码'],
+      valueObject: state.dictValueForm
+    })
+    await dispatch('queryDictValue')
+  }
 }
 
 export default {
