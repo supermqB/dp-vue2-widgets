@@ -5,13 +5,19 @@
     @dialog-complete="completeEdit"
     class="mdm_editDialog"
   >
-    <Form :formCfg="formCfg" :formData="formData" />
+    <Form
+      :formCfg="formCfg"
+      :formData="formData"
+      :formRule="formRule"
+      ref="editForm"
+    />
   </Dialog>
 </template>
 <script>
 import { keysObject } from '@/utils/lang'
 import Form from '@/components/Form.vue'
 import Dialog from '@/components/Dialog.vue'
+import { alert } from '@/utils/pops'
 
 import {
   createNamespacedHelpers,
@@ -41,9 +47,39 @@ export default {
     title() {
       return this.mode == 'create' ? '新增主索引' : '编辑主索引'
     },
+    mdmCols() {
+      const mdmType = this.selectedMDM.type
+      if (!mdmType) return []
+      return this.curMDMColumns.filter(
+        col =>
+          ['data_create_time', 'data_modify_time'].indexOf(col.property) == -1
+      )
+    },
+    formRule() {
+      const validRules = {}
+      this.mdmCols
+        .filter(col => col.required)
+        .forEach(col => {
+          validRules[col.property] = { required: true }
+        })
+      return validRules
+    },
     formCfg() {
-      let suspectList = this.workingTask.suspectList
-      return this.curMDMColumns.map(({ property, label }) => {
+      let suspectList = this.workingTask?.suspectList
+      return this.mdmCols.map(({ property, label }) => {
+        if (property.indexOf('_flag') > 1) {
+          return {
+            type: 'el-select',
+            options: [
+              { label: '是', value: '1' },
+              { label: '否', value: '0' }
+            ],
+            label,
+            id: property
+          }
+        }
+
+        /* 默认使用 autocomplete */
         return {
           type: 'el-autocomplete',
           elOptions: {
@@ -71,7 +107,7 @@ export default {
     }
   },
   methods: {
-    ...mdmlistMappers.mapActions(['editMdmItem']),
+    ...mdmlistMappers.mapActions(['editMdmItem', 'createMdmItem']),
     open() {
       this.$nextTick(() => {
         this.$refs.editDialog.toggleOpen()
@@ -96,8 +132,17 @@ export default {
       this.open()
     },
     async completeEdit() {
-      const success = await this.editMdmItem(this.formData)
-      success && this.$refs.editDialog.toggleOpen()
+      const { valid } = await this.$refs.editForm.validate()
+
+      if (valid) {
+        const success =
+           this.mode == 'edit'
+            ? await this.editMdmItem(this.formData)
+            : await this.createMdmItem(this.formData)
+        success && this.$refs.editDialog.toggleOpen()
+      } else {
+        alert('请检查表单中的错误项。')
+      }
     }
   },
   components: {
@@ -124,6 +169,10 @@ export default {
       min-height: 44px;
       margin: 0px;
       overflow: hidden;
+      .el-select,
+      .el-input {
+        width: 165px;
+      }
     }
   }
 }

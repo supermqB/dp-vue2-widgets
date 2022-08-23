@@ -215,6 +215,7 @@ export default {
       flex-wrap: wrap;
       .el-form-item {
         margin-bottom: 0px;
+        height: 36px;
         display: flex;
         justify-content: end;
         .el-select,
@@ -247,6 +248,7 @@ export default {
 
   .table_area {
     flex-grow: 1;
+    margin-top: -6px;
   }
 }
 </style>

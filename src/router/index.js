@@ -44,6 +44,12 @@ const routes = [
         name: 'bwd',
         meta: { title: '业务明细库' },
         component: () => import('@/views/bwd/')
+      },
+      {
+        path: 'docs/list',
+        name: 'docs/list',
+        meta: { title: '文献库明细' },
+        component: () => import('@/views/docs/list')
       }
     ]
   }

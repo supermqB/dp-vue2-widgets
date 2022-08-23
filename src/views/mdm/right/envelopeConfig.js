@@ -1,4 +1,4 @@
-const drugEnvolope = [
+const drg = [
   {
     name: 'basic',
     title: '基本信息',
@@ -50,7 +50,7 @@ const drugEnvolope = [
   }
 ]
 
-const matEnvolope = [
+const mat = [
   {
     name: 'classific',
     title: '分类信息',
@@ -83,4 +83,4 @@ const matEnvolope = [
   }
 ]
 
-export default { drg: drugEnvolope, mat: matEnvolope }
+export default { drg, mat }

@@ -1,0 +1,80 @@
+<template>
+  <div class="grp_wrapper">
+    <div class="title">文献分类</div>
+    <div class="search_container">
+      <el-input
+        placeholder="请输入"
+        suffix-icon="el-icon-search"
+        :value="search"
+        @input="setSearch"
+      >
+      </el-input>
+    </div>
+    <div class="grouptree">
+      <el-tree
+        :data="grouptree"
+        :filter-node-method="filterTreeNode"
+        node-key="id"
+        ref="grouptree"
+        default-expand-all
+      >
+      </el-tree>
+    </div>
+  </div>
+</template>
+<script>
+const LABEL_NAME = 'label'
+
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapMutations } = createNamespacedHelpers('docs/list')
+
+export default {
+  data() {
+    return {}
+  },
+  computed: {
+    ...mapState({ search: 'search', grouptree: 'docCtlg' })
+  },
+  watch: {
+    search(val) {
+      this.$refs.grouptree.filter(val)
+    }
+  },
+  methods: {
+    filterTreeNode(value, data) {
+      if (!value) return true
+      return data[LABEL_NAME].indexOf(value) !== -1
+    },
+    ...mapMutations(['setSearch'])
+  }
+}
+</script>
+<style lang="scss" scoped>
+::v-deep.grp_wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .title {
+    height: 40px;
+    line-height: 40px;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.65);
+    padding: 6px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+  }
+  .search_container {
+    height: 28px;
+    padding: 6px;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .grouptree {
+    flex-grow: 1;
+    .el-tree-node__content {
+      height: 36px;
+    }
+  }
+}
+</style>

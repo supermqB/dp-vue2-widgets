@@ -2,15 +2,9 @@ import { keysObject } from '@/utils/lang'
 import { post } from '@/utils/request'
 import { Message } from 'element-ui'
 import {
-  generateSearchFormConfig,
-  generateSearchFormConfig_mat,
+  default as formConfigs,
   likeFields
-} from '@/views/mdm/center/config/searchFormConfig.js'
-
-const formConfigs = {
-  drg: generateSearchFormConfig,
-  mat: generateSearchFormConfig_mat
-}
+} from '../center/config/searchFormConfig.js'
 
 const state = {
   drugFormList: ['片剂', '包衣片'],
@@ -32,6 +26,7 @@ const state = {
 const mutations = {
   setSearchFormConfig(state, type) {
     let generator = formConfigs[type]
+    if (!generator) return
     let cfg =
       typeof generator == 'function' ? generator.apply(state) : generator
 
@@ -61,7 +56,10 @@ const actions = {
       .map(([key, value]) => ({
         name: key,
         value,
-        condition: likeFields[mdmType].indexOf(key) != -1 ? 'like' : 'equal'
+        condition:
+          likeFields[mdmType] && likeFields[mdmType].indexOf(key) != -1
+            ? 'like'
+            : 'equal'
       }))
       .filter(item => item.value != '')
 
@@ -81,14 +79,28 @@ const actions = {
     }
   },
 
-  async editMdmItem({ state, rootState, dispatch }, itemDetail) {
+  async editMdmItem({ rootState, dispatch }, itemDetail) {
     const mdmModuleId = rootState.mdm.selectedMDM.id
     const result = await post('sbr/edit', {
       id: mdmModuleId,
       jsonObject: itemDetail
     })
     if (result.success) {
-      Message.success('主数据编辑成功。')
+      Message.success('主索引编辑成功。')
+      dispatch('search')
+      dispatch('mdm/loadMDMModules', null, { root: true })
+    }
+    return result.success
+  },
+
+  async createMdmItem({ rootState, dispatch }, itemDetail) {
+    const mdmModuleId = rootState.mdm.selectedMDM.id
+    const result = await post('sbr/add', {
+      id: mdmModuleId,
+      jsonObject: itemDetail
+    })
+    if (result.success) {
+      Message.success('主索引新增成功。')
       dispatch('search')
       dispatch('mdm/loadMDMModules', null, { root: true })
     }
