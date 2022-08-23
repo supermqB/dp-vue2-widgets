@@ -55,7 +55,10 @@ const actions = {
       .map(([key, value]) => ({
         name: key,
         value,
-        condition: likeFields[mdmType].indexOf(key) != -1 ? 'like' : 'equal'
+        condition:
+          likeFields[mdmType] && likeFields[mdmType].indexOf(key) != -1
+            ? 'like'
+            : 'equal'
       }))
       .filter(item => item.value != '')
 
