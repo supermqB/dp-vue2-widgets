@@ -84,6 +84,46 @@ export const mat = function () {
   ]
 }
 
+export const dis = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'sdis_inx'
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: 'wm_disease_name'
+    },
+    {
+      type: 'el-input',
+      label: '疾病分类',
+      id: 'wm_disease_class'
+    }
+  ]
+}
+
+export const tcm = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'stcm_inx'
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: 'tcm_disease_name'
+    },
+    {
+      type: 'el-input',
+      label: '疾病分类',
+      id: 'tcm_disease_class'
+    }
+  ]
+}
+
 export const likeFields = {
   mat: [
     'material_name',
@@ -92,7 +132,9 @@ export const likeFields = {
     'material_third_name',
     'mnf_company_name'
   ],
-  drg: ['drug_name']
+  drg: ['drug_name'],
+  dis: ['wm_disease_name', 'wm_disease_class'],
+  tcm: ['tcm_disease_name', 'tcm_disease_class']
 }
 
-export default { drg, mat }
+export default { drg, mat, dis, tcm }

@@ -77,4 +77,50 @@ const mat = [
   }
 ]
 
-export default { drg, mat }
+const dis = [
+  {
+    name: 'basic',
+    title: '基本信息',
+    props: ['wm_disease_other_name']
+  },
+  {
+    name: 'chapter',
+    title: '章节信息',
+    props: ['wm_disease_chapter_no']
+  },
+  {
+    name: 'type',
+    title: '类型信息',
+    props: ['wm_disease_class']
+  },
+  {
+    name: 'parent',
+    title: '父级信息',
+    props: ['sdis_parent_inx', 'parent_wm_disease_name', 'hierarchy_no']
+  }
+]
+
+const tcm = [
+  {
+    name: 'basic',
+    title: '基本信息',
+    props: ['tcm_disease_other_name']
+  },
+  {
+    name: 'type',
+    title: '类型信息',
+    props: ['tcm_disease_class']
+  },
+  {
+    name: 'parent',
+    title: '父级信息',
+    props: ['stcm_parent_inx', 'parent_tcm_disease_name', 'hierarchy_no']
+  },
+  {
+    name: 'clinical',
+    title: '临床信息',
+    props: ['nosogenesis_desc', 'clinical_feature_desc']
+  }
+]
+
+export default { drg, mat, dis, tcm }

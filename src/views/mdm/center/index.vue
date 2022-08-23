@@ -5,8 +5,7 @@
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>主索引管理</el-breadcrumb-item>
           <el-breadcrumb-item
-            >{{ `${selectedMDM.label}（${selectedMDM.name}）` }}
-            <img :src="icon(selectedMDM.state)"
+            >{{ selectedMDM.label }} <img :src="icon(selectedMDM.state)"
           /></el-breadcrumb-item>
         </el-breadcrumb>
       </div>
