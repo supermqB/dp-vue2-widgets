@@ -7,7 +7,13 @@ import {
   getVersionListApi,
   getVersionDetailApi,
   getClassifyCodeApi,
-  editDictApi
+  editDictApi,
+  addDictApi,
+  getListApi,
+  addVersionApi,
+  editVersionApi,
+  addDictValueApi,
+  editDictValueApi
 } from '@/api/value'
 
 const {
@@ -21,7 +27,7 @@ const {
 
 const processCatalog = list => {
   return list.map(item => {
-    const { sourceType, valueDictCatalogEntityList } = item
+    const { sourceType, sourceTypeCode, valueDictCatalogEntityList } = item
     return {
       id: sourceType,
       label: sourceType,
@@ -35,6 +41,8 @@ const processCatalog = list => {
           label: it.nameEn,
           nameEn: it.nameEn,
           nameCn: it.nameCn,
+          sourceType,
+          sourceTypeCode,
           state: it.suspectedState === '1' ? INCOMESTATE : COMPLETESTATE
         }
       })
@@ -59,7 +67,7 @@ const state = {
   dictForm: Object.assign({}, dictForm),
   versionForm: Object.assign({}, versionForm),
   dictVersionForm: Object.assign({}, dictVersionForm),
-  dictValueForm: Object.assign({}, dictValueForm),
+  dictValueForm: {},
   searchForm: Object.assign({}, searchForm),
   adSearchForm: Object.assign({}, adSearchForm),
   classList: []
@@ -68,6 +76,9 @@ const state = {
 const getters = {
   currentDictValueItem(state) {
     if (!state.currentDictValue) return null
+    // for (let item of state.dictList) {
+    //   const res = item.find(it => it.id === )
+    // }
   },
   currentVersionItem(state) {
     if (!state.currentVersion) return null
@@ -94,6 +105,42 @@ const getters = {
         value: item.sourceTypeCode
       }
     })
+  },
+  tableConfig(state) {
+    if (!state.currentVersionInfo || !state.currentVersionInfo.columnNameList)
+      return [
+        {
+          colConfig: {
+            property: '',
+            label: ''
+          }
+        }
+      ]
+    return state.currentVersionInfo.columnNameList.map(name => {
+      return {
+        colConfig: {
+          property: name,
+          label: name
+        }
+      }
+    })
+  },
+  dictValueFormCfg(state) {
+    if (!state.currentVersionInfo || !state.currentVersionInfo.columnNameList)
+      return []
+    return state.currentVersionInfo.columnNameList.map(name => {
+      return {
+        type: 'el-input',
+        label: name,
+        id: name,
+        elOptions: {
+          disabled: name === '术语编码',
+          style: {
+            width: '260px'
+          }
+        }
+      }
+    })
   }
 }
 
@@ -114,8 +161,22 @@ const mutations = {
       keysClone(state.dictForm, form)
     }
   },
-  setVersionForm(state, form) {
-    state.versionForm = !form ? Object.assign({}, versionForm) : form
+  setVersionForm(state, { nameCn }) {
+    state.versionForm = Object.assign({}, versionForm)
+    state.versionForm.dictName = nameCn
+  },
+  setDictVersionForm(state, { nameCn, nameEn, sourceTypeCode }) {
+    const master = state.versionList.find(item => item.isMaster)
+    const current = state.versionList.find(
+      item => item.id === state.currentVersion
+    )
+    state.dictVersionForm.masterVersion = master.value
+    state.dictVersionForm.version = current.value
+    state.dictVersionForm.nameCn = nameCn
+    state.dictVersionForm.nameEn = nameEn
+    state.dictVersionForm.state = state.currentVersionInfo.state
+    state.dictVersionForm.sourceTypeCode = sourceTypeCode
+    state.dictVersionForm.sourceBasis = state.currentVersionInfo.sourceBasis
   },
   setDictValueForm(state, form) {
     state.dictValueForm = !form ? Object.assign({}, dictValueForm) : form
@@ -137,8 +198,12 @@ const mutations = {
   setCurrentVersion(state, version) {
     state.currentVersion = version
   },
-  setCurrentDictValue(state, column) {
-    state.currentDictValue = column
+  setCurrentDictValue(state, row) {
+    if (!row) {
+      state.currentDictValue = state.dictValueList[0]
+    } else {
+      state.currentDictValue = row
+    }
   },
   setPageInfo(state, pageInfo) {
     keysClone(state.pageInfo, pageInfo)
@@ -146,13 +211,25 @@ const mutations = {
 }
 
 const actions = {
+  async onDictChange({ commit, dispatch }, { id }) {
+    commit('setCurrentDict', id)
+    await dispatch('querySuspect', { searchKey: state.currentDict })
+    await dispatch('queryVersion')
+    await dispatch('queryVersionInfo')
+    await dispatch('queryDictValue')
+    commit('setCurrentDictValue')
+  },
+  async onPageInfoChange({ commit, dispatch }, value) {
+    commit('setPageInfo', value)
+    await dispatch('queryDictValue')
+    commit('setCurrentDictValue')
+  },
   async initValue({ commit, dispatch }) {
     await dispatch('queryDict')
     commit('setCurrentDict')
     await dispatch('querySuspect', { searchKey: state.currentDict })
     await dispatch('queryVersion')
     await dispatch('queryVersionInfo')
-    // commit('setCurrentVersion')
     await dispatch('queryDictValue')
     commit('setCurrentDictValue')
     dispatch('queryClass')
@@ -165,12 +242,13 @@ const actions = {
     const { value } = await getVersionListApi(state.currentDict)
     state.versionList = value.map(item => {
       const { id, mainlineFlag, version } = item
-      if (mainlineFlag) {
+      if (mainlineFlag === '1') {
         commit('setCurrentVersion', id)
       }
       return {
         id,
         label: version,
+        value: version,
         isMaster: mainlineFlag === '1'
       }
     })
@@ -197,15 +275,101 @@ const actions = {
       }
     })
   },
-  async queryDictValue() {},
-  async submitDict() {
-    const { nameCn, nameEn } = state.dictForm
-    // await editDictApi({
-    //   id: state.currentDict
-    // })
+  async queryDictValue({ state, commit }) {
+    commit('setDictValueList')
+    const dictId = state.currentVersion
+    const { curPage: current, pageSize: size } = state.pageInfo
+    const columnParamList = []
+    ;[
+      { name: '编码', condition: 'like' },
+      { name: '名称', condition: 'like' },
+      { name: '父级代码', condition: 'equal' },
+      { name: '层级关系', condition: 'equal' }
+    ].forEach(item => {
+      if (state.searchForm[item.name]) {
+        columnParamList.push(
+          Object.assign(item, { value: state.searchForm[item.name] })
+        )
+      }
+    })
+    const { value } = await getListApi({
+      dictId,
+      current,
+      size,
+      columnParamList
+    })
+    commit('setPageInfo', value.pageInfo)
+    commit(
+      'setDictValueList',
+      value.records.map((item, index) => {
+        return Object.assign({}, item, { index })
+      })
+    )
   },
-  async submitVersion() {},
-  async submitDictValue() {}
+  async submitDict({ state }, IsNew) {
+    if (IsNew) {
+      const {
+        type,
+        ctlgCode,
+        dictCode,
+        nameEn,
+        nameCn,
+        version,
+        sourceTypeCode,
+        sourceBasis,
+        sourceBasisCode
+      } = state.dictForm
+      await addDictApi({
+        type,
+        ctlgCode,
+        dictCode,
+        nameEn,
+        nameCn,
+        version,
+        sourceTypeCode,
+        sourceBasis,
+        sourceBasisCode,
+        state: state.dictForm.state
+      })
+    } else {
+      const id = state.currentVersion
+      const { nameCn, nameEn } = state.dictForm
+      await editDictApi({
+        id,
+        nameCn,
+        nameEn
+      })
+    }
+  },
+  async addDictVersion() {
+    await addVersionApi(Object.assign({}, state.versionForm))
+  },
+  async editDictVersion() {
+    const { masterVersion, version, sourceType, sourceBasis } =
+      state.dictVersionForm
+    await editVersionApi({
+      id: state.currentVersion,
+      masterVersion,
+      version,
+      sourceType,
+      sourceBasis,
+      state: state.dictVersionForm.state
+    })
+  },
+  async addDictValue({ state, dispatch }) {
+    const id = state.currentVersion
+    await addDictValueApi({ id, valueObject: state.dictValueForm })
+    await dispatch('queryDictValue')
+  },
+  async editDictValue({ state, dispatch }) {
+    const id = state.currentVersion
+    await editDictValueApi({
+      id,
+      colId: state.dictValueForm['术语编码'],
+      valueObject: state.dictValueForm
+    })
+    await dispatch('queryDictValue')
+  }
 }
 
 export default {

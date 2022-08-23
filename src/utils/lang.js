@@ -36,3 +36,11 @@ export function getMax(value) {
   const code = parseInt(value.slice(-2)) + 1
   return `${prefix}${code < 10 ? '0' + code.toString() : code}`
 }
+
+export function getMaxNumber(value, len) {
+  let max = (parseInt(value) + 1).toString()
+  for (let i = max.length; i < len; i++) {
+    max = `0${max}`
+  }
+  return max
+}

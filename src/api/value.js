@@ -72,12 +72,17 @@ export const downloadTemplateApi = dictName => {
   })
 }
 
-export const getListApi = dictId => {
+export const getListApi = ({ dictId, current, size, columnParamList }) => {
   return request({
     url: '/dict/list',
     method: 'post',
     params: {
-      dictId
+      current,
+      size
+    },
+    data: {
+      id: dictId,
+      columnParamList
     }
   })
 }
@@ -124,53 +129,19 @@ export const editDictApi = ({ id, nameEn, nameCn }) => {
   })
 }
 
-export const addDictValueApi = ({
-  id,
-  name,
-  parCode,
-  type,
-  note,
-  hierarchyRelation,
-  file
-}) => {
+export const addDictValueApi = ({ id, valueObject, file }) => {
   return request({
     url: '/dict/addDictValue',
     method: 'post',
-    data: {
-      id,
-      name,
-      parCode,
-      type,
-      note,
-      hierarchyRelation,
-      file
-    }
+    data: { id, valueObject, file }
   })
 }
 
-export const editDictValueApi = ({
-  id,
-  colId,
-  code,
-  name,
-  parCode,
-  type,
-  note,
-  hierarchyRelation
-}) => {
+export const editDictValueApi = ({ id, colId, valueObject }) => {
   return request({
     url: '/dict/editDictValue',
     method: 'post',
-    data: {
-      id,
-      colId,
-      code,
-      name,
-      parCode,
-      type,
-      note,
-      hierarchyRelation
-    }
+    data: { id, colId, valueObject }
   })
 }
 
@@ -178,5 +149,25 @@ export const getClassifyCodeApi = () => {
   return request({
     url: '/dict/getClassifyCode',
     method: 'get'
+  })
+}
+
+export const getMaxDictCodeApi = classifyCode => {
+  return request({
+    url: '/dict/getMaxDictCode',
+    method: 'post',
+    params: {
+      classifyCode
+    }
+  })
+}
+
+export const getMAxValueCodeApi = id => {
+  return request({
+    url: '/dict/getMaxValueCode',
+    method: 'post',
+    params: {
+      id
+    }
   })
 }

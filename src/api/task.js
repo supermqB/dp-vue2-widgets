@@ -8,14 +8,22 @@ export function getParentList(params) {
   })
 }
 
-export const getSuspectListApi = (searchKey, type = 'dic', state = '0') => {
+export const getSuspectListApi = (
+  dictId,
+  searchKey,
+  type = 'dic',
+  state = '0'
+) => {
   return request({
     url: '/suspected/list',
     method: 'post',
     data: {
       type,
       state,
-      searchKey
+      searchKey: '',
+      source: '',
+      name: '',
+      dictId: 25
     }
   })
 }

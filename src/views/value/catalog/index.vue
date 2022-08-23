@@ -18,16 +18,17 @@
       ref="tree"
       :data="dictList"
       :currentNodeKey="currentDict"
-      @onClick="handleNodeClick"
+      @onClick="onDictChange"
       class="tree"
     ></Tree>
     <Dialog
       title="新增值域字典"
       ref="addCatalogDialog"
       class="addCatalogDialog"
-      @dialog-complete="onClickSubmitCatalog"
+      @dialog-complete="onClickSubmitAddCatalog"
     >
       <Form
+        ref="addDictForm"
         :formCfg="addCatalogCfg(classList, subClassOptions, subClassChange, sourceTypeOptions)"
         :formData="dictForm"
         :formRule="catalogRule"
@@ -37,9 +38,10 @@
       title="编辑值域字典"
       ref="editCatalogDialog"
       class="editCatalogDialog"
-      @dialog-complete="onClickSubmitCatalog"
+      @dialog-complete="onClickSubmitEditCatalog"
     >
       <Form
+        ref="editDictForm"
         :formCfg="editCatalogCfg"
         :formData="dictForm"
         :formRule="catalogRule"
@@ -59,6 +61,8 @@ import {
   catalogRule
 } from './config/catalogForm'
 import { createNamespacedHelpers } from 'vuex'
+import { getMaxDictCodeApi } from '@/api/value'
+import { getMaxNumber } from '@/utils/lang'
 const { mapState, mapGetters, mapActions, mapMutations } = createNamespacedHelpers('value')
 
 export default {
@@ -108,20 +112,20 @@ export default {
       'queryVersion',
       'queryVersionInfo',
       'queryDictValue',
-      'submitDict'
+      'submitDict',
+      'onDictChange'
     ]),
-    async handleNodeClick({id}) {
-      this.setCurrentDict(id)
-      await this.queryVersion()
-      await this.queryVersionInfo()
-      await this.queryDictValue()
-      this.setCurrentDictValue()
-    },
-    subClassChange(val) {
+    async subClassChange(val) {
       this.dictForm.ctlgCode = val
+      const { value } = await getMaxDictCodeApi(val)
+      const dictCode = getMaxNumber(value, 7)
+      this.setDictForm({ dictCode })
     },
-    addCatalog() {
+    async addCatalog() {
       this.$refs.addCatalogDialog.toggleOpen()
+      this.$nextTick(() => {
+        this.$refs.addDictForm.resetFields()
+      })
     },
     editCatalog() {
       const { code, classifyCode } = this.currentVersionInfo
@@ -133,13 +137,34 @@ export default {
         nameEn
       })
       this.$refs.editCatalogDialog.toggleOpen()
+      this.$nextTick(() => {
+        this.$refs.editDictForm.resetFields()
+      })
     },
     onDictFilterChange(val) {
       this.$refs.tree.filter(val)
     },
-    async onClickSubmitCatalog() {
-      await this.submitDict()
-      await this.queryDict()
+    async onClickSubmitAddCatalog() {
+      const { valid } = await this.$refs.addDictForm.validate()
+      if (valid) {
+        await this.submitDict(true)
+        this.$message.success('新增值域字典成功！')
+        this.$refs.addCatalogDialog.toggleOpen()
+        await this.queryDict()
+      } else {
+        this.$alert('请检查输入项是否完整！')
+      }
+    },
+    async onClickSubmitEditCatalog() {
+      const { valid } = await this.$refs.editDictForm.validate()
+      if (valid) {
+        await this.submitDict(false)
+        this.$message.success('值域字典编辑成功！')
+        this.$refs.editCatalogDialog.toggleOpen()
+        await this.queryDict()
+      } else {
+        this.$alert('请检查输入项是否完整！')
+      }
     }
   },
 }

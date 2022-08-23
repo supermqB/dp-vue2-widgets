@@ -64,8 +64,8 @@
       </div>
       <span slot="footer">
         <el-button @click="runDialog = false">取消</el-button>
-        <el-button @click="onClickRunAllCatalog">启动所有表单信息</el-button>
-        <el-button type="primary" @click="onClickRunCatalog">启动</el-button>
+        <el-button @click="onClickRunAllCatalog">启用所有表单信息</el-button>
+        <el-button type="primary" @click="onClickRunCatalog">启用</el-button>
       </span>
     </el-dialog>
   </div>
@@ -161,7 +161,6 @@ export default {
       this.$refs.catalogForm.resetFields()
     },
     onClickRunDialog() {
-      if (!this.currentCatalog || this.currentCatalogItem.state === RUNNINGSTATE) return
       this.runDialog = true
     },
     onClickRunAllCatalog() {
@@ -170,7 +169,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.runCatalog()
+        this.runCatalog(true)
         this.runDialog = false
       })  
     },
