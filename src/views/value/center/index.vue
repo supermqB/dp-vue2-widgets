@@ -196,8 +196,8 @@ export default {
     },
     async onClickAddVersion() {
       await this.addDictVersion()
-      this.$message.success('添加版本成功！')
       this.$refs.addVersionDialog.toggleOpen()
+      this.$message.success('添加版本成功！')
     },
     async onClickEditVersion() {
       await this.editDictVersion()
@@ -221,13 +221,13 @@ export default {
     },
     async onClickAddValue() {
       await this.addDictValue()
-      this.$message.success('新增值域字典明细成功！')
       this.$refs.addValueDialog.toggleOpen()
+      this.$message.success('新增值域字典明细成功！')
     },
     async onClickEditValue() {
       await this.editDictValue()
-      this.$message.success('编辑值域字典明细成功！')
       this.$refs.editValueDialog.toggleOpen()
+      this.$message.success('编辑值域字典明细成功！')
     },
     handleChange(file) {
       this.file = file.name

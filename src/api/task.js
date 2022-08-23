@@ -20,7 +20,7 @@ export const getSuspectListApi = (
     data: {
       type,
       state,
-      searchKey: '',
+      searchKey,
       source: '',
       name: '',
       dictId: 25
