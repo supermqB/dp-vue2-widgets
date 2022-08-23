@@ -209,7 +209,7 @@ export default {
 ::v-deep .columnDialog .el-dialog {
   width: 800px;
   form {
-    height: 320px;
+    height: 330px;
     padding-left: 10px;
     padding-right: 10px;
     display: flex;

@@ -57,3 +57,13 @@ export const TYPEOPTIONS = [
   { label: '日期型(D)', value: 'D' },
   { label: '时间型(DT)', value: 'DT' }
 ]
+export const DICTTYPEOPTIONS = [
+  {
+    label: '单值字典',
+    value: '单值字典'
+  },
+  {
+    label: '多值字典',
+    value: '多值字典'
+  }
+]

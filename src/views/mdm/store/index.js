@@ -1,40 +1,13 @@
+import { confirm } from '@/utils/pops'
 import mdmlist from './mdmlist'
 import tasks from './tasks'
+import { get, post } from '@/utils/request'
+import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
+import { Message } from 'element-ui'
 const state = {
-  mdmList: [
-    {
-      id: '1-1',
-      label: '药品（中成药/西药）',
-      name: 'mdm_data_drug',
-      type: 'drg',
-      number: 2398,
-      state: 'income' /*income*/
-    },
-    {
-      id: '1-2',
-      label: '行政区划',
-      number: 23,
-      name: 'mdm_data_region',
-      type: 'reg',
-      state: 'complete'
-    },
-    {
-      id: '1-3',
-      label: '耗材',
-      name: 'mdm_data_mat',
-      type: 'mat',
-      number: 298,
-      state: 'income'
-    }
-  ],
-  selectedMDM: {
-    id: '1-1',
-    label: '药品（中成药/西药）',
-    name: 'mdm_data_drug',
-    type: 'drg',
-    number: 2398,
-    state: 'income' /*income*/
-  },
+  mdmList: [],
+  selectedMDM: {},
+  selectedMDMDesc: {},
   suspectList: [],
   suspectFilter: []
 }
@@ -42,12 +15,77 @@ const state = {
 const mutations = {
   setSelectedMDM(state, value) {
     state.selectedMDM = value
+  },
+  setSelectedMDMDesc(state, value) {
+    state.selectedMDMDesc = value
+  },
+  setMDMList(state, value) {
+    state.mdmList = value
   }
 }
+const getters = {
+  curMDMColumns(state) {
+    if (!state.selectedMDMDesc.columnList) {
+      return []
+    }
+    return state.selectedMDMDesc.columnList
+      .map(col => ({
+        property: col.nameEn,
+        label: col.nameCn,
+        required: col.requiredFlag == '1'
+      }))
+      .filter(
+        ({ property }) => ['fundamental_factor_flag'].indexOf(property) == -1
+      )
+  }
+}
+
+const actions = {
+  async loadMDMModules({ commit }) {
+    const result = await get('sbr/getCatalog')
+    if (result.success) {
+      commit(
+        'setMDMList',
+        result.value.map(item => ({
+          ...item,
+          id: item.id + '',
+          label: item.name,
+          state: item.state == '1' ? INCOMESTATE : COMPLETESTATE,
+          number: item.refCount
+        }))
+        //.sort((i1, i2) => i1.name.localeCompare(i2.name))
+      )
+    }
+  },
+
+  async loadMDMModuleDesc({ commit }, mdmModuleId) {
+    const result = await get(`sbr/getOverView/${mdmModuleId}`)
+    if (result.success) {
+      commit('setSelectedMDMDesc', result.value)
+    }
+  },
+
+  async enableMDMModule({ state, dispatch }) {
+    const selectedMDM = state.selectedMDM
+    const confirmed = await confirm(`是否启用主索引【${selectedMDM.label}】?`)
+    if (confirmed) {
+      const result = await post('sbr/commit', {}, { id: selectedMDM.id })
+      if (result.success) {
+        Message.success(`启用主索引【${selectedMDM.label}】成功。`)
+        dispatch('loadMDMModules')
+      } else {
+        Message.error(`启用主索引【${selectedMDM.label}】失败。`)
+      }
+    }
+  }
+}
+
 export default {
   namespaced: true,
   state,
   mutations,
+  actions,
+  getters,
   modules: {
     mdmlist,
     tasks

@@ -31,6 +31,7 @@
   </div>
 </template>
 <script>
+import { debounce } from 'lodash'
 import { createNamespacedHelpers, mapActions as globalMapActions } from 'vuex'
 const elemGrpLabelName = 'ctlgName'
 const { mapState, mapMutations, mapActions } =
@@ -57,7 +58,7 @@ export default {
     checkedGrpChangeHandler() {
       let checkedKeys = this.$refs.grouptree.getCheckedKeys()
       this.setSelectedGrps(checkedKeys)
-      this.listElements()
+      this.lazyListElements()
     },
     ...mapMutations(['setSearch', 'setSelectedGrps']),
     ...mapActions(['fetchElementGrps']),
@@ -66,6 +67,9 @@ export default {
   mounted() {
     this.fetchElementGrps()
     this.$refs.grouptree.setCheckedKeys(['0'])
+    this.lazyListElements = debounce(() => {
+      this.listElements()
+    }, 500)
   }
 }
 </script>
@@ -92,8 +96,8 @@ export default {
   }
   .grouptree {
     flex-grow: 1;
-    .el-tree-node__content{
-        height: 36px;
+    .el-tree-node__content {
+      height: 36px;
     }
   }
   .groupsum {

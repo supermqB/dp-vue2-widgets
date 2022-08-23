@@ -1,13 +1,17 @@
 <template>
   <div class="mdmWrap">
-    <Header title="主索引目录" :action-types="[actionType]"></Header>
+    <Header
+      title="主索引目录"
+      :action-types="[actionType]"
+      @run="enableCtlgHandler"
+    ></Header>
     <div class="tree_header_row">
       <div>索引类别</div>
       <div class="cell2">数据源</div>
     </div>
     <Tree
       :data="mdmListData"
-      currentNodeKey="1-1"
+      :currentNodeKey="currentNodeKey"
       class="tree"
       @onClick="onSelected"
     ></Tree>
@@ -30,34 +34,50 @@ export default {
   },
   data() {
     return {
+      currentNodeKey: ''
     }
   },
   methods: {
     onSelected(node) {
       this.setSelectedMDM(node)
+      this.loadMDMModuleDesc(this.selectedMDM.id)
     },
-    ...mapMutations(['setSelectedMDM'])
+    enableCtlgHandler() {
+      this.enableMDMModule()
+    },
+    ...mapMutations(['setSelectedMDM']),
+    ...mapActions(['loadMDMModules', 'loadMDMModuleDesc', 'enableMDMModule'])
   },
   computed: {
+    ...mapState({
+      selectedMDM: state => state.selectedMDM,
+      mdmList: state => state.mdmList
+    }),
     actionType() {
       return this.selectedMDM.state == INCOMESTATE ? 'run' : 'run_disable'
     },
-    mdmListData(){
-        return  [
+    mdmListData() {
+      return [
         {
           id: '1',
           label: '',
           children: this.mdmList
         }
       ]
-    },
-    ...mapState({
-      selectedMDM: state => state.selectedMDM,
-      mdmList: state => state.mdmList
-    })
+    }
   },
   mounted() {
-    this.onSelected(this.mdmListData[0].children[0])
+    this.loadMDMModules()
+  },
+  watch: {
+    mdmList(list) {
+      /* default selected MDM. */
+      let defaultMdm = list.find(mdm => mdm.type == 'drg')
+      this.onSelected(defaultMdm)
+      this.$nextTick(() => {
+        this.currentNodeKey = defaultMdm.id
+      })
+    }
   }
 }
 </script>

@@ -1,85 +1,160 @@
-export const addCatalogCfg = [
-  // {
-  //   type: 'el-select',
-  //   label: '标准分类',
-  //   id: 'index',
-  //   elOptions: {
-  //     placeholder: '请选择'
-  //   }
-  // },
+import { STATEOPTIONS, DICTTYPEOPTIONS } from '@/utils/const'
+import { validateEnglish } from '@/utils/validator'
+
+export const addCatalogCfg = (
+  classOptions,
+  subClassOptions,
+  subClassChange,
+  sourceTypeOptions
+) =>
+  [
+    {
+      type: 'el-select',
+      label: '属性',
+      id: 'type',
+      options: DICTTYPEOPTIONS,
+      elOptions: {}
+    },
+    {
+      type: 'el-select',
+      label: '大类',
+      id: 'class',
+      options: classOptions,
+      elOptions: {}
+    },
+    {
+      type: 'el-select',
+      label: '小类',
+      id: 'subClass',
+      options: subClassOptions,
+      elEvents: {
+        change: subClassChange
+      },
+      elOptions: {}
+    },
+    {
+      type: 'el-input',
+      label: '卫生信息分类',
+      id: 'ctlgCode',
+      elOptions: {
+        disabled: true
+      }
+    },
+    {
+      type: 'el-input',
+      label: '字典编码',
+      id: 'dictCode',
+      elOptions: {
+        disabled: true
+      }
+    },
+    {
+      type: 'el-input',
+      label: '英文名',
+      id: 'nameEn',
+      elOptions: {
+        placeholder: '请输入'
+      }
+    },
+    {
+      type: 'el-input',
+      label: '字典名称',
+      id: 'nameCn',
+      elOptions: {
+        placeholder: '请输入'
+      }
+    },
+    {
+      type: 'el-input',
+      label: '版本',
+      id: 'version',
+      elOptions: {
+        disabled: true
+        // placeholder: 'V1.0'
+      }
+    },
+    {
+      type: 'el-select',
+      label: '标准来源编码',
+      id: 'sourceTypeCode',
+      options: sourceTypeOptions,
+      elOptions: {
+        placeholder: '请选择'
+      }
+    },
+    // {
+    //   type: 'el-input',
+    //   label: '标准来源名称',
+    //   id: 'sourceType',
+    //   elOptions: {
+    //     disabled: true
+    //     // placeholder: '根据标准来源编码自动匹配'
+    //   }
+    // },
+    {
+      type: 'el-input',
+      label: '标准依据',
+      id: 'sourceBasis',
+      elOptions: {
+        // placeholder: '请输入'
+      }
+    },
+    {
+      type: 'el-input',
+      label: '标准代码编号',
+      id: 'sourceBasisCode',
+      elOptions: {
+        // disabled: true
+        // placeholder: 'CV03.00.110'
+      }
+    },
+    {
+      type: 'el-select',
+      label: '状态',
+      id: 'state',
+      options: STATEOPTIONS,
+      elOptions: {
+        // placeholder: '待完成'
+      }
+    }
+  ].map(item => {
+    const elOptions = Object.assign({}, item.elOptions, {
+      style: {
+        width: '260px'
+      }
+    })
+    item.elOptions = elOptions
+    return item
+  })
+
+export const editCatalogCfg = [
+  {
+    type: 'el-input',
+    label: '卫生信息分类',
+    id: 'ctlgCode',
+    elOptions: {
+      disabled: true
+    }
+  },
   {
     type: 'el-input',
     label: '字典编码',
-    id: 'index1',
+    id: 'dictCode',
     elOptions: {
-      disabled: true,
-      placeholder: '自动生成'
+      disabled: true
     }
   },
   {
     type: 'el-input',
     label: '英文名',
     id: 'nameEn',
-    elOptions: {
-      placeholder: '请输入'
-    }
+    elOptions: {}
   },
   {
     type: 'el-input',
     label: '字典名称',
     id: 'nameCn',
-    elOptions: {
-      placeholder: '请输入'
-    }
-  },
-  {
-    type: 'el-select',
-    label: '版本',
-    id: 'version',
-    elOptions: {
-      placeholder: 'V1.0'
-    }
-  },
-  {
-    type: 'el-select',
-    label: '标准来源编码',
-    id: 'index2',
-    elOptions: {
-      placeholder: '请选择'
-    }
-  },
-  {
-    type: 'el-input',
-    label: '标准来源名称',
-    id: 'index3',
-    elOptions: {
-      disabled: true,
-      placeholder: '根据标准来源编码自动匹配'
-    }
-  },
-  {
-    type: 'el-input',
-    label: '标准依据',
-    id: 'index4',
-    elOptions: {
-      placeholder: '请输入'
-    }
-  },
-  {
-    type: 'el-input',
-    label: '标准代码编号',
-    id: 'index5',
-    elOptions: {
-      placeholder: 'CV03.00.110'
-    }
-  },
-  {
-    type: 'el-select',
-    label: '状态',
-    id: 'state',
-    elOptions: {
-      placeholder: '待完成'
-    }
+    elOptions: {}
   }
 ].map(item => {
   const elOptions = Object.assign({}, item.elOptions, {
@@ -91,84 +166,21 @@ export const addCatalogCfg = [
   return item
 })
 
-export const editCatalogCfg = [
-  {
-    type: 'el-input',
-    label: '标准分类',
-    id: 'index',
-    elOptions: {
-      disabled: true,
-      placeholder: '标识',
-      style: {
-        width: '260px'
-      }
-    }
-  },
-  {
-    type: 'el-input',
-    label: '字典编码',
-    id: 'index',
-    elOptions: {
-      disabled: true,
-      placeholder: '自动生成',
-      style: {
-        width: '260px'
-      }
-    }
-  },
-  {
-    type: 'el-input',
-    label: '英文名',
-    id: 'nameEn',
-    elOptions: {
-      placeholder: 'DICT_SEX',
-      style: {
-        width: '260px'
-      }
-    }
-  },
-  {
-    type: 'el-input',
-    label: '字典名称',
-    id: 'index',
-    elOptions: {
-      placeholder: '性别代码',
-      style: {
-        width: '260px'
-      }
-    }
-  },
-  {
-    type: 'el-select',
-    label: '状态',
-    id: 'state',
-    elOptions: {
-      placeholder: '已启用',
-      style: {
-        width: '260px'
-      }
-    }
-  }
-]
-
 export const catalogRule = {
-  index: { required: true },
-  index1: { required: true },
-  index2: { required: true },
-  index3: { required: true },
+  type: { required: true },
+  class: { required: true },
+  subClass: { required: true },
+  ctlgCode: { required: true },
+  dictCode: { required: true },
+  version: { required: true },
+  sourceType: { required: true },
+  sourceTypeCode: { required: true },
   nameCn: { required: true },
   nameEn: [
     { required: true },
     {
-      validator: (rule, value, callback) => {
-        if (!/^[\w+]{1,30}$/.test(value)) {
-          showEnErr()
-          callback('英文名称必须小于30个字符, 由小写字母、下划线、数字构成')
-        } else {
-          callback()
-        }
-      },
-      trigger: 'change'
+      validator: validateEnglish,
+      trigger: 'blur'
     }
   ],
   version: { required: true }

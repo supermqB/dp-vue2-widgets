@@ -42,10 +42,10 @@
           colConfig: {
             property: 'state',
             label: '状态',
-            width: 80
-          },
-          formatter(val) {
-            return { 0: '停用', 1: '待提交', 2: '待审核', 3: '启用' }[val]
+            width: 80,
+            formatter(row, col, val) {
+              return { 0: '停用', 1: '待提交', 2: '待审核', 3: '启用' }[val]
+            }
           }
         }
       ]"
@@ -102,12 +102,12 @@ export default {
       this.selectedItems = selection.map(item => item.id)
     },
     completeCommitHandler() {
-      this.completeCommit(this.selectedItems).then((done)=>{
-          done && this.toggleOpen();
+      this.completeCommit(this.selectedItems).then(done => {
+        done && this.toggleOpen()
       })
     },
-    toggleOpen(){
-        this.$refs.dialog.toggleOpen();
+    toggleOpen() {
+      this.$refs.dialog.toggleOpen()
     }
   },
   components: {

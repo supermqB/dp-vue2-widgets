@@ -57,7 +57,6 @@ export default {
           id: 'version'
         }
       ]
-      console.log(formCfg);
       return formCfg;
     }
   },

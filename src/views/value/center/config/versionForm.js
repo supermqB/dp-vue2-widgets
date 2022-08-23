@@ -1,119 +1,99 @@
+import { STATEOPTIONS } from '@/utils/const'
+
 export const editVersionCfg = [
   {
     type: 'el-select',
     label: '主版本',
-    id: 'version',
-    elOptions: {
-      style: {
-        width: '250px'
-      }
-    }
+    id: 'masterVersion',
+    elOptions: {}
   },
   {
     type: 'el-input',
     label: '英文名',
     id: 'nameEn',
     elOptions: {
-      style: {
-        width: '250px'
-      }
+      disabled: true
     }
   },
   {
     type: 'el-input',
     label: '字典名称',
-    id: 'nameEn',
+    id: 'nameCn',
     elOptions: {
-      style: {
-        width: '250px'
-      }
+      disabled: true
+    }
+  },
+  {
+    type: 'el-input',
+    label: '当前版本',
+    id: 'version',
+    elOptions: {
+      disabled: true
     }
   },
   {
     type: 'el-select',
-    options: [],
-    label: '版本',
-    id: 'level',
-    elOptions: {
-      style: {
-        width: '250px'
-      }
-    }
-  },
-  {
-    type: 'el-select',
-    options: [],
+    options: STATEOPTIONS,
     label: '状态',
-    id: 'level',
-    elOptions: {
-      style: {
-        width: '250px'
-      }
-    }
+    id: 'state',
+    elOptions: {}
   },
   {
     type: 'el-select',
     options: [],
     label: '标准来源',
-    id: 'level',
-    elOptions: {
-      style: {
-        width: '250px'
-      }
-    }
+    id: 'sourceType',
+    elOptions: {}
   },
   {
     type: 'el-input',
     label: '标准依据',
-    id: 'level',
-    elOptions: {
-      style: {
-        width: '250px'
-      }
-    }
+    id: 'sourceBasic',
+    elOptions: {}
   }
-]
+].map(item => {
+  const elOptions = Object.assign({}, item.elOptions, {
+    style: {
+      width: '260px'
+    }
+  })
+  item.elOptions = elOptions
+  return item
+})
 
 export const addVersionCfg = [
   {
-    type: 'el-select',
+    type: 'el-input',
     label: '版本',
     id: 'version',
-    elOptions: {
-      style: {
-        width: '260px'
-      }
-    }
+    elOptions: {}
   },
   {
     type: 'el-input',
     label: '字典名称',
     id: 'nameEn',
     elOptions: {
-      disabled: true,
-      style: {
-        width: '260px'
-      }
+      disabled: true
     }
   },
   {
     type: 'el-select',
     label: '继承版本',
     id: 'parVersion',
-    elOptions: {
-      style: {
-        width: '260px'
-      }
-    }
+    elOptions: {}
   },
   {
     type: 'upload',
     label: '导入',
     id: 'file',
-    elOptions: {
-      style: {
-        width: '260px'
-      }
-    }
+    elOptions: {}
   }
-]
+].map(item => {
+  const elOptions = Object.assign({}, item.elOptions, {
+    style: {
+      width: '260px'
+    }
+  })
+  item.elOptions = elOptions
+  return item
+})

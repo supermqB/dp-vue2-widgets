@@ -47,8 +47,10 @@ export const addValueCfg = [
   {
     type: 'el-select',
     label: '当前版本',
-    id: 'code',
-    elOptions: {}
+    id: 'version',
+    elOptions: {
+      disabled: true
+    }
   },
   {
     type: 'el-input',
@@ -65,25 +67,25 @@ export const addValueCfg = [
   {
     type: 'el-input',
     label: '父级代码',
-    id: 'name',
+    id: 'parCode',
     elOptions: {}
   },
   {
     type: 'el-input',
     label: '值类型',
-    id: 'name',
+    id: 'type',
     elOptions: {}
   },
   {
     type: 'el-input',
     label: '值备注',
-    id: 'name',
+    id: 'note',
     elOptions: {}
   },
   {
     type: 'el-input',
     label: '层级关系',
-    id: 'name',
+    id: 'hierarchyRelation',
     elOptions: {}
   }
 ].map(item => {
@@ -98,8 +100,10 @@ export const editValueCfg = [
   {
     type: 'el-select',
     label: '当前版本',
-    id: 'code',
-    elOptions: {}
+    id: 'version',
+    elOptions: {
+      disabled: true
+    }
   },
   {
     type: 'el-input',
@@ -116,25 +120,25 @@ export const editValueCfg = [
   {
     type: 'el-input',
     label: '父级代码',
-    id: 'name',
+    id: 'parCode',
     elOptions: {}
   },
   {
     type: 'el-input',
     label: '值类型',
-    id: 'name',
+    id: 'type',
     elOptions: {}
   },
   {
     type: 'el-input',
     label: '值备注',
-    id: 'name',
+    id: 'note',
     elOptions: {}
   },
   {
     type: 'el-input',
     label: '层级关系',
-    id: 'name',
+    id: 'hierarchyRelation',
     elOptions: {}
   }
 ].map(item => {
@@ -144,3 +148,12 @@ export const editValueCfg = [
   item.elOptions = Object.assign({}, item.elOptions, { style })
   return item
 })
+
+export const valueRule = {
+  version: { required: true },
+  code: { required: true },
+  name: { required: true },
+  parCode: { required: true },
+  type: { required: true },
+  hierarchyRelation: { required: true }
+}

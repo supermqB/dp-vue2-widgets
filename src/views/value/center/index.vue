@@ -3,36 +3,40 @@
     <div class="header">
       <Breadcrumb
         baseLabel="值域管理"
-        currentLabel="DICT_SEX"></Breadcrumb>
+        :currentLabel="currentDictItem.label"></Breadcrumb>
       <div>
-        <el-button type="primary" @click="editVersion" :disabled="!currentVersion">版本管理</el-button>
-        <el-button type="primary" @click="addVersion" :disabled="!currentValue">新增版本</el-button>
+        <el-button type="primary" @click="editVersion" :disabled="!currentVersion && false">版本管理</el-button>
+        <el-button type="primary" @click="addVersion" :disabled="!currentValue && false">新增版本</el-button>
       </div>
     </div>
     <div class="version">
       <span>版本</span>
       <el-select v-model="curVersion">
-        <el-option v-for="item in versionList"></el-option>
+        <el-option
+          v-for="item in versionList"
+          :key="item.id"
+          :value="item.id"
+          :label="item.label"
+        ></el-option>
       </el-select>
-      <IsMaster></IsMaster>
-      <span>状态</span>
-      <el-select v-model="state">
-        <el-option v-for="item in STATEOPTIONS"></el-option>
-      </el-select>
+      <IsMaster :isMaster="currentVersion ? currentVersionItem.isMaster : false"></IsMaster>
+      <IsRunning :currentState="currentVersion ? currentVersionInfo.state : ''"></IsRunning>
     </div>
-    <Detail></Detail>
+    <Detail
+      :sourceType="currentDictItem.sourceType"
+      v-bind="currentVersionInfo"></Detail>
     <div class="search">
-      <Form :formCfg="searchValueCfg" :formData="searchValueData"></Form>
-      <div>
+      <Form :formCfg="searchValueCfg" :formData="searchForm"></Form>
+      <div class="operation">
         <el-button>查询</el-button>
-        <el-button @click="addValue" :disabled="!currentVersion">新增</el-button>
-        <el-button @click="editValue" :disabled="!currentColumn">编辑</el-button>
+        <el-button @click="addValue" :disabled="!currentVersion && false">新增</el-button>
+        <el-button @click="editValue" :disabled="!currentColumn && false">编辑</el-button>
       </div>
     </div>
     <div class="table">
       <Table
         :tableConfig="tableConfig"
-        :tableData="columnList"
+        :tableData="dictValueList"
         :pageInfo="pageInfo">
       </Table>
     </div>
@@ -40,25 +44,33 @@
       title="新增版本"
       ref="addVersionDialog"
       class="addVersionDialog">
-      <Form :formCfg="addVersionCfg" :formData="addVersionData"></Form>
+      <Form :formCfg="addVersionCfg" :formData="versionForm"></Form>
     </Dialog>
     <Dialog
       title="版本信息管理"
       ref="editVersionDialog"
       class="editVersionDialog">
-      <Form :formCfg="editVersionCfg" :formData="editVersionData"></Form>
+      <Form :formCfg="editVersionCfg" :formData="dictVersionForm"></Form>
     </Dialog>
     <Dialog
       title="新增值域字典"
       ref="addValueDialog"
       class="addValueDialog">
-      <Form :formCfg="addValueCfg" :formData="addValueData"></Form>
+      <Form
+        :formCfg="addValueCfg"
+        :formData="dictValueForm"
+        :formRule="valueRule"
+      ></Form>
     </Dialog>
     <Dialog
       title="编辑值域字典"
       ref="editValueDialog"
       class="editValueDialog">
-      <Form :formCfg="editValueCfg" :formData="editValueData"></Form>
+      <Form 
+        :formCfg="editValueCfg"
+        :formData="dictValueForm"
+        :formRule="valueRule">
+      </Form>
     </Dialog>
   </div>
 </template>
@@ -70,56 +82,57 @@ import Dialog from '@/components/Dialog.vue'
 import Detail from './detail.vue'
 import IsMaster from '@/components/state/IsMaster.vue'
 import Breadcrumb from '@/components/header/Breadcrumb.vue'
+import IsRunning from '@/components/state/IsRunning.vue'
 import tableConfig from './config/tableColumn'
-import { STATEOPTIONS } from '@/utils/const'
 import { addVersionCfg, editVersionCfg } from './config/versionForm'
-import { searchValueCfg, addValueCfg, editValueCfg } from './config/valueForm'
+import { searchValueCfg, addValueCfg, editValueCfg, valueRule } from './config/valueForm'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('value')
 
 export default {
   components: {
-    Form, Table, Dialog, Detail, Breadcrumb, IsMaster
-  },
+    Form,
+    Table,
+    Dialog,
+    Detail,
+    Breadcrumb,
+    IsMaster,
+    IsRunning
+},
   data() {
     return {
       addVersionCfg,
       editVersionCfg,
-      addVersionData: {
-        version: '',
-        nameEn: '',
-        parVersion: '',
-        file: null
-      },
-      editVersionData: {},
       addValueCfg,
       editValueCfg,
-      addValueData: {},
-      editValueData: {},
       searchValueCfg,
-      searchValueData: {
-        name: '',
-        code: '',
-        parent: '',
-        level: ''
-      },
-      tableConfig,
-      state: '',
-      STATEOPTIONS
+      valueRule,
+      tableConfig
     }
   },
   computed: {
     ...mapState([
       'currentVersion', 
-      'currentColumn', 
-      'pageInfo', 
-      'columnList',
-      'currentValue'
+      'currentColumn',
+      'currentValue',
+      'currentVersionInfo',
+      'pageInfo',
+      'versionList',
+      'dictValueList',
+      'dictValueForm',
+      'dictVersionForm',
+      'versionForm',
+      'searchForm'
+    ]),
+    ...mapGetters([
+      'currentVersionItem',
+      'currentDictItem'
     ]),
     curVersion: {
       set(value) {
         this.setCurrentVersion(value)
+        this.queryVersionInfo()
       },
       get() {
         return this.currentVersion
@@ -131,6 +144,9 @@ export default {
   methods: {
     ...mapMutations([
       'setCurrentVersion'
+    ]),
+    ...mapActions([
+      'queryVersionInfo'
     ]),
     addVersion() {
       this.$refs.addVersionDialog.toggleOpen()
@@ -177,6 +193,12 @@ export default {
     width: 100%;
     padding-left: 10px;
     box-sizing: border-box;
+    .operation {
+      .el-button {
+        border-color: #1890FF;
+        color: #1890FF
+      }
+    }
   }
   .version {
     display: flex;
@@ -276,4 +298,6 @@ export default {
     }
   }
 }
+
+
 </style>

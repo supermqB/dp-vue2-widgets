@@ -1,19 +1,35 @@
 <template>
   <div class="wrap">
-    <Header title="值域目录" @add="addCatalog" @edit="editCatalog"></Header>
+    <Header
+      title="值域目录"
+      :actionTypes="['add', 'edit']"
+      @add="addCatalog"
+      @edit="editCatalog"
+    ></Header>
     <div class="search">
       <span>搜索</span>
-      <el-input suffix-icon="el-icon-search"></el-input>
+      <el-input
+        v-model="dictFilter"
+        @change="onDictFilterChange"
+        clearable
+        suffix-icon="el-icon-search"></el-input>
     </div>
-    <Tree :data="catalogs" currentNodeKey="2-1" class="tree"></Tree>
+    <Tree
+      ref="tree"
+      :data="dictList"
+      :currentNodeKey="currentDict"
+      @onClick="handleNodeClick"
+      class="tree"
+    ></Tree>
     <Dialog
       title="新增值域字典"
       ref="addCatalogDialog"
       class="addCatalogDialog"
+      @dialog-complete="onClickSubmitCatalog"
     >
       <Form
-        :formCfg="addCatalogCfg"
-        :formData="addCatalogData"
+        :formCfg="addCatalogCfg(classList, subClassOptions, subClassChange, sourceTypeOptions)"
+        :formData="dictForm"
         :formRule="catalogRule"
       ></Form>
     </Dialog>
@@ -21,10 +37,11 @@
       title="编辑值域字典"
       ref="editCatalogDialog"
       class="editCatalogDialog"
+      @dialog-complete="onClickSubmitCatalog"
     >
       <Form
         :formCfg="editCatalogCfg"
-        :formData="editCatalogData"
+        :formData="dictForm"
         :formRule="catalogRule"
       ></Form>
     </Dialog>
@@ -41,7 +58,8 @@ import {
   editCatalogCfg,
   catalogRule
 } from './config/catalogForm'
-import { EDITINGSTATE } from '@/utils/const'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapActions, mapMutations } = createNamespacedHelpers('value')
 
 export default {
   components: {
@@ -52,107 +70,78 @@ export default {
   },
   data() {
     return {
-      catalogs: [
-        {
-          id: '1',
-          label: '国家强制标准',
-          children: [
-            {
-              id: '1-1',
-              label: 'DICT_SEX',
-              state: EDITINGSTATE
-            },
-            {
-              id: '1-2',
-              label: 'DICT_RELIGION'
-            }
-          ]
-        },
-        {
-          id: '2',
-          label: '国家推荐标准',
-          state: EDITINGSTATE,
-          children: [
-            {
-              id: '2-1',
-              label: 'DICT_SEX',
-              state: EDITINGSTATE
-            },
-            {
-              id: '2-2',
-              label: 'DICT_RELIGION',
-              state: EDITINGSTATE
-            }
-          ]
-        },
-        {
-          id: '3',
-          label: '国家推荐标准',
-          state: EDITINGSTATE,
-          children: [
-            {
-              id: '3-1',
-              label: 'DICT_SEX',
-              state: EDITINGSTATE
-            },
-            {
-              id: '3-2',
-              label: 'DICT_RELIGION',
-              state: EDITINGSTATE
-            }
-          ]
-        },
-        {
-          id: '4',
-          label: '国家推荐标准',
-          state: EDITINGSTATE,
-          children: [
-            {
-              id: '4-1',
-              label: 'DICT_SEX',
-              state: EDITINGSTATE
-            },
-            {
-              id: '4-2',
-              label: 'DICT_RELIGION',
-              state: EDITINGSTATE
-            }
-          ]
-        },
-        {
-          id: '5',
-          label: '国家推荐标准',
-          state: EDITINGSTATE,
-          children: [
-            {
-              id: '5-1',
-              label: 'DICT_SEX',
-              state: EDITINGSTATE
-            },
-            {
-              id: '5-2',
-              label: 'DICT_RELIGION',
-              state: EDITINGSTATE
-            }
-          ]
-        }
-      ],
+      dictFilter: '',
       catalogRule,
       addCatalogCfg,
-      editCatalogCfg,
-      addCatalogData: {},
-      editCatalogData: {}
+      editCatalogCfg
     }
   },
-  created() {},
+  computed: {
+    ...mapState([
+      'dictForm', 
+      'dictList',
+      'classList',
+      'currentDict',
+      'currentVersionInfo'
+    ]),
+    ...mapGetters([
+      'currentDictItem',
+      'sourceTypeOptions'
+    ]),
+    subClassOptions() {
+      this.dictForm.subClass = ''
+      this.dictForm.ctlgCode = ''
+      const res = this.classList.find(item => item.id === this.dictForm.class)
+      if (res) return res.children
+      return []
+    }
+  },
   methods: {
+    ...mapMutations([
+      'setCurrentDict',
+      'setCurrentVersion',
+      'setCurrentDictValue',
+      'setDictForm'
+    ]),
+    ...mapActions([
+      'queryDict',
+      'queryVersion',
+      'queryVersionInfo',
+      'queryDictValue',
+      'submitDict'
+    ]),
+    async handleNodeClick({id}) {
+      this.setCurrentDict(id)
+      await this.queryVersion()
+      await this.queryVersionInfo()
+      await this.queryDictValue()
+      this.setCurrentDictValue()
+    },
+    subClassChange(val) {
+      this.dictForm.ctlgCode = val
+    },
     addCatalog() {
       this.$refs.addCatalogDialog.toggleOpen()
     },
     editCatalog() {
+      const { code, classifyCode } = this.currentVersionInfo
+      const { nameEn, nameCn } = this.currentDictItem
+      this.setDictForm({
+        dictCode: code,
+        ctlgCode: classifyCode,
+        nameCn, 
+        nameEn
+      })
       this.$refs.editCatalogDialog.toggleOpen()
+    },
+    onDictFilterChange(val) {
+      this.$refs.tree.filter(val)
+    },
+    async onClickSubmitCatalog() {
+      await this.submitDict()
+      await this.queryDict()
     }
-  }
+  },
 }
 </script>
 
@@ -164,9 +153,11 @@ export default {
   flex-direction: column;
   overflow: auto;
   .search {
-    padding: 5px 7px 5px 15px;
+    height: 41px;
+    padding: 0 7px 0 15px;
     box-sizing: border-box;
     display: flex;
+    flex-shrink: 0;
     justify-content: center;
     align-items: center;
     border-bottom: 1px solid #e5e5e5;
@@ -185,24 +176,23 @@ export default {
 }
 
 ::v-deep .addCatalogDialog .el-dialog {
-  width: 590px;
+  width: 900px;
   form {
-    /* height: 400px; */
-    /* padding-left: 20px; */
-    padding-right: 100px;
+    height: 320px;
+    padding-right: 70px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     flex-wrap: wrap;
     .el-form-item {
-      margin-bottom: 8px;
+      margin-bottom: 4px;
       display: inline-flex;
     }
   }
 }
 
 ::v-deep .editCatalogDialog .el-dialog {
-  width: 590px;
+  width: 570px;
   form {
     padding-right: 100px;
     display: flex;
@@ -210,7 +200,7 @@ export default {
     align-items: flex-end;
     flex-wrap: wrap;
     .el-form-item {
-      margin-bottom: 8px;
+      margin-bottom: 4px;
       display: inline-flex;
     }
   }

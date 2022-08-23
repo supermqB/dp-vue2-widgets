@@ -2,12 +2,6 @@
   <div class="catalogTitleWrap">
     <h3>{{ title }}</h3>
     <div class="buttons">
-      <!--img
-        v-for="action in actions"
-        :src="action.icon"
-        :key="action.type"
-        @click="click(action.type)"
-      /-->
       <div
         v-for="action in actions"
         :key="action.type"
@@ -57,10 +51,12 @@ export default {
   padding: 0 5px;
   box-sizing: border-box;
   display: flex;
+  flex-shrink: 0;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #e5e5e5;
+  flex-shrink: 0;
   h3 {
     font-size: 16px;
     font-weight: normal;

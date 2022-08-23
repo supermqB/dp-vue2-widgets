@@ -81,20 +81,9 @@
       >
       </el-input>
     </CardVue>
-    <div class="btn_box">
-      <div class="btn_area">
-        <el-button
-          @click="reset"
-          style="float: right; margin-right: 3%; margin-top: 3%"
-          >重置</el-button
-        >
-        <el-button
-          type="primary"
-          @click="save"
-          style="float: right; margin-right: 3%; margin-top: 3%"
-          >保存</el-button
-        >
-      </div>
+    <div class="btn_area">
+      <el-button @click="reset">重置</el-button>
+      <el-button type="primary" @click="save">保存</el-button>
     </div>
   </div>
 </template>
@@ -331,17 +320,12 @@ export default {
       }
     }
   }
-  .btn_box {
-    height: 45px;
-  }
   .btn_area {
-    height: 45px;
-    width: 208px;
-    position: fixed;
-    bottom: 32px;
-    right: 15px;
-    z-index: 1000;
-    background-color: #fff;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 0 6px 6px 0;
   }
 }
 </style>

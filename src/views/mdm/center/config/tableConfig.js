@@ -1,120 +1,42 @@
-import { camelCase } from 'lodash'
-
-export const drugColumns = [
-  { property: 'sdrg_inx', label: '药品SBR索引号' },
-  { property: 'drug_name', label: '药品注册名称' },
-  { property: 'drug_name_en', label: '药品注册名称(英文)' },
-  { property: 'drug_trade_name_cn', label: '药品商品名称(中文)' },
-  { property: 'drug_trade_name_en', label: '药品商品名称(英文)' },
-  { property: 'drug_common_name', label: '药物通用名称' },
-  { property: 'drug_simple_common_name', label: '简明通用名' },
-  { property: 'drug_chem_name', label: '药品化学名称' },
-  { property: 'drug_name_pinyin', label: '药物名称汉语拼音' },
-  { property: 'drug_dept', label: '用药科室' },
-  { property: 'hospital_drug_scope_use', label: '药物使用范围' },
-  { property: 'drug_type_code', label: '药品类别代码' },
-  { property: 'drug_type_name', label: '药品类别名称' },
-  { property: 'pharmacology_class_code', label: '药理分类代码' },
-  { property: 'pharmacology_class_name', label: '药理分类名称' },
-  { property: 'drug_atc_class_code', label: 'ATC分类代码' },
-  { property: 'drug_atc_class_name', label: 'ATC分类名称' },
-  { property: 'special_drug_category_code', label: '特殊药品分类代码' },
-  { property: 'special_drug_category_name', label: '特殊药品分类名称' },
-  { property: 'preparation_type_code', label: '制剂类别代码' },
-  { property: 'preparation_type_name', label: '制剂类别名称' },
-  { property: 'drug_form_code', label: '药物注册剂型代码' },
-  { property: 'drug_form_name', label: '药物注册剂型名称' },
-  { property: 'drug_spec', label: '注册规格' },
-  { property: 'drug_spec_std', label: '标准规格' },
-  { property: 'meas_num', label: '规格计量数值' },
-  { property: 'meas_unit', label: '规格计量单位' },
-  { property: 'dosage_num_vol', label: '规格剂量数值(体积)' },
-  { property: 'dosage_unit_vol', label: '规格剂量单位(体积)' },
-  { property: 'dosage_num_mass', label: '规格剂量数值(质量)' },
-  { property: 'dosage_unit_mass', label: '规格剂量单位(质量)' },
-  { property: 'dosage_num_other', label: '规格剂量数值(其他)' },
-  { property: 'dosage_unit_other', label: '规格剂量单位(其他)' },
-  { property: 'pack_quality', label: '包装材质' },
-  { property: 'pack_spec', label: '包装规格' },
-  { property: 'pack_transition_ratio', label: '包装转换比' },
-  { property: 'mini_pack_num', label: '最小包装数量' },
-  { property: 'mini_preparation_unit', label: '最小制剂单位' },
-  { property: 'mini_pack_unit', label: '最小包装单位' },
-  { property: 'scom_inx', label: '生产企业SBR索引号' },
-  { property: 'manufacture_company_name', label: '生产企业名称' },
-  { property: 'sub_package_company_name', label: '分包装企业名称' },
-  { property: 'sub_package_company_addr', label: '分包装企业地址' },
-  { property: 'sub_package_company_zip', label: '分包装企业邮政编码' },
-  { property: 'sub_package_company_tel', label: '分包装企业电话号码' },
-  { property: 'sub_package_company_fax', label: '分包装企业传真号码' },
-  { property: 'sub_package_company_website', label: '分包装企业网址' },
-  { property: 'drug_approval_no', label: '批准文号' },
-  { property: 'approve_date', label: '批准日期' },
-  { property: 'approval_expiry_date', label: '批准文号有效期截止日' },
-  { property: 'former_drug_approval_no', label: '原批准文号' },
-  { property: 'sub_package_approval_no', label: '分包装批准文号' },
-  { property: 'sub_package_approval_date', label: '分包装文号批准日期' },
-  {
-    property: 'sub_package_approval_exp_date',
-    label: '分包装批准文号有效期截止日'
-  },
-  { property: 'import_flag', label: '进口标志' },
-  { property: 'registration_no', label: '注册证号' },
-  { property: 'registration_date', label: '注册日期' },
-  { property: 'issue_date', label: '发证日期' },
-  { property: 'former_registration_no', label: '原注册证号' },
-  {
-    property: 'large_package_registration_no',
-    label: '进口药品大包装注册证号'
-  },
-  {
-    property: 'small_package_registration_no',
-    label: '进口药品小包装注册证号'
-  },
-  { property: 'drug_standard_no', label: '药品本位码' },
-  { property: 'drug_standard_no_note', label: '药品本位码备注' },
-  { property: 'insur_flag', label: '医保标志' },
-  { property: 'insur_charge_item_level_code', label: '医保收费项目等级代码' },
-  { property: 'insur_charge_item_level_name', label: '医保收费项目等级名称' },
-  { property: 'insur_drug_no', label: '医保药物编号' },
-  { property: 'insur_drug_name', label: '医保药物名称' },
-  { property: 'insur_drug_form_code', label: '医保药物剂型代码' },
-  { property: 'insur_drug_form_name', label: '医保药物剂型名称' },
-  { property: 'drug_valid_dur', label: '药品有效期限' },
-  { property: 'exec_standard', label: '执行标准' },
-  { property: 'storage', label: '贮藏方式' },
-  { property: 'drug_purchase_no', label: '药物招标采购编号' },
-  { property: 'otc_flag', label: '非处方药标志' },
-  { property: 'essential_drug_flag', label: '基药标志' },
-  { property: 'essential_drug_code', label: '基药药品代码' },
-  { property: 'essential_drug_name', label: '基药药品名称' },
-  { property: 'antibacterial_drug_flag', label: '抗菌药物标志' },
-  { property: 'antibacterial_drug_tp_code', label: '抗菌药物分类代码' },
-  { property: 'antibacterial_drug_tp_name', label: '抗菌药物分类名称' },
-  { property: 'antibacterial_drug_level_code', label: '抗菌药物等级代码' },
-  { property: 'antibacterial_drug_level_name', label: '抗菌药物等级名称' },
-  { property: 'direction_approval_date', label: '药品说明书核准日期' },
-  { property: 'direction_release_date', label: '药品说明书发布日期' },
-  { property: 'direction_modification_date', label: '药品说明书修改日期' },
-  { property: 'version_desc', label: '版本信息' },
-  { property: 'data_validity_flag', label: '数据有效标志' },
-  { property: 'data_create_time', label: '数据创建时间' },
-  { property: 'data_modify_time', label: '数据修改时间' }
-].map(({ property, label }) => ({ property: camelCase(property), label }))
-
-export const drugTableConfig = [
-  {
-    colConfig: {
-      property: 'id',
-      label: '序号',
-      width: 55
+export const tableConfigGen = function (columns) {
+  return [
+    {
+      colConfig: {
+        property: 'id',
+        label: '序号',
+        width: 55,
+        fixed: true
+      }
+    },
+    ...columns.map(({ property, label }, idx) => ({
+      colConfig: {
+        property,
+        label,
+        /* every character occupy 17px, no matter it's en, cn or symbol. */
+        width: label.length * 17,
+        fixed: idx < 2
+      }
+    })),
+    {
+      colConfig: {
+        property: '',
+        label: '操作',
+        fixed: 'right'
+      },
+      actions: [
+        {
+          type: 'el-button',
+          typeProps: {
+            type: 'text',
+            round: false
+          },
+          id: 'edit',
+          name: '编辑',
+          callback: (idx, tableData) => {
+            this.startEditMDM()
+          }
+        }
+      ]
     }
-  },
-  ...drugColumns.map(({ property, label }) => ({
-    colConfig: {
-      property,
-      label,
-      width: label.length * 17
-    }
-  }))
-]
+  ]
+}

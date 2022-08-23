@@ -1,19 +1,19 @@
-export const generateSearchFormConfig = function () {
+export const drg = function () {
   return [
     {
       type: 'el-input',
       label: '编号',
-      id: 'index'
+      id: 'sdrg_inx'
     },
     {
       type: 'el-input',
       label: '名称',
-      id: 'name'
+      id: 'drug_name'
     },
     {
       type: 'el-input',
       label: '批准文号',
-      id: 'approvalNo'
+      id: 'drug_approval_no'
     },
     {
       type: 'el-select',
@@ -23,16 +23,7 @@ export const generateSearchFormConfig = function () {
         { label: '中成药', value: '21' }
       ],
       label: '药品类别',
-      id: 'drugType'
-    },
-    {
-      type: 'el-select',
-      options: [
-        { label: 'code1', value: '1' },
-        { label: 'code2', value: '2' }
-      ],
-      label: '注册剂型',
-      id: 'atcClassCode'
+      id: 'drug_type_code'
     },
     {
       type: 'el-autocomplete',
@@ -47,7 +38,103 @@ export const generateSearchFormConfig = function () {
         placeholder: '请输入并选择'
       },
       label: '注册剂型',
-      id: 'drugForm'
+      id: 'drug_form_name'
     }
   ]
 }
+
+export const mat = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'smat_inx'
+    },
+    {
+      type: 'el-input',
+      label: '耗材名称',
+      id: 'material_name'
+    },
+
+    {
+      type: 'el-input',
+      label: '注册证号',
+      id: 'registration_number'
+    },
+    {
+      type: 'el-input',
+      label: '一级分类',
+      id: 'material_first_name'
+    },
+    {
+      type: 'el-input',
+      label: '二级分类',
+      id: 'material_second_name'
+    },
+    {
+      type: 'el-input',
+      label: '三级分类',
+      id: 'material_third_name'
+    },
+    {
+      type: 'el-input',
+      label: '生产企业',
+      id: 'mnf_company_name'
+    }
+  ]
+}
+
+export const dis = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'sdis_inx'
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: 'wm_disease_name'
+    },
+    {
+      type: 'el-input',
+      label: '疾病分类',
+      id: 'wm_disease_class'
+    }
+  ]
+}
+
+export const tcm = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'stcm_inx'
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: 'tcm_disease_name'
+    },
+    {
+      type: 'el-input',
+      label: '疾病分类',
+      id: 'tcm_disease_class'
+    }
+  ]
+}
+
+export const likeFields = {
+  mat: [
+    'material_name',
+    'material_first_name',
+    'material_second_name',
+    'material_third_name',
+    'mnf_company_name'
+  ],
+  drg: ['drug_name'],
+  dis: ['wm_disease_name', 'wm_disease_class'],
+  tcm: ['tcm_disease_name', 'tcm_disease_class']
+}
+
+export default { drg, mat, dis, tcm }

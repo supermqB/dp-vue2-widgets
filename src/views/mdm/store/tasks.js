@@ -1,4 +1,7 @@
+import { post } from '@/utils/request'
+import { Message } from 'element-ui'
 const state = {
+  searchKey: '',
   taskList: [],
   checkedFilters: [],
   selectedTasks: [],
@@ -59,6 +62,9 @@ const getters = {
 }
 
 const mutations = {
+  setSearchKey(state, value) {
+    state.searchKey = value
+  },
   setCheckedFilters(state, value) {
     state.checkedFilters = value
   },
@@ -74,46 +80,41 @@ const mutations = {
 }
 
 const actions = {
-  listSuspectTasks({ commit, rootState }) {
-    console.log(rootState.mdm.selectedMDM.id)
-    commit('setTaskList', [
-      {
-        source: '王俊',
-        name: '阿司匹林',
-        state: '待完成',
-        suspectList: [
-          {
-            id: 1,
-            sdrgInx: 'XC01EBX049B002020104017',
-            drugName: '药物A',
-            drugTradeNameCn: '阿斯匹林',
-            drugTradeNameEn: 'asipingling',
-            drugTypeName: '药品类别'
-          },
-          {
-            id: 2,
-            sdrgInx: 'XC01EBX049B002020104017',
-            drugName: '药物B',
-            drugTradeNameCn: '阿斯匹林',
-            drugTradeNameEn: 'asipingling',
-            drugTypeName: '药品类别'
-          }
-        ]
-      },
-      {
-        source: '王俊',
-        name: '药物A',
-        state: '待完成'
-      },
-      {
-        source: '丁思丝',
-        name: '药物A',
-        state: '待完成'
-      }
-    ])
+  async listSuspectTasks({ commit, state, rootState }) {
+    const type = rootState.mdm.selectedMDM.type
+    const searchKey = state.searchKey
+    const result = await post('suspected/list', { type, searchKey })
+    if (result.success) {
+      const tasks = result.value.map(task => {
+        return {
+          source: task.source,
+          name: task.name,
+          state: ['待完成', '已完成'][task.state * 1],
+          suspectList: task.suspectList.map(suspect => {
+            return {
+              id: suspect.id,
+              ...suspect.suspectObject
+            }
+          })
+        }
+      })
+
+      commit('setTaskList', tasks)
+    }
   },
-  completeTasks({ state }) {
-    console.log(state.selectedTasks)
+  async completeTasks({ state, dispatch }) {
+    const selectedTasks = state.selectedTasks
+    const commitSuspectIds = selectedTasks.reduce((accuSet, curTask) => {
+      curTask.suspectList.forEach(sus => {
+        accuSet.add(sus.id)
+      })
+      return accuSet
+    }, new Set())
+    const result = await post('suspected/commit', [...commitSuspectIds])
+    if (result.success) {
+      Message.success('疑似任务已确认完成。')
+      dispatch('listSuspectTasks')
+    }
   }
 }
 

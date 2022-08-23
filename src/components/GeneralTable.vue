@@ -12,17 +12,19 @@
         stripe
         ref="el_table"
       >
-        <el-table-column type="selection" width="30" v-if="multipleSelect">
+        <el-table-column type="selection" width="30" fixed v-if="multipleSelect">
         </el-table-column>
-        <el-table-column width="30" v-else>
-          <template #default="{ $index: idx, row, column }">
-            <el-radio v-model="selectedIdx" :label="row.index"></el-radio>
+        <el-table-column width="30" fixed v-else>
+          <template #default="{ row, $index }">
+            <el-radio v-model="selectedIdx" :label="row.index" v-if="isShowRadio"></el-radio>
+            <span v-else>{{ $index + 1 }}</span>
           </template>
         </el-table-column>
         <el-table-column
           v-for="col in tableConfig"
           v-bind="col.colConfig"
           :key="col.colConfig.property"
+          show-overflow-tooltip
         >
           <template
             #default="{ $index: rowIdx, row, column }"
@@ -39,19 +41,6 @@
             >
               {{ action.name }}
             </component>
-          </template>
-          <template v-else #default="{ $index: rowIdx, row, column }">
-            <!-- <el-tooltip :content="`${row[column.property]}`" placement="top"> -->
-            <div
-              style="
-                text-overflow: ellipsis;
-                overflow: hidden;
-                word-break: keep-all;
-                white-space: pre;
-              "
-              :title="formatCell(row[column.property], col.formatter)"
-            >{{ formatCell(row[column.property], col.formatter) }}</div>
-            <!-- </el-tooltip> -->
           </template>
         </el-table-column>
       </el-table>
@@ -75,77 +64,24 @@ export default {
   props: {
     tableConfig: {
       type: Array,
-      default: function () {
-        return [
-          /*  {
-            colConfig: {
-              property: 'index',
-              label: '序号',
-              width: 120
-            }
-          },
-          {
-            colConfig: {
-              property: 'code',
-              label: '编码',
-              width: 120
-            }
-          },
-          {
-            colConfig: {
-              property: '',
-              label: '操作'
-            },
-            actions: [
-              {
-                type: 'el-button',
-                typeProps: {
-                  type: 'text',
-                  round: false
-                },
-                id: 'edit',
-                name: '编辑',
-                callback(idx, tableData) {
-                  //this.$refs.editdialog.toggleOpen()
-                }
-              }
-            ]
-          } */
-        ]
-      }
+      default: () => []
     },
     tableData: {
       type: Array,
-      default: function () {
-        return [
-          /*  {
-            index: 1,
-            code: 'DE01.00.10.001'
-          },
-          {
-            index: 2,
-            code: 'DE01.00.10.002'
-          } */
-        ]
-      }
+      default: () => []
     },
     pageInfo: {
-      type: Object
-      /* default: function () {
-        return {
-          curPage: 2,
-          pageSize: 40,
-          totalSize: 400,
-          totalPage: 10
-        }
-      } */
+      type: Object,
+      default: () => null
     },
     multipleSelect: {
       type: Boolean,
-      default: () => {
-        return false
-      }
-    }
+      default: () => false
+    },
+    isShowRadio: {
+      type: Boolean,
+      default: () => true
+    },
   },
   data() {
     return {
@@ -175,14 +111,8 @@ export default {
       this.pageInfo.curPage = currentPage
       this.$emit('page-changed', { curPage: currentPage })
     },
-    completeEditElem() {
-      console.log('edit data elem')
-    },
     setCurrentRow(row) {
       this.$refs.el_table.setCurrentRow(row)
-    },
-    formatCell(val, formatter) {
-      return formatter ? formatter(val) : val
     }
   }
 }
@@ -206,7 +136,7 @@ export default {
     height: 300px; /*table default height*/
     overflow: auto;
     .el-table {
-        font-size: 13px;
+      font-size: 13px;
       &.el-table--border .el-table__cell:first-child .cell {
         padding-left: 0;
       }

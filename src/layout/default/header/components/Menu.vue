@@ -57,7 +57,6 @@ export default {
     }
   },
   created() {
-    // console.log(this.$route.name)
     this.activeIndex = this.$route.name
   },
   methods: {

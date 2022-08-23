@@ -12,6 +12,8 @@ import event from './modules/event'
 import value from './modules/value'
 import bwd from './modules/bwd'
 
+import docs from '@/views/docs/store'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -26,6 +28,10 @@ export default new Vuex.Store({
     event,
     mdm,
     value,
+<<<<<<< HEAD
     bwd
+=======
+    docs
+>>>>>>> dev
   }
 })

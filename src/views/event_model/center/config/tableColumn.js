@@ -59,20 +59,20 @@ export default [
     colConfig: {
       property: 'requiredFlag',
       label: '必填',
-      minWidth: 60
-    },
-    formatter(val) {
-      return val ? '是' : '否'
+      minWidth: 60,
+      formatter(row, col, val) {
+        return val ? '是' : '否'
+      }
     }
   },
   {
     colConfig: {
       property: 'primaryKeyFlag',
       label: '主键',
-      minWidth: 60
-    },
-    formatter(val) {
-      return val ? '是' : '否'
+      minWidth: 60,
+      formatter(row, col, val) {
+        return val ? '是' : '否'
+      }
     }
   }
 ]

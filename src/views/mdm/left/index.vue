@@ -9,9 +9,14 @@
       :hasItem2Do="!!selectedTasks.length"
       @checked-filter-keys="handleFiltered"
       @selected-items-changed="handleSelectedTasks"
+      @search-key-change="handleSearchChanged"
       @complete-action="handleCompleteAction"
     />
-    <Bottom class="bottom" :labelList="['数据量', '任务量']"></Bottom>
+    <Bottom
+      class="bottom"
+      :labelList="['数据量', '任务量']"
+      :value="bottomValues"
+    ></Bottom>
   </div>
 </template>
 <script>
@@ -22,6 +27,9 @@ import { taskTableConfig } from './configs'
 import CatalogVue from './Catalog.vue'
 import TaskList from '@/views/common/SuspectTaskList.vue'
 import Bottom from '@/components/bottom/Catalog.vue'
+
+import { confirm } from '@/utils/pops'
+import { unitFmt } from '@/utils/format'
 export default {
   data() {
     return {
@@ -34,21 +42,35 @@ export default {
     Bottom
   },
   computed: {
-    ...mapState({ selectedTasks: state => state.selectedTasks }),
+    ...mapState({
+      selectedTasks: state => state.selectedTasks,
+      taskCount: state => state.taskList.length
+    }),
     ...mapGetters(['filterTreeData', 'filteredTask']),
-    ...globalMapState({ selectedMDM: state => state.mdm.selectedMDM })
+    ...globalMapState({
+      selectedMDM: state => state.mdm.selectedMDM,
+      selectedMDMDesc: state => state.mdm.selectedMDMDesc
+    }),
+    bottomValues() {
+      return [unitFmt(this.selectedMDMDesc.dataCount), this.taskCount]
+    }
   },
   methods: {
-    ...mapMutations(['setCheckedFilters', 'setSelectedTasks']),
+    ...mapMutations(['setSearchKey', 'setCheckedFilters', 'setSelectedTasks']),
     ...mapActions(['listSuspectTasks', 'completeTasks']),
+    handleSearchChanged(key) {
+      this.setSearchKey(key)
+      this.listSuspectTasks()
+    },
     handleFiltered(keys) {
       this.setCheckedFilters(keys)
     },
     handleSelectedTasks(tasks) {
       this.setSelectedTasks(tasks)
     },
-    handleCompleteAction() {
-      this.completeTasks()
+    async handleCompleteAction() {
+      const confirmed = await confirm('是否确认已完成选中任务？')
+      confirmed && this.completeTasks()
     }
   },
   watch: {
@@ -74,7 +96,7 @@ export default {
   }
   .task {
     .table_container {
-      height: 300px;
+      height: 236px;
     }
   }
   .bottom {

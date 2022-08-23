@@ -1,4 +1,4 @@
-const drugEnvolope = [
+const drg = [
   {
     name: 'basic',
     title: '基本信息',
@@ -50,4 +50,77 @@ const drugEnvolope = [
   }
 ]
 
-export { drugEnvolope }
+const mat = [
+  {
+    name: 'classific',
+    title: '分类信息',
+    props: [
+      'common_name',
+      'material_other_name',
+      'material_goods',
+      'material_model',
+      'material_spec',
+      'material_first_name',
+      'material_second_name',
+      'material_third_name'
+    ]
+  },
+  {
+    name: 'produce',
+    title: '生产信息',
+    props: ['mnf_company_name', 'registration_number', 'register_info']
+  },
+  {
+    name: 'specific',
+    title: '单件产品信息',
+    props: ['product_name', 'product_spec', 'product_model']
+  }
+]
+
+const dis = [
+  {
+    name: 'basic',
+    title: '基本信息',
+    props: ['wm_disease_other_name']
+  },
+  {
+    name: 'chapter',
+    title: '章节信息',
+    props: ['wm_disease_chapter_no']
+  },
+  {
+    name: 'type',
+    title: '类型信息',
+    props: ['wm_disease_class']
+  },
+  {
+    name: 'parent',
+    title: '父级信息',
+    props: ['sdis_parent_inx', 'parent_wm_disease_name', 'hierarchy_no']
+  }
+]
+
+const tcm = [
+  {
+    name: 'basic',
+    title: '基本信息',
+    props: ['tcm_disease_other_name']
+  },
+  {
+    name: 'type',
+    title: '类型信息',
+    props: ['tcm_disease_class']
+  },
+  {
+    name: 'parent',
+    title: '父级信息',
+    props: ['stcm_parent_inx', 'parent_tcm_disease_name', 'hierarchy_no']
+  },
+  {
+    name: 'clinical',
+    title: '临床信息',
+    props: ['nosogenesis_desc', 'clinical_feature_desc']
+  }
+]
+
+export default { drg, mat, dis, tcm }
