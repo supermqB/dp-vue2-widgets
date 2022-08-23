@@ -93,10 +93,13 @@ export default {
       mdmTable: state => state.mdmTable
     }),
     mdmprops() {
+      let cTime = this.selectedMDMDesc.createTime
+      let uTime = this.selectedMDMDesc.updateTime
+      if (!cTime || !uTime) return []
       return [
         { prop: '标准来源：', value: this.selectedMDMDesc.standardSrc },
-        { prop: ' 创建日期：', value: this.selectedMDMDesc.createTime },
-        { prop: '更新日期：', value: this.selectedMDMDesc.updateTime }
+        { prop: ' 创建时间：', value: cTime.substr(0, cTime.indexOf('.')) },
+        { prop: '更新时间：', value: uTime.substr(0, uTime.indexOf('.')) }
       ]
     },
     pageInfoChangeSignal() {

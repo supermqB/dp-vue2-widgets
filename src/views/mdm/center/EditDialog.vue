@@ -136,7 +136,7 @@ export default {
 
       if (valid) {
         const success =
-           this.mode == 'edit'
+          this.mode == 'edit'
             ? await this.editMdmItem(this.formData)
             : await this.createMdmItem(this.formData)
         success && this.$refs.editDialog.toggleOpen()
