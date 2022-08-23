@@ -59,13 +59,7 @@ const mat = [
       'material_other_name',
       'material_goods',
       'material_model',
-      'material_spec'
-    ]
-  },
-  {
-    name: 'insur',
-    title: '医保分类信息',
-    props: [
+      'material_spec',
       'material_first_name',
       'material_second_name',
       'material_third_name'

@@ -28,11 +28,15 @@ const getters = {
     if (!state.selectedMDMDesc.columnList) {
       return []
     }
-    return state.selectedMDMDesc.columnList.map(col => ({
-      property: col.nameEn,
-      label: col.nameCn,
-      required: col.requiredFlag == '1'
-    }))
+    return state.selectedMDMDesc.columnList
+      .map(col => ({
+        property: col.nameEn,
+        label: col.nameCn,
+        required: col.requiredFlag == '1'
+      }))
+      .filter(
+        ({ property }) => ['fundamental_factor_flag'].indexOf(property) == -1
+      )
   }
 }
 

@@ -4,15 +4,17 @@ export const tableConfigGen = function (columns) {
       colConfig: {
         property: 'id',
         label: '序号',
-        width: 55
+        width: 55,
+        fixed: true
       }
     },
-    ...columns.map(({ property, label }) => ({
+    ...columns.map(({ property, label }, idx) => ({
       colConfig: {
         property,
         label,
         /* every character occupy 17px, no matter it's en, cn or symbol. */
-        width: label.length * 17
+        width: label.length * 17,
+        fixed: idx < 2
       }
     })),
     {

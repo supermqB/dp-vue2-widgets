@@ -12,9 +12,9 @@
         stripe
         ref="el_table"
       >
-        <el-table-column type="selection" width="30" v-if="multipleSelect">
+        <el-table-column type="selection" width="30" fixed v-if="multipleSelect">
         </el-table-column>
-        <el-table-column width="30" v-else>
+        <el-table-column width="30" fixed v-else>
           <template #default="{ row, $index }">
             <el-radio v-model="selectedIdx" :label="row.index" v-if="isShowRadio"></el-radio>
             <span v-else>{{ $index + 1 }}</span>

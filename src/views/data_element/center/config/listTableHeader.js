@@ -4,14 +4,16 @@ export function getListTableHeader() {
       colConfig: {
         property: 'id',
         label: '序号',
-        width: 55
+        width: 55,
+        fixed: true
       }
     },
     {
       colConfig: {
         property: 'identifier',
         label: '数据元标识符',
-        width: 125
+        width: 125,
+        fixed: true
       }
     },
     {
