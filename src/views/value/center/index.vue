@@ -62,7 +62,7 @@
       @dialog-complete="onClickEditVersion"
     >
       <Form
-        :formCfg="editVersionCfg(versionList)"
+        :formCfg="editVersionCfg(versionList, sourceTypeOptions)"
         :formData="dictVersionForm"></Form>
     </Dialog>
     <Dialog
@@ -147,7 +147,8 @@ export default {
       'currentVersionItem',
       'currentDictItem',
       'tableConfig',
-      'dictValueFormCfg'
+      'dictValueFormCfg',
+      'sourceTypeOptions'
     ]),
     curVersion: {
       async set(value) {
@@ -185,11 +186,11 @@ export default {
       this.$refs.addVersionDialog.toggleOpen()
     },
     editVersion() {
-      const { nameEn, nameCn, sourceType } = this.currentDictItem
+      const { nameEn, nameCn, sourceTypeCode } = this.currentDictItem
       this.setDictVersionForm({
         nameCn, 
         nameEn,
-        sourceType
+        sourceTypeCode
       })
       this.$refs.editVersionDialog.toggleOpen()
     },

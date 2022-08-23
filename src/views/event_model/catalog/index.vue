@@ -161,7 +161,6 @@ export default {
       this.$refs.catalogForm.resetFields()
     },
     onClickRunDialog() {
-      if (!this.currentCatalog || this.currentCatalogItem.state === RUNNINGSTATE) return
       this.runDialog = true
     },
     onClickRunAllCatalog() {
@@ -170,7 +169,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.runCatalog()
+        this.runCatalog(true)
         this.runDialog = false
       })  
     },

@@ -119,10 +119,11 @@ export const queryDataElementApi = nameCn => {
   })
 }
 
-export const submitCatalogApi = id => {
+export const submitCatalogApi = list => {
   return request({
-    method: 'put',
-    url: `/dataset/saveDataSet/${parseInt(id)}`
+    method: 'post',
+    url: `/dataset/saveDataSet`,
+    data: list
   })
 }
 

@@ -108,7 +108,14 @@ const getters = {
   },
   tableConfig(state) {
     if (!state.currentVersionInfo || !state.currentVersionInfo.columnNameList)
-      return []
+      return [
+        {
+          colConfig: {
+            property: '',
+            label: ''
+          }
+        }
+      ]
     return state.currentVersionInfo.columnNameList.map(name => {
       return {
         colConfig: {
@@ -158,7 +165,7 @@ const mutations = {
     state.versionForm = Object.assign({}, versionForm)
     state.versionForm.dictName = nameCn
   },
-  setDictVersionForm(state, { nameCn, nameEn, sourceType }) {
+  setDictVersionForm(state, { nameCn, nameEn, sourceTypeCode }) {
     const master = state.versionList.find(item => item.isMaster)
     const current = state.versionList.find(
       item => item.id === state.currentVersion
@@ -168,7 +175,7 @@ const mutations = {
     state.dictVersionForm.nameCn = nameCn
     state.dictVersionForm.nameEn = nameEn
     state.dictVersionForm.state = state.currentVersionInfo.state
-    state.dictVersionForm.sourceType = sourceType
+    state.dictVersionForm.sourceTypeCode = sourceTypeCode
     state.dictVersionForm.sourceBasis = state.currentVersionInfo.sourceBasis
   },
   setDictValueForm(state, form) {
@@ -183,8 +190,8 @@ const mutations = {
         state.dictList.length &&
         state.dictList[0].children.length
       ) {
-        // state.currentDict = 'dict_drug_form'
-        state.currentDict = state.dictList[0].children[0].id
+        state.currentDict = 'dict_drug_form'
+        // state.currentDict = state.dictList[0].children[0].id
       }
     }
   },

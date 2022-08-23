@@ -69,7 +69,7 @@ export const addCatalogCfg = (
       label: '版本',
       id: 'version',
       elOptions: {
-        disabled: true
+        // disabled: true
         // placeholder: 'V1.0'
       }
     },

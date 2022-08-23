@@ -1,6 +1,6 @@
 import { STATEOPTIONS } from '@/utils/const'
 
-export const editVersionCfg = versionOptions =>
+export const editVersionCfg = (versionOptions, sourceTypeOptions) =>
   [
     {
       type: 'el-select',
@@ -39,12 +39,12 @@ export const editVersionCfg = versionOptions =>
       elOptions: {}
     },
     {
-      type: 'el-input',
-      options: [],
+      type: 'el-select',
+      options: sourceTypeOptions,
       label: '标准来源',
-      id: 'sourceType',
+      id: 'sourceTypeCode',
       elOptions: {
-        disabled: true
+        // disabled: true
       }
     },
     {
