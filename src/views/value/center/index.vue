@@ -26,9 +26,9 @@
       :sourceType="currentDictItem.sourceType"
       v-bind="currentVersionInfo"></Detail>
     <div class="search">
-      <Form :formCfg="searchValueCfg" :formData="searchForm"></Form>
+      <Form :formCfg="searchValueCfg(currentVersionInfo.parentCode, currentVersionInfo.hierarchyRelation)" :formData="searchForm"></Form>
       <div class="operation">
-        <el-button>查询</el-button>
+        <el-button @click="queryDictValue">查询</el-button>
         <el-button @click="addValue" :disabled="!currentVersion && false">新增</el-button>
         <el-button @click="editValue" :disabled="!currentColumn && false">编辑</el-button>
       </div>

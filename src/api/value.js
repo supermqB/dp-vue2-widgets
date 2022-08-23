@@ -72,7 +72,7 @@ export const downloadTemplateApi = dictName => {
   })
 }
 
-export const getListApi = ({ dictId, current, size }) => {
+export const getListApi = ({ dictId, current, size, columnParamList }) => {
   return request({
     url: '/dict/list',
     method: 'post',
@@ -81,7 +81,8 @@ export const getListApi = ({ dictId, current, size }) => {
       size
     },
     data: {
-      id: dictId
+      id: dictId,
+      columnParamList
     }
   })
 }

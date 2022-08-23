@@ -28,6 +28,7 @@
       @dialog-complete="onClickSubmitAddCatalog"
     >
       <Form
+        ref="addDictForm"
         :formCfg="addCatalogCfg(classList, subClassOptions, subClassChange, sourceTypeOptions)"
         :formData="dictForm"
         :formRule="catalogRule"
@@ -40,6 +41,7 @@
       @dialog-complete="onClickSubmitEditCatalog"
     >
       <Form
+        ref="editDictForm"
         :formCfg="editCatalogCfg"
         :formData="dictForm"
         :formRule="catalogRule"
@@ -113,15 +115,17 @@ export default {
       'submitDict',
       'onDictChange'
     ]),
-    subClassChange(val) {
+    async subClassChange(val) {
       this.dictForm.ctlgCode = val
-    },
-    async addCatalog() {
-      const { classifyCode } = this.currentVersionInfo
-      const { value } = await getMaxDictCodeApi(classifyCode)
+      const { value } = await getMaxDictCodeApi(val)
       const dictCode = getMaxNumber(value, 7)
       this.setDictForm({ dictCode })
+    },
+    async addCatalog() {
       this.$refs.addCatalogDialog.toggleOpen()
+      this.$nextTick(() => {
+        this.$refs.addDictForm.resetFields()
+      })
     },
     editCatalog() {
       const { code, classifyCode } = this.currentVersionInfo
@@ -133,21 +137,34 @@ export default {
         nameEn
       })
       this.$refs.editCatalogDialog.toggleOpen()
+      this.$nextTick(() => {
+        this.$refs.editDictForm.resetFields()
+      })
     },
     onDictFilterChange(val) {
       this.$refs.tree.filter(val)
     },
     async onClickSubmitAddCatalog() {
-      await this.submitDict(true)
-      this.$message.success('新增值域字典成功！')
-      this.$refs.addCatalogDialog.toggleOpen()
-      await this.queryDict()
+      const { valid } = await this.$refs.addDictForm.validate()
+      if (valid) {
+        await this.submitDict(true)
+        this.$message.success('新增值域字典成功！')
+        this.$refs.addCatalogDialog.toggleOpen()
+        await this.queryDict()
+      } else {
+        this.$alert('请检查输入项是否完整！')
+      }
     },
     async onClickSubmitEditCatalog() {
-      await this.submitDict(false)
-      this.$message.success('值域字典编辑成功！')
-      this.$refs.editCatalogDialog.toggleOpen()
-      await this.queryDict()
+      const { valid } = await this.$refs.editDictForm.validate()
+      if (valid) {
+        await this.submitDict(false)
+        this.$message.success('值域字典编辑成功！')
+        this.$refs.editCatalogDialog.toggleOpen()
+        await this.queryDict()
+      } else {
+        this.$alert('请检查输入项是否完整！')
+      }
     }
   },
 }

@@ -1,9 +1,10 @@
-export const searchValueCfg = [
+export const searchValueCfg = (parentCode, hierarchyRelation) => [
   {
     type: 'el-input',
     label: '编码',
-    id: 'code',
+    id: '编码',
     elOptions: {
+      clearable: true,
       style: {
         width: '85px'
       }
@@ -12,8 +13,9 @@ export const searchValueCfg = [
   {
     type: 'el-input',
     label: '名称',
-    id: 'name',
+    id: '名称',
     elOptions: {
+      clearable: true,
       style: {
         width: '85px'
       }
@@ -21,10 +23,11 @@ export const searchValueCfg = [
   },
   {
     type: 'el-select',
-    options: [],
+    options: parentCode,
     label: '父级代码',
-    id: 'parent',
+    id: '父级代码',
     elOptions: {
+      clearable: true,
       style: {
         width: '90px'
       }
@@ -32,10 +35,11 @@ export const searchValueCfg = [
   },
   {
     type: 'el-select',
-    options: [],
+    options: hierarchyRelation,
     label: '层级关系',
-    id: 'level',
+    id: '层级关系',
     elOptions: {
+      clearable: true,
       style: {
         width: '90px'
       }

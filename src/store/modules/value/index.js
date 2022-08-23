@@ -183,8 +183,8 @@ const mutations = {
         state.dictList.length &&
         state.dictList[0].children.length
       ) {
-        state.currentDict = 'dict_drug_form'
-        // state.currentDict = state.dictList[0].children[0].id
+        // state.currentDict = 'dict_drug_form'
+        state.currentDict = state.dictList[0].children[0].id
       }
     }
   },
@@ -269,9 +269,28 @@ const actions = {
     })
   },
   async queryDictValue({ state, commit }) {
+    commit('setDictValueList')
     const dictId = state.currentVersion
     const { curPage: current, pageSize: size } = state.pageInfo
-    const { value } = await getListApi({ dictId, current, size })
+    const columnParamList = []
+    ;[
+      { name: '编码', condition: 'like' },
+      { name: '名称', condition: 'like' },
+      { name: '父级代码', condition: 'equal' },
+      { name: '层级关系', condition: 'equal' }
+    ].forEach(item => {
+      if (state.searchForm[item.name]) {
+        columnParamList.push(
+          Object.assign(item, { value: state.searchForm[item.name] })
+        )
+      }
+    })
+    const { value } = await getListApi({
+      dictId,
+      current,
+      size,
+      columnParamList
+    })
     commit('setPageInfo', value.pageInfo)
     commit(
       'setDictValueList',
