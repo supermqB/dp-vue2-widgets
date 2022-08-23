@@ -28,10 +28,7 @@ export default new Vuex.Store({
     event,
     mdm,
     value,
-<<<<<<< HEAD
-    bwd
-=======
+    bwd,
     docs
->>>>>>> dev
   }
 })
