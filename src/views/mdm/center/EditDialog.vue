@@ -65,7 +65,7 @@ export default {
       return validRules
     },
     formCfg() {
-      let suspectList = this.workingTask.suspectList
+      let suspectList = this.workingTask?.suspectList
       return this.mdmCols.map(({ property, label }) => {
         if (property.indexOf('_flag') > 1) {
           return {

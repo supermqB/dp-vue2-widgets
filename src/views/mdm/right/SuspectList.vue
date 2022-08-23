@@ -55,7 +55,7 @@ export default {
   watch: {
     filteredTask(tasks) {
       let firstTask = tasks[0]
-      this.curTask = `${firstTask.source}:${firstTask.name}`
+      this.curTask = firstTask ? `${firstTask.source}:${firstTask.name}` : ''
     },
     curTask(curTask) {
       this.setWorkingTask(
@@ -77,11 +77,12 @@ export default {
         task => `${task.source}:${task.name}` == this.curTask
       )
       let curSusList = curTask.length && curTask[0].suspectList
+      let cfg = envelopeConfig[curMDMType] || []
       return curSusList
         ? curSusList.map(sus => {
             return {
               title: curTask[0].name,
-              fields: envelopeConfig[curMDMType].map(item => {
+              fields: cfg.map(item => {
                 return {
                   name: item.title,
                   value: item.props

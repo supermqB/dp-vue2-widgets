@@ -26,6 +26,7 @@ const state = {
 const mutations = {
   setSearchFormConfig(state, type) {
     let generator = formConfigs[type]
+    if (!generator) return
     let cfg =
       typeof generator == 'function' ? generator.apply(state) : generator
 
