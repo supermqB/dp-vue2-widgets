@@ -7,7 +7,7 @@ export default {
     dictCode: '',
     nameEn: '',
     nameCn: '',
-    version: 'V1.0',
+    version: '',
     sourceTypeCode: '',
     sourceBasis: '',
     sourceBasisCode: '',

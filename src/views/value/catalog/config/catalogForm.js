@@ -177,5 +177,6 @@ export const catalogRule = {
   sourceTypeCode: { required: true },
   nameCn: { required: true },
   nameEn: [{ required: true }, { validator: validateEnglish, trigger: 'blur' }],
-  version: { required: true }
+  version: { required: true },
+  state: { required: true }
 }
