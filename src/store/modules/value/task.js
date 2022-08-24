@@ -1,4 +1,6 @@
 import { getSuspectListApi } from '@/api/task'
+import { post } from '@/utils/request'
+import { Message } from 'element-ui'
 
 const state = {
   searchKey: '',
@@ -71,6 +73,9 @@ const mutations = {
   setTaskList(state, list) {
     state.taskList = !list ? [] : list
   },
+  setSuspectList(state) {
+    state.taskList = []
+  },
   setSearchKey(state, value) {
     state.searchKey = value
   },
@@ -84,7 +89,7 @@ const mutations = {
 
 const actions = {
   async querySuspect({ commit, state }, { id }) {
-    const res = await getSuspectListApi('25', state.searchKey)
+    const res = await getSuspectListApi(id, state.searchKey)
     commit(
       'setTaskList',
       res.value.map(item => {
@@ -102,12 +107,11 @@ const actions = {
       })
       return accuSet
     }, new Set())
-    console.log(commitSuspectIds)
-    // const result = await post('suspected/commit', [...commitSuspectIds])
-    // if (result.success) {
-    //   Message.success('疑似任务已确认完成。')
-    //   dispatch('listSuspectTasks')
-    // }
+    const result = await post('suspected/commit', [...commitSuspectIds])
+    if (result.success) {
+      Message.success('疑似任务已确认完成。')
+      // dispatch('listSuspectTasks')
+    }
   }
 }
 

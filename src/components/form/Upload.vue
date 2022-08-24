@@ -19,8 +19,7 @@
       <p slot="tip" class="downloadTemplate">
         请
         <img src="@/assets/images/common/icons/download.png" />
-        <span class="inputTemplate">下载导入模板</span>
-        {{ templateFileName }}
+        <span class="inputTemplate" @click="download">下载导入模板</span>
       </p>
     </el-upload>
   </div>
@@ -53,6 +52,9 @@ export default {
     },
     handleFocus(event) {
       event.stopPropagation()
+    },
+    download() {
+      this.$emit("onDownload")
     }
   }
 }

@@ -19,7 +19,7 @@
           :label="item.label"
         ></el-option>
       </el-select>
-      <IsMaster :isMaster="currentVersion ? currentVersionItem.isMaster : false"></IsMaster>
+      <IsMaster :isMaster="currentVersionItem ? currentVersionItem.isMaster : false"></IsMaster>
       <IsRunning :currentState="currentVersion ? currentVersionInfo.state : ''"></IsRunning>
     </div>
     <Detail
@@ -36,6 +36,7 @@
     <div class="table">
       <Table
         ref="dictValueTable"
+        :key="`index${tableConfig.length}`"
         :tableConfig="tableConfig"
         :tableData="dictValueList"
         :pageInfo="pageInfo"
@@ -50,7 +51,7 @@
       @dialog-complete="onClickAddVersion"
     >
       <Form
-        :formCfg="addVersionCfg(versionList)"
+        :formCfg="addVersionCfg(versionList, downloadTemplate)"
         :formData="versionForm"
         :formRule="addVersionRule"
       ></Form>
@@ -102,7 +103,7 @@ import tableConfig from './config/tableColumn'
 import { addVersionCfg, editVersionCfg, addVersionRule } from './config/versionForm'
 import { searchValueCfg, addValueCfg, editValueCfg, valueRule } from './config/valueForm'
 import { createNamespacedHelpers } from 'vuex'
-import { getMAxValueCodeApi } from '@/api/value'
+import { getMAxValueCodeApi, downloadTemplateApi } from '@/api/value'
 import { getMaxNumber } from '@/utils/lang'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('value')
@@ -133,6 +134,7 @@ export default {
       'currentVersion', 
       'currentColumn',
       'currentValue',
+      'currentDict',
       'currentVersionInfo',
       'currentDictValue',
       'pageInfo',
@@ -152,9 +154,7 @@ export default {
     ]),
     curVersion: {
       async set(value) {
-        this.setCurrentVersion(value)
-        await this.queryVersionInfo()
-        await this.queryDictValue()
+        this.onVersionChange(value)
       },
       get() {
         return this.currentVersion
@@ -166,20 +166,45 @@ export default {
   methods: {
     ...mapMutations([
       'setCurrentVersion',
+      'setSearchForm',
       'setVersionForm',
+      'setVersionList',
       'setDictVersionForm',
       'setCurrentDictValue',
       'setDictValueForm'
     ]),
     ...mapActions([
+      'queryDict',
+      'queryVersion',
       'queryVersionInfo',
       'queryDictValue',
       'onPageInfoChange',
+      'onVersionChange',
       'addDictVersion',
       'editDictVersion',
       'addDictValue',
       'editDictValue'
     ]),
+    downloadTemplate() {
+      const { id } = this.currentVersionItem
+      downloadTemplateApi(id).then(res => {
+        let url = window.URL.createObjectURL(res.data)
+        // console.log(res)
+        // let str = typeof res.headers['content-disposition'] === 'undefined'
+        //           ? res.headers['Content-Disposition'].split(';')[1]
+        //           : res.headers['content-disposition'].split(';')[1]
+      
+        // let fileName = typeof str.split('fileName=')[1] === 'undefined'
+        //                 ? str.split('filename=')[1]
+        //                 : str.split('fileName=')[1]
+        const a = document.createElement("a");
+        a.setAttribute("href", url);
+        a.setAttribute("download", `${this.currentVersionInfo.type}.xlsx`);
+        document.body.append(a);
+        a.click();
+        document.body.removeChild(a);
+      })     
+    },
     addVersion() {
       const { nameCn } = this.currentDictItem
       this.setVersionForm({ nameCn })
@@ -207,8 +232,10 @@ export default {
         item => item.value === this.dictVersionForm.version
       )
       this.setCurrentVersion(current.id)
+      await this.queryDict()
+      await this.queryVersion()
       await this.queryVersionInfo()
-      await this.queryDictValue()
+      // await this.queryDictValue()
     },
     async addValue() {
       const { value } = await getMAxValueCodeApi(this.currentVersion)
@@ -237,6 +264,12 @@ export default {
     currentDictValue: {
       handler(cur) {
         this.$refs.dictValueTable.setCurrentRow(cur)
+      }
+    },
+    currentDict: {
+      handler() {
+        this.setVersionList()
+        this.setSearchForm()
       }
     }
   }

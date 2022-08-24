@@ -4404,6 +4404,13 @@ launch-editor@^2.2.1, launch-editor@^2.5.0:
     picocolors "^1.0.0"
     shell-quote "^1.7.3"
 
+less-loader@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.npmmirror.com/less-loader/-/less-loader-11.0.0.tgz#a31b2bc5cdfb62f1c7de9b2d01cd944c22b1a024"
+  integrity sha512-9+LOWWjuoectIEx3zrfN83NAGxSUB5pWEabbbidVQVgZhN+wN68pOvuyirVlH1IK4VT1f3TmlyvAnCXh8O5KEw==
+  dependencies:
+    klona "^2.0.4"
+
 levn@^0.4.1:
   version "0.4.1"
   resolved "https://registry.npmmirror.com/levn/-/levn-0.4.1.tgz#ae4562c007473b932a6200d403268dd2fffc6ade"
