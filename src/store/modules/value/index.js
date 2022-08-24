@@ -37,7 +37,7 @@ const processCatalog = list => {
         : COMPLETESTATE,
       children: valueDictCatalogEntityList.map(it => {
         return {
-          id: it.nameEn,
+          id: `${it.nameEn}`,
           label: it.nameEn,
           nameEn: it.nameEn,
           nameCn: it.nameCn,
@@ -55,6 +55,7 @@ const state = {
   versionList: [],
   dictValueList: [],
   currentDict: '',
+  currentSourceTypeCode: '',
   currentVersion: '',
   currentVersionInfo: {},
   currentDictValue: '',
@@ -91,6 +92,7 @@ const getters = {
         return state.currentDict === it.id
       })
       if (res) {
+        state.currentSourceTypeCode = res.sourceTypeCode
         return Object.assign({}, res, {
           sourceType: item.label
         })
@@ -112,7 +114,8 @@ const getters = {
         {
           colConfig: {
             property: '',
-            label: ''
+            label: '',
+            width: 2000
           }
         }
       ]
@@ -120,7 +123,8 @@ const getters = {
       return {
         colConfig: {
           property: name,
-          label: name
+          label: name,
+          minWidth: 150
         }
       }
     })
@@ -191,18 +195,31 @@ const mutations = {
         state.dictList[0].children.length
       ) {
         state.currentDict = 'dict_drug_form'
+        state.currentDict = 'dict_symptom'
         // state.currentDict = state.dictList[0].children[0].id
       }
     }
   },
   setCurrentVersion(state, version) {
-    state.currentVersion = version
+    if (!version) {
+      const master = state.versionList.find(item => item.isMaster)
+      state.currentVersion = master.id
+    } else {
+      state.currentVersion = version
+    }
   },
   setCurrentDictValue(state, row) {
     if (!row) {
       state.currentDictValue = state.dictValueList[0]
     } else {
       state.currentDictValue = row
+    }
+  },
+  setSearchForm(state, form) {
+    if (!form) {
+      state.searchForm = Object.assign({}, searchForm)
+    } else {
+      keysClone(state.searchForm, form)
     }
   },
   setPageInfo(state, pageInfo) {
@@ -212,24 +229,36 @@ const mutations = {
 
 const actions = {
   async onDictChange({ commit, dispatch }, { id }) {
+    commit('setDictValueList')
+    state.currentVersionInfo = {}
     commit('setCurrentDict', id)
-    await dispatch('querySuspect', { searchKey: state.currentDict })
+    await dispatch('querySuspect', { id: state.currentVersion })
     await dispatch('queryVersion')
+    commit('setCurrentVersion')
     await dispatch('queryVersionInfo')
     await dispatch('queryDictValue')
     commit('setCurrentDictValue')
   },
   async onPageInfoChange({ commit, dispatch }, value) {
+    commit('setDictValueList')
+    state.currentVersionInfo = {}
     commit('setPageInfo', value)
     await dispatch('queryDictValue')
     commit('setCurrentDictValue')
   },
+  async onVersionChange({ commit, dispatch }, value) {
+    commit('setCurrentVersion', value)
+    await dispatch('queryVersionInfo')
+    dispatch('queryDictValue')
+    dispatch('querySuspect', { id: value })
+  },
   async initValue({ commit, dispatch }) {
     await dispatch('queryDict')
     commit('setCurrentDict')
-    await dispatch('querySuspect', { searchKey: state.currentDict })
     await dispatch('queryVersion')
+    commit('setCurrentVersion')
     await dispatch('queryVersionInfo')
+    await dispatch('querySuspect', { id: state.currentVersion })
     await dispatch('queryDictValue')
     commit('setCurrentDictValue')
     dispatch('queryClass')
@@ -239,12 +268,18 @@ const actions = {
     commit('setDictList', processCatalog(value))
   },
   async queryVersion({ commit, state }) {
-    const { value } = await getVersionListApi(state.currentDict)
+    let sourceTypeCode = ''
+    for (let item of state.dictList) {
+      const res = item.children.find(it => {
+        return state.currentDict === it.id
+      })
+      if (res) {
+        sourceTypeCode = res.sourceTypeCode
+      }
+    }
+    const { value } = await getVersionListApi(state.currentDict, sourceTypeCode)
     state.versionList = value.map(item => {
       const { id, mainlineFlag, version } = item
-      if (mainlineFlag === '1') {
-        commit('setCurrentVersion', id)
-      }
       return {
         id,
         label: version,
@@ -299,12 +334,14 @@ const actions = {
       columnParamList
     })
     commit('setPageInfo', value.pageInfo)
-    commit(
-      'setDictValueList',
-      value.records.map((item, index) => {
-        return Object.assign({}, item, { index })
-      })
-    )
+    setTimeout(() => {
+      commit(
+        'setDictValueList',
+        value.records.map((item, index) => {
+          return Object.assign({}, item, { index })
+        })
+      )
+    }, 100)
   },
   async submitDict({ state }, IsNew) {
     if (IsNew) {
@@ -345,13 +382,13 @@ const actions = {
     await addVersionApi(Object.assign({}, state.versionForm))
   },
   async editDictVersion() {
-    const { masterVersion, version, sourceType, sourceBasis } =
+    const { masterVersion, version, sourceTypeCode, sourceBasis } =
       state.dictVersionForm
     await editVersionApi({
       id: state.currentVersion,
       masterVersion,
       version,
-      sourceType,
+      sourceTypeCode,
       sourceBasis,
       state: state.dictVersionForm.state
     })
