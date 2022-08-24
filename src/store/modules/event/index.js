@@ -229,10 +229,17 @@ const actions = {
     dispatch('queryVersion')
   },
   async runCatalog({ dispatch, state }, val) {
-    // if (!val) {
-
-    // }
-    await submitCatalogApi(state.currentCatalog)
+    const list = [state.currentCatalog]
+    if (val) {
+      state.catalogList.forEach(item => {
+        item.dataSetCatalogEntiyList.forEach(it => {
+          list.push(it.id)
+        })
+      })
+    } else {
+      list.push(state.currentCatalog)
+    }
+    await submitCatalogApi(list)
     this._vm.$message.success('启动成功！')
     dispatch('queryCatalog')
   },

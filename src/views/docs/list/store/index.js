@@ -48,6 +48,23 @@ const state = {
   searchForm: {
     formCfg: searchFormConfig,
     formData: keysObject(searchFormConfig, 'id')
+  },
+  listData: new Array(20).fill({
+    identifier: 'JR01011989001',
+    title: '文献标题',
+    titleEn: 'doc title',
+    type: '期刊',
+    author: '张春风',
+    org: '美国国立卫生研究所',
+    year: '1989',
+    ctlg: 'A30002',
+    source: '国外医学.预防.诊断.治疗用生物制品分册'
+  }),
+  pageInfo: {
+    curPage: 1,
+    pageSize: 20,
+    totalSize: 20,
+    totalPage: 1
   }
 }
 

@@ -69,13 +69,13 @@ export const addCatalogCfg = (
       label: '版本',
       id: 'version',
       elOptions: {
-        disabled: true
+        // disabled: true
         // placeholder: 'V1.0'
       }
     },
     {
       type: 'el-select',
-      label: '标准来源编码',
+      label: '标准来源',
       id: 'sourceTypeCode',
       options: sourceTypeOptions,
       elOptions: {
@@ -176,12 +176,7 @@ export const catalogRule = {
   sourceType: { required: true },
   sourceTypeCode: { required: true },
   nameCn: { required: true },
-  nameEn: [
-    { required: true },
-    {
-      validator: validateEnglish,
-      trigger: 'blur'
-    }
-  ],
-  version: { required: true }
+  nameEn: [{ required: true }, { validator: validateEnglish, trigger: 'blur' }],
+  version: { required: true },
+  state: { required: true }
 }

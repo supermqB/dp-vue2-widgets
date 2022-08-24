@@ -3,16 +3,22 @@
     <template #asideLeft>
       <div class="left_aside_container">
         <Catalog class="catalog"></Catalog>
-        <Task class="task"></Task>
+        <Task
+          :tableData="filteredTask"
+          :treeSelectionData="filterTreeData"
+          :hasItem2Do="!!task.selectedTasks.length"
+          @checked-filter-keys="handleFiltered"
+          @selected-items-changed="handleSelectedTasks"
+          @search-key-change="handleSearchChanged"
+          @complete-action="handleCompleteAction"
+          class="task"></Task>
         <Bottom class="bottom" :labelList="['值域', '任务']"></Bottom>
       </div>
     </template>
     <template #main>
-      <!-- <ValueTable /> -->
-      <Center></Center>
+      <CenterPart></CenterPart>
     </template>
     <template #asideRight>
-      <!-- <ValueDetails /> -->
       <Suspect></Suspect>
     </template>
   </dp-layout-container>
@@ -22,11 +28,12 @@
 // import Task from './task'
 import Catalog from './catalog'
 import Bottom from '@/components/bottom/Catalog.vue'
-import Center from './center'
+import CenterPart from './center'
 import Suspect from './suspect'
 import Task from '../common/SuspectTaskList.vue'
 import { createNamespacedHelpers } from 'vuex'
-const { mapActions } = createNamespacedHelpers('value')
+import { confirm } from '@/utils/pops'
+const { mapActions, mapState, mapGetters, mapMutations } = createNamespacedHelpers('value')
 
 export default {
   name: 'ValueExamine',
@@ -34,14 +41,42 @@ export default {
     Catalog,
     Task,
     Bottom,
-    Center,
+    CenterPart,
     Suspect
   },
   mounted() {
     this.initValue()
   },
+  computed:{
+    ...mapState(['task']),
+    ...mapGetters({
+      filterTreeData: 'filterTreeData', 
+      currentVersionItem: 'currentVersionItem', 
+      filteredTask: 'filteredTask'
+    })
+  },
   methods: {
-    ...mapActions(['initValue'])
+    ...mapActions(['initValue', 'querySuspect', 'completeTasks']),
+    ...mapMutations(['setCheckedFilters', 'setSelectedTasks', 'setSearchKey']),
+    handleSelectedTasks(val) {
+      this.setSelectedTasks(val)
+    },
+    handleSearchChanged(val) {
+      this.setSearchKey(val)
+      const {id} = this.currentVersionItem
+      this.querySuspect(id)
+    },
+    handleFiltered(val) {
+      this.setCheckedFilters(val)
+    },
+    async handleCompleteAction() {
+      const confirmed = await confirm('是否确认已完成选中任务？')
+      if (confirmed) {
+        await this.completeTasks()
+        const {id} = this.currentVersionItem
+        await this.querySuspect(id)
+      }
+    },
   }
 }
 </script>
@@ -58,7 +93,7 @@ export default {
   }
   .task {
     .table_container {
-      height: 300px;
+      height: 250px;
     }
   }
   .bottom {

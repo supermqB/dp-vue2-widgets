@@ -2,7 +2,7 @@
   <div class="suspectWrap">
     <p>疑似列表</p>
     <Table
-      :tableData="task.suspectList"
+      :tableData="suspectList"
       :tableConfig="config"
       :pageInfo="null"
       :isShowRadio="false"
@@ -14,23 +14,23 @@
 <script>
 import Table from '@/components/GeneralTable.vue'
 import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('value')
+const { mapState, mapGetters } = createNamespacedHelpers('value')
 const config = [
   {
     colConfig: {
-      property: 'index1',
+      property: 'system',
       label: '系统',
       minWidth: 55
     }
   },{
     colConfig: {
-      property: 'name',
+      property: 'code',
       label: '代码',
       minWidth: 55
     }
   },{
     colConfig: {
-      property: 'state',
+      property: 'name',
       label: '名称',
       minWidth: 70
     }
@@ -41,7 +41,8 @@ export default {
     Table
   },
   computed: {
-    ...mapState(['task'])
+    ...mapState(['task']),
+    ...mapGetters(['suspectList'])
   },
   data() {
     return {

@@ -73,8 +73,8 @@
       </div>
       <span slot="footer">
         <el-button @click="runDialog = false">取消</el-button>
-        <el-button @click="onClickRunAllCatalog">启动所有表单信息</el-button>
-        <el-button type="primary" @click="onClickRunCatalog">启动</el-button>
+        <el-button @click="onClickRunAllCatalog">启用所有表单信息</el-button>
+        <el-button type="primary" @click="onClickRunCatalog">启用</el-button>
       </span>
     </el-dialog>
   </div>

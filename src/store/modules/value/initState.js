@@ -7,7 +7,7 @@ export default {
     dictCode: '',
     nameEn: '',
     nameCn: '',
-    version: 'V1.0',
+    version: '',
     sourceTypeCode: '',
     sourceBasis: '',
     sourceBasisCode: '',
@@ -36,6 +36,11 @@ export default {
     hierarchyRelation: '',
     file: null
   },
-  searchForm: {},
+  searchForm: {
+    编码: '',
+    名称: '',
+    父级代码: '',
+    层级关系: ''
+  },
   adSearchForm: {}
 }
