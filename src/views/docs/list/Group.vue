@@ -17,6 +17,7 @@
         node-key="id"
         ref="grouptree"
         default-expand-all
+        highlight-current
       >
       </el-tree>
     </div>
@@ -74,6 +75,11 @@ export default {
     flex-grow: 1;
     .el-tree-node__content {
       height: 36px;
+    }
+    .el-tree--highlight-current
+      .el-tree-node.is-current
+      > .el-tree-node__content {
+      background-color: #d8fffe;
     }
   }
 }

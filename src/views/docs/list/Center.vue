@@ -18,8 +18,36 @@
         >
       </div>
     </div>
-    <div class="list"></div>
-    <div class="footer"></div>
+    <div class="list">
+      <div v-for="(item, index) in listData" class="item" :key="index">
+        <div>
+          <div class="typespan">{{ item.type }}</div>
+          <div class="title">
+            {{ item.title }}【{{ item.identifier }}】，英文标题：{{
+              item.titleEn
+            }}
+          </div>
+        </div>
+        <div class="sumline">
+          作者：{{ item.author }}，机构：{{ item.org }}，发表年份：{{
+            item.year
+          }}，来源：{{ item.source }}
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <el-pagination
+        @size-change="sizeChangeHandler"
+        @current-change="pageChangeHandler"
+        :current-page.sync="pageInfo.curPage"
+        :page-sizes="[5, 10, 20, 50]"
+        :page-size="pageInfo.pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="pageInfo.totalSize"
+        :style="{ alignSelf: 'end' }"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -30,12 +58,14 @@ import Form from '@/components/Form.vue'
 
 export default {
   computed: {
-    ...mapState(['searchForm'])
+    ...mapState(['searchForm', 'listData', 'pageInfo'])
   },
   methods: {
     startImport() {},
     searchHandler() {},
-    openAdvSearch() {}
+    openAdvSearch() {},
+    sizeChangeHandler() {},
+    pageChangeHandler() {}
   },
   components: { Form }
 }
@@ -92,6 +122,57 @@ export default {
   }
   .list {
     flex: 1 1 auto;
+    overflow-y: auto;
+    margin: 6px;
+    border-bottom: 1px solid #f2f2f2;
+    .item {
+      height: 72px;
+      border: 1px solid #f2f2f2;
+      border-width: 1px 1px 0 1px;
+      font-size: 12px;
+      line-height: 12px;
+      padding: 16px 6px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      &:nth-child(odd) {
+        background: #fafafa;
+      }
+      &:nth-child(even) {
+        background: #ffffff;
+      }
+      &:hover {
+        background-color: #eeffff;
+      }
+      .typespan {
+        color: #fff;
+        background-color: #1890ff;
+        border-radius: 2px;
+        margin-right: 6px;
+        width: 36px;
+        height: 18px;
+        line-height: 18px;
+        text-align: center;
+        display: inline-block;
+      }
+      .title {
+        font-size: 13px;
+        display: inline-block;
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: bold;
+      }
+      .sumline {
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.45);
+        line-height: 12px;
+      }
+    }
+  }
+  .footer {
+    display: flex;
+    justify-content: flex-end;
   }
 }
 </style>

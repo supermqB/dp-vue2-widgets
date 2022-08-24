@@ -157,6 +157,205 @@ export const hrb = function () {
     }
   ]
 }
+
+export const tcs = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'stcs_inx'
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: 'tcm_syndrome_name'
+    },
+    {
+      type: 'el-input',
+      label: '分类',
+      id: 'tcm_syndrome_class'
+    }
+  ]
+}
+export const exm = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'sexm_inx'
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: 'exam_item_name'
+    },
+    {
+      type: 'el-input',
+      label: '计价单位',
+      id: 'charge_unit'
+    }
+  ]
+}
+export const lab = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'slab_inx'
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: 'lab_item_name'
+    },
+    {
+      type: 'el-input',
+      label: '计价单位',
+      id: 'charge_unit'
+    }
+  ]
+}
+export const opt = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'sopt_inx'
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: 'oper_name'
+    },
+    {
+      type: 'el-input',
+      label: '分类',
+      id: 'oper_class'
+    }
+  ]
+}
+export const itm = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'sitm_inx'
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: 'item_name'
+    },
+    {
+      type: 'el-input',
+      label: '计价单位',
+      id: 'item_price_unit'
+    }
+  ]
+}
+export const org = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'sorg_inx'
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: 'org_name'
+    },
+    {
+      type: 'el-select',
+      options: [
+       { label:'三级', value: '1' },
+        { label:'三级特等', value: '11' },
+        { label:'三级甲等', value: '12' },
+        { label:'三级乙等', value: '13' },
+        { label:'三级丙等', value: '14' },
+        { label:'二级', value: '2' },
+        { label:'二级甲等', value: '21' },
+        { label:'二级乙等', value: '22' },
+        { label:'二级丙等', value: '23' },
+        { label:'一级', value: '3' },
+        { label:'一级甲等', value: '31' },
+        { label:'一级乙等', value: '32' },
+        { label:'一级丙等', value: '33' },
+        { label:'其他', value: '9' }
+      ],
+      label: '等级',
+      id: 'org_level_code'
+    },
+      {
+      type: 'el-input',
+      label: '类型名称',
+      id: 'org_type_name'
+    },
+      {
+      type: 'el-input',
+      label: '详细地址',
+      id: 'org_addr'
+    },
+  ]
+}
+export const phm = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'sphm_inx'
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: 'pharm_name'
+    },
+      {
+      type: 'el-autocomplete',
+      elOptions: {
+        'fetch-suggestions': (queryString, cb) => {
+          let orginOptions = this.drugFormList
+          let filteredValues = queryString
+            ? orginOptions.filter(item => item.indexOf(queryString) != -1)
+            : orginOptions
+          cb(filteredValues.map(item => ({ value: item })))
+        },
+        placeholder: '请输入并选择'
+      },
+      label: '注册剂型',
+      id: 'drug_form_name'
+    },
+      {
+      type: 'el-input',
+      label: '药物规格',
+      id: 'drug_spec'
+    },
+  ]
+}
+export const com = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'scom_inx'
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: 'company_name'
+    },
+    {
+      type: 'el-input',
+      label: '机构代码',
+      id: 'company_no'
+    },
+    {
+      type: 'el-input',
+      label: '详细地址',
+      id: 'register_addr'
+    }
+  ]
+}
 export const likeFields = {
   mat: [
     'material_name',
@@ -168,7 +367,15 @@ export const likeFields = {
   drg: ['drug_name'],
   dis: ['wm_disease_name', 'wm_disease_class'],
   tcm: ['tcm_disease_name', 'tcm_disease_class'],
-  hrb: ['tcm_herb_name', 'tcm_herb_type','effcet_class_name','tcm_herb_source','main_fuction']
+  hrb: ['tcm_herb_name', 'tcm_herb_type','effcet_class_name','tcm_herb_source','main_fuction'],
+  tcs: ['tcm_syndrome_name', 'tcm_syndrome_class'],
+  exm: ['exam_item_name'],
+  lab: ['lab_item_name'],
+  opt: ['oper_name', 'oper_class'],
+  itm: ['item_name'],
+  org: ['org_name', 'org_type_name','org_addr'],
+  phm: ['pharm_name', 'drug_spec'],
+  com: ['company_name', 'register_addr']
 }
 
-export default { drg, mat, dis, tcm, hrb }
+export default { drg, mat, dis, tcm, hrb ,tcs ,exm, lab, opt, itm, org, phm, com}
