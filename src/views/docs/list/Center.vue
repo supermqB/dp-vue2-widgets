@@ -19,11 +19,11 @@
       </div>
     </div>
     <div class="list">
-      <div v-for="item in listData" class="item">
+      <div v-for="(item, index) in listData" class="item" :key="index">
         <div>
           <div class="typespan">{{ item.type }}</div>
           <div class="title">
-            {{ item.title }}【{{ item.identifier }}】,英文标题：{{
+            {{ item.title }}【{{ item.identifier }}】，英文标题：{{
               item.titleEn
             }}
           </div>
@@ -133,19 +133,24 @@ export default {
       line-height: 12px;
       padding: 16px 6px;
       box-sizing: border-box;
-      display:flex;
+      display: flex;
       flex-direction: column;
       justify-content: space-between;
+
       &:nth-child(odd) {
         background: #fafafa;
       }
       &:nth-child(even) {
         background: #ffffff;
       }
+      &:hover {
+        background-color: #eeffff;
+      }
       .typespan {
         color: #fff;
         background-color: #1890ff;
         border-radius: 2px;
+        margin-right: 6px;
         width: 36px;
         height: 18px;
         line-height: 18px;
