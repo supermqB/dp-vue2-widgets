@@ -194,7 +194,7 @@ const mutations = {
         state.dictList.length &&
         state.dictList[0].children.length
       ) {
-        state.currentDict = 'dict_drug_form'
+        // state.currentDict = 'dict_drug_form'
         state.currentDict = 'dict_symptom'
         // state.currentDict = state.dictList[0].children[0].id
       }

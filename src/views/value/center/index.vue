@@ -232,7 +232,7 @@ export default {
         item => item.value === this.dictVersionForm.version
       )
       this.setCurrentVersion(current.id)
-      await this.queryDict()
+      // await this.queryDict()
       await this.queryVersion()
       await this.queryVersionInfo()
       // await this.queryDictValue()
