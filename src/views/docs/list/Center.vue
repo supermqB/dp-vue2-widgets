@@ -19,13 +19,16 @@
       </div>
     </div>
     <div class="list">
-      <div v-for="item in listData">
+      <div v-for="item in listData" class="item">
         <div>
-          <span>{{ item.type }}</span> {{ item.title }}【{{
-            item.identifier
-          }}】,英文标题：{{ item.titleEn }}
+          <div class="typespan">{{ item.type }}</div>
+          <div class="title">
+            {{ item.title }}【{{ item.identifier }}】,英文标题：{{
+              item.titleEn
+            }}
+          </div>
         </div>
-        <div>
+        <div class="sumline">
           作者：{{ item.author }}，机构：{{ item.org }}，发表年份：{{
             item.year
           }}，来源：{{ item.source }}
@@ -119,10 +122,52 @@ export default {
   }
   .list {
     flex: 1 1 auto;
+    overflow-y: auto;
+    margin: 6px;
+    border-bottom: 1px solid #f2f2f2;
+    .item {
+      height: 72px;
+      border: 1px solid #f2f2f2;
+      border-width: 1px 1px 0 1px;
+      font-size: 12px;
+      line-height: 12px;
+      padding: 16px 6px;
+      box-sizing: border-box;
+      display:flex;
+      flex-direction: column;
+      justify-content: space-between;
+      &:nth-child(odd) {
+        background: #fafafa;
+      }
+      &:nth-child(even) {
+        background: #ffffff;
+      }
+      .typespan {
+        color: #fff;
+        background-color: #1890ff;
+        border-radius: 2px;
+        width: 36px;
+        height: 18px;
+        line-height: 18px;
+        text-align: center;
+        display: inline-block;
+      }
+      .title {
+        font-size: 13px;
+        display: inline-block;
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: bold;
+      }
+      .sumline {
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.45);
+        line-height: 12px;
+      }
+    }
   }
   .footer {
-      display: flex;
-      justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
   }
 }
 </style>

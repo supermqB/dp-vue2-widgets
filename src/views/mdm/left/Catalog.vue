@@ -71,11 +71,12 @@ export default {
   },
   watch: {
     mdmList(list) {
-      /* default selected MDM. */
-      let defaultMdm = list.find(mdm => mdm.type == 'drg')
-      this.onSelected(defaultMdm)
+      const selectedMDMType = this.selectedMDM.type
+      let selectedMDM = list.find(mdm => mdm.type == (selectedMDMType || 'drg'))
+      /* update selectedMDM data only for default condition. */
+      !selectedMDMType && this.onSelected(selectedMDM)
       this.$nextTick(() => {
-        this.currentNodeKey = defaultMdm.id
+        this.currentNodeKey = selectedMDM.id
       })
     }
   }
