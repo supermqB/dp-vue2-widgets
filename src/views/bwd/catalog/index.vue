@@ -26,13 +26,19 @@
         <el-button type="text" slot="reference"> 筛选 </el-button>
       </el-popover>
       <span>搜索</span>
-      <el-input placeholder="请输入" suffix-icon="el-icon-search"></el-input>
+      <el-input
+        placeholder="请输入"
+        v-model="bwdFilter"
+        @change="onBwdFilterChange"
+        clearable
+        suffix-icon="el-icon-search"
+      ></el-input>
     </div>
     <Tree
       ref="tree"
-      :data="catalogList"
+      :data="bwdList"
       class="tree"
-      :currentNodeKey="currentCatalog"
+      :currentNodeKey="currentBwd"
       @onClick="handleNodeClick"
     ></Tree>
     <div class="dialog_port">
@@ -73,40 +79,63 @@ export default {
   },
   data() {
     return {
+      bwdFilter: '',
       fileCatalogCfg,
       fileCatalogRule,
       fileCatalogDialog: false
     }
   },
   computed: {
-    ...mapState(['treeSelectionData', 'catalogList', 'fileCatalogData']),
-    ...mapGetters(['currentCatalogItem'])
+    ...mapState([
+      'treeSelectionData',
+      'bwdList',
+      'currentBwd',
+      'fileCatalogData'
+    ]),
+    ...mapGetters(['currentBwdItem'])
   },
   methods: {
-    ...mapMutations([
-      'setCatalogForm',
-      'setCurrentCatalog',
-      'setCurrentColumn'
-    ]),
-    ...mapActions(['queryFeild']),
+    ...mapMutations(['setCatalogForm', 'setCurrentBwd']),
+    ...mapActions(['loadBwdModules', 'loadCurrentBwdValue']),
+    // 后面渲染详细信息
     async handleNodeClick({ id }) {
-      this.setCurrentCatalog(id)
-      await this.queryFeild()
-      this.setCurrentColumn()
+      this.setCurrentBwd(id)
+      this.loadCurrentBwdValue(this.currentBwd.id)
     },
+    // 左侧编辑新增
     async addFileCatalog() {
       this.$refs.fileCatalogDialog.toggleOpen()
       this.setCatalogForm()
     },
     editFileCatalog() {
+      if (!this.currentCatalog) return
       this.$refs.fileCatalogDialog.toggleOpen()
-      this.setCatalogForm(this.currentCatalogItem)
+      this.setCatalogForm(this.currentBwdItem)
     },
+    // 左侧搜索框
+    onBwdFilterChange(val) {
+      this.$refs.tree.filter(val)
+    },
+    // 筛选弹窗操作
     checkedFilterHandler() {
       let checkedKeys = this.$refs.filterTree.getCheckedKeys()
       this.$emit('checked-filter-keys', checkedKeys)
     },
     async onClickSearch() {}
+  },
+  // 挂载bwd列表
+  mounted() {
+    this.loadBwdModules()
+  },
+  // 实时监视左侧选中的bwd文件
+  watch: {
+    currentBwdItem: {
+      handler() {
+        this.$nextTick(() => {
+          this.$refs.tree.setCurrent()
+        })
+      }
+    }
   }
 }
 </script>
