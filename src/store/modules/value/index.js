@@ -37,7 +37,7 @@ const processCatalog = list => {
         : COMPLETESTATE,
       children: valueDictCatalogEntityList.map(it => {
         return {
-          id: `${it.nameEn}`,
+          id: `${sourceTypeCode},${it.nameEn}`,
           label: it.nameEn,
           nameEn: it.nameEn,
           nameCn: it.nameCn,
@@ -195,7 +195,7 @@ const mutations = {
         state.dictList[0].children.length
       ) {
         // state.currentDict = 'dict_drug_form'
-        state.currentDict = 'dict_symptom'
+        state.currentDict = '4,dict_symptom'
         // state.currentDict = state.dictList[0].children[0].id
       }
     }
@@ -235,7 +235,8 @@ const actions = {
     await dispatch('querySuspect', { id: state.currentVersion })
     await dispatch('queryVersion')
     commit('setCurrentVersion')
-    await dispatch('queryVersionInfo')
+    dispatch('queryVersionInfo')
+    dispatch('querySuspect', { id: state.currentVersion })
     await dispatch('queryDictValue')
     commit('setCurrentDictValue')
   },
@@ -268,16 +269,8 @@ const actions = {
     commit('setDictList', processCatalog(value))
   },
   async queryVersion({ commit, state }) {
-    let sourceTypeCode = ''
-    for (let item of state.dictList) {
-      const res = item.children.find(it => {
-        return state.currentDict === it.id
-      })
-      if (res) {
-        sourceTypeCode = res.sourceTypeCode
-      }
-    }
-    const { value } = await getVersionListApi(state.currentDict, sourceTypeCode)
+    const [sourceTypeCode, dictId] = state.currentDict.split(',')
+    const { value } = await getVersionListApi(dictId, sourceTypeCode)
     state.versionList = value.map(item => {
       const { id, mainlineFlag, version } = item
       return {
