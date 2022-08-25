@@ -133,7 +133,7 @@ export default {
 }
 
 ::v-deep .el-tree-node.is-current > .el-tree-node__content {
-  background-color: #d8fffe!important;
+  background-color: #d8fffe !important;
 }
 ::v-deep .el-tree-node:focus > .el-tree-node__content {
   /* background-color: #d8fffe; */

@@ -8,7 +8,7 @@ import initState from './initState'
 const state = {
   // 左侧数据
   currentBwd: '',
-  currentBwdValue: '',
+  currentBwdItem: {},
   bwdList: [
     {
       id: '1',
@@ -99,17 +99,12 @@ const state = {
 }
 
 const getters = {
-  currentBwdItem(state) {
-    if (!state.currentBwd) return {}
+  totalNumber(state) {
+    let res = 0
     for (let item of state.bwdList) {
-      const res = item.children.find(it => {
-        return state.currentBwd === it.id
-      })
-      if (res) {
-        return Object.assign({}, res, {
-          // sourceType: item.label
-        })
-      }
+      res += item.children.length
+      if (res) return res
+      return 0
     }
   },
   currentFieldsRow(state) {
@@ -122,7 +117,7 @@ const mutations = {
     state.currentBwd = value
   },
   setCurrentBwdValue(state, value) {
-    state.currentBwdValue = value
+    state.currentBwdItem = value
   },
   setBwdList(state, value) {
     state.bwdList = value

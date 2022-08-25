@@ -18,7 +18,7 @@
         >
         </el-tree>
         <div class="task-input-do">
-          <el-button size="mini">重置</el-button>
+          <el-button size="mini" @click="reset">重置</el-button>
           <el-button type="primary" @click="onClickSearch" size="mini"
             >查询</el-button
           >
@@ -55,7 +55,10 @@
         ></Form>
       </Dialog>
     </div>
-    <Bottom :labelList="['文件数', '字段数']"></Bottom>
+    <Bottom
+      :labelList="['文件数', '字段数']"
+      :value="[totalNumber, pageInfo.totalSize]"
+    ></Bottom>
   </div>
 </template>
 
@@ -90,9 +93,10 @@ export default {
       'treeSelectionData',
       'bwdList',
       'currentBwd',
-      'fileCatalogData'
+      'fileCatalogData',
+      'pageInfo'
     ]),
-    ...mapGetters(['currentBwdItem'])
+    ...mapGetters(['currentBwdItem', 'totalNumber'])
   },
   methods: {
     ...mapMutations(['setCatalogForm', 'setCurrentBwd']),
@@ -116,14 +120,18 @@ export default {
     onBwdFilterChange(val) {
       this.$refs.tree.filter(val)
     },
-    // 筛选弹窗操作
+    // 筛选弹窗点击操作
     checkedFilterHandler() {
       let checkedKeys = this.$refs.filterTree.getCheckedKeys()
       this.$emit('checked-filter-keys', checkedKeys)
     },
+    // 筛选弹窗重置，默认医疗类
+    reset() {
+      this.$refs.filterTree.setCheckedKeys([2])
+    },
     async onClickSearch() {}
   },
-  // 挂载bwd列表
+  // Vue完成DOM挂载bwd列表
   mounted() {
     this.loadBwdModules()
   },

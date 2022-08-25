@@ -3,8 +3,9 @@
     <div class="header">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>BWD文件管理</el-breadcrumb-item>
-        <el-breadcrumb-item>患者信息记录文件</el-breadcrumb-item>
-        <!-- <State :currentState="currentCatalogItem.state"></State> -->
+        <el-breadcrumb-item>
+          <!-- {{ currentBwd.label }} <img :src="icon(currentBwd.state)" /> -->
+        </el-breadcrumb-item>
       </el-breadcrumb>
       <div>
         <el-button type="primary" @click="open">启用</el-button>
@@ -92,6 +93,7 @@ export default {
   computed: {
     ...mapGetters(['currentCatalogItem', 'currentFieldsRow']),
     ...mapState({
+      currentBwd: 'currentBwd',
       pageInfo: 'pageInfo',
       searchData: 'searchData',
       fieldsList: 'fieldsList',
