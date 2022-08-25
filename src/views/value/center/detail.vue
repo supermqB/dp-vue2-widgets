@@ -18,7 +18,7 @@
     </el-col>
     <el-col :span="11">
       <p>
-        创建事件:
+        创建日期:
         <span class="value">{{ getDate(createTime) }}
         </span>
       </p>
@@ -26,6 +26,12 @@
         更新日期:
         <span class="value">{{ getDate(updateTime) }}
       </span>
+      </p>
+    </el-col>
+    <el-col :span="13">
+      <p style="width: 100%">
+        种类:
+        <span class="value">{{ type }}</span>
       </p>
     </el-col>
   </div>
@@ -54,6 +60,10 @@ export default {
       type: String,
       default: ''
     },
+    type: {
+      type: String,
+      default: ''
+    }
   },
   methods: {
     getDate(str) {

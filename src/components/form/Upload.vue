@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <el-upload
       action=""
       class="uploadWrap"
@@ -10,7 +10,7 @@
       :on-change="handleChange"
       >
       <el-input
-        :value="`${ file &&  file.name ? file.name : ''}`"
+        :value="fileName"
         @focus="handleFocus"
         @clear="handleClear"
         clearable>
@@ -28,27 +28,24 @@
 <script>
 export default {
   props: {
-    file: {
+    value: {
       type: Object,
       default: () => {}
-    },
-    templateFileName: {
-      type: String,
-      default: '(性别代码.xlsx)'
     }
   },
   data() {
     return {
-      fileList: []
+      fileName: ''
     }
   },
-  mounted() {},
   methods: {
     handleChange(file) {
-      this.$emit("update:file", file)
+      this.fileName = file.name
+      this.$emit("input", file.raw)
     },
     handleClear() {
-      this.$emit("update:file", {})
+      this.fileName = ''
+      this.$emit("input", {})
     },
     handleFocus(event) {
       event.stopPropagation()

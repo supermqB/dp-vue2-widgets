@@ -81,7 +81,7 @@ export const addVersionCfg = (versionOptions, onDownload) =>
     },
     {
       type: 'el-select',
-      label: '继承版本',
+      label: '复制已有版本',
       id: 'parVersion',
       options: versionOptions,
       elOptions: {}
@@ -109,7 +109,7 @@ export const addVersionRule = {
     required: true
   },
   parVersion: {
-    required: true
+    // required: true
   },
   dictName: {
     required: true
