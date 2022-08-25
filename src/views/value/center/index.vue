@@ -3,7 +3,7 @@
     <div class="header">
       <Breadcrumb
         baseLabel="值域管理"
-        :currentLabel="currentDictItem.label"></Breadcrumb>
+        :currentLabel="`${currentDictItem.nameCn}(${currentDictItem.nameEn})`"></Breadcrumb>
       <div>
         <el-button type="primary" @click="editVersion" :disabled="!currentVersion && false">版本管理</el-button>
         <el-button type="primary" @click="addVersion" :disabled="!currentValue && false">新增版本</el-button>
@@ -26,7 +26,14 @@
       :sourceType="currentDictItem.sourceType"
       v-bind="currentVersionInfo"></Detail>
     <div class="search">
-      <Form :formCfg="searchValueCfg(currentVersionInfo.parentCode, currentVersionInfo.hierarchyRelation)" :formData="searchForm"></Form>
+      <Form
+        :formCfg="searchValueCfg(
+          currentVersionInfo.parentCode,
+          currentVersionInfo.hierarchyRelation,
+          currentVersionInfo.type
+        )"
+        :formData="searchForm"
+      ></Form>
       <div class="operation">
         <el-button @click="queryDictValue">查询</el-button>
         <el-button @click="addValue" :disabled="!currentVersion && false">新增</el-button>
@@ -189,14 +196,6 @@ export default {
       const { id } = this.currentVersionItem
       downloadTemplateApi(id).then(res => {
         let url = window.URL.createObjectURL(res.data)
-        // console.log(res)
-        // let str = typeof res.headers['content-disposition'] === 'undefined'
-        //           ? res.headers['Content-Disposition'].split(';')[1]
-        //           : res.headers['content-disposition'].split(';')[1]
-      
-        // let fileName = typeof str.split('fileName=')[1] === 'undefined'
-        //                 ? str.split('filename=')[1]
-        //                 : str.split('fileName=')[1]
         const a = document.createElement("a");
         a.setAttribute("href", url);
         a.setAttribute("download", `${this.currentVersionInfo.type}.xlsx`);
@@ -232,14 +231,12 @@ export default {
         item => item.value === this.dictVersionForm.version
       )
       this.setCurrentVersion(current.id)
-      // await this.queryDict()
       await this.queryVersion()
       await this.queryVersionInfo()
-      // await this.queryDictValue()
     },
     async addValue() {
       const { value } = await getMAxValueCodeApi(this.currentVersion)
-      this.setDictValueForm({ '术语编码': getMaxNumber(value, 14) })
+      this.setDictValueForm({ 'term_code': getMaxNumber(value, 14) })
       this.$refs.addValueDialog.toggleOpen()
     },
     editValue() {
@@ -332,6 +329,7 @@ export default {
 
 ::v-deep .search .el-form {
   display: flex;
+  flex-wrap: wrap;
   .el-form-item {
     display: flex;
     margin-bottom: 0px;

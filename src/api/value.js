@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request, { postWithFile } from '@/utils/request'
 
 export const getCatalogApi = () => {
   return request({
@@ -50,18 +50,7 @@ export const editVersionApi = ({
   })
 }
 
-export const addVersionApi = ({ version, dictName, parVersion, file }) => {
-  return request({
-    url: '/dict/addVersion',
-    method: 'post',
-    data: {
-      version,
-      dictName,
-      parVersion,
-      file
-    }
-  })
-}
+export const addVersionApi = data => postWithFile('/dict/addVersion', data)
 
 export const downloadTemplateApi = dictId => {
   return request({

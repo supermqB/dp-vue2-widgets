@@ -85,8 +85,10 @@ export default {
       'dictForm', 
       'dictList',
       'classList',
+      'dictValueList',
+      'task',
       'currentDict',
-      'currentVersionInfo'
+      'currentVersionInfo',
     ]),
     ...mapGetters([
       'currentDictItem',

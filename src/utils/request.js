@@ -101,3 +101,18 @@ export function put(url, data = {}) {
     method: 'put'
   })
 }
+
+export function postWithFile(url, data = {}) {
+  const formData = new FormData()
+  Object.keys(data).forEach(key => {
+    formData.append(key, data[key])
+  })
+  return service({
+    url,
+    method: 'post',
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    data: formData
+  })
+}

@@ -50,6 +50,12 @@ const routes = [
         name: 'docs/list',
         meta: { title: '文献库明细' },
         component: () => import('@/views/docs/list')
+      },
+      {
+        path: 'docs/summary',
+        name: 'docs/summary',
+        meta: { title: '文献库摘要' },
+        component: () => import('@/views/docs/summary')
       }
     ]
   }

@@ -1,51 +1,61 @@
-export const searchValueCfg = (parentCode, hierarchyRelation) => [
-  {
-    type: 'el-input',
-    label: '编码',
-    id: '编码',
-    elOptions: {
-      clearable: true,
-      style: {
-        width: '85px'
+export const searchValueCfg = (
+  parentCode,
+  hierarchyRelation,
+  type = '单值字典'
+) => {
+  const list = [
+    {
+      type: 'el-input',
+      label: '编码',
+      id: '编码',
+      elOptions: {
+        clearable: true,
+        style: {
+          width: '150px'
+        }
+      }
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: '名称',
+      elOptions: {
+        clearable: true,
+        style: {
+          width: '150px'
+        }
+      }
+    },
+    {
+      type: 'el-input',
+      options: parentCode,
+      label: '父级代码',
+      id: '父级代码',
+      elOptions: {
+        clearable: true,
+        style: {
+          width: '150px'
+        }
+      }
+    },
+    {
+      type: 'el-select',
+      options: hierarchyRelation,
+      label: '层级关系',
+      id: '层级关系',
+      elOptions: {
+        clearable: true,
+        style: {
+          width: '150px'
+        }
       }
     }
-  },
-  {
-    type: 'el-input',
-    label: '名称',
-    id: '名称',
-    elOptions: {
-      clearable: true,
-      style: {
-        width: '85px'
-      }
-    }
-  },
-  {
-    type: 'el-select',
-    options: parentCode,
-    label: '父级代码',
-    id: '父级代码',
-    elOptions: {
-      clearable: true,
-      style: {
-        width: '90px'
-      }
-    }
-  },
-  {
-    type: 'el-select',
-    options: hierarchyRelation,
-    label: '层级关系',
-    id: '层级关系',
-    elOptions: {
-      clearable: true,
-      style: {
-        width: '90px'
-      }
-    }
+  ]
+  if (type === '多值字典') {
+    return list.slice(0, 2)
   }
-]
+  return list
+}
 
 export const addValueCfg = [
   {
@@ -154,10 +164,10 @@ export const editValueCfg = [
 })
 
 export const valueRule = {
-  version: { required: true },
-  code: { required: true },
-  name: { required: true },
-  parCode: { required: true },
-  type: { required: true },
-  hierarchyRelation: { required: true }
+  // version: { required: true },
+  // code: { required: true },
+  // name: { required: true },
+  // parCode: { required: true },
+  // type: { required: true },
+  // hierarchyRelation: { required: true }
 }
