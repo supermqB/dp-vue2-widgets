@@ -12,14 +12,14 @@
     <div v-else-if="currentVersionInfo.type === '多值字典'">
       <el-collapse v-model="activeName" accordion>
         <el-collapse-item
-          v-for="(suspect, index) in suspectList"
-          :title="suspect['stand_dict_code']"
+          v-for="(suspect, index) in dictValueList"
+          :title="`症状疑似xxx${index+1}`"
           :name="index"
           :key="index"
           class="propList"
         >
           <div
-            v-for="key in Object.keys(suspect)"
+            v-for="key in currentVersionInfo.columnNameList"
             :key="`${key}${index}`"
             class="propItem"
           >
@@ -62,7 +62,7 @@ export default {
     Table
   },
   computed: {
-    ...mapState(['task', 'currentVersionInfo']),
+    ...mapState(['task', 'currentVersionInfo', 'dictValueList']),
     ...mapGetters(['suspectList'])
   },
   data() {
