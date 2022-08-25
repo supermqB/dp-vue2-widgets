@@ -48,26 +48,33 @@
       >
       </el-pagination>
     </div>
+    <div>
+        <EditDialog mode="create" ref="editDialog"/>
+    </div>
   </div>
 </template>
 
 <script>
+import EditDialog from './EditDialog.vue'
+import Form from '@/components/Form.vue'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapMutations } = createNamespacedHelpers('docs/list')
-import Form from '@/components/Form.vue'
+
 
 export default {
   computed: {
     ...mapState(['searchForm', 'listData', 'pageInfo'])
   },
   methods: {
-    startImport() {},
+    startImport() {
+        this.$refs.editDialog.open()
+    },
     searchHandler() {},
     openAdvSearch() {},
     sizeChangeHandler() {},
     pageChangeHandler() {}
   },
-  components: { Form }
+  components: { Form ,EditDialog}
 }
 </script>
 <style lang="scss" scoped>
@@ -77,13 +84,13 @@ export default {
   flex-direction: column;
   .header {
     display: flex;
-    padding-left: 6px;
+    padding: 6px;
     height: 40px;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #e5e5e5;
     .btn_area {
-      padding-right: 10px;
+      padding-right: 4px;
     }
   }
   .search {
