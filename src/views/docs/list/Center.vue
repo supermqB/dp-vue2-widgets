@@ -21,7 +21,7 @@
     <div class="list">
       <div v-for="(item, index) in listData" class="item" :key="index">
         <div>
-          <div class="typespan">{{ item.type }}</div>
+          <div class="typespan">{{ item.docTypeName }}</div>
           <div class="title">
             {{ item.title }}【{{ item.identifier }}】，英文标题：{{
               item.titleEn
@@ -29,8 +29,8 @@
           </div>
         </div>
         <div class="sumline">
-          作者：{{ item.author }}，机构：{{ item.org }}，发表年份：{{
-            item.year
+          作者：{{ item.author }}，机构：{{ item.organization }}，发表年份：{{
+            item.releaseTime
           }}，来源：{{ item.source }}
         </div>
       </div>
@@ -48,26 +48,47 @@
       >
       </el-pagination>
     </div>
+    <div>
+      <EditDialog mode="create" ref="editDialog" />
+      <adv-search-dialog
+        ref="advSearchDialog"
+        :columns="advSearchCols"
+        @adv-search-action="advSearchHandler"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapMutations } = createNamespacedHelpers('docs/list')
+import EditDialog from './EditDialog.vue'
 import Form from '@/components/Form.vue'
+import { createNamespacedHelpers } from 'vuex'
+import AdvSearchDialog from '@/views/common/AdvSearchDialog'
+import tableHeader from './config/tableHeader'
+const { mapState, mapMutations } = createNamespacedHelpers('docs/list')
 
 export default {
   computed: {
-    ...mapState(['searchForm', 'listData', 'pageInfo'])
+    ...mapState(['searchForm', 'listData', 'pageInfo']),
+    advSearchCols() {
+      return tableHeader
+    }
   },
   methods: {
-    startImport() {},
+    startImport() {
+      this.$refs.editDialog.open()
+    },
     searchHandler() {},
-    openAdvSearch() {},
+    advSearchHandler(advSearchCriteria) {
+        console.log(advSearchCriteria)
+    },
+    openAdvSearch() {
+      this.$refs.advSearchDialog.open()
+    },
     sizeChangeHandler() {},
     pageChangeHandler() {}
   },
-  components: { Form }
+  components: { Form, EditDialog, AdvSearchDialog }
 }
 </script>
 <style lang="scss" scoped>
@@ -77,13 +98,13 @@ export default {
   flex-direction: column;
   .header {
     display: flex;
-    padding-left: 6px;
+    padding: 6px;
     height: 40px;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #e5e5e5;
     .btn_area {
-      padding-right: 10px;
+      padding-right: 4px;
     }
   }
   .search {
@@ -123,7 +144,7 @@ export default {
   .list {
     flex: 1 1 auto;
     overflow-y: auto;
-    margin: 6px;
+    margin: 0 6px 6px 6px;
     border-bottom: 1px solid #f2f2f2;
     .item {
       height: 72px;
@@ -136,7 +157,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-
+      cursor: pointer;
       &:nth-child(odd) {
         background: #fafafa;
       }

@@ -3,6 +3,7 @@ import searchFormConfig from '../config/searchForm'
 
 const state = {
   search: '',
+  selectedDocType: 'all',
   docCtlg: [
     {
       id: 'all',
@@ -53,11 +54,11 @@ const state = {
     identifier: 'JR01011989001',
     title: '文献标题',
     titleEn: 'doc title',
-    type: '期刊',
+    docTypeName: '期刊',
     author: '张春风',
-    org: '美国国立卫生研究所',
-    year: '1989',
-    ctlg: 'A30002',
+    organization: '美国国立卫生研究所',
+    releaseTime: '1989',
+    catalogCode: 'A30002',
     source: '国外医学.预防.诊断.治疗用生物制品分册'
   }),
   pageInfo: {

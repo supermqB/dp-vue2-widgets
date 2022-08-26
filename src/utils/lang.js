@@ -1,7 +1,7 @@
 export function keysObject(ar, keyName) {
   let re = {}
   ar.forEach(item => {
-    re[item[keyName]] = ''
+    re[item[keyName]] = null
   })
   return re
 }

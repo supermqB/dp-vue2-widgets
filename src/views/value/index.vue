@@ -12,7 +12,11 @@
           @search-key-change="handleSearchChanged"
           @complete-action="handleCompleteAction"
           class="task"></Task>
-        <Bottom class="bottom" :labelList="['值域', '任务']"></Bottom>
+        <Bottom 
+          :labelList="['值域', '任务']"
+          :value="[pageInfo.totalSize, task.taskList.length ]"
+          class="bottom"
+        ></Bottom>
       </div>
     </template>
     <template #main>
@@ -48,7 +52,7 @@ export default {
     this.initValue()
   },
   computed:{
-    ...mapState(['task']),
+    ...mapState(['task', 'pageInfo']),
     ...mapGetters({
       filterTreeData: 'filterTreeData', 
       currentVersionItem: 'currentVersionItem', 

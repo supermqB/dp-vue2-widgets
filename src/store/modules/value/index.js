@@ -38,7 +38,7 @@ const processCatalog = list => {
       children: valueDictCatalogEntityList.map(it => {
         return {
           id: `${sourceTypeCode},${it.nameEn}`,
-          label: it.nameEn,
+          label: it.nameCn,
           nameEn: it.nameEn,
           nameCn: it.nameCn,
           sourceType,
@@ -75,12 +75,6 @@ const state = {
 }
 
 const getters = {
-  currentDictValueItem(state) {
-    if (!state.currentDictValue) return null
-    // for (let item of state.dictList) {
-    //   const res = item.find(it => it.id === )
-    // }
-  },
   currentVersionItem(state) {
     if (!state.currentVersion) return null
     return state.versionList.find(item => item.id === state.currentVersion)
@@ -109,36 +103,34 @@ const getters = {
     })
   },
   tableConfig(state) {
-    if (!state.currentVersionInfo || !state.currentVersionInfo.columnNameList)
-      return [
-        {
-          colConfig: {
-            property: '',
-            label: '',
-            width: 2000
-          }
-        }
-      ]
-    return state.currentVersionInfo.columnNameList.map(name => {
+    if (
+      !state.currentVersionInfo ||
+      !state.currentVersionInfo.valueDictColumnList
+    )
+      return []
+    return state.currentVersionInfo.valueDictColumnList.map(item => {
       return {
         colConfig: {
-          property: name,
-          label: name,
+          property: item.nameEn,
+          label: item.nameCn,
           minWidth: 150
         }
       }
     })
   },
   dictValueFormCfg(state) {
-    if (!state.currentVersionInfo || !state.currentVersionInfo.columnNameList)
+    if (
+      !state.currentVersionInfo ||
+      !state.currentVersionInfo.valueDictColumnList
+    )
       return []
-    return state.currentVersionInfo.columnNameList.map(name => {
+    return state.currentVersionInfo.valueDictColumnList.map(item => {
       return {
         type: 'el-input',
-        label: name,
-        id: name,
+        label: item.nameCn,
+        id: item.nameEn,
         elOptions: {
-          disabled: name === '术语编码',
+          disabled: item.nameEn === 'term_code',
           style: {
             width: '260px'
           }
@@ -194,8 +186,8 @@ const mutations = {
         state.dictList.length &&
         state.dictList[0].children.length
       ) {
-        // state.currentDict = 'dict_drug_form'
-        state.currentDict = '4,dict_symptom'
+        state.currentDict = '1,dict_bact_type'
+        // state.currentDict = '4,dict_symptom'
         // state.currentDict = state.dictList[0].children[0].id
       }
     }
@@ -242,7 +234,6 @@ const actions = {
   },
   async onPageInfoChange({ commit, dispatch }, value) {
     commit('setDictValueList')
-    state.currentVersionInfo = {}
     commit('setPageInfo', value)
     await dispatch('queryDictValue')
     commit('setCurrentDictValue')
@@ -285,6 +276,8 @@ const actions = {
     if (!state.currentVersion) return
     const { value } = await getVersionDetailApi(state.currentVersion)
     state.currentVersionInfo = value
+    state.currentVersionInfo.valueDictColumnList =
+      value.valueDictColumnList.sort((pre, next) => pre.seqNo - next.seqNo)
   },
   async queryClass({}) {
     const { value } = await getClassifyCodeApi()
@@ -309,10 +302,10 @@ const actions = {
     const { curPage: current, pageSize: size } = state.pageInfo
     const columnParamList = []
     ;[
-      { name: '编码', condition: 'like' },
-      { name: '名称', condition: 'like' },
-      { name: '父级代码', condition: 'equal' },
-      { name: '层级关系', condition: 'equal' }
+      { name: 'code', condition: 'like' },
+      { name: 'value', condition: 'like' }
+      // { name: '父级代码', condition: 'equal' },
+      // { name: '层级关系', condition: 'equal' }
     ].forEach(item => {
       if (state.searchForm[item.name]) {
         columnParamList.push(
@@ -327,14 +320,13 @@ const actions = {
       columnParamList
     })
     commit('setPageInfo', value.pageInfo)
-    setTimeout(() => {
-      commit(
-        'setDictValueList',
-        value.records.map((item, index) => {
-          return Object.assign({}, item, { index })
-        })
-      )
-    }, 100)
+    commit(
+      'setDictValueList',
+      value.records.map((item, index) => {
+        return Object.assign({}, item, { index })
+      })
+    )
+    commit('setCurrentDictValue')
   },
   async submitDict({ state }, IsNew) {
     if (IsNew) {

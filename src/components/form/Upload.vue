@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <el-upload
       action=""
       class="uploadWrap"
@@ -8,15 +8,16 @@
       :show-file-list="false"
       :auto-upload="false"
       :on-change="handleChange"
-      >
+    >
       <el-input
-        :value="`${ file &&  file.name ? file.name : ''}`"
+        :value="fileName"
         @focus="handleFocus"
         @clear="handleClear"
-        clearable>
+        clearable
+      >
         <el-button type="primary" slot="append">导入</el-button>
       </el-input>
-      <p slot="tip" class="downloadTemplate">
+      <p slot="tip" class="downloadTemplate" v-if="showTip">
         请
         <img src="@/assets/images/common/icons/download.png" />
         <span class="inputTemplate" @click="download">下载导入模板</span>
@@ -28,33 +29,34 @@
 <script>
 export default {
   props: {
-    file: {
-      type: Object,
+    value: {
+      type: File,
       default: () => {}
     },
-    templateFileName: {
-      type: String,
-      default: '(性别代码.xlsx)'
+    showTip: {
+      type: Boolean,
+      default: () => true
     }
   },
   data() {
     return {
-      fileList: []
+      fileName: ''
     }
   },
-  mounted() {},
   methods: {
     handleChange(file) {
-      this.$emit("update:file", file)
+      this.fileName = file.name
+      this.$emit('input', file.raw)
     },
     handleClear() {
-      this.$emit("update:file", {})
+      this.fileName = ''
+      this.$emit('input', {})
     },
     handleFocus(event) {
       event.stopPropagation()
     },
     download() {
-      this.$emit("onDownload")
+      this.$emit('onDownload')
     }
   }
 }
@@ -82,7 +84,7 @@ export default {
     .inputTemplate {
       margin-right: 4px;
       letter-spacing: 0.5px;
-      color: #1890FF
+      color: #1890ff;
     }
   }
 }

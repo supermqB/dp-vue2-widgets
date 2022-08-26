@@ -16,7 +16,6 @@
         v-bind="cfg.elOptions"
         v-on="cfg.elEvents"
         v-model="formData[cfg.id]"
-        :file.sync="formData[cfg.id]"
       >
         <el-option
           v-for="(opt, index) in cfg.options"
