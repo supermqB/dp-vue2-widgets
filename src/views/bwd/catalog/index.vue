@@ -46,6 +46,8 @@
         :title="`${!fileCatalogData.id ? '新增文件目录' : '编辑文件目录'}`"
         ref="fileCatalogDialog"
         class="fileCatalogDialog"
+        @dialog-closed="onfileCatalogFormClosed"
+        @dialog-complete="onClickSubmitFileCatalog"
       >
         <Form
           ref="fileCatalogForm"
@@ -100,7 +102,11 @@ export default {
   },
   methods: {
     ...mapMutations(['setCatalogForm', 'setCurrentBwd']),
-    ...mapActions(['loadBwdModules', 'loadCurrentBwdValue']),
+    ...mapActions([
+      'loadBwdModules',
+      'loadCurrentBwdValue',
+      'submitFileCatalog'
+    ]),
     // 后面渲染详细信息
     async handleNodeClick({ id }) {
       this.setCurrentBwd(id)
@@ -115,6 +121,21 @@ export default {
       if (!this.currentCatalog) return
       this.$refs.fileCatalogDialog.toggleOpen()
       this.setCatalogForm(this.currentBwdItem)
+    },
+    // 表单重置
+    onfileCatalogFormClosed() {
+      this.setCatalogForm()
+      this.$refs.fileCatalogForm.resetFields()
+    },
+    // 表单确定提交
+    async onClickSubmitFileCatalog() {
+      const { valid } = await this.$refs.fileCatalogForm.validate()
+      if (valid) {
+        this.submitFileCatalog()
+        this.$refs.fileCatalogDialog.toggleOpen()
+      } else {
+        this.$alert('请检查输入项是否完整！')
+      }
     },
     // 左侧搜索框
     onBwdFilterChange(val) {
