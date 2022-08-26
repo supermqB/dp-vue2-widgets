@@ -332,7 +332,7 @@ export const phm = function () {
     },
   ]
 }
-export const com = function () {
+export const cmp = function () {
   return [
     {
       type: 'el-input',
@@ -356,6 +356,133 @@ export const com = function () {
     }
   ]
 }
+export const reg = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'sreg_inx'
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: 'region_name'
+    },
+    {
+      type: 'el-select',
+      options: [
+       { label:'一线', value: '1' },
+        { label:'新一线', value: '2' },
+        { label:'二线', value: '3' },
+        { label:'三线', value: '4' },
+        { label:'四线', value: '5' },
+        { label:'五线', value: '6' }
+      ],
+      label: '城市等级',
+      id: 'city_level_code'
+    },
+    {
+      type: 'el-input',
+      label: '详细地址',
+      id: 'addr'
+    }
+  ]
+}
+export const dep = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'sdep_inx'
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: 'dept_name'
+    },
+    {
+      type: 'el-select',
+      options: [
+       { label:'中医', value: '1' },
+        { label:'医', value: '11' },
+        { label:'民族医', value: '12' },
+        { label:'中西医', value: '2' },
+        { label:'西医', value: '3' },
+        { label:'其他', value: '9' }
+      ],
+      label: '科室类别',
+      id: 'dept_category_code'
+    }
+  ]
+}
+export const emp = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'semp_inx'
+    },
+    {
+      type: 'el-input',
+      label: '名称',
+      id: 'employee_name'
+    },
+    {
+      type: 'el-input',
+      label: '身份证号',
+      id: 'resident_id'
+    }
+  ]
+}
+export const fml = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'sfml_inx'
+    },
+    {
+      type: 'el-input',
+      label: '档案编号',
+      id: 'family_recode_no'
+    },
+     {
+      type: 'el-select',
+      options: [
+       { label:'常住', value: '1' },
+        { label:'户籍', value: '11' },
+        { label:'非户籍', value: '12' },
+        { label:'流动', value: '2' }
+      ],
+      label: '居住类型',
+      id: 'residential_type_code'
+    },
+    {
+      type: 'el-input',
+      label: '详细地址',
+      id: 'family_address'
+    }
+  ]
+}
+export const pat = function () {
+  return [
+    {
+      type: 'el-input',
+      label: '编号',
+      id: 'spat_inx'
+    },
+    {
+      type: 'el-input',
+      label: '户主姓名',
+      id: 'housholder_name'
+    },
+    {
+      type: 'el-input',
+      label: '患者姓名',
+      id: 'patient_name'
+    }
+  ]
+}
 export const likeFields = {
   mat: [
     'material_name',
@@ -375,7 +502,11 @@ export const likeFields = {
   itm: ['item_name'],
   org: ['org_name', 'org_type_name','org_addr'],
   phm: ['pharm_name', 'drug_spec'],
-  com: ['company_name', 'register_addr']
+  cmp: ['company_name', 'register_addr'],
+  reg: ['region_name'],
+  dep: ['dept_name'],
+  emp: ['employee_name'],
+  pat: ['housholder_name', 'patient_name']
 }
 
-export default { drg, mat, dis, tcm, hrb ,tcs ,exm, lab, opt, itm, org, phm, com}
+export default { drg, mat, dis, tcm, hrb ,tcs ,exm, lab, opt, itm, org, phm, cmp, reg, dep, emp, fml, pat}
