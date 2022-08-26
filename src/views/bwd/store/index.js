@@ -1,4 +1,6 @@
-// import { getBwdInfoApi } from '@/api/bwd'
+import { getBwdInfoApi } from '@/api/bwd'
+import { updateFileCatalogApi } from '@/api/bwd'
+import { addFileCatalogApi } from '@/api/bwd'
 
 import { keysClone } from '@/utils/lang'
 import { get, post } from '@/utils/request'
@@ -8,7 +10,6 @@ import initState from './initState'
 const state = {
   // 左侧数据
   currentBwd: '',
-  currentBwdItem: {},
   bwdList: [
     {
       id: '1',
@@ -66,7 +67,6 @@ const state = {
     }
   ],
   // 中间数据
-  currentCatalog: '',
   currentColumn: '',
   isAdvance: false,
   pageInfo: {
@@ -99,6 +99,17 @@ const state = {
 }
 
 const getters = {
+  currentBwdItem(state) {
+    for (let item of state.bwdList) {
+      const res = item.children.find(it => {
+        return state.currentBwd === it.id
+      })
+      if (res) {
+        return Object.assign({}, res)
+      }
+    }
+    return {}
+  },
   totalNumber(state) {
     let res = 0
     for (let item of state.bwdList) {
@@ -181,6 +192,19 @@ const actions = {
     if (result.success) {
       commit('setCurrentBwdValue', result.value)
     }
+  },
+  // 左侧表单提交，更新目录接口addFileCatalogApi,updateFileCatalogApi
+  // 缺状态
+  async submitFileCatalog({ dispatch, state }) {
+    const { id, name, index } = state.fileCatalogData
+    if (!id) {
+      await addFileCatalogApi(name, index)
+      this._vm.$message.success('新增文件目录成功')
+    } else {
+      await updateFileCatalogApi(id, name, index)
+      this._vm.$message.success('编辑文件目录成功')
+    }
+    dispatch('loadBwdModules')
   },
   async queryField({ commit }) {
     const { curPage, pageSize } = state.pageInfo

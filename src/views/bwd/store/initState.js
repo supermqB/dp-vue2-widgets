@@ -11,6 +11,7 @@ export default {
     index: ''
   },
   fileCatalogData: {
+    id: '',
     name: '',
     index: '',
     state: ''
