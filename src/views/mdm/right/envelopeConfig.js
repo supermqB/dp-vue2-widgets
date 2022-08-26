@@ -387,7 +387,7 @@ const phm = [
     ]
   }
 ]
-const com = [
+const cmp = [
   {
     name: 'basic',
     title: '基本信息',
@@ -410,5 +410,37 @@ const com = [
     ]
   }
 ]
+const dep = [
+  {
+    name: 'basic',
+    title: '基本信息',
+    props: [
+      'dept_abbrev_name','org_name'
+    ]
+  },
+   {
+    name: 'type',
+    title: '类型信息',
+    props: [
+      'dept_category_name','dept_type_name'
+    ]
+  }
+]
+const emp = [
+  {
+    name: 'basic',
+    title: '基本信息',
+    props: [
+      'employee_no','birth_date','resident_id','passport_no','sex','marriage_status','nationality'
+    ]
+  },
+   {
+    name: 'career',
+    title: '职业信息',
+    props: [
+      'org_name','dept_name','title_level_name','duty_name','adm_duty_level_name','emp_status_name'
+    ]
+  }
+]
 
-export default { drg, mat, dis, tcm , hrb, tcs, exm, lab, opt, itm, org, phm, com}
+export default { drg, mat, dis, tcm , hrb, tcs, exm, lab, opt, itm, org, phm, cmp, dep, emp}
