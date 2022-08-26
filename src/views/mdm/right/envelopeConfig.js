@@ -123,20 +123,26 @@ const tcm = [
   }
 ]
 
-const hrb= [
+const hrb = [
   {
     name: 'basic',
     title: '基本信息',
     props: [
-     { n: 'fundamental_factor_flag', f: v => (v ? '主因子' : '非主因子') },
-	 'tcm_herb_name_en', 'tcm_herb_name_en_short', 'tcm_herb_other_name'
+      { n: 'fundamental_factor_flag', f: v => (v ? '主因子' : '非主因子') },
+      'tcm_herb_name_en',
+      'tcm_herb_name_en_short',
+      'tcm_herb_other_name'
     ]
   },
   {
     name: 'spec',
     title: '特性信息',
     props: [
-      'tcm_herb_type','raw_material_name','effcet_class_name','tcm_herb_subject','tem_herb_source'
+      'tcm_herb_type',
+      'raw_material_name',
+      'effcet_class_name',
+      'tcm_herb_subject',
+      'tem_herb_source'
     ]
   },
   {
@@ -149,42 +155,30 @@ const hrb= [
       'drug_property_taste',
       'meridian_tropism_name',
       'main_fuction',
-     'tcm_herb_usage_dosage'
+      'tcm_herb_usage_dosage'
     ]
   },
- {
+  {
     name: 'other',
     title: '其他信息',
-    props: [
-      'pay_policy',
-      'picture_url',
-      'note'
-    ]
+    props: ['pay_policy', 'picture_url', 'note']
   }
 ]
 const tcs = [
   {
     name: 'basic',
     title: '基本信息',
-    props: [
-      'tcm_syndrome_other_name'
-    ]
+    props: ['tcm_syndrome_other_name']
   },
   {
     name: 'type',
     title: '类型信息',
-    props: [
-      'tcm_syndrome_class'
-    ]
+    props: ['tcm_syndrome_class']
   },
   {
     name: 'parent',
     title: '父级信息',
-    props: [
-      'stcs_parent_inx',
-      'parent_tcm_syndrome_name',
-      'hierarchy_no'
-    ]
+    props: ['stcs_parent_inx', 'parent_tcm_syndrome_name', 'hierarchy_no']
   }
 ]
 
@@ -193,36 +187,31 @@ const exm = [
     name: 'basic',
     title: '基本信息',
     props: [
-      'exam_item_name_en', 'exam_item_name_en_short','exam_item_connotation'
+      'exam_item_name_en',
+      'exam_item_name_en_short',
+      'exam_item_connotation'
     ]
   },
   {
     name: 'parent',
     title: '父级信息',
-    props: [
-      'sexm_parent_inx',
-      'parent_exam_item_name',
-      'hierarchy_no'
-    ]
+    props: ['sexm_parent_inx', 'parent_exam_item_name', 'hierarchy_no']
   },
- {
+  {
     name: 'test',
     title: '受检信息',
     props: [
-    'exception_content',
+      'exception_content',
       'exam_part_name',
       'technology_desc',
       'application_sex',
-  { n: 'fasting_flag', f: v => (v ? '空腹' : '非空腹') }
+      { n: 'fasting_flag', f: v => (v ? '空腹' : '非空腹') }
     ]
   },
- {
+  {
     name: 'other',
     title: '其他信息',
-    props: [
-      'charge_unit',
-      'note'
-    ]
+    props: ['charge_unit', 'note']
   }
 ]
 const lab = [
@@ -230,19 +219,17 @@ const lab = [
     name: 'basic',
     title: '基本信息',
     props: [
-      'lab_item_name_en', 'lab_item_name_en_short','lab_item_connotation'
+      'lab_item_name_en',
+      'lab_item_name_en_short',
+      'lab_item_connotation'
     ]
   },
   {
     name: 'parent',
     title: '父级信息',
-    props: [
-      'slab_parent_inx',
-      'parent_lab_item_name',
-      'hierarchy_no'
-    ]
+    props: ['slab_parent_inx', 'parent_lab_item_name', 'hierarchy_no']
   },
- {
+  {
     name: 'test',
     title: '受检信息',
     props: [
@@ -255,43 +242,32 @@ const lab = [
       'sample_type_name',
       'lab_category_name',
       'application_sex',
-  { n: 'fasting_flag', f: v => (v ? '空腹' : '非空腹') }
+      { n: 'fasting_flag', f: v => (v ? '空腹' : '非空腹') }
     ]
   },
- {
+  {
     name: 'other',
     title: '其他信息',
-    props: [
-      'charge_unit',
-      'note'
-    ]
+    props: ['charge_unit', 'note']
   }
 ]
 const opt = [
   {
     name: 'basic',
     title: '基本信息',
-    props: [
-      'oper_other_name'
-    ]
+    props: ['oper_other_name']
   },
   {
     name: 'type',
     title: '类型信息',
-    props: [
-      'oper_chapter_name', 'oper_class'
-    ]
+    props: ['oper_chapter_name', 'oper_class']
   },
   {
     name: 'parent',
     title: '父级信息',
-    props: [
-      'sopt_parent_inx',
-      'parent_oper_name',
-      'hierarchy_no'
-    ]
+    props: ['sopt_parent_inx', 'parent_oper_name', 'hierarchy_no']
   },
- {
+  {
     name: 'operation',
     title: '手术相关信息',
     props: [
@@ -305,110 +281,93 @@ const itm = [
   {
     name: 'basic',
     title: '基本信息',
-    props: [
-      'item_connotation'
-    ]
+    props: ['item_connotation']
   },
   {
     name: 'parent',
     title: '父级信息',
-    props: [
-      'sitm_parent_inx',
-      'parent_item_name',
-      'hierarchy_no'
-    ]
+    props: ['sitm_parent_inx', 'parent_item_name', 'hierarchy_no']
   },
- {
+  {
     name: 'item',
     title: '项目信息',
-    props: [
-      'item_except',
-      'item_price_unit'
-    ]
+    props: ['item_except', 'item_price_unit']
   },
- {
+  {
     name: 'other',
     title: '其他信息',
-    props: [
-      'note'
-    ]
+    props: ['note']
   }
 ]
 const org = [
   {
     name: 'basic',
     title: '基本信息',
-    props: [
-      'org_alias','org_name_en'
-    ]
+    props: ['org_alias', 'org_name_en']
   },
   {
     name: 'type',
     title: '类型信息',
-    props: [
-      'org_level_name', 'org_grade_name','org_type_name'
-    ]
+    props: ['org_level_name', 'org_grade_name', 'org_type_name']
   },
   {
     name: 'property',
     title: '属性信息',
-    props: [
-      'org_property_name'
-    ]
+    props: ['org_property_name']
   },
-{
+  {
     name: 'address',
     title: '地址信息',
-    props: [
-      'org_addr'
-    ]
+    props: ['org_addr']
   }
 ]
 const phm = [
   {
     name: 'basic',
     title: '基本信息',
-    props: [
-      'pharm_name_en','pharm_name_en_short','pharm_other_name'
-    ]
+    props: ['pharm_name_en', 'pharm_name_en_short', 'pharm_other_name']
   },
   {
     name: 'form',
     title: '剂型信息',
-    props: [
-      'drug_form_name'
-    ]
+    props: ['drug_form_name']
   },
   {
     name: 'spec',
     title: '规格信息',
-    props: [
-      'drug_spec'
-    ]
+    props: ['drug_spec']
   }
 ]
 const com = [
   {
     name: 'basic',
     title: '基本信息',
-    props: [
-      'company_name_en','company_nationality','company_nationality_en'
-    ]
+    props: ['company_name_en', 'company_nationality', 'company_nationality_en']
   },
-   {
+  {
     name: 'type',
     title: '类型信息',
-    props: [
-      'class_no'
-    ]
+    props: ['class_no']
   },
-{
+  {
     name: 'address',
     title: '地址信息',
-    props: [
-      'register_addr'
-    ]
+    props: ['register_addr']
   }
 ]
 
-export default { drg, mat, dis, tcm , hrb, tcs, exm, lab, opt, itm, org, phm, com}
+export default {
+  drg,
+  mat,
+  dis,
+  tcm,
+  hrb,
+  tcs,
+  exm,
+  lab,
+  opt,
+  itm,
+  org,
+  phm,
+  com
+}

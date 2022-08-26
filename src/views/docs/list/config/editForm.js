@@ -52,7 +52,7 @@ const ignoreFileds = {
   S: ['author', 'source', 'keywords', 'summary'],
   Z: ['author', 'source', 'keywords', 'summary', 'state'],
   M: ['source', 'keywords', 'summary', 'state'],
-  others: ['docId']
+  others: ['docId', 'state']
 }
 
 const modeIgnoreFields = {
@@ -150,7 +150,7 @@ export function getEditFormCfg(docType = 'S', mode = 'create') {
         { value: '2', label: '被代替' },
         { value: '3', label: '废止' }
       ],
-      label: '状态',
+      label: '标准状态',
       id: 'state'
     },
     {

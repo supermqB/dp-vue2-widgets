@@ -3,6 +3,7 @@ import searchFormConfig from '../config/searchForm'
 
 const state = {
   search: '',
+  selectedDocType: 'all',
   docCtlg: [
     {
       id: 'all',

@@ -101,7 +101,7 @@ export default {
     },
     'formData.colNames'(names) {
       /* remove other options if all is set. */
-      if (names.length != 1 && names.indexOf('all') != -1) {
+      if (names && names.length != 1 && names.indexOf('all') != -1) {
         this.formData.colNames = ['all']
       }
     }

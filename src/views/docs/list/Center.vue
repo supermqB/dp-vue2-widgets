@@ -50,6 +50,11 @@
     </div>
     <div>
       <EditDialog mode="create" ref="editDialog" />
+      <adv-search-dialog
+        ref="advSearchDialog"
+        :columns="advSearchCols"
+        @adv-search-action="advSearchHandler"
+      />
     </div>
   </div>
 </template>
@@ -58,22 +63,32 @@
 import EditDialog from './EditDialog.vue'
 import Form from '@/components/Form.vue'
 import { createNamespacedHelpers } from 'vuex'
+import AdvSearchDialog from '@/views/common/AdvSearchDialog'
+import tableHeader from './config/tableHeader'
 const { mapState, mapMutations } = createNamespacedHelpers('docs/list')
 
 export default {
   computed: {
-    ...mapState(['searchForm', 'listData', 'pageInfo'])
+    ...mapState(['searchForm', 'listData', 'pageInfo']),
+    advSearchCols() {
+      return tableHeader
+    }
   },
   methods: {
     startImport() {
       this.$refs.editDialog.open()
     },
     searchHandler() {},
-    openAdvSearch() {},
+    advSearchHandler(advSearchCriteria) {
+        console.log(advSearchCriteria)
+    },
+    openAdvSearch() {
+      this.$refs.advSearchDialog.open()
+    },
     sizeChangeHandler() {},
     pageChangeHandler() {}
   },
-  components: { Form, EditDialog }
+  components: { Form, EditDialog, AdvSearchDialog }
 }
 </script>
 <style lang="scss" scoped>
