@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       docType: 'S',
-      formData: {}
+      formData: {docType: 'S'}
     }
   },
   computed: {
@@ -36,7 +36,7 @@ export default {
       return this.mode == 'create' ? '导入文献' : '修改文献'
     },
     formCfg() {
-      return getEditFormCfg(this.mode)
+      return getEditFormCfg(this.docType, this.mode)
     },
     formRule() {
       return editFormRule
@@ -44,11 +44,24 @@ export default {
   },
   watch: {
     formCfg(cfg) {
-      this.formData = keysObject(cfg, 'id')
+      this.formData = Object.assign(keysObject(cfg, 'id'), {
+        docType: this.docType
+      })
+      this.$nextTick(() => {
+        this.$refs.editForm.$refs.el_form.clearValidate()
+      })
+    },
+    'formData.docType'(type) {
+      console.log(type)
+      this.docType = type
     }
   },
   methods: {
-    completeEdit() {},
+    async completeEdit() {
+      console.log(this.formData)
+      let result = await this.$refs.editForm.validate()
+      console.log(result)
+    },
     open() {
       this.$refs.editDialog.toggleOpen()
     }

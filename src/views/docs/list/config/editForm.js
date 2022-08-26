@@ -51,7 +51,8 @@ const genYearList = () => {
 const ignoreFileds = {
   S: ['author', 'source', 'keywords', 'summary'],
   Z: ['author', 'source', 'keywords', 'summary', 'state'],
-  Z: ['source', 'keywords', 'summary', 'state']
+  M: ['source', 'keywords', 'summary', 'state'],
+  others: ['docId']
 }
 
 const modeIgnoreFields = {
@@ -87,7 +88,8 @@ export function getEditFormCfg(docType = 'S', mode = 'create') {
           general_class_code,
         props: {
           multiple: true
-        }
+        },
+        collapseTags: true
       },
       label: '分类',
       id: 'catalogCode'
@@ -148,7 +150,7 @@ export function getEditFormCfg(docType = 'S', mode = 'create') {
         { value: '2', label: '被代替' },
         { value: '3', label: '废止' }
       ],
-      label: '文献类型',
+      label: '状态',
       id: 'state'
     },
     {
@@ -167,7 +169,7 @@ export function getEditFormCfg(docType = 'S', mode = 'create') {
   ]
 
   let filteredFields = allFileds.filter(
-    f => (ignoreFileds[docType] || []).indexOf(f.id) == -1
+    f => (ignoreFileds[docType] || ignoreFileds['others']).indexOf(f.id) == -1
   )
 
   filteredFields = filteredFields.filter(
@@ -186,5 +188,6 @@ export const editFormRule = {
   organization: { required: true },
   releaseTime: { required: true },
   source: { required: true },
-  releaseTime: { required: true }
+  releaseTime: { required: true },
+  file: { required: true }
 }

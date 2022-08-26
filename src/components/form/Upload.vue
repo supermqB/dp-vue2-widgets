@@ -30,7 +30,7 @@
 export default {
   props: {
     value: {
-      type: Object,
+      type: File,
       default: () => {}
     },
     showTip: {

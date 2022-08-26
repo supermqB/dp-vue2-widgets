@@ -21,7 +21,7 @@
     <div class="list">
       <div v-for="(item, index) in listData" class="item" :key="index">
         <div>
-          <div class="typespan">{{ item.type }}</div>
+          <div class="typespan">{{ item.docTypeName }}</div>
           <div class="title">
             {{ item.title }}【{{ item.identifier }}】，英文标题：{{
               item.titleEn
@@ -29,8 +29,8 @@
           </div>
         </div>
         <div class="sumline">
-          作者：{{ item.author }}，机构：{{ item.org }}，发表年份：{{
-            item.year
+          作者：{{ item.author }}，机构：{{ item.organization }}，发表年份：{{
+            item.releaseTime
           }}，来源：{{ item.source }}
         </div>
       </div>
@@ -49,7 +49,7 @@
       </el-pagination>
     </div>
     <div>
-        <EditDialog mode="create" ref="editDialog"/>
+      <EditDialog mode="create" ref="editDialog" />
     </div>
   </div>
 </template>
@@ -60,21 +60,20 @@ import Form from '@/components/Form.vue'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapMutations } = createNamespacedHelpers('docs/list')
 
-
 export default {
   computed: {
     ...mapState(['searchForm', 'listData', 'pageInfo'])
   },
   methods: {
     startImport() {
-        this.$refs.editDialog.open()
+      this.$refs.editDialog.open()
     },
     searchHandler() {},
     openAdvSearch() {},
     sizeChangeHandler() {},
     pageChangeHandler() {}
   },
-  components: { Form ,EditDialog}
+  components: { Form, EditDialog }
 }
 </script>
 <style lang="scss" scoped>
@@ -130,7 +129,7 @@ export default {
   .list {
     flex: 1 1 auto;
     overflow-y: auto;
-    margin: 6px;
+    margin: 0 6px 6px 6px;
     border-bottom: 1px solid #f2f2f2;
     .item {
       height: 72px;
@@ -143,7 +142,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-
+      cursor: pointer;
       &:nth-child(odd) {
         background: #fafafa;
       }
