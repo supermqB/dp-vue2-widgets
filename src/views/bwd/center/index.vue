@@ -130,6 +130,12 @@ export default {
       await this.queryField()
       this.setCurrentField()
     },
+    // 取消表单重置
+    onClosedFieldsForm() {
+      this.setColumnForm()
+      this.$refs.fileFieldsForm.resetFields()
+    },
+    // 提交表单验证
     async onClickSubmitFields() {
       const { valid } = await this.$refs.fileFieldsForm.validate()
       if (valid) {

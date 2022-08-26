@@ -99,6 +99,7 @@ const state = {
 }
 
 const getters = {
+  // 返回id===当前选中的bwd文件的id的信息，就是中间部分的每条数据
   currentBwdItem(state) {
     for (let item of state.bwdList) {
       const res = item.children.find(it => {
@@ -110,6 +111,7 @@ const getters = {
     }
     return {}
   },
+  // 左侧栏的文件总数
   totalNumber(state) {
     let res = 0
     for (let item of state.bwdList) {
@@ -118,22 +120,26 @@ const getters = {
       return 0
     }
   },
+  //
   currentFieldsRow(state) {
     return state.fieldsList.find(item => item.id === state.currentColumn)
   }
 }
 const mutations = {
   // 左侧bwd处理（动作set）
+  // 赋值当前点击的bwd的id,
   setCurrentBwd(state, value) {
     state.currentBwd = value
   },
+  // 将接口获取的数据赋值至页面每一条，再进行筛选
   setCurrentBwdValue(state, value) {
     state.currentBwdItem = value
   },
+  // 将接口获取的数据渲染至页面进行bwd列表展示
   setBwdList(state, value) {
     state.bwdList = value
   },
-  // 中间处理
+  // 目录栏的新增编辑赋值
   setCatalogForm: (state, form) => {
     if (form) {
       keysClone(state.fileCatalogData, form)
@@ -170,38 +176,30 @@ const mutations = {
 }
 
 const actions = {
-  // 处理左侧bwd，调接口展示
+  // 处理左侧bwd，调接口展示bwdlist
   async loadBwdModules({ commit }) {
-    // const result = await get('sbr/getCatalog')
-    const result = ''
+    const result = await get('data-mapping/getCatalog')
     if (result.success) {
-      commit('setBwdList'),
-        result.value.map(item => ({
-          // 后面根据接口的字段名称对应修改
-          ...item,
-          id: item.id + '',
-          label: item.name,
-          state: item.state == '1' ? INCOMESTATE : COMPLETESTATE,
-          number: item.refCount
-        }))
+      commit('setBwdList')
     }
   },
   // 给中间展示bwd
-  async loadCurrentBwdValue({ commit }, bwdId) {
+  async loadCurrentBwdValue({ commit }, currentBwd) {
+    const bwdId = currentBwd.id
     const result = await get(`sbr/getOverView/${bwdId}`)
     if (result.success) {
       commit('setCurrentBwdValue', result.value)
     }
   },
   // 左侧表单提交，更新目录接口addFileCatalogApi,updateFileCatalogApi
-  // 缺状态
+  // 状态
   async submitFileCatalog({ dispatch, state }) {
     const { id, name, index } = state.fileCatalogData
     if (!id) {
-      await addFileCatalogApi(name, index)
+      await addFileCatalogApi(name, index, state.fileCatalogData.state)
       this._vm.$message.success('新增文件目录成功')
     } else {
-      await updateFileCatalogApi(id, name, index)
+      await updateFileCatalogApi(id, name, index, state.fileCatalogData.state)
       this._vm.$message.success('编辑文件目录成功')
     }
     dispatch('loadBwdModules')
@@ -212,14 +210,9 @@ const actions = {
       { id: state.currentCatalog },
       state.isAdvance ? state.adSearchData : state.searchData
     )
-    const { value } = await getBwdInfoApi(
-      curPage,
-      pageSize,
-      query,
-      state.isAdvance
-    )
-    const { records, pageInfo } = value
-    state.fieldsList = processColumnList(records, curPage, pageSize)
+    const res = await getBwdInfoApi(curPage, pageSize, query, state.isAdvance)
+    const { records, pageInfo } = res.value
+    state.fieldsList = records
     commit('setPageInfo', pageInfo)
   }
 }

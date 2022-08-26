@@ -107,7 +107,7 @@ export default {
       'loadCurrentBwdValue',
       'submitFileCatalog'
     ]),
-    // 后面渲染详细信息
+    // 根据目录的id渲染中间详细信息
     async handleNodeClick({ id }) {
       this.setCurrentBwd(id)
       this.loadCurrentBwdValue(this.currentBwd.id)
@@ -150,6 +150,7 @@ export default {
     reset() {
       this.$refs.filterTree.setCheckedKeys([2])
     },
+    // 筛选框的查询功能
     async onClickSearch() {}
   },
   // Vue完成DOM挂载bwd列表
