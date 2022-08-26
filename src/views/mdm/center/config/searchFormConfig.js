@@ -268,34 +268,34 @@ export const org = function () {
     {
       type: 'el-select',
       options: [
-       { label:'三级', value: '1' },
-        { label:'三级特等', value: '11' },
-        { label:'三级甲等', value: '12' },
-        { label:'三级乙等', value: '13' },
-        { label:'三级丙等', value: '14' },
-        { label:'二级', value: '2' },
-        { label:'二级甲等', value: '21' },
-        { label:'二级乙等', value: '22' },
-        { label:'二级丙等', value: '23' },
-        { label:'一级', value: '3' },
-        { label:'一级甲等', value: '31' },
-        { label:'一级乙等', value: '32' },
-        { label:'一级丙等', value: '33' },
-        { label:'其他', value: '9' }
+        { label: '三级', value: '1' },
+        { label: '三级特等', value: '11' },
+        { label: '三级甲等', value: '12' },
+        { label: '三级乙等', value: '13' },
+        { label: '三级丙等', value: '14' },
+        { label: '二级', value: '2' },
+        { label: '二级甲等', value: '21' },
+        { label: '二级乙等', value: '22' },
+        { label: '二级丙等', value: '23' },
+        { label: '一级', value: '3' },
+        { label: '一级甲等', value: '31' },
+        { label: '一级乙等', value: '32' },
+        { label: '一级丙等', value: '33' },
+        { label: '其他', value: '9' }
       ],
       label: '等级',
       id: 'org_level_code'
     },
-      {
+    {
       type: 'el-input',
       label: '类型名称',
       id: 'org_type_name'
     },
-      {
+    {
       type: 'el-input',
       label: '详细地址',
       id: 'org_addr'
-    },
+    }
   ]
 }
 export const phm = function () {
@@ -310,7 +310,7 @@ export const phm = function () {
       label: '名称',
       id: 'pharm_name'
     },
-      {
+    {
       type: 'el-autocomplete',
       elOptions: {
         'fetch-suggestions': (queryString, cb) => {
@@ -325,11 +325,11 @@ export const phm = function () {
       label: '注册剂型',
       id: 'drug_form_name'
     },
-      {
+    {
       type: 'el-input',
       label: '药物规格',
       id: 'drug_spec'
-    },
+    }
   ]
 }
 export const com = function () {
@@ -367,15 +367,35 @@ export const likeFields = {
   drg: ['drug_name'],
   dis: ['wm_disease_name', 'wm_disease_class'],
   tcm: ['tcm_disease_name', 'tcm_disease_class'],
-  hrb: ['tcm_herb_name', 'tcm_herb_type','effcet_class_name','tcm_herb_source','main_fuction'],
+  hrb: [
+    'tcm_herb_name',
+    'tcm_herb_type',
+    'effcet_class_name',
+    'tcm_herb_source',
+    'main_fuction'
+  ],
   tcs: ['tcm_syndrome_name', 'tcm_syndrome_class'],
   exm: ['exam_item_name'],
   lab: ['lab_item_name'],
   opt: ['oper_name', 'oper_class'],
   itm: ['item_name'],
-  org: ['org_name', 'org_type_name','org_addr'],
+  org: ['org_name', 'org_type_name', 'org_addr'],
   phm: ['pharm_name', 'drug_spec'],
   com: ['company_name', 'register_addr']
 }
 
-export default { drg, mat, dis, tcm, hrb ,tcs ,exm, lab, opt, itm, org, phm, com}
+export default {
+  drg,
+  mat,
+  dis,
+  tcm,
+  hrb,
+  tcs,
+  exm,
+  lab,
+  opt,
+  itm,
+  org,
+  phm,
+  com
+}

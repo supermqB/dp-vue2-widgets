@@ -7,12 +7,13 @@ export const getCatalogApi = () => {
   })
 }
 
-export const getVersionListApi = dictName => {
+export const getVersionListApi = (dictName, sourceTypeCode) => {
   return request({
     url: '/dict/getVersionList',
     method: 'post',
     params: {
-      dictName
+      dictName,
+      sourceTypeCode
     }
   })
 }
@@ -32,7 +33,7 @@ export const editVersionApi = ({
   masterVersion,
   version,
   state,
-  sourceType,
+  sourceTypeCode,
   sourceBasis
 }) => {
   return request({
@@ -43,7 +44,7 @@ export const editVersionApi = ({
       masterVersion,
       version,
       state,
-      sourceType,
+      sourceTypeCode,
       sourceBasis
     }
   })
@@ -62,13 +63,14 @@ export const addVersionApi = ({ version, dictName, parVersion, file }) => {
   })
 }
 
-export const downloadTemplateApi = dictName => {
+export const downloadTemplateApi = dictId => {
   return request({
     url: '/dict/download',
     method: 'post',
     params: {
-      dictName
-    }
+      id: dictId
+    },
+    responseType: 'blob'
   })
 }
 

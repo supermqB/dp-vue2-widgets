@@ -23,7 +23,7 @@ export const getSuspectListApi = (
       searchKey,
       source: '',
       name: '',
-      dictId: 25
+      dictId
     }
   })
 }

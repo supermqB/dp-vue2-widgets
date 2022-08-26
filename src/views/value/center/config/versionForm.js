@@ -42,10 +42,7 @@ export const editVersionCfg = (versionOptions, sourceTypeOptions) =>
       type: 'el-select',
       options: sourceTypeOptions,
       label: '标准来源',
-      id: 'sourceTypeCode',
-      elOptions: {
-        // disabled: true
-      }
+      id: 'sourceTypeCode'
     },
     {
       type: 'el-input',
@@ -66,7 +63,7 @@ export const editVersionCfg = (versionOptions, sourceTypeOptions) =>
     return item
   })
 
-export const addVersionCfg = versionOptions =>
+export const addVersionCfg = (versionOptions, onDownload) =>
   [
     {
       type: 'el-input',
@@ -93,7 +90,9 @@ export const addVersionCfg = versionOptions =>
       type: 'upload',
       label: '导入',
       id: 'file',
-      elOptions: {}
+      elEvents: {
+        onDownload
+      }
     }
   ].map(item => {
     const elOptions = Object.assign({}, item.elOptions, {

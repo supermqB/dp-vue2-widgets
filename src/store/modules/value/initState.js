@@ -19,6 +19,7 @@ export default {
     version: '',
     state: '',
     sourceType: '',
+    sourceTypeCode: '',
     sourceBasic: ''
   },
   versionForm: {

@@ -1,26 +1,47 @@
 <template>
   <div class="suspectWrap">
-    <p>疑似列表</p>
+    <p class="listTitle">疑似列表</p>
     <Table
+      v-if="currentVersionInfo.type === '单值字典'"
       :tableData="suspectList"
       :tableConfig="config"
       :pageInfo="null"
       :isShowRadio="false"
       class="suspectTable">
     </Table>
+    <div v-else-if="currentVersionInfo.type === '多值字典'">
+      <el-collapse v-model="activeName" accordion>
+        <el-collapse-item
+          v-for="(suspect, index) in dictValueList"
+          :title="`症状疑似xxx${index+1}`"
+          :name="index"
+          :key="index"
+          class="propList"
+        >
+          <div
+            v-for="key in currentVersionInfo.columnNameList"
+            :key="`${key}${index}`"
+            class="propItem"
+          >
+            <div class="title">【{{ key }}】</div>
+            <div class="content">{{ suspect[key] }}</div>
+          </div>
+        </el-collapse-item>
+      </el-collapse>
+    </div>
   </div>
 </template>
 
 <script>
 import Table from '@/components/GeneralTable.vue'
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapGetters } = createNamespacedHelpers('value')
+const { mapState, mapGetters, mapMutations } = createNamespacedHelpers('value')
 const config = [
   {
     colConfig: {
       property: 'system',
       label: '系统',
-      minWidth: 55
+      minWidth: 50
     }
   },{
     colConfig: {
@@ -32,7 +53,7 @@ const config = [
     colConfig: {
       property: 'name',
       label: '名称',
-      minWidth: 70
+      minWidth: 55
     }
   }
 ]
@@ -41,32 +62,80 @@ export default {
     Table
   },
   computed: {
-    ...mapState(['task']),
+    ...mapState(['task', 'currentVersionInfo', 'dictValueList']),
     ...mapGetters(['suspectList'])
   },
   data() {
     return {
       config,
+      activeName: ''
     }
-  }
+  },
+  methods: {
+    ...mapMutations(['setSuspectList'])
+  },
+  watch: {
+    suspectList: {
+      handler(){
+        this.activeName = 0
+      }
+    },
+    currentVersion: {
+      handler(){
+        this.setSuspectList()
+      }
+    }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-.suspectWrap {
+::v-deep.suspectWrap {
   height: 100%;
   display: flex;
   flex-direction: column;
-  p {
-    height: 30px;
-    margin: 7px 8px 0px 8px;
-    padding-left: 3px;
-    line-height: 30px;
-    text-align: left;
+  p.listTitle {
+    margin-bottom:-1px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.65);
+    padding: 0 6px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .el-collapse-item__header {
+    height: 36px;
+    padding-left: 6px;
+    &::before {
+      height: 10px;
+      width: 3px;
+      background-color: #1890ff;
+      content: '';
+      margin-right: 5px;
+      border-radius: 16px;
+    }
+  }
+  .el-collapse-item__content {
+    padding-bottom: 17px;
+  }
+  .propList {
+    .propItem {
+      .title {
+        background: #eeeeee;
+        margin: 6px;
+      }
+      .content {
+        margin: 8px 6px 8px 14px;
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.65);
+        line-height: 18px;
+      }
+    }
   }
 }
 
 .suspectTable {
   flex: 1;
 }
+
 </style>
