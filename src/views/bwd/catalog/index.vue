@@ -102,15 +102,12 @@ export default {
   },
   methods: {
     ...mapMutations(['setCatalogForm', 'setCurrentBwd']),
-    ...mapActions([
-      'loadBwdModules',
-      'loadCurrentBwdValue',
-      'submitFileCatalog'
-    ]),
+    ...mapActions(['loadBwdModules', 'queryField', 'submitFileCatalog']),
     // 根据目录的id渲染中间详细信息
     async handleNodeClick({ id }) {
       this.setCurrentBwd(id)
-      this.loadCurrentBwdValue(this.currentBwd.id)
+      await this.queryField()
+      this.setCurrentField()
     },
     // 左侧编辑新增
     async addFileCatalog() {
@@ -118,7 +115,7 @@ export default {
       this.setCatalogForm()
     },
     editFileCatalog() {
-      if (!this.currentCatalog) return
+      if (!this.currentBwd) return
       this.$refs.fileCatalogDialog.toggleOpen()
       this.setCatalogForm(this.currentBwdItem)
     },

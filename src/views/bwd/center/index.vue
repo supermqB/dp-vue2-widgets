@@ -4,10 +4,11 @@
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>BWD文件管理</el-breadcrumb-item>
         <el-breadcrumb-item>
-          <!-- {{ currentBwd.label }} <img :src="icon(currentBwd.state)" /> -->
+          <!-- {{ currentBwdItem.label }} <img :src="icon(currentBwdItem.state)" /> -->
         </el-breadcrumb-item>
       </el-breadcrumb>
       <div>
+        <!-- {{ currentBwdItem.label }} 启用/停用 -->
         <el-button type="primary" @click="open">启用</el-button>
         <el-button type="primary" @click="editFileFields">编辑</el-button>
         <el-button type="primary" @click="addFileFields">新增</el-button>
@@ -28,6 +29,7 @@
         :tableConfig="tableConfig"
         :tableData="fieldsList"
         :pageInfo="pageInfo"
+        @row-changed="val => setCurrentField(val.id)"
         @page-changed="val => pageInfoChanged(val)"
       ></Table>
     </div>
@@ -91,7 +93,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentCatalogItem', 'currentFieldsRow']),
+    ...mapGetters(['currentBwdItem', 'currentFieldRow']),
     ...mapState({
       currentBwd: 'currentBwd',
       pageInfo: 'pageInfo',
@@ -111,14 +113,13 @@ export default {
     ]),
     ...mapActions(['queryField', 'submitFields']),
     open() {
-      this.$confirm(
-        `是否${this.currentCatalogItem.state}【患者信息记录文件】？`,
-        {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }
-      )
+      this.$confirm(`是否${this.currentBwdItem.state}【患者信息记录文件】？`, {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.currentBwdItem.state = !currentBwdItem.state
+      })
     },
     async pageInfoChanged(val) {
       this.setPageInfo(val)
@@ -129,6 +130,12 @@ export default {
       this.setIsAdvance(false)
       await this.queryField()
       this.setCurrentField()
+    },
+    async onClickAdvanceSearch() {
+      this.setIsAdvance(true)
+      await this.queryField()
+      this.setCurrentField()
+      this.$refs.searchDialog.toggleOpen()
     },
     // 取消表单重置
     onClosedFieldsForm() {
@@ -151,7 +158,7 @@ export default {
     },
     editFileFields() {
       this.$refs.fileFieldsDialog.toggleOpen()
-      this.setFieldsForm(this.currentFieldsRow)
+      this.setFieldsForm(this.currentFieldRow)
     },
     addFileFields() {
       this.$refs.fileFieldsDialog.toggleOpen()
@@ -159,11 +166,10 @@ export default {
     },
     advancedSearch() {
       this.$refs.searchDialog.toggleOpen()
-    },
-    async onClickAdvanceSearch() {}
+    }
   },
   watch: {
-    currentFieldsRow: {
+    currentFieldRow: {
       handler(cur) {
         this.$refs.columnTable.setCurrentRow(cur)
       }

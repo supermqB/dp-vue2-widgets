@@ -67,7 +67,7 @@ const state = {
     }
   ],
   // 中间数据
-  currentColumn: '',
+  currentField: '',
   isAdvance: false,
   pageInfo: {
     curPage: 1,
@@ -121,8 +121,8 @@ const getters = {
     }
   },
   //
-  currentFieldsRow(state) {
-    return state.fieldsList.find(item => item.id === state.currentColumn)
+  currentFieldRow(state) {
+    return state.fieldsList.find(item => item.id === state.currentField)
   }
 }
 const mutations = {
@@ -131,10 +131,10 @@ const mutations = {
   setCurrentBwd(state, value) {
     state.currentBwd = value
   },
-  // 将接口获取的数据赋值至页面每一条，再进行筛选
-  setCurrentBwdValue(state, value) {
-    state.currentBwdItem = value
-  },
+  // 将接口获取的数据赋值至页面每一条
+  // setCurrentBwdValue(state, value) {
+  //   state.currentBwdItem = value
+  // },
   // 将接口获取的数据渲染至页面进行bwd列表展示
   setBwdList(state, value) {
     state.bwdList = value
@@ -160,14 +160,14 @@ const mutations = {
       state.pageInfo.curPage = 1
     }
   },
-  setCurrentField: (state, column) => {
-    if (!column) {
-      state.currentColumn =
+  setCurrentField: (state, field) => {
+    if (!field) {
+      state.currentField =
         state.fieldsList && state.fieldsList.length
           ? state.fieldsList[0].id
           : ''
     } else {
-      state.currentColumn = column
+      state.currentField = field
     }
   },
   setPageInfo: (state, pageInfo) => {
@@ -176,23 +176,34 @@ const mutations = {
 }
 
 const actions = {
-  // 处理左侧bwd，调接口展示bwdlist
+  // 处理左侧bwd，调接口展示bwdlist(getCatalogApi)
   async loadBwdModules({ commit }) {
     const result = await get('data-mapping/getCatalog')
     if (result.success) {
       commit('setBwdList')
     }
   },
-  // 给中间展示bwd
-  async loadCurrentBwdValue({ commit }, currentBwd) {
-    const bwdId = currentBwd.id
-    const result = await get(`sbr/getOverView/${bwdId}`)
-    if (result.success) {
-      commit('setCurrentBwdValue', result.value)
-    }
+  // 给中间展示bwd(getBwdInfoApi)
+  async queryField({ commit }) {
+    const { curPage, pageSize } = state.pageInfo
+    const query = Object.assign(
+      { id: state.currentBwd },
+      state.isAdvance ? state.adSearchData : state.searchData
+    )
+    const res = await getBwdInfoApi(curPage, pageSize, query, state.isAdvance)
+    const { records, pageInfo } = res.value
+    state.fieldsList = records
+    commit('setPageInfo', pageInfo)
   },
+  // async loadCurrentBwdValue({ commit }, state) {
+  //   const bwdId = state.currentBwd.id
+  //   const result = await get(`sbr/getOverView/${bwdId}`)
+  //   if (result.success) {
+  //     commit('setCurrentBwdValue', result.value)
+  //   }
+  // },
   // 左侧表单提交，更新目录接口addFileCatalogApi,updateFileCatalogApi
-  // 状态
+  // 如果说要去操作store里面的数据的话，就去执行dispatch动作
   async submitFileCatalog({ dispatch, state }) {
     const { id, name, index } = state.fileCatalogData
     if (!id) {
@@ -204,16 +215,28 @@ const actions = {
     }
     dispatch('loadBwdModules')
   },
-  async queryField({ commit }) {
-    const { curPage, pageSize } = state.pageInfo
-    const query = Object.assign(
-      { id: state.currentCatalog },
-      state.isAdvance ? state.adSearchData : state.searchData
-    )
-    const res = await getBwdInfoApi(curPage, pageSize, query, state.isAdvance)
-    const { records, pageInfo } = res.value
-    state.fieldsList = records
-    commit('setPageInfo', pageInfo)
+  async submitFields({ dispatch, state }) {
+    const { id, index, nameCn, nameEn } = state.fileFieldsData
+    const datasetId = parseInt(state.currentBwd)
+    if (!id) {
+      await addFileFieldsApi({
+        datasetId,
+        index,
+        nameCn,
+        nameEn
+      })
+      this._vm.$message.success('新增字段成功！')
+    } else {
+      await updateFileFieldsApi({
+        id,
+        datasetId,
+        index,
+        nameCn,
+        nameEn
+      })
+      this._vm.$message.success('编辑字段成功！')
+    }
+    await dispatch('queryField')
   }
 }
 

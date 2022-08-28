@@ -1,6 +1,7 @@
 export default {
   adSearchData: {},
   fileFieldsData: {
+    id: '',
     index: '',
     nameCn: '',
     nameEn: ''
