@@ -16,5 +16,13 @@ export default {
     name: '',
     index: '',
     state: ''
+  },
+  eventMapData: {
+    index1: '',
+    index2: ''
+  },
+  mdmMapData: {
+    index1: '',
+    index2: ''
   }
 }

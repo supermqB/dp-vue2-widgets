@@ -51,7 +51,7 @@
       >
         <Form
           ref="fileCatalogForm"
-          :formCfg="fileCatalogCfg"
+          :formCfg="fileCatalogCfg(categoryOptions)"
           :formData="fileCatalogData"
           :formRule="fileCatalogRule"
         ></Form>
@@ -98,7 +98,7 @@ export default {
       'fileCatalogData',
       'pageInfo'
     ]),
-    ...mapGetters(['currentBwdItem', 'totalNumber'])
+    ...mapGetters(['currentBwdItem', 'totalNumber', 'categoryOptions'])
   },
   methods: {
     ...mapMutations(['setCatalogForm', 'setCurrentBwd']),

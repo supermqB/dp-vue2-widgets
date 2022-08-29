@@ -112,6 +112,14 @@ export default {
       'setPageInfo'
     ]),
     ...mapActions(['queryField', 'submitFields']),
+    icon(state) {
+      switch (state) {
+        case COMPLETESTATE:
+          return require('@/assets/images/common/icons/complete.png')
+        case INCOMESTATE:
+          return require('@/assets/images/common/icons/income.png')
+      }
+    },
     open() {
       this.$confirm(`是否${this.currentBwdItem.state}【患者信息记录文件】？`, {
         confirmButtonText: '确定',

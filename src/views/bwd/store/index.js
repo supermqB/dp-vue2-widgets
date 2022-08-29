@@ -91,11 +91,27 @@ const state = {
       nameEn: '业务系统唯一标识'
     }
   ],
+  eventMapList: [
+    {
+      seqNo: '匹配',
+      name: '11',
+      nameCn: '111'
+    }
+  ],
+  mdmMapList: [
+    {
+      seqNo: '匹配',
+      name: '22',
+      nameCn: '222'
+    }
+  ],
 
   fileCatalogData: Object.assign({}, initState.fileCatalogData),
   searchData: Object.assign({}, initState.searchData),
   adSearchData: Object.assign({}, initState.adSearchData),
-  fileFieldsData: Object.assign({}, initState.fileFieldsData)
+  fileFieldsData: Object.assign({}, initState.fileFieldsData),
+  eventMapData: Object.assign({}, initState.eventMapData),
+  mdmMapData: Object.assign({}, initState.mdmMapData)
 }
 
 const getters = {
@@ -123,6 +139,23 @@ const getters = {
   //
   currentFieldRow(state) {
     return state.fieldsList.find(item => item.id === state.currentField)
+  },
+  // 目录dialog下拉选项
+  categoryOptions(state) {
+    return state.bwdList.map(item => {
+      return {
+        label: item.label,
+        value: item.label
+      }
+    })
+  },
+  eventOptions(state) {
+    return state.fieldsList.map(item => {
+      return {
+        label: item.nameCn,
+        value: item.nameCn
+      }
+    })
   }
 }
 const mutations = {
@@ -180,7 +213,13 @@ const actions = {
   async loadBwdModules({ commit }) {
     const result = await get('data-mapping/getCatalog')
     if (result.success) {
-      commit('setBwdList')
+      // commit(
+      //   'setBwdList',
+      //   result.value.map(item => ({
+      //     ...item,
+      //     state: item.state == '1' ? INCOMESTATE : COMPLETESTATE
+      //   }))
+      // )
     }
   },
   // 给中间展示bwd(getBwdInfoApi)
