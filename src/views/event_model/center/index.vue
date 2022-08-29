@@ -14,8 +14,8 @@
     <div class="search">
       <Form class="searchForm" :formData="searchForm" :formCfg="formCfg"></Form>
       <div class="right">
-        <el-button @click="onClickSearch">查询</el-button>
-        <el-button type="text" @click="advancedSearch">高级搜索</el-button>
+        <el-button @click="onClickSearch" type="primary" plain>查询</el-button>
+        <el-button class="advance" type="text" @click="advancedSearch">高级搜索</el-button>
       </div>
     </div>
     <div class="content">
@@ -180,7 +180,7 @@ export default {
     align-items: center;
     width: 100%;
     height: 41px;
-    padding: 0 10px;
+    padding: 0 13px;
     box-sizing: border-box;
     border-bottom: 1px solid #e5e5e5;
     .left {
@@ -198,6 +198,9 @@ export default {
     .right {
       display: flex;
       align-items: center;
+      .advance {
+        text-decoration: underline;
+      }
     }
   }
   .content {

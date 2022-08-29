@@ -46,6 +46,12 @@ const routes = [
         component: () => import('@/views/bwd/')
       },
       {
+        path: 'docs/index',
+        name: 'docs/index',
+        meta: { title: '文献库首页' },
+        component: () => import('@/views/docs/index')
+      },
+      {
         path: 'docs/list',
         name: 'docs/list',
         meta: { title: '文献库明细' },
