@@ -16,8 +16,8 @@
         :filter-node-method="filterTreeNode"
         node-key="id"
         ref="grouptree"
-        default-expand-all
-        highlight-current
+        show-checkbox
+        @check-change="docTypeCtlgChanged"
       >
       </el-tree>
     </div>
@@ -46,7 +46,11 @@ export default {
       if (!value) return true
       return data[LABEL_NAME].indexOf(value) !== -1
     },
-    ...mapMutations(['setSearch'])
+    docTypeCtlgChanged() {
+      let checkedKeys = this.$refs.grouptree.getCheckedKeys()
+      this.setSelectedDocTypeCtlg(checkedKeys)
+    },
+    ...mapMutations(['setSearch', 'setSelectedDocTypeCtlg'])
   }
 }
 </script>

@@ -3,7 +3,7 @@ import searchFormConfig from '../config/searchForm'
 
 const state = {
   search: '',
-  selectedDocType: 'all',
+  selectedDocTypeCtlg: 'all',
   docCtlg: [
     {
       id: 'all',
@@ -72,6 +72,10 @@ const state = {
 const mutations = {
   setSearch(state, val) {
     state.search = val
+  },
+  setSelectedDocTypeCtlg(state, val) {
+    state.selectedDocType = val
+    console.log(val)
   }
 }
 

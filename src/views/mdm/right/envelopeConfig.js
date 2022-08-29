@@ -338,7 +338,7 @@ const phm = [
     props: ['drug_spec']
   }
 ]
-const com = [
+const cmp = [
   {
     name: 'basic',
     title: '基本信息',
@@ -355,6 +355,45 @@ const com = [
     props: ['register_addr']
   }
 ]
+const dep = [
+  {
+    name: 'basic',
+    title: '基本信息',
+    props: ['dept_abbrev_name', 'org_name']
+  },
+  {
+    name: 'type',
+    title: '类型信息',
+    props: ['dept_category_name', 'dept_type_name']
+  }
+]
+const emp = [
+  {
+    name: 'basic',
+    title: '基本信息',
+    props: [
+      'employee_no',
+      'birth_date',
+      'resident_id',
+      'passport_no',
+      'sex',
+      'marriage_status',
+      'nationality'
+    ]
+  },
+  {
+    name: 'career',
+    title: '职业信息',
+    props: [
+      'org_name',
+      'dept_name',
+      'title_level_name',
+      'duty_name',
+      'adm_duty_level_name',
+      'emp_status_name'
+    ]
+  }
+]
 
 export default {
   drg,
@@ -369,5 +408,7 @@ export default {
   itm,
   org,
   phm,
-  com
+  cmp,
+  dep,
+  emp
 }

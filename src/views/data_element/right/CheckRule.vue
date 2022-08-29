@@ -165,6 +165,7 @@ export default {
     },
     hasValRange() {
       let type = this.formatCheck.formData.data_type
+      if (!type) return false
       let enable = type.indexOf('S') == -1 && type != 'L'
       this.fieldCheck.enableValRange = enable
       return enable
@@ -198,7 +199,7 @@ export default {
           S1: ['A', 'N', 'AN'],
           S2: ['A', 'N', 'AN'],
           S3: ['A', 'N', 'AN']
-        }[val.data_type] || [val.data_type]
+        }[val.data_type || 'S3'] /* if datatype is not set, use S3 */ || [val.data_type]
         this.formatCheck.formCfg[1].options = [...ops]
         let curCode = val.char_type_code
         ops.indexOf(curCode) == -1 && (val.char_type_code = '')
