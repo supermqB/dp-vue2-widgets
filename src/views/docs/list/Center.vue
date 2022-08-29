@@ -19,7 +19,12 @@
       </div>
     </div>
     <div class="list">
-      <div v-for="(item, index) in listData" class="item" :key="index">
+      <div
+        v-for="(item, index) in listData"
+        class="item"
+        :key="index"
+        @dblclick="forward2SumPage(item.identifier)"
+      >
         <div>
           <div class="typespan">{{ item.docTypeName }}</div>
           <div class="title">
@@ -40,8 +45,8 @@
         @size-change="sizeChangeHandler"
         @current-change="pageChangeHandler"
         :current-page.sync="pageInfo.curPage"
+        :page-size.sync="pageInfo.pageSize"
         :page-sizes="[5, 10, 20, 50]"
-        :page-size="pageInfo.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="pageInfo.totalSize"
         :style="{ alignSelf: 'end' }"
@@ -49,7 +54,11 @@
       </el-pagination>
     </div>
     <div>
-      <EditDialog mode="create" ref="editDialog" />
+      <EditDialog
+        mode="create"
+        ref="editDialog"
+        @doc-create="createDocHandler"
+      />
       <adv-search-dialog
         ref="advSearchDialog"
         :columns="advSearchCols"
@@ -65,7 +74,8 @@ import Form from '@/components/Form.vue'
 import { createNamespacedHelpers } from 'vuex'
 import AdvSearchDialog from '@/views/common/AdvSearchDialog'
 import tableHeader from './config/tableHeader'
-const { mapState, mapMutations } = createNamespacedHelpers('docs/list')
+const { mapState, mapMutations, mapActions } =
+  createNamespacedHelpers('docs/list')
 
 export default {
   computed: {
@@ -78,15 +88,28 @@ export default {
     startImport() {
       this.$refs.editDialog.open()
     },
-    searchHandler() {},
+    searchHandler() {
+      this.search()
+    },
     advSearchHandler(advSearchCriteria) {
-        console.log(advSearchCriteria)
+      console.log(advSearchCriteria)
     },
     openAdvSearch() {
       this.$refs.advSearchDialog.open()
     },
-    sizeChangeHandler() {},
-    pageChangeHandler() {}
+    sizeChangeHandler() {
+      this.search()
+    },
+    pageChangeHandler() {
+      this.search()
+    },
+    createDocHandler(data) {
+      this.import(data)
+    },
+    forward2SumPage(identifier) {
+      this.$router.push(`/docs/summary/${identifier}`)
+    },
+    ...mapActions(['search', 'import'])
   },
   components: { Form, EditDialog, AdvSearchDialog }
 }

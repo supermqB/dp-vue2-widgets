@@ -15,10 +15,17 @@
         :data="grouptree"
         :filter-node-method="filterTreeNode"
         node-key="id"
+        :default-expanded-keys="['all']"
         ref="grouptree"
         show-checkbox
         @check-change="docTypeCtlgChanged"
       >
+        <template #default="{ node, data }">
+          <div class="ctlgRow">
+            <span class="label" :title="data.label">{{ data.label }}</span
+            ><span class="count">{{ data.count }}</span>
+          </div></template
+        >
       </el-tree>
     </div>
   </div>
@@ -84,6 +91,21 @@ export default {
       .el-tree-node.is-current
       > .el-tree-node__content {
       background-color: #d8fffe;
+    }
+    .ctlgRow {
+      font-size: 13px;
+      .label {
+        width: 100px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: inline-block;
+        margin-top: 2px;
+      }
+      .count {
+        position: absolute;
+        right: 6px;
+        margin-top: 2px;
+      }
     }
   }
 }

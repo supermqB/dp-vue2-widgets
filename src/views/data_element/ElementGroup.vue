@@ -17,7 +17,7 @@
         show-checkbox
         node-key="ctlgIdentifier"
         :props="{ children: 'directoryList', label: 'ctlgName' }"
-        :default-expanded-keys="['0', 'DE01', 'DE02', 'DE02.01']"
+        :default-expanded-keys="['0']"
         ref="grouptree"
         @check-change="checkedGrpChangeHandler"
       >

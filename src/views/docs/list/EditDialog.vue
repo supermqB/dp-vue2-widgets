@@ -60,7 +60,7 @@ export default {
     async completeEdit() {
       console.log(this.formData)
       let result = await this.$refs.editForm.validate()
-      console.log(result)
+      result.valid && this.$emit(`doc-${this.mode}`, this.formData)
     },
     open() {
       this.$refs.editDialog.toggleOpen()
