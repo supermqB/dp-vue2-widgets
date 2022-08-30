@@ -20,7 +20,7 @@ export default {
     state: '',
     sourceType: '',
     sourceTypeCode: '',
-    sourceBasic: ''
+    sourceBasis: ''
   },
   versionForm: {
     version: '',
@@ -38,10 +38,10 @@ export default {
     file: null
   },
   searchForm: {
-    编码: '',
-    名称: '',
-    父级代码: '',
-    层级关系: ''
+    code: '',
+    value: '',
+    parent_code: '',
+    term_code: ''
   },
   adSearchForm: {}
 }

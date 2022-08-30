@@ -6,8 +6,8 @@ export const searchValueCfg = (
   const list = [
     {
       type: 'el-input',
-      label: '编码',
-      id: '编码',
+      label: '编号',
+      id: 'code',
       elOptions: {
         clearable: true,
         style: {
@@ -18,7 +18,7 @@ export const searchValueCfg = (
     {
       type: 'el-input',
       label: '名称',
-      id: '名称',
+      id: 'value',
       elOptions: {
         clearable: true,
         style: {
@@ -30,7 +30,7 @@ export const searchValueCfg = (
       type: 'el-input',
       options: parentCode,
       label: '父级代码',
-      id: '父级代码',
+      id: 'parent_code',
       elOptions: {
         clearable: true,
         style: {
@@ -42,7 +42,7 @@ export const searchValueCfg = (
       type: 'el-select',
       options: hierarchyRelation,
       label: '层级关系',
-      id: '层级关系',
+      id: 'term_code',
       elOptions: {
         clearable: true,
         style: {

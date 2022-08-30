@@ -5,8 +5,8 @@
         baseLabel="值域管理"
         :currentLabel="`${currentDictItem.nameCn}(${currentDictItem.nameEn})`"></Breadcrumb>
       <div>
-        <el-button type="primary" @click="editVersion" :disabled="!currentVersion && false">版本管理</el-button>
-        <el-button type="primary" @click="addVersion" :disabled="!currentValue && false">新增版本</el-button>
+        <el-button type="primary" @click="editVersion" :disabled="!currentVersion">版本管理</el-button>
+        <el-button type="primary" @click="addVersion" :disabled="!currentDict">新增版本</el-button>
       </div>
     </div>
     <div class="version">
@@ -36,8 +36,8 @@
       ></Form>
       <div>
         <el-button @click="queryDictValue" type="primary" plain>查询</el-button>
-        <el-button @click="addValue" :disabled="!currentVersion && false" type="primary" plain>新增</el-button>
-        <el-button @click="editValue" :disabled="!currentColumn && false" type="primary" plain>编辑</el-button>
+        <el-button @click="addValue" :disabled="!currentVersion" type="primary" plain>新增</el-button>
+        <el-button @click="editValue" :disabled="!currentDictValue" type="primary" plain>编辑</el-button>
       </div>
     </div>
     <div class="table">
@@ -139,8 +139,6 @@ export default {
   computed: {
     ...mapState([
       'currentVersion', 
-      'currentColumn',
-      'currentValue',
       'currentDict',
       'currentVersionInfo',
       'currentDictValue',

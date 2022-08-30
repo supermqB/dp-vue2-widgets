@@ -21,9 +21,8 @@
             </li>
           </ul>
           <div class="search">
-            <el-input placeholder="请输入内容" v-model="searchContent" class="searchOnece">
-              <el-button slot="append" type="primary">搜索一下</el-button>
-            </el-input>
+            <el-input placeholder="请输入内容" v-model="searchContent" class="searchOnece"></el-input>
+            <el-button slot="append" type="primary" class="onece">搜索一下</el-button>
             <el-button type="text" class="advance">高级搜索</el-button>
           </div>
           
@@ -52,10 +51,10 @@ export default {
       config,
       searchContent: '',
       typeList: [
-        '全部', '期刊文章', '研究报告'
+        '全部', '期刊文章', '研究报告', '指南共识', '政策规则', '标准', '成书', '其他'
       ],
       hotSearch: [
-        '学术'
+        '学术', '医学', '专著', '标准', '外科'
       ]
     }
   }
@@ -91,7 +90,7 @@ export default {
     .content {
       width: 80%;
       max-width: 800px;
-      padding-bottom: 12.5%;
+      padding-bottom: 10%;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -122,8 +121,9 @@ export default {
     font-size: 14px;
     color: rgba(0,0,0,0.65);
     li {
-      padding: 0 15px;
+      padding: 0 10px;
       border-right: 1px solid rgba(0,0,0,0.65);
+      cursor: pointer
     }
     li:first-child {
       padding-left: 0;
@@ -135,17 +135,31 @@ export default {
   .search {
     width: 100%;
     display: flex;
+    position: relative;
     ::v-deep .el-input__inner{
       height: 45px;
       border-top-left-radius: 10px;
       border-bottom-left-radius: 10px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
     }
     .searchOnece {
       height: 45px;
       border-radius: 10px;
     }
+    .onece {
+      padding: 0 16px;
+      height: 45px;
+      margin-left: -1px;
+      font-size: 16px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
     .advance {
-      margin-left: 10px;
+      position: absolute;
+      top: 13px;
+      right: -75px;
+      font-size: 16px;
       text-decoration: underline;
     }
   }
