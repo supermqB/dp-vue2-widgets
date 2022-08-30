@@ -19,6 +19,12 @@ export const getBwdInfoApi = (current, size, data = {}, isAdvance = false) => {
     data
   })
 }
+export const getTotalNumApi = () => {
+  return request({
+    method: 'get',
+    url: '/data-mapping/getTotalNum'
+  })
+}
 export const updateFileCatalogApi = (id, name, index, state) => {
   return request({
     method: 'post',
