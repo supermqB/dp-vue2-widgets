@@ -8,15 +8,16 @@
       :show-file-list="false"
       :auto-upload="false"
       :on-change="handleChange"
-      >
+    >
       <el-input
         :value="fileName"
         @focus="handleFocus"
         @clear="handleClear"
-        clearable>
+        clearable
+      >
         <el-button type="primary" slot="append">导入</el-button>
       </el-input>
-      <p slot="tip" class="downloadTemplate">
+      <p slot="tip" class="downloadTemplate" v-if="showTip">
         请
         <img src="@/assets/images/common/icons/download.png" />
         <span class="inputTemplate" @click="download">下载导入模板</span>
@@ -29,8 +30,12 @@
 export default {
   props: {
     value: {
-      type: Object,
+      type: File,
       default: () => {}
+    },
+    showTip: {
+      type: Boolean,
+      default: () => true
     }
   },
   data() {
@@ -41,17 +46,17 @@ export default {
   methods: {
     handleChange(file) {
       this.fileName = file.name
-      this.$emit("input", file.raw)
+      this.$emit('input', file.raw)
     },
     handleClear() {
       this.fileName = ''
-      this.$emit("input", {})
+      this.$emit('input', {})
     },
     handleFocus(event) {
       event.stopPropagation()
     },
     download() {
-      this.$emit("onDownload")
+      this.$emit('onDownload')
     }
   }
 }
@@ -79,7 +84,7 @@ export default {
     .inputTemplate {
       margin-right: 4px;
       letter-spacing: 0.5px;
-      color: #1890FF
+      color: #1890ff;
     }
   }
 }

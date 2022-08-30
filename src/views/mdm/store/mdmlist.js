@@ -61,7 +61,7 @@ const actions = {
             ? 'like'
             : 'equal'
       }))
-      .filter(item => item.value != '')
+      .filter(item => item.value != null && item.value != '')
 
     const result = await post(
       'sbr/list',

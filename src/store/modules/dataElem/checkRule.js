@@ -67,6 +67,7 @@ const actions = {
       id: rootState.dataElem.elemList.selectedItem.id,
       illegalCharGeneral: state.illegalChar.general ? '1' : '0',
       illegalCharOnly: state.illegalChar.only ? '1' : '0',
+      type: state.formatCheckData.data_type,
       format: `${state.formatCheckData.char_type_code}${state.formatCheckData.data_length}`,
       valueDomainId: state.fieldCheck.enableValDomain
         ? state.fieldCheck.valDomain

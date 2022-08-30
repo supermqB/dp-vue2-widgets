@@ -82,10 +82,13 @@ const actions = {
     val = { ...keysObject(getFormFieldsConfig(), 'id'), id: null }
   ) {
     Object.assign(state.editElemFormData, val)
-    let segs = val.identifierPrefix.split('.')
-    state.editElemFormData.identifierSeg1 = segs[0]
-    state.editElemFormData.identifierSeg2 = segs[1]
-    state.editElemFormData.identifierSeg3 = segs[2]
+
+    if (val.identifierPrefix) {
+      let segs = val.identifierPrefix.split('.')
+      state.editElemFormData.identifierSeg1 = segs[0]
+      state.editElemFormData.identifierSeg2 = segs[1]
+      state.editElemFormData.identifierSeg3 = segs[2]
+    }
   },
   async editElem({ state, commit, dispatch }, val) {
     let success = false
