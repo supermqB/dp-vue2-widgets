@@ -8,7 +8,7 @@
       </div>
       <div>
         <el-button type="primary" @click="onclickAddColumn" :disabled="!currentCatalog">新增</el-button>
-        <el-button type="primary" @click="onclickEditColumn" :disabled="!currentCatalog">编辑</el-button>
+        <el-button type="primary" @click="onclickEditColumn" :disabled="!currentColumn">编辑</el-button>
       </div>
     </div>
     <div class="search">
@@ -193,6 +193,7 @@ export default {
     position: relative;
     padding: 0 15px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     border-bottom: 1px solid #e5e5e5;
     .right {
@@ -249,6 +250,7 @@ export default {
 ::v-deep .searchForm {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   .el-form-item {
     display: flex;
     margin-bottom: 0px;

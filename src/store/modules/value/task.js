@@ -62,10 +62,19 @@ const getters = {
     return filteredTask
   },
   suspectList(state) {
-    const res = state.taskList.reduce((x, y) => {
-      return [...x, ...y.suspectList]
-    }, [])
-    return res.map(item => item.suspectObject)
+    return str => {
+      let taskList = state.taskList
+      if (!str) {
+        const [source, name] = str.split(':')
+        taskList = state.taskList.filter(
+          item => item.source === source && item.name === name
+        )
+      }
+      const res = taskList.reduce((x, y) => {
+        return [...x, ...y.suspectList]
+      }, [])
+      return res.map(item => item.suspectObject)
+    }
   }
 }
 
