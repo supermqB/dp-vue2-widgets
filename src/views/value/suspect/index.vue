@@ -21,7 +21,7 @@
     </el-select>
     <Table
       v-if="currentVersionInfo.type === '单值字典'"
-      :tableData="suspectList"
+      :tableData="suspectList()"
       :tableConfig="config"
       :pageInfo="null"
       :isShowRadio="false"
