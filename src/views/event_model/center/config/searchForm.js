@@ -31,7 +31,7 @@ export default [
     elOptions: {
       clearable: true,
       style: {
-        width: '92px'
+        width: '170px'
       }
     }
   },
@@ -43,7 +43,7 @@ export default [
     elOptions: {
       clearable: true,
       style: {
-        width: '92px'
+        width: '170px'
       }
     }
   },
@@ -55,7 +55,7 @@ export default [
     elOptions: {
       clearable: true,
       style: {
-        width: '92px'
+        width: '170px'
       }
     }
   }

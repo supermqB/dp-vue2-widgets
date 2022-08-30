@@ -34,10 +34,10 @@
         )"
         :formData="searchForm"
       ></Form>
-      <div class="operation">
-        <el-button @click="queryDictValue">查询</el-button>
-        <el-button @click="addValue" :disabled="!currentVersion && false">新增</el-button>
-        <el-button @click="editValue" :disabled="!currentColumn && false">编辑</el-button>
+      <div>
+        <el-button @click="queryDictValue" type="primary" plain>查询</el-button>
+        <el-button @click="addValue" :disabled="!currentVersion && false" type="primary" plain>新增</el-button>
+        <el-button @click="editValue" :disabled="!currentColumn && false" type="primary" plain>编辑</el-button>
       </div>
     </div>
     <div class="table">
@@ -281,6 +281,7 @@ export default {
   .header {
     position: relative;
     display: flex;
+    flex-shrink: 0;
     justify-content: space-between;
     align-items: center;
     width: 100%;
@@ -375,34 +376,38 @@ export default {
 }
 
 ::v-deep .addValueDialog .el-dialog{
-  width: 600px;
+  width: 900px;
   .el-form {
-    padding-right: 120px;
+    padding-right: 50px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
     flex-wrap: wrap;
   }
   .el-form-item {
+    width: 50%;
     margin-bottom: 6px;
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
   }
 }
 
 ::v-deep .editValueDialog .el-dialog{
-  width: 600px;
-  form {
-    padding-right: 120px;
+  width: 900px;
+  .el-form {
+    padding-right: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .el-form-item {
+    width: 50%;
+    margin-bottom: 6px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    flex-wrap: wrap;
-    .el-form-item {
-      margin-bottom: 6px;
-      display: flex;
-      flex-direction: row;
-    }
   }
 }
 

@@ -107,7 +107,15 @@ const getters = {
       !state.currentVersionInfo ||
       !state.currentVersionInfo.valueDictColumnList
     )
-      return []
+      return [
+        {
+          colConfig: {
+            property: '',
+            label: '',
+            minWidth: 150
+          }
+        }
+      ]
     return state.currentVersionInfo.valueDictColumnList.map(item => {
       return {
         colConfig: {
