@@ -90,6 +90,7 @@ export function getEditFormCfg(docType = 'S', mode = 'create') {
           multiple: true
         },
         collapseTags: true
+        //showAllLevels: false
       },
       label: '分类',
       id: 'catalogCode'
