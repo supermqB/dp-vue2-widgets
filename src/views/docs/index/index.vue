@@ -1,36 +1,52 @@
 <template>
-  <el-row class="docWrap">
-    <el-col :xs="2" :sm="3" :md="4" :lg="5" :xl="6"></el-col>
-    <el-col :xs="20" :sm="18" :md="16" :lg="14" :xl="12">
-      <h1>
-        <img src="@/assets/images/common/logo.png" />
-        <span>联仁文库</span>  
-      </h1>
-      <ul class="type">
-        <li v-for="(name, index) in typeList"
-          :key="index">
-          {{ name }}
-        </li>
-      </ul>
-      <el-input placeholder="请输入内容" v-model="searchContent">
-        <el-button slot="append" type="primary"></el-button>
-      </el-input>
-      <div class="hotSearch">
-        <span>热搜:</span>
-        <p v-for="(name, index) in hotSearch"
-          :key="index"
-          class="item"
-        >{{ name }}</p>
+  <dp-layout-container>
+    <template #main>
+      <div class="docWrap">
+        <vue-particles v-bind="config" class="particles"></vue-particles>
+        <div class="header">
+          <Breadcrumb
+          baseLabel="文献库"
+          currentLabel="文献检索"
+          ></Breadcrumb>
+        </div>
+        <div class="content">
+          <h1>
+            <img src="@/assets/images/common/logo.png" />
+            <span>联仁文库</span>  
+          </h1>
+          <ul class="type">
+            <li v-for="(name, index) in typeList"
+              :key="index">
+              {{ name }}
+            </li>
+          </ul>
+          <div class="search">
+            <el-input placeholder="请输入内容" v-model="searchContent" class="searchOnece">
+              <el-button slot="append" type="primary">搜索一下</el-button>
+            </el-input>
+            <el-button type="text" class="advance">高级搜索</el-button>
+          </div>
+          
+          <div class="hotSearch">
+            <span>热搜:</span>
+            <p v-for="(name, index) in hotSearch"
+              :key="index"
+              class="item"
+            >{{ name }}</p>
+          </div>
+        </div>
       </div>
-    </el-col>
-    <vue-particles v-bind="config"></vue-particles>
-  </el-row>
+    </template>
+  </dp-layout-container>
 </template>
 
 <script>
-// import VueParticles from 'vue-particles';
 import config from './particlesjs-config.json'
+import Breadcrumb from '@/components/header/Breadcrumb.vue'
 export default {
+  components: {
+    Breadcrumb
+  },
   data() {
     return {
       config,
@@ -48,11 +64,40 @@ export default {
 
 <style scoped lang="scss">
   .docWrap {
-    margin-top: 5%;
+    height: 100%;
+    /* padding-bottom: 8%; */
+    position: relative;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    .particles {
+      position: absolute; 
+      height: 99%; 
+      width: 100%;
+    }
+    .header {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 41px;
+      padding: 0 13px;
+      box-sizing: border-box;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .content {
+      width: 80%;
+      max-width: 800px;
+      padding-bottom: 12.5%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
   }
   h1 {
     margin-bottom: 20px;
@@ -69,8 +114,10 @@ export default {
     color: #002E53
   }
   ul.type {
+    width: 100%;
     margin-bottom: 10px;
     display: flex;
+    justify-content: flex-start;
     align-items: center;
     font-size: 14px;
     color: rgba(0,0,0,0.65);
@@ -85,8 +132,27 @@ export default {
       border-right: 0;
     }
   }
-  .hotSearch {
+  .search {
+    width: 100%;
     display: flex;
+    ::v-deep .el-input__inner{
+      height: 45px;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+    .searchOnece {
+      height: 45px;
+      border-radius: 10px;
+    }
+    .advance {
+      margin-left: 10px;
+      text-decoration: underline;
+    }
+  }
+  .hotSearch {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
     align-items: center;
     margin-top: 10px;
     font-size: 13px;
