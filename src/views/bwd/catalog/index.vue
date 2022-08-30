@@ -36,7 +36,7 @@
     </div>
     <Tree
       ref="tree"
-      :data="bwdList"
+      :data="bwdTreeList"
       class="tree"
       :currentNodeKey="currentBwd"
       @onClick="handleNodeClick"
@@ -98,11 +98,16 @@ export default {
       'fileCatalogData',
       'pageInfo'
     ]),
-    ...mapGetters(['currentBwdItem', 'totalNumber', 'categoryOptions'])
+    ...mapGetters([
+      'bwdTreeList',
+      'currentBwdItem',
+      'totalNumber',
+      'categoryOptions'
+    ])
   },
   methods: {
     ...mapMutations(['setCatalogForm', 'setCurrentBwd']),
-    ...mapActions(['loadBwdModules', 'queryField', 'submitFileCatalog']),
+    ...mapActions(['queryCatalog', 'queryField', 'submitFileCatalog']),
     // 根据目录的id渲染中间详细信息
     async handleNodeClick({ id }) {
       this.setCurrentBwd(id)
@@ -152,7 +157,7 @@ export default {
   },
   // Vue完成DOM挂载bwd列表
   mounted() {
-    this.loadBwdModules()
+    this.queryCatalog()
   },
   // 实时监视左侧选中的bwd文件
   watch: {

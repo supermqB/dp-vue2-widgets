@@ -1,11 +1,38 @@
-import { getBwdInfoApi } from '@/api/bwd'
-import { updateFileCatalogApi } from '@/api/bwd'
-import { addFileCatalogApi } from '@/api/bwd'
+import {
+  getBwdInfoApi,
+  getCatalogApi,
+  updateFileCatalogApi,
+  addFileCatalogApi,
+  addFileFieldsApi,
+  updateFileFieldsApi,
+  submitCatalogApi
+} from '@/api/bwd'
 
 import { keysClone } from '@/utils/lang'
-import { get, post } from '@/utils/request'
 import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
 import initState from './initState'
+
+const processCatalogList = list => {
+  if (!list) return []
+  return list.map((item, index) => {
+    const { theme } = item
+    const result = {
+      id: theme,
+      label: theme,
+      theme: true,
+      children: []
+    }
+    item.bwdCatelogEntityList.forEach(item => {
+      const { id, nameCn, nameEn, refNum } = item
+      result.children.push({
+        id: id.toString(),
+        label: nameCn,
+        state: refNum
+      })
+    })
+    return result
+  })
+}
 
 const state = {
   // 左侧数据
@@ -42,6 +69,16 @@ const state = {
         {
           id: '1-7',
           label: '检查报告单主表文件'
+        }
+      ]
+    },
+    {
+      id: '2',
+      label: '测试类',
+      children: [
+        {
+          id: '2-1',
+          label: '测试记录文件'
         }
       ]
     }
@@ -115,6 +152,9 @@ const state = {
 }
 
 const getters = {
+  bwdTreeList(state) {
+    return processCatalogList(state.bwdList)
+  },
   // 返回id===当前选中的bwd文件的id的信息，就是中间部分的每条数据
   currentBwdItem(state) {
     for (let item of state.bwdList) {
@@ -127,7 +167,7 @@ const getters = {
     }
     return {}
   },
-  // 左侧栏的文件总数
+  // 左侧栏的文件总数 /data-mapping/getTotalNum
   totalNumber(state) {
     let res = 0
     for (let item of state.bwdList) {
@@ -210,18 +250,34 @@ const mutations = {
 
 const actions = {
   // 处理左侧bwd，调接口展示bwdlist(getCatalogApi)
-  async loadBwdModules({ commit }) {
-    const result = await get('data-mapping/getCatalog')
-    if (result.success) {
-      // commit(
-      //   'setBwdList',
-      //   result.value.map(item => ({
-      //     ...item,
-      //     state: item.state == '1' ? INCOMESTATE : COMPLETESTATE
-      //   }))
-      // )
-    }
+  async queryCatalog() {
+    const { value } = await getCatalogApi()
+    state.bwdList = value
   },
+  // async loadBwdModules({ commit }) {
+  //   const result = await getCatalogApi()
+  //   if (result.success) {
+  //     commit(
+  //       'setBwdList',
+  //       result.value.map(
+  //         item => (
+  //           console.log('!!!!!!!!!!!!', item),
+  //           //   {
+  //           //   ...item,
+  //           //   state: item.state == '1' ? INCOMESTATE : COMPLETESTATE
+  //           // }
+  //           {
+  //             ...item,
+  //             id: item.id + '',
+  //             label: item.name,
+  //             state: item.state == '1' ? INCOMESTATE : COMPLETESTATE,
+  //             number: item.refCount
+  //           }
+  //         )
+  //       )
+  //     )
+  //   }
+  // },
   // 给中间展示bwd(getBwdInfoApi)
   async queryField({ commit }) {
     const { curPage, pageSize } = state.pageInfo
@@ -252,7 +308,7 @@ const actions = {
       await updateFileCatalogApi(id, name, index, state.fileCatalogData.state)
       this._vm.$message.success('编辑文件目录成功')
     }
-    dispatch('loadBwdModules')
+    dispatch('queryCatalog')
   },
   async submitFields({ dispatch, state }) {
     const { id, index, nameCn, nameEn } = state.fileFieldsData
@@ -276,6 +332,21 @@ const actions = {
       this._vm.$message.success('编辑字段成功！')
     }
     await dispatch('queryField')
+  },
+  async runCatalog({ dispatch, state }, val) {
+    const list = [state.currentBwd]
+    if (val) {
+      state.bwdList.forEach(item => {
+        item.dataSetCatalogEntiyList.forEach(it => {
+          list.push(it.id)
+        })
+      })
+    } else {
+      list.push(state.currentBwd)
+    }
+    await submitCatalogApi(list)
+    this._vm.$message.success('启动成功！')
+    dispatch('queryCatalog')
   }
 }
 

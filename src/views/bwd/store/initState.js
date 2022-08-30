@@ -14,7 +14,7 @@ export default {
   fileCatalogData: {
     id: '',
     name: '',
-    index: '',
+    theme: '',
     state: ''
   },
   eventMapData: {

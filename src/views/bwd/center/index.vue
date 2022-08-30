@@ -4,12 +4,13 @@
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>BWD文件管理</el-breadcrumb-item>
         <el-breadcrumb-item>
-          <!-- {{ currentBwdItem.label }} <img :src="icon(currentBwdItem.state)" /> -->
+          <!-- {{ currentBwdItem.nameCn }}({{ currentBwdItem.nameEn }})
+          <img :src="icon(currentBwdItem.state)" /> -->
         </el-breadcrumb-item>
       </el-breadcrumb>
       <div>
-        <!-- {{ currentBwdItem.label }} 启用/停用 -->
-        <el-button type="primary" @click="open">启用</el-button>
+        <!-- {{ currentBwdItem.state}} 启用/停用 -->
+        <el-button type="primary" @click="onClickRunCatalog">启用</el-button>
         <el-button type="primary" @click="editFileFields">编辑</el-button>
         <el-button type="primary" @click="addFileFields">新增</el-button>
       </div>
@@ -111,7 +112,7 @@ export default {
       'setCurrentField',
       'setPageInfo'
     ]),
-    ...mapActions(['queryField', 'submitFields']),
+    ...mapActions(['queryField', 'submitFields', 'runCatalog']),
     icon(state) {
       switch (state) {
         case COMPLETESTATE:
@@ -120,12 +121,16 @@ export default {
           return require('@/assets/images/common/icons/income.png')
       }
     },
-    open() {
-      this.$confirm(`是否${this.currentBwdItem.state}【患者信息记录文件】？`, {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
+    onClickRunCatalog() {
+      this.$confirm(
+        `是否${this.currentBwdItem.state}【${this.currentBwdItem.nameCn}】？`,
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }
+      ).then(() => {
+        this.runCatalog()
         this.currentBwdItem.state = !currentBwdItem.state
       })
     },

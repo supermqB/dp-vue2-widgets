@@ -3,7 +3,7 @@ export const fileCatalogCfg = (categoryList = [], disabled = false) =>
     {
       type: 'el-input',
       label: 'BWD文件名称',
-      id: 'name',
+      id: 'nameCn',
       elOptions: {
         placeholder: '患者信息记录文件'
       }
@@ -12,7 +12,7 @@ export const fileCatalogCfg = (categoryList = [], disabled = false) =>
       type: 'el-select',
       label: '文件分类',
       options: categoryList,
-      id: 'index',
+      id: 'theme',
       elOptions: {
         disabled,
         placeholder: '请选择'
@@ -23,8 +23,10 @@ export const fileCatalogCfg = (categoryList = [], disabled = false) =>
       label: '启用状态',
       id: 'state',
       options: [
-        { label: '启用', value: '1' },
-        { label: '停用', value: '0' }
+        { label: '停用', value: '0' },
+        { label: '编辑', value: '1' },
+        { label: '待审核', value: '2' },
+        { label: '启用', value: '3' }
       ],
       elOptions: {
         placeholder: '请选择'
