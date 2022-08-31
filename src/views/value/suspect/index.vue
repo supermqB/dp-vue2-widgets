@@ -1,7 +1,7 @@
 <template>
   <div class="suspectWrap">
     <p class="listTitle">疑似列表</p>
-    <el-select
+    <!-- <el-select
       v-model="curTask"
       placeholder="选择疑似任务"
       style="width: 211px; margin: 4px 6px"
@@ -18,10 +18,10 @@
           item.source
         }}</span>
       </el-option>
-    </el-select>
+    </el-select> -->
     <Table
       v-if="currentVersionInfo.type === '单值字典'"
-      :tableData="suspectList()"
+      :tableData="suspectList"
       :tableConfig="config"
       :pageInfo="null"
       :isShowRadio="false"
@@ -30,19 +30,19 @@
     <div v-else-if="currentVersionInfo.type === '多值字典'">
       <el-collapse v-model="activeName" accordion>
         <el-collapse-item
-          v-for="(suspect, index) in dictValueList"
-          :title="`症状疑似xxx${index+1}`"
+          v-for="(suspect, index) in suspectList"
+          :title="suspect.name || `*****${index+1}`"
           :name="index"
           :key="index"
           class="propList"
         >
           <div
-            v-for="key in currentVersionInfo.columnNameList"
-            :key="`${key}${index}`"
+            v-for="item in currentVersionInfo.valueDictColumnList"
+            :key="`${item.id}${index}`"
             class="propItem"
           >
-            <div class="title">【{{ key }}】</div>
-            <div class="content">{{ suspect[key] }}</div>
+            <div class="title">【{{ item.nameCn }}】</div>
+            <div class="content">{{ suspect[item.nameEn] }}</div>
           </div>
         </el-collapse-item>
       </el-collapse>
@@ -81,13 +81,19 @@ export default {
   },
   computed: {
     ...mapState(['task', 'currentVersionInfo', 'dictValueList']),
-    ...mapGetters(['suspectList', 'filteredTask'])
+    ...mapGetters(['filteredTask']),
+    suspectList: function() {
+      const res = this.filteredTask.reduce((x, y) => {
+        return [...x, ...y.suspectList]
+      }, [])
+      return res.map(item => item.suspectObject)
+    }
   },
   data() {
     return {
       config,
       curTask: '',
-      activeName: ''
+      activeName: 0
     }
   },
   methods: {
@@ -96,7 +102,7 @@ export default {
   watch: {
     suspectList: {
       handler(){
-        this.activeName = 0
+        // this.activeName = 0
       }
     },
     currentVersion: {
