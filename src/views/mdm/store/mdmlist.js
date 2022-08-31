@@ -1,5 +1,6 @@
 import { keysObject } from '@/utils/lang'
 import { post } from '@/utils/request'
+import { confirm } from '@/utils/pops'
 import { Message } from 'element-ui'
 import {
   default as formConfigs,
@@ -80,10 +81,26 @@ const actions = {
   },
 
   async editMdmItem({ rootState, dispatch }, itemDetail) {
+    const workingTask = rootState.mdm.tasks.workingTask
+    let completeCurSuspect = false
+    if (workingTask.suspectList) {
+      completeCurSuspect = await confirm(
+        `编辑主索引的同时，是否完成当前疑似任务: <br> &nbsp;<b>【${workingTask.source}:${workingTask.name}】</b>
+        <br/>请确认？`,
+        {
+          dangerouslyUseHTMLString: true,
+          confirmButtonText: '是',
+          cancelButtonText: '否'
+        }
+      )
+    }
     const mdmModuleId = rootState.mdm.selectedMDM.id
     const result = await post('sbr/edit', {
       id: mdmModuleId,
-      jsonObject: itemDetail
+      jsonObject: itemDetail,
+      suspectList: completeCurSuspect
+        ? workingTask.suspectList.map(sus => sus.id)
+        : []
     })
     if (result.success) {
       Message.success('主索引编辑成功。')
@@ -94,10 +111,26 @@ const actions = {
   },
 
   async createMdmItem({ rootState, dispatch }, itemDetail) {
+    const workingTask = rootState.mdm.tasks.workingTask
+    let completeCurSuspect = false
+    if (workingTask.suspectList) {
+      completeCurSuspect = await confirm(
+        `新增主索引的同时，是否完成当前疑似任务: <br> &nbsp;<b>【${workingTask.source}:${workingTask.name}】</b>
+        <br/>请确认？`,
+        {
+          dangerouslyUseHTMLString: true,
+          confirmButtonText: '是',
+          cancelButtonText: '否'
+        }
+      )
+    }
     const mdmModuleId = rootState.mdm.selectedMDM.id
     const result = await post('sbr/add', {
       id: mdmModuleId,
-      jsonObject: itemDetail
+      jsonObject: itemDetail,
+      suspectList: completeCurSuspect
+        ? workingTask.suspectList.map(sus => sus.id)
+        : []
     })
     if (result.success) {
       Message.success('主索引新增成功。')

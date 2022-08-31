@@ -1,0 +1,289 @@
+import {
+  getBwdInfoApi,
+  getCatalogApi,
+  getTotalNumApi,
+  updateFileCatalogApi,
+  addFileCatalogApi,
+  addFileFieldsApi,
+  updateFileFieldsApi,
+  submitCatalogApi
+} from '@/api/bwd'
+
+import { keysClone } from '@/utils/lang'
+import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
+import initState from './initState'
+
+// const processFieldList = list => {
+//   return list.map(item => {
+//     console.log('11111112'.item)
+//     return Object.assign(item, {
+//       index: item.seqNo
+//     })
+//   })
+// }
+const state = {
+  // 左侧数据
+  currentBwd: '',
+  bwdList: [],
+  treeSelectionData: [
+    {
+      id: '1',
+      label: '全选',
+      children: [
+        {
+          id: '2',
+          label: '医疗类'
+        },
+        {
+          id: '3',
+          label: '运营类'
+        },
+        {
+          id: '4',
+          label: '医保类'
+        }
+      ]
+    }
+  ],
+  // 中间数据
+  currentField: '',
+  isAdvance: false,
+  pageInfo: {
+    curPage: 1,
+    pageSize: 20,
+    totalSize: 0,
+    totalPage: 0
+  },
+  totalNumber: 0,
+  fieldsList: [],
+  eventMapList: [
+    {
+      seqNo: '匹配',
+      name: '11',
+      nameCn: '111'
+    }
+  ],
+  mdmMapList: [
+    {
+      seqNo: '匹配',
+      name: '22',
+      nameCn: '222'
+    }
+  ],
+
+  fileCatalogData: Object.assign({}, initState.fileCatalogData),
+  searchData: Object.assign({}, initState.searchData),
+  adSearchData: Object.assign({}, initState.adSearchData),
+  fileFieldsData: Object.assign({}, initState.fileFieldsData),
+  eventMapData: Object.assign({}, initState.eventMapData),
+  mdmMapData: Object.assign({}, initState.mdmMapData)
+}
+
+const getters = {
+  currentBwdItem(state) {
+    for (let item of state.bwdList) {
+      const res = item.children.find(it => {
+        return state.currentBwd.toString() === it.id.toString()
+      })
+      if (res) {
+        return Object.assign({}, res, {
+          theme: item.label
+        })
+      }
+    }
+    return {}
+  },
+  currentFieldRow(state) {
+    return state.fieldsList.find(item => item.id === state.currentField)
+  },
+  // 目录dialog下拉选项
+  categoryOptions(state) {
+    return state.bwdList.map(item => {
+      return {
+        label: item.label,
+        value: item.label
+      }
+    })
+  },
+  eventOptions(state) {
+    return state.fieldsList.map(item => {
+      return {
+        label: item.nameCn,
+        value: item.nameCn
+      }
+    })
+  }
+}
+const mutations = {
+  setCurrentBwd: (state, value) => {
+    if (value) {
+      state.currentBwd = value.toString()
+    } else {
+      if (state.bwdList[0].children.length) {
+        state.currentBwd = state.bwdList[0].children[0].id.toString()
+        console.log(')))', state.currentBwd)
+      } else {
+        state.currentbwd = ''
+      }
+    }
+  },
+  // 将接口获取的数据赋值至页面每一条
+  // setCurrentBwdValue(state, value) {
+  //   state.currentBwdItem = value
+  // },
+  // 将接口获取的数据渲染至页面进行bwd列表展示
+  setBwdList(state, value) {
+    state.bwdList = value
+  },
+  // 目录栏的新增编辑赋值
+  setCatalogForm: (state, form) => {
+    if (form) {
+      keysClone(state.fileCatalogData, form)
+    } else {
+      state.fileCatalogData = Object.assign({}, initState.fileCatalogData)
+    }
+  },
+  setFieldsForm(state, form) {
+    if (form) {
+      keysClone(state.fileFieldsData, form)
+    } else {
+      state.fileFieldsData = Object.assign({}, initState.fileFieldsData)
+    }
+  },
+  setIsAdvance: (state, isAdvance) => {
+    if (state.isAdvance !== isAdvance) {
+      state.isAdvance = isAdvance
+      state.pageInfo.curPage = 1
+    }
+  },
+  setCurrentField: (state, field) => {
+    if (!field) {
+      state.currentField =
+        state.fieldsList && state.fieldsList.length
+          ? state.fieldsList[0].id
+          : ''
+    } else {
+      state.currentField = field
+    }
+  },
+  setPageInfo: (state, pageInfo) => {
+    keysClone(state.pageInfo, pageInfo)
+  },
+  setTotalNum: (state, value) => {
+    state.totalNumber = value
+  }
+}
+
+const actions = {
+  async queryTotalNum({ commit }) {
+    const { value } = await getTotalNumApi()
+    commit('setTotalNum', value)
+  },
+  // 处理左侧bwd，调接口展示bwdlist(getCatalogApi)
+  async loadBwdModules({ commit }) {
+    const result = await getCatalogApi()
+    if (result.success) {
+      commit(
+        'setBwdList',
+        result.value.map(item => ({
+          id: item.theme,
+          label: item.theme,
+          children: item.bwdCatelogEntityList.map(it => {
+            return {
+              id: it.id,
+              label: it.nameCn,
+              nameEn: it.nameEn,
+              state: it.id == '0' ? INCOMESTATE : COMPLETESTATE,
+              number: it.refNum
+            }
+          })
+        }))
+      )
+      commit('setCurrentBwd')
+    }
+  },
+  // 给中间展示bwd(getBwdInfoApi)
+  async queryField({ commit }) {
+    const { curPage, pageSize } = state.pageInfo
+    const query = Object.assign(
+      { id: state.currentBwd },
+      state.isAdvance ? state.adSearchData : state.searchData
+    )
+    const res = await getBwdInfoApi(curPage, pageSize, query, state.isAdvance)
+    const { records, pageInfo } = res.value
+    console.log('&&&&&', records)
+    // state.fieldsList = records
+    state.fieldsList = records.map(item => ({
+      ...item,
+      index: item.id
+    }))
+    commit('setPageInfo', pageInfo)
+    commit('setCurrentField')
+  },
+  // async loadCurrentBwdValue({ commit }, state) {
+  //   const bwdId = state.currentBwd.id
+  //   const result = await get(`sbr/getOverView/${bwdId}`)
+  //   if (result.success) {
+  //     commit('setCurrentBwdValue', result.value)
+  //   }
+  // },
+  // 左侧表单提交，更新目录接口addFileCatalogApi,updateFileCatalogApi
+  // 如果说要去操作store里面的数据的话，就去执行dispatch动作
+  async submitFileCatalog({ dispatch, state }) {
+    const { id, name, index } = state.fileCatalogData
+    if (!id) {
+      await addFileCatalogApi(name, index, state.fileCatalogData.state)
+      this._vm.$message.success('新增文件目录成功')
+    } else {
+      await updateFileCatalogApi(id, name, index, state.fileCatalogData.state)
+      this._vm.$message.success('编辑文件目录成功')
+    }
+    dispatch('loadBwdModules')
+  },
+  async submitFields({ dispatch, state }) {
+    const { id, index, nameCn, nameEn } = state.fileFieldsData
+    const datasetId = parseInt(state.currentBwd)
+    if (!id) {
+      await addFileFieldsApi({
+        datasetId,
+        index,
+        nameCn,
+        nameEn
+      })
+      this._vm.$message.success('新增字段成功！')
+    } else {
+      await updateFileFieldsApi({
+        id,
+        datasetId,
+        index,
+        nameCn,
+        nameEn
+      })
+      this._vm.$message.success('编辑字段成功！')
+    }
+    await dispatch('queryField')
+  },
+  async runCatalog({ dispatch, state }, val) {
+    const list = [state.currentBwd]
+    if (val) {
+      state.bwdList.forEach(item => {
+        item.dataSetCatalogEntiyList.forEach(it => {
+          list.push(it.id)
+        })
+      })
+    } else {
+      list.push(state.currentBwd)
+    }
+    await submitCatalogApi(list)
+    this._vm.$message.success('启动成功！')
+    dispatch('loadBwdModules')
+  }
+}
+
+export default {
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions
+}

@@ -2,7 +2,7 @@ export const searchCfg = [
   {
     type: 'el-input',
     label: '字段',
-    id: 'field',
+    id: 'nameCn',
     elOptions: {
       placeholder: '请输入',
       style: {
@@ -24,7 +24,7 @@ export const searchCfg = [
   {
     type: 'el-input',
     label: '事件库字段',
-    id: 'index',
+    id: 'dwdField',
     elOptions: {
       placeholder: '请输入',
       style: {
