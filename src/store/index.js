@@ -10,6 +10,7 @@ import mdm from '@/views/mdm/store/'
 
 import event from './modules/event'
 import value from './modules/value'
+import bwd from '@/views/bwd/store/'
 
 import docs from '@/views/docs/store'
 
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     event,
     mdm,
     value,
+    bwd,
     docs
   }
 })

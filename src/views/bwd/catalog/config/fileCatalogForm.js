@@ -1,80 +1,46 @@
-export const addFileCatalogCfg = [
-  {
-    type: 'el-input',
-    label: 'BWD文件名称',
-    id: 'name',
-    elOptions: {
-      placeholder: '请输入'
+export const fileCatalogCfg = (categoryList = [], disabled = false) =>
+  [
+    {
+      type: 'el-input',
+      label: 'BWD文件名称',
+      id: 'nameCn',
+      elOptions: {
+        placeholder: '患者信息记录文件'
+      }
+    },
+    {
+      type: 'el-select',
+      label: '文件分类',
+      options: categoryList,
+      id: 'theme',
+      elOptions: {
+        disabled,
+        placeholder: '请选择'
+      }
+    },
+    {
+      type: 'el-select',
+      label: '启用状态',
+      id: 'state',
+      options: [
+        { label: '停用', value: '0' },
+        { label: '编辑', value: '1' },
+        { label: '待审核', value: '2' },
+        { label: '启用', value: '3' }
+      ],
+      elOptions: {
+        placeholder: '请选择'
+      }
     }
-  },
-  {
-    type: 'el-select',
-    label: '文件分类',
-    id: 'index',
-    elOptions: {
-      placeholder: '请选择'
-    }
-  },
-  {
-    type: 'el-select',
-    label: '启用状态',
-    id: 'state',
-    options: [
-      { label: '启用', value: '1' },
-      { label: '停用', value: '0' }
-    ],
-    elOptions: {
-      placeholder: '请选择'
-    }
-  }
-].map(item => {
-  const elOptions = Object.assign({}, item.elOptions, {
-    style: {
-      width: '260px'
-    }
+  ].map(item => {
+    const elOptions = Object.assign({}, item.elOptions, {
+      style: {
+        width: '260px'
+      }
+    })
+    item.elOptions = elOptions
+    return item
   })
-  item.elOptions = elOptions
-  return item
-})
-
-export const editFileCatalogCfg = [
-  {
-    type: 'el-input',
-    label: 'BWD文件名称',
-    id: 'name',
-    elOptions: {
-      placeholder: '患者信息记录文件'
-    }
-  },
-  {
-    type: 'el-select',
-    label: '文件分类',
-    id: 'index',
-    elOptions: {
-      placeholder: '请选择'
-    }
-  },
-  {
-    type: 'el-select',
-    label: '启用状态',
-    id: 'state',
-    options: [
-      { label: '启用', value: '1' },
-      { label: '停用', value: '0' }
-    ],
-    elOptions: {
-      placeholder: '请选择'
-    }
-  }
-].map(item => {
-  const elOptions = Object.assign({}, item.elOptions, {
-    style: {
-      width: '260px'
-    }
-  })
-  item.elOptions = elOptions
-  return item
-})
 
 export const fileCatalogRule = {
   index: { required: true },

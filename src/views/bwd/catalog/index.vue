@@ -18,7 +18,7 @@
         >
         </el-tree>
         <div class="task-input-do">
-          <el-button size="mini">重置</el-button>
+          <el-button size="mini" @click="reset">重置</el-button>
           <el-button type="primary" @click="onClickSearch" size="mini"
             >查询</el-button
           >
@@ -26,34 +26,41 @@
         <el-button type="text" slot="reference"> 筛选 </el-button>
       </el-popover>
       <span>搜索</span>
-      <el-input placeholder="请输入" suffix-icon="el-icon-search"></el-input>
+      <el-input
+        placeholder="请输入"
+        v-model="bwdFilter"
+        @change="onBwdFilterChange"
+        clearable
+        suffix-icon="el-icon-search"
+      ></el-input>
     </div>
-    <Tree :data="catalogList" class="tree"></Tree>
+    <Tree
+      ref="tree"
+      :data="bwdList"
+      class="tree"
+      :currentNodeKey="currentBwd"
+      @onClick="handleNodeClick"
+    ></Tree>
     <div class="dialog_port">
       <Dialog
-        title="新增文件目录"
-        ref="addFileCatalogDialog"
-        class="addFileCatalogDialog"
+        :title="`${!fileCatalogData.id ? '新增文件目录' : '编辑文件目录'}`"
+        ref="fileCatalogDialog"
+        class="fileCatalogDialog"
+        @dialog-closed="onfileCatalogFormClosed"
+        @dialog-complete="onClickSubmitFileCatalog"
       >
         <Form
-          :formCfg="addFileCatalogCfg"
-          :formData="addFileCatalogData"
-          :formRule="fileCatalogRule"
-        ></Form>
-      </Dialog>
-      <Dialog
-        title="编辑文件目录"
-        ref="editFileCatalogDialog"
-        class="editFileCatalogDialog"
-      >
-        <Form
-          :formCfg="editFileCatalogCfg"
-          :formData="editFileCatalogData"
+          ref="fileCatalogForm"
+          :formCfg="fileCatalogCfg(categoryOptions)"
+          :formData="fileCatalogData"
           :formRule="fileCatalogRule"
         ></Form>
       </Dialog>
     </div>
-    <Bottom :labelList="['文件数', '字段数']"></Bottom>
+    <Bottom
+      :labelList="['文件数', '字段数']"
+      :value="[totalNumber, pageInfo.totalSize]"
+    ></Bottom>
   </div>
 </template>
 
@@ -63,11 +70,10 @@ import Dialog from '@/components/Dialog.vue'
 import Form from '@/components/Form.vue'
 import Bottom from '@/components/bottom/Catalog.vue'
 import Tree from '@/components/SideTree.vue'
-import {
-  editFileCatalogCfg,
-  addFileCatalogCfg,
-  fileCatalogRule
-} from './config/fileCatalogForm'
+import { fileCatalogCfg, fileCatalogRule } from './config/fileCatalogForm'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapMutations, mapActions } =
+  createNamespacedHelpers('bwd')
 export default {
   components: {
     Header,
@@ -78,81 +84,92 @@ export default {
   },
   data() {
     return {
-      catalogList: [
-        {
-          id: '1',
-          label: '医疗类',
-          children: [
-            {
-              id: '1-1',
-              label: '患者信息记录文件'
-            },
-            {
-              id: '1-2',
-              label: '挂号记录文件'
-            },
-            {
-              id: '1-3',
-              label: '入院登记文件'
-            },
-            {
-              id: '1-4',
-              label: '患者就诊记录文件'
-            },
-            {
-              id: '1-5',
-              label: '检验报告单主表文件'
-            },
-            {
-              id: '1-6',
-              label: '检验报告单丛表文件'
-            },
-            {
-              id: '1-7',
-              label: '检查报告单主表文件'
-            }
-          ]
-        }
-      ],
-      treeSelectionData: [
-        {
-          id: '1',
-          label: '全选',
-          children: [
-            {
-              id: '2',
-              label: '医疗类'
-            },
-            {
-              id: '3',
-              label: '运营类'
-            },
-            {
-              id: '4',
-              label: '医保类'
-            }
-          ]
-        }
-      ],
-      addFileCatalogCfg,
-      editFileCatalogCfg,
-      addFileCatalogData: {},
-      editFileCatalogData: {},
-      fileCatalogRule
+      bwdFilter: '',
+      fileCatalogCfg,
+      fileCatalogRule,
+      fileCatalogDialog: false
     }
   },
+  computed: {
+    ...mapState([
+      'treeSelectionData',
+      'bwdList',
+      'currentBwd',
+      'fileCatalogData',
+      'pageInfo',
+      'totalNumber'
+    ]),
+    ...mapGetters(['currentBwdItem', 'categoryOptions'])
+  },
   methods: {
-    addFileCatalog() {
-      this.$refs.addFileCatalogDialog.toggleOpen()
+    ...mapMutations(['setCatalogForm', 'setCurrentBwd', 'setCurrentField']),
+    ...mapActions([
+      'loadBwdModules',
+      'queryField',
+      'submitFileCatalog',
+      'queryTotalNum'
+    ]),
+    // 根据目录的id渲染中间详细信息
+    async handleNodeClick({ id }) {
+      this.setCurrentBwd(id)
+      await this.queryField()
+      this.setCurrentField()
+    },
+    // 左侧编辑新增
+    async addFileCatalog() {
+      this.$refs.fileCatalogDialog.toggleOpen()
+      this.setCatalogForm()
     },
     editFileCatalog() {
-      this.$refs.editFileCatalogDialog.toggleOpen()
+      if (!this.currentBwd) return
+      this.$refs.fileCatalogDialog.toggleOpen()
+      this.setCatalogForm(this.currentBwdItem)
     },
+    // 表单重置
+    onfileCatalogFormClosed() {
+      this.setCatalogForm()
+      this.$refs.fileCatalogForm.resetFields()
+    },
+    // 表单确定提交
+    async onClickSubmitFileCatalog() {
+      const { valid } = await this.$refs.fileCatalogForm.validate()
+      if (valid) {
+        this.submitFileCatalog()
+        this.$refs.fileCatalogDialog.toggleOpen()
+      } else {
+        this.$alert('请检查输入项是否完整！')
+      }
+    },
+    // 左侧搜索框
+    onBwdFilterChange(val) {
+      this.$refs.tree.filter(val)
+    },
+    // 筛选弹窗点击操作
     checkedFilterHandler() {
       let checkedKeys = this.$refs.filterTree.getCheckedKeys()
       this.$emit('checked-filter-keys', checkedKeys)
     },
+    // 筛选弹窗重置，默认医疗类
+    reset() {
+      this.$refs.filterTree.setCheckedKeys([2])
+    },
+    // 筛选框的查询功能
     async onClickSearch() {}
+  },
+  // Vue完成DOM挂载bwd列表
+  // mounted() {
+  //   this.loadBwdModules()
+  //   this.queryTotalNum()
+  // },
+  // 实时监视左侧选中的bwd文件
+  watch: {
+    currentBwdItem: {
+      handler() {
+        this.$nextTick(() => {
+          this.$refs.tree.setCurrent()
+        })
+      }
+    }
   }
 }
 </script>
@@ -167,6 +184,7 @@ export default {
     padding: 0 7px 0 0px;
     box-sizing: border-box;
     display: flex;
+    flex-shrink: 0;
     justify-content: center;
     align-items: center;
     // border-bottom: 1px solid #e5e5e5;
@@ -191,21 +209,10 @@ export default {
   position: relative;
   left: 32px;
 }
-::v-deep .addFileCatalogDialog .el-dialog {
-  width: 700px;
-  form {
-    padding-right: 25%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    .el-form-item {
-      margin-bottom: 16px;
-      display: inline-flex;
-    }
-  }
+::v-deep .catalogTitleWrap .buttons .action.run {
+  display: none;
 }
-::v-deep .editFileCatalogDialog .el-dialog {
+::v-deep .fileCatalogDialog .el-dialog {
   width: 700px;
   form {
     padding-right: 25%;

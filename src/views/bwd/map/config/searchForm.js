@@ -1,9 +1,11 @@
-export const searchCfg = [
+export const searchCfg = (eventList = [], disabled = false) => [
   {
     type: 'el-select',
     label: '事件表',
+    options: eventList,
     id: 'index1',
     elOptions: {
+      disabled,
       placeholder: '请选择',
       style: {
         width: '150px'
