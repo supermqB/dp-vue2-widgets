@@ -107,7 +107,15 @@ const getters = {
       !state.currentVersionInfo ||
       !state.currentVersionInfo.valueDictColumnList
     )
-      return []
+      return [
+        {
+          colConfig: {
+            property: '',
+            label: '',
+            minWidth: 150
+          }
+        }
+      ]
     return state.currentVersionInfo.valueDictColumnList.map(item => {
       return {
         colConfig: {
@@ -186,8 +194,8 @@ const mutations = {
         state.dictList.length &&
         state.dictList[0].children.length
       ) {
-        state.currentDict = '1,dict_bact_type'
-        // state.currentDict = '4,dict_symptom'
+        // state.currentDict = '1,dict_bact_type'
+        state.currentDict = '4,dict_symptom'
         // state.currentDict = state.dictList[0].children[0].id
       }
     }
@@ -297,10 +305,11 @@ const actions = {
     })
   },
   async queryDictValue({ state, commit }) {
-    commit('setDictValueList')
+    // commit('setDictValueList')
     const dictId = state.currentVersion
     const { curPage: current, pageSize: size } = state.pageInfo
     const columnParamList = []
+    console.log(state.searchForm)
     ;[
       { name: 'code', condition: 'like' },
       { name: 'value', condition: 'like' }

@@ -129,6 +129,7 @@ export const addDictValueApi = ({ id, valueObject, file }) => {
 }
 
 export const editDictValueApi = ({ id, colId, valueObject }) => {
+  if (valueObject['term_code']) colId = valueObject['term_code']
   return request({
     url: '/dict/editDictValue',
     method: 'post',

@@ -1,9 +1,27 @@
 <template>
   <div class="suspectWrap">
     <p class="listTitle">疑似列表</p>
+    <el-select
+      v-model="curTask"
+      placeholder="选择疑似任务"
+      style="width: 211px; margin: 4px 6px"
+      v-if="currentVersionInfo.type === '多值字典'"
+    >
+      <el-option
+        v-for="item in filteredTask"
+        :key="`${item.source}:${item.name}`"
+        :label="`${item.source}:${item.name}`"
+        :value="`${item.source}:${item.name}`"
+      >
+        <span style="float: left">{{ item.name }}</span>
+        <span style="float: right; color: #8492a6; font-size: 13px">{{
+          item.source
+        }}</span>
+      </el-option>
+    </el-select>
     <Table
       v-if="currentVersionInfo.type === '单值字典'"
-      :tableData="suspectList"
+      :tableData="suspectList()"
       :tableConfig="config"
       :pageInfo="null"
       :isShowRadio="false"
@@ -63,11 +81,12 @@ export default {
   },
   computed: {
     ...mapState(['task', 'currentVersionInfo', 'dictValueList']),
-    ...mapGetters(['suspectList'])
+    ...mapGetters(['suspectList', 'filteredTask'])
   },
   data() {
     return {
       config,
+      curTask: '',
       activeName: ''
     }
   },

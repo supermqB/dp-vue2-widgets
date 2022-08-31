@@ -13,7 +13,7 @@ export const tableConfigGen = function (columns) {
         property,
         label,
         /* every character occupy 17px, no matter it's en, cn or symbol. */
-        width: label.length * 17,
+        width: Math.max(label.length * 18, 40),
         fixed: idx < 2
       }
     })),

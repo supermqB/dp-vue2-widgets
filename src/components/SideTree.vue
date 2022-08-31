@@ -128,6 +128,11 @@ export default {
     white-space: nowrap;
   }
 }
+
+::v-deep .el-tree-node__content {
+  height: 36px;
+}
+
 ::v-deep .el-tree-node__content > .el-tree-node__expand-icon {
   padding: 4px;
 }
