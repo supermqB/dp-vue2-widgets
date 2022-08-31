@@ -65,10 +65,10 @@ const getters = {
     return str => {
       let taskList = state.taskList
       if (!str) {
-        const [source, name] = str.split(':')
-        taskList = state.taskList.filter(
-          item => item.source === source && item.name === name
-        )
+        // const [source, name] = str.split(':')
+        // taskList = state.taskList.filter(
+        //   item => item.source === source && item.name === name
+        // )
       }
       const res = taskList.reduce((x, y) => {
         return [...x, ...y.suspectList]

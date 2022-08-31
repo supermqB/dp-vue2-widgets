@@ -34,7 +34,7 @@
         )"
         :formData="searchForm"
       ></Form>
-      <div>
+      <div class="operation">
         <el-button @click="queryDictValue" type="primary" plain>查询</el-button>
         <el-button @click="addValue" :disabled="!currentVersion" type="primary" plain>新增</el-button>
         <el-button @click="editValue" :disabled="!currentDictValue" type="primary" plain>编辑</el-button>
@@ -78,11 +78,23 @@
       ref="addValueDialog"
       class="addValueDialog"
       @dialog-complete="onClickAddValue">
+      <div class="batchFlag">
+        <span>新增方式：</span>
+        <el-radio-group v-model="batchFlag">
+          <el-radio :label="false">单条新增</el-radio>
+          <el-radio :label="true">批量导入</el-radio>
+        </el-radio-group>
+      </div>
       <Form
+        v-if="!batchFlag"
         :formCfg="dictValueFormCfg"
         :formData="dictValueForm"
         :formRule="valueRule"
       ></Form>
+      <Upload v-if="batchFlag"
+        v-model="file"
+        @onDownload="downloadTemplate"
+        class="upload"></Upload>
     </Dialog>
     <Dialog
       title="编辑值域字典明细"
@@ -107,6 +119,7 @@ import IsMaster from '@/components/state/IsMaster.vue'
 import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import IsRunning from '@/components/state/IsRunning.vue'
 import tableConfig from './config/tableColumn'
+import Upload from '@/components/form/Upload.vue'
 import { addVersionCfg, editVersionCfg, addVersionRule } from './config/versionForm'
 import { searchValueCfg, addValueCfg, editValueCfg, valueRule } from './config/valueForm'
 import { createNamespacedHelpers } from 'vuex'
@@ -123,7 +136,8 @@ export default {
     Detail,
     Breadcrumb,
     IsMaster,
-    IsRunning
+    IsRunning,
+    Upload
 },
   data() {
     return {
@@ -133,7 +147,9 @@ export default {
       addValueCfg,
       editValueCfg,
       searchValueCfg,
-      valueRule
+      valueRule,
+      batchFlag: false,
+      file: null,
     }
   },
   computed: {
@@ -235,6 +251,8 @@ export default {
     async addValue() {
       const { value } = await getMAxValueCodeApi(this.currentVersion)
       this.setDictValueForm({ 'term_code': getMaxNumber(value, 14) })
+      this.batchFlag = false
+      this.file = null
       this.$refs.addValueDialog.toggleOpen()
     },
     editValue() {
@@ -242,7 +260,13 @@ export default {
       this.$refs.editValueDialog.toggleOpen()
     },
     async onClickAddValue() {
-      await this.addDictValue()
+      if (this.batchFlag) {
+        if (!this.file) {
+          this.$message.warning('请选择批量导入文件')
+          return
+        }
+      }
+      await this.addDictValue(this.batchFlag ? this.file : null)
       this.$refs.addValueDialog.toggleOpen()
       this.$message.success('新增值域字典明细成功！')
     },
@@ -299,9 +323,12 @@ export default {
     padding-left: 10px;
     box-sizing: border-box;
     .operation {
-      .el-button {
-        border-color: #1890FF;
-        color: #1890FF
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .batchAdd {
+        margin-left: 10px;
+        text-decoration: underline
       }
     }
   }
@@ -375,6 +402,19 @@ export default {
 
 ::v-deep .addValueDialog .el-dialog{
   width: 900px;
+
+  .batchFlag {
+    padding-left: 80px;
+    padding-bottom: 15px;
+    .el-radio-group {
+      margin-left: 10px;
+    }
+  }
+  .upload {
+    margin: 0 10%;
+    width: 50%;
+    
+  }
   .el-form {
     padding-right: 50px;
     display: flex;

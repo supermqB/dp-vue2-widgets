@@ -258,8 +258,8 @@ const actions = {
     await dispatch('queryVersion')
     commit('setCurrentVersion')
     await dispatch('queryVersionInfo')
-    await dispatch('querySuspect', { id: state.currentVersion })
-    await dispatch('queryDictValue')
+    dispatch('querySuspect', { id: state.currentVersion })
+    dispatch('queryDictValue')
     commit('setCurrentDictValue')
     dispatch('queryClass')
   },
@@ -309,12 +309,11 @@ const actions = {
     const dictId = state.currentVersion
     const { curPage: current, pageSize: size } = state.pageInfo
     const columnParamList = []
-    console.log(state.searchForm)
     ;[
       { name: 'code', condition: 'like' },
-      { name: 'value', condition: 'like' }
-      // { name: '父级代码', condition: 'equal' },
-      // { name: '层级关系', condition: 'equal' }
+      { name: 'value', condition: 'like' },
+      { name: 'parent_code', condition: 'equal' },
+      { name: 'level', condition: 'equal' }
     ].forEach(item => {
       if (state.searchForm[item.name]) {
         columnParamList.push(
@@ -387,9 +386,14 @@ const actions = {
       state: state.dictVersionForm.state
     })
   },
-  async addDictValue({ state, dispatch }) {
-    const id = state.currentVersion
-    await addDictValueApi({ id, valueObject: state.dictValueForm })
+  async addDictValue({ state, dispatch }, file) {
+    const data = { id: state.currentVersion }
+    if (!file) {
+      data['valueObject'] = state.dictValueForm
+    } else {
+      data['file'] = file
+    }
+    await addDictValueApi(data)
     await dispatch('queryDictValue')
   },
   async editDictValue({ state, dispatch }) {
