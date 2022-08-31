@@ -7,9 +7,9 @@ export async function alert(msg) {
   return true
 }
 
-export async function confirm(msg) {
+export async function confirm(msg, options = {}) {
   try {
-    return await MessageBox.confirm(msg)
+    return await MessageBox.confirm(msg, options)
   } catch (e) {}
   return false
 }
