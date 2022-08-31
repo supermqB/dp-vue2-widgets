@@ -42,8 +42,9 @@ export const addFileCatalogApi = (name, index, state) => {
     method: 'post',
     url: '/data-mapping/file/add',
     data: {
-      name,
-      index,
+      nameCn,
+      nameEn,
+      theme,
       state
     }
   })

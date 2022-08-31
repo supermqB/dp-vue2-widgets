@@ -5,7 +5,7 @@ export const fileCatalogCfg = (categoryList = [], disabled = false) =>
       label: 'BWD文件名称',
       id: 'nameCn',
       elOptions: {
-        placeholder: '患者信息记录文件'
+        placeholder: '请输入'
       }
     },
     {

@@ -13,14 +13,6 @@ import { keysClone } from '@/utils/lang'
 import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
 import initState from './initState'
 
-// const processFieldList = list => {
-//   return list.map(item => {
-//     console.log('11111112'.item)
-//     return Object.assign(item, {
-//       index: item.seqNo
-//     })
-//   })
-// }
 const state = {
   // 左侧数据
   currentBwd: '',
@@ -121,7 +113,6 @@ const mutations = {
     } else {
       if (state.bwdList[0].children.length) {
         state.currentBwd = state.bwdList[0].children[0].id.toString()
-        console.log(')))', state.currentBwd)
       } else {
         state.currentbwd = ''
       }
@@ -211,8 +202,6 @@ const actions = {
     )
     const res = await getBwdInfoApi(curPage, pageSize, query, state.isAdvance)
     const { records, pageInfo } = res.value
-    console.log('&&&&&', records)
-    // state.fieldsList = records
     state.fieldsList = records.map(item => ({
       ...item,
       index: item.id
@@ -220,22 +209,14 @@ const actions = {
     commit('setPageInfo', pageInfo)
     commit('setCurrentField')
   },
-  // async loadCurrentBwdValue({ commit }, state) {
-  //   const bwdId = state.currentBwd.id
-  //   const result = await get(`sbr/getOverView/${bwdId}`)
-  //   if (result.success) {
-  //     commit('setCurrentBwdValue', result.value)
-  //   }
-  // },
   // 左侧表单提交，更新目录接口addFileCatalogApi,updateFileCatalogApi
-  // 如果说要去操作store里面的数据的话，就去执行dispatch动作
   async submitFileCatalog({ dispatch, state }) {
-    const { id, name, index } = state.fileCatalogData
+    const { id, nameCn, theme } = state.fileCatalogData
     if (!id) {
-      await addFileCatalogApi(name, index, state.fileCatalogData.state)
+      await addFileCatalogApi(nameCn, theme, state.fileCatalogData.state)
       this._vm.$message.success('新增文件目录成功')
     } else {
-      await updateFileCatalogApi(id, name, index, state.fileCatalogData.state)
+      await updateFileCatalogApi(id, nameCn, theme, state.fileCatalogData.state)
       this._vm.$message.success('编辑文件目录成功')
     }
     dispatch('loadBwdModules')
