@@ -7,13 +7,13 @@ export default {
     nameEn: ''
   },
   searchData: {
-    field: '',
+    nameCn: '',
     nameEn: '',
-    index: ''
+    dwdField: ''
   },
   fileCatalogData: {
     id: '',
-    name: '',
+    nameCn: '',
     theme: '',
     state: ''
   },

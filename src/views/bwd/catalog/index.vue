@@ -96,17 +96,18 @@ export default {
       'bwdList',
       'currentBwd',
       'fileCatalogData',
-      'pageInfo'
+      'pageInfo',
+      'totalNumber'
     ]),
     ...mapGetters(['currentBwdItem', 'categoryOptions'])
   },
   methods: {
-    ...mapMutations(['setCatalogForm', 'setCurrentBwd']),
+    ...mapMutations(['setCatalogForm', 'setCurrentBwd', 'setCurrentField']),
     ...mapActions([
       'loadBwdModules',
       'queryField',
       'submitFileCatalog',
-      'totalNumber'
+      'queryTotalNum'
     ]),
     // 根据目录的id渲染中间详细信息
     async handleNodeClick({ id }) {
@@ -156,9 +157,10 @@ export default {
     async onClickSearch() {}
   },
   // Vue完成DOM挂载bwd列表
-  mounted() {
-    this.loadBwdModules()
-  },
+  // mounted() {
+  //   this.loadBwdModules()
+  //   this.queryTotalNum()
+  // },
   // 实时监视左侧选中的bwd文件
   watch: {
     currentBwdItem: {
@@ -182,6 +184,7 @@ export default {
     padding: 0 7px 0 0px;
     box-sizing: border-box;
     display: flex;
+    flex-shrink: 0;
     justify-content: center;
     align-items: center;
     // border-bottom: 1px solid #e5e5e5;

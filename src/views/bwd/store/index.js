@@ -13,77 +13,18 @@ import { keysClone } from '@/utils/lang'
 import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
 import initState from './initState'
 
-// const processCatalogList = list => {
-//   if (!list) return []
-//   return list.map((item, index) => {
-//     const { theme } = item
-//     const result = {
-//       id: theme,
-//       label: theme,
-//       theme: true,
-//       children: []
-//     }
-//     item.bwdCatelogEntityList.forEach(item => {
-//       const { id, nameCn, nameEn, refNum } = item
-//       result.children.push({
-//         id: id.toString(),
-//         label: nameCn,
-//         state: refNum
-//       })
+// const processFieldList = list => {
+//   return list.map(item => {
+//     console.log('11111112'.item)
+//     return Object.assign(item, {
+//       index: item.seqNo
 //     })
-//     return result
 //   })
 // }
-
 const state = {
   // 左侧数据
   currentBwd: '',
-  bwdList: [
-    // {
-    //   id: '1',
-    //   label: '医疗类',
-    //   children: [
-    //     {
-    //       id: '1-1',
-    //       label: '患者信息记录文件'
-    //     },
-    //     {
-    //       id: '1-2',
-    //       label: '挂号记录文件'
-    //     },
-    //     {
-    //       id: '1-3',
-    //       label: '入院登记文件'
-    //     },
-    //     {
-    //       id: '1-4',
-    //       label: '患者就诊记录文件'
-    //     },
-    //     {
-    //       id: '1-5',
-    //       label: '检验报告单主表文件'
-    //     },
-    //     {
-    //       id: '1-6',
-    //       label: '检验报告单丛表文件'
-    //     },
-    //     {
-    //       id: '1-7',
-    //       label: '检查报告单主表文件'
-    //     }
-    //   ]
-    // },
-    // {
-    //   id: '2',
-    //   label: '测试类',
-    //   children: [
-    //     {
-    //       id: '2-1',
-    //       label: '测试记录文件'
-    //     }
-    //   ]
-    // }
-  ],
+  bwdList: [],
   treeSelectionData: [
     {
       id: '1',
@@ -109,26 +50,12 @@ const state = {
   isAdvance: false,
   pageInfo: {
     curPage: 1,
-    pageSize: 10,
-    totalSize: 3,
-    totalPage: 1
+    pageSize: 20,
+    totalSize: 0,
+    totalPage: 0
   },
-  fieldsList: [
-    {
-      id: '1',
-      seqNo: 'org_id',
-      name: '医疗机构唯一标识',
-      nameCn: '个人信息表',
-      nameEn: '业务系统唯一标识'
-    },
-    {
-      id: '2',
-      seqNo: 'source_id',
-      name: '业务系统唯一标识',
-      nameCn: '个人信息表',
-      nameEn: '业务系统唯一标识'
-    }
-  ],
+  totalNumber: 0,
+  fieldsList: [],
   eventMapList: [
     {
       seqNo: '匹配',
@@ -153,35 +80,19 @@ const state = {
 }
 
 const getters = {
-  // bwdTreeList(state) {
-  //   return processCatalogList(state.bwdList)
-  // },
-  // 返回id===当前选中的bwd文件的id的信息，就是中间部分的每条数据
   currentBwdItem(state) {
     for (let item of state.bwdList) {
-      console.log('11111111111111111', item)
-      const res = item.bwdCatelogEntityList.find(it => {
+      const res = item.children.find(it => {
         return state.currentBwd.toString() === it.id.toString()
       })
-      console.log('))))))', res)
       if (res) {
         return Object.assign({}, res, {
-          theme: item.theme
+          theme: item.label
         })
       }
     }
     return {}
   },
-  // 左侧栏的文件总数 /data-mapping/getTotalNum
-  totalNumber(state) {
-    let res = 0
-    for (let item of state.bwdList) {
-      res += item.children.length
-      if (res) return res
-      return 0
-    }
-  },
-  // //
   currentFieldRow(state) {
     return state.fieldsList.find(item => item.id === state.currentField)
   },
@@ -204,10 +115,17 @@ const getters = {
   }
 }
 const mutations = {
-  // 左侧bwd处理（动作set）
-  // 赋值当前点击的bwd的id,
-  setCurrentBwd(state, value) {
-    state.currentBwd = value
+  setCurrentBwd: (state, value) => {
+    if (value) {
+      state.currentBwd = value.toString()
+    } else {
+      if (state.bwdList[0].children.length) {
+        state.currentBwd = state.bwdList[0].children[0].id.toString()
+        console.log(')))', state.currentBwd)
+      } else {
+        state.currentbwd = ''
+      }
+    }
   },
   // 将接口获取的数据赋值至页面每一条
   // setCurrentBwdValue(state, value) {
@@ -250,41 +168,38 @@ const mutations = {
   },
   setPageInfo: (state, pageInfo) => {
     keysClone(state.pageInfo, pageInfo)
+  },
+  setTotalNum: (state, value) => {
+    state.totalNumber = value
   }
 }
 
 const actions = {
-  // async totalNumber() {
-  //   const value = await getTotalNumApi()
-  //   state.totalNumber = value
-  // },
+  async queryTotalNum({ commit }) {
+    const { value } = await getTotalNumApi()
+    commit('setTotalNum', value)
+  },
   // 处理左侧bwd，调接口展示bwdlist(getCatalogApi)
-  // async queryCatalog() {
-  //   const { value } = await getCatalogApi()
-  //   state.bwdList = value
-  // },
   async loadBwdModules({ commit }) {
     const result = await getCatalogApi()
     if (result.success) {
       commit(
         'setBwdList',
-        result.value.map(
-          item => (
-            console.log('!!!!!!!!!!!!', item),
-            {
-              ...item,
-              state: item.state == '1' ? INCOMESTATE : COMPLETESTATE
+        result.value.map(item => ({
+          id: item.theme,
+          label: item.theme,
+          children: item.bwdCatelogEntityList.map(it => {
+            return {
+              id: it.id,
+              label: it.nameCn,
+              nameEn: it.nameEn,
+              state: it.id == '0' ? INCOMESTATE : COMPLETESTATE,
+              number: it.refNum
             }
-            // {
-            //   ...item,
-            //   id: item.id + '',
-            //   label: item.name,
-            //   state: item.state == '1' ? INCOMESTATE : COMPLETESTATE,
-            //   number: item.refCount
-            // }
-          )
-        )
+          })
+        }))
       )
+      commit('setCurrentBwd')
     }
   },
   // 给中间展示bwd(getBwdInfoApi)
@@ -296,8 +211,14 @@ const actions = {
     )
     const res = await getBwdInfoApi(curPage, pageSize, query, state.isAdvance)
     const { records, pageInfo } = res.value
-    state.fieldsList = records
+    console.log('&&&&&', records)
+    // state.fieldsList = records
+    state.fieldsList = records.map(item => ({
+      ...item,
+      index: item.id
+    }))
     commit('setPageInfo', pageInfo)
+    commit('setCurrentField')
   },
   // async loadCurrentBwdValue({ commit }, state) {
   //   const bwdId = state.currentBwd.id

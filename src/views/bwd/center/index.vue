@@ -1,15 +1,16 @@
 <template>
   <div class="centerWrap">
     <div class="header">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item>BWD文件管理</el-breadcrumb-item>
-        <el-breadcrumb-item>
-          <!-- {{ currentBwdItem.nameCn }}({{ currentBwdItem.nameEn }})
-          <img :src="icon(currentBwdItem.state)" /> -->
-        </el-breadcrumb-item>
-      </el-breadcrumb>
+      <div class="left">
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item>BWD文件管理</el-breadcrumb-item>
+          <el-breadcrumb-item>
+            <b>{{ currentBwdItem.label }}({{ currentBwdItem.nameEn }}) </b>
+            <img :src="icon(currentBwdItem.state)" />
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
       <div>
-        <!-- {{ currentBwdItem.state}} 启用/停用 -->
         <el-button type="primary" @click="onClickRunCatalog">启用</el-button>
         <el-button type="primary" @click="editFileFields">编辑</el-button>
         <el-button type="primary" @click="addFileFields">新增</el-button>
@@ -64,6 +65,7 @@
 </template>
 
 <script>
+import { COMPLETESTATE, INCOMESTATE } from '@/utils/const'
 import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
 import State from '@/components/state/IsRunning.vue'
@@ -123,7 +125,8 @@ export default {
     },
     onClickRunCatalog() {
       this.$confirm(
-        `是否${this.currentBwdItem.state}【${this.currentBwdItem.nameCn}】？`,
+        // `是否${this.currentBwdItem.state}【${this.currentBwdItem.label}】？`,
+        `是否开启【${this.currentBwdItem.label}】？`,
         {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -131,7 +134,8 @@ export default {
         }
       ).then(() => {
         this.runCatalog()
-        this.currentBwdItem.state = !currentBwdItem.state
+        this.currentBwdItem.state =
+          this.currentBwdItem.state === complete ? income : complete
       })
     },
     async pageInfoChanged(val) {
@@ -188,6 +192,9 @@ export default {
       }
     }
   }
+  // mounted() {
+  //   this.queryField()
+  // }
 }
 </script>
 

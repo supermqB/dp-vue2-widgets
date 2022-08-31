@@ -16,17 +16,28 @@
 import Catalog from './catalog'
 import Center from './center'
 import Map from './map'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapMutations, mapActions } =
+  createNamespacedHelpers('bwd')
 export default {
   name: 'ValueExamine',
   components: {
-    Catalog, Center, Map
+    Catalog,
+    Center,
+    Map
   },
   data() {
-    return {
-    }
+    return {}
+  },
+  methods: {
+    ...mapActions(['loadBwdModules', 'queryTotalNum', 'queryField'])
+  },
+  async mounted() {
+    await this.loadBwdModules()
+    await this.queryTotalNum()
+    await this.queryField()
   }
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

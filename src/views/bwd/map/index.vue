@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     ...mapState(['eventMapData', 'mdmMapData', 'eventMapList', 'mdmMapList']),
-    ...mapGetters(['eventOptions', 'eventOptions'])
+    ...mapGetters(['eventOptions'])
   },
   methods: {
     tabChanged() {}
