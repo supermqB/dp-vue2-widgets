@@ -10,17 +10,9 @@ import {
 } from '@/api/bwd'
 
 import { keysClone } from '@/utils/lang'
-import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
+import { STOPSTATE, RUNNINGSTATE } from '@/utils/const'
 import initState from './initState'
 
-// const processFieldList = list => {
-//   return list.map(item => {
-//     console.log('11111112'.item)
-//     return Object.assign(item, {
-//       index: item.seqNo
-//     })
-//   })
-// }
 const state = {
   // 左侧数据
   currentBwd: '',
@@ -118,19 +110,16 @@ const mutations = {
   setCurrentBwd: (state, value) => {
     if (value) {
       state.currentBwd = value.toString()
+    } else if (state.currentBwd) {
+      state.currentBwd = state.currentBwd.toString()
     } else {
       if (state.bwdList[0].children.length) {
         state.currentBwd = state.bwdList[0].children[0].id.toString()
-        console.log(')))', state.currentBwd)
       } else {
         state.currentbwd = ''
       }
     }
   },
-  // 将接口获取的数据赋值至页面每一条
-  // setCurrentBwdValue(state, value) {
-  //   state.currentBwdItem = value
-  // },
   // 将接口获取的数据渲染至页面进行bwd列表展示
   setBwdList(state, value) {
     state.bwdList = value
@@ -192,8 +181,9 @@ const actions = {
             return {
               id: it.id,
               label: it.nameCn,
+              nameCn: it.nameCn,
               nameEn: it.nameEn,
-              state: it.id == '0' ? INCOMESTATE : COMPLETESTATE,
+              state: it.state == '0' ? STOPSTATE : RUNNINGSTATE,
               number: it.refNum
             }
           })
@@ -211,8 +201,6 @@ const actions = {
     )
     const res = await getBwdInfoApi(curPage, pageSize, query, state.isAdvance)
     const { records, pageInfo } = res.value
-    console.log('&&&&&', records)
-    // state.fieldsList = records
     state.fieldsList = records.map(item => ({
       ...item,
       index: item.id
@@ -220,22 +208,25 @@ const actions = {
     commit('setPageInfo', pageInfo)
     commit('setCurrentField')
   },
-  // async loadCurrentBwdValue({ commit }, state) {
-  //   const bwdId = state.currentBwd.id
-  //   const result = await get(`sbr/getOverView/${bwdId}`)
-  //   if (result.success) {
-  //     commit('setCurrentBwdValue', result.value)
-  //   }
-  // },
   // 左侧表单提交，更新目录接口addFileCatalogApi,updateFileCatalogApi
-  // 如果说要去操作store里面的数据的话，就去执行dispatch动作
   async submitFileCatalog({ dispatch, state }) {
-    const { id, name, index } = state.fileCatalogData
+    const { id, nameCn, nameEn, theme } = state.fileCatalogData
     if (!id) {
-      await addFileCatalogApi(name, index, state.fileCatalogData.state)
+      await addFileCatalogApi(
+        nameCn,
+        nameEn,
+        theme,
+        state.fileCatalogData.state
+      )
       this._vm.$message.success('新增文件目录成功')
     } else {
-      await updateFileCatalogApi(id, name, index, state.fileCatalogData.state)
+      await updateFileCatalogApi(
+        id,
+        nameCn,
+        nameEn,
+        theme,
+        state.fileCatalogData.state
+      )
       this._vm.$message.success('编辑文件目录成功')
     }
     dispatch('loadBwdModules')
@@ -245,6 +236,7 @@ const actions = {
     const datasetId = parseInt(state.currentBwd)
     if (!id) {
       await addFileFieldsApi({
+        id,
         datasetId,
         index,
         nameCn,
@@ -263,18 +255,9 @@ const actions = {
     }
     await dispatch('queryField')
   },
-  async runCatalog({ dispatch, state }, val) {
-    const list = [state.currentBwd]
-    if (val) {
-      state.bwdList.forEach(item => {
-        item.dataSetCatalogEntiyList.forEach(it => {
-          list.push(it.id)
-        })
-      })
-    } else {
-      list.push(state.currentBwd)
-    }
-    await submitCatalogApi(list)
+  async runCatalog({ dispatch, state }) {
+    const id = state.currentBwd
+    await submitCatalogApi(id)
     this._vm.$message.success('启动成功！')
     dispatch('loadBwdModules')
   }

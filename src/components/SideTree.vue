@@ -31,6 +31,7 @@
 
 <script>
 import {
+  STOPSTATE,
   RUNNINGSTATE,
   EDITINGSTATE,
   COMPLETESTATE,
@@ -75,6 +76,8 @@ export default {
     },
     icon(state) {
       switch (state) {
+        case STOPSTATE:
+          return require('@/assets/images/common/icons/income.png')
         case RUNNINGSTATE:
           return require('@/assets/images/common/icons/running.png')
         case EDITINGSTATE:

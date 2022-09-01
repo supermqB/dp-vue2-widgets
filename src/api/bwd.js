@@ -25,58 +25,68 @@ export const getTotalNumApi = () => {
     url: '/data-mapping/getTotalNum'
   })
 }
-export const updateFileCatalogApi = (id, name, index, state) => {
+export const updateFileCatalogApi = (id, nameCn, nameEn, theme, state) => {
   return request({
     method: 'post',
     url: '/data-mapping/file/edit',
     data: {
       id,
-      name,
-      index,
+      nameCn,
+      nameEn,
+      theme,
       state
     }
   })
 }
-export const addFileCatalogApi = (name, index, state) => {
+export const addFileCatalogApi = (nameCn, nameEn, theme, state) => {
   return request({
     method: 'post',
     url: '/data-mapping/file/add',
     data: {
-      name,
-      index,
+      nameCn,
+      nameEn,
+      theme,
       state
     }
   })
 }
-export const addFileFieldsApi = (datasetId, index, nameCn, nameEn) => {
+export const addFileFieldsApi = ({ id, datasetId, index, nameCn, nameEn }) => {
   return request({
     method: 'post',
     url: '/data-mapping/column/add',
     data: {
-      datasetId,
-      index,
+      id: datasetId,
+      seqNo: index,
       nameCn,
       nameEn
     }
   })
 }
-export const updateFileFieldsApi = (id, datasetId, index, nameCn, nameEn) => {
+export const updateFileFieldsApi = ({
+  id,
+  datasetId,
+  index,
+  nameCn,
+  nameEn
+}) => {
   return request({
     method: 'post',
     url: '/data-mapping/column/edit',
     data: {
       id,
       datasetId,
-      index,
+      seqNo: index,
       nameCn,
       nameEn
     }
   })
 }
-export const submitCatalogApi = list => {
+export const submitCatalogApi = id => {
   return request({
     method: 'post',
     url: '/data-mapping/commit',
-    data: list
+    params: {
+      id: parseInt(id)
+    }
   })
 }
