@@ -11,6 +11,9 @@
         </el-breadcrumb>
       </div>
       <div>
+        <!-- <el-button type="primary" @click="onClickRunCatalog">{{
+          this.currentBwdItem.state == 0 ? '启用' : '停用'
+        }}</el-button> -->
         <el-button type="primary" @click="onClickRunCatalog">启用</el-button>
         <el-button type="primary" @click="editFileFields">编辑</el-button>
         <el-button type="primary" @click="addFileFields">新增</el-button>
@@ -65,7 +68,7 @@
 </template>
 
 <script>
-import { COMPLETESTATE, INCOMESTATE } from '@/utils/const'
+import { STOPSTATE, RUNNINGSTATE } from '@/utils/const'
 import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
 import State from '@/components/state/IsRunning.vue'
@@ -117,26 +120,36 @@ export default {
     ...mapActions(['queryField', 'submitFields', 'runCatalog']),
     icon(state) {
       switch (state) {
-        case COMPLETESTATE:
-          return require('@/assets/images/common/icons/complete.png')
-        case INCOMESTATE:
+        case RUNNINGSTATE:
+          return require('@/assets/images/common/icons/running.png')
+        case STOPSTATE:
           return require('@/assets/images/common/icons/income.png')
       }
     },
+    // onClickRunCatalog() {
+    //   this.$confirm(
+    //     this.currentBwdItem.state == 0
+    //       ? `是否启用【${this.currentBwdItem.label}】？`
+    //       : `是否停用【${this.currentBwdItem.label}】？`,
+    //     {
+    //       confirmButtonText: '确定',
+    //       cancelButtonText: '取消',
+    //       type: 'warning'
+    //     }
+    //   ).then(() => {
+    //     this.runCatalog()
+    //   })
+    // },
     onClickRunCatalog() {
-      this.$confirm(
-        // `是否${this.currentBwdItem.state}【${this.currentBwdItem.label}】？`,
-        `是否开启【${this.currentBwdItem.label}】？`,
-        {
+      if (this.currentBwdItem.state != 3) {
+        return this.$confirm(`是否启用【${this.currentBwdItem.label}】？`, {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
-        }
-      ).then(() => {
-        this.runCatalog()
-        this.currentBwdItem.state =
-          this.currentBwdItem.state === complete ? income : complete
-      })
+        }).then(() => {
+          this.runCatalog()
+        })
+      }
     },
     async pageInfoChanged(val) {
       this.setPageInfo(val)
@@ -192,9 +205,6 @@ export default {
       }
     }
   }
-  // mounted() {
-  //   this.queryField()
-  // }
 }
 </script>
 

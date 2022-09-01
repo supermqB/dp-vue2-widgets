@@ -6,18 +6,19 @@ export const tableConfig = [
       width: 54
     }
   },
-  {
-    colConfig: {
-      property: 'nameEn',
-      label: '字段英文名',
-      minWidth: 156
-    }
-  },
+
   {
     colConfig: {
       property: 'nameCn',
       label: '字段名称',
       minWidth: 160
+    }
+  },
+  {
+    colConfig: {
+      property: 'nameEn',
+      label: '字段英文名',
+      minWidth: 156
     }
   },
   {
