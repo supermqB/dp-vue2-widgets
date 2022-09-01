@@ -34,7 +34,7 @@
 const LABEL_NAME = 'label'
 
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapMutations } = createNamespacedHelpers('docs/list')
+const { mapState, mapMutations, mapActions } = createNamespacedHelpers('docs/list')
 
 export default {
   data() {
@@ -57,7 +57,11 @@ export default {
       let checkedKeys = this.$refs.grouptree.getCheckedKeys()
       this.setSelectedDocTypeCtlg(checkedKeys)
     },
-    ...mapMutations(['setSearch', 'setSelectedDocTypeCtlg'])
+    ...mapMutations(['setSearch', 'setSelectedDocTypeCtlg']),
+    ...mapActions(['loadCatalog'])
+  },
+  mounted() {
+    this.loadCatalog()
   }
 }
 </script>

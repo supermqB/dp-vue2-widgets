@@ -1,3 +1,4 @@
+import store from '@/store'
 const standard_class_code = [
   { value: '1', label: '国际标准' },
   { value: '2', label: '国家强制标准' },
@@ -85,7 +86,8 @@ export function getEditFormCfg(docType = 'S', mode = 'create') {
       elOptions: {
         options:
           { S: standard_class_code, Z: policy_class_code }[docType] ||
-          general_class_code,
+          store.state.docs.commonDocCtlg,
+        //general_class_code,
         props: {
           multiple: true
         },
