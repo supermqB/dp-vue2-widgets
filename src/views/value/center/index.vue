@@ -36,8 +36,8 @@
       ></Form>
       <div class="operation">
         <el-button @click="queryDictValue" type="primary" plain>查询</el-button>
-        <el-button @click="addValue" :disabled="!currentVersion" type="primary" plain>新增</el-button>
-        <el-button @click="editValue" :disabled="!currentDictValue" type="primary" plain>编辑</el-button>
+        <el-button @click="addValue" :disabled="!currentVersion || currentVersionInfo.state === RUNNINGSTATE" type="primary" plain>新增</el-button>
+        <el-button @click="editValue" :disabled="!currentDictValue || currentVersionInfo.state === RUNNINGSTATE" type="primary" plain>编辑</el-button>
       </div>
     </div>
     <div class="table">
@@ -125,6 +125,7 @@ import { searchValueCfg, addValueCfg, editValueCfg, valueRule } from './config/v
 import { createNamespacedHelpers } from 'vuex'
 import { getMAxValueCodeApi, downloadTemplateApi } from '@/api/value'
 import { getMaxNumber } from '@/utils/lang'
+import { RUNNINGSTATE } from '@/utils/const'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('value')
 
@@ -150,6 +151,7 @@ export default {
       valueRule,
       batchFlag: false,
       file: null,
+      RUNNINGSTATE
     }
   },
   computed: {
