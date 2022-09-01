@@ -64,6 +64,7 @@ export default {
   data() {
     return {
       title: '2809名体检人群中高血压与Hp感染的关联性分析',
+      current: null,
       detail: {}
     }
   },
@@ -76,14 +77,14 @@ export default {
       author,
       organization
     } = res.value
-    // this.detail = {
-    //   title,
-    //   titleEn,
-    //   author,
-    //   organization,
-    //   contentList: []
-    // }
-    this.detail = res.value
+    this.detail = {
+      title,
+      titleEn,
+      author,
+      organization,
+      contentList: []
+    }
+    this.current = Object.assign({}, res.value)
     this.title = title
     this.detail.contentList = contentList.map(item => {
       return {
@@ -98,10 +99,11 @@ export default {
     },
     async editDocHandler(formData) {
       await editLiteratureApi(formData)
+      this.$message.success('编辑文档成功！')
     },
     openEditDialog() {
       this.$refs.editDialog.open()
-      this.$refs.editDialog.formData = this.detail
+      this.$refs.editDialog.formData = this.current
     },
   }
 }
