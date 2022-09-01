@@ -13,7 +13,9 @@
     <div class="search">
       <Form :formData="formData" :formCfg="formCfg" class="searchForm" />
       <div class="action_area">
-        <el-button type="primary" plain @click="searchHandler">查 询</el-button>
+        <el-button type="primary" plain class="searchBtn" @click="searchHandler"
+          >查 询</el-button
+        >
         <el-link :underline="false" class="advbtn" @click="openAdvSearch"
           >高级搜索</el-link
         >
@@ -306,10 +308,13 @@ export default {
     padding: 0 6px;
     line-height: 40px;
     .action_area {
+      .searchBtn {
+        margin-right: 16px;
+      }
       .advbtn {
         color: #1890ff;
         text-decoration: underline;
-        margin: 0 6px;
+        margin: 0 6px 0 0;
       }
     }
   }

@@ -124,6 +124,7 @@ export default {
     form {
       height: auto;
       margin-right: 5px;
+      width: 262px;
     }
   }
 }

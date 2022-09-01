@@ -42,8 +42,6 @@
     </div>
     <div class="footer">
       <el-pagination
-        @size-change="sizeChangeHandler"
-        @current-change="pageChangeHandler"
         :current-page.sync="pageInfo.curPage"
         :page-size.sync="pageInfo.pageSize"
         :page-sizes="[5, 10, 20, 50]"
@@ -79,9 +77,12 @@ const { mapState, mapMutations, mapActions } =
 
 export default {
   computed: {
-    ...mapState(['searchForm', 'listData', 'pageInfo']),
+    ...mapState(['searchForm', 'listData', 'pageInfo', 'selectedDocTypeCtlg']),
     advSearchCols() {
       return tableHeader
+    },
+    pageInfoChangeSignal() {
+      return this.pageInfo.curPage + ':' + this.pageInfo.pageSize
     }
   },
   methods: {
@@ -97,19 +98,21 @@ export default {
     openAdvSearch() {
       this.$refs.advSearchDialog.open()
     },
-    sizeChangeHandler() {
-      this.search()
-    },
-    pageChangeHandler() {
-      this.search()
-    },
-    createDocHandler(data) {
-      this.import(data)
+    createDocHandler(docProps) {
+      this.importDoc(docProps)
     },
     forward2SumPage(identifier) {
       this.$router.push(`/docs/summary/${identifier}`)
     },
-    ...mapActions(['search', 'import'])
+    ...mapActions(['search', 'importDoc'])
+  },
+  watch: {
+    selectedDocTypeCtlg() {
+      this.search()
+    },
+    pageInfoChangeSignal() {
+      this.search()
+    }
   },
   components: { Form, EditDialog, AdvSearchDialog }
 }

@@ -2,6 +2,7 @@ export default {
   adSearchData: {},
   fileFieldsData: {
     id: '',
+    datasetId: '',
     index: '',
     nameCn: '',
     nameEn: ''
@@ -14,6 +15,7 @@ export default {
   fileCatalogData: {
     id: '',
     nameCn: '',
+    nameEn: '',
     theme: '',
     state: ''
   },

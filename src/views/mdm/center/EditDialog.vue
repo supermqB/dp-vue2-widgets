@@ -65,7 +65,7 @@ export default {
       return validRules
     },
     formCfg() {
-      let suspectList = this.workingTask?.suspectList
+      let suspectList = this.workingTask?.suspectList || []
       return this.mdmCols.map(({ property, label }) => {
         if (property.indexOf('_flag') > 1) {
           return {
@@ -110,6 +110,8 @@ export default {
     ...mdmlistMappers.mapActions(['editMdmItem', 'createMdmItem']),
     open() {
       this.$nextTick(() => {
+        let editForm = this.$refs.editForm
+        editForm && editForm.clearValidate()
         this.$refs.editDialog.toggleOpen()
       })
     },
@@ -127,7 +129,7 @@ export default {
       this.formData = Object.assign(
         {},
         keysObject(this.formCfg, 'id'),
-        this.workingTask?.suspectList[0]
+        this.workingTask?.suspectList?.[0]
       )
       this.open()
     },

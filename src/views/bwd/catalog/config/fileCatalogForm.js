@@ -5,7 +5,15 @@ export const fileCatalogCfg = (categoryList = [], disabled = false) =>
       label: 'BWD文件名称',
       id: 'nameCn',
       elOptions: {
-        placeholder: '患者信息记录文件'
+        placeholder: '请输入'
+      }
+    },
+    {
+      type: 'el-input',
+      label: 'BWD文件英文名称',
+      id: 'nameEn',
+      elOptions: {
+        placeholder: '请输入'
       }
     },
     {
@@ -43,6 +51,7 @@ export const fileCatalogCfg = (categoryList = [], disabled = false) =>
   })
 
 export const fileCatalogRule = {
-  index: { required: true },
-  name: { required: true }
+  nameCn: { required: true },
+  nameEn: { required: true },
+  theme: { required: true }
 }

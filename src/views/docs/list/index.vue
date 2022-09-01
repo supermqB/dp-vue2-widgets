@@ -12,8 +12,13 @@
 <script>
 import Group from './Group'
 import Center from './Center'
-
+import { createNamespacedHelpers } from 'vuex'
+const { mapActions } = createNamespacedHelpers('docs')
 export default {
+  methods: { ...mapActions(['loadCommonDocCtlg']) },
+  mounted(){
+      this.loadCommonDocCtlg()
+  },
   components: { Group, Center }
 }
 </script>
