@@ -2,6 +2,7 @@ import { keysClone } from '@/utils/lang'
 import initState from './initState'
 import task from './task'
 import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
+import { confirm } from '@/utils/pops'
 import {
   getCatalogApi,
   getVersionListApi,
@@ -195,7 +196,8 @@ const mutations = {
         state.dictList[0].children.length
       ) {
         // state.currentDict = '1,dict_bact_type'
-        state.currentDict = '4,dict_symptom'
+        // state.currentDict = '4,dict_symptom'
+        state.currentDict = '3,dict_sex'
         // state.currentDict = state.dictList[0].children[0].id
       }
     }
@@ -232,7 +234,6 @@ const actions = {
     commit('setDictValueList')
     state.currentVersionInfo = {}
     commit('setCurrentDict', id)
-    await dispatch('querySuspect', { id: state.currentVersion })
     await dispatch('queryVersion')
     commit('setCurrentVersion')
     dispatch('queryVersionInfo')
@@ -258,8 +259,8 @@ const actions = {
     await dispatch('queryVersion')
     commit('setCurrentVersion')
     await dispatch('queryVersionInfo')
-    await dispatch('querySuspect', { id: state.currentVersion })
-    await dispatch('queryDictValue')
+    dispatch('querySuspect', { id: state.currentVersion })
+    dispatch('queryDictValue')
     commit('setCurrentDictValue')
     dispatch('queryClass')
   },
@@ -305,16 +306,14 @@ const actions = {
     })
   },
   async queryDictValue({ state, commit }) {
-    // commit('setDictValueList')
     const dictId = state.currentVersion
     const { curPage: current, pageSize: size } = state.pageInfo
     const columnParamList = []
-    console.log(state.searchForm)
     ;[
       { name: 'code', condition: 'like' },
-      { name: 'value', condition: 'like' }
-      // { name: '父级代码', condition: 'equal' },
-      // { name: '层级关系', condition: 'equal' }
+      { name: 'value', condition: 'like' },
+      { name: 'parent_code', condition: 'equal' },
+      { name: 'level', condition: 'equal' }
     ].forEach(item => {
       if (state.searchForm[item.name]) {
         columnParamList.push(
@@ -387,19 +386,69 @@ const actions = {
       state: state.dictVersionForm.state
     })
   },
-  async addDictValue({ state, dispatch }) {
-    const id = state.currentVersion
-    await addDictValueApi({ id, valueObject: state.dictValueForm })
+  async addDictValue({ state, dispatch, rootState }, file) {
+    const data = { id: state.currentVersion }
+    const { curTask, taskList } = rootState.value.task
+    let curTaskItem = null
+    let completeCurSuspect = false
+    if (!file) {
+      data['valueObject'] = state.dictValueForm
+      if (curTask) {
+        completeCurSuspect = await confirm(
+          `编辑值域的同时，是否完成当前疑似任务: <br> &nbsp;<b>【${curTask}】</b>
+          <br/>请确认？`,
+          {
+            dangerouslyUseHTMLString: true,
+            confirmButtonText: '是',
+            cancelButtonText: '否'
+          }
+        )
+        curTaskItem = taskList.find(
+          item => `${item.source}:${item.name}` === curTask
+        )
+      }
+    } else {
+      data['file'] = file
+    }
+    await addDictValueApi(
+      completeCurSuspect
+        ? Object.assign(data, {
+            suspectList: curTaskItem.suspectList.map(sus => sus.id)
+          })
+        : data
+    )
     await dispatch('queryDictValue')
+    if (completeCurSuspect) dispatch('querySuspect')
   },
-  async editDictValue({ state, dispatch }) {
+  async editDictValue({ state, dispatch, rootState }) {
     const id = state.currentVersion
+    const { curTask, taskList } = rootState.value.task
+    let curTaskItem = null
+    let completeCurSuspect = false
+    if (curTask) {
+      completeCurSuspect = await confirm(
+        `编辑值域的同时，是否完成当前疑似任务: <br> &nbsp;<b>【${curTask}】</b>
+        <br/>请确认？`,
+        {
+          dangerouslyUseHTMLString: true,
+          confirmButtonText: '是',
+          cancelButtonText: '否'
+        }
+      )
+      curTaskItem = taskList.find(
+        item => `${item.source}:${item.name}` === curTask
+      )
+    }
     await editDictValueApi({
       id,
-      colId: state.dictValueForm['术语编码'],
-      valueObject: state.dictValueForm
+      colId: state.dictValueForm['term_code'],
+      valueObject: state.dictValueForm,
+      suspectList: completeCurSuspect
+        ? curTaskItem.suspectList.map(sus => sus.id)
+        : []
     })
-    await dispatch('queryDictValue')
+    dispatch('queryDictValue')
+    if (completeCurSuspect) dispatch('querySuspect')
   }
 }
 

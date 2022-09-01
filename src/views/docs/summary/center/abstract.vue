@@ -2,15 +2,15 @@
 <template>
   <div class="abstractWrap">
     <h1>{{ title }}</h1>
-    <h3>{{ nameEn }}</h3>
-    <h5>{{ authors }}</h5>
-    <h5>{{ location }}</h5>
+    <h3>{{ titleEn ? titleEn : '/' }}</h3>
+    <h5>{{ author ? author : '/' }}</h5>
+    <h5>{{ organization ? organization : '/' }}</h5>
     <ul>
       <li
         v-for="(item, key) in contentList"
         :key="key">
-        <p>{{ item.label }}</p>
-        <p>{{ item.content }}</p>
+        <p class="label">{{ `【${item.label}】` }}</p>
+        <p class="content">{{ item.content }}</p>
       </li>
     </ul>
   </div>
@@ -23,15 +23,15 @@ export default {
       type: String,
       default: '2809名体检人群中高血压与Hp感染的关联性分析',
     },
-    nameEn: {
+    titleEn: {
       type: String,
       default: 'English Title balabalaba and  balalalalal',
     },
-    authors: {
+    author: {
       type: String,
       default: '吕岩红， 张志勉',
     },
-    location: {
+    organization: {
       type: String,
       default: '山东大学齐鲁医院健康管理中心',
     },
@@ -74,7 +74,23 @@ export default {
   ul {
     margin-top: 15px;
     width: 88%;
-    border-top: 4px solid #C0C4CC
+    border-top: 4px solid #C0C4CC;
+    li {
+      padding: 10px 0 0 0;
+      .label {
+        display: inline-block;
+        padding: 7px 4px;
+        text-align: center;
+        font-size: 16px;
+        background-color: #eee;
+      }
+      .content {
+        padding: 4px 5px;
+        font-size: 14px;
+        color: rgba(0,0,0,0.65);
+        line-height: 26px;
+      }
+    }
   }
 }
 </style>

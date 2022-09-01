@@ -29,7 +29,7 @@ export default {
     data: {
       type: Array,
       default: () => [
-        {}, {}, {}, {}
+        {}, {}, {}, {},  {}, {}, {}, {}, {} , {}, {}, {} , {}, {}, {} 
       ]
     }
   }
@@ -54,6 +54,7 @@ ul {
   border: 1px solid #F2F2F2;
   li {
     padding: 8px 6px 8px 8px;
+    font-size: 15px;
     border-bottom: 1px solid #F2F2F2;
     p {
       padding: 5px 0;
@@ -62,9 +63,11 @@ ul {
     }
     .type {
       width: 50px;
-      padding: 2px;
+      padding: 3px;
       margin-right: 5px;
       text-align: center;
+      font-size: 13px;
+      line-height: 15px;
       background-color: #1890FF;
       color: #fff;
       display: inline-block;
