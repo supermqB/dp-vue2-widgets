@@ -5,6 +5,7 @@ import { Message } from 'element-ui'
 const state = {
   searchKey: '',
   taskList: [],
+  curTask: '',
   checkedFilters: [],
   selectedTasks: []
 }
@@ -60,13 +61,6 @@ const getters = {
     }
 
     return filteredTask
-  },
-  suspectList(state) {
-    return []
-    const res = taskList.reduce((x, y) => {
-      return [...x, ...y.suspectList]
-    }, [])
-    return res.map(item => item.suspectObject)
   }
 }
 
@@ -85,12 +79,17 @@ const mutations = {
   },
   setSelectedTasks(state, value) {
     state.selectedTasks = value
+  },
+  setCurrentTask(state, value) {
+    state.curTask = value
   }
 }
 
 const actions = {
-  async querySuspect({ commit, state }, { id }) {
-    const res = await getSuspectListApi(id, state.searchKey)
+  async querySuspect({ commit, state, rootState }) {
+    commit('setCurrentTask', '')
+    const version = rootState.value.currentVersion
+    const res = await getSuspectListApi(version, state.searchKey)
     commit(
       'setTaskList',
       res.value.map(item => {
@@ -99,6 +98,10 @@ const actions = {
         })
       })
     )
+    if (res.value && res.value.length) {
+      const { source, name } = res.value[0]
+      commit('setCurrentTask', `${source}:${name}`)
+    }
   },
   async completeTasks({ state, dispatch }) {
     const selectedTasks = state.selectedTasks

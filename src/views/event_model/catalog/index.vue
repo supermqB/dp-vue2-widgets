@@ -3,6 +3,7 @@
     <Header
       title="事件目录"
       hasRun
+      :actionTypes="currentCatalogItem.state === RUNNINGSTATE ? ['add', 'edit_disable', 'run_disable'] : ['add', 'edit', 'run']"
       @add="onClickAddCatalog"
       @edit="onClickEditCatalog"
       @run="onClickRunDialog"
@@ -108,7 +109,8 @@ export default {
       catalogRule,
       versionDialog: false,
       catalogDialog: false,
-      runDialog: false
+      runDialog: false,
+      RUNNINGSTATE
     }
   },
   computed: {

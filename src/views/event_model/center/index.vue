@@ -7,8 +7,8 @@
         <State :currentState="currentCatalogItem.state"></State>
       </div>
       <div>
-        <el-button type="primary" @click="onclickAddColumn" :disabled="!currentCatalog">新增</el-button>
-        <el-button type="primary" @click="onclickEditColumn" :disabled="!currentColumn">编辑</el-button>
+        <el-button type="primary" @click="onclickAddColumn" :disabled="!currentCatalog || currentCatalogItem.state === RUNNINGSTATE">新增</el-button>
+        <el-button type="primary" @click="onclickEditColumn" :disabled="!currentColumn || currentCatalogItem.state === RUNNINGSTATE">编辑</el-button>
       </div>
     </div>
     <div class="search">
@@ -63,6 +63,7 @@ import tableConfig from './config/tableColumn'
 import Dialog from '@/components/Dialog.vue'
 import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import State from '@/components/state/IsRunning.vue'
+import { RUNNINGSTATE } from '@/utils/const'
 import { columnCfg, columnRule } from './config/columnForm'
 import { adSearchCfg } from './config/adSearchForm'
 import { createNamespacedHelpers } from 'vuex'
@@ -82,7 +83,8 @@ export default {
       tableConfig,
       columnCfg,
       columnRule,
-      adSearchCfg
+      adSearchCfg,
+      RUNNINGSTATE
     }
   },
   computed: {

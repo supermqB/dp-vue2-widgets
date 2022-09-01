@@ -1,11 +1,10 @@
 <template>
   <div class="suspectWrap">
     <p class="listTitle">疑似列表</p>
-    <!-- <el-select
+    <el-select
       v-model="curTask"
       placeholder="选择疑似任务"
       style="width: 211px; margin: 4px 6px"
-      v-if="currentVersionInfo.type === '多值字典'"
     >
       <el-option
         v-for="item in filteredTask"
@@ -18,7 +17,7 @@
           item.source
         }}</span>
       </el-option>
-    </el-select> -->
+    </el-select>
     <Table
       v-if="currentVersionInfo.type === '单值字典'"
       :tableData="suspectList"
@@ -27,11 +26,13 @@
       :isShowRadio="false"
       class="suspectTable">
     </Table>
-    <div v-else-if="currentVersionInfo.type === '多值字典'">
-      <el-collapse v-model="activeName" accordion>
+    <div v-else-if="currentVersionInfo.type === '多值字典'" class="multiple">
+      <el-collapse v-model="activeName"
+        v-if="suspectList.length"
+        accordion>
         <el-collapse-item
           v-for="(suspect, index) in suspectList"
-          :title="suspect.name || `*****${index+1}`"
+          :title="curTask"
           :name="index"
           :key="index"
           class="propList"
@@ -46,6 +47,9 @@
           </div>
         </el-collapse-item>
       </el-collapse>
+      <p v-else class="noData">
+        <span>暂无数据</span>
+      </p>
     </div>
   </div>
 </template>
@@ -63,13 +67,13 @@ const config = [
     }
   },{
     colConfig: {
-      property: 'code',
+      property: 'std_vlaue_code',
       label: '代码',
       minWidth: 55
     }
   },{
     colConfig: {
-      property: 'name',
+      property: 'std_vlaue_name',
       label: '名称',
       minWidth: 55
     }
@@ -83,28 +87,32 @@ export default {
     ...mapState(['task', 'currentVersionInfo', 'dictValueList']),
     ...mapGetters(['filteredTask']),
     suspectList: function() {
-      const res = this.filteredTask.reduce((x, y) => {
+      if (!this.curTask) return []
+      const [ source, name ] = this.curTask.split(':') 
+      const res = this.filteredTask.filter(item => item.name === name && item.source === source).reduce((x, y) => {
         return [...x, ...y.suspectList]
       }, [])
       return res.map(item => item.suspectObject)
+    },
+    curTask: {
+      get() {
+        return this.task.curTask
+      },
+      set(value) {
+        this.setCurrentTask(value)
+      }
     }
   },
   data() {
     return {
       config,
-      curTask: '',
       activeName: 0
     }
   },
   methods: {
-    ...mapMutations(['setSuspectList'])
+    ...mapMutations(['setSuspectList', 'setCurrentTask'])
   },
   watch: {
-    suspectList: {
-      handler(){
-        // this.activeName = 0
-      }
-    },
     currentVersion: {
       handler(){
         this.setSuspectList()
@@ -161,6 +169,20 @@ export default {
 
 .suspectTable {
   flex: 1;
+}
+
+.multiple {
+  height: 100%;
+  /* display: flex;
+  flex-direction: column; */
+}
+
+.noData {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #909399;
 }
 
 </style>
