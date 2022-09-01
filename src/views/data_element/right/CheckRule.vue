@@ -199,7 +199,9 @@ export default {
           S1: ['A', 'N', 'AN'],
           S2: ['A', 'N', 'AN'],
           S3: ['A', 'N', 'AN']
-        }[val.data_type || 'S3'] /* if datatype is not set, use S3 */ || [val.data_type]
+        }[val.data_type || 'S3'] /* if datatype is not set, use S3 */ || [
+          val.data_type
+        ]
         this.formatCheck.formCfg[1].options = [...ops]
         let curCode = val.char_type_code
         ops.indexOf(curCode) == -1 && (val.char_type_code = '')
@@ -256,7 +258,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-x: hidden;
   * {
     font-size: 13px;
     color: #606266;
@@ -297,6 +299,7 @@ export default {
     }
   }
   .fieldContent {
+    margin-bottom: 6px;
     .val_domain_dict {
       margin-left: 23px;
     }

@@ -1,49 +1,12 @@
 import { keysObject } from '@/utils/lang'
 import searchFormConfig from '../config/searchForm'
+import { get, post, postWithFile } from '@/utils/request'
+import { Message } from 'element-ui'
 
 const state = {
   search: '',
-  selectedDocTypeCtlg: 'all',
-  docCtlg: [
-    {
-      id: 'all',
-      label: '全部',
-      count: 20090,
-      children: [
-        {
-          id: 'J',
-          label: '期刊文章',
-          count: 10045,
-          children: [
-            {
-              id: 'J.R',
-              label: '医药、卫生',
-              count: 5005,
-              children: [
-                {
-                  id: 'J.R01',
-                  label: '一般理论',
-                  count: 2002,
-                  children: [{ id: 'J.R0101', label: '方针、政策', count: 502 }]
-                },
-                {
-                  id: 'J.R04',
-                  label: '预防医学、卫生学',
-                  count: 20,
-                  children: [
-                    { id: 'J.R0401', label: '卫生基础', count: 5 },
-                    { id: 'J.R0402', label: '劳动卫生', count: 27 },
-                    { id: 'J.R0403', label: '妇幼卫生', count: 5 },
-                    { id: 'J.R0404', label: '流行学与防疫', count: 30 }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ],
+  selectedDocTypeCtlg: [],
+  docCtlg: [],
   searchForm: {
     formCfg: searchFormConfig,
     formData: keysObject(searchFormConfig, 'id')
@@ -71,20 +34,56 @@ const mutations = {
   setSearch(state, val) {
     state.search = val
   },
+  setDocCtlg(state, val) {
+    state.docCtlg = val
+  },
   setSelectedDocTypeCtlg(state, val) {
-    state.selectedDocType = val
+    state.selectedDocTypeCtlg = val
     console.log(val)
+  },
+  setListData(state, val) {
+    state.listData = val
+  },
+  setPageInfo(state, val) {
+    state.pageInfo = val
   }
 }
 
 const actions = {
-  search({ state }) {
+  async search({ state, commit }) {
     console.log(state.selectedDocTypeCtlg)
     console.log(state.searchForm.formData)
     console.log(state.pageInfo)
+
+    const result = await post(
+      'literature/pageList',
+      {
+        ...state.searchForm.formData,
+        identifierList: state.selectedDocTypeCtlg
+      },
+      {
+        size: state.pageInfo.pageSize,
+        current: state.pageInfo.curPage
+      }
+    )
+    if (result.success) {
+      commit('setListData', result.value.records)
+      commit('setPageInfo', result.value.pageInfo)
+    }
   },
-  import({ state }, payload) {
-    console.log(payload)
+  async loadCatalog({ state, commit }) {
+    const result = await get('literature/selectList')
+    if (result.success) {
+      commit('setDocCtlg', result.value)
+    }
+  },
+  async importDoc({ dispatch }, docProps) {
+    console.log(docProps)
+    const result = await postWithFile('literature/importLiterature', docProps)
+    if (result.success) {
+      Message.success('文献导入成功')
+      dispatch('search')
+    }
   }
 }
 

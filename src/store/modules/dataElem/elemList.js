@@ -99,7 +99,7 @@ const actions = {
     } else {
       let data = { ...val }
       delete data.id
-      const result = await post('data-element/add', data)
+      const result = await post('data-element/add', { ...data, state: '1' })
       success = result.success
       Message.success(`数据元 [${val.identifier}] 新增成功！`)
     }

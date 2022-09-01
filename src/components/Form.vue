@@ -66,6 +66,9 @@ export default {
           resolve({ valid, errObj })
         })
       })
+    },
+    clearValidate() {
+      this.$refs.el_form.clearValidate()
     }
   }
 }
