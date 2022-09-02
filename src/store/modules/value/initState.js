@@ -25,7 +25,7 @@ export default {
   versionForm: {
     version: '',
     dictName: '',
-    parVersion: '',
+    parVersionId: '',
     file: null
   },
   dictValueForm: {

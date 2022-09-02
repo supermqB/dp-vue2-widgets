@@ -146,6 +146,16 @@ const getters = {
         }
       }
     })
+  },
+  versionOptions(state) {
+    const res = state.versionList.map(item => {
+      return {
+        id: item.id,
+        label: item.label,
+        value: item.label
+      }
+    })
+    return res
   }
 }
 
@@ -175,8 +185,8 @@ const mutations = {
     const current = state.versionList.find(
       item => item.id === state.currentVersion
     )
-    state.dictVersionForm.masterVersion = master.value
-    state.dictVersionForm.version = current.value
+    state.dictVersionForm.masterVersion = master.label
+    state.dictVersionForm.version = current.label
     state.dictVersionForm.nameCn = nameCn
     state.dictVersionForm.nameEn = nameEn
     state.dictVersionForm.state = state.currentVersionInfo.state
@@ -197,8 +207,8 @@ const mutations = {
       ) {
         // state.currentDict = '1,dict_bact_type'
         // state.currentDict = '4,dict_symptom'
-        state.currentDict = '3,dict_sex'
-        // state.currentDict = state.dictList[0].children[0].id
+        // state.currentDict = '3,dict_sex'
+        state.currentDict = state.dictList[0].children[0].id
       }
     }
   },
@@ -268,7 +278,7 @@ const actions = {
     const { value } = await getCatalogApi()
     commit('setDictList', processCatalog(value))
   },
-  async queryVersion({ commit, state }) {
+  async queryVersion({ state }) {
     const [sourceTypeCode, dictId] = state.currentDict.split(',')
     const { value } = await getVersionListApi(dictId, sourceTypeCode)
     state.versionList = value.map(item => {
@@ -276,7 +286,7 @@ const actions = {
       return {
         id,
         label: version,
-        value: version,
+        value: id,
         isMaster: mainlineFlag === '1'
       }
     })
@@ -371,10 +381,15 @@ const actions = {
       })
     }
   },
-  async addDictVersion() {
-    await addVersionApi(Object.assign({}, state.versionForm))
+  async addDictVersion({ state, dispatch }) {
+    const data = Object.assign({}, state.versionForm, {
+      dictId: state.currentVersion
+    })
+    delete data['dictName']
+    await addVersionApi(data)
+    await dispatch('queryVersion')
   },
-  async editDictVersion() {
+  async editDictVersion({ commit, dispatch, state }) {
     const { masterVersion, version, sourceTypeCode, sourceBasis } =
       state.dictVersionForm
     await editVersionApi({
@@ -385,6 +400,10 @@ const actions = {
       sourceBasis,
       state: state.dictVersionForm.state
     })
+    const current = state.versionList.find(item => item.label === version)
+    commit('setCurrentVersion', current.id)
+    await dispatch('queryVersion')
+    dispatch('queryVersionInfo')
   },
   async addDictValue({ state, dispatch, rootState }, file) {
     const data = { id: state.currentVersion }

@@ -56,8 +56,10 @@
       ref="addVersionDialog"
       class="addVersionDialog"
       @dialog-complete="onClickAddVersion"
+      @dialog-closed="onAddVersionDialogClosed"
     >
       <Form
+        ref="addVersionForm"
         :formCfg="addVersionCfg(versionList, downloadTemplate)"
         :formData="versionForm"
         :formRule="addVersionRule"
@@ -68,9 +70,11 @@
       ref="editVersionDialog"
       class="editVersionDialog"
       @dialog-complete="onClickEditVersion"
+      @dialog-closed="onEditVersionDialogClosed"
     >
       <Form
-        :formCfg="editVersionCfg(versionList, sourceTypeOptions)"
+        ref="editVersionForm"
+        :formCfg="editVersionCfg(versionOptions, sourceTypeOptions)"
         :formData="dictVersionForm"></Form>
     </Dialog>
     <Dialog
@@ -173,7 +177,8 @@ export default {
       'currentDictItem',
       'tableConfig',
       'dictValueFormCfg',
-      'sourceTypeOptions'
+      'sourceTypeOptions',
+      'versionOptions'
     ]),
     curVersion: {
       async set(value) {
@@ -220,10 +225,17 @@ export default {
         document.body.removeChild(a);
       })     
     },
+    onAddVersionDialogClosed() {
+      this.$refs.addVersionForm.resetFields()
+    },
+    onEditVersionDialogClosed() {
+      this.$refs.editVersionForm.resetFields()
+    },
     addVersion() {
       const { nameCn } = this.currentDictItem
       this.setVersionForm({ nameCn })
       this.$refs.addVersionDialog.toggleOpen()
+      
     },
     editVersion() {
       const { nameEn, nameCn, sourceTypeCode } = this.currentDictItem
@@ -243,12 +255,6 @@ export default {
       await this.editDictVersion()
       this.$message.success('版本管理编辑成功！')
       this.$refs.editVersionDialog.toggleOpen()
-      const current = this.versionList.find(
-        item => item.value === this.dictVersionForm.version
-      )
-      this.setCurrentVersion(current.id)
-      await this.queryVersion()
-      await this.queryVersionInfo()
     },
     async addValue() {
       const { value } = await getMAxValueCodeApi(this.currentVersion)
@@ -284,7 +290,9 @@ export default {
   watch: {
     currentDictValue: {
       handler(cur) {
-        this.$refs.dictValueTable.setCurrentRow(cur)
+        setTimeout(() => {
+          this.$refs.dictValueTable.setCurrentRow(cur)
+        }, 60)
       }
     },
     currentDict: {
