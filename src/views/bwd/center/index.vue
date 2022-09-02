@@ -5,7 +5,7 @@
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>BWD文件管理</el-breadcrumb-item>
           <el-breadcrumb-item>
-            <b>{{ currentBwdItem.label }}({{ currentBwdItem.nameEn }}) </b>
+            <b>{{ currentBwdItem.label }} ({{ currentBwdItem.nameEn }}) </b>
             <img :src="icon(currentBwdItem.state)" />
           </el-breadcrumb-item>
         </el-breadcrumb>

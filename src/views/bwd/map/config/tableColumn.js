@@ -1,21 +1,21 @@
 export const tableConfig = [
   {
     colConfig: {
-      property: 'seqNo',
+      property: 'id',
       label: '操作',
       minWidth: 55
     }
   },
   {
     colConfig: {
-      property: 'name',
+      property: 'nameCn',
       label: '字段',
       minWidth: 55
     }
   },
   {
     colConfig: {
-      property: 'nameCn',
+      property: 'description',
       label: '定义',
       minWidth: 55
     }

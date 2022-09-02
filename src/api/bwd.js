@@ -90,3 +90,42 @@ export const submitCatalogApi = id => {
     }
   })
 }
+export const addMappingApi = ({ id, datasetId, index, nameCn, nameEn }) => {
+  return request({
+    method: 'post',
+    url: '/data-mapping/mapping/add',
+    data: {
+      id: datasetId,
+      seqNo: index,
+      nameCn,
+      nameEn
+    }
+  })
+}
+export const deleteMappingApi = id => {
+  return request({
+    method: 'post',
+    url: '/data-mapping/mapping/delete',
+    params: {
+      id: parseInt(id)
+    }
+  })
+}
+export const getMapModelApi = source => {
+  return request({
+    method: 'get',
+    url: '/data-mapping/getTableModel',
+    params: {
+      source
+    }
+  })
+}
+export const getMapFieldsApi = id => {
+  return request({
+    method: 'get',
+    url: '/data-mapping/getColumnModel',
+    params: {
+      id: parseInt(id)
+    }
+  })
+}

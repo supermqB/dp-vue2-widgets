@@ -20,8 +20,8 @@ export default {
     state: ''
   },
   eventMapData: {
-    index1: '',
-    index2: ''
+    event: '',
+    field: ''
   },
   mdmMapData: {
     index1: '',

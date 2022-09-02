@@ -3,13 +3,16 @@
     <el-tabs type="card" stretch @tab-click="tabChanged" class="bwd_ref_tabs">
       <el-tab-pane label="事件库映射">
         <Form
-          :formCfg="searchCfg(eventOptions)"
+          :formCfg="searchCfg(eventOptions, clickEvent)"
           :formData="eventMapData"
         ></Form>
         <Table :tableConfig="tableConfig" :tableData="eventMapList"></Table>
       </el-tab-pane>
       <el-tab-pane label="主索引映射">
-        <Form :formCfg="searchCfg(eventOptions)" :formData="mdmMapData"></Form>
+        <Form
+          :formCfg="searchCfg(eventOptions, clickEvent, 'SBR')"
+          :formData="mdmMapData"
+        ></Form>
         <Table :tableConfig="tableConfig" :tableData="mdmMapList"></Table>
       </el-tab-pane>
     </el-tabs>
@@ -36,11 +39,26 @@ export default {
     }
   },
   computed: {
-    ...mapState(['eventMapData', 'mdmMapData', 'eventMapList', 'mdmMapList']),
+    ...mapState([
+      'eventMapData',
+      'mdmMapData',
+      'eventMapList',
+      'mdmMapList',
+      'source'
+    ]),
     ...mapGetters(['eventOptions'])
   },
   methods: {
-    tabChanged() {}
+    ...mapMutations(['setCurrentEventMap']),
+    ...mapActions(['queryEventField', 'queryMappingList']),
+    tabChanged() {},
+    async clickEvent(type) {
+      await this.queryMappingList(type)
+      this.setCurrentEventMap()
+    }
+  },
+  mounted() {
+    this.queryMappingList()
   }
 }
 </script>

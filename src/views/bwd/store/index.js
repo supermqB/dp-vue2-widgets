@@ -6,7 +6,11 @@ import {
   addFileCatalogApi,
   addFileFieldsApi,
   updateFileFieldsApi,
-  submitCatalogApi
+  submitCatalogApi,
+  getMapModelApi,
+  getMapFieldsApi,
+  addMappingApi,
+  deleteMappingApi
 } from '@/api/bwd'
 
 import { keysClone } from '@/utils/lang'
@@ -47,19 +51,21 @@ const state = {
     totalPage: 0
   },
   totalNumber: 0,
+  source: '',
   fieldsList: [],
+  eventList: [],
   eventMapList: [
     {
-      seqNo: '匹配',
-      name: '11',
-      nameCn: '111'
+      id: '匹配',
+      nameCn: '11',
+      description: '111'
     }
   ],
   mdmMapList: [
     {
-      seqNo: '匹配',
-      name: '22',
-      nameCn: '222'
+      id: '匹配',
+      nameCn: '22',
+      description: '222'
     }
   ],
 
@@ -98,7 +104,7 @@ const getters = {
     })
   },
   eventOptions(state) {
-    return state.fieldsList.map(item => {
+    return state.eventList.map(item => {
       return {
         label: item.nameCn,
         value: item.nameCn
@@ -160,6 +166,9 @@ const mutations = {
   },
   setTotalNum: (state, value) => {
     state.totalNumber = value
+  },
+  setEventMapForm: state => {
+    state.eventMapData = Object.assign({}, initState.eventMapData)
   }
 }
 
@@ -207,6 +216,14 @@ const actions = {
     }))
     commit('setPageInfo', pageInfo)
     commit('setCurrentField')
+  },
+  async queryMappingList({ commit, dispatch }, source) {
+    const { value } = await getMapModelApi(source)
+    state.eventList = value
+  },
+  async queryEventField({ commit }) {
+    const result = await getMapFieldsApi()
+    console.log('0000', result)
   },
   // 左侧表单提交，更新目录接口addFileCatalogApi,updateFileCatalogApi
   async submitFileCatalog({ dispatch, state }) {
