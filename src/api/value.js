@@ -50,7 +50,10 @@ export const editVersionApi = ({
   })
 }
 
-export const addVersionApi = data => postWithFile('/dict/addVersion', data)
+export const addVersionApi = data => {
+  if (!data['file']) delete data['file']
+  return postWithFile('/dict/addVersion', data)
+}
 
 export const downloadTemplateApi = dictId => {
   return request({

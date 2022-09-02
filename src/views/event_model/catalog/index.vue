@@ -67,14 +67,18 @@
         :formRule="catalogRule"
       ></Form>
     </Dialog>
-    <el-dialog title="提示" :visible="runDialog" class="runDialog">
+    <el-dialog
+      title="提示"
+      :visible="runDialog"
+      class="runDialog">
       <div>
         <i class="el-icon-warning warning" />
-        <span>是否启用【{{ currentVersion }}】版本下的所有表单信息</span>
+        <span>是否启用【{{ `${currentCatalogItem.code}-${currentCatalogItem.nameCn}` }}】</span>
       </div>
+      <!-- 启用所有表单信息 -->
       <span slot="footer">
         <el-button @click="runDialog = false">取消</el-button>
-        <el-button @click="onClickRunAllCatalog">启用所有表单信息</el-button>
+        <el-button @click="onClickRunAllCatalog">启用所有</el-button>
         <el-button type="primary" @click="onClickRunCatalog">启用</el-button>
       </span>
     </el-dialog>
@@ -318,11 +322,16 @@ export default {
   }
 }
 
-::v-deep .runDialog {
+::v-deep .runDialog .el-dialog{
+  width: 500px;
   .warning {
     padding: 5px 5px 0 0;
     font-size: 20px;
     color: #e6a23c;
+  }
+  .el-button {
+    margin-top: 3px;
+    margin-bottom: 3px;
   }
 }
 </style>
