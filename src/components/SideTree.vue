@@ -24,6 +24,7 @@
           <span :title="data.label">{{ data.label }}</span>
         </p>
         <p class="number">{{ data.number }}</p>
+        <div class="disabled" v-if="data.isTopCannotBeSelected"></div>
       </div>
     </el-tree>
   </div>
@@ -112,12 +113,13 @@ export default {
   overflow: auto;
 }
 .treeNode {
-  position: relative;
+  /* position: relative; */
   width: 100%;
-  height: 28px;
-  padding-top: 3px;
+  height: 100%;
+  padding-top: 2px;
   padding-right: 10px;
   display: flex;
+  box-sizing: border-box;
   justify-content: space-between;
   align-items: center;
   font-size: 13px;
@@ -132,12 +134,26 @@ export default {
   }
 }
 
+.disabled {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background-color: #eee; */
+  /* opacity: 0.5; */
+  z-index: 10
+}
+
 ::v-deep .el-tree-node__content {
   height: 36px;
+  position: relative
 }
 
 ::v-deep .el-tree-node__content > .el-tree-node__expand-icon {
+  /* height: 36px; */
+  z-index: 12;
   padding: 4px;
+  display: inline-block;
 }
 
 ::v-deep .el-tree-node.is-current > .el-tree-node__content {

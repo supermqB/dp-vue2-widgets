@@ -5,8 +5,10 @@ import { Message } from 'element-ui'
 const state = {
   searchKey: '',
   taskList: [],
+  curTask: '',
   checkedFilters: [],
-  selectedTasks: []
+  selectedTasks: [],
+  currentSuspect: null
 }
 
 const getters = {
@@ -60,21 +62,6 @@ const getters = {
     }
 
     return filteredTask
-  },
-  suspectList(state) {
-    return str => {
-      let taskList = state.taskList
-      if (!str) {
-        const [source, name] = str.split(':')
-        taskList = state.taskList.filter(
-          item => item.source === source && item.name === name
-        )
-      }
-      const res = taskList.reduce((x, y) => {
-        return [...x, ...y.suspectList]
-      }, [])
-      return res.map(item => item.suspectObject)
-    }
   }
 }
 
@@ -93,12 +80,21 @@ const mutations = {
   },
   setSelectedTasks(state, value) {
     state.selectedTasks = value
+  },
+  setCurrentSuspect(state, value) {
+    console.log(value)
+    state.currentSuspect = value
+  },
+  setCurrentTask(state, value) {
+    state.curTask = value
   }
 }
 
 const actions = {
-  async querySuspect({ commit, state }, { id }) {
-    const res = await getSuspectListApi(id, state.searchKey)
+  async querySuspect({ commit, state, rootState }) {
+    commit('setCurrentTask', '')
+    const version = rootState.value.currentVersion
+    const res = await getSuspectListApi(version, state.searchKey)
     commit(
       'setTaskList',
       res.value.map(item => {
@@ -107,6 +103,10 @@ const actions = {
         })
       })
     )
+    if (res.value && res.value.length) {
+      const { source, name } = res.value[0]
+      commit('setCurrentTask', `${source}:${name}`)
+    }
   },
   async completeTasks({ state, dispatch }) {
     const selectedTasks = state.selectedTasks

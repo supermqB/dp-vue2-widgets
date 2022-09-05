@@ -82,7 +82,7 @@ export const addVersionCfg = (versionOptions, onDownload) =>
     {
       type: 'el-select',
       label: '复制已有版本',
-      id: 'parVersion',
+      id: 'parVersionId',
       options: versionOptions,
       elOptions: {}
     },

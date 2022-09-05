@@ -14,9 +14,11 @@
 </template>
 
 <script>
-const ADDICON = require('@/assets/images/common/icons/add.png')
-const EDITICON = require('@/assets/images/common/icons/edit.png')
-const RUNICON = require('@/assets/images/common/icons/run.png')
+// const ADDICON = require('@/assets/images/common/icons/add.png')
+// const EDITICON = require('@/assets/images/common/icons/edit.png')
+// const RUNICON = require('@/assets/images/common/icons/run.png')
+// const EDITDISABLEICON = require('@/assets/images/common/icons/edit_disable.png')
+// const RUNDISABLEICON = require('@/assets/images/common/icons/run_disable.png')
 export default {
   props: {
     title: {
@@ -85,6 +87,9 @@ export default {
       }
       &.edit {
         background-image: url('@/assets/images/common/icons/edit.png');
+      }
+      &.edit_disable {
+        background-image: url('@/assets/images/common/icons/edit_disable.png');
       }
     }
   }

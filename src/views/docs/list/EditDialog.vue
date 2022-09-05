@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     async completeEdit() {
-      console.log(this.formData)
+      // console.log(this.formData, this.mode)
       let result = await this.$refs.editForm.validate()
       result.valid && this.$emit(`doc-${this.mode}`, this.formData)
     },

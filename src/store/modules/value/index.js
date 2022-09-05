@@ -2,6 +2,7 @@ import { keysClone } from '@/utils/lang'
 import initState from './initState'
 import task from './task'
 import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
+import { confirm } from '@/utils/pops'
 import {
   getCatalogApi,
   getVersionListApi,
@@ -13,6 +14,7 @@ import {
   addVersionApi,
   editVersionApi,
   addDictValueApi,
+  addDictValueManyApi,
   editDictValueApi
 } from '@/api/value'
 
@@ -105,7 +107,8 @@ const getters = {
   tableConfig(state) {
     if (
       !state.currentVersionInfo ||
-      !state.currentVersionInfo.valueDictColumnList
+      !state.currentVersionInfo.valueDictColumnList ||
+      !state.currentVersionInfo.valueDictColumnList.length
     )
       return [
         {
@@ -145,6 +148,16 @@ const getters = {
         }
       }
     })
+  },
+  versionOptions(state) {
+    const res = state.versionList.map(item => {
+      return {
+        id: item.id,
+        label: item.label,
+        value: item.label
+      }
+    })
+    return res
   }
 }
 
@@ -174,8 +187,8 @@ const mutations = {
     const current = state.versionList.find(
       item => item.id === state.currentVersion
     )
-    state.dictVersionForm.masterVersion = master.value
-    state.dictVersionForm.version = current.value
+    state.dictVersionForm.masterVersion = master.label
+    state.dictVersionForm.version = current.label
     state.dictVersionForm.nameCn = nameCn
     state.dictVersionForm.nameEn = nameEn
     state.dictVersionForm.state = state.currentVersionInfo.state
@@ -183,7 +196,11 @@ const mutations = {
     state.dictVersionForm.sourceBasis = state.currentVersionInfo.sourceBasis
   },
   setDictValueForm(state, form) {
-    state.dictValueForm = !form ? Object.assign({}, dictValueForm) : form
+    if (!form) {
+      state.dictValueForm = Object.assign({}, dictValueForm)
+    } else {
+      state.dictValueForm = form
+    }
   },
   setCurrentDict(state, value) {
     if (value) {
@@ -194,9 +211,7 @@ const mutations = {
         state.dictList.length &&
         state.dictList[0].children.length
       ) {
-        // state.currentDict = '1,dict_bact_type'
-        state.currentDict = '4,dict_symptom'
-        // state.currentDict = state.dictList[0].children[0].id
+        state.currentDict = state.dictList[0].children[0].id
       }
     }
   },
@@ -232,7 +247,6 @@ const actions = {
     commit('setDictValueList')
     state.currentVersionInfo = {}
     commit('setCurrentDict', id)
-    await dispatch('querySuspect', { id: state.currentVersion })
     await dispatch('queryVersion')
     commit('setCurrentVersion')
     dispatch('queryVersionInfo')
@@ -258,8 +272,8 @@ const actions = {
     await dispatch('queryVersion')
     commit('setCurrentVersion')
     await dispatch('queryVersionInfo')
-    await dispatch('querySuspect', { id: state.currentVersion })
-    await dispatch('queryDictValue')
+    dispatch('querySuspect', { id: state.currentVersion })
+    dispatch('queryDictValue')
     commit('setCurrentDictValue')
     dispatch('queryClass')
   },
@@ -267,7 +281,7 @@ const actions = {
     const { value } = await getCatalogApi()
     commit('setDictList', processCatalog(value))
   },
-  async queryVersion({ commit, state }) {
+  async queryVersion({ state }) {
     const [sourceTypeCode, dictId] = state.currentDict.split(',')
     const { value } = await getVersionListApi(dictId, sourceTypeCode)
     state.versionList = value.map(item => {
@@ -275,7 +289,7 @@ const actions = {
       return {
         id,
         label: version,
-        value: version,
+        value: id,
         isMaster: mainlineFlag === '1'
       }
     })
@@ -305,16 +319,14 @@ const actions = {
     })
   },
   async queryDictValue({ state, commit }) {
-    // commit('setDictValueList')
     const dictId = state.currentVersion
     const { curPage: current, pageSize: size } = state.pageInfo
     const columnParamList = []
-    console.log(state.searchForm)
     ;[
       { name: 'code', condition: 'like' },
-      { name: 'value', condition: 'like' }
-      // { name: '父级代码', condition: 'equal' },
-      // { name: '层级关系', condition: 'equal' }
+      { name: 'value', condition: 'like' },
+      { name: 'parent_code', condition: 'equal' },
+      { name: 'level', condition: 'equal' }
     ].forEach(item => {
       if (state.searchForm[item.name]) {
         columnParamList.push(
@@ -372,10 +384,15 @@ const actions = {
       })
     }
   },
-  async addDictVersion() {
-    await addVersionApi(Object.assign({}, state.versionForm))
+  async addDictVersion({ state, dispatch }) {
+    const data = Object.assign({}, state.versionForm, {
+      dictId: state.currentVersion
+    })
+    delete data['dictName']
+    await addVersionApi(data)
+    await dispatch('queryVersion')
   },
-  async editDictVersion() {
+  async editDictVersion({ commit, dispatch, state }) {
     const { masterVersion, version, sourceTypeCode, sourceBasis } =
       state.dictVersionForm
     await editVersionApi({
@@ -386,20 +403,77 @@ const actions = {
       sourceBasis,
       state: state.dictVersionForm.state
     })
+    const current = state.versionList.find(item => item.label === version)
+    commit('setCurrentVersion', current.id)
+    await dispatch('queryVersion')
+    dispatch('queryVersionInfo')
   },
-  async addDictValue({ state, dispatch }) {
-    const id = state.currentVersion
-    await addDictValueApi({ id, valueObject: state.dictValueForm })
+  async addDictValue({ state, dispatch, rootState }) {
+    const data = { id: state.currentVersion }
+    const { curTask, taskList } = rootState.value.task
+    let curTaskItem = null
+    let completeCurSuspect = false
+    data['valueObject'] = state.dictValueForm
+    if (curTask) {
+      completeCurSuspect = await confirm(
+        `编辑值域的同时，是否完成当前疑似任务: <br> &nbsp;<b>【${curTask}】</b>
+        <br/>请确认？`,
+        {
+          dangerouslyUseHTMLString: true,
+          confirmButtonText: '是',
+          cancelButtonText: '否'
+        }
+      )
+      curTaskItem = taskList.find(
+        item => `${item.source}:${item.name}` === curTask
+      )
+    }
+    await addDictValueApi(
+      completeCurSuspect
+        ? Object.assign(data, {
+            suspectList: curTaskItem.suspectList.map(sus => sus.id)
+          })
+        : Object.assign(data, { suspectList: [] })
+    )
     await dispatch('queryDictValue')
+    if (completeCurSuspect) dispatch('querySuspect')
   },
-  async editDictValue({ state, dispatch }) {
+  async addBatchDictValue({ state, dispatch }, file) {
+    await addDictValueManyApi({
+      id: state.currentVersion,
+      file
+    })
+    dispatch('queryDictValue')
+  },
+  async editDictValue({ state, dispatch, rootState }) {
     const id = state.currentVersion
+    const { curTask, taskList } = rootState.value.task
+    let curTaskItem = null
+    let completeCurSuspect = false
+    if (curTask) {
+      completeCurSuspect = await confirm(
+        `编辑值域的同时，是否完成当前疑似任务: <br> &nbsp;<b>【${curTask}】</b>
+        <br/>请确认？`,
+        {
+          dangerouslyUseHTMLString: true,
+          confirmButtonText: '是',
+          cancelButtonText: '否'
+        }
+      )
+      curTaskItem = taskList.find(
+        item => `${item.source}:${item.name}` === curTask
+      )
+    }
     await editDictValueApi({
       id,
-      colId: state.dictValueForm['术语编码'],
-      valueObject: state.dictValueForm
+      colId: state.dictValueForm['term_code'],
+      valueObject: state.dictValueForm,
+      suspectList: completeCurSuspect
+        ? curTaskItem.suspectList.map(sus => sus.id)
+        : []
     })
-    await dispatch('queryDictValue')
+    dispatch('queryDictValue')
+    if (completeCurSuspect) dispatch('querySuspect')
   }
 }
 

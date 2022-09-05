@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span v-if="currentState === RUNNINGSTATE" class="status running">已启动</span>
+    <span v-if="currentState === RUNNINGSTATE" class="status running">已启用</span>
     <span v-else-if="currentState === EDITINGSTATE" class="status editing">编辑中</span>
   </div>
 </template>

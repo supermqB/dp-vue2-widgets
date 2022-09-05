@@ -5,7 +5,6 @@
       v-model="curTask"
       placeholder="选择疑似任务"
       style="width: 211px; margin: 4px 6px"
-      v-if="currentVersionInfo.type === '多值字典'"
     >
       <el-option
         v-for="item in filteredTask"
@@ -21,31 +20,38 @@
     </el-select>
     <Table
       v-if="currentVersionInfo.type === '单值字典'"
-      :tableData="suspectList()"
+      ref="suspectTable"
+      :tableData="suspectList"
       :tableConfig="config"
       :pageInfo="null"
       :isShowRadio="false"
+      @row-changed="rowClick"
       class="suspectTable">
     </Table>
-    <div v-else-if="currentVersionInfo.type === '多值字典'">
-      <el-collapse v-model="activeName" accordion>
+    <div v-else-if="currentVersionInfo.type === '多值字典'" class="multiple">
+      <el-collapse v-model="activeName"
+        v-if="suspectList.length"
+        accordion>
         <el-collapse-item
-          v-for="(suspect, index) in dictValueList"
-          :title="`症状疑似xxx${index+1}`"
+          v-for="(suspect, index) in suspectList"
+          :title="curTask"
           :name="index"
           :key="index"
           class="propList"
         >
           <div
-            v-for="key in currentVersionInfo.columnNameList"
-            :key="`${key}${index}`"
+            v-for="item in currentVersionInfo.valueDictColumnList"
+            :key="`${item.id}${index}`"
             class="propItem"
           >
-            <div class="title">【{{ key }}】</div>
-            <div class="content">{{ suspect[key] }}</div>
+            <div class="title">【{{ item.nameCn }}】</div>
+            <div class="content">{{ suspect[item.nameEn] }}</div>
           </div>
         </el-collapse-item>
       </el-collapse>
+      <p v-else class="noData">
+        <span>暂无数据</span>
+      </p>
     </div>
   </div>
 </template>
@@ -63,13 +69,13 @@ const config = [
     }
   },{
     colConfig: {
-      property: 'code',
+      property: 'std_vlaue_code',
       label: '代码',
       minWidth: 55
     }
   },{
     colConfig: {
-      property: 'name',
+      property: 'std_vlaue_name',
       label: '名称',
       minWidth: 55
     }
@@ -81,22 +87,42 @@ export default {
   },
   computed: {
     ...mapState(['task', 'currentVersionInfo', 'dictValueList']),
-    ...mapGetters(['suspectList', 'filteredTask'])
+    ...mapGetters(['filteredTask']),
+    suspectList: function() {
+      if (!this.curTask) return []
+      const [ source, name ] = this.curTask.split(':') 
+      const res = this.filteredTask.filter(item => item.name === name && item.source === source).reduce((x, y) => {
+        return [...x, ...y.suspectList]
+      }, [])
+      return res.map(item => item.suspectObject)
+    },
+    curTask: {
+      get() {
+        return this.task.curTask
+      },
+      set(value) {
+        this.setCurrentTask(value)
+      }
+    }
   },
   data() {
     return {
       config,
-      curTask: '',
-      activeName: ''
+      activeName: 0
     }
   },
   methods: {
-    ...mapMutations(['setSuspectList'])
+    ...mapMutations(['setSuspectList', 'setCurrentTask', 'setCurrentSuspect']),
+    rowClick(row) {
+      this.setCurrentSuspect(row)
+    },
   },
   watch: {
-    suspectList: {
-      handler(){
-        this.activeName = 0
+    activeName: {
+      handler(cur) {
+        if (this.suspectList && this.suspectList[cur]) {
+          this.setCurrentSuspect(this.suspectList[cur])
+        }
       }
     },
     currentVersion: {
@@ -155,6 +181,20 @@ export default {
 
 .suspectTable {
   flex: 1;
+}
+
+.multiple {
+  height: 100%;
+  /* display: flex;
+  flex-direction: column; */
+}
+
+.noData {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #909399;
 }
 
 </style>

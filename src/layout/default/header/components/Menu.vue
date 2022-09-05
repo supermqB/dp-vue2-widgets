@@ -48,7 +48,7 @@ export default {
             },
              {
               value: 'docs/summary',
-              label: '文献库摘要'
+              label: '文献库摘要',
             }
           ]
         }
@@ -61,7 +61,16 @@ export default {
   },
   methods: {
     handleSelect(idx) {
-      this.$router.push({ name: idx })
+      if (idx === 'docs/summary') {
+        this.$router.push({ 
+          name: idx,
+          params: {
+            identifier : 'S31990001'
+          }
+        })
+      } else {
+        this.$router.push({ name: idx })
+      }
     }
   }
 }

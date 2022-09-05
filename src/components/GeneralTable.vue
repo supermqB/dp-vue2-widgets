@@ -19,7 +19,7 @@
           v-if="multipleSelect"
         >
         </el-table-column>
-        <el-table-column width="30" fixed v-else>
+        <el-table-column width="30" fixed v-else-if="isShowSelection">
           <template #default="{ row, $index }">
             <el-radio
               v-model="selectedIdx"

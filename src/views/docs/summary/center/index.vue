@@ -3,27 +3,54 @@
     <div class="headers">
       <Breadcrumb
         baseLabel="文献库"
-        :currentLabel="title"></Breadcrumb>
+        :currentLabel="detail.title"></Breadcrumb>
       <div>
         <el-button type="primary">预览</el-button>
-        <el-button type="primary">编辑</el-button>
-        <el-button type="primary">下载</el-button>
+        <el-button type="primary" @click="openEditDialog">编辑</el-button>
+        <el-button type="primary" @click="downloadLiterature">下载</el-button>
       </div>
     </div>
-    <Abstract></Abstract>
+    <Abstract v-bind="summaryDetail"></Abstract>
+    <EditDialog
+      mode="edit"
+      ref="editDialog"
+      @doc-edit="editDocHandler"
+    />
   </div>
 </template>
 
 <script>
 import Abstract from './abstract.vue';
+import EditDialog from '../../list/EditDialog.vue'
 import Breadcrumb from '@/components/header/Breadcrumb.vue'
-
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapActions } = createNamespacedHelpers('docs/summary')
+import { downloadLiteratureApi } from '@/api/doc'
 export default {
-  components: { Abstract, Breadcrumb },
-  data() {
-    return {
-      title: '2809名体检人群中高血压与Hp感染的关联性分析 '
-    }
+  components: {
+    Abstract,
+    Breadcrumb,
+    EditDialog
+  },
+  computed: {
+    ...mapState(['detail']),
+    ...mapGetters(['summaryDetail'])
+  },
+  methods: {
+    ...mapActions(['submitEditLiterature', 'queryLiterature']),
+    async downloadLiterature() {
+      await downloadLiteratureApi()
+    },
+    async editDocHandler(formData) {
+      await this.submitEditLiterature(formData)
+      this.queryLiterature()
+      this.$message.success('编辑文档成功！')
+      this.$refs.editDialog.open()
+    },
+    openEditDialog() {
+      this.$refs.editDialog.open()
+      this.$refs.editDialog.formData = Object.assign({}, this.detail)
+    },
   }
 }
 </script>

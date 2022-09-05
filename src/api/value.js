@@ -50,7 +50,10 @@ export const editVersionApi = ({
   })
 }
 
-export const addVersionApi = data => postWithFile('/dict/addVersion', data)
+export const addVersionApi = data => {
+  if (!data['file']) delete data['file']
+  return postWithFile('/dict/addVersion', data)
+}
 
 export const downloadTemplateApi = dictId => {
   return request({
@@ -120,20 +123,32 @@ export const editDictApi = ({ id, nameEn, nameCn }) => {
   })
 }
 
-export const addDictValueApi = ({ id, valueObject, file }) => {
+export const addDictValueApi = ({ id, valueObject, suspectList }) => {
   return request({
-    url: '/dict/addDictValue',
+    url: '/dict/addDictValueOne',
     method: 'post',
-    data: { id, valueObject, file }
+    data: {
+      id,
+      valueObject,
+      suspectList
+    }
   })
 }
 
-export const editDictValueApi = ({ id, colId, valueObject }) => {
+export const addDictValueManyApi = ({ id, file }) => {
+  return postWithFile('/dict/addDictValueMany', {
+    id,
+    file,
+    suspectList: null
+  })
+}
+
+export const editDictValueApi = ({ id, colId, valueObject, suspectList }) => {
   if (valueObject['term_code']) colId = valueObject['term_code']
   return request({
     url: '/dict/editDictValue',
     method: 'post',
-    data: { id, colId, valueObject }
+    data: { id, colId, valueObject, suspectList }
   })
 }
 
