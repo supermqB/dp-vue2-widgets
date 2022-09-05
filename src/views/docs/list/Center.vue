@@ -155,7 +155,6 @@ export default {
   .header {
     display: flex;
     padding: 6px;
-    height: 40px;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #e5e5e5;
