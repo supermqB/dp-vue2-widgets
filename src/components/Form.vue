@@ -15,7 +15,7 @@
         :is="cfg.type"
         v-bind="cfg.elOptions"
         v-on="cfg.elEvents"
-        v-model:number="formData[cfg.id]"
+        v-model:trim="formData[cfg.id]"
       >
         <el-option
           v-for="(opt, index) in cfg.options"
