@@ -16,11 +16,11 @@ export const downloadLiteratureApi = (
 
 export const getSimilarLiteratureListApi = identifier => {
   return request({
-    method: 'get',
-    params: {
+    method: 'post',
+    data: {
       identifier
     },
-    url: '/literatrue/similarList'
+    url: '/literature/similarList'
   })
 }
 
@@ -35,6 +35,7 @@ export const queryLiteratureApi = identifier => {
 }
 
 export const editLiteratureApi = data => {
+  // data['catalogCode'] = data['catalogCode'].split(',')
   return request({
     method: 'post',
     data,

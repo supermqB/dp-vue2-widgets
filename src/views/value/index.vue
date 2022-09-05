@@ -3,15 +3,7 @@
     <template #asideLeft>
       <div class="left_aside_container">
         <Catalog class="catalog"></Catalog>
-        <Task
-          :tableData="filteredTask"
-          :treeSelectionData="filterTreeData"
-          :hasItem2Do="!!task.selectedTasks.length"
-          @checked-filter-keys="handleFiltered"
-          @selected-items-changed="handleSelectedTasks"
-          @search-key-change="handleSearchChanged"
-          @complete-action="handleCompleteAction"
-          class="task"></Task>
+        <Task></Task>
         <Bottom 
           :labelList="['值域', '任务']"
           :value="[pageInfo.totalSize, task.taskList.length ]"
@@ -29,15 +21,13 @@
 </template>
 
 <script>
-// import Task from './task'
+import Task from './task'
 import Catalog from './catalog'
 import Bottom from '@/components/bottom/Catalog.vue'
 import CenterPart from './center'
 import Suspect from './suspect'
-import Task from '../common/SuspectTaskList.vue'
 import { createNamespacedHelpers } from 'vuex'
-import { confirm } from '@/utils/pops'
-const { mapActions, mapState, mapGetters, mapMutations } = createNamespacedHelpers('value')
+const { mapActions, mapState } = createNamespacedHelpers('value')
 
 export default {
   name: 'ValueExamine',
@@ -53,40 +43,15 @@ export default {
   },
   computed:{
     ...mapState(['task', 'pageInfo']),
-    ...mapGetters({
-      filterTreeData: 'filterTreeData', 
-      currentVersionItem: 'currentVersionItem', 
-      filteredTask: 'filteredTask'
-    })
   },
   methods: {
-    ...mapActions(['initValue', 'querySuspect', 'completeTasks']),
-    ...mapMutations(['setCheckedFilters', 'setSelectedTasks', 'setSearchKey']),
-    handleSelectedTasks(val) {
-      this.setSelectedTasks(val)
-    },
-    handleSearchChanged(val) {
-      this.setSearchKey(val)
-      const {id} = this.currentVersionItem
-      this.querySuspect(id)
-    },
-    handleFiltered(val) {
-      this.setCheckedFilters(val)
-    },
-    async handleCompleteAction() {
-      const confirmed = await confirm('是否确认已完成选中任务？')
-      if (confirmed) {
-        await this.completeTasks()
-        const {id} = this.currentVersionItem
-        await this.querySuspect(id)
-      }
-    },
+    ...mapActions(['initValue'])
   }
 }
 </script>
 
 <style lang="scss" scoped>
-::v-deep .left_aside_container {
+.left_aside_container {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -94,11 +59,6 @@ export default {
   overflow: hidden;
   .catalog {
     flex: 1 1 auto;
-  }
-  .task {
-    .table_container {
-      height: 250px;
-    }
   }
   .bottom {
     height: 30px;
