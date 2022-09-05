@@ -22,9 +22,5 @@ export default {
   eventMapData: {
     event: '',
     field: ''
-  },
-  mdmMapData: {
-    mdm: '',
-    field: ''
   }
 }

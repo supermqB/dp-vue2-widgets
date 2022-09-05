@@ -1,10 +1,22 @@
-export const tableConfig = [
+export const tableConfig = startMapMatch => [
   {
     colConfig: {
       property: 'id',
-      label: '操作',
+      label: '映射',
       minWidth: 55
-    }
+    },
+    actions: [
+      {
+        type: 'el-button',
+        typeProps: {
+          type: 'text',
+          round: false
+        },
+        id: 'match',
+        name: '',
+        callback: startMapMatch
+      }
+    ]
   },
   {
     colConfig: {

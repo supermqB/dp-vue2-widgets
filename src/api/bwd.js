@@ -90,15 +90,13 @@ export const submitCatalogApi = id => {
     }
   })
 }
-export const addMappingApi = ({ id, datasetId, index, nameCn, nameEn }) => {
+export const addMappingApi = ({ id, bwdMappingColumn }) => {
   return request({
     method: 'post',
     url: '/data-mapping/mapping/add',
     data: {
-      id: datasetId,
-      seqNo: index,
-      nameCn,
-      nameEn
+      id,
+      bwdMappingColumn
     }
   })
 }

@@ -12,11 +12,20 @@
         stripe
         ref="el_table"
       >
-        <el-table-column type="selection" width="30" fixed v-if="multipleSelect">
+        <el-table-column
+          type="selection"
+          width="30"
+          fixed
+          v-if="multipleSelect"
+        >
         </el-table-column>
         <el-table-column width="30" fixed v-else>
           <template #default="{ row, $index }">
-            <el-radio v-model="selectedIdx" :label="row.index" v-if="isShowRadio"></el-radio>
+            <el-radio
+              v-model="selectedIdx"
+              :label="row.index"
+              v-if="isShowRadio"
+            ></el-radio>
             <span v-else>{{ $index + 1 }}</span>
           </template>
         </el-table-column>
@@ -39,7 +48,7 @@
                 rowAction({ rowIdx, row, column }, action.callback)
               "
             >
-              {{ action.name }}
+              {{ action.name || row[`${action.id}Label`] }}
             </component>
           </template>
         </el-table-column>
@@ -81,7 +90,7 @@ export default {
     isShowRadio: {
       type: Boolean,
       default: () => true
-    },
+    }
   },
   data() {
     return {

@@ -1,19 +1,33 @@
 <template>
   <div>
-    <el-tabs type="card" stretch @tab-click="tabChanged" class="bwd_ref_tabs">
-      <el-tab-pane label="事件库映射">
+    <el-tabs
+      v-model="mappingType"
+      type="card"
+      stretch
+      @tab-click="tabChanged"
+      class="bwd_ref_tabs"
+    >
+      <el-tab-pane label="事件库映射" name="DWD">
         <Form
-          :formCfg="searchCfg(eventOptions, onChangeMap, clickEvent)"
+          :formCfg="eventCfg(eventOptions, onChangeMap, clickEvent)"
           :formData="eventMapData"
         ></Form>
-        <Table :tableConfig="tableConfig" :tableData="eventMapList"></Table>
+        <Table
+          ref="tableList"
+          :tableConfig="tableConfig(startMapMatch)"
+          :tableData="eventMapList"
+          @row-changed="handleSelectionChange"
+        ></Table>
       </el-tab-pane>
-      <el-tab-pane label="主索引映射">
+      <el-tab-pane label="主索引映射" name="SBR">
         <Form
-          :formCfg="searchCfg(eventOptions, onChangeMap, clickEvent, 'SBR')"
-          :formData="mdmMapData"
+          :formCfg="mdmCfg(eventOptions, onChangeMap, clickEvent, 'SBR')"
+          :formData="eventMapData"
         ></Form>
-        <Table :tableConfig="tableConfig" :tableData="mdmMapList"></Table>
+        <Table
+          :tableConfig="tableConfig(startMapMatch)"
+          :tableData="eventMapList"
+        ></Table>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -22,7 +36,7 @@
 <script>
 import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
-import { searchCfg } from './config/searchForm'
+import { eventCfg, mdmCfg } from './config/searchForm'
 import { tableConfig } from './config/tableColumn'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapMutations, mapActions } =
@@ -34,28 +48,49 @@ export default {
   },
   data() {
     return {
-      searchCfg,
-      tableConfig
+      mappingType: 'DWD',
+      eventCfg,
+      mdmCfg,
+      tableConfig,
+      eventFilter: ''
     }
   },
   computed: {
-    ...mapState(['eventMapData', 'mdmMapData', 'eventMapList', 'mdmMapList']),
+    ...mapState(['eventMapData', 'eventMapList']),
     ...mapGetters(['eventOptions'])
   },
   methods: {
-    ...mapMutations(['setCurrentEventMap']),
-    ...mapActions(['queryEventField', 'queryMappingList']),
-    tabChanged() {},
-    async onChangeMap(source) {
-      await this.queryMappingList(source)
+    ...mapMutations(['setTabMapList']),
+    ...mapActions([
+      'queryMappingField',
+      'queryMappingList',
+      'filterMapList',
+      'submitMapping'
+    ]),
+    tabChanged() {
+      this.queryMappingList(this.mappingType)
+      const { event } = this.eventMapData
+      if (event) {
+        this.setTabMapList()
+      }
     },
-    async clickEvent(id) {
-      await this.queryEventField(id)
-      this.setCurrentEventMap()
+    async onChangeMap() {
+      const { event } = this.eventMapData
+      await this.queryMappingField(event)
+    },
+    async clickEvent() {
+      const { field } = this.eventMapData
+      this.filterMapList(field)
+    },
+    async startMapMatch(index, data) {
+      await this.submitMapping(index)
+    },
+    handleSelectionChange(val) {
+      this.$refs.tableList = val
     }
   },
   mounted() {
-    this.queryMappingList()
+    this.queryMappingList(this.mappingType)
   }
 }
 </script>
