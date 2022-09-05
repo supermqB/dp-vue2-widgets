@@ -2,8 +2,10 @@
   <div class="bwdWrap">
     <Header
       title="BWD目录"
+      hasRun
       @add="addFileCatalog"
       @edit="editFileCatalog"
+      @run="onClickRunCatalog"
     ></Header>
     <div class="search">
       <el-popover placement="right-start" width="150" trigger="click">
@@ -107,8 +109,20 @@ export default {
       'loadBwdModules',
       'queryField',
       'submitFileCatalog',
-      'queryTotalNum'
+      'queryTotalNum',
+      'runCatalog'
     ]),
+    onClickRunCatalog() {
+      if (this.currentBwdItem.state != 3) {
+        return this.$confirm(`是否启用【${this.currentBwdItem.label}】？`, {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.runCatalog()
+        })
+      }
+    },
     // 根据目录的id渲染中间详细信息
     async handleNodeClick({ id }) {
       this.setCurrentBwd(id)
@@ -208,9 +222,6 @@ export default {
 .task-input-do {
   position: relative;
   left: 32px;
-}
-::v-deep .catalogTitleWrap .buttons .action.run {
-  display: none;
 }
 ::v-deep .fileCatalogDialog .el-dialog {
   width: 700px;
