@@ -16,7 +16,7 @@
           type="selection"
           width="30"
           fixed
-          v-if="multipleSelect"
+          v-if="multipleSelect && isShowSelection"
         >
         </el-table-column>
         <el-table-column width="30" fixed v-else-if="isShowSelection">
@@ -90,7 +90,11 @@ export default {
     isShowRadio: {
       type: Boolean,
       default: () => true
-    }
+    },
+    isShowSelection: {
+      type: Boolean,
+      default: () => true
+    },
   },
   data() {
     return {
