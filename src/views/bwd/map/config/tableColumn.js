@@ -15,7 +15,7 @@ export const tableConfig = [
   },
   {
     colConfig: {
-      property: 'description',
+      property: 'definition',
       label: '定义',
       minWidth: 55
     }

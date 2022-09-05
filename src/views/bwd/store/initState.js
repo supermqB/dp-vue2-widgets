@@ -24,7 +24,7 @@ export default {
     field: ''
   },
   mdmMapData: {
-    index1: '',
-    index2: ''
+    mdm: '',
+    field: ''
   }
 }

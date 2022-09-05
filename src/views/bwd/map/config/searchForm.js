@@ -1,4 +1,10 @@
-export const searchCfg = (eventList = [], clickEvent, type = 'DWD') => [
+export const searchCfg = (
+  eventList = [],
+  onChangeMap,
+  clickEvent,
+  source = 'DWD',
+  id = 266
+) => [
   {
     type: 'el-select',
     label: '事件表',
@@ -11,7 +17,7 @@ export const searchCfg = (eventList = [], clickEvent, type = 'DWD') => [
       }
     },
     elEvents: {
-      change: () => clickEvent(type)
+      change: () => onChangeMap(source)
     }
   },
   {
@@ -26,7 +32,7 @@ export const searchCfg = (eventList = [], clickEvent, type = 'DWD') => [
       }
     },
     elEvents: {
-      change: () => clickEvent(type)
+      change: () => clickEvent(id)
     }
   }
 ]

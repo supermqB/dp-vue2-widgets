@@ -52,20 +52,26 @@ const state = {
   },
   totalNumber: 0,
   source: '',
+  // id: '',
   fieldsList: [],
   eventList: [],
   eventMapList: [
     {
       id: '匹配',
+      nameCn: '1',
+      definition: '11'
+    },
+    {
+      id: '匹配',
       nameCn: '11',
-      description: '111'
+      definition: '111'
     }
   ],
   mdmMapList: [
     {
       id: '匹配',
       nameCn: '22',
-      description: '222'
+      definition: '222'
     }
   ],
 
@@ -218,12 +224,15 @@ const actions = {
     commit('setCurrentField')
   },
   async queryMappingList({ commit, dispatch }, source) {
-    const { value } = await getMapModelApi(source)
+    const { value } = await getMapModelApi('DWD')
     state.eventList = value
+    console.log(value, 9999)
   },
-  async queryEventField({ commit }) {
-    const result = await getMapFieldsApi()
-    console.log('0000', result)
+  async queryEventField({ commit }, id) {
+    // const id = parseInt(state.currentBwd)
+    const result = await getMapFieldsApi(id)
+    state.eventMapList = result.value
+    console.log('0000', result.value)
   },
   // 左侧表单提交，更新目录接口addFileCatalogApi,updateFileCatalogApi
   async submitFileCatalog({ dispatch, state }) {
