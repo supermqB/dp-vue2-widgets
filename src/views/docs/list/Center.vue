@@ -28,15 +28,11 @@
         <div>
           <div class="typespan">{{ item.docTypeName }}</div>
           <div class="title">
-            {{ item.title }}【{{ item.identifier }}】，英文标题：{{
-              item.titleEn
-            }}
+            {{ getItemTilte(item) }}
           </div>
         </div>
         <div class="sumline">
-          作者：{{ item.author }}，机构：{{ item.organization }}，发表年份：{{
-            item.releaseTime
-          }}，来源：{{ item.source }}
+          {{ getItemSumline(item) }}
         </div>
       </div>
     </div>
@@ -67,6 +63,7 @@
 </template>
 
 <script>
+import { debounce } from 'lodash'
 import EditDialog from './EditDialog.vue'
 import Form from '@/components/Form.vue'
 import { createNamespacedHelpers } from 'vuex'
@@ -104,15 +101,48 @@ export default {
     forward2SumPage(identifier) {
       this.$router.push(`/docs/summary/${identifier}`)
     },
+    getItemTilte(item) {
+      return [
+        { label: '', value: `${item.title}【${item.identifier}】` },
+        {
+          label: '英文标题：',
+          value: item.titleEn
+        }
+      ]
+        .filter(f => !!f.value)
+        .map(f => `${f.label}${f.value}`)
+        .join('，')
+    },
+    getItemSumline(item) {
+      return [
+        { label: '作者：', value: item.author },
+        { label: '机构', value: item.organization },
+        { label: '发表年份：', value: item.releaseTime },
+        {
+          label: '来源：',
+          value: item.source
+        }
+      ]
+        .filter(f => !!f.value)
+        .map(f => `${f.label}${f.value}`)
+        .join('，')
+    },
     ...mapActions(['search', 'importDoc'])
   },
   watch: {
     selectedDocTypeCtlg() {
-      this.search()
+      this.lazyList()
     },
     pageInfoChangeSignal() {
-      this.search()
+      this.lazyList()
     }
+  },
+  mounted() {
+    this.search()
+    this.lazyList = debounce(() => {
+      this.search()
+    }, 500)
+    this.lazyList()
   },
   components: { Form, EditDialog, AdvSearchDialog }
 }
@@ -125,7 +155,6 @@ export default {
   .header {
     display: flex;
     padding: 6px;
-    height: 40px;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #e5e5e5;
@@ -198,7 +227,7 @@ export default {
         background-color: #1890ff;
         border-radius: 2px;
         margin-right: 6px;
-        width: 36px;
+        padding: 0 6px;
         height: 18px;
         line-height: 18px;
         text-align: center;

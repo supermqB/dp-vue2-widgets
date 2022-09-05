@@ -22,12 +22,12 @@ export default [
   {
     type: 'el-input',
     label: '机构',
-    id: 'org'
+    id: 'organization'
   },
   {
     type: 'el-select',
     options: genYearList(),
     label: '年份',
-    id: 'year'
+    id: 'releaseTime'
   }
 ]
