@@ -1,21 +1,33 @@
-export const tableConfig = [
+export const tableConfig = startMapMatch => [
   {
     colConfig: {
-      property: 'seqNo',
-      label: '操作',
+      property: 'id',
+      label: '映射',
       minWidth: 55
-    }
+    },
+    actions: [
+      {
+        type: 'el-button',
+        typeProps: {
+          type: 'text',
+          round: false
+        },
+        id: 'match',
+        name: '',
+        callback: startMapMatch
+      }
+    ]
   },
   {
     colConfig: {
-      property: 'name',
+      property: 'nameCn',
       label: '字段',
       minWidth: 55
     }
   },
   {
     colConfig: {
-      property: 'nameCn',
+      property: 'definition',
       label: '定义',
       minWidth: 55
     }

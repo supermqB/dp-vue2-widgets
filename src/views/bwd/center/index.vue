@@ -5,16 +5,12 @@
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>BWD文件管理</el-breadcrumb-item>
           <el-breadcrumb-item>
-            <b>{{ currentBwdItem.label }}({{ currentBwdItem.nameEn }}) </b>
+            <b>{{ currentBwdItem.label }} ({{ currentBwdItem.nameEn }}) </b>
             <img :src="icon(currentBwdItem.state)" />
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div>
-        <!-- <el-button type="primary" @click="onClickRunCatalog">{{
-          this.currentBwdItem.state == 0 ? '启用' : '停用'
-        }}</el-button> -->
-        <el-button type="primary" @click="onClickRunCatalog">启用</el-button>
         <el-button type="primary" @click="editFileFields">编辑</el-button>
         <el-button type="primary" @click="addFileFields">新增</el-button>
       </div>
@@ -117,38 +113,13 @@ export default {
       'setCurrentField',
       'setPageInfo'
     ]),
-    ...mapActions(['queryField', 'submitFields', 'runCatalog']),
+    ...mapActions(['queryField', 'submitFields']),
     icon(state) {
       switch (state) {
         case RUNNINGSTATE:
           return require('@/assets/images/common/icons/running.png')
         case STOPSTATE:
           return require('@/assets/images/common/icons/income.png')
-      }
-    },
-    // onClickRunCatalog() {
-    //   this.$confirm(
-    //     this.currentBwdItem.state == 0
-    //       ? `是否启用【${this.currentBwdItem.label}】？`
-    //       : `是否停用【${this.currentBwdItem.label}】？`,
-    //     {
-    //       confirmButtonText: '确定',
-    //       cancelButtonText: '取消',
-    //       type: 'warning'
-    //     }
-    //   ).then(() => {
-    //     this.runCatalog()
-    //   })
-    // },
-    onClickRunCatalog() {
-      if (this.currentBwdItem.state != 3) {
-        return this.$confirm(`是否启用【${this.currentBwdItem.label}】？`, {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.runCatalog()
-        })
       }
     },
     async pageInfoChanged(val) {

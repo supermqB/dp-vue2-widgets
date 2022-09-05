@@ -23,7 +23,7 @@ export const tableConfig = [
   },
   {
     colConfig: {
-      property: 'dwdMappingColumnList',
+      property: 'dwdTable',
       label: '事件库映射表',
       minWidth: 101
     }
@@ -37,7 +37,7 @@ export const tableConfig = [
   },
   {
     colConfig: {
-      property: 'sbrMappingColumnList',
+      property: 'sbrTable',
       label: '主索引映射表',
       minWidth: 134
     }

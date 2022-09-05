@@ -6,7 +6,11 @@ import {
   addFileCatalogApi,
   addFileFieldsApi,
   updateFileFieldsApi,
-  submitCatalogApi
+  submitCatalogApi,
+  getMapModelApi,
+  getMapFieldsApi,
+  addMappingApi,
+  deleteMappingApi
 } from '@/api/bwd'
 
 import { keysClone } from '@/utils/lang'
@@ -39,6 +43,7 @@ const state = {
   ],
   // 中间数据
   currentField: '',
+  currentMap: '',
   isAdvance: false,
   pageInfo: {
     curPage: 1,
@@ -48,27 +53,14 @@ const state = {
   },
   totalNumber: 0,
   fieldsList: [],
-  eventMapList: [
-    {
-      seqNo: '匹配',
-      name: '11',
-      nameCn: '111'
-    }
-  ],
-  mdmMapList: [
-    {
-      seqNo: '匹配',
-      name: '22',
-      nameCn: '222'
-    }
-  ],
+  eventList: [],
+  eventMapList: [],
 
   fileCatalogData: Object.assign({}, initState.fileCatalogData),
   searchData: Object.assign({}, initState.searchData),
   adSearchData: Object.assign({}, initState.adSearchData),
   fileFieldsData: Object.assign({}, initState.fileFieldsData),
-  eventMapData: Object.assign({}, initState.eventMapData),
-  mdmMapData: Object.assign({}, initState.mdmMapData)
+  eventMapData: Object.assign({}, initState.eventMapData)
 }
 
 const getters = {
@@ -98,10 +90,10 @@ const getters = {
     })
   },
   eventOptions(state) {
-    return state.fieldsList.map(item => {
+    return state.eventList.map(item => {
       return {
         label: item.nameCn,
-        value: item.nameCn
+        value: item.id
       }
     })
   }
@@ -154,12 +146,36 @@ const mutations = {
     } else {
       state.currentField = field
     }
+    state.eventMapList = field.dwdMappingColumnList.map((item, index) => {
+      return {
+        id: item.tableId,
+        index,
+        nameCn: item.tableNameCn,
+        defination: item.tableNameCn,
+        match: true,
+        matchLabel: '取消匹配'
+      }
+    })
+    state.eventMapList = field.sbrMappingColumnList.map((item, index) => {
+      return {
+        id: item.tableId,
+        index,
+        nameCn: item.tableNameCn,
+        defination: item.tableNameCn,
+        match: true,
+        matchLabel: '取消匹配'
+      }
+    })
   },
   setPageInfo: (state, pageInfo) => {
     keysClone(state.pageInfo, pageInfo)
   },
   setTotalNum: (state, value) => {
     state.totalNumber = value
+  },
+  setTabMapList: state => {
+    state.eventMapData = Object.assign({}, initState.eventMapData)
+    state.eventMapList = []
   }
 }
 
@@ -201,12 +217,37 @@ const actions = {
     )
     const res = await getBwdInfoApi(curPage, pageSize, query, state.isAdvance)
     const { records, pageInfo } = res.value
-    state.fieldsList = records.map(item => ({
+    state.fieldsList = records.map((item, index) => ({
       ...item,
-      index: item.id
+      index,
+      dwdTable: item.dwdMappingColumnList
+        .map(item => item.tableNameCn)
+        .join(','),
+      dwdField: item.dwdMappingColumnList.map(item => item.colNameCn).join(','),
+      sbrTable: item.sbrMappingColumnList
+        .map(item => item.tableNameCn)
+        .join(','),
+      sbrField: item.sbrMappingColumnList.map(item => item.colNameCn).join(',')
     }))
     commit('setPageInfo', pageInfo)
     commit('setCurrentField')
+  },
+  async queryMappingList({}, source) {
+    const { value } = await getMapModelApi(source)
+    state.eventList = value
+  },
+  async queryMappingField({ commit }, id) {
+    const result = await getMapFieldsApi(id)
+    state.eventMapList = result.value.map(item => ({
+      ...item,
+      index: item.id,
+      matchLabel: item.match ? '取消匹配' : '匹配'
+    }))
+  },
+  async filterMapList({}, field) {
+    state.eventMapList = state.eventMapList.filter(
+      item => item.nameCn.indexOf(field) != -1
+    )
   },
   // 左侧表单提交，更新目录接口addFileCatalogApi,updateFileCatalogApi
   async submitFileCatalog({ dispatch, state }) {
@@ -254,6 +295,40 @@ const actions = {
       this._vm.$message.success('编辑字段成功！')
     }
     await dispatch('queryField')
+  },
+  async submitMapping({ dispatch, state }, index) {
+    const currentField = state.fieldsList.find(
+      item => item.id === state.currentField
+    )
+
+    const { id } = currentField
+    const col = state.eventMapList[index]
+    const table = state.eventMapList.find(
+      item => item.id === state.eventMapData.event
+    )
+    if (!col.match) {
+      await addMappingApi({
+        id,
+        bwdMappingColumn: {
+          tableId: table.id,
+          tableNameCn: table.nameCn,
+          tableNameEn: table.nameEn,
+          colId: col.id,
+          colNameCn: col.nameCn,
+          colNameEn: col.nameEn
+        }
+      })
+      this._vm.$message.success('匹配成功！')
+      state.eventMapList[index].match = true
+      state.eventMapList[index].matchLabel = '取消匹配'
+      await dispatch('queryField')
+    } else {
+      await deleteMappingApi(col.id)
+      state.eventMapList[index].match = false
+      state.eventMapList[index].matchLabel = '匹配'
+      this._vm.$message.success('取消匹配成功！')
+      await dispatch('queryField')
+    }
   },
   async runCatalog({ dispatch, state }) {
     const id = state.currentBwd
