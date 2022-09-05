@@ -7,7 +7,8 @@ const state = {
   taskList: [],
   curTask: '',
   checkedFilters: [],
-  selectedTasks: []
+  selectedTasks: [],
+  currentSuspect: null
 }
 
 const getters = {
@@ -79,6 +80,10 @@ const mutations = {
   },
   setSelectedTasks(state, value) {
     state.selectedTasks = value
+  },
+  setCurrentSuspect(state, value) {
+    console.log(value)
+    state.currentSuspect = value
   },
   setCurrentTask(state, value) {
     state.curTask = value

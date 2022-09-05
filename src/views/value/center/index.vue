@@ -170,7 +170,8 @@ export default {
       'dictValueForm',
       'dictVersionForm',
       'versionForm',
-      'searchForm'
+      'searchForm',
+      'task'
     ]),
     ...mapGetters([
       'currentVersionItem',
@@ -211,6 +212,7 @@ export default {
       'addDictVersion',
       'editDictVersion',
       'addDictValue',
+      'addBatchDictValue',
       'editDictValue'
     ]),
     downloadTemplate() {
@@ -258,7 +260,8 @@ export default {
     },
     async addValue() {
       const { value } = await getMAxValueCodeApi(this.currentVersion)
-      this.setDictValueForm({ 'term_code': getMaxNumber(value, 14) })
+      const form = Object.assign({}, { 'term_code': getMaxNumber(value, 14) }, this.task.currentSuspect)
+      this.setDictValueForm(form)
       this.batchFlag = false
       this.file = null
       this.$refs.addValueDialog.toggleOpen()
@@ -273,10 +276,14 @@ export default {
           this.$message.warning('请选择批量导入文件')
           return
         }
+        await this.addBatchDictValue(file)
+        this.$refs.addValueDialog.toggleOpen()
+        this.$message.success('新增值域字典明细成功！')
+      } else {
+        await this.addDictValue()
+        this.$refs.addValueDialog.toggleOpen()
+        this.$message.success('新增值域字典明细成功！')
       }
-      await this.addDictValue(this.batchFlag ? this.file : null)
-      this.$refs.addValueDialog.toggleOpen()
-      this.$message.success('新增值域字典明细成功！')
     },
     async onClickEditValue() {
       await this.editDictValue()

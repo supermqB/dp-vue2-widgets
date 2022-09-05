@@ -123,17 +123,24 @@ export const editDictApi = ({ id, nameEn, nameCn }) => {
   })
 }
 
-export const addDictValueApi = ({ id, valueObject, file, suspectList }) => {
-  const data = { id, suspectList }
-  if (file) {
-    data['file'] = file
-  }
-  if (valueObject) {
-    Object.keys(valueObject).forEach(key => {
-      data[`valueObject[${key}]`] = valueObject[key]
-    })
-  }
-  return postWithFile('/dict/addDictValue', data)
+export const addDictValueApi = ({ id, valueObject, suspectList }) => {
+  return request({
+    url: '/dict/addDictValueOne',
+    method: 'post',
+    data: {
+      id,
+      valueObject,
+      suspectList
+    }
+  })
+}
+
+export const addDictValueManyApi = ({ id, file }) => {
+  return postWithFile('/dict/addDictValueMany', {
+    id,
+    file,
+    suspectList: null
+  })
 }
 
 export const editDictValueApi = ({ id, colId, valueObject, suspectList }) => {

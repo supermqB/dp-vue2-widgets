@@ -3,20 +3,22 @@
     <div class="header">相似文献</div>
     <div class="docs">
       <el-input 
+        v-model="name"
         placeholder="请输入"
         suffix-icon="el-icon-search"
         clearable
       ></el-input>
       <ul>
         <li
-          v-for="(item, index) in data"
+          v-for="(item, index) in literatureFilterList"
+          @click="selectLiterature(item)"
           :key="index"
         >
           <p>
-            <span class="type">期刊</span>
-            <span class="title">用DNA重组技术制备的*******</span>
+            <span class="type">{{ item.docType }}</span>
+            <span class="title">{{ item.title }}</span>
           </p>
-          <p>分类：A0003</p>
+          <p>分类：{{ item.catalogGrp }}</p>
         </li>
       </ul>
     </div>
@@ -24,13 +26,29 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('docs/summary')
 export default {
-  props: {
-    data: {
-      type: Array,
-      default: () => [
-        {}, {}, {}, {},  {}, {}, {}, {}, {} , {}, {}, {} , {}, {}, {} 
-      ]
+  computed: {
+    ...mapState(['filter']),
+    ...mapGetters(['literatureFilterList']),
+    name: {
+      get() {
+        return this.filter
+      },
+      set(value) {
+        this.setFilter(value)
+      }
+    },
+  },
+  methods: {
+    ...mapMutations(['setIdentifier', 'setFilter']),
+    ...mapActions(['queryLiterature', 'getSimilarLiteratureList']),
+    selectLiterature({ identifier }) {
+      this.setFilter()
+      this.setIdentifier(identifier)
+      this.queryLiterature(identifier)
+      this.getSimilarLiteratureList(identifier)
     }
   }
 }
@@ -55,6 +73,7 @@ ul {
   li {
     padding: 8px 6px 8px 8px;
     font-size: 15px;
+    cursor: pointer;
     border-bottom: 1px solid #F2F2F2;
     p {
       padding: 5px 0;

@@ -20,10 +20,12 @@
     </el-select>
     <Table
       v-if="currentVersionInfo.type === '单值字典'"
+      ref="suspectTable"
       :tableData="suspectList"
       :tableConfig="config"
       :pageInfo="null"
       :isShowRadio="false"
+      @row-changed="rowClick"
       class="suspectTable">
     </Table>
     <div v-else-if="currentVersionInfo.type === '多值字典'" class="multiple">
@@ -110,9 +112,19 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setSuspectList', 'setCurrentTask'])
+    ...mapMutations(['setSuspectList', 'setCurrentTask', 'setCurrentSuspect']),
+    rowClick(row) {
+      this.setCurrentSuspect(row)
+    },
   },
   watch: {
+    activeName: {
+      handler(cur) {
+        if (this.suspectList && this.suspectList[cur]) {
+          this.setCurrentSuspect(this.suspectList[cur])
+        }
+      }
+    },
     currentVersion: {
       handler(){
         this.setSuspectList()

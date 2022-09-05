@@ -1,4 +1,5 @@
 import list from '../list/store'
+import summary from '../summary/store'
 import { get } from '@/utils/request'
 const state = {
   commonDocCtlg: []
@@ -30,5 +31,5 @@ export default {
   state,
   mutations,
   actions,
-  modules: { list }
+  modules: { list, summary }
 }
