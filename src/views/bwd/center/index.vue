@@ -11,15 +11,29 @@
         </el-breadcrumb>
       </div>
       <div>
-        <el-button type="primary" @click="editFileFields" :disabled="currentBwdItem.state === RUNNINGSTATE">编辑</el-button>
-        <el-button type="primary" @click="addFileFields" :disabled="currentBwdItem.state === RUNNINGSTATE">新增</el-button>
+        <el-button
+          type="primary"
+          @click="editFileFields"
+          :disabled="currentBwdItem.state === RUNNINGSTATE || !currentFieldRow"
+          >编辑</el-button
+        >
+        <el-button
+          type="primary"
+          @click="addFileFields"
+          :disabled="currentBwdItem.state === RUNNINGSTATE"
+          >新增</el-button
+        >
       </div>
     </div>
     <div class="search">
       <Form :formCfg="searchCfg" :formData="searchData"></Form>
       <div style="line-height: 36px">
         <el-button @click="onClickSearch">查询</el-button>
-        <el-button type="text" style="font-size: 13px" @click="advancedSearch" disabled
+        <el-button
+          type="text"
+          style="font-size: 13px"
+          @click="advancedSearch"
+          disabled
           >高级搜索</el-button
         >
       </div>
@@ -103,8 +117,7 @@ export default {
       searchData: 'searchData',
       fieldsList: 'fieldsList',
       fileFieldsData: 'fileFieldsData',
-      adSearchData: 'adSearchData',
-      currentColumn: 'currentColumn'
+      adSearchData: 'adSearchData'
     })
   },
   methods: {
