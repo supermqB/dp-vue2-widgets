@@ -24,7 +24,7 @@
     </el-tabs>
     <Form
       class="form"
-      :formCfg="eventCfg(eventOptions, onChangeMap, clickEvent)"
+      :formCfg="eventCfg(eventOptions, onChangeMap, clickEvent, mappingType)"
       :formData="eventMapData"
     ></Form>
     <Table

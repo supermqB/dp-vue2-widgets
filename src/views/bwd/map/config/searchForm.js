@@ -1,7 +1,12 @@
-export const eventCfg = (eventList = [], onChangeMap, clickEvent) => [
+export const eventCfg = (
+  eventList = [],
+  onChangeMap,
+  clickEvent,
+  mappingType
+) => [
   {
     type: 'el-select',
-    label: '事件表',
+    label: `${mappingType === 'DWD' ? '事件表' : '索引表'}`,
     options: eventList,
     id: 'event',
     elOptions: {

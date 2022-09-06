@@ -6,6 +6,7 @@
       @add="addFileCatalog"
       @edit="editFileCatalog"
       @run="onClickRunCatalog"
+      :actionTypes="currentBwdItem.state === RUNNINGSTATE ? ['add', 'edit_disable', 'run_disable'] : ['add', 'edit', 'run']"
     ></Header>
     <div class="search">
       <!-- <el-popover placement="right-start" width="150" trigger="click">
@@ -72,6 +73,7 @@ import Dialog from '@/components/Dialog.vue'
 import Form from '@/components/Form.vue'
 import Bottom from '@/components/bottom/Catalog.vue'
 import Tree from '@/components/SideTree.vue'
+import { RUNNINGSTATE } from '@/utils/const'
 import { fileCatalogCfg, fileCatalogRule } from './config/fileCatalogForm'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapMutations, mapActions } =
@@ -89,7 +91,8 @@ export default {
       bwdFilter: '',
       fileCatalogCfg,
       fileCatalogRule,
-      fileCatalogDialog: false
+      fileCatalogDialog: false,
+      RUNNINGSTATE
     }
   },
   computed: {

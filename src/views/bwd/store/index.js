@@ -154,6 +154,7 @@ const mutations = {
     const currentField = state.fieldsList.find(
       item => item.id === state.currentField
     )
+    if (!state.currentField || !currentField) return
     state.eventMapList = (
       type === 'DWD'
         ? currentField.dwdMappingColumnList

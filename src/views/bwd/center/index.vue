@@ -11,8 +11,8 @@
         </el-breadcrumb>
       </div>
       <div>
-        <el-button type="primary" @click="editFileFields">编辑</el-button>
-        <el-button type="primary" @click="addFileFields">新增</el-button>
+        <el-button type="primary" @click="editFileFields" :disabled="currentBwdItem.state === RUNNINGSTATE">编辑</el-button>
+        <el-button type="primary" @click="addFileFields" :disabled="currentBwdItem.state === RUNNINGSTATE">新增</el-button>
       </div>
     </div>
     <div class="search">
@@ -91,7 +91,8 @@ export default {
       tableConfig,
       fileFieldsCfg,
       fileFieldsRule,
-      adSearchCfg
+      adSearchCfg,
+      RUNNINGSTATE
     }
   },
   computed: {
