@@ -18,7 +18,7 @@
             <span class="type">{{ item.docType }}</span>
             <span class="title">{{ item.title }}</span>
           </p>
-          <p>分类：{{ item.catalogGrp }}</p>
+          <p class="catalog">分类：{{ item.catalogGrp }}</p>
         </li>
       </ul>
     </div>
@@ -81,18 +81,24 @@ ul {
       align-items: center;
     }
     .type {
-      width: 50px;
+      min-width: 35px;
       padding: 3px;
       margin-right: 5px;
       text-align: center;
-      font-size: 13px;
-      line-height: 15px;
+      font-size: 12px;
+      line-height: 14px;
       background-color: #1890FF;
       color: #fff;
       display: inline-block;
     }
     .title {
-      @include ellipsisNoWrap()
+      @include ellipsisNoWrap();
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .catalog {
+      font-size: 12px;
+      color: rgba(0,0,0,0.45)
     }
   }
   li:nth-child(2) {

@@ -7,10 +7,11 @@ export const downloadLiteratureApi = (
   return request({
     method: 'post',
     data: {
-      identifier,
+      identifier: 'Z220220002',
       online
     },
-    url: '/literature/downloadLiterature'
+    url: '/literature/downloadFile',
+    responseType: 'blob'
   })
 }
 

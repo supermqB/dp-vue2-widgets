@@ -146,26 +146,37 @@ const mutations = {
     } else {
       state.currentField = field
     }
-    state.eventMapList = field.dwdMappingColumnList.map((item, index) => {
-      return {
-        id: item.tableId,
-        index,
-        nameCn: item.tableNameCn,
-        defination: item.tableNameCn,
-        match: true,
-        matchLabel: '取消匹配'
-      }
-    })
-    state.eventMapList = field.sbrMappingColumnList.map((item, index) => {
-      return {
-        id: item.tableId,
-        index,
-        nameCn: item.tableNameCn,
-        defination: item.tableNameCn,
-        match: true,
-        matchLabel: '取消匹配'
-      }
-    })
+
+    const currentFieldItem = state.fieldsList.find(
+      item => item.id === state.currentField
+    )
+
+    if (currentFieldItem.dwdMappingColumnList)
+      state.eventMapList = currentFieldItem.dwdMappingColumnList.map(
+        (item, index) => {
+          return {
+            id: item.tableId,
+            index,
+            nameCn: item.tableNameCn,
+            defination: item.tableNameCn,
+            match: true,
+            matchLabel: '取消匹配'
+          }
+        }
+      )
+    if (currentFieldItem.sbrMappingColumnList)
+      state.eventMapList = currentFieldItem.sbrMappingColumnList.map(
+        (item, index) => {
+          return {
+            id: item.tableId,
+            index,
+            nameCn: item.tableNameCn,
+            defination: item.tableNameCn,
+            match: true,
+            matchLabel: '取消匹配'
+          }
+        }
+      )
   },
   setPageInfo: (state, pageInfo) => {
     keysClone(state.pageInfo, pageInfo)

@@ -13,11 +13,14 @@
 import CenterVue from './center'
 import RightVue from './right'
 import { createNamespacedHelpers } from 'vuex'
-const { mapMutations, mapActions } = createNamespacedHelpers('docs/summary')
+const { mapMutations, mapActions, mapState } = createNamespacedHelpers('docs/summary')
 export default {
   components: {
     CenterVue,
     RightVue
+  },
+  computed: {
+    ...mapState(['identifier'])
   },
   async mounted() {
     const identifier = this.$route.params.identifier ? this.$route.params.identifier : 'S31990001'
@@ -28,6 +31,7 @@ export default {
   methods: {
     ...mapMutations(['setIdentifier']),
     ...mapActions(['queryLiterature', 'getSimilarLiteratureList']),
-  }
+  },
+  watch: {}
 }
 </script>
