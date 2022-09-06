@@ -85,7 +85,7 @@ const getters = {
     return state.bwdList.map(item => {
       return {
         label: item.label,
-        value: item.label
+        value: item.id
       }
     })
   },
@@ -112,11 +112,9 @@ const mutations = {
       }
     }
   },
-  // 将接口获取的数据渲染至页面进行bwd列表展示
   setBwdList(state, value) {
     state.bwdList = value
   },
-  // 目录栏的新增编辑赋值
   setCatalogForm: (state, form) => {
     if (form) {
       keysClone(state.fileCatalogData, form)
@@ -146,26 +144,34 @@ const mutations = {
     } else {
       state.currentField = field
     }
-    state.eventMapList = field.dwdMappingColumnList.map((item, index) => {
-      return {
-        id: item.tableId,
-        index,
-        nameCn: item.tableNameCn,
-        defination: item.tableNameCn,
-        match: true,
-        matchLabel: '取消匹配'
+    const currentField = state.fieldsList.find(
+      item => item.id === state.currentField
+    )
+    // 给一个index,匹配字段的id
+    state.eventMapList = currentField.dwdMappingColumnList.map(
+      (item, index) => {
+        return {
+          id: item.id, // tableId
+          index,
+          nameCn: item.tableNameCn,
+          defination: item.tableNameCn,
+          match: true,
+          matchLabel: '取消匹配'
+        }
       }
-    })
-    state.eventMapList = field.sbrMappingColumnList.map((item, index) => {
-      return {
-        id: item.tableId,
-        index,
-        nameCn: item.tableNameCn,
-        defination: item.tableNameCn,
-        match: true,
-        matchLabel: '取消匹配'
-      }
-    })
+    )
+    // state.eventMapList = currentField.sbrMappingColumnList.map(
+    //   (item, index) => {
+    //     return {
+    //       id: item.tableId,
+    //       index,
+    //       nameCn: item.tableNameCn,
+    //       defination: item.tableNameCn,
+    //       match: true,
+    //       matchLabel: '取消匹配'
+    //     }
+    //   }
+    // )
   },
   setPageInfo: (state, pageInfo) => {
     keysClone(state.pageInfo, pageInfo)
@@ -219,18 +225,19 @@ const actions = {
     const { records, pageInfo } = res.value
     state.fieldsList = records.map((item, index) => ({
       ...item,
-      index,
+      index: item.id,
       dwdTable: item.dwdMappingColumnList
         .map(item => item.tableNameCn)
-        .join(','),
-      dwdField: item.dwdMappingColumnList.map(item => item.colNameCn).join(','),
+        .join(', '),
+      dwdField: item.dwdMappingColumnList
+        .map(item => item.colNameCn)
+        .join(', '),
       sbrTable: item.sbrMappingColumnList
         .map(item => item.tableNameCn)
-        .join(','),
-      sbrField: item.sbrMappingColumnList.map(item => item.colNameCn).join(',')
+        .join(', '),
+      sbrField: item.sbrMappingColumnList.map(item => item.colNameCn).join(', ')
     }))
     commit('setPageInfo', pageInfo)
-    commit('setCurrentField')
   },
   async queryMappingList({}, source) {
     const { value } = await getMapModelApi(source)
@@ -238,9 +245,10 @@ const actions = {
   },
   async queryMappingField({ commit }, id) {
     const result = await getMapFieldsApi(id)
-    state.eventMapList = result.value.map(item => ({
+    state.eventMapList = result.value.map((item, index) => ({
       ...item,
-      index: item.id,
+      index,
+      // index: item.id,
       matchLabel: item.match ? '取消匹配' : '匹配'
     }))
   },
@@ -300,11 +308,11 @@ const actions = {
     const currentField = state.fieldsList.find(
       item => item.id === state.currentField
     )
-
     const { id } = currentField
+    const eventId = state.eventMapData.event
     const col = state.eventMapList[index]
-    const table = state.eventMapList.find(
-      item => item.id === state.eventMapData.event
+    const table = state.eventList.find(
+      item => item.id === eventId //3===3
     )
     if (!col.match) {
       await addMappingApi({
@@ -321,13 +329,13 @@ const actions = {
       this._vm.$message.success('匹配成功！')
       state.eventMapList[index].match = true
       state.eventMapList[index].matchLabel = '取消匹配'
-      await dispatch('queryField')
+      dispatch('queryField', state.currentField)
     } else {
       await deleteMappingApi(col.id)
       state.eventMapList[index].match = false
       state.eventMapList[index].matchLabel = '匹配'
       this._vm.$message.success('取消匹配成功！')
-      await dispatch('queryField')
+      dispatch('queryField', state.currentField)
     }
   },
   async runCatalog({ dispatch, state }) {

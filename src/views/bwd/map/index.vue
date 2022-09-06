@@ -14,6 +14,7 @@
         ></Form>
         <Table
           ref="tableList"
+          :isShowSelection="false"
           :tableConfig="tableConfig(startMapMatch)"
           :tableData="eventMapList"
           @row-changed="handleSelectionChange"
@@ -25,6 +26,7 @@
           :formData="eventMapData"
         ></Form>
         <Table
+          :isShowSelection="false"
           :tableConfig="tableConfig(startMapMatch)"
           :tableData="eventMapList"
         ></Table>
@@ -52,7 +54,8 @@ export default {
       eventCfg,
       mdmCfg,
       tableConfig,
-      eventFilter: ''
+      eventFilter: '',
+      matchDialog: false
     }
   },
   computed: {
@@ -65,7 +68,8 @@ export default {
       'queryMappingField',
       'queryMappingList',
       'filterMapList',
-      'submitMapping'
+      'submitMapping',
+      'matchCatalog'
     ]),
     tabChanged() {
       this.queryMappingList(this.mappingType)
@@ -83,7 +87,17 @@ export default {
       this.filterMapList(field)
     },
     async startMapMatch(index, data) {
-      await this.submitMapping(index)
+      if (this.eventMapList[index].match) {
+        return this.$confirm(`是否取消匹配？`, {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.submitMapping(index)
+        })
+      } else {
+        await this.submitMapping(index)
+      }
     },
     handleSelectionChange(val) {
       this.$refs.tableList = val

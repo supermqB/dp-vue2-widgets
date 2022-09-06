@@ -30,12 +30,14 @@ export default {
     return {}
   },
   methods: {
-    ...mapActions(['loadBwdModules', 'queryTotalNum', 'queryField'])
+    ...mapActions(['loadBwdModules', 'queryTotalNum', 'queryField']),
+    ...mapMutations(['setCurrentField'])
   },
   async mounted() {
     await this.loadBwdModules()
     await this.queryTotalNum()
     await this.queryField()
+    this.setCurrentField()
   }
 }
 </script>
