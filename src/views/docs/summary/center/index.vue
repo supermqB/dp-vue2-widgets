@@ -5,7 +5,7 @@
         baseLabel="文献库"
         :currentLabel="detail.title"></Breadcrumb>
       <div>
-        <el-button type="primary">预览</el-button>
+        <el-button type="primary" @click="preview">预览</el-button>
         <el-button type="primary" @click="openEditDialog">编辑</el-button>
         <el-button type="primary" @click="downloadLiterature">下载</el-button>
       </div>
@@ -16,10 +16,21 @@
       ref="editDialog"
       @doc-edit="editDocHandler"
     />
+    <el-dialog
+      :visible.sync="pdfVisible">
+      <Pdf
+        ref="pdf"
+        v-for="index in pdfTotal"
+        :key="index"
+        :src="pdfSrc"
+        :page="index"></Pdf>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import Pdf from 'vue-pdf'
+import CMapReaderFactory from 'vue-pdf/src/CMapReaderFactory'
 import Abstract from './abstract.vue';
 import EditDialog from '../../list/EditDialog.vue'
 import Breadcrumb from '@/components/header/Breadcrumb.vue'
@@ -27,10 +38,18 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapActions } = createNamespacedHelpers('docs/summary')
 import { downloadLiteratureApi } from '@/api/doc'
 export default {
+  data() {
+    return {
+      pdfSrc: null,
+      pdfTotal: null,
+      pdfVisible: false
+    }
+  },
   components: {
     Abstract,
     Breadcrumb,
-    EditDialog
+    EditDialog,
+    Pdf
   },
   computed: {
     ...mapState(['detail']),
@@ -39,7 +58,29 @@ export default {
   methods: {
     ...mapActions(['submitEditLiterature', 'queryLiterature']),
     async downloadLiterature() {
-      await downloadLiteratureApi()
+      downloadLiteratureApi().then(res => {
+        let url = window.URL.createObjectURL(res.data)
+        const fileName = decodeURIComponent(res.headers["content-disposition"].split("=")[1])
+        const a = document.createElement("a")
+        a.setAttribute("href", url)
+        a.setAttribute("download", fileName)
+        document.body.append(a)
+        a.click()
+        document.body.removeChild(a)
+      }) 
+    },
+    async preview() {
+      downloadLiteratureApi().then(res => {
+        const urlPdf = window.URL.createObjectURL(res.data)
+        this.pdfSrc = Pdf.createLoadingTask({
+          url: urlPdf,
+          CMapReaderFactory
+        })
+        this.pdfSrc.promise.then(pdf => {
+          this.pdfTotal = pdf.numPages
+        })
+        this.pdfVisible = true
+      })
     },
     async editDocHandler(formData) {
       await this.submitEditLiterature(formData)
