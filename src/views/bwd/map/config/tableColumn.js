@@ -20,7 +20,7 @@ export const tableConfig = startMapMatch => [
   },
   {
     colConfig: {
-      property: 'nameCn',
+      property: 'colNameCn',
       label: '字段',
       minWidth: 55
     }

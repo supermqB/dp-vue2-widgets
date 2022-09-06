@@ -8,7 +8,7 @@
       @run="onClickRunCatalog"
     ></Header>
     <div class="search">
-      <el-popover placement="right-start" width="150" trigger="click">
+      <!-- <el-popover placement="right-start" width="150" trigger="click">
         <el-tree
           show-checkbox
           ref="filterTree"
@@ -26,7 +26,7 @@
           >
         </div>
         <el-button type="text" slot="reference"> 筛选 </el-button>
-      </el-popover>
+      </el-popover> -->
       <span>搜索</span>
       <el-input
         placeholder="请输入"
@@ -194,18 +194,18 @@ export default {
   display: flex;
   flex-direction: column;
   .search {
-    height: 41px;
+    height: 39px;
     padding: 0 7px 0 0px;
     box-sizing: border-box;
     display: flex;
     flex-shrink: 0;
     justify-content: center;
     align-items: center;
-    // border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
     span {
       display: inline-block;
       padding-left: 7px;
-      width: 70px;
+      width: 50px;
       font-size: 14px;
     }
     .el-button {

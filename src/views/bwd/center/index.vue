@@ -30,7 +30,7 @@
         :tableConfig="tableConfig"
         :tableData="fieldsList"
         :pageInfo="pageInfo"
-        @row-changed="val => setCurrentField(val.id)"
+        @row-changed="rowChange"
         @page-changed="val => pageInfoChanged(val)"
       ></Table>
     </div>
@@ -122,6 +122,9 @@ export default {
           return require('@/assets/images/common/icons/income.png')
       }
     },
+    rowChange(val) {
+      this.setCurrentField(val.id)
+    },
     async pageInfoChanged(val) {
       this.setPageInfo(val)
       await this.queryField()
@@ -199,15 +202,20 @@ export default {
     border-bottom: 1px solid #e5e5e5;
   }
   .search {
-    height: 36px;
-    padding: 0 10px;
+    height: 38px;
+    position: relative;
+    padding: 0 15px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     border-bottom: 1px solid #e5e5e5;
   }
   .table {
     flex: 1;
   }
+}
+::v-deep .el-form-item {
+  margin-top: -2px;
 }
 ::v-deep .el-dialog {
   width: 700px;
