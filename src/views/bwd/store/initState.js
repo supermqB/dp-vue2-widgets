@@ -10,7 +10,7 @@ export default {
   searchData: {
     nameCn: '',
     nameEn: '',
-    dwdField: ''
+    dwdNameCn: ''
   },
   fileCatalogData: {
     id: '',

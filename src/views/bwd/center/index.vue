@@ -19,7 +19,7 @@
       <Form :formCfg="searchCfg" :formData="searchData"></Form>
       <div style="line-height: 36px">
         <el-button @click="onClickSearch">查询</el-button>
-        <el-button type="text" style="font-size: 13px" @click="advancedSearch"
+        <el-button type="text" style="font-size: 13px" @click="advancedSearch" disabled
           >高级搜索</el-button
         >
       </div>

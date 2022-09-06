@@ -303,6 +303,7 @@ const actions = {
       this._vm.$message.success('编辑文件目录成功')
     }
     dispatch('loadBwdModules')
+    dispatch('queryTotalNum')
   },
   async submitFields({ dispatch, state }) {
     const { id, index, nameCn, nameEn } = state.fileFieldsData
