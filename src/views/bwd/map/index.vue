@@ -71,8 +71,8 @@ export default {
       'submitMapping',
       'matchCatalog'
     ]),
-    tabChanged() {
-      this.queryMappingList(this.mappingType)
+    async tabChanged() {
+      await this.queryMappingList(this.mappingType)
       this.resetEventMapData()
       this.setEventMapList()
     },
