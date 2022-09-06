@@ -55,6 +55,7 @@ const state = {
   fieldsList: [],
   eventList: [],
   eventMapList: [],
+  source: 'DWD',
 
   fileCatalogData: Object.assign({}, initState.fileCatalogData),
   searchData: Object.assign({}, initState.searchData),
@@ -150,13 +151,13 @@ const mutations = {
       state.currentField = field
     }
   },
-  setEventMapList: (state, type = 'DWD') => {
+  setEventMapList: state => {
     const currentField = state.fieldsList.find(
       item => item.id === state.currentField
     )
     if (!state.currentField || !currentField) return
     state.eventMapList = (
-      type === 'DWD'
+      state.source === 'DWD'
         ? currentField.dwdMappingColumnList
         : currentField.sbrMappingColumnList
     ).map((item, index) => {
@@ -192,17 +193,18 @@ const mutations = {
     const currentField = state.fieldsList.find(
       item => item.id === state.currentField
     )
-
-    currentField.dwdMappingColumnList.forEach((item, index) => {
-      state.eventMapList.forEach(event => {
-        console.log(event, item)
-        if (event.colId === item.colId) {
-          event.id = item.id
-          event.match = true
-          event.matchLabel = '取消匹配'
-        }
-      })
-    })
+    state.source === 'DWD'
+      ? currentField.dwdMappingColumnList
+      : currentField.sbrMappingColumnList.forEach((item, index) => {
+          state.eventMapList.forEach(event => {
+            console.log(event, item)
+            if (event.colId === item.colId) {
+              event.id = item.id
+              event.match = true
+              event.matchLabel = '取消匹配'
+            }
+          })
+        })
   }
 }
 
@@ -263,6 +265,7 @@ const actions = {
   async queryMappingList({}, source) {
     const { value } = await getMapModelApi(source)
     state.eventList = value
+    state.source = source
   },
   async queryMappingField({ commit }, id) {
     const result = await getMapFieldsApi(id)

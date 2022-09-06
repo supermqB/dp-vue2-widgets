@@ -74,7 +74,7 @@ export default {
     tabChanged() {
       this.queryMappingList(this.mappingType)
       this.resetEventMapData()
-      this.setEventMapList(this.mappingType)
+      this.setEventMapList()
     },
     async onChangeMap() {
       const { event } = this.eventMapData
