@@ -317,12 +317,12 @@ export default {
         border-right: 1px solid #e2e2e2;
         &:not(.active) {
           color: #333;
-          background-color: transparent;
+          background-color: #f5f5f5;
         }
         &:hover,
         &.active {
           color: #333;
-          background-color: #f5f5f5;
+          background-color: #fff;
         }
       }
     }

@@ -23,7 +23,10 @@ export const drg = function () {
         { label: '中成药', value: '21' }
       ],
       label: '药品类别',
-      id: 'drug_type_code'
+      id: 'drug_type_code',
+      elOptions: {
+        clearable: true
+      }
     },
     {
       type: 'el-autocomplete',
@@ -35,7 +38,8 @@ export const drg = function () {
             : orginOptions
           cb(filteredValues.map(item => ({ value: item })))
         },
-        placeholder: '请输入并选择'
+        placeholder: '请输入并选择',
+        clearable: true
       },
       label: '注册剂型',
       id: 'drug_form_name'

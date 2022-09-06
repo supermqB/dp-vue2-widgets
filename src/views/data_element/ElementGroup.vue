@@ -7,6 +7,7 @@
         suffix-icon="el-icon-search"
         :value="search"
         @input="setSearch"
+        clearable
       >
       </el-input>
     </div>

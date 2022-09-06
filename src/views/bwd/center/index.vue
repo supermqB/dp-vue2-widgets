@@ -11,15 +11,15 @@
         </el-breadcrumb>
       </div>
       <div>
-        <el-button type="primary" @click="editFileFields">编辑</el-button>
-        <el-button type="primary" @click="addFileFields">新增</el-button>
+        <el-button type="primary" @click="editFileFields" :disabled="currentBwdItem.state === RUNNINGSTATE">编辑</el-button>
+        <el-button type="primary" @click="addFileFields" :disabled="currentBwdItem.state === RUNNINGSTATE">新增</el-button>
       </div>
     </div>
     <div class="search">
       <Form :formCfg="searchCfg" :formData="searchData"></Form>
       <div style="line-height: 36px">
         <el-button @click="onClickSearch">查询</el-button>
-        <el-button type="text" style="font-size: 13px" @click="advancedSearch"
+        <el-button type="text" style="font-size: 13px" @click="advancedSearch" disabled
           >高级搜索</el-button
         >
       </div>
@@ -30,7 +30,7 @@
         :tableConfig="tableConfig"
         :tableData="fieldsList"
         :pageInfo="pageInfo"
-        @row-changed="val => setCurrentField(val.id)"
+        @row-changed="rowChange"
         @page-changed="val => pageInfoChanged(val)"
       ></Table>
     </div>
@@ -91,7 +91,8 @@ export default {
       tableConfig,
       fileFieldsCfg,
       fileFieldsRule,
-      adSearchCfg
+      adSearchCfg,
+      RUNNINGSTATE
     }
   },
   computed: {
@@ -121,6 +122,9 @@ export default {
         case STOPSTATE:
           return require('@/assets/images/common/icons/income.png')
       }
+    },
+    rowChange(val) {
+      this.setCurrentField(val.id)
     },
     async pageInfoChanged(val) {
       this.setPageInfo(val)
@@ -199,15 +203,20 @@ export default {
     border-bottom: 1px solid #e5e5e5;
   }
   .search {
-    height: 36px;
-    padding: 0 10px;
+    height: 38px;
+    position: relative;
+    padding: 0 15px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     border-bottom: 1px solid #e5e5e5;
   }
   .table {
     flex: 1;
   }
+}
+::v-deep .el-form-item {
+  margin-top: -2px;
 }
 ::v-deep .el-dialog {
   width: 700px;

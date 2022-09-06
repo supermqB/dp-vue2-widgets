@@ -28,6 +28,9 @@ export default [
     type: 'el-select',
     options: genYearList(),
     label: '年份',
-    id: 'releaseTime'
+    id: 'releaseTime',
+    elOptions: {
+      clearable: true
+    }
   }
 ]
