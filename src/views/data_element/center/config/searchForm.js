@@ -13,7 +13,10 @@ export default function getFormConfig() {
         { label: '时间型(DT)', value: 'DT' }
       ],
       label: '类型',
-      id: 'type'
+      id: 'type',
+      elOptions: {
+        clearable: true
+      }
     },
     {
       type: 'el-autocomplete',
@@ -25,7 +28,8 @@ export default function getFormConfig() {
             : orginOptions
           cb(filteredValues.map(item => ({ value: item })))
         },
-        placeholder: '请输入并选择'
+        placeholder: '请输入并选择',
+        clearable: true
       },
       label: '词性',
       id: 'wordSpeech'
@@ -39,6 +43,9 @@ export default function getFormConfig() {
         //{ label: '待审核', value: '2' },
         { label: '启用', value: '3' }
       ],
+      elOptions: {
+        clearable: true
+      },
       label: '状态',
       id: 'state'
     }

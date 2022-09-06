@@ -148,6 +148,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@mixin ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 ::v-deep.doclist_wrapper {
   display: flex;
   height: 100%;
@@ -234,15 +239,20 @@ export default {
         display: inline-block;
       }
       .title {
+        position: relative;
+        top: 2px;
         font-size: 13px;
         display: inline-block;
         color: rgba(0, 0, 0, 0.85);
         font-weight: bold;
+        width: calc(100% - 70px);
+        @include ellipsis();
       }
       .sumline {
         font-size: 12px;
         color: rgba(0, 0, 0, 0.45);
         line-height: 12px;
+        @include ellipsis();
       }
     }
   }
