@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mapWrap">
     <el-tabs
       v-model="mappingType"
       type="card"
@@ -8,28 +8,31 @@
       class="bwd_ref_tabs"
     >
       <el-tab-pane label="事件库映射" name="DWD">
-        <Form
-          :formCfg="eventCfg(eventOptions, onChangeMap, clickEvent)"
-          :formData="eventMapData"
-        ></Form>
-        <Table
-          ref="tableList"
-          :tableConfig="tableConfig(startMapMatch)"
-          :tableData="eventMapList"
-          @row-changed="handleSelectionChange"
-        ></Table>
+        
       </el-tab-pane>
       <el-tab-pane label="主索引映射" name="SBR">
-        <Form
+        <!-- <Form
           :formCfg="mdmCfg(eventOptions, onChangeMap, clickEvent, 'SBR')"
           :formData="eventMapData"
         ></Form>
         <Table
+          :isShowSelection="false"
           :tableConfig="tableConfig(startMapMatch)"
           :tableData="eventMapList"
-        ></Table>
+        ></Table> -->
       </el-tab-pane>
     </el-tabs>
+    <Form
+      class="form"
+      :formCfg="eventCfg(eventOptions, onChangeMap, clickEvent, mappingType)"
+      :formData="eventMapData"
+    ></Form>
+    <Table
+      :isShowSelection="false"
+      :tableConfig="tableConfig(startMapMatch)"
+      :tableData="filterEventMapList"
+      @row-changed="handleSelectionChange"
+    ></Table>
   </div>
 </template>
 
@@ -52,38 +55,43 @@ export default {
       eventCfg,
       mdmCfg,
       tableConfig,
-      eventFilter: ''
+      eventFilter: '',
+      matchDialog: false
     }
   },
   computed: {
-    ...mapState(['eventMapData', 'eventMapList']),
-    ...mapGetters(['eventOptions'])
+    ...mapState(['eventMapData', 'eventMapList', 'currentField']),
+    ...mapGetters(['eventOptions', 'filterEventMapList'])
   },
   methods: {
-    ...mapMutations(['setTabMapList']),
+    ...mapMutations(['setTabMapList', 'setEventMapList', 'resetEventMapData']),
     ...mapActions([
       'queryMappingField',
       'queryMappingList',
-      'filterMapList',
-      'submitMapping'
+      'submitMapping',
+      'matchCatalog'
     ]),
-    tabChanged() {
-      this.queryMappingList(this.mappingType)
-      const { event } = this.eventMapData
-      if (event) {
-        this.setTabMapList()
-      }
+    async tabChanged() {
+      await this.queryMappingList(this.mappingType)
+      this.resetEventMapData()
+      this.setEventMapList()
     },
     async onChangeMap() {
       const { event } = this.eventMapData
       await this.queryMappingField(event)
     },
     async clickEvent() {
-      const { field } = this.eventMapData
-      this.filterMapList(field)
+      // const { field } = this.eventMapData
+      // this.filterMapList(field)
     },
     async startMapMatch(index, data) {
-      await this.submitMapping(index)
+      this.$confirm(`${this.eventMapList[index].match ? '是否取消匹配？' : '是否匹配？'}`, {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.submitMapping(data[index])
+      })
     },
     handleSelectionChange(val) {
       this.$refs.tableList = val
@@ -91,7 +99,15 @@ export default {
   },
   mounted() {
     this.queryMappingList(this.mappingType)
-  }
+  },
+  watch: {
+    currentField: {
+      handler() {
+        this.setEventMapList()
+        this.resetEventMapData()
+      }
+    }
+  },
 }
 </script>
 
@@ -104,5 +120,14 @@ export default {
 
 ::v-deep .el-tabs__header {
   margin-bottom: 5px;
+}
+
+.mapWrap {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  .form {
+    margin-right: 10px;
+  }
 }
 </style>

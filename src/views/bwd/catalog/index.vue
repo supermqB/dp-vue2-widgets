@@ -6,9 +6,14 @@
       @add="addFileCatalog"
       @edit="editFileCatalog"
       @run="onClickRunCatalog"
+      :actionTypes="
+        currentBwdItem.state === RUNNINGSTATE
+          ? ['add', 'edit_disable', 'run_disable']
+          : ['add', 'edit', 'run']
+      "
     ></Header>
     <div class="search">
-      <el-popover placement="right-start" width="150" trigger="click">
+      <!-- <el-popover placement="right-start" width="150" trigger="click">
         <el-tree
           show-checkbox
           ref="filterTree"
@@ -26,12 +31,12 @@
           >
         </div>
         <el-button type="text" slot="reference"> 筛选 </el-button>
-      </el-popover>
+      </el-popover> -->
       <span>搜索</span>
       <el-input
         placeholder="请输入"
         v-model="bwdFilter"
-        @change="onBwdFilterChange"
+        @input="onBwdFilterChange"
         clearable
         suffix-icon="el-icon-search"
       ></el-input>
@@ -72,6 +77,7 @@ import Dialog from '@/components/Dialog.vue'
 import Form from '@/components/Form.vue'
 import Bottom from '@/components/bottom/Catalog.vue'
 import Tree from '@/components/SideTree.vue'
+import { RUNNINGSTATE } from '@/utils/const'
 import { fileCatalogCfg, fileCatalogRule } from './config/fileCatalogForm'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapMutations, mapActions } =
@@ -89,7 +95,8 @@ export default {
       bwdFilter: '',
       fileCatalogCfg,
       fileCatalogRule,
-      fileCatalogDialog: false
+      fileCatalogDialog: false,
+      RUNNINGSTATE
     }
   },
   computed: {
@@ -194,18 +201,18 @@ export default {
   display: flex;
   flex-direction: column;
   .search {
-    height: 41px;
+    height: 39px;
     padding: 0 7px 0 0px;
     box-sizing: border-box;
     display: flex;
     flex-shrink: 0;
     justify-content: center;
     align-items: center;
-    // border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
     span {
       display: inline-block;
       padding-left: 7px;
-      width: 70px;
+      width: 50px;
       font-size: 14px;
     }
     .el-button {
