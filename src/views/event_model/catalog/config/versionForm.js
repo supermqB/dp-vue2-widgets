@@ -1,4 +1,5 @@
 import { STATEOPTIONS } from '@/utils/const'
+import { validateNotEmpty } from '@/utils/validator'
 
 export const versionCfg = (versionOptions = []) => [
   {
@@ -10,6 +11,9 @@ export const versionCfg = (versionOptions = []) => [
       style: {
         width: '260px'
       }
+    },
+    elEvents: {
+      // blur: () =>
     }
   },
   {
@@ -37,6 +41,14 @@ export const versionCfg = (versionOptions = []) => [
 ]
 
 export const versionRule = {
-  version: { required: true, message: '请输入版本信息！', trigger: 'blur' },
+  version: [
+    {
+      required: true
+    },
+    {
+      validator: validateNotEmpty,
+      trigger: 'blur'
+    }
+  ],
   state: { required: true, message: '请选择状态！', trigger: 'blur' }
 }

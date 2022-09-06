@@ -61,9 +61,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .taskWrap {
-  .table_container {
-    height: 250px;
-  }
+::v-deep .el_table_wrapper .table_container {
+  height: 250px;
 }
 </style>
