@@ -109,4 +109,8 @@ export default {
   box-sizing: border-box;
   border-bottom: 1px solid #E5E5E5;
 }
+
+::v-deep .el-dialog__header {
+  border-bottom: 0;
+}
 </style>

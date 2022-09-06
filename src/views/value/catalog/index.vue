@@ -10,7 +10,7 @@
       <span>搜索</span>
       <el-input
         v-model="dictFilter"
-        @change="onDictFilterChange"
+        @input="onDictFilterChange"
         clearable
         suffix-icon="el-icon-search"></el-input>
     </div>
