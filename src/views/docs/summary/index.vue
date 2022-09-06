@@ -28,6 +28,12 @@ export default {
     this.queryLiterature()
     this.getSimilarLiteratureList()
   },
+  async activated() {
+    const identifier = this.$route.params.identifier ? this.$route.params.identifier : 'S31990001'
+    this.setIdentifier(identifier)
+    this.queryLiterature()
+    this.getSimilarLiteratureList()
+  },
   methods: {
     ...mapMutations(['setIdentifier']),
     ...mapActions(['queryLiterature', 'getSimilarLiteratureList']),

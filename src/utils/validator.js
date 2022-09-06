@@ -8,3 +8,12 @@ export const validateEnglish = (rule, value, callback) => {
     callback()
   }
 }
+
+export const validateNotEmpty = (rule, value, callback) => {
+  if (!value.trim()) {
+    Message.warning('输入不能是空！')
+    callback(new Error())
+  } else {
+    callback()
+  }
+}
