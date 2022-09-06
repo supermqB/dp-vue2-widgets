@@ -6,7 +6,11 @@
       @add="addFileCatalog"
       @edit="editFileCatalog"
       @run="onClickRunCatalog"
-      :actionTypes="currentBwdItem.state === RUNNINGSTATE ? ['add', 'edit_disable', 'run_disable'] : ['add', 'edit', 'run']"
+      :actionTypes="
+        currentBwdItem.state === RUNNINGSTATE
+          ? ['add', 'edit_disable', 'run_disable']
+          : ['add', 'edit', 'run']
+      "
     ></Header>
     <div class="search">
       <!-- <el-popover placement="right-start" width="150" trigger="click">
@@ -32,7 +36,7 @@
       <el-input
         placeholder="请输入"
         v-model="bwdFilter"
-        @change="onBwdFilterChange"
+        @input="onBwdFilterChange"
         clearable
         suffix-icon="el-icon-search"
       ></el-input>
