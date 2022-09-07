@@ -12,10 +12,14 @@ import {
   addMappingApi,
   deleteMappingApi
 } from '@/api/bwd'
-
+import { Message } from 'element-ui'
 import { keysClone } from '@/utils/lang'
 import { STOPSTATE, RUNNINGSTATE } from '@/utils/const'
 import initState from './initState'
+
+const getCurrentFieldItem = (list, id) => {
+  return list.find(item => item.id === id)
+}
 
 const state = {
   // 左侧数据
@@ -152,14 +156,15 @@ const mutations = {
     }
   },
   setEventMapList: state => {
-    const currentField = state.fieldsList.find(
-      item => item.id === state.currentField
+    if (!state.currentField) return
+    const currentField = getCurrentFieldItem(
+      state.fieldsList,
+      state.currentField
     )
-    if (!state.currentField || !currentField) return
+    if (!currentField) return
+    const { dwdMappingColumnList, sbrMappingColumnList } = currentField
     state.eventMapList = (
-      state.source === 'DWD'
-        ? currentField.dwdMappingColumnList
-        : currentField.sbrMappingColumnList
+      state.source === 'DWD' ? dwdMappingColumnList : sbrMappingColumnList
     ).map((item, index) => {
       return {
         id: item.id,
@@ -170,7 +175,7 @@ const mutations = {
         tableId: item.tableId,
         tableNameCn: item.nameCn,
         tableNameEn: item.nameEn,
-        definition: item.tableNameCn,
+        definition: item.definition,
         match: true,
         matchLabel: '取消匹配'
       }
@@ -190,14 +195,16 @@ const mutations = {
     state.eventMapData = Object.assign({}, initState.eventMapData)
   },
   matchId: state => {
-    const currentField = state.fieldsList.find(
-      item => item.id === state.currentField
+    const currentField = getCurrentFieldItem(
+      state.fieldsList,
+      state.currentField
     )
+    if (!currentField) return
+    const { dwdMappingColumnList, sbrMappingColumnList } = currentField
     state.source === 'DWD'
-      ? currentField.dwdMappingColumnList
-      : currentField.sbrMappingColumnList.forEach((item, index) => {
+      ? dwdMappingColumnList
+      : sbrMappingColumnList.forEach(item => {
           state.eventMapList.forEach(event => {
-            console.log(event, item)
             if (event.colId === item.colId) {
               event.id = item.id
               event.match = true
@@ -228,7 +235,7 @@ const actions = {
               label: it.nameCn,
               nameCn: it.nameCn,
               nameEn: it.nameEn,
-              state: it.state == '0' ? STOPSTATE : RUNNINGSTATE,
+              state: it.state,
               number: it.refNum
             }
           })
@@ -334,8 +341,20 @@ const actions = {
   },
   async submitMapping({ commit, dispatch, state }, col) {
     if (!col.match) {
+      const currentField = getCurrentFieldItem(
+        state.fieldsList,
+        state.currentField
+      )
+      if (!currentField) return
+      const { dwdMappingColumnList, id } = currentField
+      if (state.source === 'DWD') {
+        if (dwdMappingColumnList && dwdMappingColumnList.length === 1) {
+          Message.warning('事件库映射已存在！')
+          return
+        }
+      }
       await addMappingApi({
-        id: state.currentField,
+        id,
         bwdMappingColumn: {
           tableId: col.tableId,
           tableNameCn: col.tableNameCn,
@@ -348,7 +367,7 @@ const actions = {
       this._vm.$message.success('匹配成功！')
       col.match = true
       col.matchLabel = '取消匹配'
-      await dispatch('queryField', state.currentField)
+      await dispatch('queryField')
       commit('matchId')
     } else {
       await deleteMappingApi(col.id)
@@ -356,7 +375,7 @@ const actions = {
       col.matchLabel = '匹配'
       delete col['id']
       this._vm.$message.success('取消匹配成功！')
-      await dispatch('queryField', state.currentField)
+      await dispatch('queryField')
     }
   },
   async runCatalog({ dispatch, state }) {

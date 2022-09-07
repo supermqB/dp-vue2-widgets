@@ -2,9 +2,9 @@
 <template>
   <div class="abstractWrap">
     <h1>{{ title }}</h1>
-    <h3>{{ titleEn ? titleEn : '/' }}</h3>
-    <h5>{{ author ? author : '/' }}</h5>
-    <h5>{{ organization ? organization : '/' }}</h5>
+    <h3>{{ titleEn ? titleEn : '无' }}</h3>
+    <h5>{{ author ? author : '无' }}</h5>
+    <h5>{{ organization ? organization : '无' }}</h5>
     <ul>
       <li
         v-for="(item, key) in contentList"
@@ -21,19 +21,19 @@ export default {
   props: {
     title: {
       type: String,
-      default: '2809名体检人群中高血压与Hp感染的关联性分析',
+      default: '',
     },
     titleEn: {
       type: String,
-      default: 'English Title balabalaba and  balalalalal',
+      default: '',
     },
     author: {
       type: String,
-      default: '吕岩红， 张志勉',
+      default: '',
     },
     organization: {
       type: String,
-      default: '山东大学齐鲁医院健康管理中心',
+      default: '',
     },
     contentList: {
       type: Array,

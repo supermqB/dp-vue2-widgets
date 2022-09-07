@@ -50,7 +50,7 @@ export const addFileCatalogApi = (nameCn, nameEn, theme, state) => {
     }
   })
 }
-export const addFileFieldsApi = ({ id, datasetId, index, nameCn, nameEn }) => {
+export const addFileFieldsApi = ({ datasetId, index, nameCn, nameEn }) => {
   return request({
     method: 'post',
     url: '/data-mapping/column/add',
