@@ -70,7 +70,10 @@ const actions = {
   },
   async importDoc({ dispatch }, docProps) {
     console.log(docProps)
-    const result = await postWithFile('literature/importLiterature', docProps)
+    const result = await postWithFile('literature/importLiterature', {
+      ...docProps,
+      catalogCode: docProps.catalogCode.map(codeList => codeList.pop())
+    })
     if (result.success) {
       Message.success('文献导入成功')
       dispatch('search')
