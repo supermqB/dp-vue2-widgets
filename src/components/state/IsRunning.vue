@@ -2,11 +2,12 @@
   <div>
     <span v-if="currentState === RUNNINGSTATE" class="status running">已启用</span>
     <span v-else-if="currentState === EDITINGSTATE" class="status editing">编辑中</span>
+    <span v-else-if="currentState === STOPSTATE" class="status stop">已停用</span>
   </div>
 </template>
 
 <script>
-import { RUNNINGSTATE, EDITINGSTATE } from '@/utils/const'
+import { RUNNINGSTATE, EDITINGSTATE, STOPSTATE } from '@/utils/const'
 export default {
   props: {
     currentState: {
@@ -17,6 +18,7 @@ export default {
   created() {
     this.RUNNINGSTATE = RUNNINGSTATE
     this.EDITINGSTATE = EDITINGSTATE
+    this.STOPSTATE = STOPSTATE
   }
 }
 </script>
@@ -39,6 +41,10 @@ export default {
   &.editing {
     color: #EB9E05;
     background-color: rgba(235,158,5,0.2)
+  }
+  &.stop {
+    color: #777;
+    background-color: #eee;
   }
 }
 </style>
