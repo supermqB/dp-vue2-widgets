@@ -7,7 +7,7 @@
       :filter-node-method="filterNodeMethod"
       :data="treeList"
       :expand-on-click-node="false"
-      default-expand-all
+      :default-expand-all="defaultExpandAll"
       @node-click="handleNodeClick"
       :indent="11"
       highlight-current
@@ -47,6 +47,10 @@ export default {
     currentNodeKey: {
       type: String,
       default: ''
+    },
+    defaultExpandAll: {
+      type: Boolean,
+      default: true
     },
     isTopCannotBeSelected: {
       type: Boolean,
@@ -93,11 +97,25 @@ export default {
       this.$nextTick(() =>
         this.$refs.sideTree.setCurrentKey(this.currentNodeKey)
       )
+    },
+    expandParents (node) {
+      node.expanded = true
+      if (node.parent) {
+        this.expandParents(node.parent)
+      }
     }
   },
   watch: {
-    currentNodeKey() {
+    currentNodeKey(cur, old) {
       this.setCurrent()
+      if (!old) {
+        this.$nextTick(() => {
+          const selected = this.$refs.sideTree.getCurrentNode()
+          if (this.$refs.sideTree.getNode(selected) && this.$refs.sideTree.getNode(selected).parent) {
+            this.expandParents(this.$refs.sideTree.getNode(selected).parent)
+          }
+        })
+      }
     },
     data() {
       this.setCurrent()

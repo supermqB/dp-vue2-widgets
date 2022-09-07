@@ -18,6 +18,7 @@
       ref="tree"
       :data="dictList"
       :currentNodeKey="currentDict"
+      :defaultExpandAll="false"
       @onClick="onDictChange"
       class="tree"
     ></Tree>
