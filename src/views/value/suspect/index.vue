@@ -61,13 +61,14 @@ import Table from '@/components/GeneralTable.vue'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapMutations } = createNamespacedHelpers('value')
 const config = [
+  // {
+  //   colConfig: {
+  //     property: 'system',
+  //     label: '系统',
+  //     minWidth: 50
+  //   }
+  // },
   {
-    colConfig: {
-      property: 'system',
-      label: '系统',
-      minWidth: 50
-    }
-  },{
     colConfig: {
       property: 'std_vlaue_code',
       label: '代码',

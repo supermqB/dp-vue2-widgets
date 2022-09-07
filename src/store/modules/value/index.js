@@ -211,6 +211,16 @@ const mutations = {
         state.dictList.length &&
         state.dictList[0].children.length
       ) {
+        // state.currentDict = state.dictList[0].children[0].id
+        // state.currentDict = '3,dict_marriage'
+        for (let item of state.dictList) {
+          for (let it of item.children) {
+            if (it.state === INCOMESTATE) {
+              state.currentDict = it.id
+              return
+            }
+          }
+        }
         state.currentDict = state.dictList[0].children[0].id
       }
     }
