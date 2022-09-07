@@ -24,7 +24,7 @@
     </el-tabs>
     <Form
       class="form"
-      :formCfg="eventCfg(eventOptions, onChangeMap, clickEvent, mappingType)"
+      :formCfg="eventCfg(eventOptions, onChangeMap, mappingType)"
       :formData="eventMapData"
     ></Form>
     <Table
@@ -76,13 +76,13 @@ export default {
       this.resetEventMapData()
       this.setEventMapList()
     },
-    async onChangeMap() {
+    onChangeMap() {
       const { event } = this.eventMapData
-      await this.queryMappingField(event)
-    },
-    async clickEvent() {
-      // const { field } = this.eventMapData
-      // this.filterMapList(field)
+      if (!event) {
+        this.setEventMapList()
+      } else {
+        this.queryMappingField(event)
+      }
     },
     async startMapMatch(index, data) {
       this.$confirm(`${this.eventMapList[index].match ? '是否取消匹配？' : '是否匹配？'}`, {

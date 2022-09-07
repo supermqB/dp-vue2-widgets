@@ -110,7 +110,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentBwdItem', 'currentFieldRow']),
+    ...mapGetters(['currentBwdItem', 'currentFieldRow', 'pageInfo']),
     ...mapState({
       currentBwd: 'currentBwd',
       pageInfo: 'pageInfo',
@@ -180,7 +180,7 @@ export default {
     },
     addFileFields() {
       this.$refs.fileFieldsDialog.toggleOpen()
-      this.setFieldsForm()
+      this.setFieldsForm({ index: this.pageInfo.totalSize + 1 })
     },
     advancedSearch() {
       this.$refs.searchDialog.toggleOpen()

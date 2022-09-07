@@ -1,13 +1,10 @@
 import request from '@/utils/request'
 
-export const downloadLiteratureApi = (
-  identifier = 'S31990001',
-  online = true
-) => {
+export const downloadLiteratureApi = (identifier, online = true) => {
   return request({
     method: 'post',
     data: {
-      identifier: 'Z220220002',
+      identifier,
       online
     },
     url: '/literature/downloadFile',

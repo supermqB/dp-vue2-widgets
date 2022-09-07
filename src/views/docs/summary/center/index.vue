@@ -52,13 +52,13 @@ export default {
     Pdf
   },
   computed: {
-    ...mapState(['detail']),
+    ...mapState(['detail', 'identifier']),
     ...mapGetters(['summaryDetail'])
   },
   methods: {
     ...mapActions(['submitEditLiterature', 'queryLiterature']),
     async downloadLiterature() {
-      downloadLiteratureApi().then(res => {
+      downloadLiteratureApi(this.identifier).then(res => {
         let url = window.URL.createObjectURL(res.data)
         const fileName = decodeURIComponent(res.headers["content-disposition"].split("=")[1])
         const a = document.createElement("a")
@@ -70,7 +70,7 @@ export default {
       }) 
     },
     async preview() {
-      downloadLiteratureApi().then(res => {
+      downloadLiteratureApi(this.identifier).then(res => {
         const urlPdf = window.URL.createObjectURL(res.data)
         this.pdfSrc = Pdf.createLoadingTask({
           url: urlPdf,
