@@ -138,7 +138,6 @@ export default {
     }
   },
   mounted() {
-    this.search()
     this.lazyList = debounce(() => {
       this.search()
     }, 500)
