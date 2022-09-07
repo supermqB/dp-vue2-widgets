@@ -67,7 +67,9 @@ export default {
         document.body.append(a)
         a.click()
         document.body.removeChild(a)
-      }) 
+      }).catch(() => {
+        this.$message.error('当前文献待上传！')
+      })
     },
     async preview() {
       downloadLiteratureApi(this.identifier).then(res => {
@@ -80,16 +82,18 @@ export default {
           this.pdfTotal = pdf.numPages
         })
         this.pdfVisible = true
+      }).catch(() => {
+        this.$message.error('当前文献待上传，不支持预览！')
       })
     },
     async editDocHandler(formData) {
       await this.submitEditLiterature(formData)
       this.queryLiterature()
       this.$message.success('编辑文档成功！')
-      this.$refs.editDialog.open()
+      this.$refs.editDialog.toggleOpen()
     },
     openEditDialog() {
-      this.$refs.editDialog.open()
+      this.$refs.editDialog.toggleOpen()
       this.$refs.editDialog.formData = Object.assign({}, this.detail)
     },
   }

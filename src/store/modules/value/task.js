@@ -82,7 +82,6 @@ const mutations = {
     state.selectedTasks = value
   },
   setCurrentSuspect(state, value) {
-    console.log(value)
     state.currentSuspect = value
   },
   setCurrentTask(state, value) {

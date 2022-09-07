@@ -130,7 +130,16 @@ export default {
       handler(){
         this.setSuspectList()
       }
-    }
+    },
+    curTask: {
+      handler() {
+        if (this.suspectList && this.suspectList.length) {
+          this.setCurrentSuspect(this.suspectList[0])
+          if (this.$refs.suspectTable)
+            this.$refs.suspectTable.setCurrentRow(this.suspectList[0])
+        }
+      }
+    },
   },
 }
 </script>

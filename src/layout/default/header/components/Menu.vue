@@ -45,10 +45,6 @@ export default {
             {
               value: 'docs/list',
               label: '文献库明细'
-            },
-             {
-              value: 'docs/summary',
-              label: '文献库摘要',
             }
           ]
         }
