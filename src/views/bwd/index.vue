@@ -26,9 +26,6 @@ export default {
     Center,
     Map
   },
-  data() {
-    return {}
-  },
   methods: {
     ...mapActions(['loadBwdModules', 'queryTotalNum', 'queryField']),
     ...mapMutations(['setCurrentField'])

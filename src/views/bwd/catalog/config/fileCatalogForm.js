@@ -1,3 +1,6 @@
+import { STATEOPTIONS } from '@/utils/const'
+import { validateEnglish } from '@/utils/validator'
+
 export const fileCatalogCfg = (categoryList = [], disabled = false) =>
   [
     {
@@ -30,12 +33,7 @@ export const fileCatalogCfg = (categoryList = [], disabled = false) =>
       type: 'el-select',
       label: '启用状态',
       id: 'state',
-      options: [
-        { label: '停用', value: '0' },
-        { label: '编辑', value: '1' },
-        { label: '待审核', value: '2' },
-        { label: '启用', value: '3' }
-      ],
+      options: STATEOPTIONS,
       elOptions: {
         placeholder: '请选择'
       }
@@ -52,6 +50,6 @@ export const fileCatalogCfg = (categoryList = [], disabled = false) =>
 
 export const fileCatalogRule = {
   nameCn: { required: true },
-  nameEn: { required: true },
+  nameEn: [{ required: true }, { validator: validateEnglish, trigger: 'blur' }],
   theme: { required: true }
 }
