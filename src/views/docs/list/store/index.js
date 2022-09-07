@@ -65,6 +65,7 @@ const actions = {
     const result = await get('literature/selectList')
     if (result.success) {
       commit('setDocCtlg', result.value)
+      return result.value
     }
   },
   async importDoc({ dispatch }, docProps) {
