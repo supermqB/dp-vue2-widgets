@@ -74,6 +74,7 @@ const actions = {
       Message.success('文献导入成功')
       dispatch('search')
     }
+    return result.success
   }
 }
 

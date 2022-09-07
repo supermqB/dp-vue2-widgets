@@ -62,7 +62,7 @@ export default {
       let result = await this.$refs.editForm.validate()
       result.valid && this.$emit(`doc-${this.mode}`, this.formData)
     },
-    open() {
+    toggleOpen() {
       this.$refs.editDialog.toggleOpen()
     }
   },

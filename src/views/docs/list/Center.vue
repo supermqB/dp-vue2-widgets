@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     startImport() {
-      this.$refs.editDialog.open()
+      this.$refs.editDialog.toggleOpen()
     },
     searchHandler() {
       this.search()
@@ -96,7 +96,7 @@ export default {
       this.$refs.advSearchDialog.open()
     },
     createDocHandler(docProps) {
-      this.importDoc(docProps)
+      this.importDoc(docProps) && this.$refs.editDialog.toggleOpen()
     },
     forward2SumPage(identifier) {
       this.$router.push(`/docs/summary/${identifier}`)
