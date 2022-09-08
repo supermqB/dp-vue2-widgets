@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getMapFieldsApi = exports.getMapModelApi = exports.deleteMappingApi = exports.addMappingApi = exports.submitCatalogApi = exports.updateFileFieldsApi = exports.addFileFieldsApi = exports.addFileCatalogApi = exports.updateFileCatalogApi = exports.getTotalNumApi = exports.getBwdInfoApi = exports.getCatalogApi = void 0;
 
+var _const = require("@/utils/const");
+
 var _request = _interopRequireDefault(require("@/utils/request"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -60,7 +62,8 @@ var updateFileCatalogApi = function updateFileCatalogApi(id, nameCn, nameEn, the
 
 exports.updateFileCatalogApi = updateFileCatalogApi;
 
-var addFileCatalogApi = function addFileCatalogApi(nameCn, nameEn, theme, state) {
+var addFileCatalogApi = function addFileCatalogApi(nameCn, nameEn, theme) {
+  var state = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : _const.EDITINGSTATE;
   return (0, _request["default"])({
     method: 'post',
     url: '/data-mapping/file/add',

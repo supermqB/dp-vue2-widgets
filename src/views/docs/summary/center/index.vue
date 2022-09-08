@@ -2,6 +2,7 @@
   <div>
     <div class="headers">
       <Breadcrumb
+        path="/docs/list"
         baseLabel="文献库"
         :currentLabel="detail.title"></Breadcrumb>
       <div>
