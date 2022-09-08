@@ -87,12 +87,10 @@ export function getEditFormCfg(docType = 'S', mode = 'create') {
         options:
           { S: standard_class_code, Z: policy_class_code }[docType] ||
           store.state.docs.commonDocCtlg,
-        //general_class_code,
         props: {
           multiple: true
         },
         collapseTags: true
-        //showAllLevels: false
       },
       label: '分类',
       id: 'catalogCode'
@@ -104,7 +102,7 @@ export function getEditFormCfg(docType = 'S', mode = 'create') {
     },
     {
       type: 'el-input',
-      label: '标题',
+      label: '英文标题',
       id: 'titleEn'
     },
     {

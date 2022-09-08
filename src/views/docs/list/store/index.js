@@ -76,6 +76,7 @@ const actions = {
     })
     if (result.success) {
       Message.success('文献导入成功')
+      dispatch('loadCatalog')
       dispatch('search')
     }
     return result.success
