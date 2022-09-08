@@ -1,3 +1,4 @@
+import { EDITINGSTATE } from '@/utils/const'
 import request from '@/utils/request'
 
 export const getCatalogApi = () => {
@@ -38,7 +39,12 @@ export const updateFileCatalogApi = (id, nameCn, nameEn, theme, state) => {
     }
   })
 }
-export const addFileCatalogApi = (nameCn, nameEn, theme, state) => {
+export const addFileCatalogApi = (
+  nameCn,
+  nameEn,
+  theme,
+  state = EDITINGSTATE
+) => {
   return request({
     method: 'post',
     url: '/data-mapping/file/add',

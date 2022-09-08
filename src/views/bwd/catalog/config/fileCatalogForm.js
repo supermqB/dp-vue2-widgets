@@ -28,16 +28,16 @@ export const fileCatalogCfg = (categoryList = [], disabled = false) =>
         disabled,
         placeholder: '请选择'
       }
-    },
-    {
-      type: 'el-select',
-      label: '启用状态',
-      id: 'state',
-      options: STATEOPTIONS,
-      elOptions: {
-        placeholder: '请选择'
-      }
     }
+    // {
+    //   type: 'el-select',
+    //   label: '启用状态',
+    //   id: 'state',
+    //   options: STATEOPTIONS,
+    //   elOptions: {
+    //     placeholder: '请选择'
+    //   }
+    // }
   ].map(item => {
     const elOptions = Object.assign({}, item.elOptions, {
       style: {

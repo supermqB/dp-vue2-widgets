@@ -35,15 +35,16 @@ var fileCatalogCfg = function fileCatalogCfg() {
       disabled: disabled,
       placeholder: '请选择'
     }
-  }, {
-    type: 'el-select',
-    label: '启用状态',
-    id: 'state',
-    options: _const.STATEOPTIONS,
-    elOptions: {
-      placeholder: '请选择'
-    }
-  }].map(function (item) {
+  } // {
+  //   type: 'el-select',
+  //   label: '启用状态',
+  //   id: 'state',
+  //   options: STATEOPTIONS,
+  //   elOptions: {
+  //     placeholder: '请选择'
+  //   }
+  // }
+  ].map(function (item) {
     var elOptions = Object.assign({}, item.elOptions, {
       style: {
         width: '260px'
