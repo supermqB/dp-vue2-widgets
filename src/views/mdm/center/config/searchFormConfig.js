@@ -336,7 +336,7 @@ export const phm = function () {
     }
   ]
 }
-export const cmp = function () {
+export const com = function () {
   return [
     {
       type: 'el-input',
@@ -512,7 +512,7 @@ export const likeFields = {
   itm: ['item_name'],
   org: ['org_name', 'org_type_name', 'org_addr'],
   phm: ['pharm_name', 'drug_spec'],
-  cmp: ['company_name', 'register_addr'],
+  com: ['company_name', 'register_addr'],
   reg: ['region_name'],
   dep: ['dept_name'],
   emp: ['employee_name'],
@@ -532,7 +532,7 @@ export default {
   itm,
   org,
   phm,
-  cmp,
+  com,
   reg,
   dep,
   emp,
