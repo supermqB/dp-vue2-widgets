@@ -85,13 +85,7 @@ export default {
       }
     },
     async startMapMatch(index, data) {
-      this.$confirm(`${this.eventMapList[index].match ? '是否取消匹配？' : '是否匹配？'}`, {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.submitMapping(data[index])
-      })
+      this.submitMapping(data[index])
     },
     handleSelectionChange(val) {
       this.$refs.tableList = val

@@ -26,18 +26,18 @@ export const versionCfg = (versionOptions = []) => [
         width: '260px'
       }
     }
-  },
-  {
-    type: 'el-select',
-    label: '状态',
-    id: 'state',
-    options: STATEOPTIONS,
-    elOptions: {
-      style: {
-        width: '260px'
-      }
-    }
   }
+  // {
+  //   type: 'el-select',
+  //   label: '状态',
+  //   id: 'state',
+  //   options: STATEOPTIONS,
+  //   elOptions: {
+  //     style: {
+  //       width: '260px'
+  //     }
+  //   }
+  // }
 ]
 
 export const versionRule = {

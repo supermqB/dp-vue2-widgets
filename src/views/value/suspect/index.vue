@@ -72,13 +72,13 @@ const config = [
     colConfig: {
       property: 'std_vlaue_code',
       label: '代码',
-      minWidth: 55
+      minWidth: 40
     }
   },{
     colConfig: {
       property: 'std_vlaue_name',
       label: '名称',
-      minWidth: 55
+      minWidth: 60
     }
   }
 ]

@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { EDITINGSTATE } from '@/utils/const'
 
 export const getVersionListApi = () => {
   return request({
@@ -31,7 +32,7 @@ export const getEventInfoApi = (
   })
 }
 
-export const addVersionApi = (version, parVersion, state) => {
+export const addVersionApi = (version, parVersion, state = EDITINGSTATE) => {
   return request({
     method: 'post',
     url: '/dataset/addVersion',

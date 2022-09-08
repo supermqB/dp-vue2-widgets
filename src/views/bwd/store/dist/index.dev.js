@@ -11,8 +11,6 @@ var _elementUi = require("element-ui");
 
 var _lang = require("@/utils/lang");
 
-var _const = require("@/utils/const");
-
 var _initState = _interopRequireDefault(require("./initState"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -218,14 +216,22 @@ var mutations = {
     if (!currentField) return;
     var dwdMappingColumnList = currentField.dwdMappingColumnList,
         sbrMappingColumnList = currentField.sbrMappingColumnList;
-    state.source === 'DWD' ? dwdMappingColumnList : sbrMappingColumnList.forEach(function (item) {
+    if (state.source !== 'DWD') dwdMappingColumnList = sbrMappingColumnList;
+    dwdMappingColumnList.forEach(function (item) {
       state.eventMapList.forEach(function (event) {
         if (event.colId === item.colId) {
           event.id = item.id;
           event.match = true;
-          event.matchLabel = '取消匹配';
         }
       });
+    });
+  },
+  cancelMatch: function cancelMatch(state, id) {
+    state.eventMapList.forEach(function (item) {
+      if (item.id === id) {
+        delete item.id;
+        item.match = false;
+      }
     });
   }
 };
@@ -315,7 +321,8 @@ var actions = {
             _res$value = res.value, records = _res$value.records, pageInfo = _res$value.pageInfo;
             state.fieldsList = records.map(function (item, index) {
               return _objectSpread({}, item, {
-                index: item.id,
+                index: pageInfo.pageSize * (pageInfo.curPage - 1) + index + 1,
+                // index: item.id,
                 dwdTable: item.dwdMappingColumnList.map(function (item) {
                   return item.tableNameCn;
                 }).join(', '),
@@ -389,8 +396,7 @@ var actions = {
                 colNameEn: item.nameEn,
                 colId: item.id,
                 definition: item.definition,
-                match: false,
-                matchLabel: '匹配'
+                match: false
               };
             });
             commit('matchId');
@@ -501,7 +507,7 @@ var actions = {
     }, null, this);
   },
   submitMapping: function submitMapping(_ref10, col) {
-    var commit, dispatch, state, currentField, dwdMappingColumnList, id;
+    var commit, dispatch, state;
     return regeneratorRuntime.async(function submitMapping$(_context8) {
       while (1) {
         switch (_context8.prev = _context8.next) {
@@ -509,38 +515,74 @@ var actions = {
             commit = _ref10.commit, dispatch = _ref10.dispatch, state = _ref10.state;
 
             if (col.match) {
-              _context8.next = 20;
+              _context8.next = 11;
               break;
             }
 
+            _context8.next = 4;
+            return regeneratorRuntime.awrap(dispatch('map', col));
+
+          case 4:
+            this._vm.$message.success('匹配成功！');
+
+            col.match = true;
+            _context8.next = 8;
+            return regeneratorRuntime.awrap(dispatch('queryField'));
+
+          case 8:
+            commit('matchId');
+            _context8.next = 18;
+            break;
+
+          case 11:
+            _context8.next = 13;
+            return regeneratorRuntime.awrap((0, _bwd.deleteMappingApi)(col.id));
+
+          case 13:
+            col.match = false;
+            delete col['id'];
+
+            this._vm.$message.success('取消匹配成功！');
+
+            _context8.next = 18;
+            return regeneratorRuntime.awrap(dispatch('queryField'));
+
+          case 18:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, null, this);
+  },
+  map: function map(_ref11, col) {
+    var commit, state, currentField, dwdMappingColumnList, id;
+    return regeneratorRuntime.async(function map$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            commit = _ref11.commit, state = _ref11.state;
             currentField = getCurrentFieldItem(state.fieldsList, state.currentField);
-
-            if (currentField) {
-              _context8.next = 5;
-              break;
-            }
-
-            return _context8.abrupt("return");
-
-          case 5:
             dwdMappingColumnList = currentField.dwdMappingColumnList, id = currentField.id;
 
-            if (!(state.source === 'DWD')) {
-              _context8.next = 10;
+            if (!(state.source === 'DWD' && dwdMappingColumnList && dwdMappingColumnList.length === 1)) {
+              _context9.next = 12;
               break;
             }
 
-            if (!(dwdMappingColumnList && dwdMappingColumnList.length === 1)) {
-              _context8.next = 10;
-              break;
-            }
+            _context9.next = 6;
+            return regeneratorRuntime.awrap(_elementUi.MessageBox.confirm('该字段事件库映射已存在，是否替换？', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }));
 
-            _elementUi.Message.warning('事件库映射已存在！');
+          case 6:
+            _context9.next = 8;
+            return regeneratorRuntime.awrap((0, _bwd.deleteMappingApi)(dwdMappingColumnList[0].id));
 
-            return _context8.abrupt("return");
-
-          case 10:
-            _context8.next = 12;
+          case 8:
+            commit('cancelMatch', dwdMappingColumnList[0].id);
+            _context9.next = 11;
             return regeneratorRuntime.awrap((0, _bwd.addMappingApi)({
               id: id,
               bwdMappingColumn: {
@@ -553,49 +595,39 @@ var actions = {
               }
             }));
 
+          case 11:
+            return _context9.abrupt("return");
+
           case 12:
-            this._vm.$message.success('匹配成功！');
+            _context9.next = 14;
+            return regeneratorRuntime.awrap((0, _bwd.addMappingApi)({
+              id: id,
+              bwdMappingColumn: {
+                tableId: col.tableId,
+                tableNameCn: col.tableNameCn,
+                tableNameEn: col.tableNameEn,
+                colId: col.colId,
+                colNameCn: col.colNameCn,
+                colNameEn: col.colNameEn
+              }
+            }));
 
-            col.match = true;
-            col.matchLabel = '取消匹配';
-            _context8.next = 17;
-            return regeneratorRuntime.awrap(dispatch('queryField'));
-
-          case 17:
-            commit('matchId');
-            _context8.next = 28;
-            break;
-
-          case 20:
-            _context8.next = 22;
-            return regeneratorRuntime.awrap((0, _bwd.deleteMappingApi)(col.id));
-
-          case 22:
-            col.match = false;
-            col.matchLabel = '匹配';
-            delete col['id'];
-
-            this._vm.$message.success('取消匹配成功！');
-
-            _context8.next = 28;
-            return regeneratorRuntime.awrap(dispatch('queryField'));
-
-          case 28:
+          case 14:
           case "end":
-            return _context8.stop();
+            return _context9.stop();
         }
       }
-    }, null, this);
+    });
   },
-  runCatalog: function runCatalog(_ref11) {
+  runCatalog: function runCatalog(_ref12) {
     var dispatch, state, id;
-    return regeneratorRuntime.async(function runCatalog$(_context9) {
+    return regeneratorRuntime.async(function runCatalog$(_context10) {
       while (1) {
-        switch (_context9.prev = _context9.next) {
+        switch (_context10.prev = _context10.next) {
           case 0:
-            dispatch = _ref11.dispatch, state = _ref11.state;
+            dispatch = _ref12.dispatch, state = _ref12.state;
             id = state.currentBwd;
-            _context9.next = 4;
+            _context10.next = 4;
             return regeneratorRuntime.awrap((0, _bwd.submitCatalogApi)(id));
 
           case 4:
@@ -605,7 +637,7 @@ var actions = {
 
           case 6:
           case "end":
-            return _context9.stop();
+            return _context10.stop();
         }
       }
     }, null, this);

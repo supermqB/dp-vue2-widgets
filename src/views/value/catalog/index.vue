@@ -140,9 +140,6 @@ export default {
         nameEn
       })
       this.$refs.editCatalogDialog.toggleOpen()
-      this.$nextTick(() => {
-        this.$refs.editDictForm.resetFields()
-      })
     },
     onDictFilterChange(val) {
       this.$refs.tree.filter(val)
