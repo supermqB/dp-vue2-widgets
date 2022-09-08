@@ -43,12 +43,13 @@
               v-for="action in col.actions"
               :key="action.id"
               :is="action.type"
+              v-model="row[action.id]"
               v-bind="action.typeProps"
               @click.native.prevent="
                 rowAction({ rowIdx, row, column }, action.callback)
               "
             >
-              {{ action.name || row[`${action.id}Label`] }}
+              {{ action.name }}
             </component>
           </template>
         </el-table-column>

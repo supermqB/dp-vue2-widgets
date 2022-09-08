@@ -96,9 +96,6 @@ var mutations = {
   setTaskList: function setTaskList(state, list) {
     state.taskList = !list ? [] : list;
   },
-  setSuspectList: function setSuspectList(state) {
-    state.taskList = [];
-  },
   setSearchKey: function setSearchKey(state, value) {
     state.searchKey = value;
   },

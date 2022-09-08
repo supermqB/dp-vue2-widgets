@@ -9,6 +9,11 @@ import DefaultLayout from '@/layout/default'
 /* Page */
 import ValuePage from '@/views/value' // 值域页面
 
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 const routes = [
   {
     path: '/',

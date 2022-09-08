@@ -69,9 +69,6 @@ const mutations = {
   setTaskList(state, list) {
     state.taskList = !list ? [] : list
   },
-  setSuspectList(state) {
-    state.taskList = []
-  },
   setSearchKey(state, value) {
     state.searchKey = value
   },

@@ -225,7 +225,7 @@ const actions = {
   async addVersion({ dispatch, commit }) {
     const { version, parVersion } = state.versionForm
     await addVersionApi(version, parVersion, state.versionForm.state)
-    commit('resetVersionForm')
+    commit('setVersionForm')
     dispatch('queryVersion')
   },
   async runCatalog({ dispatch, state }, val) {

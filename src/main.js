@@ -15,8 +15,10 @@ import router from './router'
 import store from './store'
 import '@/assets/css/reset.scss'
 import VueParticles from 'vue-particles'
+import MatchButton from '@/components/button/match.vue'
 
 Vue.use(VueParticles)
+Vue.component('MatchButton', MatchButton)
 
 new Vue({
   router,

@@ -69,7 +69,7 @@
     </Dialog>
     <el-dialog
       title="提示"
-      :visible="runDialog"
+      :visible.sync="runDialog"
       class="runDialog">
       <div>
         <i class="el-icon-warning warning" />
@@ -198,7 +198,7 @@ export default {
           type: 'warning'
         }
       ).then(() => {
-        this.runCatalog()
+        this.runCatalog(true)
         this.runDialog = false
       })
     },
@@ -235,7 +235,8 @@ export default {
     async onClickSubmitVersion() {
       const { valid } = await this.$refs.versionForm.validate()
       if (valid) {
-        this.addVersion()
+        await this.addVersion()
+        this.$message.success('新增版本成功！')
         this.$refs.versionDialog.toggleOpen()
       } else {
         this.$alert('请检查输入项是否完整！')

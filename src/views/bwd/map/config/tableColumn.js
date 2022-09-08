@@ -3,18 +3,21 @@ export const tableConfig = startMapMatch => [
     colConfig: {
       property: 'id',
       label: '映射',
-      minWidth: 55
+      width: 40,
+      align: 'left'
     },
     actions: [
       {
-        type: 'el-button',
-        typeProps: {
-          type: 'text',
-          round: false
-        },
+        type: 'match-button',
         id: 'match',
         name: '',
-        callback: startMapMatch
+        callback: startMapMatch,
+        typeProps: {
+          style: {
+            marginTop: '5px',
+            marginLeft: '5px'
+          }
+        }
       }
     ]
   },

@@ -12,9 +12,8 @@ import {
   addMappingApi,
   deleteMappingApi
 } from '@/api/bwd'
-import { Message } from 'element-ui'
+import { MessageBox } from 'element-ui'
 import { keysClone } from '@/utils/lang'
-import { STOPSTATE, RUNNINGSTATE } from '@/utils/const'
 import initState from './initState'
 
 const getCurrentFieldItem = (list, id) => {
@@ -200,18 +199,24 @@ const mutations = {
       state.currentField
     )
     if (!currentField) return
-    const { dwdMappingColumnList, sbrMappingColumnList } = currentField
-    state.source === 'DWD'
-      ? dwdMappingColumnList
-      : sbrMappingColumnList.forEach(item => {
-          state.eventMapList.forEach(event => {
-            if (event.colId === item.colId) {
-              event.id = item.id
-              event.match = true
-              event.matchLabel = '取消匹配'
-            }
-          })
-        })
+    let { dwdMappingColumnList, sbrMappingColumnList } = currentField
+    if (state.source !== 'DWD') dwdMappingColumnList = sbrMappingColumnList
+    dwdMappingColumnList.forEach(item => {
+      state.eventMapList.forEach(event => {
+        if (event.colId === item.colId) {
+          event.id = item.id
+          event.match = true
+        }
+      })
+    })
+  },
+  cancelMatch: (state, id) => {
+    state.eventMapList.forEach(item => {
+      if (item.id === id) {
+        delete item.id
+        item.match = false
+      }
+    })
   }
 }
 
@@ -255,7 +260,8 @@ const actions = {
     const { records, pageInfo } = res.value
     state.fieldsList = records.map((item, index) => ({
       ...item,
-      index: item.id,
+      index: pageInfo.pageSize * (pageInfo.curPage - 1) + index + 1,
+      // index: item.id,
       dwdTable: item.dwdMappingColumnList
         .map(item => item.tableNameCn)
         .join(', '),
@@ -286,8 +292,7 @@ const actions = {
       colNameEn: item.nameEn,
       colId: item.id,
       definition: item.definition,
-      match: false,
-      matchLabel: '匹配'
+      match: false
     }))
     commit('matchId')
   },
@@ -341,18 +346,37 @@ const actions = {
   },
   async submitMapping({ commit, dispatch, state }, col) {
     if (!col.match) {
-      const currentField = getCurrentFieldItem(
-        state.fieldsList,
-        state.currentField
-      )
-      if (!currentField) return
-      const { dwdMappingColumnList, id } = currentField
-      if (state.source === 'DWD') {
-        if (dwdMappingColumnList && dwdMappingColumnList.length === 1) {
-          Message.warning('事件库映射已存在！')
-          return
-        }
-      }
+      await dispatch('map', col)
+      this._vm.$message.success('匹配成功！')
+      col.match = true
+      await dispatch('queryField')
+      commit('matchId')
+    } else {
+      await deleteMappingApi(col.id)
+      col.match = false
+      delete col['id']
+      this._vm.$message.success('取消匹配成功！')
+      await dispatch('queryField')
+    }
+  },
+  async map({ commit, state }, col) {
+    const currentField = getCurrentFieldItem(
+      state.fieldsList,
+      state.currentField
+    )
+    const { dwdMappingColumnList, id } = currentField
+    if (
+      state.source === 'DWD' &&
+      dwdMappingColumnList &&
+      dwdMappingColumnList.length === 1
+    ) {
+      await MessageBox.confirm('该字段事件库映射已存在，是否替换？', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+      await deleteMappingApi(dwdMappingColumnList[0].id)
+      commit('cancelMatch', dwdMappingColumnList[0].id)
       await addMappingApi({
         id,
         bwdMappingColumn: {
@@ -364,19 +388,19 @@ const actions = {
           colNameEn: col.colNameEn
         }
       })
-      this._vm.$message.success('匹配成功！')
-      col.match = true
-      col.matchLabel = '取消匹配'
-      await dispatch('queryField')
-      commit('matchId')
-    } else {
-      await deleteMappingApi(col.id)
-      col.match = false
-      col.matchLabel = '匹配'
-      delete col['id']
-      this._vm.$message.success('取消匹配成功！')
-      await dispatch('queryField')
+      return
     }
+    await addMappingApi({
+      id,
+      bwdMappingColumn: {
+        tableId: col.tableId,
+        tableNameCn: col.tableNameCn,
+        tableNameEn: col.tableNameEn,
+        colId: col.colId,
+        colNameCn: col.colNameCn,
+        colNameEn: col.colNameEn
+      }
+    })
   },
   async runCatalog({ dispatch, state }) {
     const id = state.currentBwd
