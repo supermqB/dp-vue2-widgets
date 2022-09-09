@@ -132,7 +132,18 @@ const _formatCheck = {
   formRule: {
     data_type: { required: true },
     char_type_code: { required: true },
-    data_length: { required: true }
+    data_length: [
+      { required: true },
+      {
+        validator: function (rule, value, cb) {
+          if (/^(\.+)?\d+$/.test(value)) {
+            cb()
+          } else {
+            cb(new Error('请输入正确的数字范围'))
+          }
+        }
+      }
+    ]
   },
   formData: {
     data_type: 'S1',
