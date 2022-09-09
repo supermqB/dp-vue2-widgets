@@ -50,6 +50,7 @@
         }
       ]"
       :tableData="tableData"
+      :key="tableKey"
       @selection-changed="selChgHandler"
       multipleSelect
     />
@@ -85,7 +86,8 @@ export default {
       formData: {
         status: '3'
       },
-      selectedItems: []
+      selectedItems: [],
+      tableKey: 1
     }
   },
   computed: {
@@ -108,6 +110,8 @@ export default {
     },
     toggleOpen() {
       this.$refs.dialog.toggleOpen()
+      /* recreate commit table to escapse layout issue. */
+      this.tableKey++
     }
   },
   components: {
@@ -125,6 +129,9 @@ export default {
       height: auto;
       margin-right: 5px;
       width: 262px;
+      .el-form-item {
+        white-space: nowrap;
+      }
     }
   }
 }

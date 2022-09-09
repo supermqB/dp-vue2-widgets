@@ -7,21 +7,25 @@ export function getFormFieldsConfig() {
     {
       type: 'el-select',
       options: [
-        { label: '标识类信息', value: 'DE01' },
-        { label: '卫生服务对象信息', value: 'DE02' }
+        /* { label: '标识类信息', value: 'DE01' },
+        { label: '卫生服务对象信息', value: 'DE02' } */
       ],
       label: '大类',
       id: 'identifierSeg1'
     },
     {
       type: 'el-select',
-      options: [{ label: '标识', value: '01' }],
+      options: [
+        /* { label: '标识', value: '01' } */
+      ],
       label: '小类',
       id: 'identifierSeg2'
     },
     {
       type: 'el-select',
-      options: [{ label: '标识', value: '01' }],
+      options: [
+        /* { label: '标识', value: '01' } */
+      ],
       label: '细类',
       id: 'identifierSeg3'
     },

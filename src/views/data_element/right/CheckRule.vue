@@ -88,6 +88,7 @@
   </div>
 </template>
 <script>
+import { get } from '@/utils/request'
 import CardVue from '@/components/list/Card.vue'
 import FormVue from '@/components/Form.vue'
 import { createNamespacedHelpers, mapState as globalMapState } from 'vuex'
@@ -177,12 +178,23 @@ export default {
     }
   },
   methods: {
-    searchDomainByList(queryString, cb) {
-      let orginOptions = this.fieldCheck.valDomainList
-      let filteredValues = queryString
-        ? orginOptions.filter(item => item.indexOf(queryString) != -1)
-        : orginOptions
-      cb(filteredValues.map(item => ({ value: item })))
+    async searchDomainByList(queryString, cb) {
+      const ctlgResp = await get('dict/getCatalog')
+      if (ctlgResp.success) {
+        let orginOptions = new Set()
+        ctlgResp.value.forEach(ctlg => {
+          ctlg.valueDictCatalogEntityList.forEach(dict => {
+            orginOptions.add(dict.nameEn)
+          })
+        })
+        orginOptions = [...orginOptions]
+        let filteredValues = queryString
+          ? orginOptions.filter(item => item.indexOf(queryString) != -1)
+          : orginOptions
+        cb(filteredValues.map(item => ({ value: item })))
+      } else {
+        cb([])
+      }
     },
     toggleFormatCheckInput(enable) {
       let fcCfg = this.formatCheck.formCfg
