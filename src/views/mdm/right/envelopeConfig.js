@@ -338,7 +338,7 @@ const phm = [
     props: ['drug_spec']
   }
 ]
-const cmp = [
+const com = [
   {
     name: 'basic',
     title: '基本信息',
@@ -408,7 +408,7 @@ export default {
   itm,
   org,
   phm,
-  cmp,
+  com,
   dep,
   emp
 }

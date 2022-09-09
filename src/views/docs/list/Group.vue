@@ -64,7 +64,7 @@ export default {
   },
   async mounted() {
     const ctlg = await this.loadCatalog()
-    ctlg && this.$refs.grouptree.setCheckedKeys(ctlg.map(c => c.id))
+    //ctlg && this.$refs.grouptree.setCheckedKeys(ctlg.map(c => c.id))
   }
 }
 </script>
