@@ -78,7 +78,8 @@ export default {
       }
     },
     async startMapMatch(index, data) {
-      this.submitMapping(data[index])
+      const col = data.find(item => item.index === index)
+      this.submitMapping(col)
     },
     handleSelectionChange(val) {
       this.$refs.tableList = val
