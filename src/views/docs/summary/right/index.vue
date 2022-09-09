@@ -81,8 +81,8 @@ ul {
       align-items: center;
     }
     .type {
-      min-width: 35px;
-      padding: 3px;
+      /* min-width: 35px; */
+      padding: 3px 6px;
       margin-right: 5px;
       text-align: center;
       font-size: 12px;
@@ -90,6 +90,7 @@ ul {
       background-color: #1890FF;
       color: #fff;
       display: inline-block;
+      white-space: nowrap;
     }
     .title {
       @include ellipsisNoWrap();

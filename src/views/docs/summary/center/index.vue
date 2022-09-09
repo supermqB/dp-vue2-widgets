@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="summaryWrap">
     <div class="headers">
       <Breadcrumb
         path="/docs/list"
@@ -11,7 +11,7 @@
         <el-button type="primary" @click="downloadLiterature">下载</el-button>
       </div>
     </div>
-    <Abstract v-bind="summaryDetail"></Abstract>
+    <Abstract v-bind="summaryDetail" class="abstract"></Abstract>
     <EditDialog
       mode="edit"
       ref="editDialog"
@@ -102,9 +102,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.summaryWrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 .headers {
   display: flex;
-  flex: 1;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -113,6 +117,9 @@ export default {
   padding-right: 10px;
   box-sizing: border-box;
   border-bottom: 1px solid #E5E5E5;
+}
+.abstract {
+  flex: 1;
 }
 
 ::v-deep .el-dialog__header {
