@@ -132,7 +132,19 @@ const _formatCheck = {
   formRule: {
     data_type: { required: true },
     char_type_code: { required: true },
-    data_length: { required: true }
+    data_length: [
+      { required: true },
+      {
+        validator: function (rule, value, cb) {
+          let numVal = value * 1
+          if (/^(\.+)?\d+$/.test(value) && (isNaN(numVal) || numVal > 0)) {
+            cb()
+          } else {
+            cb(new Error('请输入正确的数字范围'))
+          }
+        }
+      }
+    ]
   },
   formData: {
     data_type: 'S1',
