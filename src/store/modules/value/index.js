@@ -96,6 +96,11 @@ const getters = {
     }
     return {}
   },
+  currentDictValueItem(state) {
+    return state.dictValueList.find(
+      item => item.term_code === state.currentDictValue.term_code
+    )
+  },
   sourceTypeOptions(state) {
     return state.dictList.map(item => {
       return {

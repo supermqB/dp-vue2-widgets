@@ -176,6 +176,7 @@ export default {
     ...mapGetters([
       'currentVersionItem',
       'currentDictItem',
+      'currentDictValueItem',
       'tableConfig',
       'dictValueFormCfg',
       'sourceTypeOptions',
@@ -298,7 +299,7 @@ export default {
     dictValueList: {
       handler() {
         setTimeout(() => {
-          this.$refs.dictValueTable.setCurrentRow(this.currentDictValue)
+          this.$refs.dictValueTable.setCurrentRow(this.currentDictValueItem)
         }, 60)
       }
     },
