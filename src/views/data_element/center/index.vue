@@ -144,6 +144,7 @@ export default {
     openCreateDialog() {
       this.editElemDialogTitle = '新增数据元'
       this.presetEditDialog()
+      this.setEditDialogIdSegOptions()
       this.$nextTick(() => {
         this.$refs.editElemForm.$refs.el_form.clearValidate()
       })
@@ -154,7 +155,6 @@ export default {
         this.editElemFormData
       let lastSegReg = /.*\.(\d+)$/
 
-      if (!identifierSeg1) return
       let seg1List = this.groupTreeData[0].directoryList
       this.editElemFormConfig[0].options = seg1List.map(
         ({ ctlgIdentifier, ctlgName }) => ({
@@ -163,6 +163,7 @@ export default {
         })
       )
 
+      if (!identifierSeg1) return
       let seg2List = seg1List.find(
         item => item.ctlgIdentifier == identifierSeg1
       ).directoryList

@@ -25,9 +25,13 @@ const state = {
   }
 }
 const mutations = {
-  setSearchFormConfig(state, type) {
+  async setSearchFormConfig(state, type) {
     let generator = formConfigs[type]
     if (!generator) return
+    const drgFormResp = await post('dict/list', { id: 279 })
+    if (drgFormResp.success) {
+      state.drugFormList = drgFormResp.value.records.map(item => item.value)
+    }
     let cfg =
       typeof generator == 'function' ? generator.apply(state) : generator
 

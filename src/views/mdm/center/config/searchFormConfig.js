@@ -31,7 +31,7 @@ export const drg = function () {
     {
       type: 'el-autocomplete',
       elOptions: {
-        'fetch-suggestions': (queryString, cb) => {
+        'fetch-suggestions': (queryString, cb) => {            
           let orginOptions = this.drugFormList
           let filteredValues = queryString
             ? orginOptions.filter(item => item.indexOf(queryString) != -1)
