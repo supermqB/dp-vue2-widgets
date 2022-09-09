@@ -227,7 +227,7 @@ var mutations = {
     if (!form) {
       state.dictValueForm = Object.assign({}, dictValueForm);
     } else {
-      state.dictValueForm = form;
+      state.dictValueForm = Object.assign({}, form);
     }
   },
   setCurrentDict: function setCurrentDict(state, value) {
@@ -423,11 +423,14 @@ var actions = {
             dispatch('querySuspect', {
               id: state.currentVersion
             });
-            dispatch('queryDictValue');
+            _context4.next = 12;
+            return regeneratorRuntime.awrap(dispatch('queryDictValue'));
+
+          case 12:
             commit('setCurrentDictValue');
             dispatch('queryClass');
 
-          case 13:
+          case 14:
           case "end":
             return _context4.stop();
         }
@@ -608,9 +611,8 @@ var actions = {
                 index: index
               });
             }));
-            commit('setCurrentDictValue');
 
-          case 12:
+          case 11:
           case "end":
             return _context9.stop();
         }

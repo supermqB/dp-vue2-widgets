@@ -177,7 +177,11 @@ var mutations = {
     }
   },
   setEventMapList: function setEventMapList(state) {
-    if (!state.currentField) return;
+    if (!state.currentField) {
+      state.eventMapList = [];
+      return;
+    }
+
     var currentField = getCurrentFieldItem(state.fieldsList, state.currentField);
     if (!currentField) return;
     var dwdMappingColumnList = currentField.dwdMappingColumnList,
