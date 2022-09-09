@@ -136,7 +136,8 @@ const _formatCheck = {
       { required: true },
       {
         validator: function (rule, value, cb) {
-          if (/^(\.+)?\d+$/.test(value)) {
+          let numVal = value * 1
+          if (/^(\.+)?\d+$/.test(value) && (isNaN(numVal) || numVal > 0)) {
             cb()
           } else {
             cb(new Error('请输入正确的数字范围'))
