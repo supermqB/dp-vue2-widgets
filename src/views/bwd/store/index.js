@@ -155,7 +155,10 @@ const mutations = {
     }
   },
   setEventMapList: state => {
-    if (!state.currentField) return
+    if (!state.currentField) {
+      state.eventMapList = []
+      return
+    }
     const currentField = getCurrentFieldItem(
       state.fieldsList,
       state.currentField

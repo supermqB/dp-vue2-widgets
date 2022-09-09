@@ -7,20 +7,8 @@
       @tab-click="tabChanged"
       class="bwd_ref_tabs"
     >
-      <el-tab-pane label="事件库映射" name="DWD">
-        
-      </el-tab-pane>
-      <el-tab-pane label="主索引映射" name="SBR">
-        <!-- <Form
-          :formCfg="mdmCfg(eventOptions, onChangeMap, clickEvent, 'SBR')"
-          :formData="eventMapData"
-        ></Form>
-        <Table
-          :isShowSelection="false"
-          :tableConfig="tableConfig(startMapMatch)"
-          :tableData="eventMapList"
-        ></Table> -->
-      </el-tab-pane>
+      <el-tab-pane label="事件库映射" name="DWD"></el-tab-pane>
+      <el-tab-pane label="主索引映射" name="SBR"></el-tab-pane>
     </el-tabs>
     <Form
       class="form"
@@ -60,8 +48,13 @@ export default {
     }
   },
   computed: {
-    ...mapState(['eventMapData', 'eventMapList', 'currentField']),
-    ...mapGetters(['eventOptions', 'filterEventMapList'])
+    ...mapState(['eventMapData', 'eventMapList', 'currentField', 'currentBwd']),
+    ...mapGetters(['eventOptions', 'filterEventMapList']),
+    bwdField: {
+      get() {
+        return `${this.currentField}${this.currentBwd}`
+      }
+    },
   },
   methods: {
     ...mapMutations(['setTabMapList', 'setEventMapList', 'resetEventMapData']),
@@ -95,8 +88,8 @@ export default {
     this.queryMappingList(this.mappingType)
   },
   watch: {
-    currentField: {
-      handler() {
+    bwdField: {
+      handler(cur) {
         this.setEventMapList()
         this.resetEventMapData()
       }

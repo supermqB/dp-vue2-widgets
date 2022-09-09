@@ -295,10 +295,10 @@ export default {
     }
   },
   watch: {
-    currentDictValue: {
-      handler(cur) {
+    dictValueList: {
+      handler() {
         setTimeout(() => {
-          this.$refs.dictValueTable.setCurrentRow(cur)
+          this.$refs.dictValueTable.setCurrentRow(this.currentDictValue)
         }, 60)
       }
     },

@@ -199,7 +199,7 @@ const mutations = {
     if (!form) {
       state.dictValueForm = Object.assign({}, dictValueForm)
     } else {
-      state.dictValueForm = form
+      state.dictValueForm = Object.assign({}, form)
     }
   },
   setCurrentDict(state, value) {
@@ -283,7 +283,7 @@ const actions = {
     commit('setCurrentVersion')
     await dispatch('queryVersionInfo')
     dispatch('querySuspect', { id: state.currentVersion })
-    dispatch('queryDictValue')
+    await dispatch('queryDictValue')
     commit('setCurrentDictValue')
     dispatch('queryClass')
   },
@@ -357,7 +357,6 @@ const actions = {
         return Object.assign({}, item, { index })
       })
     )
-    commit('setCurrentDictValue')
   },
   async submitDict({ state }, IsNew) {
     if (IsNew) {
