@@ -130,6 +130,11 @@ var getters = {
 
     return {};
   },
+  currentDictValueItem: function currentDictValueItem(state) {
+    return state.dictValueList.find(function (item) {
+      return item.term_code === state.currentDictValue.term_code;
+    });
+  },
   sourceTypeOptions: function sourceTypeOptions(state) {
     return state.dictList.map(function (item) {
       return {
