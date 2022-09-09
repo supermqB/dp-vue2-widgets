@@ -104,6 +104,7 @@ const actions = {
   },
   async getSimilarLiteratureList({ state, commit }) {
     const res = await getSimilarLiteratureListApi(state.identifier)
+    // const setLiteratureList =
     commit('setLiteratureList', res.value)
   },
   async submitEditLiterature({ state, commit }, form) {

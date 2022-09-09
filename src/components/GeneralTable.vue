@@ -142,9 +142,13 @@ export default {
     box-sizing: border-box;
   }
 }
+
 </style>
 
 <style lang="scss">
+.el-table__body tr.current-row>td{
+  background-color: #D8FFFE !important;
+}
 .el_table_wrapper {
   .table_container {
     height: 300px; /*table default height*/

@@ -45,10 +45,12 @@ export default {
 
 <style lang="scss" scoped>
 .abstractWrap {
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
+  overflow: auto;
   h1 {
     padding: 10px 0;
     font-size: 22px;
