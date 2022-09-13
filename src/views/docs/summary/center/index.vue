@@ -38,6 +38,7 @@ import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapActions } = createNamespacedHelpers('docs/summary')
 import { downloadLiteratureApi } from '@/api/doc'
+import { nextTick } from 'process';
 export default {
   data() {
     return {
@@ -95,7 +96,7 @@ export default {
     },
     openEditDialog() {
       this.$refs.editDialog.toggleOpen()
-      this.$refs.editDialog.formData = Object.assign({}, this.detail)
+      this.$refs.editDialog.formData = Object.assign({ catalogCode: [ this.detail.catalogCode ] }, this.detail)
     },
   }
 }

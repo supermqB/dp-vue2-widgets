@@ -2,6 +2,12 @@ import { keysObject } from '@/utils/lang'
 import searchFormConfig from '../config/searchForm'
 import { get, post, postWithFile } from '@/utils/request'
 import { Message } from 'element-ui'
+import { DOCTYPEOPTIONS } from '@/utils/const'
+
+const getDocTypeName = docType => {
+  const res = DOCTYPEOPTIONS.find(item => item.value === docType)
+  return res ? res.label : ''
+}
 
 const state = {
   search: '',
@@ -32,7 +38,12 @@ const mutations = {
     console.log(val)
   },
   setListData(state, val) {
-    state.listData = val
+    state.listData = val.map(item => {
+      if (!item.docTypeName) {
+        item.docTypeName = getDocTypeName(item.docType)
+      }
+      return item
+    })
   },
   setPageInfo(state, val) {
     state.pageInfo = val
@@ -70,9 +81,12 @@ const actions = {
   },
   async importDoc({ dispatch }, docProps) {
     console.log(docProps)
+    // const result = await postWithFile('literature/importLiterature', {
+    //   ...docProps,
+    //   catalogCode: docProps.catalogCode.map(codeList => codeList.pop())
+    // })
     const result = await postWithFile('literature/importLiterature', {
-      ...docProps,
-      catalogCode: docProps.catalogCode.map(codeList => codeList.pop())
+      ...docProps
     })
     if (result.success) {
       Message.success('文献导入成功')

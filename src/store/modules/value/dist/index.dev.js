@@ -226,7 +226,7 @@ var mutations = {
     state.dictVersionForm.nameEn = nameEn;
     state.dictVersionForm.state = state.currentVersionInfo.state;
     state.dictVersionForm.sourceTypeCode = sourceTypeCode;
-    state.dictVersionForm.sourceBasis = state.currentVersionInfo.sourceBasis;
+    state.dictVersionForm.basis = state.currentVersionInfo.basis;
   },
   setDictValueForm: function setDictValueForm(state, form) {
     if (!form) {
@@ -700,21 +700,21 @@ var actions = {
     });
   },
   editDictVersion: function editDictVersion(_ref19) {
-    var commit, dispatch, state, _state$dictVersionFor, masterVersion, version, sourceTypeCode, sourceBasis, current;
+    var commit, dispatch, state, _state$dictVersionFor, masterVersion, version, sourceTypeCode, basis, current;
 
     return regeneratorRuntime.async(function editDictVersion$(_context12) {
       while (1) {
         switch (_context12.prev = _context12.next) {
           case 0:
             commit = _ref19.commit, dispatch = _ref19.dispatch, state = _ref19.state;
-            _state$dictVersionFor = state.dictVersionForm, masterVersion = _state$dictVersionFor.masterVersion, version = _state$dictVersionFor.version, sourceTypeCode = _state$dictVersionFor.sourceTypeCode, sourceBasis = _state$dictVersionFor.sourceBasis;
+            _state$dictVersionFor = state.dictVersionForm, masterVersion = _state$dictVersionFor.masterVersion, version = _state$dictVersionFor.version, sourceTypeCode = _state$dictVersionFor.sourceTypeCode, basis = _state$dictVersionFor.basis;
             _context12.next = 4;
             return regeneratorRuntime.awrap((0, _value.editVersionApi)({
               id: state.currentVersion,
               masterVersion: masterVersion,
               version: version,
               sourceTypeCode: sourceTypeCode,
-              sourceBasis: sourceBasis,
+              basis: basis,
               state: state.dictVersionForm.state
             }));
 

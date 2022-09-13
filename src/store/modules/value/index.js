@@ -198,7 +198,7 @@ const mutations = {
     state.dictVersionForm.nameEn = nameEn
     state.dictVersionForm.state = state.currentVersionInfo.state
     state.dictVersionForm.sourceTypeCode = sourceTypeCode
-    state.dictVersionForm.sourceBasis = state.currentVersionInfo.sourceBasis
+    state.dictVersionForm.basis = state.currentVersionInfo.basis
   },
   setDictValueForm(state, form) {
     if (!form) {
@@ -407,14 +407,14 @@ const actions = {
     await dispatch('queryVersion')
   },
   async editDictVersion({ commit, dispatch, state }) {
-    const { masterVersion, version, sourceTypeCode, sourceBasis } =
+    const { masterVersion, version, sourceTypeCode, basis } =
       state.dictVersionForm
     await editVersionApi({
       id: state.currentVersion,
       masterVersion,
       version,
       sourceTypeCode,
-      sourceBasis,
+      basis,
       state: state.dictVersionForm.state
     })
     const current = state.versionList.find(item => item.label === version)

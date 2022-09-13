@@ -34,7 +34,7 @@ export const editVersionApi = ({
   version,
   state,
   sourceTypeCode,
-  sourceBasis
+  basis
 }) => {
   return request({
     url: '/dict/editVersion',
@@ -45,7 +45,7 @@ export const editVersionApi = ({
       version,
       state,
       sourceTypeCode,
-      sourceBasis
+      basis
     }
   })
 }
