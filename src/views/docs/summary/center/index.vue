@@ -38,7 +38,6 @@ import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapActions } = createNamespacedHelpers('docs/summary')
 import { downloadLiteratureApi } from '@/api/doc'
-import { nextTick } from 'process';
 export default {
   data() {
     return {
