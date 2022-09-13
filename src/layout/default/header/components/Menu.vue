@@ -49,11 +49,16 @@ export default {
           ]
         }
       ],
-      activeIndex: ''
+      // activeIndex: ''
     }
   },
-  created() {
-    this.activeIndex = this.$route.name
+  // created() {
+  //   this.activeIndex = this.$route.name
+  // },
+  computed: {
+    activeIndex() {
+      return this.$route.name
+    }
   },
   methods: {
     handleSelect(idx) {
