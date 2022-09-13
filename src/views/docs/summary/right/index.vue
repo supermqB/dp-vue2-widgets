@@ -98,8 +98,9 @@ ul {
       font-weight: bold;
     }
     .catalog {
+      @include ellipsisNoWrap();
       font-size: 12px;
-      color: rgba(0,0,0,0.45)
+      color: rgba(0,0,0,0.45);
     }
   }
   li:nth-child(2) {

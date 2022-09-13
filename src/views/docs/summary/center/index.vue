@@ -96,10 +96,7 @@ export default {
     },
     openEditDialog() {
       this.$refs.editDialog.toggleOpen()
-      this.$refs.editDialog.formData = Object.assign({}, this.detail)
-      this.$nextTick(() => {
-        this.$refs.editDialog.formData = Object.assign({}, this.detail)
-      })
+      this.$refs.editDialog.formData = Object.assign({ catalogCode: [ this.detail.catalogCode ] }, this.detail)
     },
   }
 }

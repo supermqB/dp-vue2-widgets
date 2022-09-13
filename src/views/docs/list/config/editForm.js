@@ -88,7 +88,8 @@ export function getEditFormCfg(docType = 'S', mode = 'create') {
           { S: standard_class_code, Z: policy_class_code }[docType] ||
           store.state.docs.commonDocCtlg,
         props: {
-          multiple: true
+          multiple: true,
+          emitPath: false
         },
         collapseTags: true
       },
@@ -176,6 +177,8 @@ export function getEditFormCfg(docType = 'S', mode = 'create') {
   filteredFields = filteredFields.filter(
     f => (modeIgnoreFields[mode] || []).indexOf(f.id) == -1
   )
+
+  console.log(filteredFields)
 
   return filteredFields
 }

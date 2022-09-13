@@ -47,7 +47,7 @@ export const editVersionCfg = (versionOptions, sourceTypeOptions) =>
     {
       type: 'el-input',
       label: '标准依据',
-      id: 'sourceBasis',
+      id: 'basis',
       elOptions: {
         type: 'textarea',
         rows: 4

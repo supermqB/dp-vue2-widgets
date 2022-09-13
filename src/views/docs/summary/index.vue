@@ -14,6 +14,8 @@ import CenterVue from './center'
 import RightVue from './right'
 import { createNamespacedHelpers } from 'vuex'
 const { mapMutations, mapActions, mapState } = createNamespacedHelpers('docs/summary')
+const { mapActions: mapDocActions } = createNamespacedHelpers('docs')
+
 export default {
   components: {
     CenterVue,
@@ -27,6 +29,7 @@ export default {
     this.setIdentifier(identifier)
     this.queryLiterature()
     this.getSimilarLiteratureList()
+    this.loadCommonDocCtlg()
   },
   async activated() {
     const identifier = this.$route.params.identifier ? this.$route.params.identifier : 'S31990001'
@@ -37,6 +40,7 @@ export default {
   methods: {
     ...mapMutations(['setIdentifier']),
     ...mapActions(['queryLiterature', 'getSimilarLiteratureList']),
+    ...mapDocActions(['loadCommonDocCtlg'])
   },
   watch: {}
 }

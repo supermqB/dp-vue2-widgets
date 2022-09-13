@@ -20,7 +20,7 @@ export default {
     state: '',
     sourceType: '',
     sourceTypeCode: '',
-    sourceBasis: ''
+    basis: ''
   },
   versionForm: {
     version: '',

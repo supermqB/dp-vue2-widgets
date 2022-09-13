@@ -44,9 +44,25 @@ export default {
   },
   watch: {
     formCfg(cfg) {
-      this.formData = Object.assign(keysObject(cfg, 'id'), {
-        docType: this.docType
-      })
+      if (this.mode === 'create') {
+        this.formData = Object.assign(keysObject(cfg, 'id'), {
+          docType: this.docType
+        })
+      } else {
+        const obj = {}
+        cfg.forEach(item => {
+          if (this.formData[item.id]) {
+            obj[item.id] = this.formData[item.id]
+          } else {
+            obj[item.id] = null
+          }
+        })
+        this.formData = Object.assign(obj, {
+          docType: this.docType,
+          identifier: this.formData['identifier']
+        })
+      }
+      
       this.$nextTick(() => {
         this.$refs.editForm.$refs.el_form.clearValidate()
       })
