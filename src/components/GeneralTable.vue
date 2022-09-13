@@ -95,7 +95,7 @@ export default {
     isShowSelection: {
       type: Boolean,
       default: () => true
-    },
+    }
   },
   data() {
     return {
@@ -142,12 +142,11 @@ export default {
     box-sizing: border-box;
   }
 }
-
 </style>
 
 <style lang="scss">
-.el-table__body tr.current-row>td{
-  background-color: #D8FFFE !important;
+.el-table__body tr.current-row > td {
+  background-color: #d8fffe !important;
 }
 .el_table_wrapper {
   .table_container {
@@ -155,6 +154,9 @@ export default {
     overflow: auto;
     .el-table {
       font-size: 13px;
+      .el-table__body-wrapper.is-scrolling-right {
+        padding-right: 6px;
+      }
       &.el-table--border .el-table__cell:first-child .cell {
         padding-left: 0;
       }
