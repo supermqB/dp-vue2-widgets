@@ -72,13 +72,13 @@ export default {
       this.$refs.sideTree.filter(val)
     },
     handleNodeClick(node) {
-      console.log(node, 2222222222)
+      /* filter invalid parent requests. */
+      if (node.id == this.treeList[0].id) return
       this.$emit('onClick', node)
     },
     filterNodeMethod(value, data) {
       if (!value) return true
       return data.label.indexOf(value) > -1
-      // this.$emit('onFilterNodeMethod', { value, data, node })
     },
     icon(state) {
       switch (state) {
@@ -99,7 +99,7 @@ export default {
         this.$refs.sideTree.setCurrentKey(this.currentNodeKey)
       )
     },
-    expandParents (node) {
+    expandParents(node) {
       node.expanded = true
       if (node.parent) {
         this.expandParents(node.parent)
@@ -112,7 +112,10 @@ export default {
       if (!old) {
         this.$nextTick(() => {
           const selected = this.$refs.sideTree.getCurrentNode()
-          if (this.$refs.sideTree.getNode(selected) && this.$refs.sideTree.getNode(selected).parent) {
+          if (
+            this.$refs.sideTree.getNode(selected) &&
+            this.$refs.sideTree.getNode(selected).parent
+          ) {
             this.expandParents(this.$refs.sideTree.getNode(selected).parent)
           }
         })
@@ -160,12 +163,12 @@ export default {
   height: 100%;
   /* background-color: #eee; */
   /* opacity: 0.5; */
-  z-index: 10
+  z-index: 10;
 }
 
 ::v-deep .el-tree-node__content {
   height: 36px;
-  position: relative
+  position: relative;
 }
 
 ::v-deep .el-tree-node__content > .el-tree-node__expand-icon {

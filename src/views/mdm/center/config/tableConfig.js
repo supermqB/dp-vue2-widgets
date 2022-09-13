@@ -21,7 +21,8 @@ export const tableConfigGen = function (columns) {
       colConfig: {
         property: '',
         label: '操作',
-        fixed: 'right'
+        fixed: 'right',
+        width: 120
       },
       actions: [
         {

@@ -72,7 +72,7 @@ export default {
   watch: {
     mdmList(list) {
       const selectedMDMType = this.selectedMDM.type
-      let selectedMDM = list.find(mdm => mdm.type == (selectedMDMType || 'drg'))
+      let selectedMDM = list.find(mdm => mdm.type == (selectedMDMType || 'reg'))
       /* update selectedMDM data only for default condition. */
       !selectedMDMType && this.onSelected(selectedMDM)
       this.$nextTick(() => {
