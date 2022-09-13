@@ -72,6 +72,7 @@ export default {
       this.$refs.sideTree.filter(val)
     },
     handleNodeClick(node) {
+      console.log(node, 2222222222)
       this.$emit('onClick', node)
     },
     filterNodeMethod(value, data) {
