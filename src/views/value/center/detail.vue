@@ -13,7 +13,7 @@
     <el-col :span="13">
       <p style="width: 100%">
         标准依据:
-        <span class="value">{{ sourceBasis }}</span>
+        <span class="value">{{ basis }}</span>
       </p>
     </el-col>
     <el-col :span="11">
@@ -48,7 +48,7 @@ export default {
       type: String,
       default: '',
     },
-    sourceBasis: {
+    basis: {
       type: String,
       default: '',
     },
