@@ -101,6 +101,9 @@ const actions = {
       Message.success('主索引编辑成功。')
       dispatch('search')
       dispatch('mdm/loadMDMModules', null, { root: true })
+      dispatch('mdm/loadMDMModuleDesc', rootState.mdm.selectedMDM.id, {
+        root: true
+      })
       completeCurSuspect &&
         dispatch('mdm/tasks/listSuspectTasks', null, { root: true })
     }
@@ -128,6 +131,9 @@ const actions = {
       Message.success('主索引新增成功。')
       dispatch('search')
       dispatch('mdm/loadMDMModules', null, { root: true })
+      dispatch('mdm/loadMDMModuleDesc', rootState.mdm.selectedMDM.id, {
+        root: true
+      })
       completeCurSuspect &&
         dispatch('mdm/tasks/listSuspectTasks', null, { root: true })
     }
