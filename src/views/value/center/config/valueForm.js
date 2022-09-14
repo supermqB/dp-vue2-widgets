@@ -6,7 +6,7 @@ export const searchValueCfg = (
   const list = [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'code',
       elOptions: {
         clearable: true,
@@ -17,7 +17,7 @@ export const searchValueCfg = (
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'value',
       elOptions: {
         clearable: true,
