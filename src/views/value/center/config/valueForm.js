@@ -42,7 +42,7 @@ export const searchValueCfg = (
       type: 'el-select',
       options: hierarchyRelation,
       label: '层级关系',
-      id: 'term_code',
+      id: 'level',
       elOptions: {
         clearable: true,
         style: {
