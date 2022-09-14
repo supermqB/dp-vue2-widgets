@@ -1,7 +1,7 @@
 import { keysClone } from '@/utils/lang'
 import initState from './initState'
 import task from './task'
-import { INCOMESTATE, COMPLETESTATE } from '@/utils/const'
+import { INCOMESTATE, COMPLETESTATE, EDITINGSTATE } from '@/utils/const'
 import { confirm } from '@/utils/pops'
 import {
   getCatalogApi,
@@ -376,7 +376,7 @@ const actions = {
         sourceBasis,
         sourceBasisCode
       } = state.dictForm
-      await addDictApi({
+      return await addDictApi({
         type,
         ctlgCode,
         dictCode,
@@ -386,12 +386,12 @@ const actions = {
         sourceTypeCode,
         sourceBasis,
         sourceBasisCode,
-        state: state.dictForm.state
+        state: EDITINGSTATE
       })
     } else {
       const id = state.currentVersion
       const { nameCn, nameEn } = state.dictForm
-      await editDictApi({
+      return await editDictApi({
         id,
         nameCn,
         nameEn
@@ -404,7 +404,7 @@ const actions = {
     })
     delete data['dictName']
     await addVersionApi(data)
-    await dispatch('queryVersion')
+    dispatch('queryVersion')
   },
   async editDictVersion({ commit, dispatch, state }) {
     const { masterVersion, version, sourceTypeCode, basis } =

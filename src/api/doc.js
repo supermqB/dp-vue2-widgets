@@ -22,11 +22,11 @@ export const getSimilarLiteratureListApi = identifier => {
   })
 }
 
-export const queryLiteratureApi = identifier => {
+export const queryLiteratureApi = id => {
   return request({
     method: 'post',
     data: {
-      identifier
+      id
     },
     url: '/literature/detail'
   })

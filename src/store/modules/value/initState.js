@@ -1,3 +1,5 @@
+import { EDITINGSTATE } from '@/utils/const'
+
 export default {
   dictForm: {
     type: '',
@@ -10,8 +12,7 @@ export default {
     version: '',
     sourceTypeCode: '',
     sourceBasis: '',
-    sourceBasisCode: '',
-    state: ''
+    sourceBasisCode: ''
   },
   dictVersionForm: {
     id: '',

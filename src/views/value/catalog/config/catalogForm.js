@@ -107,16 +107,16 @@ export const addCatalogCfg = (
         // disabled: true
         // placeholder: 'CV03.00.110'
       }
-    },
-    {
-      type: 'el-select',
-      label: '状态',
-      id: 'state',
-      options: STATEOPTIONS,
-      elOptions: {
-        // placeholder: '待完成'
-      }
     }
+    // {
+    //   type: 'el-select',
+    //   label: '状态',
+    //   id: 'state',
+    //   options: STATEOPTIONS,
+    //   elOptions: {
+    //     // placeholder: '待完成'
+    //   }
+    // }
   ].map(item => {
     const elOptions = Object.assign({}, item.elOptions, {
       style: {
