@@ -12,7 +12,7 @@ export function getListTableHeader() {
       colConfig: {
         property: 'identifier',
         label: '数据元标识符',
-        width: 125,
+        minWidth: 125,
         fixed: true
       }
     },
@@ -20,84 +20,77 @@ export function getListTableHeader() {
       colConfig: {
         property: 'identifierSeg1',
         label: '大类',
-        width: 100
+        minWidth: 100
       }
     },
     {
       colConfig: {
         property: 'identifierSeg2',
         label: '小类',
-        width: 100
+        minWidth: 100
       }
     },
     {
       colConfig: {
         property: 'identifierSeg3',
         label: '细类',
-        width: 100
+        minWidth: 100
       }
     },
-    /* {
-      colConfig: {
-        property: 'identifierPrefix',
-        label: '数据元分类编码',
-        width: 120
-      }
-    }, */
     {
       colConfig: {
         property: 'nameCn',
         label: '名称',
-        width: 200
+        minWidth: 200
       }
     },
     {
       colConfig: {
         property: 'nameEn',
         label: '英文名称',
-        width: 200
+        minWidth: 200
       }
     },
     {
       colConfig: {
         property: 'definition',
         label: '定义',
-        width: 200
+        minWidth: 200
       }
     },
     {
       colConfig: {
         property: 'type',
         label: '类型',
-        width: 50
+        minWidth: 50
       }
     },
     {
       colConfig: {
         property: 'format',
         label: '格式',
-        width: 80
+        minWidth: 80
       }
     },
     {
       colConfig: {
         property: 'valueDomainName',
         label: '数据元允许值',
-        width: 110
+        minWidth: 110
       }
     },
     {
       colConfig: {
         property: 'wordSpeech',
         label: '词性',
-        width: 80
+        minWidth: 80
       }
     },
     {
       colConfig: {
         property: 'state',
         label: '状态标识',
-        width: 100,
+        minWidth: 100,
         formatter(row, col, val) {
           return { 0: '停用', 1: '待提交', 2: '待审核', 3: '启用' }[val]
         }
@@ -107,7 +100,8 @@ export function getListTableHeader() {
       colConfig: {
         property: '',
         label: '操作',
-        fixed: 'right'
+        fixed: 'right',
+        width: 100
       },
       actions: [
         {
