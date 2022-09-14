@@ -11,7 +11,9 @@
       </div>
       <div class="btn_area">
         <!--el-button type="primary" @click="startEditMDM">编 辑</el-button-->
-        <el-button type="primary" @click="startCreateMDM" v-if="!isFrozenMDM">新 增</el-button>
+        <el-button type="primary" @click="startCreateMDM" v-if="!isFrozenMDM"
+          >新 增</el-button
+        >
       </div>
     </div>
     <div class="search">
@@ -91,8 +93,8 @@ export default {
       searchForm: state => state.searchForm,
       mdmTable: state => state.mdmTable
     }),
-    isFrozenMDM(){
-        return ['pat','fml','emp'].indexOf(this.selectedMDM.type) != -1
+    isFrozenMDM() {
+      return ['pat', 'fml', 'emp'].indexOf(this.selectedMDM.type) != -1
     },
     mdmprops() {
       let cTime = this.selectedMDMDesc.createTime
@@ -168,9 +170,11 @@ export default {
     },
     ...mapMutations({ selectItemHandler: 'setTableSelectItem' }),
     ...mapMutations(['setSearchFormConfig']),
-    ...mapActions(['search'])
+    ...mapActions(['search', 'loadDrugformList'])
   },
-
+  mounted() {
+    this.loadDrugformList()
+  },
   components: { Form, Table, EditDialog, AdvSearchDialog }
 }
 </script>

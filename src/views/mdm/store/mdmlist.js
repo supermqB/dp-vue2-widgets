@@ -8,7 +8,7 @@ import {
 } from '../center/config/searchFormConfig.js'
 
 const state = {
-  drugFormList: ['片剂', '包衣片'],
+  drugFormList: [],
   searchForm: {
     formCfg: [],
     formData: {}
@@ -25,17 +25,9 @@ const state = {
   }
 }
 const mutations = {
-  async setSearchFormConfig(state, type) {
+  setSearchFormConfig(state, type) {
     let generator = formConfigs[type]
     if (!generator) return
-    const drgFormResp = await post(
-      'suspected/getValueDomain',
-      {},
-      { identifier: 'dict_drug_form' }
-    )
-    if (drgFormResp.success) {
-      state.drugFormList = drgFormResp.value.map(item => item.name)
-    }
     let cfg =
       typeof generator == 'function' ? generator.apply(state) : generator
 
@@ -140,6 +132,17 @@ const actions = {
         dispatch('mdm/tasks/listSuspectTasks', null, { root: true })
     }
     return result.success
+  },
+  async loadDrugformList({ state }) {
+      debugger
+    const drgFormResp = await post(
+      'api/suspected/getValueDomain',
+      {},
+      { identifier: 'dict_drug_form' }
+    )
+    if (drgFormResp.success) {
+      state.drugFormList = drgFormResp.value.map(item => item.name)
+    }
   }
 }
 

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 import Loading from './loading'
@@ -57,15 +57,11 @@ service.interceptors.response.use(
         type: 'error',
         duration: 3 * 1000
       })
-      // loading.closeLoading()
-      return Promise.reject()
     }
-    // loading.closeLoading()
     return res
   },
   error => {
     console.log('err' + error) // for debug
-    // loading.closeLoading()
     Message({
       message: error.message,
       type: 'error',
