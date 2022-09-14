@@ -24,23 +24,23 @@ export default {
   computed: {
     ...mapState(['identifier'])
   },
-  async mounted() {
-    const identifier = this.$route.params.identifier ? this.$route.params.identifier : 'S31990001'
-    this.setIdentifier(identifier)
-    this.queryLiterature()
-    this.getSimilarLiteratureList()
-    this.loadCommonDocCtlg()
+  mounted() {
+    this.init(this.$route.params.id)
   },
-  async activated() {
-    const identifier = this.$route.params.identifier ? this.$route.params.identifier : 'S31990001'
-    this.setIdentifier(identifier)
-    this.queryLiterature()
-    this.getSimilarLiteratureList()
+  activated() {
+    this.init(this.$route.params.id)
   },
   methods: {
-    ...mapMutations(['setIdentifier']),
+    ...mapMutations(['setID']),
     ...mapActions(['queryLiterature', 'getSimilarLiteratureList']),
-    ...mapDocActions(['loadCommonDocCtlg'])
+    ...mapDocActions(['loadCommonDocCtlg']),
+    async init(id) {
+      if (!id) return
+      this.setID(id)
+      await this.queryLiterature()
+      this.getSimilarLiteratureList()
+      this.loadCommonDocCtlg()
+    }
   },
   watch: {}
 }

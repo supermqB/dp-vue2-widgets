@@ -42,13 +42,13 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(['setIdentifier', 'setFilter']),
+    ...mapMutations(['setID', 'setFilter']),
     ...mapActions(['queryLiterature', 'getSimilarLiteratureList']),
-    selectLiterature({ identifier }) {
+    async selectLiterature({ id }) {
       this.setFilter()
-      this.setIdentifier(identifier)
-      this.queryLiterature(identifier)
-      this.getSimilarLiteratureList(identifier)
+      this.setID(id)
+      await this.queryLiterature()
+      this.getSimilarLiteratureList()
     }
   }
 }

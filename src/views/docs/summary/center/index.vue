@@ -57,7 +57,7 @@ export default {
     ...mapGetters(['summaryDetail'])
   },
   methods: {
-    ...mapActions(['submitEditLiterature', 'queryLiterature']),
+    ...mapActions(['submitEditLiterature', 'queryLiterature', 'getSimilarLiteratureList']),
     async downloadLiterature() {
       downloadLiteratureApi(this.identifier).then(res => {
         let url = window.URL.createObjectURL(res.data)
@@ -90,7 +90,8 @@ export default {
     async editDocHandler(formData) {
       const res = await this.submitEditLiterature(formData)
       if (res.success) {
-        this.queryLiterature()
+        await this.queryLiterature()
+        await this.getSimilarLiteratureList()
         this.$message.success('编辑文档成功！')
         this.$refs.editDialog.toggleOpen()
       }

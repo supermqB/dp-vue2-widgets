@@ -109,20 +109,28 @@ export default {
   watch: {
     currentNodeKey(cur, old) {
       this.setCurrent()
-      if (!old) {
-        this.$nextTick(() => {
-          const selected = this.$refs.sideTree.getCurrentNode()
-          if (
-            this.$refs.sideTree.getNode(selected) &&
-            this.$refs.sideTree.getNode(selected).parent
-          ) {
-            this.expandParents(this.$refs.sideTree.getNode(selected).parent)
-          }
-        })
-      }
+      this.$nextTick(() => {
+        const selected = this.$refs.sideTree.getCurrentNode()
+        if (
+          this.$refs.sideTree.getNode(selected) &&
+          this.$refs.sideTree.getNode(selected).parent
+        ) {
+          this.expandParents(this.$refs.sideTree.getNode(selected).parent)
+        }
+      })
     },
     data() {
       this.setCurrent()
+      this.$nextTick(() => {
+        const selected = this.$refs.sideTree.getCurrentNode()
+        if (
+          selected &&  
+          this.$refs.sideTree.getNode(selected) &&
+          this.$refs.sideTree.getNode(selected).parent
+        ) {
+          this.expandParents(this.$refs.sideTree.getNode(selected).parent)
+        }
+      })
     }
   }
 }

@@ -27,7 +27,7 @@
       >
         <div>
           <div class="typespan">{{ item.docTypeName }}</div>
-          <div class="title" @click="forward2SumPage(item.identifier)">
+          <div class="title" @click="forward2SumPage(item.id)">
             {{ getItemTilte(item) }}
           </div>
         </div>

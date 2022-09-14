@@ -630,7 +630,7 @@ var actions = {
             state = _ref16.state;
 
             if (!IsNew) {
-              _context10.next = 7;
+              _context10.next = 8;
               break;
             }
 
@@ -646,24 +646,26 @@ var actions = {
               sourceTypeCode: sourceTypeCode,
               sourceBasis: sourceBasis,
               sourceBasisCode: sourceBasisCode,
-              state: state.dictForm.state
+              state: _const.EDITINGSTATE
             }));
 
           case 5:
-            _context10.next = 11;
-            break;
+            return _context10.abrupt("return", _context10.sent);
 
-          case 7:
+          case 8:
             id = state.currentVersion;
             _state$dictForm2 = state.dictForm, _nameCn = _state$dictForm2.nameCn, _nameEn = _state$dictForm2.nameEn;
-            _context10.next = 11;
+            _context10.next = 12;
             return regeneratorRuntime.awrap((0, _value.editDictApi)({
               id: id,
               nameCn: _nameCn,
               nameEn: _nameEn
             }));
 
-          case 11:
+          case 12:
+            return _context10.abrupt("return", _context10.sent);
+
+          case 13:
           case "end":
             return _context10.stop();
         }
@@ -685,10 +687,9 @@ var actions = {
             return regeneratorRuntime.awrap((0, _value.addVersionApi)(data));
 
           case 5:
-            _context11.next = 7;
-            return regeneratorRuntime.awrap(dispatch('queryVersion'));
+            dispatch('queryVersion');
 
-          case 7:
+          case 6:
           case "end":
             return _context11.stop();
         }

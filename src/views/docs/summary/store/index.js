@@ -5,7 +5,6 @@ import {
   queryLiteratureApi
 } from '@/api/doc'
 import { DOCTYPEOPTIONS } from '@/utils/const'
-import { flatten } from 'lodash'
 
 const contentList = [
   {
@@ -35,7 +34,7 @@ const contentList = [
 ]
 
 const state = {
-  identifier: '',
+  id: '',
   detail: {},
   literatureList: [],
   filter: '',
@@ -75,8 +74,8 @@ const mutations = {
       state.filter = value
     }
   },
-  setIdentifier(state, value) {
-    state.identifier = value
+  setID(state, value) {
+    state.id = value
   },
   setDetail(state, value) {
     state.detail = Object.assign({}, value, {
@@ -86,12 +85,12 @@ const mutations = {
   setLiteratureList(state, value) {
     state.literatureList = value.map(item => {
       const res = DOCTYPEOPTIONS.find(it => it.value === item.docType)
-      const catalogGrp1 = item.catalogGrp1 ? item.catalogGrp1 : ''
-      const catalogGrp2 = item.catalogGrp2 ? item.catalogGrp2 : ''
-      const catalogGrp3 = item.catalogGrp3 ? item.catalogGrp3 : ''
+      const { catalogGrp1, catalogGrp2, catalogGrp3 } = item
       return Object.assign({}, item, {
         docType: res.label,
-        catalogGrp: `${catalogGrp1} ${catalogGrp2} ${catalogGrp3}`
+        catalogGrp: `${catalogGrp1 ? catalogGrp1 : ''} ${
+          catalogGrp2 ? catalogGrp2 : ''
+        } ${catalogGrp3 ? catalogGrp3 : ''}`
       })
     })
   }
@@ -99,17 +98,18 @@ const mutations = {
 
 const actions = {
   async queryLiterature({ state, commit }) {
-    const res = await queryLiteratureApi(state.identifier)
-    commit('setDetail', res.value)
+    const res = await queryLiteratureApi(state.id)
+    if (res.success) {
+      commit('setDetail', res.value)
+    }
   },
   async getSimilarLiteratureList({ state, commit }) {
-    const res = await getSimilarLiteratureListApi(state.identifier)
-    // const setLiteratureList =
+    if (!state.detail.identifier) return
+    const res = await getSimilarLiteratureListApi(state.detail.identifier)
     commit('setLiteratureList', res.value)
   },
-  async submitEditLiterature({ state, commit }, form) {
-    form.catalogCode = flatten(form.catalogCode)
-    await editLiteratureApi(form)
+  async submitEditLiterature({}, form) {
+    return await editLiteratureApi(form)
   }
 }
 
