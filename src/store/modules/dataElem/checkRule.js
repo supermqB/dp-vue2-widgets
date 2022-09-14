@@ -69,7 +69,7 @@ const actions = {
       illegalCharOnly: state.illegalChar.only ? '1' : '0',
       type: state.formatCheckData.data_type,
       format: `${state.formatCheckData.char_type_code}${state.formatCheckData.data_length}`,
-      valueDomainId: state.fieldCheck.enableValDomain
+      valueDomainNameEn: state.fieldCheck.enableValDomain
         ? state.fieldCheck.valDomain
         : '',
       valueRange: state.fieldCheck.enableValRange

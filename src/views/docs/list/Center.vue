@@ -23,11 +23,11 @@
         v-for="(item, index) in listData"
         class="item"
         :key="index"
-        @dblclick="forward2SumPage(item.identifier)"
+       
       >
         <div>
           <div class="typespan">{{ item.docTypeName }}</div>
-          <div class="title">
+          <div class="title" @click="forward2SumPage(item.identifier)">
             {{ getItemTilte(item) }}
           </div>
         </div>
@@ -210,7 +210,7 @@ export default {
       border: 1px solid #f2f2f2;
       border-width: 1px 1px 0 1px;
       font-size: 12px;
-      line-height: 12px;
+      line-height: 14px;
       padding: 16px 6px;
       box-sizing: border-box;
       display: flex;
@@ -239,13 +239,17 @@ export default {
       }
       .title {
         position: relative;
-        top: 2px;
+        top: 3px;
         font-size: 13px;
         display: inline-block;
         color: rgba(0, 0, 0, 0.85);
         font-weight: bold;
         width: calc(100% - 70px);
         @include ellipsis();
+        &:hover{
+            color: #1890FF;
+            text-decoration: underline;
+        }
       }
       .sumline {
         font-size: 12px;
