@@ -1,4 +1,4 @@
-import { STATEOPTIONS, DICTTYPEOPTIONS } from '@/utils/const'
+import { DICTTYPEOPTIONS } from '@/utils/const'
 import { validateEnglish } from '@/utils/validator'
 
 export const addCatalogCfg = (
@@ -10,7 +10,7 @@ export const addCatalogCfg = (
   [
     {
       type: 'el-select',
-      label: '属性',
+      label: '种类',
       id: 'type',
       options: DICTTYPEOPTIONS,
       elOptions: {}
