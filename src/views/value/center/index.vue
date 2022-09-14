@@ -378,6 +378,10 @@ export default {
     display: flex;
     margin-bottom: 0px;
   }
+  .el-form-item__label {
+    width: 64px;
+    text-align: left;
+  }
   .el-input {
     margin-right: 8px;
   }
