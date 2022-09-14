@@ -63,21 +63,21 @@ export default {
             colConfig: {
               property: 'source',
               label: '来源',
-              minWidth: 50
+              minWidth: 40
             }
           },
           {
             colConfig: {
               property: 'name',
               label: '名称',
-              minWidth: 55
+              minWidth: 40
             }
           },
           {
             colConfig: {
               property: 'state',
               label: '状态',
-              minWidth: 60
+              minWidth: 40
             }
           }
         ]
