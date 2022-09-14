@@ -1,8 +1,10 @@
 <template>
   <el-breadcrumb separator="/">
-    <el-breadcrumb-item :to="{ path }">{{ baseLabel }}</el-breadcrumb-item>
+    <el-breadcrumb-item :to="{ path }">
+      <span class="base">{{ baseLabel }}</span>
+    </el-breadcrumb-item>
     <el-breadcrumb-item v-if="currentLabel">
-      <b>{{ currentLabel }}</b>
+      <span class="current">{{ currentLabel }}</span>
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
@@ -29,5 +31,11 @@ export default {
 <style scoped lang="scss">
   ::v-deep .el-breadcrumb__inner {
     font-weight: normal;
+  }
+  .base {
+    color: rgba(0,0,0, 0.45)
+  }
+  .current {
+    color: rgba(0,0,0, 0.85)
   }
 </style>

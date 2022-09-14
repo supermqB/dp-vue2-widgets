@@ -81,13 +81,13 @@ ul {
       align-items: center;
     }
     .type {
-      /* min-width: 35px; */
       padding: 3px 6px;
       margin-right: 5px;
       text-align: center;
       font-size: 12px;
       line-height: 14px;
       background-color: #1890FF;
+      border-radius: 2px;
       color: #fff;
       display: inline-block;
       white-space: nowrap;

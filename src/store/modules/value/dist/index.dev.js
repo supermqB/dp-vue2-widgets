@@ -19,8 +19,6 @@ var _value = require("@/api/value");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -532,21 +530,19 @@ var actions = {
       }
     });
   },
-  queryClass: function queryClass(_ref13) {
-    var _ref14, value;
+  queryClass: function queryClass() {
+    var _ref13, value;
 
     return regeneratorRuntime.async(function queryClass$(_context8) {
       while (1) {
         switch (_context8.prev = _context8.next) {
           case 0:
-            _objectDestructuringEmpty(_ref13);
-
-            _context8.next = 3;
+            _context8.next = 2;
             return regeneratorRuntime.awrap((0, _value.getClassifyCodeApi)());
 
-          case 3:
-            _ref14 = _context8.sent;
-            value = _ref14.value;
+          case 2:
+            _ref13 = _context8.sent;
+            value = _ref13.value;
             state.classList = value.map(function (item) {
               return {
                 id: item.code,
@@ -562,21 +558,21 @@ var actions = {
               };
             });
 
-          case 6:
+          case 5:
           case "end":
             return _context8.stop();
         }
       }
     });
   },
-  queryDictValue: function queryDictValue(_ref15) {
-    var state, commit, dictId, _state$pageInfo, current, size, columnParamList, _ref16, value;
+  queryDictValue: function queryDictValue(_ref14) {
+    var state, commit, dictId, _state$pageInfo, current, size, columnParamList, _ref15, value;
 
     return regeneratorRuntime.async(function queryDictValue$(_context9) {
       while (1) {
         switch (_context9.prev = _context9.next) {
           case 0:
-            state = _ref15.state, commit = _ref15.commit;
+            state = _ref14.state, commit = _ref14.commit;
             dictId = state.currentVersion;
             _state$pageInfo = state.pageInfo, current = _state$pageInfo.curPage, size = _state$pageInfo.pageSize;
             columnParamList = [];
@@ -608,8 +604,8 @@ var actions = {
             }));
 
           case 7:
-            _ref16 = _context9.sent;
-            value = _ref16.value;
+            _ref15 = _context9.sent;
+            value = _ref15.value;
             commit('setPageInfo', value.pageInfo);
             commit('setDictValueList', value.records.map(function (item, index) {
               return Object.assign({}, item, {
@@ -624,14 +620,14 @@ var actions = {
       }
     });
   },
-  submitDict: function submitDict(_ref17, IsNew) {
+  submitDict: function submitDict(_ref16, IsNew) {
     var state, _state$dictForm, type, ctlgCode, dictCode, nameEn, nameCn, version, sourceTypeCode, sourceBasis, sourceBasisCode, id, _state$dictForm2, _nameCn, _nameEn;
 
     return regeneratorRuntime.async(function submitDict$(_context10) {
       while (1) {
         switch (_context10.prev = _context10.next) {
           case 0:
-            state = _ref17.state;
+            state = _ref16.state;
 
             if (!IsNew) {
               _context10.next = 7;
@@ -674,13 +670,13 @@ var actions = {
       }
     });
   },
-  addDictVersion: function addDictVersion(_ref18) {
+  addDictVersion: function addDictVersion(_ref17) {
     var state, dispatch, data;
     return regeneratorRuntime.async(function addDictVersion$(_context11) {
       while (1) {
         switch (_context11.prev = _context11.next) {
           case 0:
-            state = _ref18.state, dispatch = _ref18.dispatch;
+            state = _ref17.state, dispatch = _ref17.dispatch;
             data = Object.assign({}, state.versionForm, {
               dictId: state.currentVersion
             });
@@ -699,14 +695,14 @@ var actions = {
       }
     });
   },
-  editDictVersion: function editDictVersion(_ref19) {
+  editDictVersion: function editDictVersion(_ref18) {
     var commit, dispatch, state, _state$dictVersionFor, masterVersion, version, sourceTypeCode, basis, current;
 
     return regeneratorRuntime.async(function editDictVersion$(_context12) {
       while (1) {
         switch (_context12.prev = _context12.next) {
           case 0:
-            commit = _ref19.commit, dispatch = _ref19.dispatch, state = _ref19.state;
+            commit = _ref18.commit, dispatch = _ref18.dispatch, state = _ref18.state;
             _state$dictVersionFor = state.dictVersionForm, masterVersion = _state$dictVersionFor.masterVersion, version = _state$dictVersionFor.version, sourceTypeCode = _state$dictVersionFor.sourceTypeCode, basis = _state$dictVersionFor.basis;
             _context12.next = 4;
             return regeneratorRuntime.awrap((0, _value.editVersionApi)({
@@ -736,14 +732,14 @@ var actions = {
       }
     });
   },
-  addDictValue: function addDictValue(_ref20) {
+  addDictValue: function addDictValue(_ref19) {
     var state, dispatch, rootState, data, _rootState$value$task, curTask, taskList, curTaskItem, completeCurSuspect;
 
     return regeneratorRuntime.async(function addDictValue$(_context13) {
       while (1) {
         switch (_context13.prev = _context13.next) {
           case 0:
-            state = _ref20.state, dispatch = _ref20.dispatch, rootState = _ref20.rootState;
+            state = _ref19.state, dispatch = _ref19.dispatch, rootState = _ref19.rootState;
             data = {
               id: state.currentVersion
             };
@@ -794,13 +790,13 @@ var actions = {
       }
     });
   },
-  addBatchDictValue: function addBatchDictValue(_ref21, file) {
+  addBatchDictValue: function addBatchDictValue(_ref20, file) {
     var state, dispatch;
     return regeneratorRuntime.async(function addBatchDictValue$(_context14) {
       while (1) {
         switch (_context14.prev = _context14.next) {
           case 0:
-            state = _ref21.state, dispatch = _ref21.dispatch;
+            state = _ref20.state, dispatch = _ref20.dispatch;
             _context14.next = 3;
             return regeneratorRuntime.awrap((0, _value.addDictValueManyApi)({
               id: state.currentVersion,
@@ -817,14 +813,14 @@ var actions = {
       }
     });
   },
-  editDictValue: function editDictValue(_ref22) {
+  editDictValue: function editDictValue(_ref21) {
     var state, dispatch, rootState, id, _rootState$value$task2, curTask, taskList, curTaskItem, completeCurSuspect;
 
     return regeneratorRuntime.async(function editDictValue$(_context15) {
       while (1) {
         switch (_context15.prev = _context15.next) {
           case 0:
-            state = _ref22.state, dispatch = _ref22.dispatch, rootState = _ref22.rootState;
+            state = _ref21.state, dispatch = _ref21.dispatch, rootState = _ref21.rootState;
             id = state.currentVersion;
             _rootState$value$task2 = rootState.value.task, curTask = _rootState$value$task2.curTask, taskList = _rootState$value$task2.taskList;
             curTaskItem = null;

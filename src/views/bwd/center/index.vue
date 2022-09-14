@@ -2,13 +2,18 @@
   <div class="centerWrap">
     <div class="header">
       <div class="left">
-        <el-breadcrumb separator="/">
+        <!-- <el-breadcrumb separator="/">
           <el-breadcrumb-item>BWD文件管理</el-breadcrumb-item>
           <el-breadcrumb-item>
             <b>{{ currentBwdItem.label }} ({{ currentBwdItem.nameEn }}) </b>
             <img :src="icon(currentBwdItem.state)" />
           </el-breadcrumb-item>
-        </el-breadcrumb>
+        </el-breadcrumb> -->
+        <Breadcrumb
+          baseLabel="BWD文件管理"
+          :currentLabel="`${currentBwdItem.label}(${currentBwdItem.nameEn})`"  
+        ></Breadcrumb>
+        <img :src="icon(currentBwdItem.state)" />
       </div>
       <div>
         <el-button
@@ -214,6 +219,15 @@ export default {
     padding-right: 10px;
     box-sizing: border-box;
     border-bottom: 1px solid #e5e5e5;
+    .left {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      img {
+        margin-left: 4px;
+        margin-top: 2px;
+      }
+    }
   }
   .search {
     height: 38px;

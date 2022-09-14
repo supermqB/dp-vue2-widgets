@@ -53,7 +53,7 @@ service.interceptors.response.use(
     const res = response.data
     if (!res.success) {
       Message({
-        message: `[${res.code}]:${res.msg}`,
+        message: `[${res.code}]:${res.message}`,
         type: 'error',
         duration: 3 * 1000
       })

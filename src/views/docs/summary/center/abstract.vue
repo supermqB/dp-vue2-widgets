@@ -45,21 +45,26 @@ export default {
 
 <style lang="scss" scoped>
 .abstractWrap {
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 20px;
+  padding-top: 28px;
   overflow: auto;
   h1 {
-    padding: 10px 0;
+    /* @include ellipsisNoWrap(); */
+    width: 87%;
+    padding: 4px 0;
     font-size: 22px;
     color: #222222;
     letter-spacing: 0;
     text-align: center;
   }
   h3 {
-    padding: 10px 0;
+    /* @include ellipsisNoWrap(); */
+    width: 87%;
+    padding: 6px 0 16px 0;
     font-family: 'Arial';
     font-size: 15px;
     color: rgba(0,0,0,0.45);
@@ -67,27 +72,30 @@ export default {
     text-align: center;
   }
   h5 {
-    padding: 2px 0;
+    /* @include ellipsisNoWrap(); */
+    width: 87%;
+    padding: 3px 0;
     font-size: 16px;
+    line-height: 20px;
     color: #222222;
     letter-spacing: 0;
     text-align: center;
   }
   ul {
-    margin-top: 15px;
-    width: 88%;
-    border-top: 4px solid #C0C4CC;
+    margin-top: 8px;
+    width: 82%;
+    border-top: 3px solid #C0C4CC;
     li {
       padding: 10px 0 0 0;
       .label {
         display: inline-block;
-        padding: 7px 4px;
+        padding: 5px 4px;
         text-align: center;
-        font-size: 16px;
+        font-size: 14px;
         background-color: #eee;
       }
       .content {
-        padding: 4px 5px;
+        padding: 2px 5px 2px 0;
         font-size: 14px;
         color: rgba(0,0,0,0.65);
         line-height: 26px;
