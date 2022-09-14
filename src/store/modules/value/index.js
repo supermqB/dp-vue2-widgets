@@ -316,7 +316,7 @@ const actions = {
     state.currentVersionInfo.valueDictColumnList =
       value.valueDictColumnList.sort((pre, next) => pre.seqNo - next.seqNo)
   },
-  async queryClass({}) {
+  async queryClass() {
     const { value } = await getClassifyCodeApi()
     state.classList = value.map(item => {
       return {
