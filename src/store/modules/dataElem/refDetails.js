@@ -28,7 +28,8 @@ const state = {
 
 const getters = {
   moduleList(state) {
-    return state.details.map(item => item.module)
+    let modules = new Set(state.details.map(item => item.module))
+    return [...modules]
   },
   curVersionList(state) {
     let curModuleVersions = state.details.filter(

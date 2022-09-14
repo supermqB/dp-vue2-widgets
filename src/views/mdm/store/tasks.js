@@ -92,8 +92,8 @@ const actions = {
           state: ['待完成', '已完成'][task.state * 1],
           suspectList: task.suspectList.map(suspect => {
             return {
-              id: suspect.id,
-              ...suspect.suspectObject
+              ...suspect.suspectObject,
+              id: suspect.id
             }
           })
         }
