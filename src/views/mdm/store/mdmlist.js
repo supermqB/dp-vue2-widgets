@@ -134,7 +134,6 @@ const actions = {
     return result.success
   },
   async loadDrugformList({ state }) {
-      debugger
     const drgFormResp = await post(
       'api/suspected/getValueDomain',
       {},

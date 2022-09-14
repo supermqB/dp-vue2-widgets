@@ -88,10 +88,12 @@ export default {
       })
     },
     async editDocHandler(formData) {
-      await this.submitEditLiterature(formData)
-      this.queryLiterature()
-      this.$message.success('编辑文档成功！')
-      this.$refs.editDialog.toggleOpen()
+      const res = await this.submitEditLiterature(formData)
+      if (res.success) {
+        this.queryLiterature()
+        this.$message.success('编辑文档成功！')
+        this.$refs.editDialog.toggleOpen()
+      }
     },
     openEditDialog() {
       this.$refs.editDialog.toggleOpen()
