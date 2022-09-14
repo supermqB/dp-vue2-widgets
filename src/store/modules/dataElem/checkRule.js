@@ -28,8 +28,8 @@ const state = {
 
 const mutations = {
   setDefaultValues(state, val) {
-    state.illegalChar.general = !!val.illegalCharGeneral
-    state.illegalChar.only = !!val.illegalCharOnly
+    state.illegalChar.general = val.illegalCharGeneral == '1'
+    state.illegalChar.only = val.illegalCharOnly == '1'
     state.formatCheckData.data_type = val.type
     let matchedRe = /([A-Z]+)([^A-Z]+)/.exec(val.format)
     if (matchedRe && matchedRe.length) {

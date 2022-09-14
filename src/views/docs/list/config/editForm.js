@@ -1,4 +1,6 @@
 import store from '@/store'
+import { Message } from 'element-ui'
+import { debounce } from 'lodash'
 const standard_class_code = [
   { value: '1', label: '国际标准' },
   { value: '2', label: '国家强制标准' },
@@ -183,10 +185,31 @@ export function getEditFormCfg(docType = 'S', mode = 'create') {
   return filteredFields
 }
 
+const showEnErr = debounce(() => {
+  Message({
+    message: '英文名称由小写字母、下划线、数字构成',
+    type: 'error',
+    duration: 2000
+  })
+}, 500)
+
 export const editFormRule = {
   docType: { required: true },
   catalogCode: { required: true },
   title: { required: true },
+  titleEn: [
+    {
+      validator: (rule, value, callback) => {
+        if (!/^[\w]+$/.test(value) && value != '') {
+          callback('英文名称由小写字母、下划线、数字构成')
+          showEnErr()
+        } else {
+          callback()
+        }
+      },
+      trigger: 'change'
+    }
+  ],
   docId: { required: true },
   author: { required: true },
   organization: { required: true },
