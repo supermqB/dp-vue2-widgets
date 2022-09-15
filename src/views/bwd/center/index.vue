@@ -32,7 +32,7 @@
     </div>
     <div class="search">
       <Form :formCfg="searchCfg" :formData="searchData"></Form>
-      <div style="line-height: 36px">
+      <div class="buttons">
         <el-button @click="onClickSearch">查询</el-button>
         <el-button
           type="text"
@@ -230,13 +230,15 @@ export default {
     }
   }
   .search {
-    height: 38px;
     position: relative;
     padding: 0 15px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     border-bottom: 1px solid #e5e5e5;
+    .buttons {
+      line-height: 36px;
+    }
   }
   .table {
     flex: 1;
@@ -262,13 +264,20 @@ export default {
 }
 ::v-deep .search {
   form {
+    display: flex;
+    flex-wrap: wrap;
     .el-form-item {
       display: inline-flex;
-      margin-bottom: 0px;
+      padding-top: 1px;
+      margin-bottom: -1px;
+    }
+    .el-form-item__label {
+      width: 77px;
+      text-align: left;
     }
     .el-form-item__content {
-      line-height: 38 px;
-      padding-right: 50px;
+      line-height: 38px;
+      padding-right: 10px;
     }
     .el-input__inner {
       height: 28px;

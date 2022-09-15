@@ -239,7 +239,7 @@ const actions = {
           label: item.theme,
           children: item.bwdCatelogEntityList.map(it => {
             return {
-              id: it.id,
+              id: `${item.theme};${it.id}`,
               label: it.nameCn,
               nameCn: it.nameCn,
               nameEn: it.nameEn,
@@ -255,27 +255,34 @@ const actions = {
   // 给中间展示bwd(getBwdInfoApi)
   async queryField({ commit }) {
     const { curPage, pageSize } = state.pageInfo
+    const [theme, id] = state.currentBwd.split(';')
     const query = Object.assign(
-      { id: state.currentBwd },
+      { id },
       state.isAdvance ? state.adSearchData : state.searchData
     )
     const res = await getBwdInfoApi(curPage, pageSize, query, state.isAdvance)
     const { records, pageInfo } = res.value
-    state.fieldsList = records.map((item, index) => ({
-      ...item,
-      index: pageInfo.pageSize * (pageInfo.curPage - 1) + index + 1,
-      // index: item.id,
-      dwdTable: item.dwdMappingColumnList
-        .map(item => item.tableNameCn)
-        .join(', '),
-      dwdField: item.dwdMappingColumnList
-        .map(item => item.colNameCn)
-        .join(', '),
-      sbrTable: item.sbrMappingColumnList
-        .map(item => item.tableNameCn)
-        .join(', '),
-      sbrField: item.sbrMappingColumnList.map(item => item.colNameCn).join(', ')
-    }))
+    if (records) {
+      state.fieldsList = records.map((item, index) => ({
+        ...item,
+        index: pageInfo.pageSize * (pageInfo.curPage - 1) + index + 1,
+        // index: item.id,
+        dwdTable: item.dwdMappingColumnList
+          .map(item => item.tableNameCn)
+          .join(', '),
+        dwdField: item.dwdMappingColumnList
+          .map(item => item.colNameCn)
+          .join(', '),
+        sbrTable: item.sbrMappingColumnList
+          .map(item => item.tableNameCn)
+          .join(', '),
+        sbrField: item.sbrMappingColumnList
+          .map(item => item.colNameCn)
+          .join(', ')
+      }))
+    } else {
+      state.fieldsList = []
+    }
     commit('setPageInfo', pageInfo)
   },
   async queryMappingList({}, source) {

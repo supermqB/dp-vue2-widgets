@@ -355,13 +355,17 @@ const actions = {
       size,
       columnParamList
     })
+    if (value.records) {
+      commit(
+        'setDictValueList',
+        value.records.map((item, index) => {
+          return Object.assign({}, item, { index })
+        })
+      )
+    } else {
+      commit('setDictValueList')
+    }
     commit('setPageInfo', value.pageInfo)
-    commit(
-      'setDictValueList',
-      value.records.map((item, index) => {
-        return Object.assign({}, item, { index })
-      })
-    )
   },
   async submitDict({ state }, IsNew) {
     if (IsNew) {

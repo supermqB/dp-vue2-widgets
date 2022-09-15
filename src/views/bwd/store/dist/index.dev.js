@@ -23,6 +23,14 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 var getCurrentFieldItem = function getCurrentFieldItem(list, id) {
   return list.find(function (item) {
     return item.id === id;
@@ -284,7 +292,7 @@ var actions = {
                   label: item.theme,
                   children: item.bwdCatelogEntityList.map(function (it) {
                     return {
-                      id: it.id,
+                      id: "".concat(item.theme, ";").concat(it.id),
                       label: it.nameCn,
                       nameCn: it.nameCn,
                       nameEn: it.nameEn,
@@ -306,7 +314,7 @@ var actions = {
   },
   // 给中间展示bwd(getBwdInfoApi)
   queryField: function queryField(_ref4) {
-    var commit, _state$pageInfo, curPage, pageSize, query, res, _res$value, records, pageInfo;
+    var commit, _state$pageInfo, curPage, pageSize, _state$currentBwd$spl, _state$currentBwd$spl2, theme, id, query, res, _res$value, records, pageInfo;
 
     return regeneratorRuntime.async(function queryField$(_context3) {
       while (1) {
@@ -314,36 +322,43 @@ var actions = {
           case 0:
             commit = _ref4.commit;
             _state$pageInfo = state.pageInfo, curPage = _state$pageInfo.curPage, pageSize = _state$pageInfo.pageSize;
+            _state$currentBwd$spl = state.currentBwd.split(';'), _state$currentBwd$spl2 = _slicedToArray(_state$currentBwd$spl, 2), theme = _state$currentBwd$spl2[0], id = _state$currentBwd$spl2[1];
             query = Object.assign({
-              id: state.currentBwd
+              id: id
             }, state.isAdvance ? state.adSearchData : state.searchData);
-            _context3.next = 5;
+            _context3.next = 6;
             return regeneratorRuntime.awrap((0, _bwd.getBwdInfoApi)(curPage, pageSize, query, state.isAdvance));
 
-          case 5:
+          case 6:
             res = _context3.sent;
             _res$value = res.value, records = _res$value.records, pageInfo = _res$value.pageInfo;
-            state.fieldsList = records.map(function (item, index) {
-              return _objectSpread({}, item, {
-                index: pageInfo.pageSize * (pageInfo.curPage - 1) + index + 1,
-                // index: item.id,
-                dwdTable: item.dwdMappingColumnList.map(function (item) {
-                  return item.tableNameCn;
-                }).join(', '),
-                dwdField: item.dwdMappingColumnList.map(function (item) {
-                  return item.colNameCn;
-                }).join(', '),
-                sbrTable: item.sbrMappingColumnList.map(function (item) {
-                  return item.tableNameCn;
-                }).join(', '),
-                sbrField: item.sbrMappingColumnList.map(function (item) {
-                  return item.colNameCn;
-                }).join(', ')
+
+            if (records) {
+              state.fieldsList = records.map(function (item, index) {
+                return _objectSpread({}, item, {
+                  index: pageInfo.pageSize * (pageInfo.curPage - 1) + index + 1,
+                  // index: item.id,
+                  dwdTable: item.dwdMappingColumnList.map(function (item) {
+                    return item.tableNameCn;
+                  }).join(', '),
+                  dwdField: item.dwdMappingColumnList.map(function (item) {
+                    return item.colNameCn;
+                  }).join(', '),
+                  sbrTable: item.sbrMappingColumnList.map(function (item) {
+                    return item.tableNameCn;
+                  }).join(', '),
+                  sbrField: item.sbrMappingColumnList.map(function (item) {
+                    return item.colNameCn;
+                  }).join(', ')
+                });
               });
-            });
+            } else {
+              state.fieldsList = [];
+            }
+
             commit('setPageInfo', pageInfo);
 
-          case 9:
+          case 10:
           case "end":
             return _context3.stop();
         }
