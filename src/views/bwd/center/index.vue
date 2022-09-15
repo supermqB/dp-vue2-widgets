@@ -131,7 +131,8 @@ export default {
       'setFieldsForm',
       'setIsAdvance',
       'setCurrentField',
-      'setPageInfo'
+      'setPageInfo',
+      'setEventMapList'
     ]),
     ...mapActions(['queryField', 'submitFields', 'queryMappingList']),
     icon(state) {
@@ -170,7 +171,8 @@ export default {
     async onClickSubmitFields() {
       const { valid } = await this.$refs.fileFieldsForm.validate()
       if (valid) {
-        if (this.submitFields()) this.$refs.fileFieldsDialog.toggleOpen()
+        this.submitFields()
+        this.$refs.fileFieldsDialog.toggleOpen()
       } else {
         this.$alert('请检查输入项是否完整！')
       }
@@ -190,9 +192,11 @@ export default {
     advancedSearch() {
       this.$refs.searchDialog.toggleOpen()
     },
-    onVersionChange() {
+    async onVersionChange() {
       this.queryMappingList()
-      this.queryField()
+      await this.queryField()
+      this.setCurrentField()
+      this.setEventMapList()
     },
   },
   watch: {
