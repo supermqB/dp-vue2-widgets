@@ -80,3 +80,6 @@ export const DOCTYPEOPTIONS = [
   { value: 'A', label: '专著' },
   { value: 'Q', label: '其它' }
 ]
+
+export const DWD = 'DWD'
+export const SBR = 'SBR'

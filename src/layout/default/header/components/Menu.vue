@@ -28,11 +28,11 @@ export default {
         },
         {
           value: 'event_model',
-          label: '事件模型管理'
+          label: '事件模型'
         },
         {
           value: 'bwd',
-          label: 'BWD管理'
+          label: '业务模型'
         },
         {
           value: 'docs',

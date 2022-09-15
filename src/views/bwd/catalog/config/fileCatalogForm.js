@@ -5,7 +5,7 @@ export const fileCatalogCfg = (categoryList = [], disabled = false) =>
   [
     {
       type: 'el-input',
-      label: 'BWD文件名称',
+      label: '业务模型名称',
       id: 'nameCn',
       elOptions: {
         placeholder: '请输入'
@@ -13,7 +13,7 @@ export const fileCatalogCfg = (categoryList = [], disabled = false) =>
     },
     {
       type: 'el-input',
-      label: 'BWD文件英文名称',
+      label: '业务模型英文名称',
       id: 'nameEn',
       elOptions: {
         placeholder: '请输入'
@@ -21,23 +21,17 @@ export const fileCatalogCfg = (categoryList = [], disabled = false) =>
     },
     {
       type: 'el-select',
-      label: '文件分类',
+      label: '业务类型',
       options: categoryList,
       id: 'theme',
       elOptions: {
         disabled,
+        multiple: true,
+        clearable: true,
+        collapseTags: false,
         placeholder: '请选择'
       }
     }
-    // {
-    //   type: 'el-select',
-    //   label: '启用状态',
-    //   id: 'state',
-    //   options: STATEOPTIONS,
-    //   elOptions: {
-    //     placeholder: '请选择'
-    //   }
-    // }
   ].map(item => {
     const elOptions = Object.assign({}, item.elOptions, {
       style: {

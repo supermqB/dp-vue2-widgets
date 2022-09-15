@@ -1,7 +1,7 @@
 <template>
   <div class="bwdWrap">
     <Header
-      title="BWD目录"
+      title="业务目录"
       hasRun
       @add="addFileCatalog"
       @edit="editFileCatalog"
@@ -140,6 +140,9 @@ export default {
     async addFileCatalog() {
       this.$refs.fileCatalogDialog.toggleOpen()
       this.setCatalogForm()
+      this.$nextTick(() => {
+        this.$refs.fileCatalogForm.clearValidate()
+      })
     },
     editFileCatalog() {
       if (!this.currentBwd) return
@@ -231,9 +234,9 @@ export default {
   left: 32px;
 }
 ::v-deep .fileCatalogDialog .el-dialog {
-  width: 700px;
+  width: 600px;
   form {
-    padding-right: 25%;
+    padding-right: 19%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -242,6 +245,9 @@ export default {
       margin-bottom: 16px;
       display: inline-flex;
     }
+    .el-tag {
+      height: 20px
+    } 
   }
 }
 .tree {

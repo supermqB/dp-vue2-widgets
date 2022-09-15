@@ -10,14 +10,15 @@ export default {
   searchData: {
     nameCn: '',
     nameEn: '',
-    dwdNameCn: ''
+    dwdNameCn: '',
+    version: ''
   },
   fileCatalogData: {
     id: '',
     nameCn: '',
     nameEn: '',
     theme: '',
-    state: ''
+    state: []
   },
   eventMapData: {
     event: '',

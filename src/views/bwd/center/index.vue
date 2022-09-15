@@ -230,14 +230,19 @@ export default {
     }
   }
   .search {
+    width: 100%;
+    box-sizing: border-box;
     position: relative;
-    padding: 0 15px;
     display: flex;
-    flex-wrap: wrap;
+    padding-left: 10px;
+    padding-right: 10px;
     justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid #e5e5e5;
     .buttons {
-      line-height: 36px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
     }
   }
   .table {
@@ -273,6 +278,7 @@ export default {
     }
     .el-form-item__label {
       width: 77px;
+      padding-right: 6px!important;
       text-align: left;
     }
     .el-form-item__content {

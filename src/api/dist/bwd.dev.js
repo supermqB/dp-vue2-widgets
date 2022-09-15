@@ -157,12 +157,13 @@ var deleteMappingApi = function deleteMappingApi(id) {
 
 exports.deleteMappingApi = deleteMappingApi;
 
-var getMapModelApi = function getMapModelApi(source) {
+var getMapModelApi = function getMapModelApi(source, version) {
   return (0, _request["default"])({
     method: 'get',
     url: '/data-mapping/getTableModel',
     params: {
-      source: source
+      source: source,
+      version: version
     }
   });
 };

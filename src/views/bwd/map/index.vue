@@ -7,8 +7,8 @@
       @tab-click="tabChanged"
       class="bwd_ref_tabs"
     >
-      <el-tab-pane label="事件库映射" name="DWD"></el-tab-pane>
-      <el-tab-pane label="主索引映射" name="SBR"></el-tab-pane>
+      <el-tab-pane label="事件库映射" :name="DWD"></el-tab-pane>
+      <el-tab-pane label="主索引映射" :name="SBR"></el-tab-pane>
     </el-tabs>
     <Form
       class="form"
@@ -30,6 +30,7 @@ import Table from '@/components/GeneralTable.vue'
 import { eventCfg, mdmCfg } from './config/searchForm'
 import { tableConfig } from './config/tableColumn'
 import { createNamespacedHelpers } from 'vuex'
+import { DWD, SBR } from '@/utils/const'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('bwd')
 export default {
@@ -39,7 +40,6 @@ export default {
   },
   data() {
     return {
-      mappingType: 'DWD',
       eventCfg,
       mdmCfg,
       tableConfig,
@@ -47,9 +47,27 @@ export default {
       matchDialog: false
     }
   },
+  created() {
+    this.DWD = DWD
+    this.SBR = SBR
+  },
   computed: {
-    ...mapState(['eventMapData', 'eventMapList', 'currentField', 'currentBwd']),
+    ...mapState([
+      'eventMapData',
+      'eventMapList',
+      'currentField',
+      'currentBwd',
+      'source'
+    ]),
     ...mapGetters(['eventOptions', 'filterEventMapList']),
+    mappingType: {
+      get() {
+        return this.source
+      },
+      set(value) {
+        this.setSource(value)
+      }
+    },
     bwdField: {
       get() {
         return `${this.currentField}${this.currentBwd}`
@@ -57,7 +75,12 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(['setTabMapList', 'setEventMapList', 'resetEventMapData']),
+    ...mapMutations([
+      'setTabMapList', 
+      'setEventMapList', 
+      'resetEventMapData',
+      'setSource'
+    ]),
     ...mapActions([
       'queryMappingField',
       'queryMappingList',
@@ -65,7 +88,7 @@ export default {
       'matchCatalog'
     ]),
     async tabChanged() {
-      await this.queryMappingList(this.mappingType)
+      await this.queryMappingList()
       this.resetEventMapData()
       this.setEventMapList()
     },
@@ -85,10 +108,12 @@ export default {
       this.$refs.tableList = val
     }
   },
-  mounted() {
-    this.queryMappingList(this.mappingType)
-  },
   watch: {
+    currentBwd: {
+      handler() {
+        this.queryMappingList()
+      }
+    },
     bwdField: {
       handler(cur) {
         this.setEventMapList()

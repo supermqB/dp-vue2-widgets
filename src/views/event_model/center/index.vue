@@ -192,11 +192,14 @@ export default {
     }
   }
   .search {
+    width: 100%;
+    box-sizing: border-box;
     position: relative;
-    padding: 0 15px;
     display: flex;
-    flex-wrap: wrap;
+    padding-left: 10px;
+    padding-right: 10px;
     justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid #e5e5e5;
     .right {
       display: flex;
