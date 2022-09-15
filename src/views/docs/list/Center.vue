@@ -22,7 +22,11 @@
       <div v-for="(item, index) in listData" class="item" :key="index">
         <div class="titlerow">
           <div class="typespan">{{ item.docTypeName }}</div>
-          <div class="title" @click="forward2SumPage(item.id)" :title="getItemTilte(item)">
+          <div
+            class="title"
+            @click="forward2SumPage(item.id)"
+            :title="getItemTilte(item)"
+          >
             {{ getItemTilte(item) }}
           </div>
         </div>
@@ -43,11 +47,7 @@
       </el-pagination>
     </div>
     <div>
-      <EditDialog
-        mode="create"
-        ref="editDialog"
-        @doc-create="createDocHandler"
-      />
+      <EditDialog mode="create" ref="editDialog" @doc-create="createDocHandler" />
       <adv-search-dialog
         ref="advSearchDialog"
         :columns="advSearchCols"
@@ -58,88 +58,92 @@
 </template>
 
 <script>
-import { debounce } from 'lodash'
-import EditDialog from './EditDialog.vue'
-import Form from '@/components/Form.vue'
-import { createNamespacedHelpers } from 'vuex'
-import AdvSearchDialog from '@/views/common/AdvSearchDialog'
-import tableHeader from './config/tableHeader'
-const { mapState, mapMutations, mapActions } =
-  createNamespacedHelpers('docs/list')
+import { debounce } from "lodash";
+import EditDialog from "./EditDialog.vue";
+import Form from "@/components/Form.vue";
+import { createNamespacedHelpers } from "vuex";
+import AdvSearchDialog from "@/views/common/AdvSearchDialog";
+import tableHeader from "./config/tableHeader";
+const { mapState, mapActions } = createNamespacedHelpers("docs/list");
 
 export default {
   computed: {
-    ...mapState(['searchForm', 'listData', 'pageInfo', 'selectedDocTypeCtlg']),
+    ...mapState(["searchForm", "listData", "pageInfo", "selectedDocTypeCtlg"]),
     advSearchCols() {
-      return tableHeader
+      return tableHeader;
     },
     pageInfoChangeSignal() {
-      return this.pageInfo.curPage + ':' + this.pageInfo.pageSize
-    }
+      return this.pageInfo.curPage + ":" + this.pageInfo.pageSize;
+    },
   },
   methods: {
     startImport() {
-      this.$refs.editDialog.toggleOpen()
+      this.$refs.editDialog.toggleOpen();
     },
     searchHandler() {
-      this.search()
+      const curPage = this.pageInfo.curPage;
+      if (curPage == 1) {
+        this.lazyList();
+      } else {
+        this.pageInfo.curPage = 1;
+      }
     },
     advSearchHandler(advSearchCriteria) {
-      console.log(advSearchCriteria)
+      console.log(advSearchCriteria);
     },
     openAdvSearch() {
-      this.$refs.advSearchDialog.open()
+      this.$refs.advSearchDialog.open();
     },
     createDocHandler(docProps) {
-      this.importDoc(docProps) && this.$refs.editDialog.toggleOpen()
+      this.importDoc(docProps) && this.$refs.editDialog.toggleOpen();
     },
     forward2SumPage(identifier) {
-      this.$router.push(`/docs/summary/${identifier}`)
+      this.$router.push(`/docs/summary/${identifier}`);
     },
     getItemTilte(item) {
       return [
-        { label: '', value: `${item.title}【${item.identifier}】` },
+        { label: "", value: `${item.title}【${item.identifier}】` },
         {
-          label: '英文标题：',
-          value: item.titleEn
-        }
+          label: "英文标题：",
+          value: item.titleEn,
+        },
       ]
-        .filter(f => !!f.value)
-        .map(f => `${f.label}${f.value}`)
-        .join('，')
+        .filter((f) => !!f.value)
+        .map((f) => `${f.label}${f.value}`)
+        .join("，");
     },
     getItemSumline(item) {
       return [
-        { label: '作者：', value: item.author },
-        { label: '机构', value: item.organization },
-        { label: '发表年份：', value: item.releaseTime },
+        { label: "作者：", value: item.author },
+        { label: "机构", value: item.organization },
+        { label: "发表年份：", value: item.releaseTime },
         {
-          label: '来源：',
-          value: item.source
-        }
+          label: "来源：",
+          value: item.source,
+        },
       ]
-        .filter(f => !!f.value)
-        .map(f => `${f.label}${f.value}`)
-        .join('，')
+        .filter((f) => !!f.value)
+        .map((f) => `${f.label}${f.value}`)
+        .join("，");
     },
-    ...mapActions(['search', 'importDoc'])
+    ...mapActions(["search", "importDoc"]),
   },
   watch: {
     selectedDocTypeCtlg() {
-      this.lazyList()
+      this.lazyList();
     },
     pageInfoChangeSignal() {
-      this.lazyList()
-    }
+      this.lazyList();
+    },
   },
   mounted() {
     this.lazyList = debounce(() => {
-      this.search()
-    }, 500)
-    this.lazyList()
+      this.search();
+    }, 500);
+    this.lazyList();
   },
-  components: { Form, EditDialog, AdvSearchDialog }
-}
+  components: { Form, EditDialog, AdvSearchDialog },
+};
 </script>
 <style lang="scss" scoped>
 @mixin ellipsis {
