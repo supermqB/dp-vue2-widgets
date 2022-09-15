@@ -1,7 +1,7 @@
 export const searchCfg = [
   {
     type: 'el-input',
-    label: '字段',
+    label: '字\xa0\xa0段',
     id: 'nameCn',
     elOptions: {
       clearable: true,
@@ -13,7 +13,7 @@ export const searchCfg = [
   },
   {
     type: 'el-input',
-    label: '英文名',
+    label: '英\xa0文\xa0名',
     id: 'nameEn',
     elOptions: {
       clearable: true,

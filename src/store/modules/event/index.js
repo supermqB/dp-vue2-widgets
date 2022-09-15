@@ -211,7 +211,11 @@ const actions = {
       state.isAdvance
     )
     const { records, pageInfo } = value
-    state.columnList = processColumnList(records, curPage, pageSize)
+    state.columnList = processColumnList(
+      records ? records : [],
+      curPage,
+      pageSize
+    )
     commit('setPageInfo', pageInfo)
   },
   async initEvent({ dispatch, commit }) {
