@@ -115,12 +115,13 @@ export const deleteMappingApi = id => {
     }
   })
 }
-export const getMapModelApi = source => {
+export const getMapModelApi = (source, version) => {
   return request({
     method: 'get',
     url: '/data-mapping/getTableModel',
     params: {
-      source
+      source,
+      version
     }
   })
 }

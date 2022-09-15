@@ -12,12 +12,19 @@ import {
   addMappingApi,
   deleteMappingApi
 } from '@/api/bwd'
+import { getVersionListApi } from '@/api/event'
 import { MessageBox } from 'element-ui'
 import { keysClone } from '@/utils/lang'
+import { DWD, EDITINGSTATE } from '@/utils/const'
 import initState from './initState'
 
 const getCurrentFieldItem = (list, id) => {
   return list.find(item => item.id === id)
+}
+
+const joinName = (list, id) => {
+  if (!list) return ''
+  return list.map(item => item[id]).join(', ')
 }
 
 const state = {
@@ -55,11 +62,12 @@ const state = {
     totalPage: 0
   },
   totalNumber: 0,
+  versionList: [],
   fieldsList: [],
   eventList: [],
   eventMapList: [],
-  source: 'DWD',
-
+  themeOptions: [],
+  source: DWD,
   fileCatalogData: Object.assign({}, initState.fileCatalogData),
   searchData: Object.assign({}, initState.searchData),
   adSearchData: Object.assign({}, initState.adSearchData),
@@ -74,8 +82,10 @@ const getters = {
         return state.currentBwd.toString() === it.id.toString()
       })
       if (res) {
+        const [theme, id] = res.id.split(';')
         return Object.assign({}, res, {
-          theme: item.label
+          id: id,
+          theme: [theme]
         })
       }
     }
@@ -123,6 +133,12 @@ const mutations = {
   },
   setBwdList(state, value) {
     state.bwdList = value
+    state.themeOptions = value.map(item => {
+      return {
+        value: item.id.toString(),
+        label: item.label
+      }
+    })
   },
   setCatalogForm: (state, form) => {
     if (form) {
@@ -155,22 +171,19 @@ const mutations = {
     }
   },
   setEventMapList: state => {
-    if (!state.currentField) {
-      state.eventMapList = []
-      return
-    }
+    state.eventMapList = []
+    if (!state.currentField) return
     const currentField = getCurrentFieldItem(
       state.fieldsList,
       state.currentField
     )
-    if (!currentField) return
     const { dwdMappingColumnList, sbrMappingColumnList } = currentField
     state.eventMapList = (
-      state.source === 'DWD' ? dwdMappingColumnList : sbrMappingColumnList
+      state.source === DWD ? dwdMappingColumnList : sbrMappingColumnList
     ).map((item, index) => {
       return {
-        id: item.id,
         index,
+        id: item.id,
         colId: item.colId,
         colNameCn: item.colNameCn,
         colNameEn: item.colNameEn,
@@ -178,8 +191,7 @@ const mutations = {
         tableNameCn: item.nameCn,
         tableNameEn: item.nameEn,
         definition: item.definition,
-        match: true,
-        matchLabel: '取消匹配'
+        match: true
       }
     })
   },
@@ -196,6 +208,9 @@ const mutations = {
   resetEventMapData: state => {
     state.eventMapData = Object.assign({}, initState.eventMapData)
   },
+  setSource: (state, source) => {
+    state.source = source
+  },
   matchId: state => {
     const currentField = getCurrentFieldItem(
       state.fieldsList,
@@ -203,7 +218,7 @@ const mutations = {
     )
     if (!currentField) return
     let { dwdMappingColumnList, sbrMappingColumnList } = currentField
-    if (state.source !== 'DWD') dwdMappingColumnList = sbrMappingColumnList
+    if (state.source !== DWD) dwdMappingColumnList = sbrMappingColumnList
     dwdMappingColumnList.forEach(item => {
       state.eventMapList.forEach(event => {
         if (event.colId === item.colId) {
@@ -228,6 +243,15 @@ const actions = {
     const { value } = await getTotalNumApi()
     commit('setTotalNum', value)
   },
+  async queryVersion() {
+    const { value } = await getVersionListApi()
+    state.versionList = value.map(item => {
+      return {
+        value: item.versionName,
+        label: item.versionName
+      }
+    })
+  },
   // 处理左侧bwd，调接口展示bwdlist(getCatalogApi)
   async loadBwdModules({ commit }) {
     const result = await getCatalogApi()
@@ -235,11 +259,11 @@ const actions = {
       commit(
         'setBwdList',
         result.value.map(item => ({
-          id: item.theme,
+          id: item.id,
           label: item.theme,
           children: item.bwdCatelogEntityList.map(it => {
             return {
-              id: `${item.theme};${it.id}`,
+              id: `${item.id};${it.id}`,
               label: it.nameCn,
               nameCn: it.nameCn,
               nameEn: it.nameEn,
@@ -255,9 +279,9 @@ const actions = {
   // 给中间展示bwd(getBwdInfoApi)
   async queryField({ commit }) {
     const { curPage, pageSize } = state.pageInfo
-    const [theme, id] = state.currentBwd.split(';')
+    const [version, id] = state.currentBwd.split(';')
     const query = Object.assign(
-      { id },
+      { id, version },
       state.isAdvance ? state.adSearchData : state.searchData
     )
     const res = await getBwdInfoApi(curPage, pageSize, query, state.isAdvance)
@@ -266,29 +290,24 @@ const actions = {
       state.fieldsList = records.map((item, index) => ({
         ...item,
         index: pageInfo.pageSize * (pageInfo.curPage - 1) + index + 1,
-        // index: item.id,
-        dwdTable: item.dwdMappingColumnList
-          .map(item => item.tableNameCn)
-          .join(', '),
-        dwdField: item.dwdMappingColumnList
-          .map(item => item.colNameCn)
-          .join(', '),
-        sbrTable: item.sbrMappingColumnList
-          .map(item => item.tableNameCn)
-          .join(', '),
-        sbrField: item.sbrMappingColumnList
-          .map(item => item.colNameCn)
-          .join(', ')
+        dwdTable: joinName(item.dwdMappingColumnList, 'tableNameCn'),
+        dwdField: joinName(item.dwdMappingColumnList, 'colNameCn'),
+        sbrTable: joinName(item.sbrMappingColumnList, 'tableNameCn'),
+        sbrField: joinName(item.sbrMappingColumnList, 'colNameCn')
       }))
     } else {
       state.fieldsList = []
     }
     commit('setPageInfo', pageInfo)
   },
-  async queryMappingList({}, source) {
-    const { value } = await getMapModelApi(source)
-    state.eventList = value
-    state.source = source
+  async queryMappingList() {
+    const version = state.searchData.version
+    if (!version) return
+    const res = await getMapModelApi(
+      state.source,
+      state.source === DWD ? version : 'V1.0'
+    )
+    state.eventList = res.value
   },
   async queryMappingField({ commit }, id) {
     const result = await getMapFieldsApi(id)
@@ -310,25 +329,28 @@ const actions = {
   async submitFileCatalog({ dispatch, state }) {
     const { id, nameCn, nameEn, theme } = state.fileCatalogData
     if (!id) {
-      await addFileCatalogApi(
+      const res = await addFileCatalogApi(
         nameCn,
         nameEn,
-        theme,
-        state.fileCatalogData.state
+        theme.join(','),
+        EDITINGSTATE
       )
+      if (!res.success) return false
       this._vm.$message.success('新增文件目录成功')
     } else {
-      await updateFileCatalogApi(
+      const res = await updateFileCatalogApi(
         id,
         nameCn,
         nameEn,
-        theme,
-        state.fileCatalogData.state
+        theme.join(','),
+        EDITINGSTATE
       )
+      if (!res.success) return false
       this._vm.$message.success('编辑文件目录成功')
     }
     dispatch('loadBwdModules')
     dispatch('queryTotalNum')
+    return true
   },
   async submitFields({ dispatch, state }) {
     const { id, index, nameCn, nameEn } = state.fileFieldsData
@@ -354,15 +376,17 @@ const actions = {
     }
     await dispatch('queryField')
   },
-  async submitMapping({ commit, dispatch, state }, col) {
+  async submitMapping({ commit, dispatch }, col) {
     if (!col.match) {
-      await dispatch('map', col)
+      const res = await dispatch('map', col)
+      if (!res.success) return
       this._vm.$message.success('匹配成功！')
       col.match = true
       await dispatch('queryField')
       commit('matchId')
     } else {
-      await deleteMappingApi(col.id)
+      const res = await deleteMappingApi(col.id)
+      if (!res.success) return
       col.match = false
       delete col['id']
       this._vm.$message.success('取消匹配成功！')
@@ -376,7 +400,7 @@ const actions = {
     )
     const { dwdMappingColumnList, id } = currentField
     if (
-      state.source === 'DWD' &&
+      state.source === DWD &&
       dwdMappingColumnList &&
       dwdMappingColumnList.length === 1
     ) {
@@ -385,22 +409,11 @@ const actions = {
         cancelButtonText: '取消',
         type: 'warning'
       })
-      await deleteMappingApi(dwdMappingColumnList[0].id)
+      const delResponse = await deleteMappingApi(dwdMappingColumnList[0].id)
+      if (!delResponse.success) return
       commit('cancelMatch', dwdMappingColumnList[0].id)
-      await addMappingApi({
-        id,
-        bwdMappingColumn: {
-          tableId: col.tableId,
-          tableNameCn: col.tableNameCn,
-          tableNameEn: col.tableNameEn,
-          colId: col.colId,
-          colNameCn: col.colNameCn,
-          colNameEn: col.colNameEn
-        }
-      })
-      return
     }
-    await addMappingApi({
+    return await addMappingApi({
       id,
       bwdMappingColumn: {
         tableId: col.tableId,

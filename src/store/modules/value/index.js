@@ -338,8 +338,8 @@ const actions = {
     const { curPage: current, pageSize: size } = state.pageInfo
     const columnParamList = []
     ;[
-      { name: 'code', condition: 'like' },
-      { name: 'value', condition: 'like' },
+      { name: 'term_code', condition: 'like' },
+      // { name: 'value', condition: 'like' },
       { name: 'parent_code', condition: 'equal' },
       { name: 'level', condition: 'equal' }
     ].forEach(item => {

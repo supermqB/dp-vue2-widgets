@@ -7,7 +7,7 @@ export const searchValueCfg = (
     {
       type: 'el-input',
       label: '编\xa0\xa0\xa0\xa0号',
-      id: 'code',
+      id: 'term_code',
       elOptions: {
         clearable: true,
         style: {
@@ -15,17 +15,17 @@ export const searchValueCfg = (
         }
       }
     },
-    {
-      type: 'el-input',
-      label: '名\xa0\xa0\xa0\xa0称',
-      id: 'value',
-      elOptions: {
-        clearable: true,
-        style: {
-          width: '150px'
-        }
-      }
-    },
+    // {
+    //   type: 'el-input',
+    //   label: '名\xa0\xa0\xa0\xa0称',
+    //   id: 'value',
+    //   elOptions: {
+    //     clearable: true,
+    //     style: {
+    //       width: '150px'
+    //     }
+    //   }
+    // },
     {
       type: 'el-input',
       options: parentCode,

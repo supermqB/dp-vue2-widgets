@@ -47,7 +47,7 @@ const routes = [
       {
         path: 'bwd',
         name: 'bwd',
-        meta: { title: '业务明细库' },
+        meta: { title: '业务模型' },
         component: () => import('@/views/bwd/')
       },
       {

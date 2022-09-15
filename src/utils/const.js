@@ -81,3 +81,6 @@ export const DOCTYPEOPTIONS = [
   { value: 'A', label: '专著、论文集中的析出文献' },
   { value: 'Q', label: '其他未说明的文献类型' }
 ]
+
+export const DWD = 'DWD'
+export const SBR = 'SBR'
