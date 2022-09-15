@@ -12,13 +12,19 @@ import {
   addMappingApi,
   deleteMappingApi
 } from '@/api/bwd'
+import { getVersionListApi } from '@/api/event'
 import { MessageBox } from 'element-ui'
 import { keysClone } from '@/utils/lang'
-import { DWD } from '@/utils/const'
+import { DWD, EDITINGSTATE } from '@/utils/const'
 import initState from './initState'
 
 const getCurrentFieldItem = (list, id) => {
   return list.find(item => item.id === id)
+}
+
+const joinName = (list, id) => {
+  if (!list) return ''
+  return list.map(item => item[id]).join(', ')
 }
 
 const state = {
@@ -56,11 +62,12 @@ const state = {
     totalPage: 0
   },
   totalNumber: 0,
+  versionList: [],
   fieldsList: [],
   eventList: [],
   eventMapList: [],
+  themeOptions: [],
   source: DWD,
-
   fileCatalogData: Object.assign({}, initState.fileCatalogData),
   searchData: Object.assign({}, initState.searchData),
   adSearchData: Object.assign({}, initState.adSearchData),
@@ -75,8 +82,10 @@ const getters = {
         return state.currentBwd.toString() === it.id.toString()
       })
       if (res) {
+        const [theme, id] = res.id.split(';')
         return Object.assign({}, res, {
-          theme: item.label
+          id: id,
+          theme: [theme]
         })
       }
     }
@@ -124,6 +133,12 @@ const mutations = {
   },
   setBwdList(state, value) {
     state.bwdList = value
+    state.themeOptions = value.map(item => {
+      return {
+        value: item.id.toString(),
+        label: item.label
+      }
+    })
   },
   setCatalogForm: (state, form) => {
     if (form) {
@@ -228,6 +243,15 @@ const actions = {
     const { value } = await getTotalNumApi()
     commit('setTotalNum', value)
   },
+  async queryVersion() {
+    const { value } = await getVersionListApi()
+    state.versionList = value.map(item => {
+      return {
+        value: item.versionName,
+        label: item.versionName
+      }
+    })
+  },
   // 处理左侧bwd，调接口展示bwdlist(getCatalogApi)
   async loadBwdModules({ commit }) {
     const result = await getCatalogApi()
@@ -235,11 +259,11 @@ const actions = {
       commit(
         'setBwdList',
         result.value.map(item => ({
-          id: item.theme,
+          id: item.id,
           label: item.theme,
           children: item.bwdCatelogEntityList.map(it => {
             return {
-              id: `${item.theme};${it.id}`,
+              id: `${item.id};${it.id}`,
               label: it.nameCn,
               nameCn: it.nameCn,
               nameEn: it.nameEn,
@@ -266,19 +290,10 @@ const actions = {
       state.fieldsList = records.map((item, index) => ({
         ...item,
         index: pageInfo.pageSize * (pageInfo.curPage - 1) + index + 1,
-        // index: item.id,
-        dwdTable: item.dwdMappingColumnList
-          .map(item => item.tableNameCn)
-          .join(', '),
-        dwdField: item.dwdMappingColumnList
-          .map(item => item.colNameCn)
-          .join(', '),
-        sbrTable: item.sbrMappingColumnList
-          .map(item => item.tableNameCn)
-          .join(', '),
-        sbrField: item.sbrMappingColumnList
-          .map(item => item.colNameCn)
-          .join(', ')
+        dwdTable: joinName(item.dwdMappingColumnList, 'tableNameCn'),
+        dwdField: joinName(item.dwdMappingColumnList, 'colNameCn'),
+        sbrTable: joinName(item.sbrMappingColumnList, 'tableNameCn'),
+        sbrField: joinName(item.sbrMappingColumnList, 'colNameCn')
       }))
     } else {
       state.fieldsList = []
@@ -286,10 +301,11 @@ const actions = {
     commit('setPageInfo', pageInfo)
   },
   async queryMappingList() {
-    const [version] = state.currentBwd.split(';')
+    const version = state.searchData.version
+    if (!version) return
     const res = await getMapModelApi(
       state.source,
-      state.source === 'DWD' ? version : 'V1.0'
+      state.source === DWD ? version : 'V1.0'
     )
     state.eventList = res.value
   },
@@ -313,25 +329,28 @@ const actions = {
   async submitFileCatalog({ dispatch, state }) {
     const { id, nameCn, nameEn, theme } = state.fileCatalogData
     if (!id) {
-      await addFileCatalogApi(
+      const res = await addFileCatalogApi(
         nameCn,
         nameEn,
-        theme,
-        state.fileCatalogData.state
+        theme.join(','),
+        EDITINGSTATE
       )
+      if (!res.success) return false
       this._vm.$message.success('新增文件目录成功')
     } else {
-      await updateFileCatalogApi(
+      const res = await updateFileCatalogApi(
         id,
         nameCn,
         nameEn,
-        theme,
-        state.fileCatalogData.state
+        theme.join(','),
+        EDITINGSTATE
       )
+      if (!res.success) return false
       this._vm.$message.success('编辑文件目录成功')
     }
     dispatch('loadBwdModules')
     dispatch('queryTotalNum')
+    return true
   },
   async submitFields({ dispatch, state }) {
     const { id, index, nameCn, nameEn } = state.fileFieldsData

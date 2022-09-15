@@ -58,7 +58,7 @@
       >
         <Form
           ref="fileCatalogForm"
-          :formCfg="fileCatalogCfg(categoryOptions)"
+          :formCfg="fileCatalogCfg(themeOptions)"
           :formData="fileCatalogData"
           :formRule="fileCatalogRule"
         ></Form>
@@ -106,12 +106,17 @@ export default {
       'currentBwd',
       'fileCatalogData',
       'pageInfo',
-      'totalNumber'
+      'totalNumber',
+      'themeOptions'
     ]),
     ...mapGetters(['currentBwdItem', 'categoryOptions'])
   },
   methods: {
-    ...mapMutations(['setCatalogForm', 'setCurrentBwd', 'setCurrentField']),
+    ...mapMutations([
+      'setCatalogForm', 
+      'setCurrentBwd', 
+      'setCurrentField'
+    ]),
     ...mapActions([
       'loadBwdModules',
       'queryField',
@@ -158,8 +163,8 @@ export default {
     async onClickSubmitFileCatalog() {
       const { valid } = await this.$refs.fileCatalogForm.validate()
       if (valid) {
-        this.submitFileCatalog()
-        this.$refs.fileCatalogDialog.toggleOpen()
+        if(await this.submitFileCatalog())
+          this.$refs.fileCatalogDialog.toggleOpen()
       } else {
         this.$alert('请检查输入项是否完整！')
       }

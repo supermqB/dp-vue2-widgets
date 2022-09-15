@@ -39,7 +39,7 @@ export default {
     file: null
   },
   searchForm: {
-    code: '',
+    level: '',
     value: '',
     parent_code: '',
     term_code: ''

@@ -1,4 +1,4 @@
-export const searchCfg = [
+export const searchCfg = (versionList, onChange) => [
   {
     type: 'el-input',
     label: '字\xa0\xa0\xa0\xa0段',
@@ -39,13 +39,16 @@ export const searchCfg = [
     type: 'el-select',
     label: '事件库版本',
     id: 'version',
-    options: [],
+    options: versionList,
     elOptions: {
       clearable: true,
       placeholder: '请选择事件库版本',
       style: {
         width: '170px'
       }
+    },
+    elEvents: {
+      change: onChange
     }
   }
 ]

@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="search">
-      <Form :formCfg="searchCfg" :formData="searchData"></Form>
+      <Form :formCfg="searchCfg(versionList, onVersionChange)" :formData="searchData"></Form>
       <div class="buttons">
         <el-button @click="onClickSearch">查询</el-button>
         <el-button
@@ -122,7 +122,8 @@ export default {
       searchData: 'searchData',
       fieldsList: 'fieldsList',
       fileFieldsData: 'fileFieldsData',
-      adSearchData: 'adSearchData'
+      adSearchData: 'adSearchData',
+      versionList: 'versionList'
     })
   },
   methods: {
@@ -132,7 +133,7 @@ export default {
       'setCurrentField',
       'setPageInfo'
     ]),
-    ...mapActions(['queryField', 'submitFields']),
+    ...mapActions(['queryField', 'submitFields', 'queryMappingList']),
     icon(state) {
       switch (state) {
         case RUNNINGSTATE:
@@ -169,8 +170,7 @@ export default {
     async onClickSubmitFields() {
       const { valid } = await this.$refs.fileFieldsForm.validate()
       if (valid) {
-        this.submitFields()
-        this.$refs.fileFieldsDialog.toggleOpen()
+        if (this.submitFields()) this.$refs.fileFieldsDialog.toggleOpen()
       } else {
         this.$alert('请检查输入项是否完整！')
       }
@@ -189,7 +189,11 @@ export default {
     },
     advancedSearch() {
       this.$refs.searchDialog.toggleOpen()
-    }
+    },
+    onVersionChange() {
+      this.queryMappingList()
+      this.queryField()
+    },
   },
   watch: {
     currentFieldRow: {

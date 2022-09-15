@@ -27,10 +27,17 @@ export default {
     Map
   },
   methods: {
-    ...mapActions(['loadBwdModules', 'queryTotalNum', 'queryField', 'queryMappingList']),
+    ...mapActions([
+      'loadBwdModules', 
+      'queryTotalNum', 
+      'queryField', 
+      'queryMappingList',
+      'queryVersion'
+    ]),
     ...mapMutations(['setCurrentField'])
   },
   async mounted() {
+    this.queryVersion()
     await this.loadBwdModules()
     await this.queryTotalNum()
     await this.queryField()

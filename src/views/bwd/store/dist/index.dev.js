@@ -7,6 +7,8 @@ exports["default"] = void 0;
 
 var _bwd = require("@/api/bwd");
 
+var _event = require("@/api/event");
+
 var _elementUi = require("element-ui");
 
 var _lang = require("@/utils/lang");
@@ -35,6 +37,13 @@ var getCurrentFieldItem = function getCurrentFieldItem(list, id) {
   return list.find(function (item) {
     return item.id === id;
   });
+};
+
+var joinName = function joinName(list, id) {
+  if (!list) return '';
+  return list.map(function (item) {
+    return item[id];
+  }).join(', ');
 };
 
 var state = {
@@ -66,9 +75,11 @@ var state = {
     totalPage: 0
   },
   totalNumber: 0,
+  versionList: [],
   fieldsList: [],
   eventList: [],
   eventMapList: [],
+  themeOptions: [],
   source: _const.DWD,
   fileCatalogData: Object.assign({}, _initState["default"].fileCatalogData),
   searchData: Object.assign({}, _initState["default"].searchData),
@@ -90,8 +101,14 @@ var getters = {
         });
 
         if (res) {
+          var _res$id$split = res.id.split(';'),
+              _res$id$split2 = _slicedToArray(_res$id$split, 2),
+              theme = _res$id$split2[0],
+              id = _res$id$split2[1];
+
           return Object.assign({}, res, {
-            theme: item.label
+            id: id,
+            theme: [theme]
           });
         }
       }
@@ -156,6 +173,12 @@ var mutations = {
   },
   setBwdList: function setBwdList(state, value) {
     state.bwdList = value;
+    state.themeOptions = value.map(function (item) {
+      return {
+        value: item.id.toString(),
+        label: item.label
+      };
+    });
   },
   setCatalogForm: function setCatalogForm(state, form) {
     if (form) {
@@ -269,28 +292,55 @@ var actions = {
       }
     });
   },
-  // 处理左侧bwd，调接口展示bwdlist(getCatalogApi)
-  loadBwdModules: function loadBwdModules(_ref3) {
-    var commit, result;
-    return regeneratorRuntime.async(function loadBwdModules$(_context2) {
+  queryVersion: function queryVersion() {
+    var _ref3, value;
+
+    return regeneratorRuntime.async(function queryVersion$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            commit = _ref3.commit;
-            _context2.next = 3;
+            _context2.next = 2;
+            return regeneratorRuntime.awrap((0, _event.getVersionListApi)());
+
+          case 2:
+            _ref3 = _context2.sent;
+            value = _ref3.value;
+            state.versionList = value.map(function (item) {
+              return {
+                value: item.versionName,
+                label: item.versionName
+              };
+            });
+
+          case 5:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    });
+  },
+  // 处理左侧bwd，调接口展示bwdlist(getCatalogApi)
+  loadBwdModules: function loadBwdModules(_ref4) {
+    var commit, result;
+    return regeneratorRuntime.async(function loadBwdModules$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            commit = _ref4.commit;
+            _context3.next = 3;
             return regeneratorRuntime.awrap((0, _bwd.getCatalogApi)());
 
           case 3:
-            result = _context2.sent;
+            result = _context3.sent;
 
             if (result.success) {
               commit('setBwdList', result.value.map(function (item) {
                 return {
-                  id: item.theme,
+                  id: item.id,
                   label: item.theme,
                   children: item.bwdCatelogEntityList.map(function (it) {
                     return {
-                      id: "".concat(item.theme, ";").concat(it.id),
+                      id: "".concat(item.id, ";").concat(it.id),
                       label: it.nameCn,
                       nameCn: it.nameCn,
                       nameEn: it.nameEn,
@@ -305,50 +355,41 @@ var actions = {
 
           case 5:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
       }
     });
   },
   // 给中间展示bwd(getBwdInfoApi)
-  queryField: function queryField(_ref4) {
+  queryField: function queryField(_ref5) {
     var commit, _state$pageInfo, curPage, pageSize, _state$currentBwd$spl, _state$currentBwd$spl2, version, id, query, res, _res$value, records, pageInfo;
 
-    return regeneratorRuntime.async(function queryField$(_context3) {
+    return regeneratorRuntime.async(function queryField$(_context4) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
-            commit = _ref4.commit;
+            commit = _ref5.commit;
             _state$pageInfo = state.pageInfo, curPage = _state$pageInfo.curPage, pageSize = _state$pageInfo.pageSize;
             _state$currentBwd$spl = state.currentBwd.split(';'), _state$currentBwd$spl2 = _slicedToArray(_state$currentBwd$spl, 2), version = _state$currentBwd$spl2[0], id = _state$currentBwd$spl2[1];
             query = Object.assign({
               id: id,
               version: version
             }, state.isAdvance ? state.adSearchData : state.searchData);
-            _context3.next = 6;
+            _context4.next = 6;
             return regeneratorRuntime.awrap((0, _bwd.getBwdInfoApi)(curPage, pageSize, query, state.isAdvance));
 
           case 6:
-            res = _context3.sent;
+            res = _context4.sent;
             _res$value = res.value, records = _res$value.records, pageInfo = _res$value.pageInfo;
 
             if (records) {
               state.fieldsList = records.map(function (item, index) {
                 return _objectSpread({}, item, {
                   index: pageInfo.pageSize * (pageInfo.curPage - 1) + index + 1,
-                  // index: item.id,
-                  dwdTable: item.dwdMappingColumnList.map(function (item) {
-                    return item.tableNameCn;
-                  }).join(', '),
-                  dwdField: item.dwdMappingColumnList.map(function (item) {
-                    return item.colNameCn;
-                  }).join(', '),
-                  sbrTable: item.sbrMappingColumnList.map(function (item) {
-                    return item.tableNameCn;
-                  }).join(', '),
-                  sbrField: item.sbrMappingColumnList.map(function (item) {
-                    return item.colNameCn;
-                  }).join(', ')
+                  dwdTable: joinName(item.dwdMappingColumnList, 'tableNameCn'),
+                  dwdField: joinName(item.dwdMappingColumnList, 'colNameCn'),
+                  sbrTable: joinName(item.sbrMappingColumnList, 'tableNameCn'),
+                  sbrField: joinName(item.sbrMappingColumnList, 'colNameCn')
                 });
               });
             } else {
@@ -359,45 +400,53 @@ var actions = {
 
           case 10:
           case "end":
-            return _context3.stop();
-        }
-      }
-    });
-  },
-  queryMappingList: function queryMappingList() {
-    var _state$currentBwd$spl3, _state$currentBwd$spl4, version, res;
-
-    return regeneratorRuntime.async(function queryMappingList$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            _state$currentBwd$spl3 = state.currentBwd.split(';'), _state$currentBwd$spl4 = _slicedToArray(_state$currentBwd$spl3, 1), version = _state$currentBwd$spl4[0];
-            _context4.next = 3;
-            return regeneratorRuntime.awrap((0, _bwd.getMapModelApi)(state.source, state.source === 'DWD' ? version : 'V1.0'));
-
-          case 3:
-            res = _context4.sent;
-            state.eventList = res.value;
-
-          case 5:
-          case "end":
             return _context4.stop();
         }
       }
     });
   },
-  queryMappingField: function queryMappingField(_ref5, id) {
-    var commit, result, table;
-    return regeneratorRuntime.async(function queryMappingField$(_context5) {
+  queryMappingList: function queryMappingList() {
+    var version, res;
+    return regeneratorRuntime.async(function queryMappingList$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
-            commit = _ref5.commit;
-            _context5.next = 3;
+            version = state.searchData.version;
+
+            if (version) {
+              _context5.next = 3;
+              break;
+            }
+
+            return _context5.abrupt("return");
+
+          case 3:
+            _context5.next = 5;
+            return regeneratorRuntime.awrap((0, _bwd.getMapModelApi)(state.source, state.source === _const.DWD ? version : 'V1.0'));
+
+          case 5:
+            res = _context5.sent;
+            state.eventList = res.value;
+
+          case 7:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    });
+  },
+  queryMappingField: function queryMappingField(_ref6, id) {
+    var commit, result, table;
+    return regeneratorRuntime.async(function queryMappingField$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            commit = _ref6.commit;
+            _context6.next = 3;
             return regeneratorRuntime.awrap((0, _bwd.getMapFieldsApi)(id));
 
           case 3:
-            result = _context5.sent;
+            result = _context6.sent;
             table = state.eventList.find(function (item) {
               return item.id === id;
             });
@@ -418,71 +467,92 @@ var actions = {
 
           case 7:
           case "end":
-            return _context5.stop();
+            return _context6.stop();
         }
       }
     });
   },
   // 左侧表单提交，更新目录接口addFileCatalogApi,updateFileCatalogApi
-  submitFileCatalog: function submitFileCatalog(_ref6) {
-    var dispatch, state, _state$fileCatalogDat, id, nameCn, nameEn, theme;
+  submitFileCatalog: function submitFileCatalog(_ref7) {
+    var dispatch, state, _state$fileCatalogDat, id, nameCn, nameEn, theme, res, _res;
 
-    return regeneratorRuntime.async(function submitFileCatalog$(_context6) {
-      while (1) {
-        switch (_context6.prev = _context6.next) {
-          case 0:
-            dispatch = _ref6.dispatch, state = _ref6.state;
-            _state$fileCatalogDat = state.fileCatalogData, id = _state$fileCatalogDat.id, nameCn = _state$fileCatalogDat.nameCn, nameEn = _state$fileCatalogDat.nameEn, theme = _state$fileCatalogDat.theme;
-
-            if (id) {
-              _context6.next = 8;
-              break;
-            }
-
-            _context6.next = 5;
-            return regeneratorRuntime.awrap((0, _bwd.addFileCatalogApi)(nameCn, nameEn, theme, state.fileCatalogData.state));
-
-          case 5:
-            this._vm.$message.success('新增文件目录成功');
-
-            _context6.next = 11;
-            break;
-
-          case 8:
-            _context6.next = 10;
-            return regeneratorRuntime.awrap((0, _bwd.updateFileCatalogApi)(id, nameCn, nameEn, theme, state.fileCatalogData.state));
-
-          case 10:
-            this._vm.$message.success('编辑文件目录成功');
-
-          case 11:
-            dispatch('loadBwdModules');
-            dispatch('queryTotalNum');
-
-          case 13:
-          case "end":
-            return _context6.stop();
-        }
-      }
-    }, null, this);
-  },
-  submitFields: function submitFields(_ref7) {
-    var dispatch, state, _state$fileFieldsData, id, index, nameCn, nameEn, datasetId;
-
-    return regeneratorRuntime.async(function submitFields$(_context7) {
+    return regeneratorRuntime.async(function submitFileCatalog$(_context7) {
       while (1) {
         switch (_context7.prev = _context7.next) {
           case 0:
             dispatch = _ref7.dispatch, state = _ref7.state;
+            _state$fileCatalogDat = state.fileCatalogData, id = _state$fileCatalogDat.id, nameCn = _state$fileCatalogDat.nameCn, nameEn = _state$fileCatalogDat.nameEn, theme = _state$fileCatalogDat.theme;
+
+            if (id) {
+              _context7.next = 11;
+              break;
+            }
+
+            _context7.next = 5;
+            return regeneratorRuntime.awrap((0, _bwd.addFileCatalogApi)(nameCn, nameEn, theme.join(','), _const.EDITINGSTATE));
+
+          case 5:
+            res = _context7.sent;
+
+            if (res.success) {
+              _context7.next = 8;
+              break;
+            }
+
+            return _context7.abrupt("return", false);
+
+          case 8:
+            this._vm.$message.success('新增文件目录成功');
+
+            _context7.next = 17;
+            break;
+
+          case 11:
+            _context7.next = 13;
+            return regeneratorRuntime.awrap((0, _bwd.updateFileCatalogApi)(id, nameCn, nameEn, theme.join(','), _const.EDITINGSTATE));
+
+          case 13:
+            _res = _context7.sent;
+
+            if (_res.success) {
+              _context7.next = 16;
+              break;
+            }
+
+            return _context7.abrupt("return", false);
+
+          case 16:
+            this._vm.$message.success('编辑文件目录成功');
+
+          case 17:
+            dispatch('loadBwdModules');
+            dispatch('queryTotalNum');
+            return _context7.abrupt("return", true);
+
+          case 20:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, null, this);
+  },
+  submitFields: function submitFields(_ref8) {
+    var dispatch, state, _state$fileFieldsData, id, index, nameCn, nameEn, datasetId;
+
+    return regeneratorRuntime.async(function submitFields$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            dispatch = _ref8.dispatch, state = _ref8.state;
             _state$fileFieldsData = state.fileFieldsData, id = _state$fileFieldsData.id, index = _state$fileFieldsData.index, nameCn = _state$fileFieldsData.nameCn, nameEn = _state$fileFieldsData.nameEn;
             datasetId = parseInt(state.currentBwd);
 
             if (id) {
-              _context7.next = 9;
+              _context8.next = 9;
               break;
             }
 
-            _context7.next = 6;
+            _context8.next = 6;
             return regeneratorRuntime.awrap((0, _bwd.addFileFieldsApi)({
               id: id,
               datasetId: datasetId,
@@ -494,11 +564,11 @@ var actions = {
           case 6:
             this._vm.$message.success('新增字段成功！');
 
-            _context7.next = 12;
+            _context8.next = 12;
             break;
 
           case 9:
-            _context7.next = 11;
+            _context8.next = 11;
             return regeneratorRuntime.awrap((0, _bwd.updateFileFieldsApi)({
               id: id,
               datasetId: datasetId,
@@ -511,68 +581,68 @@ var actions = {
             this._vm.$message.success('编辑字段成功！');
 
           case 12:
-            _context7.next = 14;
+            _context8.next = 14;
             return regeneratorRuntime.awrap(dispatch('queryField'));
 
           case 14:
           case "end":
-            return _context7.stop();
+            return _context8.stop();
         }
       }
     }, null, this);
   },
-  submitMapping: function submitMapping(_ref8, col) {
-    var commit, dispatch, res, _res;
+  submitMapping: function submitMapping(_ref9, col) {
+    var commit, dispatch, res, _res2;
 
-    return regeneratorRuntime.async(function submitMapping$(_context8) {
+    return regeneratorRuntime.async(function submitMapping$(_context9) {
       while (1) {
-        switch (_context8.prev = _context8.next) {
+        switch (_context9.prev = _context9.next) {
           case 0:
-            commit = _ref8.commit, dispatch = _ref8.dispatch;
+            commit = _ref9.commit, dispatch = _ref9.dispatch;
 
             if (col.match) {
-              _context8.next = 14;
+              _context9.next = 14;
               break;
             }
 
-            _context8.next = 4;
+            _context9.next = 4;
             return regeneratorRuntime.awrap(dispatch('map', col));
 
           case 4:
-            res = _context8.sent;
+            res = _context9.sent;
 
             if (res.success) {
-              _context8.next = 7;
+              _context9.next = 7;
               break;
             }
 
-            return _context8.abrupt("return");
+            return _context9.abrupt("return");
 
           case 7:
             this._vm.$message.success('匹配成功！');
 
             col.match = true;
-            _context8.next = 11;
+            _context9.next = 11;
             return regeneratorRuntime.awrap(dispatch('queryField'));
 
           case 11:
             commit('matchId');
-            _context8.next = 24;
+            _context9.next = 24;
             break;
 
           case 14:
-            _context8.next = 16;
+            _context9.next = 16;
             return regeneratorRuntime.awrap((0, _bwd.deleteMappingApi)(col.id));
 
           case 16:
-            _res = _context8.sent;
+            _res2 = _context9.sent;
 
-            if (_res.success) {
-              _context8.next = 19;
+            if (_res2.success) {
+              _context9.next = 19;
               break;
             }
 
-            return _context8.abrupt("return");
+            return _context9.abrupt("return");
 
           case 19:
             col.match = false;
@@ -580,32 +650,32 @@ var actions = {
 
             this._vm.$message.success('取消匹配成功！');
 
-            _context8.next = 24;
+            _context9.next = 24;
             return regeneratorRuntime.awrap(dispatch('queryField'));
 
           case 24:
           case "end":
-            return _context8.stop();
+            return _context9.stop();
         }
       }
     }, null, this);
   },
-  map: function map(_ref9, col) {
+  map: function map(_ref10, col) {
     var commit, state, currentField, dwdMappingColumnList, id, delResponse;
-    return regeneratorRuntime.async(function map$(_context9) {
+    return regeneratorRuntime.async(function map$(_context10) {
       while (1) {
-        switch (_context9.prev = _context9.next) {
+        switch (_context10.prev = _context10.next) {
           case 0:
-            commit = _ref9.commit, state = _ref9.state;
+            commit = _ref10.commit, state = _ref10.state;
             currentField = getCurrentFieldItem(state.fieldsList, state.currentField);
             dwdMappingColumnList = currentField.dwdMappingColumnList, id = currentField.id;
 
             if (!(state.source === _const.DWD && dwdMappingColumnList && dwdMappingColumnList.length === 1)) {
-              _context9.next = 12;
+              _context10.next = 12;
               break;
             }
 
-            _context9.next = 6;
+            _context10.next = 6;
             return regeneratorRuntime.awrap(_elementUi.MessageBox.confirm('该字段事件库映射已存在，是否替换？', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
@@ -613,24 +683,24 @@ var actions = {
             }));
 
           case 6:
-            _context9.next = 8;
+            _context10.next = 8;
             return regeneratorRuntime.awrap((0, _bwd.deleteMappingApi)(dwdMappingColumnList[0].id));
 
           case 8:
-            delResponse = _context9.sent;
+            delResponse = _context10.sent;
 
             if (delResponse.success) {
-              _context9.next = 11;
+              _context10.next = 11;
               break;
             }
 
-            return _context9.abrupt("return");
+            return _context10.abrupt("return");
 
           case 11:
             commit('cancelMatch', dwdMappingColumnList[0].id);
 
           case 12:
-            _context9.next = 14;
+            _context10.next = 14;
             return regeneratorRuntime.awrap((0, _bwd.addMappingApi)({
               id: id,
               bwdMappingColumn: {
@@ -644,24 +714,24 @@ var actions = {
             }));
 
           case 14:
-            return _context9.abrupt("return", _context9.sent);
+            return _context10.abrupt("return", _context10.sent);
 
           case 15:
           case "end":
-            return _context9.stop();
+            return _context10.stop();
         }
       }
     });
   },
-  runCatalog: function runCatalog(_ref10) {
+  runCatalog: function runCatalog(_ref11) {
     var dispatch, state, id;
-    return regeneratorRuntime.async(function runCatalog$(_context10) {
+    return regeneratorRuntime.async(function runCatalog$(_context11) {
       while (1) {
-        switch (_context10.prev = _context10.next) {
+        switch (_context11.prev = _context11.next) {
           case 0:
-            dispatch = _ref10.dispatch, state = _ref10.state;
+            dispatch = _ref11.dispatch, state = _ref11.state;
             id = state.currentBwd;
-            _context10.next = 4;
+            _context11.next = 4;
             return regeneratorRuntime.awrap((0, _bwd.submitCatalogApi)(id));
 
           case 4:
@@ -671,7 +741,7 @@ var actions = {
 
           case 6:
           case "end":
-            return _context10.stop();
+            return _context11.stop();
         }
       }
     }, null, this);
