@@ -237,6 +237,8 @@ export default {
           height: 18px;
           line-height: 18px;
           text-align: center;
+          word-break: keep-all;
+          white-space: nowrap;
         }
         .title {
           font-size: 13px;

@@ -69,16 +69,17 @@ export function getEditFormCfg(docType = 'S', mode = 'create') {
       type: 'el-select',
       options: [
         { value: 'S', label: '标准' },
-        { value: 'P', label: '专利' },
         { value: 'Z', label: '政策' },
-        { value: 'M', label: '成书' },
+        { value: 'P', label: '专利' },
+        { value: 'M', label: '专著' },
         { value: 'C', label: '论文集' },
         { value: 'N', label: '报纸文章' },
         { value: 'J', label: '期刊文章' },
         { value: 'G', label: '指南共识' },
+        { value: 'D', label: '学位论文' },
         { value: 'R', label: '研究报告' },
-        { value: 'A', label: '专著、论文集中的的析出文献' },
-        { value: 'Q', label: '其它未说明的文献类型' }
+        { value: 'A', label: '专著、论文集中的析出文献' },
+        { value: 'Q', label: '其他未说明的文献类型' }
       ],
       label: '文献类型',
       id: 'docType'
