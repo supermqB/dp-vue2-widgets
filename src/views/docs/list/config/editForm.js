@@ -187,7 +187,7 @@ export function getEditFormCfg(docType = 'S', mode = 'create') {
 
 const showEnErr = debounce(() => {
   Message({
-    message: '英文名称由小写字母、下划线、数字构成',
+    message: '英文名称由小写字母、下划线、数字、连接符、空格构成',
     type: 'error',
     duration: 2000
   })
@@ -200,8 +200,8 @@ export const editFormRule = {
   titleEn: [
     {
       validator: (rule, value, callback) => {
-        if (!/^[\w]+$/.test(value) && value != '') {
-          callback('英文名称由小写字母、下划线、数字构成')
+        if (!/^[\w|\s|-]+$/.test(value) && value != '') {
+          callback('英文名称由小写字母、下划线、数字、连接符、空格构成')
           showEnErr()
         } else {
           callback()

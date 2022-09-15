@@ -19,19 +19,14 @@
       </div>
     </div>
     <div class="list">
-      <div
-        v-for="(item, index) in listData"
-        class="item"
-        :key="index"
-       
-      >
-        <div>
+      <div v-for="(item, index) in listData" class="item" :key="index">
+        <div class="titlerow">
           <div class="typespan">{{ item.docTypeName }}</div>
-          <div class="title" @click="forward2SumPage(item.id)">
+          <div class="title" @click="forward2SumPage(item.id)" :title="getItemTilte(item)">
             {{ getItemTilte(item) }}
           </div>
         </div>
-        <div class="sumline">
+        <div class="sumline" :title="getItemSumline(item)">
           {{ getItemSumline(item) }}
         </div>
       </div>
@@ -226,31 +221,32 @@ export default {
       &:hover {
         background-color: #eeffff;
       }
-      .typespan {
-        color: #fff;
-        background-color: #1890ff;
-        border-radius: 2px;
-        margin-right: 6px;
-        padding: 0 6px;
-        height: 18px;
-        line-height: 18px;
-        text-align: center;
-        display: inline-block;
-      }
-      .title {
-        position: relative;
-        top: 3px;
-        font-size: 13px;
-        display: inline-block;
-        color: rgba(0, 0, 0, 0.85);
-        font-weight: bold;
-        width: calc(100% - 70px);
-        @include ellipsis();
-        &:hover{
-            color: #1890FF;
+      .titlerow {
+        display: flex;
+        align-items: center;
+        .typespan {
+          color: #fff;
+          background-color: #1890ff;
+          border-radius: 2px;
+          margin-right: 6px;
+          padding: 0 6px;
+          height: 18px;
+          line-height: 18px;
+          text-align: center;
+        }
+        .title {
+          font-size: 13px;
+          color: rgba(0, 0, 0, 0.85);
+          font-weight: bold;
+          width: calc(100% - 70px);
+          @include ellipsis();
+          &:hover {
+            color: #1890ff;
             text-decoration: underline;
+          }
         }
       }
+
       .sumline {
         font-size: 12px;
         color: rgba(0, 0, 0, 0.45);

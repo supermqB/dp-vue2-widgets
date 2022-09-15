@@ -58,6 +58,7 @@ const mutations = {
       }
     }
     state.fieldCheck.regexpText = val.regexpText
+    state.fieldCheck.valDomain = val.valueDomainName
   }
 }
 const actions = {
