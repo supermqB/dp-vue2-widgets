@@ -56,6 +56,7 @@
   </div>
 </template>
 <script>
+import { debounce } from 'lodash'
 import { toFixedNumStr } from '@/utils/lang'
 import { get } from '@/utils/request'
 import { alert } from '@/utils/pops'
@@ -220,11 +221,16 @@ export default {
     advSearchHandler(advCriteria) {
       this.setAdvanceMode(true)
       this.setAdvanceCriteria(advCriteria)
-      this.search()
+      this.lazyList()
     },
     searchHandler() {
       this.setAdvanceMode(false)
-      this.search()
+      const curPage = this.pageInfo.curPage
+      if (curPage == 1) {
+        this.lazyList()
+      } else {
+        this.pageInfo.curPage = 1
+      }
     },
     openCommitDialog() {
       this.startCommit()
@@ -269,20 +275,21 @@ export default {
         formData.identifier =
           tmpIdentifierPrefix + '.' + toFixedNumStr(parseInt(maxId) + 1, 3)
         formData.identifierPrefix = tmpIdentifierPrefix
-
-        /*         this.$refs.editElemForm.$refs.el_form.validate(valid => {
-          this.editElemFormValid = valid
-        }) */
       },
       deep: true
     },
     pageInfoChangeSignal() {
-      this.search()
+      this.lazyList()
     },
     tableData(val) {
       let selected = val.find(item => item.id == this.selectedItem?.id)
       this.$refs.dp_table.setCurrentRow(selected ? this.selectedItem : val[0])
     }
+  },
+  mounted() {
+    this.lazyList = debounce(() => {
+      this.search()
+    }, 500)
   },
   components: { Form, Table, Dialog, CommitDialogVue, AdvSearchDialog }
 }

@@ -19,13 +19,14 @@ export default {
           label: '值域'
         },
         {
-          value: 'mdm',
-          label: '主索引',
-        },
-        {
           value: 'data_element',
           label: '数据元'
         },
+        {
+          value: 'mdm',
+          label: '主索引'
+        },
+
         {
           value: 'event_model',
           label: '事件模型'
@@ -40,21 +41,17 @@ export default {
           children: [
             {
               value: 'docs/index',
-              label: '文献库首页'
+              label: '文献检索'
             },
             {
               value: 'docs/list',
-              label: '文献库明细'
+              label: '文献明细'
             }
           ]
         }
-      ],
-      // activeIndex: ''
+      ]
     }
   },
-  // created() {
-  //   this.activeIndex = this.$route.name
-  // },
   computed: {
     activeIndex() {
       return this.$route.name
@@ -63,10 +60,10 @@ export default {
   methods: {
     handleSelect(idx) {
       if (idx === 'docs/summary') {
-        this.$router.push({ 
+        this.$router.push({
           name: idx,
           params: {
-            identifier : 'S31990001'
+            identifier: 'S31990001'
           }
         })
       } else {
