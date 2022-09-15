@@ -15,17 +15,17 @@ export const searchValueCfg = (
         }
       }
     },
-    // {
-    //   type: 'el-input',
-    //   label: '名\xa0\xa0\xa0\xa0称',
-    //   id: 'value',
-    //   elOptions: {
-    //     clearable: true,
-    //     style: {
-    //       width: '150px'
-    //     }
-    //   }
-    // },
+    {
+      type: 'el-input',
+      label: '名\xa0\xa0\xa0\xa0称',
+      id: 'value',
+      elOptions: {
+        clearable: true,
+        style: {
+          width: '150px'
+        }
+      }
+    },
     {
       type: 'el-input',
       options: parentCode,
@@ -53,6 +53,7 @@ export const searchValueCfg = (
   ]
   if (type === '多值字典') {
     return list.slice(0, 2)
+    // return list.slice(0, 1)
   }
   return list
 }

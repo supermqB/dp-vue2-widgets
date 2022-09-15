@@ -339,7 +339,7 @@ const actions = {
     const columnParamList = []
     ;[
       { name: 'term_code', condition: 'like' },
-      // { name: 'value', condition: 'like' },
+      { name: 'value', condition: 'like' },
       { name: 'parent_code', condition: 'equal' },
       { name: 'level', condition: 'equal' }
     ].forEach(item => {

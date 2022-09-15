@@ -354,11 +354,10 @@ const actions = {
   },
   async submitFields({ dispatch, state }) {
     const { id, index, nameCn, nameEn } = state.fileFieldsData
-    const datasetId = parseInt(state.currentBwd)
+    const [theme, columnId] = state.currentBwd.split(';')
     if (!id) {
       await addFileFieldsApi({
-        id,
-        datasetId,
+        id: columnId,
         index,
         nameCn,
         nameEn
@@ -367,7 +366,6 @@ const actions = {
     } else {
       await updateFileFieldsApi({
         id,
-        datasetId,
         index,
         nameCn,
         nameEn
