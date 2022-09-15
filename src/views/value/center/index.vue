@@ -35,7 +35,7 @@
         :formData="searchForm"
       ></Form>
       <div class="operation">
-        <el-button @click="queryDictValue" type="primary" plain>查询</el-button>
+        <el-button @click="onSearch" type="primary" plain>查询</el-button>
         <el-button @click="addValue" :disabled="!currentVersion || currentVersionInfo.state === RUNNINGSTATE" type="primary" plain>新增</el-button>
         <el-button @click="editValue" :disabled="!currentDictValue || currentVersionInfo.state === RUNNINGSTATE" type="primary" plain>编辑</el-button>
       </div>
@@ -191,8 +191,6 @@ export default {
       }
     }
   },
-  mounted() {
-  },
   methods: {
     ...mapMutations([
       'setCurrentVersion',
@@ -201,7 +199,8 @@ export default {
       'setVersionList',
       'setDictVersionForm',
       'setCurrentDictValue',
-      'setDictValueForm'
+      'setDictValueForm',
+      'setPageInfo'
     ]),
     ...mapActions([
       'queryDict',
@@ -228,6 +227,10 @@ export default {
         document.body.removeChild(a);
       })     
     },
+    onSearch() {
+      this.setPageInfo({ curPage: 1 })
+      this.queryDictValue()
+    },
     onAddVersionDialogClosed() {
       this.$refs.addVersionForm.resetFields()
     },
@@ -238,7 +241,6 @@ export default {
       const { nameCn } = this.currentDictItem
       this.setVersionForm({ nameCn })
       this.$refs.addVersionDialog.toggleOpen()
-      
     },
     editVersion() {
       const { nameEn, nameCn, sourceTypeCode } = this.currentDictItem
@@ -332,14 +334,14 @@ export default {
     border-bottom: 1px solid #E5E5E5;
   } 
   .search {
+    width: 100%;
+    box-sizing: border-box;
     position: relative;
     display: flex;
+    padding-left: 10px;
     padding-right: 10px;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    padding-left: 10px;
-    box-sizing: border-box;
     .operation {
       display: flex;
       flex-direction: row;

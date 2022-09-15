@@ -56,31 +56,24 @@ export const addFileCatalogApi = (
     }
   })
 }
-export const addFileFieldsApi = ({ datasetId, index, nameCn, nameEn }) => {
+export const addFileFieldsApi = ({ id, index, nameCn, nameEn }) => {
   return request({
     method: 'post',
     url: '/data-mapping/column/add',
     data: {
-      id: datasetId,
+      id,
       seqNo: index,
       nameCn,
       nameEn
     }
   })
 }
-export const updateFileFieldsApi = ({
-  id,
-  datasetId,
-  index,
-  nameCn,
-  nameEn
-}) => {
+export const updateFileFieldsApi = ({ id, index, nameCn, nameEn }) => {
   return request({
     method: 'post',
     url: '/data-mapping/column/edit',
     data: {
       id,
-      datasetId,
       seqNo: index,
       nameCn,
       nameEn

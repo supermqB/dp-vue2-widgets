@@ -17,7 +17,7 @@ import Catalog from './catalog'
 import Center from './center'
 import Map from './map'
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapGetters, mapMutations, mapActions } =
+const { mapMutations, mapActions } =
   createNamespacedHelpers('bwd')
 export default {
   name: 'ValueExamine',

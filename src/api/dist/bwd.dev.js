@@ -79,7 +79,7 @@ var addFileCatalogApi = function addFileCatalogApi(nameCn, nameEn, theme) {
 exports.addFileCatalogApi = addFileCatalogApi;
 
 var addFileFieldsApi = function addFileFieldsApi(_ref) {
-  var datasetId = _ref.datasetId,
+  var id = _ref.id,
       index = _ref.index,
       nameCn = _ref.nameCn,
       nameEn = _ref.nameEn;
@@ -87,7 +87,7 @@ var addFileFieldsApi = function addFileFieldsApi(_ref) {
     method: 'post',
     url: '/data-mapping/column/add',
     data: {
-      id: datasetId,
+      id: id,
       seqNo: index,
       nameCn: nameCn,
       nameEn: nameEn
@@ -99,7 +99,6 @@ exports.addFileFieldsApi = addFileFieldsApi;
 
 var updateFileFieldsApi = function updateFileFieldsApi(_ref2) {
   var id = _ref2.id,
-      datasetId = _ref2.datasetId,
       index = _ref2.index,
       nameCn = _ref2.nameCn,
       nameEn = _ref2.nameEn;
@@ -108,7 +107,6 @@ var updateFileFieldsApi = function updateFileFieldsApi(_ref2) {
     url: '/data-mapping/column/edit',
     data: {
       id: id,
-      datasetId: datasetId,
       seqNo: index,
       nameCn: nameCn,
       nameEn: nameEn

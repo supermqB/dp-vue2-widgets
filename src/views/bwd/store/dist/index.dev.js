@@ -537,7 +537,7 @@ var actions = {
     }, null, this);
   },
   submitFields: function submitFields(_ref8) {
-    var dispatch, state, _state$fileFieldsData, id, index, nameCn, nameEn, datasetId;
+    var dispatch, state, _state$fileFieldsData, id, index, nameCn, nameEn, _state$currentBwd$spl3, _state$currentBwd$spl4, theme, columnId;
 
     return regeneratorRuntime.async(function submitFields$(_context8) {
       while (1) {
@@ -545,7 +545,7 @@ var actions = {
           case 0:
             dispatch = _ref8.dispatch, state = _ref8.state;
             _state$fileFieldsData = state.fileFieldsData, id = _state$fileFieldsData.id, index = _state$fileFieldsData.index, nameCn = _state$fileFieldsData.nameCn, nameEn = _state$fileFieldsData.nameEn;
-            datasetId = parseInt(state.currentBwd);
+            _state$currentBwd$spl3 = state.currentBwd.split(';'), _state$currentBwd$spl4 = _slicedToArray(_state$currentBwd$spl3, 2), theme = _state$currentBwd$spl4[0], columnId = _state$currentBwd$spl4[1];
 
             if (id) {
               _context8.next = 9;
@@ -554,8 +554,7 @@ var actions = {
 
             _context8.next = 6;
             return regeneratorRuntime.awrap((0, _bwd.addFileFieldsApi)({
-              id: id,
-              datasetId: datasetId,
+              id: columnId,
               index: index,
               nameCn: nameCn,
               nameEn: nameEn
@@ -571,7 +570,6 @@ var actions = {
             _context8.next = 11;
             return regeneratorRuntime.awrap((0, _bwd.updateFileFieldsApi)({
               id: id,
-              datasetId: datasetId,
               index: index,
               nameCn: nameCn,
               nameEn: nameEn

@@ -152,6 +152,7 @@ export default {
       this.setCurrentField()
     },
     async onClickSearch() {
+      this.setPageInfo({ curPage: 1 })
       this.setIsAdvance(false)
       await this.queryField()
       this.setCurrentField()

@@ -123,6 +123,7 @@ export default {
       this.setCurrentColumn()
     },
     async onClickSearch() {
+      this.setPageInfo({ curPage: 1 })
       this.setIsAdvance(false)
       await this.queryColumn()
       this.setCurrentColumn()
