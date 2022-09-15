@@ -2,12 +2,12 @@ export const drg = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'sdrg_inx'
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'drug_name'
     },
     {
@@ -51,7 +51,7 @@ export const mat = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'smat_inx'
     },
     {
@@ -92,12 +92,12 @@ export const dis = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'sdis_inx'
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'wm_disease_name'
     },
     {
@@ -112,12 +112,12 @@ export const tcm = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'stcm_inx'
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'tcm_disease_name'
     },
     {
@@ -131,12 +131,12 @@ export const hrb = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'shrb_inx'
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'tcm_herb_name'
     },
     {
@@ -166,12 +166,12 @@ export const tcs = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'stcs_inx'
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'tcm_syndrome_name'
     },
     {
@@ -185,12 +185,12 @@ export const exm = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'sexm_inx'
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'exam_item_name'
     },
     {
@@ -204,12 +204,12 @@ export const lab = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'slab_inx'
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'lab_item_name'
     },
     {
@@ -223,12 +223,12 @@ export const opt = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'sopt_inx'
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'oper_name'
     },
     {
@@ -242,12 +242,12 @@ export const itm = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'sitm_inx'
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'item_name'
     },
     {
@@ -261,12 +261,12 @@ export const org = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'sorg_inx'
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'org_name'
     },
     {
@@ -306,12 +306,12 @@ export const phm = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'sphm_inx'
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'pharm_name'
     },
     {
@@ -340,12 +340,12 @@ export const com = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'scom_inx'
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'company_name'
     },
     {
@@ -364,12 +364,12 @@ export const reg = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'sreg_inx'
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'region_name'
     },
     {
@@ -396,12 +396,12 @@ export const dep = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'sdep_inx'
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'dept_name'
     },
     {
@@ -423,12 +423,12 @@ export const emp = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'semp_inx'
     },
     {
       type: 'el-input',
-      label: '名称',
+      label: '名\xa0\xa0\xa0\xa0称',
       id: 'employee_name'
     },
     {
@@ -442,7 +442,7 @@ export const fml = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'sfml_inx'
     },
     {
@@ -472,7 +472,7 @@ export const pat = function () {
   return [
     {
       type: 'el-input',
-      label: '编号',
+      label: '编\xa0\xa0\xa0\xa0号',
       id: 'spat_inx'
     },
     {
