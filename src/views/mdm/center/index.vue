@@ -236,11 +236,9 @@ export default {
       }
       .el-form-item__label {
         width: 80px;
-      }
-      &.mat {
-        .el-form-item__label {
-          //width: 180px;
-        }
+        padding: 0 15px;
+        text-align: left;
+        word-break: keep-all;
       }
     }
     .action_area {
