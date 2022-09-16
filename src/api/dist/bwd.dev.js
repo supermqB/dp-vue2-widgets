@@ -130,12 +130,14 @@ exports.submitCatalogApi = submitCatalogApi;
 
 var addMappingApi = function addMappingApi(_ref3) {
   var id = _ref3.id,
+      dwdVersion = _ref3.dwdVersion,
       bwdMappingColumn = _ref3.bwdMappingColumn;
   return (0, _request["default"])({
     method: 'post',
     url: '/data-mapping/mapping/add',
     data: {
       id: id,
+      dwdVersion: dwdVersion,
       bwdMappingColumn: bwdMappingColumn
     }
   });

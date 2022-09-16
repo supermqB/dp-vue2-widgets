@@ -1,7 +1,13 @@
 import { YESORNOOPTIONS } from '@/utils/const'
 import { validateEnglish } from '@/utils/validator'
 
-export const columnCfg = (remoteMethod, dataElementData, setDataElementInfo) =>
+export const columnCfg = (
+  setDataElementInfo,
+  dataElementList,
+  queryDataElement,
+  valueDomainName,
+  valueVersionList
+) =>
   [
     {
       type: 'el-input',
@@ -28,12 +34,12 @@ export const columnCfg = (remoteMethod, dataElementData, setDataElementInfo) =>
       elEvents: {
         change: setDataElementInfo
       },
-      options: dataElementData,
+      options: dataElementList,
       elOptions: {
         filterable: true,
         remote: true,
         reserveKeyword: true,
-        remoteMethod
+        remoteMethod: queryDataElement
       }
     },
     {
@@ -74,6 +80,15 @@ export const columnCfg = (remoteMethod, dataElementData, setDataElementInfo) =>
       id: 'valueDomainName',
       elOptions: {
         disabled: true
+      }
+    },
+    {
+      type: 'el-select',
+      label: '值域字典版本',
+      id: 'dictTableId',
+      options: valueVersionList,
+      elOptions: {
+        disabled: !valueDomainName
       }
     },
     {

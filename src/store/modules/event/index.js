@@ -10,6 +10,7 @@ import {
   submitCatalogApi,
   getMaxCodeApi
 } from '@/api/event'
+import { getVersionListApi as getValueVersionListApi } from '@/api/value'
 import { getMax, keysClone } from '@/utils/lang'
 import dataElement from './dataElement'
 import initState from './initState'
@@ -52,6 +53,7 @@ const state = {
   versionList: [],
   catalogList: [],
   columnList: [],
+  valueVersionList: [],
   isAdvance: false,
   currentVersion: '',
   currentCatalog: '',
@@ -190,6 +192,17 @@ const mutations = {
 }
 
 const actions = {
+  async getValueVersionList({}, dictName) {
+    state.valueVersionList = []
+    if (!dictName) return
+    const res = await getValueVersionListApi(dictName)
+    state.valueVersionList = res.value.map(item => {
+      return {
+        value: item.id,
+        label: item.version
+      }
+    })
+  },
   async queryVersion() {
     const { value } = await getVersionListApi()
     state.versionList = value
@@ -277,7 +290,8 @@ const actions = {
       definition,
       primaryKeyFlag,
       requiredFlag,
-      indexFlag
+      indexFlag,
+      dictTableId
     } = state.columnForm
     const datasetId = parseInt(state.currentCatalog)
     if (!id) {
@@ -289,7 +303,8 @@ const actions = {
         definition,
         primaryKeyFlag,
         requiredFlag,
-        indexFlag
+        indexFlag,
+        dictTableId
       })
       this._vm.$message.success('新增字段成功！')
     } else {
@@ -302,7 +317,8 @@ const actions = {
         definition,
         primaryKeyFlag,
         requiredFlag,
-        indexFlag
+        indexFlag,
+        dictTableId
       })
       this._vm.$message.success('编辑字段成功！')
     }

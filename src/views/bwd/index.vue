@@ -37,10 +37,10 @@ export default {
     ...mapMutations(['setCurrentField'])
   },
   async mounted() {
-    this.queryVersion()
     await this.loadBwdModules()
-    await this.queryTotalNum()
+    await this.queryVersion()
     await this.queryField()
+    this.queryTotalNum()
     this.queryMappingList()
     this.setCurrentField()
   }

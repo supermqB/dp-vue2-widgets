@@ -7,7 +7,7 @@ export const getCatalogApi = () => {
   })
 }
 
-export const getVersionListApi = (dictName, sourceTypeCode) => {
+export const getVersionListApi = (dictName, sourceTypeCode = '') => {
   return request({
     url: '/dict/getVersionList',
     method: 'post',

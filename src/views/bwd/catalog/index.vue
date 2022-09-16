@@ -120,6 +120,8 @@ export default {
     ...mapActions([
       'loadBwdModules',
       'queryField',
+      'queryVersion',
+      'queryMappingList',
       'submitFileCatalog',
       'queryTotalNum',
       'runCatalog'
@@ -138,7 +140,9 @@ export default {
     // 根据目录的id渲染中间详细信息
     async handleNodeClick({ id }) {
       this.setCurrentBwd(id)
+      await this.queryVersion()
       await this.queryField()
+      await this.queryMappingList()
       this.setCurrentField()
     },
     // 左侧编辑新增

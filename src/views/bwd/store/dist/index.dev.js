@@ -293,26 +293,36 @@ var actions = {
     });
   },
   queryVersion: function queryVersion() {
-    var _ref3, value;
+    var _state$currentBwd$spl, _state$currentBwd$spl2, themeId, theme, _ref3, value;
 
     return regeneratorRuntime.async(function queryVersion$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            _context2.next = 2;
+            _state$currentBwd$spl = state.currentBwd.split(';'), _state$currentBwd$spl2 = _slicedToArray(_state$currentBwd$spl, 1), themeId = _state$currentBwd$spl2[0];
+            theme = state.bwdList.find(function (item) {
+              return item.id.toString() === themeId;
+            });
+            _context2.next = 4;
             return regeneratorRuntime.awrap((0, _event.getVersionListApi)());
 
-          case 2:
+          case 4:
             _ref3 = _context2.sent;
             value = _ref3.value;
-            state.versionList = value.map(function (item) {
+            state.versionList = value.filter(function (item) {
+              return item.businessGroup === theme.label;
+            }).map(function (item) {
               return {
                 value: item.versionName,
                 label: item.versionName
               };
             });
 
-          case 5:
+            if (state.versionList && state.versionList.length) {
+              state.searchData.version = state.versionList[0].value;
+            }
+
+          case 8:
           case "end":
             return _context2.stop();
         }
@@ -362,7 +372,7 @@ var actions = {
   },
   // 给中间展示bwd(getBwdInfoApi)
   queryField: function queryField(_ref5) {
-    var commit, _state$pageInfo, curPage, pageSize, _state$currentBwd$spl, _state$currentBwd$spl2, version, id, query, res, _res$value, records, pageInfo;
+    var commit, _state$pageInfo, curPage, pageSize, _state$currentBwd$spl3, _state$currentBwd$spl4, version, id, query, res, _res$value, records, pageInfo;
 
     return regeneratorRuntime.async(function queryField$(_context4) {
       while (1) {
@@ -370,7 +380,7 @@ var actions = {
           case 0:
             commit = _ref5.commit;
             _state$pageInfo = state.pageInfo, curPage = _state$pageInfo.curPage, pageSize = _state$pageInfo.pageSize;
-            _state$currentBwd$spl = state.currentBwd.split(';'), _state$currentBwd$spl2 = _slicedToArray(_state$currentBwd$spl, 2), version = _state$currentBwd$spl2[0], id = _state$currentBwd$spl2[1];
+            _state$currentBwd$spl3 = state.currentBwd.split(';'), _state$currentBwd$spl4 = _slicedToArray(_state$currentBwd$spl3, 2), version = _state$currentBwd$spl4[0], id = _state$currentBwd$spl4[1];
             query = Object.assign({
               id: id,
               version: version
@@ -537,7 +547,7 @@ var actions = {
     }, null, this);
   },
   submitFields: function submitFields(_ref8) {
-    var dispatch, state, _state$fileFieldsData, id, index, nameCn, nameEn, _state$currentBwd$spl3, _state$currentBwd$spl4, theme, columnId;
+    var dispatch, state, _state$fileFieldsData, id, index, nameCn, nameEn, _state$currentBwd$spl5, _state$currentBwd$spl6, theme, columnId;
 
     return regeneratorRuntime.async(function submitFields$(_context8) {
       while (1) {
@@ -545,7 +555,7 @@ var actions = {
           case 0:
             dispatch = _ref8.dispatch, state = _ref8.state;
             _state$fileFieldsData = state.fileFieldsData, id = _state$fileFieldsData.id, index = _state$fileFieldsData.index, nameCn = _state$fileFieldsData.nameCn, nameEn = _state$fileFieldsData.nameEn;
-            _state$currentBwd$spl3 = state.currentBwd.split(';'), _state$currentBwd$spl4 = _slicedToArray(_state$currentBwd$spl3, 2), theme = _state$currentBwd$spl4[0], columnId = _state$currentBwd$spl4[1];
+            _state$currentBwd$spl5 = state.currentBwd.split(';'), _state$currentBwd$spl6 = _slicedToArray(_state$currentBwd$spl5, 2), theme = _state$currentBwd$spl6[0], columnId = _state$currentBwd$spl6[1];
 
             if (id) {
               _context8.next = 9;
@@ -709,6 +719,7 @@ var actions = {
             _context10.next = 14;
             return regeneratorRuntime.awrap((0, _bwd.addMappingApi)({
               id: id,
+              dwdVersion: state.searchData.version,
               bwdMappingColumn: {
                 tableId: col.tableId,
                 tableNameCn: col.tableNameCn,
@@ -730,14 +741,14 @@ var actions = {
     });
   },
   runCatalog: function runCatalog(_ref11) {
-    var dispatch, state, _state$currentBwd$spl5, _state$currentBwd$spl6, theme, id, res;
+    var dispatch, state, _state$currentBwd$spl7, _state$currentBwd$spl8, theme, id, res;
 
     return regeneratorRuntime.async(function runCatalog$(_context11) {
       while (1) {
         switch (_context11.prev = _context11.next) {
           case 0:
             dispatch = _ref11.dispatch, state = _ref11.state;
-            _state$currentBwd$spl5 = state.currentBwd.split(';'), _state$currentBwd$spl6 = _slicedToArray(_state$currentBwd$spl5, 2), theme = _state$currentBwd$spl6[0], id = _state$currentBwd$spl6[1];
+            _state$currentBwd$spl7 = state.currentBwd.split(';'), _state$currentBwd$spl8 = _slicedToArray(_state$currentBwd$spl7, 2), theme = _state$currentBwd$spl8[0], id = _state$currentBwd$spl8[1];
             _context11.next = 4;
             return regeneratorRuntime.awrap((0, _bwd.submitCatalogApi)(id));
 
