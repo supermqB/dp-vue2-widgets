@@ -138,8 +138,8 @@ export const addDictValueApi = ({ id, valueObject, suspectList }) => {
 export const addDictValueManyApi = ({ id, file }) => {
   return postWithFile('/dict/addDictValueMany', {
     id,
-    file,
-    suspectList: null
+    file
+    // suspectList: null
   })
 }
 

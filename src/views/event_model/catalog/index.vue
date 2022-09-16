@@ -202,8 +202,8 @@ export default {
         this.runDialog = false
       })
     },
-    onClickRunCatalog() {
-      this.runCatalog()
+    async onClickRunCatalog() {
+      await this.runCatalog()
       this.runDialog = false
     },
     async onChangeTheme(theme) {
@@ -226,7 +226,7 @@ export default {
     async onClickSubmitCatalog() {
       const { valid } = await this.$refs.catalogForm.validate()
       if (valid) {
-        this.submitCatalog()
+        await this.submitCatalog()
         this.$refs.catalogDialog.toggleOpen()
       } else {
         this.$alert('请检查输入项是否完整！')

@@ -146,7 +146,7 @@ export default {
     async onClickSubmitColumn() {
       const { valid } = await this.$refs.columnForm.validate()
       if (valid) {
-        this.submitColumn()
+        await this.submitColumn()
         this.$refs.columnDialog.toggleOpen()
       } else {
         this.$alert('请检查输入项是否完整！')
