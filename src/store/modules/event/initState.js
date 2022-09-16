@@ -34,7 +34,8 @@ export default {
     format: '',
     identifier: '',
     valueRange: '',
-    valueDomainName: ''
+    valueDomainName: '',
+    dictTableId: ''
   },
   adSearchForm: {
     colNames: [],
