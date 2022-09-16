@@ -381,7 +381,7 @@ const actions = {
         sourceBasis,
         sourceBasisCode
       } = state.dictForm
-      return await addDictApi({
+      const res = await addDictApi({
         type,
         ctlgCode,
         dictCode,
@@ -393,14 +393,16 @@ const actions = {
         sourceBasisCode,
         state: EDITINGSTATE
       })
+      return res.success
     } else {
       const id = state.currentVersion
       const { nameCn, nameEn } = state.dictForm
-      return await editDictApi({
+      const res = await editDictApi({
         id,
         nameCn,
         nameEn
       })
+      return res.success
     }
   },
   async addDictVersion({ state, dispatch }) {
@@ -409,8 +411,9 @@ const actions = {
     })
     delete data['dictName']
     const res = await addVersionApi(data)
-    if (!res.success) return Promise.reject()
+    if (!res.success) return false
     dispatch('queryVersion')
+    return true
   },
   async editDictVersion({ commit, dispatch, state }) {
     const { masterVersion, version, sourceTypeCode, basis } =
@@ -423,11 +426,12 @@ const actions = {
       basis,
       state: state.dictVersionForm.state
     })
-    if (!res.success) return Promise.reject()
+    if (!res.success) return false
     const current = state.versionList.find(item => item.label === version)
     commit('setCurrentVersion', current.id)
     await dispatch('queryVersion')
     dispatch('queryVersionInfo')
+    return true
   },
   async addDictValue({ state, dispatch, rootState }) {
     const data = { id: state.currentVersion }
@@ -456,7 +460,7 @@ const actions = {
           })
         : Object.assign(data, { suspectList: [] })
     )
-    if (!res.success) return Promise.reject()
+    if (!res.success) return false
     await dispatch('queryDictValue')
     if (completeCurSuspect) dispatch('querySuspect')
     return true
@@ -466,8 +470,9 @@ const actions = {
       id: state.currentVersion,
       file
     })
-    if (!res.success) return Promise.reject()
+    if (!res.success) return false
     dispatch('queryDictValue')
+    return true
   },
   async editDictValue({ state, dispatch, rootState }) {
     const id = state.currentVersion
@@ -496,9 +501,10 @@ const actions = {
         ? curTaskItem.suspectList.map(sus => sus.id)
         : []
     })
-    if (!res.success) return Promise.reject()
+    if (!res.success) return false
     dispatch('queryDictValue')
     if (completeCurSuspect) dispatch('querySuspect')
+    return true
   }
 }
 

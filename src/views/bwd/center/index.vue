@@ -172,8 +172,7 @@ export default {
     async onClickSubmitFields() {
       const { valid } = await this.$refs.fileFieldsForm.validate()
       if (valid) {
-        this.submitFields()
-        this.$refs.fileFieldsDialog.toggleOpen()
+        if (await this.submitFields()) this.$refs.fileFieldsDialog.toggleOpen()
       } else {
         this.$alert('请检查输入项是否完整！')
       }

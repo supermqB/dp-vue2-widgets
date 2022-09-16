@@ -252,14 +252,16 @@ export default {
       this.$refs.editVersionDialog.toggleOpen()
     },
     async onClickAddVersion() {
-      await this.addDictVersion()
-      this.$refs.addVersionDialog.toggleOpen()
-      this.$message.success('添加版本成功！')
+      if (await this.addDictVersion()) {
+        this.$refs.addVersionDialog.toggleOpen()
+        this.$message.success('添加版本成功！')
+      }
     },
     async onClickEditVersion() {
-      await this.editDictVersion()
-      this.$message.success('版本管理编辑成功！')
-      this.$refs.editVersionDialog.toggleOpen()
+      if (await this.editDictVersion()) {
+        this.$message.success('版本管理编辑成功！')
+        this.$refs.editVersionDialog.toggleOpen()
+      }
     },
     async addValue() {
       const { value } = await getMAxValueCodeApi(this.currentVersion)
@@ -279,19 +281,22 @@ export default {
           this.$message.warning('请选择批量导入文件')
           return
         }
-        await this.addBatchDictValue(this.file)
-        this.$refs.addValueDialog.toggleOpen()
-        this.$message.success('新增值域字典明细成功！')
+        if (await this.addBatchDictValue(this.file)) {
+          this.$refs.addValueDialog.toggleOpen()
+          this.$message.success('新增值域字典明细成功！')
+        }
       } else {
-        await this.addDictValue()
-        this.$refs.addValueDialog.toggleOpen()
-        this.$message.success('新增值域字典明细成功！')
+        if (await this.addDictValue()) {
+          this.$refs.addValueDialog.toggleOpen()
+          this.$message.success('新增值域字典明细成功！')
+        }
       }
     },
     async onClickEditValue() {
-      await this.editDictValue()
-      this.$refs.editValueDialog.toggleOpen()
-      this.$message.success('编辑值域字典明细成功！')
+      if (await this.editDictValue()) {
+        this.$refs.editValueDialog.toggleOpen()
+        this.$message.success('编辑值域字典明细成功！')
+      }
     },
     handleChange(file) {
       this.file = file.name
