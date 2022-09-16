@@ -244,13 +244,20 @@ const actions = {
     commit('setTotalNum', value)
   },
   async queryVersion() {
+    const [themeId] = state.currentBwd.split(';')
+    const theme = state.bwdList.find(item => item.id.toString() === themeId)
     const { value } = await getVersionListApi()
-    state.versionList = value.map(item => {
-      return {
-        value: item.versionName,
-        label: item.versionName
-      }
-    })
+    state.versionList = value
+      .filter(item => item.businessGroup === theme.label)
+      .map(item => {
+        return {
+          value: item.versionName,
+          label: item.versionName
+        }
+      })
+    if (state.versionList && state.versionList.length) {
+      state.searchData.version = state.versionList[0].value
+    }
   },
   // 处理左侧bwd，调接口展示bwdlist(getCatalogApi)
   async loadBwdModules({ commit }) {
@@ -414,6 +421,7 @@ const actions = {
     }
     return await addMappingApi({
       id,
+      dwdVersion: state.searchData.version,
       bwdMappingColumn: {
         tableId: col.tableId,
         tableNameCn: col.tableNameCn,

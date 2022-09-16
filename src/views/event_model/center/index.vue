@@ -37,9 +37,7 @@
     >
       <Form
         ref="columnForm"
-        :formCfg="
-          columnCfg(queryDataElement, dataElement.dataElementList, setDataElementInfo)
-        "
+        :formCfg="columnCfg(setDataElementInfo, dataElement.dataElementList, queryDataElement, columnForm.valueDomainName, valueVersionList)"
         :formData="columnForm"
         :formRule="columnRule"
       ></Form>
@@ -87,6 +85,7 @@ export default {
       RUNNINGSTATE
     }
   },
+  mounted() {},
   computed: {
     ...mapGetters(['currentCatalogItem', 'currentColumnRow']),
     ...mapState({
@@ -97,8 +96,9 @@ export default {
       columnForm: 'columnForm',
       currentColumn: 'currentColumn',
       currentCatalog: 'currentCatalog',
+      valueVersionList: 'valueVersionList',
       dataElement: 'dataElement'
-    })
+    }),
   },
   mounted() {},
   methods: {
@@ -111,7 +111,8 @@ export default {
     ...mapActions([
       'submitColumn', 
       'adQueryColumn', 
-      'queryColumn'
+      'queryColumn',
+      'getValueVersionList'
     ]),
     ...mapActions({
       queryDataElement: 'queryDataElement',
@@ -139,6 +140,8 @@ export default {
     onclickEditColumn() {
       this.$refs.columnDialog.toggleOpen()
       this.setColumnForm(this.currentColumnRow)
+      if (this.currentColumnRow.valueDomainName)
+        this.getValueVersionList(this.currentColumnRow.valueDomainName)
     },
     async onClickSubmitColumn() {
       const { valid } = await this.$refs.columnForm.validate()
