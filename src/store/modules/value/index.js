@@ -17,6 +17,7 @@ import {
   addDictValueManyApi,
   editDictValueApi
 } from '@/api/value'
+import { Message } from 'element-ui'
 
 const {
   dictForm,
@@ -407,13 +408,14 @@ const actions = {
       dictId: state.currentVersion
     })
     delete data['dictName']
-    await addVersionApi(data)
+    const res = await addVersionApi(data)
+    if (!res.success) return Promise.reject()
     dispatch('queryVersion')
   },
   async editDictVersion({ commit, dispatch, state }) {
     const { masterVersion, version, sourceTypeCode, basis } =
       state.dictVersionForm
-    await editVersionApi({
+    const res = await editVersionApi({
       id: state.currentVersion,
       masterVersion,
       version,
@@ -421,6 +423,7 @@ const actions = {
       basis,
       state: state.dictVersionForm.state
     })
+    if (!res.success) return Promise.reject()
     const current = state.versionList.find(item => item.label === version)
     commit('setCurrentVersion', current.id)
     await dispatch('queryVersion')
@@ -446,21 +449,24 @@ const actions = {
         item => `${item.source}:${item.name}` === curTask
       )
     }
-    await addDictValueApi(
+    const res = await addDictValueApi(
       completeCurSuspect
         ? Object.assign(data, {
             suspectList: curTaskItem.suspectList.map(sus => sus.id)
           })
         : Object.assign(data, { suspectList: [] })
     )
+    if (!res.success) return Promise.reject()
     await dispatch('queryDictValue')
     if (completeCurSuspect) dispatch('querySuspect')
+    return true
   },
   async addBatchDictValue({ state, dispatch }, file) {
-    await addDictValueManyApi({
+    const res = await addDictValueManyApi({
       id: state.currentVersion,
       file
     })
+    if (!res.success) return Promise.reject()
     dispatch('queryDictValue')
   },
   async editDictValue({ state, dispatch, rootState }) {
@@ -482,7 +488,7 @@ const actions = {
         item => `${item.source}:${item.name}` === curTask
       )
     }
-    await editDictValueApi({
+    const res = await editDictValueApi({
       id,
       colId: state.dictValueForm['term_code'],
       valueObject: state.dictValueForm,
@@ -490,6 +496,7 @@ const actions = {
         ? curTaskItem.suspectList.map(sus => sus.id)
         : []
     })
+    if (!res.success) return Promise.reject()
     dispatch('queryDictValue')
     if (completeCurSuspect) dispatch('querySuspect')
   }
