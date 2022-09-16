@@ -279,7 +279,7 @@ export default {
           this.$message.warning('请选择批量导入文件')
           return
         }
-        await this.addBatchDictValue(file)
+        await this.addBatchDictValue(this.file)
         this.$refs.addValueDialog.toggleOpen()
         this.$message.success('新增值域字典明细成功！')
       } else {

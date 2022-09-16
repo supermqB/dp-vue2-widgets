@@ -242,7 +242,12 @@ const actions = {
   },
   async addVersion({ dispatch, commit }) {
     const { version, parVersion } = state.versionForm
-    await addVersionApi(version, parVersion, state.versionForm.state)
+    const res = await addVersionApi(
+      version,
+      parVersion,
+      state.versionForm.state
+    )
+    if (!res.success) return
     commit('setVersionForm')
     dispatch('queryVersion')
   },
@@ -265,10 +270,18 @@ const actions = {
     const version = state.currentVersion
     const { id, theme, code, nameCn, nameEn, description } = state.catalogForm
     if (!id) {
-      await addCatalogApi(version, theme, code, nameCn, nameEn, description)
+      const res = await addCatalogApi(
+        version,
+        theme,
+        code,
+        nameCn,
+        nameEn,
+        description
+      )
+      if (!res.success) return
       this._vm.$message.success('新增目录成功！')
     } else {
-      await updateCatalogApi(
+      const res = await updateCatalogApi(
         id,
         version,
         theme,
@@ -277,6 +290,7 @@ const actions = {
         nameEn,
         description
       )
+      if (!res.success) return
       this._vm.$message.success('编辑目录成功！')
     }
     dispatch('queryCatalog')
@@ -295,7 +309,7 @@ const actions = {
     } = state.columnForm
     const datasetId = parseInt(state.currentCatalog)
     if (!id) {
-      await addCatalogColumnApi({
+      const res = await addCatalogColumnApi({
         datasetId,
         dataElementId,
         nameCn,
@@ -306,9 +320,10 @@ const actions = {
         indexFlag,
         dictTableId
       })
+      if (!res.success) return
       this._vm.$message.success('新增字段成功！')
     } else {
-      await updateCatalogColumnApi({
+      const res = await updateCatalogColumnApi({
         id,
         datasetId,
         dataElementId,
@@ -320,6 +335,7 @@ const actions = {
         indexFlag,
         dictTableId
       })
+      if (!res.success) return
       this._vm.$message.success('编辑字段成功！')
     }
     await dispatch('queryColumn')
