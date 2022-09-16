@@ -25,28 +25,28 @@ export const tableConfig = [
     colConfig: {
       property: 'dwdTable',
       label: '事件库映射表',
-      minWidth: 101
+      minWidth: 130
     }
   },
   {
     colConfig: {
       property: 'dwdField',
       label: '事件库映射字段',
-      minWidth: 129
+      minWidth: 130
     }
   },
   {
     colConfig: {
       property: 'sbrTable',
       label: '主索引映射表',
-      minWidth: 134
+      minWidth: 130
     }
   },
   {
     colConfig: {
       property: 'sbrField',
       label: '主索引映射字段',
-      minWidth: 134
+      minWidth: 130
     }
   }
 ]

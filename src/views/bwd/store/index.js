@@ -383,6 +383,7 @@ const actions = {
       await dispatch('queryField')
       commit('matchId')
     } else {
+      if (!col.id) return
       const res = await deleteMappingApi(col.id)
       if (!res.success) return
       col.match = false
@@ -424,8 +425,9 @@ const actions = {
     })
   },
   async runCatalog({ dispatch, state }) {
-    const id = state.currentBwd
-    await submitCatalogApi(id)
+    const [theme, id] = state.currentBwd.split(';')
+    const res = await submitCatalogApi(id)
+    if (!res.success) return
     this._vm.$message.success('启动成功！')
     dispatch('loadBwdModules')
   }

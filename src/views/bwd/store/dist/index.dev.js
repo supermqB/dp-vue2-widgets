@@ -625,33 +625,41 @@ var actions = {
 
           case 11:
             commit('matchId');
-            _context9.next = 24;
+            _context9.next = 26;
             break;
 
           case 14:
-            _context9.next = 16;
-            return regeneratorRuntime.awrap((0, _bwd.deleteMappingApi)(col.id));
-
-          case 16:
-            _res2 = _context9.sent;
-
-            if (_res2.success) {
-              _context9.next = 19;
+            if (col.id) {
+              _context9.next = 16;
               break;
             }
 
             return _context9.abrupt("return");
 
-          case 19:
+          case 16:
+            _context9.next = 18;
+            return regeneratorRuntime.awrap((0, _bwd.deleteMappingApi)(col.id));
+
+          case 18:
+            _res2 = _context9.sent;
+
+            if (_res2.success) {
+              _context9.next = 21;
+              break;
+            }
+
+            return _context9.abrupt("return");
+
+          case 21:
             col.match = false;
             delete col['id'];
 
             this._vm.$message.success('取消匹配成功！');
 
-            _context9.next = 24;
+            _context9.next = 26;
             return regeneratorRuntime.awrap(dispatch('queryField'));
 
-          case 24:
+          case 26:
           case "end":
             return _context9.stop();
         }
@@ -722,22 +730,33 @@ var actions = {
     });
   },
   runCatalog: function runCatalog(_ref11) {
-    var dispatch, state, id;
+    var dispatch, state, _state$currentBwd$spl5, _state$currentBwd$spl6, theme, id, res;
+
     return regeneratorRuntime.async(function runCatalog$(_context11) {
       while (1) {
         switch (_context11.prev = _context11.next) {
           case 0:
             dispatch = _ref11.dispatch, state = _ref11.state;
-            id = state.currentBwd;
+            _state$currentBwd$spl5 = state.currentBwd.split(';'), _state$currentBwd$spl6 = _slicedToArray(_state$currentBwd$spl5, 2), theme = _state$currentBwd$spl6[0], id = _state$currentBwd$spl6[1];
             _context11.next = 4;
             return regeneratorRuntime.awrap((0, _bwd.submitCatalogApi)(id));
 
           case 4:
+            res = _context11.sent;
+
+            if (res.success) {
+              _context11.next = 7;
+              break;
+            }
+
+            return _context11.abrupt("return");
+
+          case 7:
             this._vm.$message.success('启动成功！');
 
             dispatch('loadBwdModules');
 
-          case 6:
+          case 9:
           case "end":
             return _context11.stop();
         }
