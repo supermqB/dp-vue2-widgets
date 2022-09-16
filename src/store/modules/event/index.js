@@ -247,7 +247,7 @@ const actions = {
       parVersion,
       state.versionForm.state
     )
-    if (!res.success) return
+    if (!res.success) return Promise.reject()
     commit('setVersionForm')
     dispatch('queryVersion')
   },
@@ -262,7 +262,8 @@ const actions = {
     } else {
       list.push(state.currentCatalog)
     }
-    await submitCatalogApi(list)
+    const res = await submitCatalogApi(list)
+    if (!res.success) return Promise.reject()
     this._vm.$message.success('启动成功！')
     dispatch('queryCatalog')
   },
@@ -278,7 +279,7 @@ const actions = {
         nameEn,
         description
       )
-      if (!res.success) return
+      if (!res.success) return Promise.reject()
       this._vm.$message.success('新增目录成功！')
     } else {
       const res = await updateCatalogApi(
@@ -290,7 +291,7 @@ const actions = {
         nameEn,
         description
       )
-      if (!res.success) return
+      if (!res.success) return Promise.reject()
       this._vm.$message.success('编辑目录成功！')
     }
     dispatch('queryCatalog')
@@ -320,7 +321,7 @@ const actions = {
         indexFlag,
         dictTableId
       })
-      if (!res.success) return
+      if (!res.success) return Promise.reject()
       this._vm.$message.success('新增字段成功！')
     } else {
       const res = await updateCatalogColumnApi({
@@ -335,7 +336,7 @@ const actions = {
         indexFlag,
         dictTableId
       })
-      if (!res.success) return
+      if (!res.success) return Promise.reject()
       this._vm.$message.success('编辑字段成功！')
     }
     await dispatch('queryColumn')
