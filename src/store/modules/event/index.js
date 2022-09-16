@@ -225,6 +225,7 @@ const actions = {
     commit('setCurrentCatalog')
     await dispatch('queryColumn')
     commit('setCurrentColumn')
+    dispatch('queryDataElement')
   },
   async addVersion({ dispatch, commit }) {
     const { version, parVersion } = state.versionForm
