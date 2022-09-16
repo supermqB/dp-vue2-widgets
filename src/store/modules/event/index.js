@@ -12,6 +12,7 @@ import {
 } from '@/api/event'
 import { getVersionListApi as getValueVersionListApi } from '@/api/value'
 import { getMax, keysClone } from '@/utils/lang'
+import { Message } from 'element-ui'
 import dataElement from './dataElement'
 import initState from './initState'
 
@@ -247,9 +248,11 @@ const actions = {
       parVersion,
       state.versionForm.state
     )
-    if (!res.success) return Promise.reject()
+    if (!res.success) return false
+    Message.success('新增版本成功！')
     commit('setVersionForm')
     dispatch('queryVersion')
+    return true
   },
   async runCatalog({ dispatch, state }, val) {
     const list = [state.currentCatalog]
@@ -263,9 +266,10 @@ const actions = {
       list.push(state.currentCatalog)
     }
     const res = await submitCatalogApi(list)
-    if (!res.success) return Promise.reject()
+    if (!res.success) return false
     this._vm.$message.success('启动成功！')
     dispatch('queryCatalog')
+    return true
   },
   async submitCatalog({ dispatch, state }) {
     const version = state.currentVersion
@@ -279,7 +283,7 @@ const actions = {
         nameEn,
         description
       )
-      if (!res.success) return Promise.reject()
+      if (!res.success) return false
       this._vm.$message.success('新增目录成功！')
     } else {
       const res = await updateCatalogApi(
@@ -291,10 +295,11 @@ const actions = {
         nameEn,
         description
       )
-      if (!res.success) return Promise.reject()
+      if (!res.success) return false
       this._vm.$message.success('编辑目录成功！')
     }
     dispatch('queryCatalog')
+    return true
   },
   async submitColumn({ dispatch, state }) {
     const {
@@ -321,7 +326,7 @@ const actions = {
         indexFlag,
         dictTableId
       })
-      if (!res.success) return Promise.reject()
+      if (!res.success) return false
       this._vm.$message.success('新增字段成功！')
     } else {
       const res = await updateCatalogColumnApi({
@@ -336,10 +341,11 @@ const actions = {
         indexFlag,
         dictTableId
       })
-      if (!res.success) return Promise.reject()
+      if (!res.success) return false
       this._vm.$message.success('编辑字段成功！')
     }
     await dispatch('queryColumn')
+    return true
   },
   async getMaxCode({}, { version, theme }) {
     const res = await getMaxCodeApi(version, theme)

@@ -147,11 +147,10 @@ export default {
     async onClickSubmitAddCatalog() {
       const { valid } = await this.$refs.addDictForm.validate()
       if (valid) {
-        const res = await this.submitDict(true)
-        if (res.success) {
+        if (await this.submitDict(true)) {
           this.$message.success('新增值域字典成功！')
           this.$refs.addCatalogDialog.toggleOpen()
-          await this.queryDict()
+          this.queryDict()
         }
       } else {
         this.$alert('请检查输入项是否完整！')
@@ -160,11 +159,10 @@ export default {
     async onClickSubmitEditCatalog() {
       const { valid } = await this.$refs.editDictForm.validate()
       if (valid) {
-        const res = await this.submitDict(false)
-        if (res.success) {
+        if (await this.submitDict(false)) {
           this.$message.success('值域字典编辑成功！')
           this.$refs.editCatalogDialog.toggleOpen()
-          await this.queryDict()
+          this.queryDict()
         }
       } else {
         this.$alert('请检查输入项是否完整！')

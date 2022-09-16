@@ -197,14 +197,12 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }
-      ).then(() => {
-        this.runCatalog(true)
-        this.runDialog = false
+      ).then(async () => {
+        if (await this.runCatalog(true)) this.runDialog = false
       })
     },
     async onClickRunCatalog() {
-      await this.runCatalog()
-      this.runDialog = false
+      if (await this.runCatalog()) this.runDialog = false
     },
     async onChangeTheme(theme) {
       const version = this.currentVersion
@@ -226,8 +224,7 @@ export default {
     async onClickSubmitCatalog() {
       const { valid } = await this.$refs.catalogForm.validate()
       if (valid) {
-        await this.submitCatalog()
-        this.$refs.catalogDialog.toggleOpen()
+        if (await this.submitCatalog()) this.$refs.catalogDialog.toggleOpen()
       } else {
         this.$alert('请检查输入项是否完整！')
       }
@@ -235,9 +232,7 @@ export default {
     async onClickSubmitVersion() {
       const { valid } = await this.$refs.versionForm.validate()
       if (valid) {
-        await this.addVersion()
-        this.$message.success('新增版本成功！')
-        this.$refs.versionDialog.toggleOpen()
+        if (await this.addVersion()) this.$refs.versionDialog.toggleOpen()
       } else {
         this.$alert('请检查输入项是否完整！')
       }

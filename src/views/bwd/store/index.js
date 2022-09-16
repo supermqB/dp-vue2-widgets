@@ -384,20 +384,21 @@ const actions = {
   async submitMapping({ commit, dispatch }, col) {
     if (!col.match) {
       const res = await dispatch('map', col)
-      if (!res.success) return
+      if (!res.success) return false
       this._vm.$message.success('匹配成功！')
       col.match = true
       await dispatch('queryField')
       commit('matchId')
     } else {
-      if (!col.id) return
+      if (!col.id) return false
       const res = await deleteMappingApi(col.id)
-      if (!res.success) return
+      if (!res.success) return false
       col.match = false
       delete col['id']
       this._vm.$message.success('取消匹配成功！')
       await dispatch('queryField')
     }
+    return true
   },
   async map({ commit, state }, col) {
     const currentField = getCurrentFieldItem(
@@ -435,9 +436,10 @@ const actions = {
   async runCatalog({ dispatch, state }) {
     const [theme, id] = state.currentBwd.split(';')
     const res = await submitCatalogApi(id)
-    if (!res.success) return
+    if (!res.success) return false
     this._vm.$message.success('启动成功！')
     dispatch('loadBwdModules')
+    return true
   }
 }
 
