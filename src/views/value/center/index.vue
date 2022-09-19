@@ -36,7 +36,7 @@
       ></Form>
       <div class="operation">
         <el-button @click="onSearch" type="primary" plain>查询</el-button>
-        <el-button @click="addValue" :disabled="!currentVersion || currentVersionInfo.state === RUNNINGSTATE" type="primary" plain>新增</el-button>
+        <el-button @click="addValue" :disabled="!currentVersion" type="primary" plain>新增</el-button>
         <el-button @click="editValue" :disabled="!currentDictValue || currentVersionInfo.state === RUNNINGSTATE" type="primary" plain>编辑</el-button>
       </div>
     </div>

@@ -2,13 +2,6 @@
   <div class="centerWrap">
     <div class="header">
       <div class="left">
-        <!-- <el-breadcrumb separator="/">
-          <el-breadcrumb-item>BWD文件管理</el-breadcrumb-item>
-          <el-breadcrumb-item>
-            <b>{{ currentBwdItem.label }} ({{ currentBwdItem.nameEn }}) </b>
-            <img :src="icon(currentBwdItem.state)" />
-          </el-breadcrumb-item>
-        </el-breadcrumb> -->
         <Breadcrumb
           baseLabel="BWD文件管理"
           :currentLabel="`${currentBwdItem.label}(${currentBwdItem.nameEn})`"  
@@ -25,7 +18,6 @@
         <el-button
           type="primary"
           @click="addFileFields"
-          :disabled="currentBwdItem.state === RUNNINGSTATE"
           >新增</el-button
         >
       </div>

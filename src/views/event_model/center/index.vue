@@ -7,7 +7,7 @@
         <State :currentState="currentCatalogItem.state"></State>
       </div>
       <div>
-        <el-button type="primary" @click="onclickAddColumn" :disabled="!currentCatalog || currentCatalogItem.state === RUNNINGSTATE">新增</el-button>
+        <el-button type="primary" @click="onclickAddColumn" :disabled="!currentCatalog">新增</el-button>
         <el-button type="primary" @click="onclickEditColumn" :disabled="!currentColumn || currentCatalogItem.state === RUNNINGSTATE">编辑</el-button>
       </div>
     </div>

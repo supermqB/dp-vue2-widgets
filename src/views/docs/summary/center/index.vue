@@ -38,6 +38,7 @@ import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapActions } = createNamespacedHelpers('docs/summary')
 import { downloadLiteratureApi } from '@/api/doc'
+import { processDownloadFile } from '@/utils/download'
 export default {
   data() {
     return {
@@ -60,34 +61,23 @@ export default {
     ...mapActions(['submitEditLiterature', 'queryLiterature', 'getSimilarLiteratureList']),
     async downloadLiterature() {
       const { identifier } = this.detail
-      downloadLiteratureApi(identifier).then(res => {
-        let url = window.URL.createObjectURL(res.data)
-        const fileName = decodeURIComponent(res.headers["content-disposition"].split("=")[1])
-        const a = document.createElement("a")
-        a.setAttribute("href", url)
-        a.setAttribute("download", fileName)
-        document.body.append(a)
-        a.click()
-        document.body.removeChild(a)
-      }).catch(() => {
-        this.$message.error('当前文献待上传！')
-      })
+      const res = await downloadLiteratureApi(identifier)
+      processDownloadFile(res)
+      // this.$message.error('当前文献待上传！')
     },
     async preview() {
       const { identifier } = this.detail
-      downloadLiteratureApi(identifier).then(res => {
-        const urlPdf = window.URL.createObjectURL(res.data)
-        this.pdfSrc = Pdf.createLoadingTask({
-          url: urlPdf,
-          CMapReaderFactory
-        })
-        this.pdfSrc.promise.then(pdf => {
-          this.pdfTotal = pdf.numPages
-        })
-        this.pdfVisible = true
-      }).catch(() => {
-        this.$message.error('当前文献待上传，不支持预览！')
+      const res = await downloadLiteratureApi(identifier)
+      const urlPdf = window.URL.createObjectURL(res.data)
+      this.pdfSrc = Pdf.createLoadingTask({
+        url: urlPdf,
+        CMapReaderFactory
       })
+      this.pdfSrc.promise.then(pdf => {
+        this.pdfTotal = pdf.numPages
+      })
+      this.pdfVisible = true
+      // this.$message.error('当前文献待上传，不支持预览！')
     },
     async editDocHandler(formData) {
       const res = await this.submitEditLiterature(formData)
