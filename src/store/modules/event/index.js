@@ -43,7 +43,7 @@ const processColumnList = list => {
   return list.map(item => {
     return Object.assign(item, {
       index: item.seqNo,
-      valueRange: item.valueDomainName
+      valueRangeOrDomainVersion: item.valueDomainName
         ? `${item.valueDomainName}\x0a:\x0a${item.valueDomainVersion}`
         : item.valueRange,
       primaryKeyFlag: parseInt(item.primaryKeyFlag),

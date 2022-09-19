@@ -37,7 +37,12 @@
     >
       <Form
         ref="columnForm"
-        :formCfg="columnCfg(setDataElementInfo, dataElement.dataElementList, queryDataElement, columnForm.valueDomainName, valueVersionList)"
+        :formCfg="columnCfg(
+          setDataElementInfo, 
+          dataElement.dataElementList, 
+          queryDataElement, 
+          columnForm.valueDomainName,
+          valueVersionList)"
         :formData="columnForm"
         :formRule="columnRule"
       ></Form>
@@ -140,8 +145,6 @@ export default {
     onclickEditColumn() {
       this.$refs.columnDialog.toggleOpen()
       this.setColumnForm(this.currentColumnRow)
-      if (this.currentColumnRow.valueDomainName)
-        this.getValueVersionList(this.currentColumnRow.valueDomainName)
     },
     async onClickSubmitColumn() {
       const { valid } = await this.$refs.columnForm.validate()
@@ -166,7 +169,13 @@ export default {
       handler(cur) {
         this.$refs.columnTable.setCurrentRow(cur)
       }
-    }
+    },
+    'columnForm.valueDomainName': {
+      handler(cur, old) {
+        this.getValueVersionList(cur)
+        old ? this.setColumnForm({ dictTableId: '' }) : null
+      }
+    },
   }
 }
 </script>

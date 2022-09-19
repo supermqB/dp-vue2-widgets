@@ -50,7 +50,7 @@ export default [
   },
   {
     colConfig: {
-      property: 'valueRange',
+      property: 'valueRangeOrDomainVersion',
       label: '数据元允许值',
       minWidth: 135
     }
