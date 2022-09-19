@@ -1,27 +1,24 @@
 <template>
-  <div>
+  <div class="wrap">
     <div class="header">相似文献</div>
-    <div class="docs">
-      <el-input 
-        v-model="name"
-        placeholder="请输入"
-        suffix-icon="el-icon-search"
-        clearable
-      ></el-input>
-      <ul>
-        <li
-          v-for="(item, index) in literatureFilterList"
-          @click="selectLiterature(item)"
-          :key="index"
-        >
-          <p>
-            <span class="type">{{ item.docType }}</span>
-            <span class="title">{{ item.title }}</span>
-          </p>
-          <p class="catalog">分类：{{ item.catalogGrp }}</p>
-        </li>
-      </ul>
-    </div>
+    <el-input 
+      v-model="name"
+      placeholder="请输入"
+      suffix-icon="el-icon-search"
+      clearable />
+    <ul>
+      <li
+        v-for="(item, index) in literatureFilterList"
+        @click="selectLiterature(item)"
+        :key="index"
+      >
+        <p>
+          <span class="type">{{ item.docType }}</span>
+          <span class="title">{{ item.title }}</span>
+        </p>
+        <p class="catalog">分类：{{ item.catalogGrp }}</p>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -48,17 +45,20 @@ export default {
       this.setFilter()
       this.setID(id)
       await this.queryLiterature()
-      this.getSimilarLiteratureList()
+      // this.getSimilarLiteratureList()
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.docs {
-  padding: 5px;
+.wrap {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .header {
+  margin-bottom: 8px;
   height: 40px;
   line-height: 40px;
   font-size: 15px;
@@ -66,9 +66,14 @@ export default {
   padding: 0 6px;
   border-bottom: 1px solid #e5e5e5;
 }
-
+.el-input {
+  width: calc(100% - 10px);
+  margin: 0 5px;
+}
 ul {
-  margin-top: 8px;
+  flex: 1;
+  overflow: auto;
+  margin: 8px 5px 0 5px;
   border: 1px solid #F2F2F2;
   li {
     padding: 8px 6px 8px 8px;
