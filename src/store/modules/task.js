@@ -106,7 +106,7 @@ const mutations = {
   },
   setListData: (state, data) => {
     state.list = data
-  },
+  }
 }
 
 export default {

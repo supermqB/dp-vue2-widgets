@@ -130,6 +130,7 @@ import { createNamespacedHelpers } from 'vuex'
 import { getMAxValueCodeApi, downloadTemplateApi } from '@/api/value'
 import { getMaxNumber } from '@/utils/lang'
 import { RUNNINGSTATE } from '@/utils/const'
+import { processDownloadFile } from '@/utils/download'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('value')
 
@@ -215,17 +216,10 @@ export default {
       'addBatchDictValue',
       'editDictValue'
     ]),
-    downloadTemplate() {
+    async downloadTemplate() {
       const { id } = this.currentVersionItem
-      downloadTemplateApi(id).then(res => {
-        let url = window.URL.createObjectURL(res.data)
-        const a = document.createElement("a");
-        a.setAttribute("href", url);
-        a.setAttribute("download", `${this.currentVersionInfo.type}.xlsx`);
-        document.body.append(a);
-        a.click();
-        document.body.removeChild(a);
-      })     
+      const res = await downloadTemplateApi(id)
+      processDownloadFile(res)    
     },
     onSearch() {
       this.setPageInfo({ curPage: 1 })
