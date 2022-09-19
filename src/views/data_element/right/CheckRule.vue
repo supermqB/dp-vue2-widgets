@@ -5,7 +5,7 @@
       <el-checkbox v-model="illegalChar.only">仅非法字符校验</el-checkbox>
     </CardVue>
     <CardVue title="类型格式校验">
-      <FormVue v-bind="formatCheck" />
+      <FormVue v-bind="formatCheck" ref="typeCheckForm" />
     </CardVue>
     <CardVue title="字段内涵校验" class="fieldContent">
       <el-checkbox
@@ -83,12 +83,13 @@
     </CardVue>
     <div class="btn_area">
       <el-button @click="reset">重置</el-button>
-      <el-button type="primary" @click="save">保存</el-button>
+      <el-button type="primary" @click="saveRuleHandler">保存</el-button>
     </div>
   </div>
 </template>
 <script>
 import { get } from '@/utils/request'
+import { alert } from '@/utils/pops'
 import CardVue from '@/components/list/Card.vue'
 import FormVue from '@/components/Form.vue'
 import { createNamespacedHelpers, mapState as globalMapState } from 'vuex'
@@ -212,6 +213,14 @@ export default {
       let fcCfg = this.formatCheck.formCfg
       fcCfg[1].elOptions.disabled = !enable
       fcCfg[2].elOptions.disabled = !enable
+    },
+    async saveRuleHandler() {
+      const { valid } = await this.$refs.typeCheckForm.validate()
+      if (valid) {
+        this.save()
+      } else {
+        alert('请检查表单中的错误项。')
+      }
     },
     ...mapActions(['save', 'reset'])
   },
