@@ -378,7 +378,7 @@ const actions = {
         nameCn,
         version,
         sourceTypeCode,
-        sourceBasis,
+        basis,
         sourceBasisCode
       } = state.dictForm
       const res = await addDictApi({
@@ -389,7 +389,7 @@ const actions = {
         nameCn,
         version,
         sourceTypeCode,
-        sourceBasis,
+        basis,
         sourceBasisCode,
         state: EDITINGSTATE
       })

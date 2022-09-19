@@ -94,7 +94,7 @@ export const addCatalogCfg = (
     {
       type: 'el-input',
       label: '标准依据',
-      id: 'sourceBasis',
+      id: 'basis',
       elOptions: {
         // placeholder: '请输入'
       }

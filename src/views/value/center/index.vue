@@ -356,6 +356,7 @@ export default {
     align-items: center;
     width: 100%;
     height: 41px;
+    flex-shrink: 0;
     padding-left: 10px;
     padding-right: 10px;
     font-size: 13px;

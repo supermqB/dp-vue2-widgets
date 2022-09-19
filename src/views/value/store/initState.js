@@ -11,7 +11,7 @@ export default {
     nameCn: '',
     version: '',
     sourceTypeCode: '',
-    sourceBasis: '',
+    basis: '',
     sourceBasisCode: ''
   },
   dictVersionForm: {

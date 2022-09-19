@@ -81,33 +81,11 @@ export const getListApi = ({ dictId, current, size, columnParamList }) => {
   })
 }
 
-export const addDictApi = ({
-  type,
-  ctlgCode,
-  dictCode,
-  nameEn,
-  nameCn,
-  version,
-  sourceTypeCode,
-  sourceBasis,
-  sourceBasisCode,
-  state
-}) => {
+export const addDictApi = data => {
   return request({
     url: '/dict/addDict',
     method: 'post',
-    data: {
-      type,
-      ctlgCode,
-      dictCode,
-      nameEn,
-      nameCn,
-      version,
-      sourceTypeCode,
-      sourceBasis,
-      sourceBasisCode,
-      state
-    }
+    data
   })
 }
 
