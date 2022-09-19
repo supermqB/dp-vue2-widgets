@@ -7,7 +7,7 @@
         <State :currentState="currentCatalogItem.state"></State>
       </div>
       <div>
-        <el-button type="primary" @click="onclickAddColumn" :disabled="!currentCatalog || currentCatalogItem.state === RUNNINGSTATE">新增</el-button>
+        <el-button type="primary" @click="onclickAddColumn" :disabled="!currentCatalog">新增</el-button>
         <el-button type="primary" @click="onclickEditColumn" :disabled="!currentColumn || currentCatalogItem.state === RUNNINGSTATE">编辑</el-button>
       </div>
     </div>
@@ -37,7 +37,12 @@
     >
       <Form
         ref="columnForm"
-        :formCfg="columnCfg(setDataElementInfo, dataElement.dataElementList, queryDataElement, columnForm.valueDomainName, valueVersionList)"
+        :formCfg="columnCfg(
+          setDataElementInfo, 
+          dataElement.dataElementList, 
+          queryDataElement, 
+          columnForm.valueDomainName,
+          valueVersionList)"
         :formData="columnForm"
         :formRule="columnRule"
       ></Form>
@@ -140,8 +145,6 @@ export default {
     onclickEditColumn() {
       this.$refs.columnDialog.toggleOpen()
       this.setColumnForm(this.currentColumnRow)
-      if (this.currentColumnRow.valueDomainName)
-        this.getValueVersionList(this.currentColumnRow.valueDomainName)
     },
     async onClickSubmitColumn() {
       const { valid } = await this.$refs.columnForm.validate()
@@ -166,7 +169,13 @@ export default {
       handler(cur) {
         this.$refs.columnTable.setCurrentRow(cur)
       }
-    }
+    },
+    'columnForm.valueDomainName': {
+      handler(cur, old) {
+        this.getValueVersionList(cur)
+        old ? this.setColumnForm({ dictTableId: '' }) : null
+      }
+    },
   }
 }
 </script>
