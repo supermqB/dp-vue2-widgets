@@ -53,13 +53,14 @@ export default {
     Pdf
   },
   computed: {
-    ...mapState(['detail', 'identifier']),
+    ...mapState(['detail']),
     ...mapGetters(['summaryDetail'])
   },
   methods: {
     ...mapActions(['submitEditLiterature', 'queryLiterature', 'getSimilarLiteratureList']),
     async downloadLiterature() {
-      downloadLiteratureApi(this.identifier).then(res => {
+      const { identifier } = this.detail
+      downloadLiteratureApi(identifier).then(res => {
         let url = window.URL.createObjectURL(res.data)
         const fileName = decodeURIComponent(res.headers["content-disposition"].split("=")[1])
         const a = document.createElement("a")
@@ -73,7 +74,8 @@ export default {
       })
     },
     async preview() {
-      downloadLiteratureApi(this.identifier).then(res => {
+      const { identifier } = this.detail
+      downloadLiteratureApi(identifier).then(res => {
         const urlPdf = window.URL.createObjectURL(res.data)
         this.pdfSrc = Pdf.createLoadingTask({
           url: urlPdf,
