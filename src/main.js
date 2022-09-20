@@ -16,11 +16,9 @@ import store from './store'
 import '@/assets/css/reset.scss'
 import VueParticles from 'vue-particles'
 import MatchButton from '@/components/button/Match.vue'
-import UploadButton from '@/components/button/Upload.vue'
 
 Vue.use(VueParticles)
 Vue.component('MatchButton', MatchButton)
-Vue.component('UploadButton', UploadButton)
 
 new Vue({
   router,
