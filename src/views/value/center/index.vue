@@ -369,6 +369,7 @@ export default {
   }
   .table {
     flex-grow: 1;
+    flex-shrink: 1;
     padding-bottom: 5px;
   }
 }
