@@ -37,14 +37,15 @@
       <div class="operation">
         <el-button @click="onSearch" type="primary" plain>查询</el-button>
         <el-button @click="addValue" :disabled="!currentVersion" type="primary" plain>新增</el-button>
-        <el-button @click="editValue" :disabled="!currentDictValue || currentVersionInfo.state === RUNNINGSTATE" type="primary" plain>编辑</el-button>
+        <UploadButton class="batchAdd"></UploadButton>
+        <!-- <el-button @click="editValue" :disabled="!currentDictValue || currentVersionInfo.state === RUNNINGSTATE" type="primary" plain>编辑</el-button> -->
       </div>
     </div>
     <div class="table">
       <Table
         ref="dictValueTable"
         :key="`index${tableConfig.length}`"
-        :tableConfig="tableConfig"
+        :tableConfig="tableCfg"
         :tableData="dictValueList"
         :pageInfo="pageInfo"
         @row-changed="val => setCurrentDictValue(val)"
@@ -82,23 +83,22 @@
       ref="addValueDialog"
       class="addValueDialog"
       @dialog-complete="onClickAddValue">
-      <div class="batchFlag">
+      <!-- <div class="batchFlag">
         <span>新增方式：</span>
         <el-radio-group v-model="batchFlag">
           <el-radio :label="false">单条新增</el-radio>
           <el-radio :label="true">批量导入</el-radio>
         </el-radio-group>
-      </div>
+      </div> -->
       <Form
-        v-if="!batchFlag"
         :formCfg="dictValueFormCfg"
         :formData="dictValueForm"
         :formRule="valueRule"
       ></Form>
-      <Upload v-if="batchFlag"
+      <!-- <Upload v-if="batchFlag"
         v-model="file"
         @onDownload="downloadTemplate"
-        class="upload"></Upload>
+        class="upload"></Upload> -->
     </Dialog>
     <Dialog
       title="编辑值域字典明细"
@@ -122,7 +122,6 @@ import Detail from './detail.vue'
 import IsMaster from '@/components/state/IsMaster.vue'
 import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import IsRunning from '@/components/state/IsRunning.vue'
-import tableConfig from './config/tableColumn'
 import Upload from '@/components/form/Upload.vue'
 import { addVersionCfg, editVersionCfg, addVersionRule } from './config/versionForm'
 import { searchValueCfg, addValueCfg, editValueCfg, valueRule } from './config/valueForm'
@@ -189,6 +188,46 @@ export default {
       },
       get() {
         return this.currentVersion
+      }
+    },
+    tableCfg() {
+      if (!this.tableConfig.length){
+        return [{
+          colConfig: {
+            property: '',
+            label: '',
+            minWidth: 150
+          }
+        }]
+      } else {
+        return [
+          ...this.tableConfig, 
+          {
+            colConfig: {
+              property: 'state',
+              label: '操作',
+              minWidth: 150,
+              fixed: 'right',
+            },
+            actions: [
+              {
+                type: 'el-button',
+                name: '编辑',
+                typeProps: {
+                  type: 'text',
+                  // disabled: dataProps.state === RUNNINGSTATE
+                }
+              }, {
+                type: 'el-button',
+                name: '删除',
+                typeProps: {
+                  type: 'text',
+                  // disabled: dataProps.state === RUNNINGSTATE
+                }
+              }
+            ]
+          }
+        ]
       }
     }
   },
@@ -270,21 +309,22 @@ export default {
       this.$refs.editValueDialog.toggleOpen()
     },
     async onClickAddValue() {
-      if (this.batchFlag) {
-        if (!this.file) {
-          this.$message.warning('请选择批量导入文件')
-          return
-        }
-        if (await this.addBatchDictValue(this.file)) {
+      if (await this.addDictValue()) {
           this.$refs.addValueDialog.toggleOpen()
           this.$message.success('新增值域字典明细成功！')
         }
-      } else {
-        if (await this.addDictValue()) {
-          this.$refs.addValueDialog.toggleOpen()
-          this.$message.success('新增值域字典明细成功！')
-        }
-      }
+      // if (this.batchFlag) {
+      //   if (!this.file) {
+      //     this.$message.warning('请选择批量导入文件')
+      //     return
+      //   }
+      //   if (await this.addBatchDictValue(this.file)) {
+      //     this.$refs.addValueDialog.toggleOpen()
+      //     this.$message.success('新增值域字典明细成功！')
+      //   }
+      // } else {
+        
+      // }
     },
     async onClickEditValue() {
       if (await this.editDictValue()) {

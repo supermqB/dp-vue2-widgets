@@ -17,7 +17,6 @@ import {
   addDictValueManyApi,
   editDictValueApi
 } from '@/api/value'
-import { Message } from 'element-ui'
 
 const {
   dictForm,
@@ -116,15 +115,7 @@ const getters = {
       !state.currentVersionInfo.valueDictColumnList ||
       !state.currentVersionInfo.valueDictColumnList.length
     )
-      return [
-        {
-          colConfig: {
-            property: '',
-            label: '',
-            minWidth: 150
-          }
-        }
-      ]
+      return []
     return state.currentVersionInfo.valueDictColumnList.map(item => {
       return {
         colConfig: {
@@ -361,9 +352,11 @@ const actions = {
       commit(
         'setDictValueList',
         value.records.map((item, index) => {
-          return Object.assign({}, item, {
-            index: (curPage - 1) * pageSize + index + 1
-          })
+          const res = Object.assign({}, item.columnMap, { state: item.state })
+          if (!res['index']) {
+            res['index'] = (curPage - 1) * pageSize + index + 1
+          }
+          return res
         })
       )
     } else {
@@ -433,7 +426,8 @@ const actions = {
     const current = state.versionList.find(item => item.label === version)
     commit('setCurrentVersion', current.id)
     await dispatch('queryVersion')
-    dispatch('queryVersionInfo')
+    await dispatch('queryVersionInfo')
+    dispatch('queryDictValue')
     return true
   },
   async addDictValue({ state, dispatch, rootState }) {

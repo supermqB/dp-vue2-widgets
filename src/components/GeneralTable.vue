@@ -44,7 +44,7 @@
               :key="action.id"
               :is="action.type"
               v-model="row[action.id]"
-              v-bind="action.typeProps"
+              v-bind="{...action.typeProps }"
               @click.native.prevent="
                 rowAction({ rowIdx, row, column }, action.callback)
               "
@@ -127,6 +127,14 @@ export default {
     },
     setCurrentRow(row) {
       this.$refs.el_table.setCurrentRow(row)
+    },
+    typeProps(obj, row) {
+      Object.keys(obj).forEach(key => {
+        if (typeof obj[key] === 'function') {
+          obj[key] = obj[key](row)
+        }
+      })
+      return obj
     }
   }
 }
