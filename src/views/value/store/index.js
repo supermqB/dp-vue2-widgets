@@ -361,7 +361,7 @@ const actions = {
       commit(
         'setDictValueList',
         value.records.map((item, index) => {
-          return Object.assign({}, item, {
+          return Object.assign({}, item.columnMap, {
             index: (curPage - 1) * pageSize + index + 1
           })
         })

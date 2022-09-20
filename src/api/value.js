@@ -55,13 +55,10 @@ export const addVersionApi = data => {
   return postWithFile('/dict/addVersion', data)
 }
 
-export const downloadTemplateApi = dictId => {
+export const downloadTemplateApi = () => {
   return request({
     url: '/dict/download',
-    method: 'post',
-    params: {
-      id: dictId
-    },
+    method: 'get',
     responseType: 'blob'
   })
 }
