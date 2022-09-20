@@ -5,6 +5,7 @@
       :actionTypes="['add', 'edit']"
       @add="addCatalog"
       @edit="editCatalog"
+      @output="output"
     ></Header>
     <div class="search">
       <span>搜索</span>
@@ -22,6 +23,10 @@
       @onClick="onDictChange"
       class="tree"
     ></Tree>
+    <OutputDialog
+      ref="output"
+      :data="dictList"
+    ></OutputDialog>
     <Dialog
       title="新增值域字典"
       ref="addCatalogDialog"
@@ -56,6 +61,7 @@ import Tree from '@/components/SideTree.vue'
 import Dialog from '@/components/Dialog.vue'
 import Form from '@/components/Form.vue'
 import Header from '@/components/header/Catalog.vue'
+import OutputDialog from '@/views/common/OutputDialog.vue'
 import {
   addCatalogCfg,
   editCatalogCfg,
@@ -71,8 +77,9 @@ export default {
     Tree,
     Dialog,
     Form,
-    Header
-  },
+    Header,
+    OutputDialog
+},
   data() {
     return {
       dictFilter: '',
@@ -129,6 +136,9 @@ export default {
       this.$nextTick(() => {
         this.$refs.addDictForm.resetFields()
       })
+    },
+    output() {
+      this.$refs.output.toggleOpen()
     },
     editCatalog() {
       const { code, classifyCode } = this.currentVersionInfo

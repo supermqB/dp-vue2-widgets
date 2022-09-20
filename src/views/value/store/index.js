@@ -339,7 +339,7 @@ const actions = {
     const { curPage: current, pageSize: size } = state.pageInfo
     const columnParamList = []
     ;[
-      { name: 'term_code', condition: 'like' },
+      { name: 'code', condition: 'like' },
       { name: 'value', condition: 'like' },
       { name: 'parent_code', condition: 'equal' },
       { name: 'level', condition: 'equal' }
@@ -357,10 +357,13 @@ const actions = {
       columnParamList
     })
     if (value.records) {
+      const { curPage, pageSize } = state.pageInfo
       commit(
         'setDictValueList',
         value.records.map((item, index) => {
-          return Object.assign({}, item, { index })
+          return Object.assign({}, item, {
+            index: (curPage - 1) * pageSize + index + 1
+          })
         })
       )
     } else {

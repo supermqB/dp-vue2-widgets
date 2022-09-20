@@ -91,6 +91,9 @@ export default {
       &.edit_disable {
         background-image: url('@/assets/images/common/icons/edit_disable.png');
       }
+      &.output {
+        background-image: url('@/assets/images/common/icons/output.svg');
+      }
     }
   }
 }

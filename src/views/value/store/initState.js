@@ -42,7 +42,7 @@ export default {
     level: '',
     value: '',
     parent_code: '',
-    term_code: ''
+    code: ''
   },
   adSearchForm: {}
 }
