@@ -303,11 +303,11 @@ const actions = {
     })
   },
   async queryVersionList({}, currentDict) {
-    const [sourceTypeCode, dict] = currentDict.split(',')
-    const { value } = await getVersionListApi(dict, sourceTypeCode)
+    const [sourceTypeCode, dictName] = currentDict.split(',')
+    const { value } = await getVersionListApi(dictName, sourceTypeCode)
     return value.map(item => {
       return {
-        id: `${dict},${item.id}`,
+        id: `${currentDict},${item.version}`,
         label: item.version,
         leaf: true
       }

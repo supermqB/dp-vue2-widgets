@@ -8,6 +8,7 @@ module.exports = defineConfig({
   productionSourceMap: process.env.NODE_ENV === 'development',
   configureWebpack: {
     // target: 'web',
+    devtool: 'source-map',
     resolve: {
       alias: {
         '@': path.resolve('src'),
