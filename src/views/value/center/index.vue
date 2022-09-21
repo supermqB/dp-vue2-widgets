@@ -210,7 +210,7 @@ export default {
                   type: 'text',
                   disabled: row => row.state === RUNNINGSTATE
                 },
-                callback: () => this.editValue()
+                callback: (index, data, row) => this.editValue(row)
               }, {
                 type: 'el-button',
                 name: '删除',
@@ -300,8 +300,8 @@ export default {
       this.file = null
       this.$refs.addValueDialog.toggleOpen()
     },
-    editValue() {
-      this.setDictValueForm(this.currentDictValue)
+    editValue(row) {
+      this.setDictValueForm(row)
       this.$refs.editValueDialog.toggleOpen()
     },
     async onClickAddValue() {
