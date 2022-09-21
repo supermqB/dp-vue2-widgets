@@ -302,6 +302,17 @@ const actions = {
       }
     })
   },
+  async queryVersionList({}, currentDict) {
+    const [sourceTypeCode, dict] = currentDict.split(',')
+    const { value } = await getVersionListApi(dict, sourceTypeCode)
+    return value.map(item => {
+      return {
+        id: `${dict},${item.id}`,
+        label: item.version,
+        leaf: true
+      }
+    })
+  },
   async queryVersionInfo() {
     if (!state.currentVersion) return
     const { value } = await getVersionDetailApi(state.currentVersion)

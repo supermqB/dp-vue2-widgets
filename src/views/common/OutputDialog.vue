@@ -16,9 +16,12 @@
         suffix-icon="el-icon-search"></el-input>
       <el-tree
         ref="outputTree"
+        :props="props"
         :data="outputData"
         :default-expanded-keys="['all']"
         :filter-node-method="filterNode"
+        :load="loadNode"
+        :lazy="lazy"
         show-checkbox
         node-key="id">
       </el-tree>
@@ -51,11 +54,24 @@
       data: {
         type: Array,
         default: () => []
+      },
+      lazy: {
+        type: Boolean,
+        default: false
+      },
+      lazyFunc: {
+        type: Function,
+        default: null
       }
     },
     data() {
       return {
-        search: ''
+        search: '',
+        props: {
+          isLeaf: 'leaf',
+          label: 'label',
+          children: 'children'
+        }
       }
     },
     methods: {
@@ -75,6 +91,27 @@
       },
       filter(val) {
         this.$refs.outputTree.filter(val)
+      },
+      async loadNode(node, resolve) {
+        if (node.level === 0) {
+          return resolve([
+            {
+              id: 'all',
+              label: '全部',
+            }
+          ])
+        }
+        if (node.level === 1) {
+          return resolve(this.data)
+        }
+        if (node.data.children) {
+          return resolve(node.data.children)
+        }
+        if (!node.isLeaf) {
+          const res = await this.lazyFunc(node.data.id)
+          return resolve(res)
+        }
+        return resolve([])
       }
     }
   }
