@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     rowAction({ rowIdx, row, column }, callback) {
-      callback(row.index, this.tableData)
+      callback(row.index, this.tableData, row)
     },
     rowChangeHandler(rowData) {
       if (rowData == null) {

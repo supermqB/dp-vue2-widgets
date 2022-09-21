@@ -2,9 +2,10 @@
   <Dialog
     :title="`导出${title}`"
     @dialog-complete="completeHanlder"
+    @dialog-closed="closed"
     ref="outputDialog"
     class="outputDialog"
-    closeAfterConfirm
+    :closeAfterConfirm="false"
   >
     <div class="wrapper">
       <p class="label">选择导出{{ title }}</p>
@@ -61,9 +62,12 @@
       toggleOpen() {
         this.$refs.outputDialog.toggleOpen()
       },
+      closed() {
+        this.$refs.outputTree.setCheckedKeys([])
+      },
       completeHanlder() {
         const res = this.$refs.outputTree.getCheckedKeys(true)
-        this.$emit('output-download', res)
+        this.$emit('output-file', res)
       },
       filterNode(value, data) {
         if (!value) return true;

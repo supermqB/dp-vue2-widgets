@@ -15,7 +15,8 @@ import {
   editVersionApi,
   addDictValueApi,
   addDictValueManyApi,
-  editDictValueApi
+  editDictValueApi,
+  deleteDictValueApi
 } from '@/api/value'
 
 const {
@@ -354,7 +355,7 @@ const actions = {
         value.records.map((item, index) => {
           const res = Object.assign({}, item.columnMap, { state: item.state })
           if (!res['index']) {
-            res['index'] = (curPage - 1) * pageSize + index + 1
+            res['index'] = index
           }
           return res
         })
@@ -503,8 +504,11 @@ const actions = {
     if (completeCurSuspect) dispatch('querySuspect')
     return true
   },
-  async deleteDictValue({}, termCode) {
-    //
+  async deleteDictValue({ dispatch }, termCode) {
+    const res = await deleteDictValueApi(termCode)
+    if (!res.success) return false
+    dispatch('queryDictValue')
+    return true
   }
 }
 

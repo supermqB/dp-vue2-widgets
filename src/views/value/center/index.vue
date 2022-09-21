@@ -217,7 +217,8 @@ export default {
                 typeProps: {
                   type: 'text',
                   disabled: row => row.state === RUNNINGSTATE
-                }
+                },
+                callback: (index, data, row) => this.onClickDeleteValue(row)
               }
             ]
           }
@@ -247,7 +248,8 @@ export default {
       'editDictVersion',
       'addDictValue',
       'addBatchDictValue',
-      'editDictValue'
+      'editDictValue',
+      'deleteDictValue'
     ]),
     async downloadTemplate() {
       const { id } = this.currentVersionItem
@@ -323,6 +325,17 @@ export default {
       if (await this.editDictValue()) {
         this.$refs.editValueDialog.toggleOpen()
         this.$message.success('编辑值域字典明细成功！')
+      }
+    },
+    async onClickDeleteValue(row) {
+      const { term_code } = row
+      await this.$confirm('是否删除该值域字典明细？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+      if (await this.deleteDictValue(term_code)) {
+        this.$message.success('值域字典明细删除成功！')
       }
     },
     handleChange(file) {
