@@ -270,7 +270,7 @@ const actions = {
           label: item.theme,
           children: item.bwdCatelogEntityList.map(it => {
             return {
-              id: `${item.id};${it.id}`,
+              id: `${item.id};${it.id}`, //6;101
               label: it.nameCn,
               nameCn: it.nameCn,
               nameEn: it.nameEn,
@@ -339,7 +339,7 @@ const actions = {
       const res = await addFileCatalogApi(
         nameCn,
         nameEn,
-        theme.join(','),
+        theme.join(','), //Array(1)-"6"
         EDITINGSTATE
       )
       if (!res.success) return false
