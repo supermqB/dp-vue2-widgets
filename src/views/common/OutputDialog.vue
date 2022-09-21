@@ -71,12 +71,20 @@
           isLeaf: 'leaf',
           label: 'label',
           children: 'children'
+          // canSelectd, parent
         }
       }
     },
     methods: {
       toggleOpen() {
         this.$refs.outputDialog.toggleOpen()
+        if (this.$refs.outputTree) {
+          this.$refs.outputTree.store._getAllNodes().forEach(node => {
+            if (node.data.id !== 'all') {
+              node.expanded = false
+            }
+          })
+        }
       },
       closed() {
         this.$refs.outputTree.setCheckedKeys([])
