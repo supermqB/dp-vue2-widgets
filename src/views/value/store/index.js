@@ -502,6 +502,9 @@ const actions = {
     dispatch('queryDictValue')
     if (completeCurSuspect) dispatch('querySuspect')
     return true
+  },
+  async deleteDictValue({}, termCode) {
+    //
   }
 }
 

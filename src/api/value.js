@@ -130,6 +130,16 @@ export const editDictValueApi = ({ id, colId, valueObject, suspectList }) => {
   })
 }
 
+export const deleteDictValueApi = termCode => {
+  return request({
+    url: '/dict/deleteDictValue',
+    method: 'get',
+    params: {
+      termCode
+    }
+  })
+}
+
 export const getClassifyCodeApi = () => {
   return request({
     url: '/dict/getClassifyCode',

@@ -209,7 +209,8 @@ export default {
                 typeProps: {
                   type: 'text',
                   disabled: row => row.state === RUNNINGSTATE
-                }
+                },
+                callback: () => this.editValue()
               }, {
                 type: 'el-button',
                 name: '删除',
@@ -302,22 +303,21 @@ export default {
       this.$refs.editValueDialog.toggleOpen()
     },
     async onClickAddValue() {
-      if (await this.addDictValue()) {
+      if (this.batchFlag) {
+        if (!this.file) {
+          this.$message.warning('请选择批量导入文件')
+          return
+        }
+        if (await this.addBatchDictValue(this.file)) {
           this.$refs.addValueDialog.toggleOpen()
           this.$message.success('新增值域字典明细成功！')
         }
-      // if (this.batchFlag) {
-      //   if (!this.file) {
-      //     this.$message.warning('请选择批量导入文件')
-      //     return
-      //   }
-      //   if (await this.addBatchDictValue(this.file)) {
-      //     this.$refs.addValueDialog.toggleOpen()
-      //     this.$message.success('新增值域字典明细成功！')
-      //   }
-      // } else {
-        
-      // }
+      } else {
+        if (await this.addDictValue()) {
+          this.$refs.addValueDialog.toggleOpen()
+          this.$message.success('新增值域字典明细成功！')
+        }
+      }
     },
     async onClickEditValue() {
       if (await this.editDictValue()) {
