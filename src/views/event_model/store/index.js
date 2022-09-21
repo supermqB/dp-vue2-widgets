@@ -112,6 +112,7 @@ const getters = {
     })
   },
   totalNumber(state) {
+    console.log('99', state.versionList)
     const res = state.versionList.find(
       item => item.versionName === state.currentVersion
     )
@@ -210,6 +211,17 @@ const actions = {
   async queryVersion() {
     const { value } = await getVersionListApi()
     state.versionList = value
+    console.log('777', state.versionList)
+  },
+  async queryVersionList({}) {
+    const { value } = await getVersionListApi()
+    return value.map(item => {
+      return {
+        id: item.id,
+        label: item.versionName,
+        leaf: true
+      }
+    })
   },
   async queryCatalog() {
     const { value } = await getCatalogApi(state.currentVersion)

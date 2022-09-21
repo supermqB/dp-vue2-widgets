@@ -11,9 +11,11 @@
       <p class="label">选择导出{{ title }}</p>
       <el-input
         v-model="search"
+        clearable:true
         @input="filter"
         placeholder="请搜索"
-        suffix-icon="el-icon-search"></el-input>
+        suffix-icon="el-icon-search"
+      ></el-input>
       <el-tree
         ref="outputTree"
         :props="props"
@@ -23,98 +25,99 @@
         :load="loadNode"
         :lazy="lazy"
         show-checkbox
-        node-key="id">
+        node-key="id"
+      >
       </el-tree>
     </div>
   </Dialog>
 </template>
 
 <script>
-  import Dialog from '@/components/Dialog.vue'
-  export default {
-    components: {
-      Dialog
+import Dialog from '@/components/Dialog.vue'
+export default {
+  components: {
+    Dialog
+  },
+  computed: {
+    outputData() {
+      return [
+        {
+          id: 'all',
+          label: '全部',
+          children: this.data
+        }
+      ]
+    }
+  },
+  props: {
+    title: {
+      type: String,
+      default: '值域'
     },
-    computed: {
-      outputData() {
-        return [
-          {
-            id: 'all',
-            label: '全部',
-            children: this.data
-          }
-        ]
-      }
+    data: {
+      type: Array,
+      default: () => []
     },
-    props: {
-      title: {
-        type: String,
-        default: '值域'
-      },
-      data: {
-        type: Array,
-        default: () => []
-      },
-      lazy: {
-        type: Boolean,
-        default: false
-      },
-      lazyFunc: {
-        type: Function,
-        default: null
-      }
+    lazy: {
+      type: Boolean,
+      default: false
     },
-    data() {
-      return {
-        search: '',
-        props: {
-          isLeaf: 'leaf',
-          label: 'label',
-          children: 'children'
-        }
-      }
-    },
-    methods: {
-      toggleOpen() {
-        this.$refs.outputDialog.toggleOpen()
-      },
-      closed() {
-        this.$refs.outputTree.setCheckedKeys([])
-      },
-      completeHanlder() {
-        const res = this.$refs.outputTree.getCheckedKeys(true)
-        this.$emit('output-file', res)
-      },
-      filterNode(value, data) {
-        if (!value) return true;
-        return data.label.indexOf(value) !== -1;
-      },
-      filter(val) {
-        this.$refs.outputTree.filter(val)
-      },
-      async loadNode(node, resolve) {
-        if (node.level === 0) {
-          return resolve([
-            {
-              id: 'all',
-              label: '全部',
-            }
-          ])
-        }
-        if (node.level === 1) {
-          return resolve(this.data)
-        }
-        if (node.data.children) {
-          return resolve(node.data.children)
-        }
-        if (!node.isLeaf) {
-          const res = await this.lazyFunc(node.data.id)
-          return resolve(res)
-        }
-        return resolve([])
+    lazyFunc: {
+      type: Function,
+      default: null
+    }
+  },
+  data() {
+    return {
+      search: '',
+      props: {
+        isLeaf: 'leaf',
+        label: 'label',
+        children: 'children'
       }
     }
+  },
+  methods: {
+    toggleOpen() {
+      this.$refs.outputDialog.toggleOpen()
+    },
+    closed() {
+      this.$refs.outputTree.setCheckedKeys([])
+    },
+    completeHanlder() {
+      const res = this.$refs.outputTree.getCheckedKeys(true)
+      this.$emit('output-file', res)
+    },
+    filterNode(value, data) {
+      if (!value) return true
+      return data.label.indexOf(value) !== -1
+    },
+    filter(val) {
+      this.$refs.outputTree.filter(val)
+    },
+    async loadNode(node, resolve) {
+      if (node.level === 0) {
+        return resolve([
+          {
+            id: 'all',
+            label: '全部'
+          }
+        ])
+      }
+      if (node.level === 1) {
+        return resolve(this.data)
+      }
+      if (node.data.children) {
+        return resolve(node.data.children)
+      }
+      if (!node.isLeaf) {
+        const res = await this.lazyFunc(node.data.id)
+        return resolve(res)
+      }
+      return resolve([])
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -125,14 +128,14 @@
   max-height: 600px;
   display: flex;
   flex-direction: column;
-  border: 1px solid #DCDFE6;
+  border: 1px solid #dcdfe6;
   .label {
     height: 36px;
     padding-left: 12px;
-    background-color: #F5F7FA;
+    background-color: #f5f7fa;
     line-height: 36px;
     font-size: 14px;
-    color: #303133
+    color: #303133;
   }
   .el-input {
     margin-top: 10px;

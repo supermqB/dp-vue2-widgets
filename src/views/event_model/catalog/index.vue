@@ -3,10 +3,15 @@
     <Header
       title="事件目录"
       hasRun
-      :actionTypes="currentCatalogItem.state === RUNNINGSTATE ? ['add', 'edit_disable', 'run_disable'] : ['add', 'edit', 'run']"
+      :actionTypes="
+        currentCatalogItem.state === RUNNINGSTATE
+          ? ['add', 'edit_disable', 'run_disable', 'output']
+          : ['add', 'edit', 'run', 'output']
+      "
       @add="onClickAddCatalog"
       @edit="onClickEditCatalog"
       @run="onClickRunDialog"
+      @output="output"
     ></Header>
     <div class="version">
       <span>版本</span>
@@ -31,6 +36,14 @@
       :labelList="['总数', '字段数']"
       :value="[totalNumber, pageInfo.totalSize]"
     ></Bottom>
+    <OutputDialog
+      title="事件模型"
+      ref="output"
+      :data="catalogTreeList"
+      :lazy="true"
+      :lazyFunc="queryVersionList"
+      @output-file="outputFile"
+    ></OutputDialog>
     <Dialog
       title="新增版本"
       :isOpen="versionDialog"
@@ -67,13 +80,14 @@
         :formRule="catalogRule"
       ></Form>
     </Dialog>
-    <el-dialog
-      title="提示"
-      :visible.sync="runDialog"
-      class="runDialog">
+    <el-dialog title="提示" :visible.sync="runDialog" class="runDialog">
       <div>
         <i class="el-icon-warning warning" />
-        <span>是否启用【{{ `${currentCatalogItem.code}-${currentCatalogItem.nameCn}` }}】</span>
+        <span
+          >是否启用【{{
+            `${currentCatalogItem.code}-${currentCatalogItem.nameCn}`
+          }}】</span
+        >
       </div>
       <!-- 启用所有表单信息 -->
       <span slot="footer">
@@ -95,6 +109,7 @@ import { versionCfg, versionRule } from './config/versionForm'
 import { catalogCfg, catalogRule } from './config/catalogForm'
 import { createNamespacedHelpers } from 'vuex'
 import { RUNNINGSTATE } from '@/utils/const'
+import OutputDialog from '@/views/common/OutputDialog.vue'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('event')
 export default {
@@ -103,7 +118,8 @@ export default {
     Form,
     Tree,
     Header,
-    Bottom
+    Bottom,
+    OutputDialog
   },
   data() {
     return {
@@ -159,11 +175,19 @@ export default {
     ...mapActions([
       'queryCatalog',
       'queryColumn',
+      'queryVersionList',
       'addVersion',
       'runCatalog',
       'submitCatalog',
       'getMaxCode'
     ]),
+    output() {
+      this.$refs.output.toggleOpen()
+    },
+    outputFile(list) {
+      const res = list.map(item => item.split(',')[1])
+      this.$refs.output.toggleOpen()
+    },
     async handleNodeClick({ id }) {
       this.setCurrentCatalog(id)
       await this.queryColumn()
@@ -318,7 +342,7 @@ export default {
   }
 }
 
-::v-deep .runDialog .el-dialog{
+::v-deep .runDialog .el-dialog {
   width: 500px;
   .warning {
     padding: 5px 5px 0 0;

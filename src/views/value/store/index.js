@@ -303,6 +303,7 @@ const actions = {
     })
   },
   async queryVersionList({}, currentDict) {
+    console.log('000000', currentDict)
     const [sourceTypeCode, dict] = currentDict.split(',')
     const { value } = await getVersionListApi(dict, sourceTypeCode)
     return value.map(item => {

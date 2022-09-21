@@ -247,6 +247,7 @@ const actions = {
     const [themeId] = state.currentBwd.split(';')
     const theme = state.bwdList.find(item => item.id.toString() === themeId)
     const { value } = await getVersionListApi()
+    console.log('00', value)
     state.versionList = value
       .filter(item => item.businessGroup === theme.label)
       .map(item => {
@@ -258,6 +259,20 @@ const actions = {
     if (state.versionList && state.versionList.length) {
       state.searchData.version = state.versionList[0].value
     }
+  },
+  async queryVersionList({}, currentBwd) {
+    const [themeId] = currentBwd.split(';')
+    const theme = state.bwdList.find(item => item.id.toString() === themeId)
+    const { value } = await getVersionListApi(themeId)
+    return value
+      .filter(item => item.businessGroup === theme.label)
+      .map(item => {
+        return {
+          id: `${themeId},${item.id}`,
+          label: item.versionName,
+          leaf: true
+        }
+      })
   },
   // 处理左侧bwd，调接口展示bwdlist(getCatalogApi)
   async loadBwdModules({ commit }) {

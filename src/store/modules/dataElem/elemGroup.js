@@ -6,8 +6,14 @@ const state = {
     { key: '总数', value: 2148 }
   ],
   selectedGrps: [],
-  grouptree: []
+  grouptree: [],
+  groupList: []
 }
+// const getters={
+//   grpTreeList(state){
+//     return state.grouptree.
+//   }
+// }
 
 const mutations = {
   setSearch(state, val) {
@@ -15,6 +21,9 @@ const mutations = {
   },
   setGrpTree(state, val) {
     state.grouptree = val
+  },
+  setGrpOut(state, val) {
+    state.groupList = val
   },
   setSelectedGrps(state, val) {
     state.selectedGrps = val
@@ -24,6 +33,8 @@ const mutations = {
 const actions = {
   async fetchElementGrps({ commit, state }) {
     const { value: grpData } = await get('/data-element/getClassification')
+    console.log('456', state.grouptree)
+    console.log('456', grpData)
     grpData.sort((i1, i2) => i1.ctlgIdentifier.localeCompare(i2.ctlgIdentifier))
     let treeData = [
       {
@@ -33,6 +44,7 @@ const actions = {
       }
     ]
     commit('setGrpTree', treeData)
+    commit('setGrpOut', grpData)
   }
 }
 export default {

@@ -1,6 +1,6 @@
 <template>
   <div class="elegrp_wrapper">
-    <div class="title">数据元</div>
+    <Header title="数据元" :actionTypes="['output']" @output="output"></Header>
     <div class="search_container">
       <el-input
         placeholder="请搜索"
@@ -24,6 +24,12 @@
       >
       </el-tree>
     </div>
+    <OutputDialog
+      title="数据元"
+      ref="output"
+      :data="groupList"
+      @output-file="outputFile"
+    ></OutputDialog>
     <div class="groupsum">
       <div v-for="item in groupSum" :key="item.key">
         {{ item.key }} : {{ item.value }}
@@ -34,16 +40,23 @@
 <script>
 import { debounce } from 'lodash'
 import { createNamespacedHelpers, mapActions as globalMapActions } from 'vuex'
+import Header from '@/components/header/Catalog.vue'
+import OutputDialog from '@/views/common/OutputDialog.vue'
 const elemGrpLabelName = 'ctlgName'
 const { mapState, mapMutations, mapActions } =
   createNamespacedHelpers('dataElem/elemGroup')
 
 export default {
+  components: {
+    Header,
+    OutputDialog
+  },
   computed: {
     ...mapState({
       search: state => state.search,
       groupSum: state => state.groupSum,
-      grouptree: state => state.grouptree
+      grouptree: state => state.grouptree,
+      groupList: state => state.groupList
     })
   },
   watch: {
@@ -63,7 +76,15 @@ export default {
     },
     ...mapMutations(['setSearch', 'setSelectedGrps']),
     ...mapActions(['fetchElementGrps']),
-    ...globalMapActions('dataElem/elemList', { listElements: 'search' })
+    ...globalMapActions('dataElem/elemList', { listElements: 'search' }),
+    output() {
+      this.$refs.output.toggleOpen()
+    },
+    outputFile() {
+      console.log('aa', list)
+      const res = list.map(item => item.split(',')[1])
+      this.$refs.output.toggleOpen()
+    }
   },
   mounted() {
     this.fetchElementGrps()
