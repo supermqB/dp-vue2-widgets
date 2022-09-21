@@ -26,6 +26,7 @@
     <OutputDialog
       ref="output"
       :data="dictList"
+      @output-file="outputFile"
     ></OutputDialog>
     <Dialog
       title="新增值域字典"
@@ -138,6 +139,10 @@ export default {
       })
     },
     output() {
+      this.$refs.output.toggleOpen()
+    },
+    outputFile(list) {
+      const res = list.map(item => item.split(',')[1])
       this.$refs.output.toggleOpen()
     },
     editCatalog() {

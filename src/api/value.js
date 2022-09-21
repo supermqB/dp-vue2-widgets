@@ -130,7 +130,7 @@ export const editDictValueApi = ({ id, colId, valueObject, suspectList }) => {
 export const deleteDictValueApi = termCode => {
   return request({
     url: '/dict/deleteDictValue',
-    method: 'get',
+    method: 'post',
     params: {
       termCode
     }
