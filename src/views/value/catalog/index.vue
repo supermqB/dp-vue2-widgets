@@ -26,6 +26,8 @@
     <OutputDialog
       ref="output"
       :data="dictList"
+      :lazy="true"
+      :lazyFunc="queryVersionList"
       @output-file="outputFile"
     ></OutputDialog>
     <Dialog
@@ -121,6 +123,7 @@ export default {
     ...mapActions([
       'queryDict',
       'queryVersion',
+      'queryVersionList',
       'queryVersionInfo',
       'queryDictValue',
       'submitDict',
