@@ -36,15 +36,15 @@
       ></Form>
       <div class="operation">
         <el-button @click="onSearch" type="primary" plain>查询</el-button>
-        <el-button @click="addValue" :disabled="!currentVersion" type="primary" plain>新增</el-button>
-        <el-button @click="editValue" :disabled="!currentDictValue || currentVersionInfo.state === RUNNINGSTATE" type="primary" plain>编辑</el-button>
+        <el-button @click="addValue(false)" :disabled="!currentVersion" type="primary" plain>新增</el-button>
+        <el-button @click="addValue(true)" :disabled="!currentDictValue" type="primary" plain>导入</el-button>
       </div>
     </div>
     <div class="table">
       <Table
         ref="dictValueTable"
         :key="`index${tableConfig.length}`"
-        :tableConfig="tableConfig"
+        :tableConfig="tableCfg"
         :tableData="dictValueList"
         :pageInfo="pageInfo"
         @row-changed="val => setCurrentDictValue(val)"
@@ -78,17 +78,10 @@
         :formData="dictVersionForm"></Form>
     </Dialog>
     <Dialog
-      title="新增值域字典明细"
+      :title="`${batchFlag ? '导入值域字典明细' : '新增值域字典明细'}`"
       ref="addValueDialog"
       class="addValueDialog"
       @dialog-complete="onClickAddValue">
-      <div class="batchFlag">
-        <span>新增方式：</span>
-        <el-radio-group v-model="batchFlag">
-          <el-radio :label="false">单条新增</el-radio>
-          <el-radio :label="true">批量导入</el-radio>
-        </el-radio-group>
-      </div>
       <Form
         v-if="!batchFlag"
         :formCfg="dictValueFormCfg"
@@ -122,7 +115,6 @@ import Detail from './detail.vue'
 import IsMaster from '@/components/state/IsMaster.vue'
 import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import IsRunning from '@/components/state/IsRunning.vue'
-import tableConfig from './config/tableColumn'
 import Upload from '@/components/form/Upload.vue'
 import { addVersionCfg, editVersionCfg, addVersionRule } from './config/versionForm'
 import { searchValueCfg, addValueCfg, editValueCfg, valueRule } from './config/valueForm'
@@ -189,6 +181,47 @@ export default {
       },
       get() {
         return this.currentVersion
+      }
+    },
+    tableCfg() {
+      if (!this.tableConfig.length){
+        return [{
+          colConfig: {
+            property: '',
+            label: '',
+            minWidth: 150
+          }
+        }]
+      } else {
+        return [
+          ...this.tableConfig, 
+          {
+            colConfig: {
+              property: 'state',
+              label: '操作',
+              minWidth: 150,
+              fixed: 'right',
+            },
+            actions: [
+              {
+                type: 'el-button',
+                name: '编辑',
+                typeProps: {
+                  type: 'text',
+                  disabled: row => row.state === RUNNINGSTATE
+                },
+                callback: () => this.editValue()
+              }, {
+                type: 'el-button',
+                name: '删除',
+                typeProps: {
+                  type: 'text',
+                  disabled: row => row.state === RUNNINGSTATE
+                }
+              }
+            ]
+          }
+        ]
       }
     }
   },
@@ -257,11 +290,11 @@ export default {
         this.$refs.editVersionDialog.toggleOpen()
       }
     },
-    async addValue() {
+    async addValue(batchFlag) {
+      this.batchFlag = batchFlag
       const { value } = await getMAxValueCodeApi(this.currentVersion)
       const form = Object.assign({}, { 'term_code': getMaxNumber(value, 14) }, this.task.currentSuspect)
       this.setDictValueForm(form)
-      this.batchFlag = false
       this.file = null
       this.$refs.addValueDialog.toggleOpen()
     },

@@ -2,7 +2,7 @@
   <div class="wrap">
     <Header
       title="值域目录"
-      :actionTypes="['add', 'edit']"
+      :actionTypes="['add', 'edit', 'output']"
       @add="addCatalog"
       @edit="editCatalog"
       @output="output"

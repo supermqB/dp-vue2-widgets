@@ -1,5 +1,7 @@
 import { STATEOPTIONS } from '@/utils/const'
 
+const stateOptions = [STATEOPTIONS[1], STATEOPTIONS[3]]
+
 export const editVersionCfg = (versionOptions, sourceTypeOptions) =>
   [
     {
@@ -33,7 +35,7 @@ export const editVersionCfg = (versionOptions, sourceTypeOptions) =>
     },
     {
       type: 'el-select',
-      options: STATEOPTIONS,
+      options: stateOptions,
       label: '状态',
       id: 'state',
       elOptions: {}
@@ -85,15 +87,16 @@ export const addVersionCfg = (versionOptions, onDownload) =>
       id: 'parVersionId',
       options: versionOptions,
       elOptions: {}
-    },
-    {
-      type: 'upload',
-      label: '导入',
-      id: 'file',
-      elEvents: {
-        onDownload
-      }
     }
+    // ,
+    // {
+    //   type: 'upload',
+    //   label: '导入',
+    //   id: 'file',
+    //   elEvents: {
+    //     onDownload
+    //   }
+    // }
   ].map(item => {
     const elOptions = Object.assign({}, item.elOptions, {
       style: {

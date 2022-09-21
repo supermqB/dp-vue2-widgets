@@ -44,7 +44,7 @@
               :key="action.id"
               :is="action.type"
               v-model="row[action.id]"
-              v-bind="action.typeProps"
+              v-bind="typeProps(action.typeProps, row)"
               @click.native.prevent="
                 rowAction({ rowIdx, row, column }, action.callback)
               "
@@ -70,6 +70,7 @@
   </div>
 </template>
 <script>
+  import { cloneDeep } from 'lodash'
 export default {
   props: {
     tableConfig: {
@@ -127,6 +128,15 @@ export default {
     },
     setCurrentRow(row) {
       this.$refs.el_table.setCurrentRow(row)
+    },
+    typeProps(obj, row) {
+      const res = cloneDeep(obj)
+      Object.keys(res).forEach(key => {
+        if (typeof res[key] === 'function') {
+          res[key] = res[key](row)
+        }
+      })
+      return res
     }
   }
 }
