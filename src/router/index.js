@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 import DefaultLayout from '@/layout/default'
 
 /* Page */
-import ValuePage from '@/views/value' // 值域页面
+import HomePage from '@/views/home'
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
@@ -17,14 +17,20 @@ VueRouter.prototype.push = function push(location) {
 const routes = [
   {
     path: '/',
-    redirect: { name: 'value' },
+    redirect: { name: 'home' },
     component: DefaultLayout,
     children: [
+      {
+        path: 'home',
+        name: 'home',
+        meta: { title: '首页' },
+        component: HomePage
+      },
       {
         path: 'value',
         name: 'value',
         meta: { title: '值域管理' },
-        component: ValuePage
+        component: () => import('@/views/value/')
       },
       {
         path: 'mdm',

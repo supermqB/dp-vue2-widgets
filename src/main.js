@@ -16,9 +16,12 @@ import store from './store'
 import '@/assets/css/reset.scss'
 import VueParticles from 'vue-particles'
 import MatchButton from '@/components/button/Match.vue'
+import 'echarts'
+import ECharts from 'vue-echarts'
 
 Vue.use(VueParticles)
 Vue.component('MatchButton', MatchButton)
+Vue.component('VueEcharts', ECharts)
 
 new Vue({
   router,
