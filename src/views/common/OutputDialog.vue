@@ -11,7 +11,7 @@
       <p class="label">选择导出{{ title }}</p>
       <el-input
         v-model="search"
-        clearable:true
+        :clearable="true"
         @input="filter"
         placeholder="请搜索"
         suffix-icon="el-icon-search"

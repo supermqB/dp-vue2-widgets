@@ -13,7 +13,8 @@
         v-model="dictFilter"
         @input="onDictFilterChange"
         clearable
-        suffix-icon="el-icon-search"></el-input>
+        suffix-icon="el-icon-search"
+      ></el-input>
     </div>
     <Tree
       ref="tree"
@@ -38,7 +39,14 @@
     >
       <Form
         ref="addDictForm"
-        :formCfg="addCatalogCfg(classList, subClassOptions, subClassChange, sourceTypeOptions)"
+        :formCfg="
+          addCatalogCfg(
+            classList,
+            subClassOptions,
+            subClassChange,
+            sourceTypeOptions
+          )
+        "
         :formData="dictForm"
         :formRule="catalogRule"
       ></Form>
@@ -75,7 +83,8 @@ import { getMaxDictCodeApi } from '@/api/value'
 import { getMaxNumber } from '@/utils/lang'
 import { processDownloadFile } from '@/utils/download'
 import { exportValueApi } from '@/api/output'
-const { mapState, mapGetters, mapActions, mapMutations } = createNamespacedHelpers('value')
+const { mapState, mapGetters, mapActions, mapMutations } =
+  createNamespacedHelpers('value')
 
 export default {
   components: {
@@ -84,7 +93,7 @@ export default {
     Form,
     Header,
     OutputDialog
-},
+  },
   data() {
     return {
       dictFilter: '',
@@ -95,18 +104,15 @@ export default {
   },
   computed: {
     ...mapState([
-      'dictForm', 
+      'dictForm',
       'dictList',
       'classList',
       'dictValueList',
       'task',
       'currentDict',
-      'currentVersionInfo',
+      'currentVersionInfo'
     ]),
-    ...mapGetters([
-      'currentDictItem',
-      'sourceTypeOptions'
-    ]),
+    ...mapGetters(['currentDictItem', 'sourceTypeOptions']),
     subClassOptions() {
       this.dictForm.subClass = ''
       this.dictForm.ctlgCode = ''
@@ -148,8 +154,8 @@ export default {
     },
     async outputFile(list) {
       const data = list.map(item => {
-        const [ source, dictName, version ] = item.split(',')
-        const res = { 
+        const [source, dictName, version] = item.split(',')
+        const res = {
           dictName
         }
         if (version) {
@@ -167,7 +173,7 @@ export default {
       this.setDictForm({
         dictCode: code,
         ctlgCode: classifyCode,
-        nameCn, 
+        nameCn,
         nameEn
       })
       this.$refs.editCatalogDialog.toggleOpen()
@@ -199,7 +205,7 @@ export default {
         this.$alert('请检查输入项是否完整！')
       }
     }
-  },
+  }
 }
 </script>
 

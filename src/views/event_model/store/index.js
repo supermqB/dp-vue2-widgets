@@ -57,6 +57,7 @@ const state = {
   versionList: [],
   catalogList: [],
   columnList: [],
+  eventOutList: [],
   valueVersionList: [],
   isAdvance: false,
   currentVersion: '',
@@ -112,7 +113,6 @@ const getters = {
     })
   },
   totalNumber(state) {
-    console.log('99', state.versionList)
     const res = state.versionList.find(
       item => item.versionName === state.currentVersion
     )
@@ -122,6 +122,15 @@ const getters = {
 }
 
 const mutations = {
+  setEventOutList(state, list) {
+    state.eventOutList = list.map(item => {
+      return {
+        id: item.versionName,
+        label: item.versionName,
+        leaf: true
+      }
+    })
+  },
   setCurrentVersion: (state, version) => {
     if (version) {
       state.currentVersion = version
@@ -208,10 +217,10 @@ const actions = {
       }
     })
   },
-  async queryVersion() {
+  async queryVersion({ commit, state }) {
     const { value } = await getVersionListApi()
     state.versionList = value
-    console.log('777', state.versionList)
+    commit('setEventOutList', value)
   },
   async queryVersionList({}) {
     const { value } = await getVersionListApi()

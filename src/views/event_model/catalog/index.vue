@@ -39,9 +39,7 @@
     <OutputDialog
       title="事件模型"
       ref="output"
-      :data="catalogTreeList"
-      :lazy="true"
-      :lazyFunc="queryVersionList"
+      :data="eventOutList"
       @output-file="outputFile"
     ></OutputDialog>
     <Dialog
@@ -110,6 +108,8 @@ import { catalogCfg, catalogRule } from './config/catalogForm'
 import { createNamespacedHelpers } from 'vuex'
 import { RUNNINGSTATE } from '@/utils/const'
 import OutputDialog from '@/views/common/OutputDialog.vue'
+import { processDownloadFile } from '@/utils/download'
+import { exportEventApi } from '@/api/output'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('event')
 export default {
@@ -140,7 +140,8 @@ export default {
       'pageInfo',
       'currentVersion',
       'versionForm',
-      'catalogForm'
+      'catalogForm',
+      'eventOutList'
     ]),
     curVersion: {
       get() {
@@ -184,8 +185,17 @@ export default {
     output() {
       this.$refs.output.toggleOpen()
     },
-    outputFile(list) {
-      const res = list.map(item => item.split(',')[1])
+    async outputFile(list) {
+      console.log('event', list)
+      const data = list.map(item => {
+        const [version] = item.split(',')
+        const res = {
+          version
+        }
+        return res
+      })
+      const res = await exportEventApi(data)
+      processDownloadFile(res)
       this.$refs.output.toggleOpen()
     },
     async handleNodeClick({ id }) {

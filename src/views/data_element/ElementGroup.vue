@@ -24,12 +24,6 @@
       >
       </el-tree>
     </div>
-    <OutputDialog
-      title="数据元"
-      ref="output"
-      :data="groupList"
-      @output-file="outputFile"
-    ></OutputDialog>
     <div class="groupsum">
       <div v-for="item in groupSum" :key="item.key">
         {{ item.key }} : {{ item.value }}
@@ -41,15 +35,15 @@
 import { debounce } from 'lodash'
 import { createNamespacedHelpers, mapActions as globalMapActions } from 'vuex'
 import Header from '@/components/header/Catalog.vue'
-import OutputDialog from '@/views/common/OutputDialog.vue'
+import { exportElementApi } from '@/api/output'
+import { processDownloadFile } from '@/utils/download'
 const elemGrpLabelName = 'ctlgName'
 const { mapState, mapMutations, mapActions } =
   createNamespacedHelpers('dataElem/elemGroup')
 
 export default {
   components: {
-    Header,
-    OutputDialog
+    Header
   },
   computed: {
     ...mapState({
@@ -77,13 +71,9 @@ export default {
     ...mapMutations(['setSearch', 'setSelectedGrps']),
     ...mapActions(['fetchElementGrps']),
     ...globalMapActions('dataElem/elemList', { listElements: 'search' }),
-    output() {
-      this.$refs.output.toggleOpen()
-    },
-    outputFile() {
-      console.log('aa', list)
-      const res = list.map(item => item.split(',')[1])
-      this.$refs.output.toggleOpen()
+    async output() {
+      const res = await exportElementApi()
+      processDownloadFile(res)
     }
   },
   mounted() {

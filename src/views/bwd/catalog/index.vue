@@ -53,9 +53,7 @@
       <OutputDialog
         title="业务模型"
         ref="output"
-        :data="bwdList"
-        :lazy="true"
-        :lazyFunc="queryVersionList"
+        :data="bwdOutList"
         @output-file="outputFile"
       >
       </OutputDialog>
@@ -90,6 +88,8 @@ import Tree from '@/components/SideTree.vue'
 import { RUNNINGSTATE } from '@/utils/const'
 import { fileCatalogCfg, fileCatalogRule } from './config/fileCatalogForm'
 import { createNamespacedHelpers } from 'vuex'
+import { processDownloadFile } from '@/utils/download'
+import { exportValueApi } from '@/api/output'
 import OutputDialog from '@/views/common/OutputDialog.vue'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('bwd')
@@ -119,7 +119,8 @@ export default {
       'fileCatalogData',
       'pageInfo',
       'totalNumber',
-      'themeOptions'
+      'themeOptions',
+      'bwdOutList'
     ]),
     ...mapGetters(['currentBwdItem', 'categoryOptions'])
   },
@@ -129,7 +130,6 @@ export default {
       'loadBwdModules',
       'queryField',
       'queryVersion',
-      'queryVersionList',
       'queryMappingList',
       'submitFileCatalog',
       'queryTotalNum',
@@ -149,8 +149,19 @@ export default {
     output() {
       this.$refs.output.toggleOpen()
     },
-    outputFile(list) {
-      const res = list.map(item => item.split(',')[1])
+    async outputFile(list) {
+      const data = list.map(item => {
+        const [bwdId, version] = item.split(';')
+        const res = {
+          bwdId
+        }
+        if (version) {
+          res['version'] = version
+        }
+        return res
+      })
+      const res = await exportValueApi(data)
+      processDownloadFile(res)
       this.$refs.output.toggleOpen()
     },
     // 根据目录的id渲染中间详细信息

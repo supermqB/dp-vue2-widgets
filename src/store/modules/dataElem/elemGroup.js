@@ -33,8 +33,6 @@ const mutations = {
 const actions = {
   async fetchElementGrps({ commit, state }) {
     const { value: grpData } = await get('/data-element/getClassification')
-    console.log('456', state.grouptree)
-    console.log('456', grpData)
     grpData.sort((i1, i2) => i1.ctlgIdentifier.localeCompare(i2.ctlgIdentifier))
     let treeData = [
       {
