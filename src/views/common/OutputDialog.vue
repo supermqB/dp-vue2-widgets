@@ -74,19 +74,40 @@ export default {
         isLeaf: 'leaf',
         label: 'label',
         children: 'children'
+        // canSelectd, parent
       }
     }
   },
   methods: {
     toggleOpen() {
       this.$refs.outputDialog.toggleOpen()
+      if (this.$refs.outputTree) {
+        this.$refs.outputTree.store._getAllNodes().forEach(node => {
+          if (node.data.id !== 'all') {
+            node.expanded = false
+          }
+        })
+      }
     },
     closed() {
       this.$refs.outputTree.setCheckedKeys([])
     },
     completeHanlder() {
-      const res = this.$refs.outputTree.getCheckedKeys(true)
-      this.$emit('output-file', res)
+      if (!this.lazy) {
+        const res = this.$refs.outputTree.getCheckedKeys(true)
+        this.$emit('output-file', res)
+      } else {
+        const list = this.$refs.outputTree
+          .getCheckedNodes(false)
+          .filter(item => item.canSelectd)
+        const parentList = [
+          ...new Set(list.filter(item => item.parent).map(item => item.parent))
+        ]
+        const res = list
+          .filter(item => !parentList.some(id => id === item.id))
+          .map(item => item.id)
+        this.$emit('output-file', res)
+      }
     },
     filterNode(value, data) {
       if (!value) return true
@@ -108,13 +129,21 @@ export default {
         return resolve(this.data)
       }
       if (node.data.children) {
-        return resolve(node.data.children)
-      }
-      if (!node.isLeaf) {
-        const res = await this.lazyFunc(node.data.id)
+        const res = node.data.children.map(item => {
+          if (!item.children)
+            return Object.assign({}, item, { canSelectd: true })
+          return item
+        })
         return resolve(res)
       }
-      return resolve([])
+      const res = await this.lazyFunc(node.data.id)
+      const list = res.map(item => {
+        return Object.assign({}, item, {
+          canSelectd: true,
+          parent: node.data.id
+        })
+      })
+      return resolve(list)
     }
   }
 }

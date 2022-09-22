@@ -73,6 +73,8 @@ import {
 import { createNamespacedHelpers } from 'vuex'
 import { getMaxDictCodeApi } from '@/api/value'
 import { getMaxNumber } from '@/utils/lang'
+import { processDownloadFile } from '@/utils/download'
+import { exportValueApi } from '@/api/output'
 const { mapState, mapGetters, mapActions, mapMutations } = createNamespacedHelpers('value')
 
 export default {
@@ -144,8 +146,19 @@ export default {
     output() {
       this.$refs.output.toggleOpen()
     },
-    outputFile(list) {
-      const res = list.map(item => item.split(',')[1])
+    async outputFile(list) {
+      const data = list.map(item => {
+        const [ source, dictName, version ] = item.split(',')
+        const res = { 
+          dictName
+        }
+        if (version) {
+          res['version'] = version
+        }
+        return res
+      })
+      const res = await exportValueApi(data)
+      processDownloadFile(res)
       this.$refs.output.toggleOpen()
     },
     editCatalog() {
