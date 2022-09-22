@@ -7,11 +7,12 @@
       <Summary :list="summaryList"></Summary>
     </div>
     <div class="detail">
-      <el-tabs tab-position="right">
+      <component :is="activeComponent" class="component"></component>
+      <el-tabs v-model="activeComponent" tab-position="right">
         <el-tab-pane v-for="(item, key) in summaryComponentList"
           :key="key"
+          :name="item.component"
           :label="item.label">
-          <component :is="item.component"></component>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -38,6 +39,7 @@
       return {
         summaryComponentList,
         summaryList,
+        activeComponent: summaryComponentList[0].component
       }
     }
   }
@@ -61,11 +63,21 @@
     border-bottom: 1px solid #eee;
   }
   .detail {
+    position: relative;
     flex: 1;
+    display: flex;
+    flex-direction: row;
     margin-top: 5px;
-    margin-right: 40px;
+    .component {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      padding-right: 160px;
+    }
     ::v-deep .el-tabs{
-      margin-top: 20px;
+      position: absolute;
+      top: 10px;
+      right: 60px;
     } 
   }
 }

@@ -2,6 +2,7 @@
   <div>
     <VueEcharts
       :option="defaultOption"
+      :auto-resize="true"
       style="width: 100%; height: 400px"></VueEcharts>
   </div>
 </template>
