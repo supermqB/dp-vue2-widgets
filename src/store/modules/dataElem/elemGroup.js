@@ -6,8 +6,7 @@ const state = {
     { key: '总数', value: 2148 }
   ],
   selectedGrps: [],
-  grouptree: [],
-  groupList: []
+  grouptree: []
 }
 // const getters={
 //   grpTreeList(state){
@@ -21,9 +20,6 @@ const mutations = {
   },
   setGrpTree(state, val) {
     state.grouptree = val
-  },
-  setGrpOut(state, val) {
-    state.groupList = val
   },
   setSelectedGrps(state, val) {
     state.selectedGrps = val
@@ -42,7 +38,6 @@ const actions = {
       }
     ]
     commit('setGrpTree', treeData)
-    commit('setGrpOut', grpData)
   }
 }
 export default {
