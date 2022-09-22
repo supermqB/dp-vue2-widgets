@@ -8,6 +8,11 @@ const state = {
   selectedGrps: [],
   grouptree: []
 }
+// const getters={
+//   grpTreeList(state){
+//     return state.grouptree.
+//   }
+// }
 
 const mutations = {
   setSearch(state, val) {

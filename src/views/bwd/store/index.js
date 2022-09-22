@@ -31,6 +31,7 @@ const state = {
   // 左侧数据
   currentBwd: '',
   bwdList: [],
+  bwdOutList: [],
   treeSelectionData: [
     {
       id: '1',
@@ -140,6 +141,27 @@ const mutations = {
       }
     })
   },
+  setBwdOutList(state, list) {
+    state.bwdOutList = state.bwdList.map(item => {
+      return {
+        id: item.id,
+        label: item.label,
+        children: list
+          .filter(it => it.businessGroup === item.label)
+          .map(it => {
+            return {
+              id: `${it.id};${it.versionName}`,
+              label: it.versionName,
+              children: item.children.map(one =>
+                Object.assign(one, {
+                  id: `${one.id};${it.versionName}`
+                })
+              )
+            }
+          })
+      }
+    })
+  },
   setCatalogForm: (state, form) => {
     if (form) {
       keysClone(state.fileCatalogData, form)
@@ -243,7 +265,7 @@ const actions = {
     const { value } = await getTotalNumApi()
     commit('setTotalNum', value)
   },
-  async queryVersion() {
+  async queryVersion({ commit, state }) {
     const [themeId] = state.currentBwd.split(';')
     const theme = state.bwdList.find(item => item.id.toString() === themeId)
     const { value } = await getVersionListApi()
@@ -258,6 +280,7 @@ const actions = {
     if (state.versionList && state.versionList.length) {
       state.searchData.version = state.versionList[0].value
     }
+    commit('setBwdOutList', value)
   },
   // 处理左侧bwd，调接口展示bwdlist(getCatalogApi)
   async loadBwdModules({ commit }) {
@@ -270,7 +293,7 @@ const actions = {
           label: item.theme,
           children: item.bwdCatelogEntityList.map(it => {
             return {
-              id: `${item.id};${it.id}`,
+              id: `${item.id};${it.id}`, //6;101
               label: it.nameCn,
               nameCn: it.nameCn,
               nameEn: it.nameEn,
@@ -339,7 +362,7 @@ const actions = {
       const res = await addFileCatalogApi(
         nameCn,
         nameEn,
-        theme.join(','),
+        theme.join(','), //Array(1)-"6"
         EDITINGSTATE
       )
       if (!res.success) return false
