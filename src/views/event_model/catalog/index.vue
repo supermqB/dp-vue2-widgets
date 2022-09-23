@@ -189,9 +189,7 @@ export default {
       console.log('event', list)
       const data = list.map(item => {
         const [version] = item.split(',')
-        const res = {
-          version
-        }
+        const res = version
         return res
       })
       const res = await exportEventApi(data)

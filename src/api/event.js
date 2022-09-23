@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request, { postWithFile } from '@/utils/request'
 import { EDITINGSTATE } from '@/utils/const'
 
 export const getVersionListApi = () => {
@@ -43,7 +43,20 @@ export const addVersionApi = (version, parVersion, state = EDITINGSTATE) => {
     }
   })
 }
-
+export const downloadTemplateApi = () => {
+  return request({
+    url: '/dict/download',
+    method: 'get',
+    responseType: 'blob'
+  })
+}
+export const addEventManyApi = ({ id, file }) => {
+  return postWithFile(
+    '/import/dwd',
+    // id,
+    file
+  )
+}
 export const addCatalogApi = (
   version,
   theme,

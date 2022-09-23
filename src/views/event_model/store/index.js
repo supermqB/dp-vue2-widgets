@@ -8,7 +8,8 @@ import {
   addCatalogColumnApi,
   updateCatalogColumnApi,
   submitCatalogApi,
-  getMaxCodeApi
+  getMaxCodeApi,
+  addEventManyApi
 } from '@/api/event'
 import { getVersionListApi as getValueVersionListApi } from '@/api/value'
 import { getMax, keysClone } from '@/utils/lang'
@@ -216,6 +217,12 @@ const actions = {
         label: item.version
       }
     })
+  },
+  async addBatchEvent({ dispatch }, file) {
+    const res = await addEventManyApi(file)
+    if (!res.success) return false
+    dispatch('queryColumn')
+    return true
   },
   async queryVersion({ commit, state }) {
     const { value } = await getVersionListApi()

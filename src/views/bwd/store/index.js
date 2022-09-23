@@ -153,7 +153,7 @@ const mutations = {
               id: `${it.id};${it.versionName}`,
               label: it.versionName,
               children: item.children.map(one =>
-                Object.assign(one, {
+                Object.assign({}, one, {
                   id: `${one.id};${it.versionName}`
                 })
               )
@@ -386,23 +386,26 @@ const actions = {
     const { id, index, nameCn, nameEn } = state.fileFieldsData
     const [theme, columnId] = state.currentBwd.split(';')
     if (!id) {
-      await addFileFieldsApi({
+      const res = await addFileFieldsApi({
         id: columnId,
         index,
         nameCn,
         nameEn
       })
       this._vm.$message.success('新增字段成功！')
+      if (!res.success) return false
     } else {
-      await updateFileFieldsApi({
+      const res = await updateFileFieldsApi({
         id,
         index,
         nameCn,
         nameEn
       })
       this._vm.$message.success('编辑字段成功！')
+      if (!res.success) return false
     }
     await dispatch('queryField')
+    return true
   },
   async submitMapping({ commit, dispatch }, col) {
     if (!col.match) {
