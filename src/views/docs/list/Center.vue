@@ -65,6 +65,37 @@ import { createNamespacedHelpers } from "vuex";
 import AdvSearchDialog from "@/views/common/AdvSearchDialog";
 import tableHeader from "./config/tableHeader";
 const { mapState, mapActions } = createNamespacedHelpers("docs/list");
+export const docListUtils = {
+    getItemTilte(item) {
+      return [
+        { label: "", value: `${item.title}【${item.identifier}】` },
+        {
+          label: "英文标题：",
+          value: item.titleEn,
+        },
+      ]
+        .filter((f) => !!f.value)
+        .map((f) => `${f.label}${f.value}`)
+        .join("，");
+    },
+    getItemSumline(item) {
+      return [
+        { label: "作者：", value: item.author },
+        { label: "机构", value: item.organization },
+        { label: "发表年份：", value: item.releaseTime },
+        {
+          label: "来源：",
+          value: item.source,
+        },
+      ]
+        .filter((f) => !!f.value)
+        .map((f) => `${f.label}${f.value}`)
+        .join("，");
+    },
+    forward2SumPage(identifier) {
+      this.$router.push(`/docs/summary/${identifier}`);
+    },
+}
 
 export default {
   computed: {
@@ -97,35 +128,7 @@ export default {
     createDocHandler(docProps) {
       this.importDoc(docProps) && this.$refs.editDialog.toggleOpen();
     },
-    forward2SumPage(identifier) {
-      this.$router.push(`/docs/summary/${identifier}`);
-    },
-    getItemTilte(item) {
-      return [
-        { label: "", value: `${item.title}【${item.identifier}】` },
-        {
-          label: "英文标题：",
-          value: item.titleEn,
-        },
-      ]
-        .filter((f) => !!f.value)
-        .map((f) => `${f.label}${f.value}`)
-        .join("，");
-    },
-    getItemSumline(item) {
-      return [
-        { label: "作者：", value: item.author },
-        { label: "机构", value: item.organization },
-        { label: "发表年份：", value: item.releaseTime },
-        {
-          label: "来源：",
-          value: item.source,
-        },
-      ]
-        .filter((f) => !!f.value)
-        .map((f) => `${f.label}${f.value}`)
-        .join("，");
-    },
+    ...docListUtils,
     ...mapActions(["search", "importDoc"]),
   },
   watch: {
