@@ -89,7 +89,7 @@ import { RUNNINGSTATE } from '@/utils/const'
 import { fileCatalogCfg, fileCatalogRule } from './config/fileCatalogForm'
 import { createNamespacedHelpers } from 'vuex'
 import { processDownloadFile } from '@/utils/download'
-import { exportValueApi } from '@/api/output'
+import { exportBwdApi } from '@/api/output'
 import OutputDialog from '@/views/common/OutputDialog.vue'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('bwd')
@@ -151,16 +151,14 @@ export default {
     },
     async outputFile(list) {
       const data = list.map(item => {
-        const [bwdId, version] = item.split(';')
+        const [dataset, id, version] = item.split(';')
         const res = {
-          bwdId
-        }
-        if (version) {
-          res['version'] = version
+          id,
+          version
         }
         return res
       })
-      const res = await exportValueApi(data)
+      const res = await exportBwdApi(data)
       processDownloadFile(res)
       this.$refs.output.toggleOpen()
     },
