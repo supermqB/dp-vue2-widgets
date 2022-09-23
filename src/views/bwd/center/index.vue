@@ -10,6 +10,7 @@
       </div>
       <div>
         <el-button type="primary" @click="addFileFields">新增</el-button>
+        <el-button type="primary" @click="onclickImportColumn">导入</el-button>
       </div>
     </div>
     <div class="search">
@@ -53,6 +54,19 @@
       ></Form>
     </Dialog>
     <Dialog
+      title="导入字段"
+      ref="importDialog"
+      class="importDialog"
+      @dialog-complete="onClickImport"
+    >
+      <Upload
+        ref="uploadRef"
+        v-model="fileFieldsData.file"
+        @onDownload="downloadTemplate"
+        class="upload"
+      ></Upload>
+    </Dialog>
+    <Dialog
       title="高级搜索"
       ref="searchDialog"
       class="searchDialog"
@@ -79,6 +93,9 @@ import { adSearchCfg } from './config/adSearchForm'
 import Dialog from '@/components/Dialog.vue'
 import { fileFieldsCfg, fileFieldsRule } from './config/fileFieldsForm'
 import { createNamespacedHelpers } from 'vuex'
+import Upload from '@/components/form/Upload.vue'
+import { downloadTemplateApi } from '@/api/bwd'
+import { processDownloadFile } from '@/utils/download'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('bwd')
 export default {
@@ -87,7 +104,8 @@ export default {
     Form,
     Table,
     State,
-    Dialog
+    Dialog,
+    Upload
   },
   data() {
     return {
@@ -155,7 +173,12 @@ export default {
       'setPageInfo',
       'setEventMapList'
     ]),
-    ...mapActions(['queryField', 'submitFields', 'queryMappingList']),
+    ...mapActions([
+      'queryField',
+      'submitFields',
+      'queryMappingList',
+      'addBatchBwd'
+    ]),
     icon(state) {
       switch (state) {
         case RUNNINGSTATE:
@@ -183,6 +206,26 @@ export default {
       await this.queryField()
       this.setCurrentField()
       this.$refs.searchDialog.toggleOpen()
+    },
+    async downloadTemplate() {
+      const { id } = this.currentBwdItem
+      const res = await downloadTemplateApi(id)
+      processDownloadFile(res)
+    },
+    onclickImportColumn() {
+      if (this.$refs.uploadRef) this.$refs.uploadRef.clearFileName()
+      this.file = null
+      this.$refs.importDialog.toggleOpen()
+    },
+    async onClickImport() {
+      if (!this.fileFieldsData.file) {
+        this.$message.warning('请选择批量导入文件')
+        return
+      }
+      if (await this.addBatchBwd(this.fileFieldsData.file)) {
+        this.$refs.importDialog.toggleOpen()
+        this.$message.success('导入字段成功！')
+      }
     },
     // 取消表单重置
     onClosedFieldsForm() {
@@ -317,6 +360,13 @@ export default {
     .el-input__inner {
       height: 28px;
     }
+  }
+}
+::v-deep .importDialog .el-dialog {
+  width: 900px;
+  .upload {
+    margin: 0 10%;
+    width: 50%;
   }
 }
 </style>

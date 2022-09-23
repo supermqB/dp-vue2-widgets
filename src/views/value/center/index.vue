@@ -118,7 +118,8 @@
         :formData="dictValueForm"
         :formRule="valueRule"
       ></Form>
-      <Upload v-if="batchFlag"
+      <Upload
+        v-if="batchFlag"
         ref="uploadRef"
         v-model="dictValueForm.file"
         @onDownload="downloadTemplate"
@@ -257,7 +258,8 @@ export default {
                   disabled: row => row.state === RUNNINGSTATE
                 },
                 callback: (index, data, row) => this.editValue(row)
-              }, {
+              },
+              {
                 id: 'delete',
                 type: 'el-button',
                 name: '删除',
@@ -342,8 +344,7 @@ export default {
     async addValue(batchFlag) {
       this.batchFlag = batchFlag
       if (batchFlag) {
-        if (this.$refs.uploadRef)
-          this.$refs.uploadRef.clearFileName()
+        if (this.$refs.uploadRef) this.$refs.uploadRef.clearFileName()
       }
       const { value } = await getMAxValueCodeApi(this.currentVersion)
       const form = Object.assign(
@@ -407,7 +408,7 @@ export default {
     },
     currentDict: {
       handler() {
-        this.setPageInfo({curPage : 1})
+        this.setPageInfo({ curPage: 1 })
         this.setVersionList()
         this.setSearchForm()
       }
