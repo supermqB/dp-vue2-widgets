@@ -186,7 +186,6 @@ export default {
       this.$refs.output.toggleOpen()
     },
     async outputFile(list) {
-      console.log('event', list)
       const data = list.map(item => {
         const [version] = item.split(',')
         const res = version

@@ -50,12 +50,8 @@ export const downloadTemplateApi = () => {
     responseType: 'blob'
   })
 }
-export const addEventManyApi = ({ id, file }) => {
-  return postWithFile(
-    '/import/dwd',
-    // id,
-    file
-  )
+export const addEventManyApi = file => {
+  return postWithFile('/import/dwd', { file })
 }
 export const addCatalogApi = (
   version,

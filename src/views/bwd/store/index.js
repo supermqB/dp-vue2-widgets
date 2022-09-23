@@ -10,7 +10,8 @@ import {
   getMapModelApi,
   getMapFieldsApi,
   addMappingApi,
-  deleteMappingApi
+  deleteMappingApi,
+  addBwdManyApi
 } from '@/api/bwd'
 import { getVersionListApi } from '@/api/event'
 import { MessageBox } from 'element-ui'
@@ -261,6 +262,12 @@ const mutations = {
 }
 
 const actions = {
+  async addBatchBwd({ dispatch }, file) {
+    const res = await addBwdManyApi(file)
+    if (!res.success) return false
+    dispatch('queryField')
+    return true
+  },
   async queryTotalNum({ commit }) {
     const { value } = await getTotalNumApi()
     commit('setTotalNum', value)
