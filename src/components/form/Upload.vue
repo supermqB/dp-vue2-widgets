@@ -44,6 +44,9 @@ export default {
     }
   },
   methods: {
+    clearFileName() {
+      this.fileName = ''
+    },
     handleChange(file) {
       this.fileName = file.name
       this.$emit('input', file.raw)

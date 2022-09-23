@@ -89,7 +89,8 @@
         :formRule="valueRule"
       ></Form>
       <Upload v-if="batchFlag"
-        v-model="file"
+        ref="uploadRef"
+        v-model="dictValueForm.file"
         @onDownload="downloadTemplate"
         class="upload"></Upload>
     </Dialog>
@@ -204,6 +205,7 @@ export default {
             },
             actions: [
               {
+                id: 'edit',
                 type: 'el-button',
                 name: '编辑',
                 typeProps: {
@@ -212,6 +214,7 @@ export default {
                 },
                 callback: (index, data, row) => this.editValue(row)
               }, {
+                id: 'delete',
                 type: 'el-button',
                 name: '删除',
                 typeProps: {
@@ -294,6 +297,11 @@ export default {
     },
     async addValue(batchFlag) {
       this.batchFlag = batchFlag
+      if (batchFlag) {
+        this.$nextTick(() => {
+          this.$refs.uploadRef.clearFileName()
+        })
+      }
       const { value } = await getMAxValueCodeApi(this.currentVersion)
       const form = Object.assign({}, { 'term_code': getMaxNumber(value, 14) }, this.task.currentSuspect)
       this.setDictValueForm(form)
@@ -306,11 +314,11 @@ export default {
     },
     async onClickAddValue() {
       if (this.batchFlag) {
-        if (!this.file) {
+        if (!this.dictValueForm.file) {
           this.$message.warning('请选择批量导入文件')
           return
         }
-        if (await this.addBatchDictValue(this.file)) {
+        if (await this.addBatchDictValue(this.dictValueForm.file)) {
           this.$refs.addValueDialog.toggleOpen()
           this.$message.success('新增值域字典明细成功！')
         }
@@ -352,6 +360,7 @@ export default {
     },
     currentDict: {
       handler() {
+        this.setPageInfo({curPage : 1})
         this.setVersionList()
         this.setSearchForm()
       }
