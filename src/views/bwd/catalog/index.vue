@@ -6,10 +6,11 @@
       @add="addFileCatalog"
       @edit="editFileCatalog"
       @run="onClickRunCatalog"
+      @output="output"
       :actionTypes="
         currentBwdItem.state === RUNNINGSTATE
-          ? ['add', 'edit_disable', 'run_disable']
-          : ['add', 'edit', 'run']
+          ? ['add', 'edit_disable', 'run_disable', 'output']
+          : ['add', 'edit', 'run', 'output']
       "
     ></Header>
     <div class="search">
@@ -49,6 +50,13 @@
       @onClick="handleNodeClick"
     ></Tree>
     <div class="dialog_port">
+      <OutputDialog
+        title="业务模型"
+        ref="output"
+        :data="bwdOutList"
+        @output-file="outputFile"
+      >
+      </OutputDialog>
       <Dialog
         :title="`${!fileCatalogData.id ? '新增文件目录' : '编辑文件目录'}`"
         ref="fileCatalogDialog"
@@ -80,6 +88,9 @@ import Tree from '@/components/SideTree.vue'
 import { RUNNINGSTATE } from '@/utils/const'
 import { fileCatalogCfg, fileCatalogRule } from './config/fileCatalogForm'
 import { createNamespacedHelpers } from 'vuex'
+import { processDownloadFile } from '@/utils/download'
+import { exportBwdApi } from '@/api/output'
+import OutputDialog from '@/views/common/OutputDialog.vue'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('bwd')
 export default {
@@ -88,7 +99,8 @@ export default {
     Dialog,
     Tree,
     Form,
-    Bottom
+    Bottom,
+    OutputDialog
   },
   data() {
     return {
@@ -107,16 +119,13 @@ export default {
       'fileCatalogData',
       'pageInfo',
       'totalNumber',
-      'themeOptions'
+      'themeOptions',
+      'bwdOutList'
     ]),
     ...mapGetters(['currentBwdItem', 'categoryOptions'])
   },
   methods: {
-    ...mapMutations([
-      'setCatalogForm', 
-      'setCurrentBwd', 
-      'setCurrentField'
-    ]),
+    ...mapMutations(['setCatalogForm', 'setCurrentBwd', 'setCurrentField']),
     ...mapActions([
       'loadBwdModules',
       'queryField',
@@ -136,6 +145,22 @@ export default {
           this.runCatalog()
         })
       }
+    },
+    output() {
+      this.$refs.output.toggleOpen()
+    },
+    async outputFile(list) {
+      const data = list.map(item => {
+        const [dataset, id, version] = item.split(';')
+        const res = {
+          id,
+          version
+        }
+        return res
+      })
+      const res = await exportBwdApi(data)
+      processDownloadFile(res)
+      this.$refs.output.toggleOpen()
     },
     // 根据目录的id渲染中间详细信息
     async handleNodeClick({ id }) {
@@ -167,7 +192,7 @@ export default {
     async onClickSubmitFileCatalog() {
       const { valid } = await this.$refs.fileCatalogForm.validate()
       if (valid) {
-        if(await this.submitFileCatalog())
+        if (await this.submitFileCatalog())
           this.$refs.fileCatalogDialog.toggleOpen()
       } else {
         this.$alert('请检查输入项是否完整！')
@@ -255,8 +280,8 @@ export default {
       display: inline-flex;
     }
     .el-tag {
-      height: 20px
-    } 
+      height: 20px;
+    }
   }
 }
 .tree {

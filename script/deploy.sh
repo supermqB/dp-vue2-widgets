@@ -1,14 +1,16 @@
 #!/bin/bash
-DIR="$( cd "$( dirname "$0"  )" && pwd  )"
+DIR="$(cd "$(dirname "$0")" && pwd)"
 echo $DIR
 cd $DIR/..
 
 hostName=$1
-if [ $hostName == "beta" ];
-then
+if [ $hostName == "beta" ]; then
     hostIP="36.133.124.47"
+elif [ $hostName == "test" ]; then
+    hostIP="192.168.29.40"
 else
     hostIP="192.168.29.32"
+
 fi
 
 yarn build
