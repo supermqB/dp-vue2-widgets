@@ -342,9 +342,8 @@ export default {
     async addValue(batchFlag) {
       this.batchFlag = batchFlag
       if (batchFlag) {
-        this.$nextTick(() => {
+        if (this.$refs.uploadRef)
           this.$refs.uploadRef.clearFileName()
-        })
       }
       const { value } = await getMAxValueCodeApi(this.currentVersion)
       const form = Object.assign(
