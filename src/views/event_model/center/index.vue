@@ -71,7 +71,8 @@
       @dialog-complete="onClickImport"
     >
       <Upload
-        v-model="file"
+        ref="uploadRef"
+        v-model="columnForm.file"
         @onDownload="downloadTemplate"
         class="upload"
       ></Upload>
@@ -219,16 +220,16 @@ export default {
       this.setColumnForm()
     },
     onclickImportColumn() {
+      if (this.$refs.uploadRef) this.$refs.uploadRef.clearFileName()
       this.file = null
       this.$refs.importDialog.toggleOpen()
     },
     async onClickImport() {
-      if (!this.file) {
+      if (!this.columnForm.file) {
         this.$message.warning('请选择批量导入文件')
         return
       }
-      console.log(file, 111)
-      if (await this.addBatchEvent(this.file)) {
+      if (await this.addBatchEvent(this.columnForm.file)) {
         this.$refs.importDialog.toggleOpen()
         this.$message.success('导入字段成功！')
       }
