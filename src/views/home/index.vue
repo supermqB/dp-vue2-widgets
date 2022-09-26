@@ -19,13 +19,16 @@
         <component
           v-for="item in summaryComponentList"
           :key="item.component"
-          :is="item.component"></component>
+          :is="item.component"
+        ></component>
       </div>
       <el-tabs v-model="activeComponent" tab-position="right">
-        <el-tab-pane v-for="(item, key) in summaryComponentList"
+        <el-tab-pane
+          v-for="(item, key) in summaryComponentList"
           :key="key"
           :name="item.component"
-          :label="item.label">
+          :label="item.label"
+        >
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -33,34 +36,40 @@
 </template>
 
 <script>
-  import Bwd from './component/bwd.vue'
-  import DataElement from './component/dataElement.vue'
-  import Docs from './component/docs.vue'
-  import Event from './component/event.vue'
-  import Mdm from './component/mdm.vue'
-  import Value from './component/value.vue'
-  import Breadcrumb from '@/components/header/Breadcrumb.vue'
-  import Summary from './component/summary.vue'
-  import { summaryList, summaryComponentList } from './config'
-  import TaskIcon from '@/assets/images/home/task.svg'
-  import LogIcon from '@/assets/images/home/log.svg'
-  export default {
-    components: {
-      Bwd, DataElement, Docs, Event, Mdm, Value, 
-      Breadcrumb, Summary
-    },
-    data() {
-      return {
-        summaryComponentList,
-        summaryList,
-        activeComponent: summaryComponentList[0].component
-      }
-    },
-    created() {
-      this.TaskIcon = TaskIcon
-      this.LogIcon = LogIcon
+import Bwd from './component/bwd.vue'
+import DataElement from './component/dataElement.vue'
+import Docs from './component/docs.vue'
+import Event from './component/event.vue'
+import Mdm from './component/mdm.vue'
+import Value from './component/value.vue'
+import Breadcrumb from '@/components/header/Breadcrumb.vue'
+import Summary from './component/summary.vue'
+import { summaryList, summaryComponentList } from './config'
+import TaskIcon from '@/assets/images/home/task.svg'
+import LogIcon from '@/assets/images/home/log.svg'
+export default {
+  components: {
+    Bwd,
+    DataElement,
+    Docs,
+    Event,
+    Mdm,
+    Value,
+    Breadcrumb,
+    Summary
+  },
+  data() {
+    return {
+      summaryComponentList,
+      summaryList,
+      activeComponent: summaryComponentList[0].component
     }
+  },
+  created() {
+    this.TaskIcon = TaskIcon
+    this.LogIcon = LogIcon
   }
+}
 </script>
 
 <style scoped lang="scss">
@@ -91,7 +100,7 @@
         margin: 5px 12px 0 12px;
         ::v-deep .el-badge__content.is-fixed {
           top: 5px;
-          right: 11px
+          right: 11px;
         }
       }
     }
@@ -115,7 +124,7 @@
       box-sizing: border-box;
       overflow: auto;
     }
-    ::v-deep .el-tabs{
+    ::v-deep .el-tabs {
       /* position: absolute;
       top: 10px;
       right: 60px; */
@@ -124,12 +133,11 @@
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
-    } 
+    }
   }
 }
 
-
 ::-webkit-scrollbar {
-  display: none //兼容chrome
+  display: none; //兼容chrome
 }
 </style>
