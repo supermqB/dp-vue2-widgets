@@ -148,12 +148,12 @@ export const summaryComponentList = [
     component: 'Mdm'
   },
   {
-    label: '业务模型',
-    component: 'Bwd'
-  },
-  {
     label: '事件模型',
     component: 'Event'
+  },
+  {
+    label: '业务模型',
+    component: 'Bwd'
   },
   {
     label: '文献库',
