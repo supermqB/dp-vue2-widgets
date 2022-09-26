@@ -15,6 +15,10 @@ export default {
     return {
       menuItems: [
         {
+          value: 'home',
+          label: '首页'
+        },
+        {
           value: 'value',
           label: '值域'
         },
