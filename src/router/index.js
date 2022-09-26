@@ -5,6 +5,7 @@ Vue.use(VueRouter)
 
 /* Layout */
 import DefaultLayout from '@/layout/default'
+import BlankLayout from '@/layout/BlankLayout'
 
 /* Page */
 import ValuePage from '@/views/value' // 值域页面
@@ -18,7 +19,7 @@ const routes = [
   {
     path: '/',
     redirect: { name: 'value' },
-    component: DefaultLayout,
+    component: !window.__POWERED_BY_QIANKUN__ ? DefaultLayout : BlankLayout,
     children: [
       {
         path: 'value',

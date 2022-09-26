@@ -20,8 +20,39 @@ import MatchButton from '@/components/button/Match.vue'
 Vue.use(VueParticles)
 Vue.component('MatchButton', MatchButton)
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+let instance = null
+
+console.log({ QIANKUN: !!window.__POWERED_BY_QIANKUN__ })
+
+function render(props = {}) {
+  const { container } = props
+  // console.log({
+  //   container,
+  //   containerApp: container ? container.querySelector('#app') : '#app'
+  // })
+
+  instance = new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount(container ? container.querySelector('#app') : '#app')
+}
+if (!window.__POWERED_BY_QIANKUN__) {
+  render()
+}
+
+export async function bootstrap() {
+  // console.log('[vue] vue app - 2 bootstraped')
+}
+
+export async function mount(props) {
+  // console.log('[vue] props from main framework', props)
+
+  render(props)
+}
+
+export async function unmount() {
+  instance.$destroy()
+  // instance.$el.innerHTML = ''
+  instance = null
+}
