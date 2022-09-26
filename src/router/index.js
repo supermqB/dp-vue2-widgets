@@ -5,6 +5,7 @@ Vue.use(VueRouter)
 
 /* Layout */
 import DefaultLayout from '@/layout/default'
+import BlankLayout from '@/layout/BlankLayout'
 
 /* Page */
 import HomePage from '@/views/home'
@@ -19,6 +20,7 @@ const routes = [
     path: '/',
     redirect: { name: 'home' },
     component: DefaultLayout,
+    component: !window.__POWERED_BY_QIANKUN__ ? DefaultLayout : BlankLayout,
     children: [
       {
         path: 'home',
@@ -80,7 +82,10 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
+  // base: process.env.BASE_URL,
+  base: window.__POWERED_BY_QIANKUN__
+    ? process.env.VUE_APP_QIANKUN_ROUTER_BASE
+    : process.env.VUE_APP_REAL_ROUTER_BASE,
   routes
 })
 
