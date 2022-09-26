@@ -1,0 +1,38 @@
+.head {
+  margin-right: 16px;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #EBEEF5;
+  span {
+    display: inline-block;
+    height: 26px;
+    border-bottom: 4px solid #1890FF;
+    height: 26px;
+  }
+}
+
+.title {
+  font-weight: 600;
+  width: 100%;
+  height: 38px;
+  padding: 0px 16px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  .spot {
+    background-color: #1890FF;
+    width: 3px;
+    height: 11px;
+    margin-right: 5px;
+  }
+  p {
+    font-size: 12px;
+    line-height: 22px;
+  }
+}
+
+  
+.boxShadow {
+  box-shadow: 0 1px 2px 0px rgba($color: #000000, $alpha: 0.4);
+}
