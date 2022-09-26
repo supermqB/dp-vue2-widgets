@@ -83,7 +83,7 @@
 <style scoped lang="scss">
   @import "./commonCss.scss";
   .docs {
-    padding: 16px 0;
+    padding: 16px;
     .contents {
       display: flex;
       justify-content: space-evenly;
