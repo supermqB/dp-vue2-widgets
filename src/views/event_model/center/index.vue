@@ -2,26 +2,40 @@
   <div class="wrapper">
     <div class="header">
       <div class="left">
-        <Breadcrumb baseLabel="事件模型管理" :currentLabel="`${currentCatalog ? `${currentCatalogItem.nameCn}(${currentCatalogItem.nameEn})` : ''}`">
+        <Breadcrumb
+          baseLabel="事件模型管理"
+          :currentLabel="`${
+            currentCatalog
+              ? `${currentCatalogItem.nameCn}(${currentCatalogItem.nameEn})`
+              : ''
+          }`"
+        >
         </Breadcrumb>
         <State :currentState="currentCatalogItem.state"></State>
       </div>
       <div>
-        <el-button type="primary" @click="onclickAddColumn" :disabled="!currentCatalog">新增</el-button>
-        <el-button type="primary" @click="onclickEditColumn" :disabled="!currentColumn || currentCatalogItem.state === RUNNINGSTATE">编辑</el-button>
+        <el-button
+          type="primary"
+          @click="onclickAddColumn"
+          :disabled="!currentCatalog"
+          >新增</el-button
+        >
+        <el-button type="primary" @click="onclickImportColumn">导入</el-button>
       </div>
     </div>
     <div class="search">
       <Form class="searchForm" :formData="searchForm" :formCfg="formCfg"></Form>
       <div class="right">
         <el-button @click="onClickSearch" type="primary" plain>查询</el-button>
-        <el-button class="advance" type="text" @click="advancedSearch">高级搜索</el-button>
+        <el-button class="advance" type="text" @click="advancedSearch"
+          >高级搜索</el-button
+        >
       </div>
     </div>
     <div class="content">
       <Table
         ref="columnTable"
-        :tableConfig="tableConfig"
+        :tableConfig="tableCfg"
         :tableData="columnList"
         :pageInfo="pageInfo"
         @row-changed="val => setCurrentColumn(val.id)"
@@ -37,15 +51,31 @@
     >
       <Form
         ref="columnForm"
-        :formCfg="columnCfg(
-          setDataElementInfo, 
-          dataElement.dataElementList, 
-          queryDataElement, 
-          columnForm.valueDomainName,
-          valueVersionList)"
+        :formCfg="
+          columnCfg(
+            setDataElementInfo,
+            dataElement.dataElementList,
+            queryDataElement,
+            columnForm.valueDomainName,
+            valueVersionList
+          )
+        "
         :formData="columnForm"
         :formRule="columnRule"
       ></Form>
+    </Dialog>
+    <Dialog
+      title="导入字段"
+      ref="importDialog"
+      class="importDialog"
+      @dialog-complete="onClickImport"
+    >
+      <Upload
+        ref="uploadRef"
+        v-model="columnForm.file"
+        @onDownload="downloadTemplate"
+        class="upload"
+      ></Upload>
     </Dialog>
     <Dialog
       title="高级搜索"
@@ -69,6 +99,9 @@ import State from '@/components/state/IsRunning.vue'
 import { RUNNINGSTATE } from '@/utils/const'
 import { columnCfg, columnRule } from './config/columnForm'
 import { adSearchCfg } from './config/adSearchForm'
+import Upload from '@/components/form/Upload.vue'
+import { processDownloadFile } from '@/utils/download'
+import { downloadTemplateApi } from '@/api/event'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('event')
@@ -78,7 +111,8 @@ export default {
     Table,
     Dialog,
     Breadcrumb,
-    State
+    State,
+    Upload
   },
   data() {
     return {
@@ -87,7 +121,8 @@ export default {
       columnCfg,
       columnRule,
       adSearchCfg,
-      RUNNINGSTATE
+      RUNNINGSTATE,
+      file: null
     }
   },
   mounted() {},
@@ -104,6 +139,42 @@ export default {
       valueVersionList: 'valueVersionList',
       dataElement: 'dataElement'
     }),
+    tableCfg() {
+      if (!this.tableConfig.length) {
+        return [
+          {
+            colConfig: {
+              property: '',
+              label: '',
+              minWidth: 150
+            }
+          }
+        ]
+      } else {
+        return [
+          ...this.tableConfig,
+          {
+            colConfig: {
+              property: 'state',
+              label: '操作',
+              minWidth: 150,
+              fixed: 'right'
+            },
+            actions: [
+              {
+                type: 'el-button',
+                name: '编辑',
+                typeProps: {
+                  type: 'text',
+                  disabled: this.currentCatalogItem.state === RUNNINGSTATE
+                },
+                callback: (index, data, row) => this.onclickEditColumn(row)
+              }
+            ]
+          }
+        ]
+      }
+    }
   },
   mounted() {},
   methods: {
@@ -114,15 +185,21 @@ export default {
       'setIsAdvance'
     ]),
     ...mapActions([
-      'submitColumn', 
-      'adQueryColumn', 
+      'submitColumn',
+      'adQueryColumn',
       'queryColumn',
       'getValueVersionList'
     ]),
     ...mapActions({
       queryDataElement: 'queryDataElement',
-      setDataElementInfo: 'setDataElementInfo'
+      setDataElementInfo: 'setDataElementInfo',
+      addBatchEvent: 'addBatchEvent'
     }),
+    async downloadTemplate() {
+      const { id } = this.currentCatalogItem
+      const res = await downloadTemplateApi(id)
+      processDownloadFile(res)
+    },
     async pageInfoChanged(val) {
       this.setPageInfo(val)
       await this.queryColumn()
@@ -142,9 +219,24 @@ export default {
       this.$refs.columnDialog.toggleOpen()
       this.setColumnForm()
     },
-    onclickEditColumn() {
+    onclickImportColumn() {
+      if (this.$refs.uploadRef) this.$refs.uploadRef.clearFileName()
+      this.file = null
+      this.$refs.importDialog.toggleOpen()
+    },
+    async onClickImport() {
+      if (!this.columnForm.file) {
+        this.$message.warning('请选择批量导入文件')
+        return
+      }
+      if (await this.addBatchEvent(this.columnForm.file)) {
+        this.$refs.importDialog.toggleOpen()
+        this.$message.success('导入字段成功！')
+      }
+    },
+    onclickEditColumn(row) {
       this.$refs.columnDialog.toggleOpen()
-      this.setColumnForm(this.currentColumnRow)
+      this.setColumnForm(row)
     },
     async onClickSubmitColumn() {
       const { valid } = await this.$refs.columnForm.validate()
@@ -162,6 +254,9 @@ export default {
     },
     advancedSearch() {
       this.$refs.searchDialog.toggleOpen()
+    },
+    handleChange(file) {
+      this.file = file.name
     }
   },
   watch: {
@@ -175,7 +270,7 @@ export default {
         this.getValueVersionList(cur)
         old ? this.setColumnForm({ dictTableId: '' }) : null
       }
-    },
+    }
   }
 }
 </script>
@@ -247,7 +342,13 @@ export default {
     }
   }
 }
-
+::v-deep .importDialog .el-dialog {
+  width: 900px;
+  .upload {
+    margin: 0 10%;
+    width: 50%;
+  }
+}
 ::v-deep .searchDialog .el-dialog {
   width: 600px;
   .el-form {

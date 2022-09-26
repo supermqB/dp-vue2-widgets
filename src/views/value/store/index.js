@@ -391,7 +391,7 @@ const actions = {
       } = state.dictForm
       const res = await addDictApi({
         type,
-        ctlgCode,
+        classifyCode: ctlgCode,
         dictCode,
         nameEn,
         nameCn,

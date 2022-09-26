@@ -1,4 +1,5 @@
 import list from '../list/store'
+import index from '../index/store'
 import summary from '../summary/store'
 import { get } from '@/utils/request'
 const state = {
@@ -31,5 +32,5 @@ export default {
   state,
   mutations,
   actions,
-  modules: { list, summary }
+  modules: { list, summary, index }
 }

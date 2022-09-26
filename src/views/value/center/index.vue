@@ -3,10 +3,18 @@
     <div class="header">
       <Breadcrumb
         baseLabel="值域管理"
-        :currentLabel="`${currentDictItem.nameCn}(${currentDictItem.nameEn})`"></Breadcrumb>
+        :currentLabel="`${currentDictItem.nameCn}(${currentDictItem.nameEn})`"
+      ></Breadcrumb>
       <div>
-        <el-button type="primary" @click="editVersion" :disabled="!currentVersion">版本管理</el-button>
-        <el-button type="primary" @click="addVersion" :disabled="!currentDict">新增版本</el-button>
+        <el-button
+          type="primary"
+          @click="editVersion"
+          :disabled="!currentVersion"
+          >版本管理</el-button
+        >
+        <el-button type="primary" @click="addVersion" :disabled="!currentDict"
+          >新增版本</el-button
+        >
       </div>
     </div>
     <div class="version">
@@ -19,25 +27,44 @@
           :label="item.label"
         ></el-option>
       </el-select>
-      <IsMaster :isMaster="currentVersionItem ? currentVersionItem.isMaster : false"></IsMaster>
-      <IsRunning :currentState="currentVersion ? currentVersionInfo.state : ''"></IsRunning>
+      <IsMaster
+        :isMaster="currentVersionItem ? currentVersionItem.isMaster : false"
+      ></IsMaster>
+      <IsRunning
+        :currentState="currentVersion ? currentVersionInfo.state : ''"
+      ></IsRunning>
     </div>
     <Detail
       :sourceType="currentDictItem.sourceType"
-      v-bind="currentVersionInfo"></Detail>
+      v-bind="currentVersionInfo"
+    ></Detail>
     <div class="search">
       <Form
-        :formCfg="searchValueCfg(
-          currentVersionInfo.parentCode,
-          currentVersionInfo.hierarchyRelation,
-          currentVersionInfo.type
-        )"
+        :formCfg="
+          searchValueCfg(
+            currentVersionInfo.parentCode,
+            currentVersionInfo.hierarchyRelation,
+            currentVersionInfo.type
+          )
+        "
         :formData="searchForm"
       ></Form>
       <div class="operation">
         <el-button @click="onSearch" type="primary" plain>查询</el-button>
-        <el-button @click="addValue(false)" :disabled="!currentVersion" type="primary" plain>新增</el-button>
-        <el-button @click="addValue(true)" :disabled="!currentDictValue" type="primary" plain>导入</el-button>
+        <el-button
+          @click="addValue(false)"
+          :disabled="!currentVersion"
+          type="primary"
+          plain
+          >新增</el-button
+        >
+        <el-button
+          @click="addValue(true)"
+          :disabled="!currentDictValue"
+          type="primary"
+          plain
+          >导入</el-button
+        >
       </div>
     </div>
     <div class="table">
@@ -48,7 +75,8 @@
         :tableData="dictValueList"
         :pageInfo="pageInfo"
         @row-changed="val => setCurrentDictValue(val)"
-        @page-changed="val => onPageInfoChange(val)">
+        @page-changed="val => onPageInfoChange(val)"
+      >
       </Table>
     </div>
     <Dialog
@@ -75,33 +103,40 @@
       <Form
         ref="editVersionForm"
         :formCfg="editVersionCfg(versionOptions, sourceTypeOptions)"
-        :formData="dictVersionForm"></Form>
+        :formData="dictVersionForm"
+      ></Form>
     </Dialog>
     <Dialog
       :title="`${batchFlag ? '导入值域字典明细' : '新增值域字典明细'}`"
       ref="addValueDialog"
       class="addValueDialog"
-      @dialog-complete="onClickAddValue">
+      @dialog-complete="onClickAddValue"
+    >
       <Form
         v-if="!batchFlag"
         :formCfg="dictValueFormCfg"
         :formData="dictValueForm"
         :formRule="valueRule"
       ></Form>
-      <Upload v-if="batchFlag"
-        v-model="file"
+      <Upload
+        v-if="batchFlag"
+        ref="uploadRef"
+        v-model="dictValueForm.file"
         @onDownload="downloadTemplate"
-        class="upload"></Upload>
+        class="upload"
+      ></Upload>
     </Dialog>
     <Dialog
       title="编辑值域字典明细"
       ref="editValueDialog"
       class="editValueDialog"
-      @dialog-complete="onClickEditValue">
-      <Form 
+      @dialog-complete="onClickEditValue"
+    >
+      <Form
         :formCfg="dictValueFormCfg"
         :formData="dictValueForm"
-        :formRule="valueRule">
+        :formRule="valueRule"
+      >
       </Form>
     </Dialog>
   </div>
@@ -116,8 +151,17 @@ import IsMaster from '@/components/state/IsMaster.vue'
 import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import IsRunning from '@/components/state/IsRunning.vue'
 import Upload from '@/components/form/Upload.vue'
-import { addVersionCfg, editVersionCfg, addVersionRule } from './config/versionForm'
-import { searchValueCfg, addValueCfg, editValueCfg, valueRule } from './config/valueForm'
+import {
+  addVersionCfg,
+  editVersionCfg,
+  addVersionRule
+} from './config/versionForm'
+import {
+  searchValueCfg,
+  addValueCfg,
+  editValueCfg,
+  valueRule
+} from './config/valueForm'
 import { createNamespacedHelpers } from 'vuex'
 import { getMAxValueCodeApi, downloadTemplateApi } from '@/api/value'
 import { getMaxNumber } from '@/utils/lang'
@@ -136,7 +180,7 @@ export default {
     IsMaster,
     IsRunning,
     Upload
-},
+  },
   data() {
     return {
       addVersionCfg,
@@ -153,7 +197,7 @@ export default {
   },
   computed: {
     ...mapState([
-      'currentVersion', 
+      'currentVersion',
       'currentDict',
       'currentVersionInfo',
       'currentDictValue',
@@ -184,26 +228,29 @@ export default {
       }
     },
     tableCfg() {
-      if (!this.tableConfig.length){
-        return [{
-          colConfig: {
-            property: '',
-            label: '',
-            minWidth: 150
+      if (!this.tableConfig.length) {
+        return [
+          {
+            colConfig: {
+              property: '',
+              label: '',
+              minWidth: 150
+            }
           }
-        }]
+        ]
       } else {
         return [
-          ...this.tableConfig, 
+          ...this.tableConfig,
           {
             colConfig: {
               property: 'state',
               label: '操作',
               minWidth: 150,
-              fixed: 'right',
+              fixed: 'right'
             },
             actions: [
               {
+                id: 'edit',
                 type: 'el-button',
                 name: '编辑',
                 typeProps: {
@@ -211,7 +258,9 @@ export default {
                   disabled: row => row.state === RUNNINGSTATE
                 },
                 callback: (index, data, row) => this.editValue(row)
-              }, {
+              },
+              {
+                id: 'delete',
                 type: 'el-button',
                 name: '删除',
                 typeProps: {
@@ -254,7 +303,7 @@ export default {
     async downloadTemplate() {
       const { id } = this.currentVersionItem
       const res = await downloadTemplateApi(id)
-      processDownloadFile(res)    
+      processDownloadFile(res)
     },
     onSearch() {
       this.setPageInfo({ curPage: 1 })
@@ -274,7 +323,7 @@ export default {
     editVersion() {
       const { nameEn, nameCn, sourceTypeCode } = this.currentDictItem
       this.setDictVersionForm({
-        nameCn, 
+        nameCn,
         nameEn,
         sourceTypeCode
       })
@@ -294,8 +343,15 @@ export default {
     },
     async addValue(batchFlag) {
       this.batchFlag = batchFlag
+      if (batchFlag) {
+        if (this.$refs.uploadRef) this.$refs.uploadRef.clearFileName()
+      }
       const { value } = await getMAxValueCodeApi(this.currentVersion)
-      const form = Object.assign({}, { 'term_code': getMaxNumber(value, 14) }, this.task.currentSuspect)
+      const form = Object.assign(
+        {},
+        { term_code: getMaxNumber(value, 14) },
+        this.task.currentSuspect
+      )
       this.setDictValueForm(form)
       this.file = null
       this.$refs.addValueDialog.toggleOpen()
@@ -306,13 +362,13 @@ export default {
     },
     async onClickAddValue() {
       if (this.batchFlag) {
-        if (!this.file) {
+        if (!this.dictValueForm.file) {
           this.$message.warning('请选择批量导入文件')
           return
         }
-        if (await this.addBatchDictValue(this.file)) {
+        if (await this.addBatchDictValue(this.dictValueForm.file)) {
           this.$refs.addValueDialog.toggleOpen()
-          this.$message.success('新增值域字典明细成功！')
+          this.$message.success('导入值域字典明细成功！')
         }
       } else {
         if (await this.addDictValue()) {
@@ -352,6 +408,7 @@ export default {
     },
     currentDict: {
       handler() {
+        this.setPageInfo({ curPage: 1 })
         this.setVersionList()
         this.setSearchForm()
       }
@@ -376,8 +433,8 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
     box-sizing: border-box;
-    border-bottom: 1px solid #E5E5E5;
-  } 
+    border-bottom: 1px solid #e5e5e5;
+  }
   .search {
     width: 100%;
     box-sizing: border-box;
@@ -393,7 +450,7 @@ export default {
       align-items: center;
       .batchAdd {
         margin-left: 10px;
-        text-decoration: underline
+        text-decoration: underline;
       }
     }
   }
@@ -407,7 +464,7 @@ export default {
     padding-right: 10px;
     font-size: 13px;
     box-sizing: border-box;
-    border-bottom: 1px solid #E5E5E5;
+    border-bottom: 1px solid #e5e5e5;
     .el-select {
       margin: 0 10px 0 9px;
       width: 150px;
@@ -441,7 +498,7 @@ export default {
   }
 }
 
-::v-deep .addVersionDialog .el-dialog{
+::v-deep .addVersionDialog .el-dialog {
   width: 600px;
   form {
     padding-right: 120px;
@@ -456,7 +513,7 @@ export default {
   }
 }
 
-::v-deep .editVersionDialog .el-dialog{
+::v-deep .editVersionDialog .el-dialog {
   width: 600px;
   form {
     padding-right: 130px;
@@ -471,7 +528,7 @@ export default {
   }
 }
 
-::v-deep .addValueDialog .el-dialog{
+::v-deep .addValueDialog .el-dialog {
   width: 900px;
 
   .batchFlag {
@@ -484,7 +541,6 @@ export default {
   .upload {
     margin: 0 10%;
     width: 50%;
-    
   }
   .el-form {
     padding-right: 50px;
@@ -502,7 +558,7 @@ export default {
   }
 }
 
-::v-deep .editValueDialog .el-dialog{
+::v-deep .editValueDialog .el-dialog {
   width: 900px;
   .el-form {
     padding-right: 50px;
@@ -519,6 +575,4 @@ export default {
     justify-content: flex-end;
   }
 }
-
-
 </style>
