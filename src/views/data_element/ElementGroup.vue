@@ -1,6 +1,6 @@
 <template>
   <div class="elegrp_wrapper">
-    <div class="title">数据元</div>
+    <Header title="数据元" :actionTypes="['output']" @output="output"></Header>
     <div class="search_container">
       <el-input
         placeholder="请搜索"
@@ -34,16 +34,23 @@
 <script>
 import { debounce } from 'lodash'
 import { createNamespacedHelpers, mapActions as globalMapActions } from 'vuex'
+import Header from '@/components/header/Catalog.vue'
+import { exportElementApi } from '@/api/output'
+import { processDownloadFile } from '@/utils/download'
 const elemGrpLabelName = 'ctlgName'
 const { mapState, mapMutations, mapActions } =
   createNamespacedHelpers('dataElem/elemGroup')
 
 export default {
+  components: {
+    Header
+  },
   computed: {
     ...mapState({
       search: state => state.search,
       groupSum: state => state.groupSum,
-      grouptree: state => state.grouptree
+      grouptree: state => state.grouptree,
+      groupList: state => state.groupList
     })
   },
   watch: {
@@ -63,7 +70,11 @@ export default {
     },
     ...mapMutations(['setSearch', 'setSelectedGrps']),
     ...mapActions(['fetchElementGrps']),
-    ...globalMapActions('dataElem/elemList', { listElements: 'search' })
+    ...globalMapActions('dataElem/elemList', { listElements: 'search' }),
+    async output() {
+      const res = await exportElementApi()
+      processDownloadFile(res)
+    }
   },
   mounted() {
     this.fetchElementGrps()

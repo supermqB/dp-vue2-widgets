@@ -4,26 +4,20 @@
       <div class="left">
         <Breadcrumb
           baseLabel="BWD文件管理"
-          :currentLabel="`${currentBwdItem.label}(${currentBwdItem.nameEn})`"  
+          :currentLabel="`${currentBwdItem.label}(${currentBwdItem.nameEn})`"
         ></Breadcrumb>
         <img :src="icon(currentBwdItem.state)" />
       </div>
       <div>
-        <el-button
-          type="primary"
-          @click="editFileFields"
-          :disabled="currentBwdItem.state === RUNNINGSTATE || !currentFieldRow"
-          >编辑</el-button
-        >
-        <el-button
-          type="primary"
-          @click="addFileFields"
-          >新增</el-button
-        >
+        <el-button type="primary" @click="addFileFields">新增</el-button>
+        <el-button type="primary" @click="onclickImportColumn">导入</el-button>
       </div>
     </div>
     <div class="search">
-      <Form :formCfg="searchCfg(versionList, onVersionChange)" :formData="searchData"></Form>
+      <Form
+        :formCfg="searchCfg(versionList, onVersionChange)"
+        :formData="searchData"
+      ></Form>
       <div class="buttons">
         <el-button @click="onClickSearch">查询</el-button>
         <el-button
@@ -38,7 +32,7 @@
     <div class="table">
       <Table
         ref="columnTable"
-        :tableConfig="tableConfig"
+        :tableConfig="tableCfg"
         :tableData="fieldsList"
         :pageInfo="pageInfo"
         @row-changed="rowChange"
@@ -58,6 +52,19 @@
         :formData="fileFieldsData"
         :formRule="fileFieldsRule"
       ></Form>
+    </Dialog>
+    <Dialog
+      title="导入字段"
+      ref="importDialog"
+      class="importDialog"
+      @dialog-complete="onClickImport"
+    >
+      <Upload
+        ref="uploadRef"
+        v-model="fileFieldsData.file"
+        @onDownload="downloadTemplate"
+        class="upload"
+      ></Upload>
     </Dialog>
     <Dialog
       title="高级搜索"
@@ -86,6 +93,9 @@ import { adSearchCfg } from './config/adSearchForm'
 import Dialog from '@/components/Dialog.vue'
 import { fileFieldsCfg, fileFieldsRule } from './config/fileFieldsForm'
 import { createNamespacedHelpers } from 'vuex'
+import Upload from '@/components/form/Upload.vue'
+import { downloadTemplateApi } from '@/api/bwd'
+import { processDownloadFile } from '@/utils/download'
 const { mapState, mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers('bwd')
 export default {
@@ -94,7 +104,8 @@ export default {
     Form,
     Table,
     State,
-    Dialog
+    Dialog,
+    Upload
   },
   data() {
     return {
@@ -116,7 +127,43 @@ export default {
       fileFieldsData: 'fileFieldsData',
       adSearchData: 'adSearchData',
       versionList: 'versionList'
-    })
+    }),
+    tableCfg() {
+      if (!this.tableConfig.length) {
+        return [
+          {
+            colConfig: {
+              property: '',
+              label: '',
+              minWidth: 150
+            }
+          }
+        ]
+      } else {
+        return [
+          ...this.tableConfig,
+          {
+            colConfig: {
+              property: 'state',
+              label: '操作',
+              minWidth: 150,
+              fixed: 'right'
+            },
+            actions: [
+              {
+                type: 'el-button',
+                name: '编辑',
+                typeProps: {
+                  type: 'text',
+                  disabled: this.currentBwdItem.state === RUNNINGSTATE
+                },
+                callback: (index, data, row) => this.editFileFields(row)
+              }
+            ]
+          }
+        ]
+      }
+    }
   },
   methods: {
     ...mapMutations([
@@ -126,7 +173,12 @@ export default {
       'setPageInfo',
       'setEventMapList'
     ]),
-    ...mapActions(['queryField', 'submitFields', 'queryMappingList']),
+    ...mapActions([
+      'queryField',
+      'submitFields',
+      'queryMappingList',
+      'addBatchBwd'
+    ]),
     icon(state) {
       switch (state) {
         case RUNNINGSTATE:
@@ -155,6 +207,26 @@ export default {
       this.setCurrentField()
       this.$refs.searchDialog.toggleOpen()
     },
+    async downloadTemplate() {
+      const { id } = this.currentBwdItem
+      const res = await downloadTemplateApi(id)
+      processDownloadFile(res)
+    },
+    onclickImportColumn() {
+      if (this.$refs.uploadRef) this.$refs.uploadRef.clearFileName()
+      this.file = null
+      this.$refs.importDialog.toggleOpen()
+    },
+    async onClickImport() {
+      if (!this.fileFieldsData.file) {
+        this.$message.warning('请选择批量导入文件')
+        return
+      }
+      if (await this.addBatchBwd(this.fileFieldsData.file)) {
+        this.$refs.importDialog.toggleOpen()
+        this.$message.success('导入字段成功！')
+      }
+    },
     // 取消表单重置
     onClosedFieldsForm() {
       this.setColumnForm()
@@ -173,9 +245,9 @@ export default {
       this.setFieldsForm()
       this.$refs.fileFieldsForm.resetFields()
     },
-    editFileFields() {
+    editFileFields(row) {
       this.$refs.fileFieldsDialog.toggleOpen()
-      this.setFieldsForm(this.currentFieldRow)
+      this.setFieldsForm(row)
     },
     addFileFields() {
       this.$refs.fileFieldsDialog.toggleOpen()
@@ -189,7 +261,7 @@ export default {
       await this.queryField()
       this.setCurrentField()
       this.setEventMapList()
-    },
+    }
   },
   watch: {
     currentFieldRow: {
@@ -278,7 +350,7 @@ export default {
     }
     .el-form-item__label {
       width: 77px;
-      padding-right: 6px!important;
+      padding-right: 6px !important;
       text-align: left;
     }
     .el-form-item__content {
@@ -288,6 +360,13 @@ export default {
     .el-input__inner {
       height: 28px;
     }
+  }
+}
+::v-deep .importDialog .el-dialog {
+  width: 900px;
+  .upload {
+    margin: 0 10%;
+    width: 50%;
   }
 }
 </style>

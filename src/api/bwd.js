@@ -1,5 +1,5 @@
 import { EDITINGSTATE } from '@/utils/const'
-import request from '@/utils/request'
+import request, { postWithFile } from '@/utils/request'
 
 export const getCatalogApi = () => {
   return request({
@@ -38,6 +38,16 @@ export const updateFileCatalogApi = (id, nameCn, nameEn, theme, state) => {
       state
     }
   })
+}
+export const downloadTemplateApi = () => {
+  return request({
+    url: '/dict/download',
+    method: 'get',
+    responseType: 'blob'
+  })
+}
+export const addBwdManyApi = file => {
+  return postWithFile('/import/bwd', { file })
 }
 export const addFileCatalogApi = (
   nameCn,

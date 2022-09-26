@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper">
     值域
   </div>
 </template>
@@ -9,3 +9,9 @@
     
   }
 </script>
+
+<style scoped lang="scss">
+  .wrapper {
+    height: 300px;
+  }
+</style>

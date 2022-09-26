@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="mdm">
     <div class="head">
       <span>主索引</span>
@@ -69,6 +70,10 @@
         </div>
       </div>
     </div>
+=======
+  <div class="wrapper">
+    主索引
+>>>>>>> dev
   </div>
 </template>
 
@@ -260,6 +265,7 @@
   }
 </script>
 
+<<<<<<< HEAD
 <style scoped lang="scss" >
 @import "./commonCss.scss";
 @mixin ellipsis {
@@ -432,4 +438,10 @@
       }
     }
  }
+=======
+<style scoped lang="scss">
+  .wrapper {
+    height: 300px;
+  }
+>>>>>>> dev
 </style>
