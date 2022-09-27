@@ -157,7 +157,8 @@ export default {
     padding-right: 4px;
   }
   .label {
-    width: 130px;
+    //width: 130px;
+    width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

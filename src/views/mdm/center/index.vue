@@ -57,6 +57,7 @@
   </div>
 </template>
 <script>
+import { stdTimeFmt } from '@/utils/format'
 import {
   RUNNINGSTATE,
   EDITINGSTATE,
@@ -102,8 +103,8 @@ export default {
       if (!cTime || !uTime) return []
       return [
         { prop: '标准来源：', value: this.selectedMDMDesc.standardSrc },
-        { prop: ' 创建时间：', value: cTime.substr(0, cTime.indexOf('.')) },
-        { prop: '更新时间：', value: uTime.substr(0, uTime.indexOf('.')) }
+        { prop: ' 创建时间：', value: stdTimeFmt(cTime) },
+        { prop: '更新时间：', value: stdTimeFmt(uTime) }
       ]
     },
     pageInfoChangeSignal() {
@@ -258,6 +259,7 @@ export default {
   .table_area {
     flex-grow: 1;
     margin-top: -6px;
+    padding-bottom: 6px;
   }
 }
 </style>
