@@ -5,7 +5,7 @@
       :style="item.style">
       <div class="header">
         <span>{{ item.label }}</span>
-        <!-- icon -->
+        <img :src="require(`@/assets/images/home/${item.name}.svg`)" />
       </div>
       <div class="content">
         <p
@@ -55,12 +55,15 @@
     margin-right: 15px;
     box-sizing: border-box;
     font-size: 16px;
-    border: 1px solid #ddd;
+    background-color: #FAFAFA;
+    border: 1px solid #DEDEDE;
     border-radius: 5px;
     .header {
       height: 35px;
-      line-height: 35px;
-      font-size: 17px;
+      padding-left: 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       font-weight: 600;
       color: rgba(0,0,0,0.85)
       /* font-weight: bold; */

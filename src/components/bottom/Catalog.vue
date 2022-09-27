@@ -2,7 +2,7 @@
   <div class="catalogBottomWrap">
     <p v-for="(label, index) in labelList" :key="index">
       <span>{{ label }}：</span>
-      <span>{{ value[index] ? value[index] : '' }}</span>
+      <span>{{ value[index] ? value[index] : 0 }}</span>
     </p>
   </div>
 </template>

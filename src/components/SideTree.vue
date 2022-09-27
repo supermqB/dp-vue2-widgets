@@ -23,7 +23,7 @@
           <img :src="icon(data.state)" />
           <span :title="data.label">{{ data.label }}</span>
         </p>
-        <p class="number">{{ data.number }}</p>
+        <!--p class="number">{{ data.number }}</p-->
         <div class="disabled" v-if="data.isTopCannotBeSelected"></div>
       </div>
     </el-tree>
@@ -157,7 +157,8 @@ export default {
     padding-right: 4px;
   }
   .label {
-    width: 130px;
+    //width: 130px;
+    width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

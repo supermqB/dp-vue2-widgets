@@ -72,6 +72,8 @@
       }
     }
   }
+
+
 </script>
 
 <style scoped lang="scss">
@@ -102,7 +104,7 @@
         margin: 5px 12px 0 12px;
         ::v-deep .el-badge__content.is-fixed {
           top: 5px;
-          right: 11px
+          right: 11px;
         }
       }
     }
@@ -126,7 +128,7 @@
       box-sizing: border-box;
       overflow: auto;
     }
-    ::v-deep .el-tabs{
+    ::v-deep .el-tabs {
       /* position: absolute;
       top: 10px;
       right: 60px; */
@@ -135,15 +137,14 @@
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
-    } 
+    }
   }
   .taskManagement {
     cursor: pointer ;
   }
 }
 
-
 ::-webkit-scrollbar {
-  display: none //兼容chrome
+  display: none; //兼容chrome
 }
 </style>
