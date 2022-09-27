@@ -4,31 +4,34 @@
       <Breadcrumb baseLabel="首页"></Breadcrumb>
       <div class="badge">
         <el-badge :value="100" :max="99">
-          <img :src="TaskIcon" />
+          <img :src="TaskIcon" @click="taskManagementOpen" class="taskManagement"/>
         </el-badge>
         <el-badge :value="12">
-          <img :src="LogIcon" />
+          <img :src="LogIcon" class="taskManagement"/>
         </el-badge>
       </div>
     </div>
-    <div class="summary">
-      <Summary :list="summaryList"></Summary>
-    </div>
-    <div class="detail">
-      <div class="components">
-        <component
-          v-for="item in summaryComponentList"
-          :key="item.component"
-          :is="item.component"></component>
+    <div v-if="showCard === '' ">
+      <div class="summary">
+        <Summary :list="summaryList"></Summary>
       </div>
-      <el-tabs v-model="activeComponent" tab-position="right">
-        <el-tab-pane v-for="(item, key) in summaryComponentList"
-          :key="key"
-          :name="item.component"
-          :label="item.label">
-        </el-tab-pane>
-      </el-tabs>
+      <div class="detail">
+        <div class="components">
+          <component
+            v-for="item in summaryComponentList"
+            :key="item.component"
+            :is="item.component"></component>
+        </div>
+        <el-tabs v-model="activeComponent" tab-position="right">
+          <el-tab-pane v-for="(item, key) in summaryComponentList"
+            :key="key"
+            :name="item.component"
+            :label="item.label">
+          </el-tab-pane>
+        </el-tabs>
+      </div>
     </div>
+    <TaskManagement v-if="showCard === 'taskManagement' " :showCard.sync = 'showCard'></TaskManagement>
   </div>
 </template>
 
@@ -44,21 +47,29 @@
   import { summaryList, summaryComponentList } from './config'
   import TaskIcon from '@/assets/images/home/task.svg'
   import LogIcon from '@/assets/images/home/log.svg'
+  import TaskManagement from './component/taskManagement.vue'
   export default {
     components: {
       Bwd, DataElement, Docs, Event, Mdm, Value, 
-      Breadcrumb, Summary
+      Breadcrumb, Summary, TaskManagement
     },
     data() {
       return {
         summaryComponentList,
         summaryList,
-        activeComponent: summaryComponentList[0].component
+        activeComponent: summaryComponentList[0].component,
+        showCard:''
       }
     },
     created() {
       this.TaskIcon = TaskIcon
       this.LogIcon = LogIcon
+    },
+    methods:{
+      taskManagementOpen(){
+        this.showCard = 'taskManagement'
+        console.log(this.showCard);
+      }
     }
   }
 </script>
@@ -125,6 +136,9 @@
       flex-direction: row;
       justify-content: flex-start;
     } 
+  }
+  .taskManagement {
+    cursor: pointer ;
   }
 }
 
