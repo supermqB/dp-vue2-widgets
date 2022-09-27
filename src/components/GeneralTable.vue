@@ -168,7 +168,7 @@ export default {
         padding-right: 6px;
       }
       &.el-table--border .el-table__cell:first-child .cell {
-        padding-left: 0;
+        //padding-left: 0;
       }
       .el-table_1_column_1 {
         .el-radio__label {
