@@ -132,11 +132,7 @@
       class="editValueDialog"
       @dialog-complete="onClickEditValue"
     >
-      <Form
-        :formCfg="dictValueFormCfg"
-        :formData="dictValueForm"
-        :formRule="valueRule"
-      >
+      <Form :formCfg="dictValueFormCfg" :formData="dictValueForm" :formRule="valueRule">
       </Form>
     </Dialog>
   </div>
@@ -231,11 +227,7 @@ export default {
       if (!this.tableConfig.length) {
         return [
           {
-            colConfig: {
-              property: '',
-              label: '',
-              minWidth: 150
-            }
+            colConfig: { property: '', label: '', minWidth: 150 }
           }
         ]
       } else {
