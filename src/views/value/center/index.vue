@@ -60,7 +60,7 @@
         >
         <el-button
           @click="addValue(true)"
-          :disabled="!currentDictValue"
+          :disabled="!currentVersion"
           type="primary"
           plain
           >导入</el-button
