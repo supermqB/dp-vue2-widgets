@@ -165,19 +165,23 @@ export default {
       'bwdDatasetValue',
       'bwdDatasetTitle',
       'bwdDetailValue',
-      'bwdDetailTitle'
+      'bwdDetailTitle',
+      'bwdValueList'
     ])
   },
   methods: {
     ...mapMutations(['setBwdData']),
-    ...mapActions(['queryBwdData'])
+    ...mapActions(['queryDataset'])
   },
   async mounted() {
-    this.datasetOption.series[0].data = this.bwdDatasetValue
+    // this.datasetOption.series[0].data = this.bwdDatasetValue
+    this.datasetOption.series[0].data = !this.bwdValueList.dataSetValue
+      ? []
+      : this.bwdValueList.dataSetValue.source
     this.detailOption.series[0].data = this.bwdDetailValue
     this.datasetOption.yAxis.data = this.bwdDatasetTitle
     this.detailOption.yAxis.data = this.bwdDetailTitle
-    await this.queryBwdData
+    await this.queryDataset
   }
 }
 </script>
