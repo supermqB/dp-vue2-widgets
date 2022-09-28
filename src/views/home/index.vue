@@ -89,6 +89,7 @@
               document.getElementById(`tab-${summaryComponentList[i].component}`).classList.remove('is-active')
             }
             document.getElementById(`tab-${summaryComponentList[i].component}`).classList.add('is-active')
+            document.querySelector('.el-tabs__active-bar').style.transform = `translateY(${40 *i}px)`
           }
         }
       }
@@ -161,6 +162,7 @@
       top: 270px;
       right: 0px; 
       width: 200px;
+      height: 400px;
       /* margin-left: -5px; */
       display: flex;
       flex-direction: row;
