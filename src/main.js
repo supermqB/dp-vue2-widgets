@@ -18,9 +18,7 @@ import VueParticles from 'vue-particles'
 import MatchButton from '@/components/button/Match.vue'
 import 'echarts'
 import ECharts from 'vue-echarts'
-import Plugin from 'v-fit-columns' //el-tabled列宽自适应
 
-Vue.use(Plugin)
 Vue.use(VueParticles)
 Vue.component('MatchButton', MatchButton)
 Vue.component('VueEcharts', ECharts)

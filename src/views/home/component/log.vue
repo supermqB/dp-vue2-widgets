@@ -3,16 +3,16 @@
 
       <!-- 头部 -->
       <div slot="header">
-        <el-button>任务管理</el-button>
+        <el-button>系统日志</el-button>
         <el-button style="float: right; padding: 3px 0" type="text" @click="closeCard"><i class="el-icon-close"></i></el-button>
       </div>
 
       <!-- 查询框 -->
       <div class="condition">
         <Select :name="'模块'"></Select>
-        <Select :name="'来源'"></Select>
+        <Select :name="'类型'"></Select>
+        <Input :name="'对象'"></Input>
         <Select :name="'操作人'"></Select>
-        <Select :name="'状态'"></Select>
         <el-button>查询</el-button>
       </div>
 
@@ -91,9 +91,10 @@
 
 <script>
 import Select from './component/select.vue'
+import Input from './component/input.vue'
 export default {
   components: {
-    Select
+    Select,Input
   },
   data() {
     return {

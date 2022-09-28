@@ -7,7 +7,7 @@
           <img :src="TaskIcon" @click="taskManagementOpen" class="taskManagement"/>
         </el-badge>
         <el-badge :value="12">
-          <img :src="LogIcon" class="taskManagement"/>
+          <img :src="LogIcon" @click="logOpen" class="taskManagement"/>
         </el-badge>
       </div>
     </div>
@@ -33,6 +33,7 @@
       </div>
     </div>
     <TaskManagement v-if="showCard === 'taskManagement' " :showCard.sync = 'showCard'></TaskManagement>
+    <Log v-if="showCard === 'log' " :showCard.sync=" showCard "></Log>
   </div>
 </template>
 
@@ -49,10 +50,11 @@
   import TaskIcon from '@/assets/images/home/task.svg'
   import LogIcon from '@/assets/images/home/log.svg'
   import TaskManagement from './component/taskManagement.vue'
+  import Log from './component/log.vue'
   export default {
     components: {
       Bwd, DataElement, Docs, Event, Mdm, Value, 
-      Breadcrumb, Summary, TaskManagement
+      Breadcrumb, Summary, TaskManagement, Log
     },
     data() {
       return {
@@ -69,7 +71,6 @@
     methods:{
       taskManagementOpen(){
         this.showCard = 'taskManagement'
-        console.log(this.showCard);
       },
        handleClick(tab) {
         let main = document.querySelector('.el-main')
@@ -77,9 +78,25 @@
         let box = document.querySelector(`.${component}`)
         main.scrollTop = box.offsetTop +200
       },
+      logOpen(){
+        this.showCard = 'log'
+      },
+      isSelected(){
+         let main = document.querySelector('.el-main')
+         for (let i = 0; i < summaryComponentList.length; i++) {
+           if(main.scrollTop > document.querySelector(`.${summaryList[i].name}`).offsetTop - 200) {
+             for (let i = 0; i < summaryComponentList.length; i++) {
+              document.getElementById(`tab-${summaryComponentList[i].component}`).classList.remove('is-active')
+            }
+            document.getElementById(`tab-${summaryComponentList[i].component}`).classList.add('is-active')
+          }
+        }
+      }
     },
     mounted(){
-      document.querySelector('.el-main').addEventListener('scroll',this.echo)
+      document.querySelector('.el-main').addEventListener('scroll',() => {
+        this.isSelected()
+      })
     }
   }
 
@@ -87,6 +104,7 @@
 </script>
 
 <style scoped lang="scss">
+
 .homePageWrap {
   display: flex;
   flex-direction: column;
