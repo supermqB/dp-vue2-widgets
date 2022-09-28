@@ -113,19 +113,8 @@ import Title from '../common/title.vue'
                 show:true,
                 formatter:'{b}: {d}%'
               },
-              labelLayout: function (params) {
-                const chartWidth = container.value.offsetWidth;
-                const isLeft =
-                  params.labelRect.x <
-                  (chartWidth * parseInt(maskPos.value.left)) / 100;
-                const points = params.labelLinePoints;
-                points[2][0] = isLeft
-                  ? params.labelRect.x
-                  : params.labelRect.x + params.labelRect.width;
-                return {
-                  labelLinePoints: points,
-                };
-              },
+
+           
             }
           ]
         }

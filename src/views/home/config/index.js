@@ -69,32 +69,6 @@ export const summaryList = [
     ]
   },
   {
-    label: '业务模型',
-    name: 'bwd',
-    // style: {
-    //   borderColor: 'rgba(213,239,235,1)',
-    //   backgroundColor: 'rgba(242,255,253,1)'
-    // },
-    contents: [
-      {
-        label: '数据集',
-        number: '1671',
-        unit: '组',
-        style: {
-          color: '#109880'
-        }
-      },
-      {
-        label: '字段',
-        number: '86.1',
-        unit: '万条',
-        style: {
-          color: '#109880'
-        }
-      }
-    ]
-  },
-  {
     label: '事件模型',
     name: 'event',
     // style: {
@@ -116,6 +90,32 @@ export const summaryList = [
         unit: '条',
         style: {
           color: '#9D5E00'
+        }
+      }
+    ]
+  },
+  {
+    label: '业务模型',
+    name: 'bwd',
+    // style: {
+    //   borderColor: 'rgba(213,239,235,1)',
+    //   backgroundColor: 'rgba(242,255,253,1)'
+    // },
+    contents: [
+      {
+        label: '数据集',
+        number: '1671',
+        unit: '组',
+        style: {
+          color: '#109880'
+        }
+      },
+      {
+        label: '字段',
+        number: '86.1',
+        unit: '万条',
+        style: {
+          color: '#109880'
         }
       }
     ]
