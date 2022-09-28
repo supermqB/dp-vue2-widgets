@@ -170,14 +170,14 @@ export default {
   },
   methods: {
     ...mapMutations(['setEventData']),
-    ...mapActions(['queryEventData'])
+    ...mapActions(['queryDataset'])
   },
   async mounted() {
     this.datasetOption.series[0].data = this.eventDatasetValue
     this.detailOption.series[0].data = this.eventDetailValue
     this.datasetOption.yAxis.data = this.eventDatasetTitle
     this.detailOption.yAxis.data = this.eventDetailTitle
-    await this.queryEventData
+    await this.queryDataset
   }
 }
 </script>
