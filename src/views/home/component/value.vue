@@ -23,7 +23,7 @@
         <div class="collect">
           <div class="suspect">
             <VueEcharts
-              :option="detailOption"
+              :option="suspectOption"
               :auto-resize="true"
               style="width: 100%; height: 200px"
             ></VueEcharts>
@@ -60,11 +60,41 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapMutations, mapActions } =
+  createNamespacedHelpers('home')
+
 export default {
   data() {
     return {
       datasetOption: {
-        color: ['#FEB73A', '#4671FE'],
+        // color: ['#FEB73A', '#4671FE'],
+        color: [
+          {
+            colorStops: [
+              {
+                offset: 0,
+                color: '#FFB600'
+              },
+              {
+                offset: 0.05,
+                color: '#f7d390'
+              }
+            ]
+          },
+          {
+            colorStops: [
+              {
+                offset: 0.95,
+                color: '#38D3EC'
+              },
+              {
+                offset: 1,
+                color: '#4671FE'
+              }
+            ]
+          }
+        ],
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -75,8 +105,8 @@ export default {
           data: ['值域目录（组）', '值域明细（条）'],
           width: '500px',
           orient: 'horizontal',
-          itemGap: 130,
-          left: 'center'
+          itemGap: 80,
+          left: '35%'
         },
         axisPointer: {
           link: { xAxisIndex: 'all' }
@@ -98,7 +128,7 @@ export default {
         ],
         xAxis: [
           {
-            type: 'value',
+            type: 'value', //左侧图
             boundaryGap: [0, 0.01],
             interval: 500,
             max: 2500,
@@ -136,6 +166,7 @@ export default {
         yAxis: [
           {
             type: 'category',
+            inverse: true,
             position: 'right',
             axisTick: {
               show: false
@@ -165,57 +196,7 @@ export default {
             },
             gridIndex: 1,
             inverse: true,
-            data: [
-              {
-                value: '国家标准',
-                textStyle: {
-                  align: 'middle',
-                  padding: [0, 90, 0, 0]
-                }
-              },
-              {
-                value: '国家强制标准',
-                textStyle: {
-                  align: 'middle',
-                  padding: [0, 90, 0, 0]
-                }
-              },
-              {
-                value: '行业标准',
-                textStyle: {
-                  align: 'middle',
-                  padding: [0, 90, 0, 0]
-                }
-              },
-              {
-                value: '地方标准',
-                textStyle: {
-                  align: 'middle',
-                  padding: [0, 90, 0, 0]
-                }
-              },
-              {
-                value: '企业标准',
-                textStyle: {
-                  align: 'middle',
-                  padding: [0, 90, 0, 0]
-                }
-              },
-              {
-                value: '自定义标准',
-                textStyle: {
-                  align: 'middle',
-                  padding: [0, 90, 0, 0]
-                }
-              },
-              {
-                value: '团体标准',
-                textStyle: {
-                  align: 'middle',
-                  padding: [0, 90, 0, 0]
-                }
-              }
-            ]
+            data: []
           }
         ],
         series: [
@@ -223,7 +204,7 @@ export default {
             name: '值域目录（组）',
             type: 'bar',
             barWidth: 18,
-            data: [1150, 850, 1750, 1250, 1950, 1700, 950, 750]
+            data: []
           },
           {
             name: '值域明细（条）',
@@ -231,12 +212,11 @@ export default {
             barWidth: 18,
             xAxisIndex: 1,
             yAxisIndex: 1,
-            // data: [1450, 1550, 1100, 850, 2100, 1550, 1100, 850] 数据反过来
-            data: [850, 1100, 1550, 2100, 850, 1100, 1550, 1450]
+            data: []
           }
         ]
       },
-      detailOption: {
+      suspectOption: {
         color: ['#57CBFF', '#FECF7A'],
         tooltip: {
           trigger: 'item',
@@ -272,10 +252,7 @@ export default {
               borderColor: '#fff',
               borderWidth: 2
             },
-            data: [
-              { value: 289, name: '已完成', label: { color: '#57CBFF' } },
-              { value: 50, name: '待完成', label: { color: '#FECF7A' } }
-            ],
+            data: [],
             emphasis: {
               itemStyle: {
                 shadowBlur: 10,
@@ -292,6 +269,25 @@ export default {
         ]
       }
     }
+  },
+  computed: {
+    ...mapState([
+      'valueDatasetCatalog',
+      'valueDatasetDetail',
+      'valueDatasetTitle',
+      'valueSuspectDetail'
+    ])
+  },
+  methods: {
+    ...mapMutations(['setvalueData']),
+    ...mapActions(['queryvalueData'])
+  },
+  async mounted() {
+    this.datasetOption.series[0].data = this.valueDatasetCatalog
+    this.datasetOption.series[1].data = this.valueDatasetDetail
+    this.datasetOption.yAxis[1].data = this.valueDatasetTitle
+    this.suspectOption.series[0].data = this.valueSuspectDetail
+    await this.queryValueData
   }
 }
 </script>

@@ -12,7 +12,7 @@
         <VueEcharts
           :option="datasetOption"
           :auto-resize="true"
-          style="width: 100%; height: 95%; top: -35px"
+          style="width: 100%; height: 95%; top: -15%"
         ></VueEcharts>
       </div>
       <div class="right boxShadow">
@@ -23,7 +23,7 @@
         <VueEcharts
           :option="detailOption"
           :auto-resize="true"
-          style="width: 100%; height: 95%; top: -35px"
+          style="width: 100%; height: 95%; top: -15%"
         ></VueEcharts>
       </div>
     </div>
@@ -31,6 +31,10 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapMutations, mapActions } =
+  createNamespacedHelpers('home')
+
 export default {
   data() {
     return {
@@ -72,7 +76,8 @@ export default {
         },
         yAxis: {
           type: 'category',
-          data: ['医保版V1.0', '卫生版V1.0', '运营版V1.0'],
+          inverse: true,
+          data: [],
           axisTick: {
             show: false
           },
@@ -89,7 +94,7 @@ export default {
           {
             type: 'bar',
             barWidth: 24,
-            data: [340, 640, 485]
+            data: []
           }
         ]
       },
@@ -131,7 +136,8 @@ export default {
         },
         yAxis: {
           type: 'category',
-          data: ['医保版V1.0', '卫生版V1.0', '运营版V1.0'],
+          inverse: true,
+          data: [],
           axisTick: {
             show: false
           },
@@ -148,11 +154,30 @@ export default {
           {
             type: 'bar',
             barWidth: 24,
-            data: [480, 325, 720]
+            data: []
           }
         ]
       }
     }
+  },
+  computed: {
+    ...mapState([
+      'eventDatasetValue',
+      'eventDatasetTitle',
+      'eventDetailValue',
+      'eventDetailTitle'
+    ])
+  },
+  methods: {
+    ...mapMutations(['setEventData']),
+    ...mapActions(['queryEventData'])
+  },
+  async mounted() {
+    this.datasetOption.series[0].data = this.eventDatasetValue
+    this.detailOption.series[0].data = this.eventDetailValue
+    this.datasetOption.yAxis.data = this.eventDatasetTitle
+    this.detailOption.yAxis.data = this.eventDetailTitle
+    await this.queryEventData
   }
 }
 </script>
