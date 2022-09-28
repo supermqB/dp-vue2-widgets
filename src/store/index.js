@@ -10,6 +10,7 @@ import event from '@/views/event_model/store'
 import value from '@/views/value/store'
 import bwd from '@/views/bwd/store'
 import docs from '@/views/docs/store'
+import home from '@/views/home/store'
 
 Vue.use(Vuex)
 
@@ -26,6 +27,7 @@ export default new Vuex.Store({
     mdm,
     value,
     bwd,
-    docs
+    docs,
+    home
   }
 })
