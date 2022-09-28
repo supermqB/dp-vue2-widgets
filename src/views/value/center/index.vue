@@ -13,8 +13,9 @@
           >版本管理</el-button
         >
         <el-button type="primary" @click="addVersion" :disabled="!currentDict"
-          >新增版本</el-button
-        >
+          >新增版本
+        </el-button>
+        <el-button type="primary" @click="importValue">导入</el-button>
       </div>
     </div>
     <div class="version">
@@ -127,6 +128,18 @@
       ></Upload>
     </Dialog>
     <Dialog
+      title="批量导入值域字典明细"
+      ref="importDictDialog"
+      @dialog-complete="onClickImportDict"
+    >
+      <Upload
+        ref="importDictValue"
+        v-model="importFile"
+        @onDownload="downloadTemplate"
+        class="upload"
+      ></Upload>
+    </Dialog>
+    <Dialog
       title="编辑值域字典明细"
       ref="editValueDialog"
       class="editValueDialog"
@@ -191,7 +204,7 @@ export default {
       searchValueCfg,
       valueRule,
       batchFlag: false,
-      file: null,
+      importFile: null,
       RUNNINGSTATE
     }
   },
@@ -300,6 +313,10 @@ export default {
       'editDictValue',
       'deleteDictValue'
     ]),
+    importValue() {
+      this.$refs.importDictDialog.toggleOpen()
+    },
+    onClickImportDict() {},
     async downloadTemplate() {
       const { id } = this.currentVersionItem
       const res = await downloadTemplateApi(id)
@@ -353,7 +370,7 @@ export default {
         this.task.currentSuspect
       )
       this.setDictValueForm(form)
-      this.file = null
+      // this.file = null
       this.$refs.addValueDialog.toggleOpen()
     },
     editValue(row) {
@@ -393,9 +410,6 @@ export default {
       if (await this.deleteDictValue(term_code)) {
         this.$message.success('值域字典明细删除成功！')
       }
-    },
-    handleChange(file) {
-      this.file = file.name
     }
   },
   watch: {
