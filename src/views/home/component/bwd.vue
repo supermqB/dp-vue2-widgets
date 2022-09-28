@@ -12,7 +12,7 @@
         <VueEcharts
           :option="datasetOption"
           :auto-resize="true"
-          style="width: 100%; height: 95%; top: -35px; left: 25px"
+          style="width: 100%; height: 95%; top: -15%; left: 3%"
         ></VueEcharts>
       </div>
       <div class="right boxShadow">
@@ -23,7 +23,7 @@
         <VueEcharts
           :option="detailOption"
           :auto-resize="true"
-          style="width: 100%; height: 95%; top: -35px; left: 25px"
+          style="width: 100%; height: 95%; top: -15%; left: 3%"
         ></VueEcharts>
       </div>
     </div>
@@ -31,6 +31,10 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapMutations, mapActions } =
+  createNamespacedHelpers('home')
+
 export default {
   data() {
     return {
@@ -72,7 +76,8 @@ export default {
         },
         yAxis: {
           type: 'category',
-          data: ['医保版', '卫生版', '运营版'],
+          inverse: true,
+          data: [],
           axisTick: {
             show: false
           },
@@ -89,7 +94,7 @@ export default {
           {
             type: 'bar',
             barWidth: 24,
-            data: [250, 445, 645]
+            data: []
           }
         ]
       },
@@ -131,7 +136,8 @@ export default {
         },
         yAxis: {
           type: 'category',
-          data: ['医保版', '卫生版', '运营版'],
+          inverse: true,
+          data: [],
           axisTick: {
             show: false
           },
@@ -148,11 +154,30 @@ export default {
           {
             type: 'bar',
             barWidth: 24,
-            data: [480, 320, 370]
+            data: []
           }
         ]
       }
     }
+  },
+  computed: {
+    ...mapState([
+      'bwdDatasetValue',
+      'bwdDatasetTitle',
+      'bwdDetailValue',
+      'bwdDetailTitle'
+    ])
+  },
+  methods: {
+    ...mapMutations(['setBwdData']),
+    ...mapActions(['queryBwdData'])
+  },
+  async mounted() {
+    this.datasetOption.series[0].data = this.bwdDatasetValue
+    this.detailOption.series[0].data = this.bwdDetailValue
+    this.datasetOption.yAxis.data = this.bwdDatasetTitle
+    this.detailOption.yAxis.data = this.bwdDetailTitle
+    await this.queryBwdData
   }
 }
 </script>
