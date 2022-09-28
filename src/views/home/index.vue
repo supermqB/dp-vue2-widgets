@@ -1,5 +1,5 @@
 <template>
-  <div class="homePageWrap">
+  <div class="homePageWrap" ref="homePageWrap">
     <div class="header">
       <Breadcrumb baseLabel="首页"></Breadcrumb>
       <div class="badge">
@@ -12,17 +12,18 @@
       </div>
     </div>
     <div v-if="showCard === '' ">
-      <div class="summary">
+      <div class="summary" >
         <Summary :list="summaryList"></Summary>
       </div>
       <div class="detail">
         <div class="components">
           <component
             v-for="item in summaryComponentList"
+            :ref="item.component"
             :key="item.component"
             :is="item.component"></component>
         </div>
-        <el-tabs v-model="activeComponent" tab-position="right">
+        <el-tabs v-model="activeComponent" tab-position="right" @tab-click="handleClick">
           <el-tab-pane v-for="(item, key) in summaryComponentList"
             :key="key"
             :name="item.component"
@@ -69,7 +70,16 @@
       taskManagementOpen(){
         this.showCard = 'taskManagement'
         console.log(this.showCard);
-      }
+      },
+       handleClick(tab) {
+        let main = document.querySelector('.el-main')
+        let component = summaryList[tab.index].name
+        let box = document.querySelector(`.${component}`)
+        main.scrollTop = box.offsetTop +200
+      },
+    },
+    mounted(){
+      document.querySelector('.el-main').addEventListener('scroll',this.echo)
     }
   }
 
@@ -123,15 +133,15 @@
     margin-top: 5px;
     overflow: auto;
     .components {
-      width: 100%;
+      width: 88%;
       height: 100%;
       box-sizing: border-box;
       overflow: auto;
     }
     ::v-deep .el-tabs {
-      /* position: absolute;
-      top: 10px;
-      right: 60px; */
+      position: fixed;
+      top: 270px;
+      right: 0px; 
       width: 200px;
       /* margin-left: -5px; */
       display: flex;
