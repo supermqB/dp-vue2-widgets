@@ -310,7 +310,6 @@ export default {
 }
 .tree {
   flex: 1;
-  overflow: auto;
 }
 
 ::v-deep .el-form-item {

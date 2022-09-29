@@ -286,6 +286,5 @@ export default {
 }
 .tree {
   flex-grow: 1;
-  overflow: auto;
 }
 </style>
