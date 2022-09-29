@@ -3,7 +3,10 @@ import {
   dataElementClassifyApi,
   queryIndexInfoApi,
   selectIndexSourceApi,
-  selectLiteratureInfoApi
+  selectLiteratureInfoApi,
+  getModelDatasetApi,
+  getDictDatasetApi,
+  getDictSuspectApi
 } from '@/api/home.js'
 
 const state = {
@@ -11,51 +14,71 @@ const state = {
   dataElementClassify: [],
   queryIndexInfo: [],
   selectIndexSource: [],
-  selectLiteratureInfo: []
+  selectLiteratureInfo: [],
+  bwdValueList: {},
+  eventValueList: {},
+  dictValueList: {},
+  dictSuspectList: []
 }
-
-const mutations = {
-  setGeneralView(state, val) {
-    state.generalView = val
-  },
-  setDataElementClassify(state, val) {
-    state.dataElementClassify = val
-  },
-  setQueryIndexInfo(state, val) {
-    state.queryIndexInfo = val
-  },
-  setSelectIndexSource(state, val) {
-    state.selectIndexSource = val
-  },
-  setSelectLiteratureInfo(state, val) {
-    state.selectLiteratureInfo = val
-  }
-}
-const actions = {
-  async getGeneralView({ state, commit }) {
-    const { value } = await getGeneralViewApi()
-    commit('setGeneralView', value)
-  },
-  async getDataElementClassify({ state, commit }) {
-    const { value } = await dataElementClassifyApi()
-    commit('setDataElementClassify', value)
-  },
-  async getQueryIndexInfo({ state, commit }) {
-    const { value } = await queryIndexInfoApi()
-    commit('setQueryIndexInfo', value)
-  },
-  async getSelectIndexSource({ state, commit }) {
-    const { value } = await selectIndexSourceApi()
-    commit('setSelectIndexSource', value)
-  },
-  async getSelectLiteratureInfo({ state, commit }) {
-    const { value } = await selectLiteratureInfoApi()
-    commit('setSelectLiteratureInfo', value)
-    console.log(state.selectLiteratureInfo, 89898989)
-  }
-}
-
 const getters = {
+  bwdValueListCount(state) {
+    return state.bwdValueList[0].dataSetValue.map(item => item.count)
+  },
+  bwdValueListSource(state) {
+    return state.bwdValueList[0].dataSetValue.map(item => item.source)
+  },
+  bwdDetailListCount(state) {
+    return state.bwdValueList[0].dataSetDetailValue.map(item => item.count)
+  },
+  bwdDetailListSource(state) {
+    return state.bwdValueList[0].dataSetDetailValue.map(item => item.source)
+  },
+  eventValueListCount(state) {
+    return state.eventValueList[0].dataSetValue.map(item => item.count)
+  },
+  eventValueListSource(state) {
+    return state.eventValueList[0].dataSetValue.map(item => item.source)
+  },
+  eventDetailListCount(state) {
+    return state.eventValueList[0].dataSetDetailValue.map(item => item.count)
+  },
+  eventDetailListSource(state) {
+    return state.eventValueList[0].dataSetDetailValue.map(item => item.source)
+  },
+  dictValueListCatalog(state) {
+    return state.dictValueList.dictDirectoryList.map(item => item.count)
+  },
+  dictValueListDetail(state) {
+    return state.dictValueList.dictDetailList.map(item => item.count)
+  },
+  dictValueListTitle(state) {
+    return state.dictValueList.dictDetailList.map(item => {
+      return {
+        value: item.desc,
+        textStyle: {
+          align: 'middle',
+          padding: [0, 90, 0, 0]
+        }
+      }
+    })
+  },
+  dictSuspectData(state) {
+    return [
+      {
+        value: state.dictSuspectList ? state.dictSuspectList[1].completed : '',
+        name: '已完成',
+        label: { color: '#57CBFF' }
+      },
+      {
+        value: state.dictSuspectList ? state.dictSuspectList[1].unfinished : '',
+        name: '待完成',
+        label: { color: '#FECF7A' }
+      }
+    ]
+  },
+  dictSuspectSource(state) {
+    return state.dictSuspectList.length ? state.dictSuspectList[1].list : []
+  },
   summaryList(state) {
     return [
       {
@@ -199,10 +222,79 @@ const getters = {
   }
 }
 
+const mutations = {
+  setGeneralView(state, val) {
+    state.generalView = val
+  },
+  setDataElementClassify(state, val) {
+    state.dataElementClassify = val
+  },
+  setQueryIndexInfo(state, val) {
+    state.queryIndexInfo = val
+  },
+  setSelectIndexSource(state, val) {
+    state.selectIndexSource = val
+  },
+  setSelectLiteratureInfo(state, val) {
+    state.selectLiteratureInfo = val
+  }
+}
+const actions = {
+  async getGeneralView({ state, commit }) {
+    const { value } = await getGeneralViewApi()
+    commit('setGeneralView', value)
+  },
+  async getDataElementClassify({ state, commit }) {
+    const { value } = await dataElementClassifyApi()
+    commit('setDataElementClassify', value)
+  },
+  async getQueryIndexInfo({ state, commit }) {
+    const { value } = await queryIndexInfoApi()
+    commit('setQueryIndexInfo', value)
+  },
+  async getSelectIndexSource({ state, commit }) {
+    const { value } = await selectIndexSourceApi()
+    commit('setSelectIndexSource', value)
+  },
+  async getSelectLiteratureInfo({ state, commit }) {
+    const { value } = await selectLiteratureInfoApi()
+    commit('setSelectLiteratureInfo', value)
+    console.log(state.selectLiteratureInfo, 89898989)
+  },
+  async queryDataset({ commit }) {
+    const result = await getModelDatasetApi()
+    const value = result.value.filter(item => item.source === 'BWD')
+    commit('setBwdData', value)
+    const detail = result.value.filter(item => item.source === 'DWD')
+    commit('setEventData', detail)
+  },
+  async queryDictData({ commit }) {
+    const { value } = await getDictDatasetApi()
+    commit('setDictData', value)
+  },
+  async querySuspectData({ commit }) {
+    const { value } = await getDictSuspectApi()
+    commit('setSuspectData', value)
+  }
+}
+
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions,
-  getters
+  getters,
+  setBwdData(state, value) {
+    state.bwdValueList = value
+  },
+  setEventData(state, value) {
+    state.eventValueList = value
+  },
+  setDictData(state, value) {
+    state.dictValueList = value
+  },
+  setSuspectData(state, value) {
+    state.dictSuspectList = value
+  }
 }

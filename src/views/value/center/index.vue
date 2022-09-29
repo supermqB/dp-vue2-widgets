@@ -13,8 +13,9 @@
           >版本管理</el-button
         >
         <el-button type="primary" @click="addVersion" :disabled="!currentDict"
-          >新增版本</el-button
-        >
+          >新增版本
+        </el-button>
+        <el-button type="primary" @click="importValue">批量导入</el-button>
       </div>
     </div>
     <div class="version">
@@ -127,16 +128,24 @@
       ></Upload>
     </Dialog>
     <Dialog
+      title="批量导入值域字典明细"
+      ref="importDictDialog"
+      @dialog-complete="onClickImportDict"
+    >
+      <Upload
+        ref="importDictValue"
+        v-model="importFile"
+        @onDownload="downloadTemplate"
+        class="upload"
+      ></Upload>
+    </Dialog>
+    <Dialog
       title="编辑值域字典明细"
       ref="editValueDialog"
       class="editValueDialog"
       @dialog-complete="onClickEditValue"
     >
-      <Form
-        :formCfg="dictValueFormCfg"
-        :formData="dictValueForm"
-        :formRule="valueRule"
-      >
+      <Form :formCfg="dictValueFormCfg" :formData="dictValueForm" :formRule="valueRule">
       </Form>
     </Dialog>
   </div>
@@ -162,6 +171,7 @@ import {
   editValueCfg,
   valueRule
 } from './config/valueForm'
+import { importDictValueApi } from '@/api/value'
 import { createNamespacedHelpers } from 'vuex'
 import { getMAxValueCodeApi, downloadTemplateApi } from '@/api/value'
 import { getMaxNumber } from '@/utils/lang'
@@ -191,7 +201,7 @@ export default {
       searchValueCfg,
       valueRule,
       batchFlag: false,
-      file: null,
+      importFile: null,
       RUNNINGSTATE
     }
   },
@@ -231,11 +241,7 @@ export default {
       if (!this.tableConfig.length) {
         return [
           {
-            colConfig: {
-              property: '',
-              label: '',
-              minWidth: 150
-            }
+            colConfig: { property: '', label: '', minWidth: 150 }
           }
         ]
       } else {
@@ -300,6 +306,22 @@ export default {
       'editDictValue',
       'deleteDictValue'
     ]),
+    importValue() {
+      this.importFile = null
+      if (this.$refs.importDictValue) this.$refs.importDictValue.clearFileName()
+      this.$refs.importDictDialog.toggleOpen()
+    },
+    async onClickImportDict() {
+      if (!this.importFile) {
+        this.$message.warning('请选择批量导入文件！')
+        return
+      }
+      const res = await importDictValueApi(this.importFile)
+      if (res.success) {
+        this.$message.success('批量导入文件成功！')
+        this.$refs.importDictDialog.toggleOpen()
+      }
+    },
     async downloadTemplate() {
       const { id } = this.currentVersionItem
       const res = await downloadTemplateApi(id)
@@ -353,7 +375,7 @@ export default {
         this.task.currentSuspect
       )
       this.setDictValueForm(form)
-      this.file = null
+      // this.file = null
       this.$refs.addValueDialog.toggleOpen()
     },
     editValue(row) {
@@ -393,9 +415,6 @@ export default {
       if (await this.deleteDictValue(term_code)) {
         this.$message.success('值域字典明细删除成功！')
       }
-    },
-    handleChange(file) {
-      this.file = file.name
     }
   },
   watch: {

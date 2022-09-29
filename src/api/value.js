@@ -110,6 +110,12 @@ export const addDictValueApi = ({ id, valueObject, suspectList }) => {
   })
 }
 
+export const importDictValueApi = file => {
+  return postWithFile('/import/dict', {
+    file
+  })
+}
+
 export const addDictValueManyApi = ({ id, file }) => {
   return postWithFile('/dict/addDictValueMany', {
     id,
