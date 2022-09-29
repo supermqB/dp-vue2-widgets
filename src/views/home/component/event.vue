@@ -58,8 +58,6 @@ export default {
         xAxis: {
           type: 'value',
           name: '组',
-          // max: 800,
-          // interval: 100,
           boundaryGap: [0, 0.01],
           nameTextStyle: {
             color: '#909399'
@@ -118,8 +116,6 @@ export default {
         xAxis: {
           type: 'value',
           name: '条',
-          // max: 800,
-          // interval: 100,
           boundaryGap: [0, 0.01],
           nameTextStyle: {
             color: '#909399'

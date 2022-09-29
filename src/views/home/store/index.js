@@ -55,16 +55,19 @@ const getters = {
   dictSuspectData(state) {
     return [
       {
-        value: state.dictSuspectList ? state.dictSuspectList[0].completed : '',
+        value: state.dictSuspectList ? state.dictSuspectList[1].completed : '',
         name: '已完成',
         label: { color: '#57CBFF' }
       },
       {
-        value: state.dictSuspectList ? state.dictSuspectList[0].unfinished : '',
+        value: state.dictSuspectList ? state.dictSuspectList[1].unfinished : '',
         name: '待完成',
         label: { color: '#FECF7A' }
       }
     ]
+  },
+  dictSuspectSource(state) {
+    return state.dictSuspectList.length ? state.dictSuspectList[1].list : []
   }
 }
 const mutations = {
@@ -78,7 +81,6 @@ const mutations = {
     state.dictValueList = value
   },
   setSuspectData(state, value) {
-    console.log(111, value)
     state.dictSuspectList = value
   }
 }

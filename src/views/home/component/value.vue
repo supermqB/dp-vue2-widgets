@@ -32,7 +32,7 @@
               <div class="count">
                 <i>{{
                   this.dictSuspectList.length
-                    ? this.dictSuspectList[0].completed
+                    ? this.dictSuspectList[1].completed
                     : ''
                 }}</i>
                 <span>条</span>
@@ -43,7 +43,7 @@
               <div class="count">
                 <i>{{
                   this.dictSuspectList.length
-                    ? this.dictSuspectList[0].unfinished
+                    ? this.dictSuspectList[1].unfinished
                     : ''
                 }}</i>
                 <span>条</span>
@@ -53,10 +53,14 @@
           <div class="suspectData">
             <div class="source">
               <p class="sourceTitle">疑似主要来源 (TOP10)</p>
-              <div class="sourceMsg" v-for="i in 10" :key="i">
-                <div class="ranking">{{ i }}</div>
-                <p>学历代码</p>
-                <span class="num">999</span>
+              <div
+                class="sourceMsg"
+                v-for="(item, index) in this.dictSuspectSource"
+                :key="index"
+              >
+                <div class="ranking">{{ index + 1 }}</div>
+                <p>{{ item.source }}</p>
+                <span class="num">{{ item.count }}</span>
                 <span class="unit">次</span>
               </div>
             </div>
@@ -76,7 +80,6 @@ export default {
   data() {
     return {
       datasetOption: {
-        // color: ['#FEB73A', '#4671FE'],
         color: [
           {
             colorStops: [
@@ -138,8 +141,6 @@ export default {
           {
             type: 'value', //左侧图
             boundaryGap: [0, 0.01],
-            // interval: 500,
-            // max: 2500,
             inverse: true,
             position: 'right',
             axisLine: { onZero: true },
@@ -155,8 +156,6 @@ export default {
           },
           {
             type: 'value',
-            // interval: 500,
-            // max: 2500,
             gridIndex: 1,
             boundaryGap: [0, 0.01],
             axisLine: { onZero: true },
@@ -285,7 +284,8 @@ export default {
       'dictValueListCatalog',
       'dictValueListDetail',
       'dictValueListTitle',
-      'dictSuspectData'
+      'dictSuspectData',
+      'dictSuspectSource'
     ])
   },
   methods: {
