@@ -14,7 +14,7 @@
     >
       <div
         class="treeNode"
-        slot-scope="{ node, data }"
+        slot-scope="{ data }"
         @click="
           event => (data.isTopCannotBeSelected ? event.stopPropagation() : null)
         "

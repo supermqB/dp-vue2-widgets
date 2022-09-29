@@ -1,91 +1,190 @@
+import {
+  getGeneralViewApi,
+  dataElementClassifyApi,
+  queryIndexInfoApi,
+  selectIndexSourceApi
+} from '@/api/home.js'
+
 const state = {
-  bwdDatasetValue: [250, 445, 645],
-  bwdDatasetTitle: ['医保版', '卫生版', '运营版'],
-  bwdDetailValue: [480, 320, 370],
-  bwdDetailTitle: ['医保版', '卫生版', '运营版'],
-  eventDatasetValue: [340, 640, 485],
-  eventDatasetTitle: ['医保版V1.0', '卫生版V1.0', '运营版V1.0'],
-  eventDetailValue: [480, 325, 720],
-  eventDetailTitle: ['医保版V1.0', '卫生版V1.0', '运营版V1.0'],
-  valueDatasetCatalog: [1150, 850, 1750, 1250, 1950, 1700, 950, 750],
-  valueDatasetDetail: [1450, 1550, 1100, 850, 2100, 1550, 1100, 850],
-  valueDatasetTitle: [
-    {
-      value: '国家标准',
-      textStyle: {
-        align: 'middle',
-        padding: [0, 90, 0, 0]
-      }
-    },
-    {
-      value: '国家强制标准',
-      textStyle: {
-        align: 'middle',
-        padding: [0, 90, 0, 0]
-      }
-    },
-    {
-      value: '国家推荐标准',
-      textStyle: {
-        align: 'middle',
-        padding: [0, 90, 0, 0]
-      }
-    },
-    {
-      value: '行业标准',
-      textStyle: {
-        align: 'middle',
-        padding: [0, 90, 0, 0]
-      }
-    },
-    {
-      value: '地方标准',
-      textStyle: {
-        align: 'middle',
-        padding: [0, 90, 0, 0]
-      }
-    },
-    {
-      value: '企业标准',
-      textStyle: {
-        align: 'middle',
-        padding: [0, 90, 0, 0]
-      }
-    },
-    {
-      value: '自定义标准',
-      textStyle: {
-        align: 'middle',
-        padding: [0, 90, 0, 0]
-      }
-    },
-    {
-      value: '团体标准',
-      textStyle: {
-        align: 'middle',
-        padding: [0, 90, 0, 0]
-      }
-    }
-  ],
-  valueSuspectDetail: [
-    { value: 289, name: '已完成', label: { color: '#57CBFF' } },
-    { value: 50, name: '待完成', label: { color: '#FECF7A' } }
-  ]
+  generalView: {},
+  dataElementClassify: [],
+  queryIndexInfo: [],
+  selectIndexSource: []
 }
+
 const mutations = {
-  setBwdData(state, value) {},
-  setEventData(state, value) {},
-  setvalueData(state, value) {}
+  setGeneralView(state, val) {
+    state.generalView = val
+  },
+  setDataElementClassify(state, val) {
+    state.dataElementClassify = val
+  },
+  setQueryIndexInfo(state, val) {
+    state.queryIndexInfo = val
+  },
+  setSelectIndexSource(state, val) {
+    state.selectIndexSource = val
+  }
 }
 const actions = {
-  async queryBwdData({ commit }) {},
-  async queryEventData({ commit }) {},
-  async queryvalueData({ commit }) {}
+  async getGeneralView({ state, commit }) {
+    const { value } = await getGeneralViewApi()
+    commit('setGeneralView', value)
+  },
+  async getDataElementClassify({ state, commit }) {
+    const { value } = await dataElementClassifyApi()
+    commit('setDataElementClassify', value)
+  },
+  async getQueryIndexInfo({ state, commit }) {
+    const { value } = await queryIndexInfoApi()
+    commit('setQueryIndexInfo', value)
+  },
+  async getSelectIndexSource({ state, commit }) {
+    const { value } = await selectIndexSourceApi()
+    commit('setSelectIndexSource', value)
+  }
 }
+
+const getters = {
+  summaryList(state) {
+    return [
+      {
+        label: '数据元',
+        name: 'dataElement',
+        contents: [
+          {
+            number: state.generalView.dataElementSize,
+            unit: '条',
+            style: {
+              color: '#1251CB'
+            }
+          }
+        ]
+      },
+      {
+        label: '值域',
+        name: 'value',
+        contents: [
+          {
+            label: '目录',
+            number: state.generalView.dictDirectorySize,
+            unit: '组',
+            style: {
+              color: '#008AAC'
+            }
+          },
+          {
+            label: '明细',
+            number: (state.generalView.dictDetailSize / 10000).toFixed(2),
+            unit: '万',
+            style: {
+              color: '#008AAC'
+            }
+          }
+        ]
+      },
+      {
+        label: '主索引',
+        name: 'mdm',
+        contents: [
+          {
+            label: '目录',
+            number: state.generalView.primeIndexSize,
+            unit: '组',
+            style: {
+              color: '#C044A0'
+            }
+          },
+          {
+            label: '明细',
+            number: (state.generalView.primeIndexTotalSize / 10000).toFixed(2),
+            unit: '万',
+            style: {
+              color: '#C044A0'
+            }
+          }
+        ]
+      },
+      {
+        label: '事件模型',
+        name: 'event',
+        contents: [
+          {
+            label: '数据集',
+            number: state.generalView.dwdModelSize,
+            unit: '组',
+            style: {
+              color: '#9D5E00'
+            }
+          },
+          {
+            label: '字段',
+            number: state.generalView.dwdFieldSize,
+            unit: '条',
+            style: {
+              color: '#9D5E00'
+            }
+          }
+        ]
+      },
+      {
+        label: '业务模型',
+        name: 'bwd',
+        contents: [
+          {
+            label: '数据集',
+            number: state.generalView.bwdModelSize,
+            unit: '组',
+            style: {
+              color: '#109880'
+            }
+          },
+          {
+            label: '字段',
+            number: (state.generalView.bwdFieldSize / 10000).toFixed(2),
+            unit: '万条',
+            style: {
+              color: '#109880'
+            }
+          }
+        ]
+      },
+      {
+        label: '文献库',
+        name: 'docs',
+        contents: [
+          {
+            label: '文献',
+            number: (state.generalView.literatureSize / 10000).toFixed(2),
+            unit: '万篇',
+            style: {
+              color: '#0085A0'
+            }
+          }
+        ]
+      }
+    ]
+  },
+  newDataElementClassify(state) {
+    return state.dataElementClassify.map(item => {
+      return {
+        value: item.count,
+        name: item.classificationFirst
+      }
+    })
+  },
+  newQueryIndexInfoX(state) {
+    return state.queryIndexInfo.map(item => item.indexName)
+  },
+  newQueryIndexInfoY(state) {
+    return state.queryIndexInfo.map(item => item.counts)
+  }
+}
+
 export default {
   namespaced: true,
   state,
-  // getters,
   mutations,
-  actions
+  actions,
+  getters
 }

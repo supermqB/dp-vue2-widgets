@@ -45,7 +45,6 @@
   justify-content: flex-start;
   width: 100%;
   li {
-    max-width: 220px;
     min-width: 190px;
     height: 124px;
     width: 15%;
