@@ -58,8 +58,8 @@ export default {
         xAxis: {
           type: 'value',
           name: '组',
-          max: 800,
-          interval: 100,
+          // max: 800,
+          // interval: 100,
           boundaryGap: [0, 0.01],
           nameTextStyle: {
             color: '#909399'
@@ -118,8 +118,8 @@ export default {
         xAxis: {
           type: 'value',
           name: '条',
-          max: 800,
-          interval: 100,
+          // max: 800,
+          // interval: 100,
           boundaryGap: [0, 0.01],
           nameTextStyle: {
             color: '#909399'
@@ -161,23 +161,35 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      'eventDatasetValue',
-      'eventDatasetTitle',
-      'eventDetailValue',
-      'eventDetailTitle'
+    ...mapState(['eventValueList']),
+    ...mapGetters([
+      'eventValueListCount',
+      'eventValueListSource',
+      'eventDetailListCount',
+      'eventDetailListSource'
     ])
   },
   methods: {
     ...mapMutations(['setEventData']),
-    ...mapActions(['queryDataset'])
+    ...mapActions(['queryDataset']),
+    updateEventList() {
+      this.datasetOption.yAxis.data = this.eventValueListSource
+      this.datasetOption.series[0].data = this.eventValueListCount
+      this.detailOption.yAxis.data = this.eventDetailListSource
+      this.detailOption.series[0].data = this.eventDetailListCount
+    }
   },
   async mounted() {
-    this.datasetOption.series[0].data = this.eventDatasetValue
-    this.detailOption.series[0].data = this.eventDetailValue
-    this.datasetOption.yAxis.data = this.eventDatasetTitle
-    this.detailOption.yAxis.data = this.eventDetailTitle
-    await this.queryDataset
+    await this.queryDataset()
+    this.updateEventList()
+  },
+  watch: {
+    eventValueList: {
+      handler() {
+        this.updateEventList()
+      },
+      deep: true
+    }
   }
 }
 </script>

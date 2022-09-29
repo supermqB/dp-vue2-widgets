@@ -58,8 +58,6 @@ export default {
         xAxis: {
           type: 'value',
           name: '组',
-          max: 800,
-          interval: 100,
           boundaryGap: [0, 0.01],
           nameTextStyle: {
             color: '#909399'
@@ -118,8 +116,6 @@ export default {
         xAxis: {
           type: 'value',
           name: '条',
-          max: 800,
-          interval: 100,
           boundaryGap: [0, 0.01],
           nameTextStyle: {
             color: '#909399'
@@ -161,27 +157,35 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      'bwdDatasetValue',
-      'bwdDatasetTitle',
-      'bwdDetailValue',
-      'bwdDetailTitle',
-      'bwdValueList'
+    ...mapState(['bwdValueList']),
+    ...mapGetters([
+      'bwdValueListCount',
+      'bwdValueListSource',
+      'bwdDetailListSource',
+      'bwdDetailListCount'
     ])
   },
   methods: {
     ...mapMutations(['setBwdData']),
-    ...mapActions(['queryDataset'])
+    ...mapActions(['queryDataset']),
+    updateBwdList() {
+      this.datasetOption.yAxis.data = this.bwdValueListSource
+      this.datasetOption.series[0].data = this.bwdValueListCount
+      this.detailOption.yAxis.data = this.bwdDetailListSource
+      this.detailOption.series[0].data = this.bwdDetailListCount
+    }
   },
   async mounted() {
-    // this.datasetOption.series[0].data = this.bwdDatasetValue
-    this.datasetOption.series[0].data = !this.bwdValueList.dataSetValue
-      ? []
-      : this.bwdValueList.dataSetValue.source
-    this.detailOption.series[0].data = this.bwdDetailValue
-    this.datasetOption.yAxis.data = this.bwdDatasetTitle
-    this.detailOption.yAxis.data = this.bwdDetailTitle
-    await this.queryDataset
+    await this.queryDataset()
+    this.updateBwdList()
+  },
+  watch: {
+    bwdValueList: {
+      handler() {
+        this.updateBwdList()
+      },
+      deep: true
+    }
   }
 }
 </script>
