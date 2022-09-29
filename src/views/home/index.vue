@@ -73,7 +73,7 @@
         this.showCard = 'taskManagement'
       },
        handleClick(tab) {
-        let main = document.querySelector('.el-main')
+        let main = document.querySelector('.components')
         let component = summaryList[tab.index].name
         let box = document.querySelector(`.${component}`)
         main.scrollTop = box.offsetTop +200
@@ -82,7 +82,7 @@
         this.showCard = 'log'
       },
       isSelected(){
-         let main = document.querySelector('.el-main')
+         let main = document.querySelector('.components')
          for (let i = 0; i < summaryComponentList.length; i++) {
            if(main.scrollTop > document.querySelector(`.${summaryList[i].name}`).offsetTop - 200) {
              for (let i = 0; i < summaryComponentList.length; i++) {
@@ -95,7 +95,7 @@
       }
     },
     mounted(){
-      document.querySelector('.el-main').addEventListener('scroll',() => {
+      document.querySelector('.components').addEventListener('scroll',() => {
         this.isSelected()
       })
     }
@@ -119,12 +119,6 @@
     box-sizing: border-box;
     align-items: center;
     border-bottom: 1px solid #eee;
-    position: fixed;
-    width: 100%;
-    margin-right: 20px;
-    left: -17px;
-    z-index: 99;
-    background-color: #fff;
     .badge {
       width: 100px;
       display: flex;
@@ -145,32 +139,24 @@
     }
   }
   .summary {
-    margin: 0 20px;
-    padding: 15px 10px 15px 35px;
+    padding: 10px;
     border-bottom: 1px solid #eee;
-    position: fixed;
     width: 100%;
-    margin-right: 20px;
-    left: -37px;
-    z-index: 99;
     background-color: #fff;
     box-sizing: border-box;
-    top: 89px;
   }
   .detail {
     flex: 1;
     display: flex;
     flex-direction: row;
     position: relative;
-    /* margin-right: 160px; */
     margin-top: 5px;
     overflow: auto;
     .components {
-      width: 88%;
-      height: 100%;
+      width: 89%;
+      height: 430px;
       box-sizing: border-box;
       overflow: auto;
-      margin-top: 200px;
     }
     ::v-deep .el-tabs {
       position: fixed;
@@ -178,7 +164,6 @@
       right: 0px; 
       width: 200px;
       height: 400px;
-      /* margin-left: -5px; */
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
