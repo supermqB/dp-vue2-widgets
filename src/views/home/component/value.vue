@@ -30,14 +30,22 @@
             <div class="completed">
               <p>已完成</p>
               <div class="count">
-                <i>289</i>
+                <i>{{
+                  this.dictSuspectList.length
+                    ? this.dictSuspectList[1].completed
+                    : ''
+                }}</i>
                 <span>条</span>
               </div>
             </div>
             <div class="undone">
               <p>待完成</p>
               <div class="count">
-                <i>50</i>
+                <i>{{
+                  this.dictSuspectList.length
+                    ? this.dictSuspectList[1].unfinished
+                    : ''
+                }}</i>
                 <span>条</span>
               </div>
             </div>
@@ -45,10 +53,14 @@
           <div class="suspectData">
             <div class="source">
               <p class="sourceTitle">疑似主要来源 (TOP10)</p>
-              <div class="sourceMsg" v-for="i in 10" :key="i">
-                <div class="ranking">{{ i }}</div>
-                <p>学历代码</p>
-                <span class="num">999</span>
+              <div
+                class="sourceMsg"
+                v-for="(item, index) in this.dictSuspectSource"
+                :key="index"
+              >
+                <div class="ranking">{{ index + 1 }}</div>
+                <p>{{ item.source }}</p>
+                <span class="num">{{ item.count }}</span>
                 <span class="unit">次</span>
               </div>
             </div>
@@ -68,7 +80,6 @@ export default {
   data() {
     return {
       datasetOption: {
-        // color: ['#FEB73A', '#4671FE'],
         color: [
           {
             colorStops: [
@@ -130,8 +141,6 @@ export default {
           {
             type: 'value', //左侧图
             boundaryGap: [0, 0.01],
-            interval: 500,
-            max: 2500,
             inverse: true,
             position: 'right',
             axisLine: { onZero: true },
@@ -147,8 +156,6 @@ export default {
           },
           {
             type: 'value',
-            interval: 500,
-            max: 2500,
             gridIndex: 1,
             boundaryGap: [0, 0.01],
             axisLine: { onZero: true },
@@ -178,7 +185,8 @@ export default {
               lineStyle: {
                 color: '#EEEEEE'
               }
-            }
+            },
+            data: []
           },
           {
             type: 'category',
@@ -271,23 +279,47 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      'valueDatasetCatalog',
-      'valueDatasetDetail',
-      'valueDatasetTitle',
-      'valueSuspectDetail'
+    ...mapState(['dictValueList', 'dictSuspectList']),
+    ...mapGetters([
+      'dictValueListCatalog',
+      'dictValueListDetail',
+      'dictValueListTitle',
+      'dictSuspectData',
+      'dictSuspectSource'
     ])
   },
   methods: {
-    ...mapMutations(['setvalueData']),
-    ...mapActions(['queryvalueData'])
+    ...mapMutations(['setDictData', 'setSuspectData']),
+    ...mapActions(['queryDictData', 'querySuspectData']),
+    updateDictList() {
+      this.datasetOption.series[0].data = this.dictValueListCatalog
+      this.datasetOption.series[1].data = this.dictValueListDetail
+      this.datasetOption.yAxis[0].data = this.dictValueListTitle
+      this.datasetOption.yAxis[1].data = this.dictValueListTitle
+    },
+    updateSuspectList() {
+      this.suspectOption.series[0].data = this.dictSuspectData
+    }
   },
   async mounted() {
-    this.datasetOption.series[0].data = this.valueDatasetCatalog
-    this.datasetOption.series[1].data = this.valueDatasetDetail
-    this.datasetOption.yAxis[1].data = this.valueDatasetTitle
-    this.suspectOption.series[0].data = this.valueSuspectDetail
-    await this.queryValueData
+    await this.queryDictData()
+    await this.querySuspectData()
+    this.updateDictList()
+    this.updateSuspectList()
+  },
+  watch: {
+    dictValueList: {
+      handler() {
+        this.updateDictList()
+      },
+      deep: true
+    },
+    dictSuspectList: {
+      handler() {
+        this.updateSuspectList()
+      },
+      deep: true
+    }
   }
 }
 </script>
