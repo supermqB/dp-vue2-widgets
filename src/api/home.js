@@ -1,6 +1,5 @@
 import request from '@/utils/request'
 
-<<<<<<< HEAD
 export const getGeneralViewApi = () => {
   return request({
     method: 'post',
@@ -33,7 +32,9 @@ export const selectLiteratureInfoApi = () => {
   return request({
     method: 'post',
     url: '/homePage/selectLiteratureInfo'
-=======
+  })
+}
+
 export const getModelDatasetApi = () => {
   return request({
     method: 'post',
@@ -50,6 +51,5 @@ export const getDictSuspectApi = () => {
   return request({
     method: 'post',
     url: '/homePage/queryValueDict'
->>>>>>> dev
   })
 }
