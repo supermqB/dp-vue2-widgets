@@ -27,3 +27,10 @@ export const selectIndexSourceApi = () => {
     url: '/homePage/selectIndexSource'
   })
 }
+
+export const selectLiteratureInfoApi = () => {
+  return request({
+    method: 'post',
+    url: '/homePage/selectLiteratureInfo'
+  })
+}

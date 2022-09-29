@@ -2,14 +2,16 @@ import {
   getGeneralViewApi,
   dataElementClassifyApi,
   queryIndexInfoApi,
-  selectIndexSourceApi
+  selectIndexSourceApi,
+  selectLiteratureInfoApi
 } from '@/api/home.js'
 
 const state = {
   generalView: {},
   dataElementClassify: [],
   queryIndexInfo: [],
-  selectIndexSource: []
+  selectIndexSource: [],
+  selectLiteratureInfo: []
 }
 
 const mutations = {
@@ -24,6 +26,9 @@ const mutations = {
   },
   setSelectIndexSource(state, val) {
     state.selectIndexSource = val
+  },
+  setSelectLiteratureInfo(state, val) {
+    state.selectLiteratureInfo = val
   }
 }
 const actions = {
@@ -42,6 +47,11 @@ const actions = {
   async getSelectIndexSource({ state, commit }) {
     const { value } = await selectIndexSourceApi()
     commit('setSelectIndexSource', value)
+  },
+  async getSelectLiteratureInfo({ state, commit }) {
+    const { value } = await selectLiteratureInfoApi()
+    commit('setSelectLiteratureInfo', value)
+    console.log(state.selectLiteratureInfo, 89898989)
   }
 }
 
@@ -178,6 +188,14 @@ const getters = {
   },
   newQueryIndexInfoY(state) {
     return state.queryIndexInfo.map(item => item.counts)
+  },
+  newSelectLiteratureInfo(state) {
+    return state.selectLiteratureInfo.map(item => {
+      return {
+        value: item.count,
+        name: item.docName
+      }
+    })
   }
 }
 
