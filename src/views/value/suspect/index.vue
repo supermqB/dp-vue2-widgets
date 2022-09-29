@@ -26,12 +26,11 @@
       :pageInfo="null"
       :isShowRadio="false"
       @row-changed="rowClick"
-      class="suspectTable">
+      class="suspectTable"
+    >
     </Table>
     <div v-else-if="currentVersionInfo.type === '多值字典'" class="multiple">
-      <el-collapse v-model="activeName"
-        v-if="suspectList.length"
-        accordion>
+      <el-collapse v-model="activeName" v-if="suspectList.length" accordion>
         <el-collapse-item
           v-for="(suspect, index) in suspectList"
           :title="curTask"
@@ -70,13 +69,14 @@ const config = [
   // },
   {
     colConfig: {
-      property: 'std_vlaue_code',
+      property: 'code',
       label: '代码',
       minWidth: 40
     }
-  },{
+  },
+  {
     colConfig: {
-      property: 'std_vlaue_name',
+      property: 'vlaue',
       label: '名称',
       minWidth: 60
     }
@@ -89,12 +89,14 @@ export default {
   computed: {
     ...mapState(['task', 'currentVersionInfo', 'dictValueList']),
     ...mapGetters(['filteredTask']),
-    suspectList: function() {
+    suspectList: function () {
       if (!this.curTask) return []
-      const [ source, name ] = this.curTask.split(':') 
-      const res = this.filteredTask.filter(item => item.name === name && item.source === source).reduce((x, y) => {
-        return [...x, ...y.suspectList]
-      }, [])
+      const [source, name] = this.curTask.split(':')
+      const res = this.filteredTask
+        .filter(item => item.name === name && item.source === source)
+        .reduce((x, y) => {
+          return [...x, ...y.suspectList]
+        }, [])
       return res.map(item => item.suspectObject)
     },
     curTask: {
@@ -116,7 +118,7 @@ export default {
     ...mapMutations(['setSuspectList', 'setCurrentTask', 'setCurrentSuspect']),
     rowClick(row) {
       this.setCurrentSuspect(row)
-    },
+    }
   },
   watch: {
     activeName: {
@@ -127,7 +129,7 @@ export default {
       }
     },
     currentVersion: {
-      handler(){
+      handler() {
         this.setSuspectList()
       }
     },
@@ -139,8 +141,8 @@ export default {
             this.$refs.suspectTable.setCurrentRow(this.suspectList[0])
         }
       }
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -150,7 +152,7 @@ export default {
   display: flex;
   flex-direction: column;
   p.listTitle {
-    margin-bottom:-1px;
+    margin-bottom: -1px;
     height: 40px;
     line-height: 40px;
     font-size: 15px;
@@ -206,5 +208,4 @@ export default {
   align-items: center;
   color: #909399;
 }
-
 </style>

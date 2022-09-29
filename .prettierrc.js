@@ -11,5 +11,6 @@ module.exports = {
   stylelintIntegration: false, //不让prettier使用stylelint的代码格式进行校验
   eslintIntegration: false, //不让prettier使用eslint的代码格式进行校验
   tslintIntegration: false, // 不让prettier使用tslint的代码格式进行校验
-  htmlWhitespaceSensitivity: 'css'
+  htmlWhitespaceSensitivity: 'css',
+  formatOnSave: true
 }
