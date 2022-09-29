@@ -128,6 +128,7 @@ export default {
 
 <style scopet lang="scss" >
   .boxCard {
+    margin-top: 41px;
     width: 100%;
     height: 100%;
     .el-card__header {

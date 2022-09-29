@@ -115,10 +115,16 @@
     display: flex;
     justify-content: space-between;
     flex-shrink: 0;
-    padding: 0 10px;
+    padding: 0 10px 0 25px;
     box-sizing: border-box;
     align-items: center;
     border-bottom: 1px solid #eee;
+    position: fixed;
+    width: 100%;
+    margin-right: 20px;
+    left: -17px;
+    z-index: 99;
+    background-color: #fff;
     .badge {
       width: 100px;
       display: flex;
@@ -140,8 +146,16 @@
   }
   .summary {
     margin: 0 20px;
-    padding: 15px 0;
+    padding: 15px 10px 15px 35px;
     border-bottom: 1px solid #eee;
+    position: fixed;
+    width: 100%;
+    margin-right: 20px;
+    left: -37px;
+    z-index: 99;
+    background-color: #fff;
+    box-sizing: border-box;
+    top: 89px;
   }
   .detail {
     flex: 1;
@@ -156,6 +170,7 @@
       height: 100%;
       box-sizing: border-box;
       overflow: auto;
+      margin-top: 200px;
     }
     ::v-deep .el-tabs {
       position: fixed;
