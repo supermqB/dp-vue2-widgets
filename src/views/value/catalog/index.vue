@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="value_ctlg_wrap">
     <Header
       title="值域目录"
       :actionTypes="['add', 'edit', 'output']"
@@ -210,7 +210,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wrap {
+::v-deep.value_ctlg_wrap {
   width: 100%;
   height: 100%;
   display: flex;
@@ -233,9 +233,11 @@ export default {
   }
   .tree {
     flex: 1 1 auto;
-    overflow: auto;
     padding-top: 5px;
     border-bottom: 1px solid #e5e5e5;
+    .treeNode .label {
+      width: 95%;
+    }
   }
 }
 
