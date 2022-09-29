@@ -1,36 +1,45 @@
 <template>
-  <div class="wrapper">
-    <div class="header">事件模型</div>
-    <div>
-      <VueEcharts
-        class="left"
-        :option="datasetOption"
-        :auto-resize="true"
-        style="width: 48%; height: 270px"
-      ></VueEcharts>
-      <VueEcharts
-        class="right"
-        :option="detailOption"
-        :auto-resize="true"
-        style="width: 48%; height: 270px"
-      ></VueEcharts>
+  <div class="event">
+    <div class="head">
+      <span>事件模型</span>
+    </div>
+    <div class="body">
+      <div class="left boxShadow">
+        <div class="title">
+          <div class="spot"></div>
+          <p>数据集</p>
+        </div>
+        <VueEcharts
+          :option="datasetOption"
+          :auto-resize="true"
+          style="width: 100%; height: 95%; top: -15%"
+        ></VueEcharts>
+      </div>
+      <div class="right boxShadow">
+        <div class="title">
+          <div class="spot"></div>
+          <p>数据明细</p>
+        </div>
+        <VueEcharts
+          :option="detailOption"
+          :auto-resize="true"
+          style="width: 100%; height: 95%; top: -15%"
+        ></VueEcharts>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapMutations, mapActions } =
+  createNamespacedHelpers('home')
+
 export default {
   data() {
     return {
       datasetOption: {
         color: ['#7696F1'],
-        title: {
-          text: '数据集',
-          padding: [15, 24],
-          textStyle: {
-            fontSize: 13
-          }
-        },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -49,32 +58,48 @@ export default {
         xAxis: {
           type: 'value',
           name: '组',
-          boundaryGap: [0, 0.01]
+          max: 800,
+          interval: 100,
+          boundaryGap: [0, 0.01],
+          nameTextStyle: {
+            color: '#909399'
+          },
+          axisLabel: {
+            color: '#909399'
+          },
+          splitLine: {
+            lineStyle: {
+              color: '#EEEEEE',
+              type: 'dashed'
+            }
+          }
         },
         yAxis: {
           type: 'category',
-          data: ['医保版V1.0', '卫生版V1.0', '运营版V1.0'],
+          inverse: true,
+          data: [],
           axisTick: {
             show: false
+          },
+          axisLabel: {
+            color: '#909399'
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#EEEEEE'
+            }
           }
         },
         series: [
           {
             type: 'bar',
             barWidth: 24,
-            data: [340, 640, 485]
+            data: []
           }
         ]
       },
       detailOption: {
         color: ['#AEC2FC'],
-        title: {
-          text: '数据明细',
-          padding: [15, 24],
-          textStyle: {
-            fontSize: 13
-          }
-        },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -93,55 +118,82 @@ export default {
         xAxis: {
           type: 'value',
           name: '条',
-          boundaryGap: [0, 0.01]
+          max: 800,
+          interval: 100,
+          boundaryGap: [0, 0.01],
+          nameTextStyle: {
+            color: '#909399'
+          },
+          axisLabel: {
+            color: '#909399'
+          },
+          splitLine: {
+            lineStyle: {
+              color: '#EEEEEE',
+              type: 'dashed'
+            }
+          }
         },
         yAxis: {
           type: 'category',
-          data: ['医保版V1.0', '卫生版V1.0', '运营版V1.0'],
+          inverse: true,
+          data: [],
           axisTick: {
             show: false
+          },
+          axisLabel: {
+            color: '#909399'
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#EEEEEE'
+            }
           }
         },
         series: [
           {
             type: 'bar',
             barWidth: 24,
-            data: [480, 325, 720]
+            data: []
           }
         ]
       }
     }
+  },
+  computed: {
+    ...mapState([
+      'eventDatasetValue',
+      'eventDatasetTitle',
+      'eventDetailValue',
+      'eventDetailTitle'
+    ])
+  },
+  methods: {
+    ...mapMutations(['setEventData']),
+    ...mapActions(['queryDataset'])
+  },
+  async mounted() {
+    this.datasetOption.series[0].data = this.eventDatasetValue
+    this.detailOption.series[0].data = this.eventDetailValue
+    this.datasetOption.yAxis.data = this.eventDatasetTitle
+    this.detailOption.yAxis.data = this.eventDetailTitle
+    await this.queryDataset
   }
 }
 </script>
 
 <style scoped lang="scss">
-.wrapper {
-  position: relative;
-  height: 350px;
-}
-.header {
-  margin-top: 22px;
-  font-size: 15px;
-  font-weight: 700;
-  font-family: PingFangSC-Medium;
-  color: rgba(0, 0, 0, 0.85);
-  width: 60px;
-  padding-bottom: 6px;
-  margin-left: 16px;
-  line-height: 16px;
-  border-bottom: 4px solid #1890ff;
-}
-.left {
-  left: 16px;
-  position: absolute;
-  bottom: 16px;
-  border: 1px solid #ebeef5;
-}
-.right {
-  right: 24px;
-  position: absolute;
-  bottom: 16px;
-  border: 1px solid #ebeef5;
+@import './commonCss.scss';
+.event {
+  padding: 16px;
+  .body {
+    display: flex;
+    height: 270px;
+  }
+  .left,
+  .right {
+    margin-right: 16px;
+    flex: 1;
+  }
 }
 </style>

@@ -328,7 +328,8 @@ export default {
   }
   .table_area {
     flex-grow: 1;
-    margin-top: -8px;
+    margin-top: -6px;
+    padding-bottom: 6px;
   }
 }
 </style>

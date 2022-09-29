@@ -37,91 +37,11 @@
 </template>
 
 <script>
+import Title from '../common/title.vue'
   export default {
     data() {
       return {
         defaultOption : {
-          // title: {
-          //   padding:20,
-          //   text: '医院种类比例',
-          //   left: 'left'
-          // },
-          // color: [
-          //   "#0277BC",
-          //   "#37B5D0",
-          //   "#8473FF",
-          //   "#417CFF",
-          //   "#D8C435",
-          //   "#029876",
-          //   "#4DDF8A",
-          // ],
-          // legend: {
-          //   orient: "vertical",
-          //   top: 50,
-          //   right: 0,
-          //   itemGap: 15,
-          //   itemHeight: 10,
-          //   itemWidth: 10,
-          //   icon: "circle",
-          //   textStyle: {
-          //     color: "white",
-          //     padding: [0, 8],
-          //   },
-          //   itemStyle: {
-          //     borderCap: "round",
-          //   },
-          // },
-          // tooltip: {
-          //   trigger: "item",
-          //   backgroundColor: "rgba(6, 57, 146, 0.86)",
-          //   borderColor: "#0091FF",
-          //   textStyle: {
-          //     color: "#fff",
-          //   },
-          //   formatter: ({ data: { name, value }, percent }) =>
-          //     `${name} ${Number(value).toLocaleString()} 条`,
-          // },
-          // series: [
-          //   {
-          //     name: "Ringpie Chart",
-          //     type: "pie",
-          //     radius: [35, 80],
-          //     clockwise: false,
-          //     label: {
-          //       alignTo: "edge",
-          //       minMargin: 15,
-          //       edgeDistance: 130,
-          //       formatter: "{b}\n\n{d}%",
-          //       color: "white",
-          //       },
-          //     labelLine: {
-          //       length2: 0,
-          //       maxSurfaceAngle: 80,
-          //     },
-          //     labelLayout: function (params) {
-          //       const chartWidth = container.value.offsetWidth;
-          //       const isLeft =
-          //         params.labelRect.x <
-          //         (chartWidth * parseInt(maskPos.value.left)) / 100;
-          //       const points = params.labelLinePoints;
-          //       points[2][0] = isLeft
-          //         ? params.labelRect.x
-          //         : params.labelRect.x + params.labelRect.width;
-          //       return {
-          //         labelLinePoints: points,
-          //       };
-          //     },
-          //   },      
-          
-          // ],
-          // title: {
-          //   padding:20,
-          //   text: '医院种类比例',
-          //   left: 'left',
-          //   textStyle:{
-          //     fontSize: 13
-          //   }
-          // },
           color: [
             "#90EAFF",
             "#43C9F9",
@@ -193,23 +113,15 @@
                 show:true,
                 formatter:'{b}: {d}%'
               },
-              labelLayout: function (params) {
-                const chartWidth = container.value.offsetWidth;
-                const isLeft =
-                  params.labelRect.x <
-                  (chartWidth * parseInt(maskPos.value.left)) / 100;
-                const points = params.labelLinePoints;
-                points[2][0] = isLeft
-                  ? params.labelRect.x
-                  : params.labelRect.x + params.labelRect.width;
-                return {
-                  labelLinePoints: points,
-                };
-              },
+
+           
             }
           ]
         }
       }
+    },
+    components:{
+      Title
     }
   }
 </script>

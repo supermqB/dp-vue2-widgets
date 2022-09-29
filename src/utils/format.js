@@ -9,3 +9,7 @@ export function unitFmt(num) {
   }
   return num + ''
 }
+export function stdTimeFmt(time) {
+  if (time.indexOf('.') == -1) return time
+  return time.substr(0, time.indexOf('.'))
+}

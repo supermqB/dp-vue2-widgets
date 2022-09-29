@@ -6,7 +6,7 @@
         <span class="value">{{ code }}</span>
       </p>
       <p>
-        标准来源:
+        标准分类:
         <span class="value">{{ sourceType }}</span>
       </p>
     </el-col>
@@ -19,13 +19,11 @@
     <el-col :span="11">
       <p>
         创建日期:
-        <span class="value">{{ getDate(createTime) }}
-        </span>
+        <span class="value">{{ getDate(createTime) }} </span>
       </p>
       <p>
         更新日期:
-        <span class="value">{{ getDate(updateTime) }}
-      </span>
+        <span class="value">{{ getDate(updateTime) }} </span>
       </p>
     </el-col>
     <el-col :span="13">
@@ -46,15 +44,15 @@ export default {
     },
     sourceType: {
       type: String,
-      default: '',
+      default: ''
     },
     basis: {
       type: String,
-      default: '',
+      default: ''
     },
     createTime: {
       type: String,
-      default: '',
+      default: ''
     },
     updateTime: {
       type: String,
@@ -70,9 +68,9 @@ export default {
       if (!str) return ''
       const arr = str.split('T')
       if (arr.length !== 2) return ''
-      return arr[0] 
+      return arr[0]
     }
-  },
+  }
 }
 </script>
 
@@ -89,11 +87,10 @@ export default {
   }
   p {
     width: 50%;
-    @include ellipsisNoWrap()
+    @include ellipsisNoWrap();
   }
   .value {
-    padding-left: 5px
+    padding-left: 5px;
   }
 }
-
 </sstyle>

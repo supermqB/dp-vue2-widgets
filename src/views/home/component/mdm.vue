@@ -197,63 +197,60 @@
         },
         pieOption :{
            color:[
-    '#57CBFF',
-    '#FECF7A'
-    ],
-   tooltip: {
-    trigger: 'item',
-    backgroundColor: 'rgba(31,45,61,0.65)',
-    textStyle: {
-      color: "#fff",
-    },
-    formatter: ({ data: { name, value } }) =>
-      `${name} ${Number(value).toLocaleString()} 条`,
-  },
-  legend: {
-    padding:[0,0,10,0],
-    top: 'bottom',
-    left:"center",
-    textStyle:{
-      fontSize:12,
-      padding: [0, 0]
-    },
-    icon:'circle',
-    itemGap: 20,
-    itemHeight: 10,
-    itemWidth: 10,
-    itemStyle: {
-      borderCap: "round",
-    },
-  },
-  series: [
-    {
-      name: 'Access From',
-      type: 'pie',
-      startAngle: 100,
-      center:['50%','40%'],
-      minAngle:5,
-      itemStyle:{
-        borderColor: '#fff',
-         borderWidth: 2
-      },
-      ceter:['100%,100%'],
-      radius: '55%',
-      data: [
-        { value: 120, name: '已完成',label:{color:'#57CBFF'} },
-        { value: 10, name: '待完成',label:{color:'#FECF7A'} }
-      ],
-      labelLine: {
-        length: 0,
-      },
-      label:{
-        lineHeight:15,
-        show:true,
-        formatter:'{b}\n{d}%'
-      }
-    }
-  ]
-
-
+            '#57CBFF',
+            '#FECF7A'
+            ],
+          tooltip: {
+            trigger: 'item',
+            backgroundColor: 'rgba(31,45,61,0.65)',
+            textStyle: {
+              color: "#fff",
+            },
+            formatter: ({ data: { name, value } }) =>
+              `${name} ${Number(value).toLocaleString()} 条`,
+          },
+          legend: {
+            padding:[0,0,10,0],
+            top: 'bottom',
+            left:"center",
+            textStyle:{
+              fontSize:12,
+              padding: [0, 0]
+            },
+            icon:'circle',
+            itemGap: 20,
+            itemHeight: 10,
+            itemWidth: 10,
+            itemStyle: {
+              borderCap: "round",
+            },
+          },
+          series: [
+            {
+              name: 'Access From',
+              type: 'pie',
+              startAngle: 100,
+              center:['50%','40%'],
+              minAngle:5,
+              itemStyle:{
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              radius: '55%',
+              data: [
+                { value: 120, name: '已完成',label:{color:'#57CBFF'} },
+                { value: 10, name: '待完成',label:{color:'#FECF7A'} }
+              ],
+              labelLine: {
+                length: 0,
+              },
+              label:{
+                lineHeight:15,
+                show:true,
+                formatter:'{b}\n{d}%'
+              }
+            }
+          ]
         }
       }
     }
