@@ -15,7 +15,7 @@
         <el-button type="primary" @click="addVersion" :disabled="!currentDict"
           >新增版本
         </el-button>
-        <el-button type="primary" @click="importValue">导入</el-button>
+        <el-button type="primary" @click="importValue">批量导入</el-button>
       </div>
     </div>
     <div class="version">
@@ -175,6 +175,7 @@ import {
   editValueCfg,
   valueRule
 } from './config/valueForm'
+import { importDictValueApi } from '@/api/value'
 import { createNamespacedHelpers } from 'vuex'
 import { getMAxValueCodeApi, downloadTemplateApi } from '@/api/value'
 import { getMaxNumber } from '@/utils/lang'
@@ -314,9 +315,21 @@ export default {
       'deleteDictValue'
     ]),
     importValue() {
+      this.importFile = null
+      if (this.$refs.importDictValue) this.$refs.importDictValue.clearFileName()
       this.$refs.importDictDialog.toggleOpen()
     },
-    onClickImportDict() {},
+    async onClickImportDict() {
+      if (!this.importFile) {
+        this.$message.warning('请选择批量导入文件！')
+        return
+      }
+      const res = await importDictValueApi(this.importFile)
+      if (res.success) {
+        this.$message.success('批量导入文件成功！')
+        this.$refs.importDictDialog.toggleOpen()
+      }
+    },
     async downloadTemplate() {
       const { id } = this.currentVersionItem
       const res = await downloadTemplateApi(id)
