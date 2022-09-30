@@ -22,9 +22,9 @@
         </div>
         <p class="sourceTitle">疑似主要来源 (TOP10)</p>
         <div class="source">
-          <div class="sourceMsg" v-for="i in 5" :key="i">
-            <i class="numIcon">{{ i }}</i>
-            <p>国家医保信息业务编码标准数据库-ICD-10医保2.0版国家医保信息业务编码…</p>
+          <div class="sourceMsg" v-for="(item,index) in selectIndexSource" :key="index">
+            <i class="numIcon">{{ index + 1 }}</i>
+            <p>{{ item }}</p>
           </div>
         </div>
       </div>
@@ -73,6 +73,8 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('home')
   export default {
     data() {
       return {
@@ -114,23 +116,7 @@
           xAxis: [
             {
               type: 'category',
-              data: [
-                '行政区划',
-                '居民(患者)',
-                '家庭',
-                '企事业单位',
-                '医疗卫生组织机构',
-                '医院科室',
-                '卫生人员',
-                '药品(西药中药都是hhhhhhhhhhhhhhh好药)',
-                '药品(中药饮片)',
-                '药物',
-                '西医疾病',
-                '中医疾病',
-                '中医证候',
-                '手术操作',
-                '医用卫生耗材'
-              ],
+              data:[],
               axisTick: {
                 show: false
               },
@@ -188,10 +174,7 @@
               name: '盒',
               type: 'bar',
               barWidth: '30%',
-              data: [
-                10, 52, 200, 334, 390, 330, 220, 52, 200, 334, 390, 330, 220, 52, 200,
-                334, 390, 330
-              ]
+              data:[],
             }
           ]
         },
@@ -252,6 +235,25 @@
             }
           ]
         }
+      }
+    },
+    computed:{
+      ...mapState(['selectIndexSource']),
+      ...mapGetters(['newQueryIndexInfoY','newQueryIndexInfoX'])
+    },
+    methods:{
+      ...mapActions(['getQueryIndexInfo','getSelectIndexSource'])
+    },
+   async mounted(){
+     await this.getQueryIndexInfo()
+     await this.getSelectIndexSource()
+    },
+    watch:{
+      newQueryIndexInfoX(value){
+        this.defaultOption.xAxis[0].data = value
+      },
+       newQueryIndexInfoY(value){
+        this.defaultOption.series[0].data = value
       }
     }
   }
