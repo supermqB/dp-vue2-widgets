@@ -340,6 +340,7 @@ export default {
     .left {
       margin-right: 16px;
       flex: 1;
+      width: 100%;
     }
     .left {
       align-items: center;

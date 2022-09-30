@@ -10,7 +10,7 @@
           <p>分类汇总</p>
         </div>
         <div class="content">
-            <div class="tag" v-for="(item,index) in newDataElementClassify" :key="index">
+            <div class="tag" v-for="(item,index) in newDataElementClassify.length?newDataElementClassify:9" :key="index">
               <div class="ribbon"></div>
               <div class="tagCountent">
                 <p>{{ item.name }}</p>
@@ -224,7 +224,8 @@ import Title from '../common/title.vue'
         align-items: center;
         padding-bottom: 16px;
         box-sizing: border-box;
-        height: 387px;
+        // height: 387px;
+        // min-height: 387px;
       }
     }
   }
