@@ -279,13 +279,17 @@ const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpe
     .topContent {
       height: 353px;
       margin-right: 16px;
+      box-sizing: border-box;
     }
     .bottonContent {
+      box-sizing: border-box;
       margin: 16px 16px 0 0;
       height: 380px;
       display: flex;
       .bottonLeft,.bottonRight {
         flex: 1;
+        width: 100%;
+        overflow: hidden;
       }
       .sourceTitle {
         font:normal 600 14px normal ;

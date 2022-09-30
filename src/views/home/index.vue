@@ -11,7 +11,7 @@
         </el-badge> -->
       </div>
     </div>
-    <div v-if="showCard === '' ">
+    <div v-if="showCard === '' " style="height:100%">
       <div class="summary" >
         <Summary :list="summaryList"></Summary>
       </div>
@@ -153,6 +153,7 @@
   .detail {
     flex: 1;
     display: flex;
+    justify-content: start;
     flex-direction: row;
     position: relative;
     margin-top: 5px;
@@ -161,16 +162,15 @@
     box-sizing: border-box;
     .components {
       width: 89%;
-      height: 430px;
+      height: 100%;
       box-sizing: border-box;
       overflow: auto;
     }
     ::v-deep .el-tabs {
-      position: fixed;
       top: 270px;
       right: 0px; 
       width: 200px;
-      height: 400px;
+      height: 100%;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
