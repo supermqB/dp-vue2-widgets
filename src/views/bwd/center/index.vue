@@ -3,7 +3,7 @@
     <div class="header">
       <div class="left">
         <Breadcrumb
-          baseLabel="BWD文件管理"
+          baseLabel="业务模型"
           :currentLabel="`${currentBwdItem.label}(${currentBwdItem.nameEn})`"
         ></Breadcrumb>
         <img :src="icon(currentBwdItem.state)" />

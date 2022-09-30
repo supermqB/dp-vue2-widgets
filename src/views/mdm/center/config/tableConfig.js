@@ -1,13 +1,13 @@
 export const tableConfigGen = function (columns) {
   return [
-    {
+/*     {
       colConfig: {
         property: 'id',
         label: '序号',
         width: 55,
         fixed: true
       }
-    },
+    }, */
     ...columns.map(({ property, label }, idx) => ({
       colConfig: {
         property,
