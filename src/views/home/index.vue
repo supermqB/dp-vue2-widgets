@@ -6,9 +6,9 @@
         <el-badge :value="100" :max="99">
           <img :src="TaskIcon" @click="taskManagementOpen" class="taskManagement"/>
         </el-badge>
-        <el-badge :value="12">
+        <!-- <el-badge :value="12">
           <img :src="LogIcon" @click="logOpen" class="taskManagement"/>
-        </el-badge>
+        </el-badge> -->
       </div>
     </div>
     <div v-if="showCard === '' ">
@@ -113,7 +113,6 @@
 <style scoped lang="scss">
 
 .homePageWrap {
-  display: flex;
   flex-direction: column;
   height: 100%;
   .header {
@@ -158,6 +157,8 @@
     position: relative;
     margin-top: 5px;
     overflow: auto;
+    height: 100%;
+    box-sizing: border-box;
     .components {
       width: 89%;
       height: 430px;

@@ -53,3 +53,16 @@ export const getDictSuspectApi = () => {
     url: '/homePage/queryValueDict'
   })
 }
+export const literatureStatisticsApi = () => {
+  return request({
+    method: 'post',
+    url: '/homePage/literatureStatistics'
+  })
+}
+export const suspectedPageInfoApi = data => {
+  return request({
+    method: 'post',
+    url: '/homePage/suspectedPageInfo ',
+    data
+  })
+}
