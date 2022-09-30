@@ -10,12 +10,12 @@
           <p>分类汇总</p>
         </div>
         <div class="content">
-            <div class="tag" v-for="i in 9" :key="i">
+            <div class="tag" v-for="(item,index) in newDataElementClassify" :key="index">
               <div class="ribbon"></div>
               <div class="tagCountent">
-                <p>表识类表识类表</p>
+                <p>{{ item.name }}</p>
                 <div class="count">
-                  <i>833</i>
+                  <i>{{ item.value }}</i>
                   <span>条</span>
                 </div>
               </div>
@@ -37,8 +37,14 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('home')
 import Title from '../common/title.vue'
   export default {
+    async created(){
+       await this.getDataElementClassify()
+        console.log(this.newDataElementClassify,6666);
+     },
     data() {
       return {
         defaultOption : {
@@ -87,17 +93,7 @@ import Title from '../common/title.vue'
               radius: '50%',
               minAngle:5,
               center:['50%','40%'],
-              data: [
-                { value: 1048, name: '标识' },
-                { value: 735, name: '卫生服务对象' },
-                { value: 580, name: '危险因素' },
-                { value: 484, name: '医学观察' },
-                { value: 484, name: '诊断评估' },
-                { value: 484, name: '计划与干预' },
-                { value: 484, name: '卫生经济' },
-                { value: 484, name: '卫生资源' },
-                { value: 300, name: '卫生管理' }
-              ],
+              data: [],
               labelLine: {
                 length: 15,
                 smooth:true,
@@ -120,8 +116,19 @@ import Title from '../common/title.vue'
         }
       }
     },
+    computed:{
+      ...mapGetters(['newDataElementClassify'])
+    },
+    methods:{
+      ...mapActions(['getDataElementClassify'])
+    },
     components:{
       Title
+    },
+    watch:{
+      newDataElementClassify(value){
+        this.defaultOption.series[0].data = value
+      },
     }
   }
 </script>
@@ -217,6 +224,7 @@ import Title from '../common/title.vue'
         align-items: center;
         padding-bottom: 16px;
         box-sizing: border-box;
+        height: 387px;
       }
     }
   }

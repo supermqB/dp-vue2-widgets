@@ -46,11 +46,13 @@
   import Value from './component/value.vue'
   import Breadcrumb from '@/components/header/Breadcrumb.vue'
   import Summary from './component/summary.vue'
-  import { summaryList, summaryComponentList } from './config'
+  import { summaryComponentList } from './config'
   import TaskIcon from '@/assets/images/home/task.svg'
   import LogIcon from '@/assets/images/home/log.svg'
   import TaskManagement from './component/taskManagement.vue'
   import Log from './component/log.vue'
+  import { createNamespacedHelpers } from 'vuex'
+  const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('home')
   export default {
     components: {
       Bwd, DataElement, Docs, Event, Mdm, Value, 
@@ -59,32 +61,35 @@
     data() {
       return {
         summaryComponentList,
-        summaryList,
         activeComponent: summaryComponentList[0].component,
         showCard:''
       }
     },
-    created() {
+    computed:{
+      ...mapGetters(['summaryList']),
+    },
+   async created() {
       this.TaskIcon = TaskIcon
       this.LogIcon = LogIcon
     },
     methods:{
+      ...mapActions(['getGeneralView']),
       taskManagementOpen(){
         this.showCard = 'taskManagement'
       },
        handleClick(tab) {
-        let main = document.querySelector('.el-main')
-        let component = summaryList[tab.index].name
+        let main = document.querySelector('.components')
+        let component = this.summaryList[tab.index].name
         let box = document.querySelector(`.${component}`)
-        main.scrollTop = box.offsetTop +200
+        main.scrollTop = box.offsetTop
       },
       logOpen(){
         this.showCard = 'log'
       },
       isSelected(){
-         let main = document.querySelector('.el-main')
+         let main = document.querySelector('.components')
          for (let i = 0; i < summaryComponentList.length; i++) {
-           if(main.scrollTop > document.querySelector(`.${summaryList[i].name}`).offsetTop - 200) {
+           if(main.scrollTop > document.querySelector(`.${this.summaryList[i].name}`).offsetTop - 200) {
              for (let i = 0; i < summaryComponentList.length; i++) {
               document.getElementById(`tab-${summaryComponentList[i].component}`).classList.remove('is-active')
             }
@@ -94,10 +99,11 @@
         }
       }
     },
-    mounted(){
-      document.querySelector('.el-main').addEventListener('scroll',() => {
+   async mounted(){
+      document.querySelector('.components').addEventListener('scroll',() => {
         this.isSelected()
       })
+      await this.getGeneralView()
     }
   }
 
@@ -115,7 +121,7 @@
     display: flex;
     justify-content: space-between;
     flex-shrink: 0;
-    padding: 0 10px;
+    padding: 0 10px 0 25px;
     box-sizing: border-box;
     align-items: center;
     border-bottom: 1px solid #eee;
@@ -139,21 +145,22 @@
     }
   }
   .summary {
-    margin: 0 20px;
-    padding: 15px 0;
+    padding: 10px;
     border-bottom: 1px solid #eee;
+    width: 100%;
+    background-color: #fff;
+    box-sizing: border-box;
   }
   .detail {
     flex: 1;
     display: flex;
     flex-direction: row;
     position: relative;
-    /* margin-right: 160px; */
     margin-top: 5px;
     overflow: auto;
     .components {
-      width: 88%;
-      height: 100%;
+      width: 89%;
+      height: 430px;
       box-sizing: border-box;
       overflow: auto;
     }
@@ -163,7 +170,6 @@
       right: 0px; 
       width: 200px;
       height: 400px;
-      /* margin-left: -5px; */
       display: flex;
       flex-direction: row;
       justify-content: flex-start;

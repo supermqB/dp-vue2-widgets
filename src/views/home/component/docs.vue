@@ -11,13 +11,13 @@
         </div>
         <el-table
           border
-          :data="tableData"
+          :data="selectLiteratureInfo"
           :header-cell-style="{height:'27px',padding:'0 0 0 15px'}"
           :cell-style="{height:'27px',padding:'0 0 0 15px'}"
           style="width: 350px">
-          <el-table-column prop="category" label="分类" width="259px">
+          <el-table-column prop="docName" label="分类" width="259px">
             </el-table-column>
-          <el-table-column prop="num" label="数量" width="90px">
+          <el-table-column prop="count" label="数量" width="90px">
             </el-table-column>
         </el-table>
       </div>
@@ -50,44 +50,12 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('home')
   export default {
     data() {
       return {
-        sliderValue:'0',
-        tableData: [{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        }],
+        // sliderValue:'0',
         defaultOption: {
            legend: {
             bottom: '5%',
@@ -95,7 +63,7 @@
             itemGap:16,
             itemHeight: 20,
             itemWidth: 10,
-          },
+            },
           series: [
             {
               name: 'Nightingale Chart',
@@ -114,13 +82,14 @@
                 length:10,
                 length2:45
               },
-              data: [
-                { value: 40, name: '专著' },
-                { value: 38, name: '论文' },
-                { value: 32, name: '期刊' },
-                { value: 30, name: '报纸' },
-                { value: 28, name: '其他' }
-              ]
+              data:[],
+              // data: [
+              //   { value: 40, name: '专著' },
+              //   { value: 38, name: '论文' },
+              //   { value: 32, name: '期刊' },
+              //   { value: 30, name: '报纸' },
+              //   { value: 28, name: '其他' }
+              // ]
             }
           ]
         },
@@ -262,6 +231,22 @@
             symbolSize: 5, //拐点大小
           }]
         }
+      }
+    },
+    computed:{
+      ...mapState(['selectLiteratureInfo']),
+      ...mapGetters(['newSelectLiteratureInfo'])
+    },
+    methods:{
+      ...mapActions(['getSelectLiteratureInfo'])
+    },
+    async mounted(){
+      await this.getSelectLiteratureInfo()
+    },
+    watch:{
+      newSelectLiteratureInfo(value){
+        this.defaultOption.series[0].data = value
+        console.log(newSelectLiteratureInfo);
       }
     }
   }
