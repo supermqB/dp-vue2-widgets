@@ -9,10 +9,10 @@
 
       <!-- 查询框 -->
       <div class="condition">
-        <Select :name="'模块'"></Select>
-        <Select :name="'来源'"></Select>
-        <Select :name="'操作人'"></Select>
-        <Select :name="'状态'"></Select>
+        <Select :name="'模块'" :options="modelOptions" @selected="selectModel"></Select>
+        <Input :name="'对象名称'" @inputVal="inputObJectName"></Input>
+        <Input :name="'操作人'" @inputVal="inputOperator"></Input>
+        <Select :name="'状态'" :options="stateOption" @selected='selectState'></Select>
         <el-button>查询</el-button>
       </div>
 
@@ -75,7 +75,7 @@
       
 
       <!-- 分页器 -->
-      <el-pagination
+      <!-- <el-pagination
         style="float: right; padding: 3px 0"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -84,19 +84,39 @@
         :page-size="100"
         layout="total, prev, pager, next, sizes, jumper"
         :total="400">
-      </el-pagination>
+      </el-pagination> -->
 
     </el-card>
 </template>
 
 <script>
 import Select from './component/select.vue'
+import Input from './component/input.vue'
 export default {
   components: {
-    Select
+    Select, Input
   },
+  
+ 
   data() {
     return {
+      taskOption:{
+        systemModule:'',
+        objectName:'',
+        operator:'',
+        taskStatus:''
+      },
+      modelOptions:[
+        {label:'请选择',value:'请选择'},
+        {label:'值域',value:'值域'},
+        {label:'主索引',value:'主索引'}
+      ],
+      stateOption:[
+        {label:'请选择',value:'请选择'},
+        {label:'已完成',value:1},
+        {label:'未完成',value:0}
+      ],
+
       tableData:[
         {
           1:213123214,
@@ -121,6 +141,26 @@ export default {
     closeCard() {
       this.$emit('update:showCard','')
       console.log(this.showCard);
+    },
+    selectModel(val){
+      this.taskOption.systemModule = val
+    },
+    selectState(val){
+       this.taskOption.taskStatus = val
+    },
+    inputObJectName(val){
+       this.taskOption.objectName = val
+    },
+    inputOperator(val){
+       this.taskOption.operator = val
+    }
+  },
+  watch:{
+    taskOption:{
+      handler(val){
+        console.log(val);
+      },
+      deep:true
     }
   }
 }

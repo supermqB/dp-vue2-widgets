@@ -1,7 +1,7 @@
 <template>
   <div class="input">
-    <div class="name">{{ name }}</div>
-    <el-input v-model="input" placeholder="请输入"></el-input>
+    <p class="name">{{ name }}</p>
+    <el-input v-model="input" placeholder="请输入" @change="inputVal"></el-input>
   </div>
 </template>
 
@@ -12,6 +12,16 @@ export default {
       type:String,
       require:true
     }
+  },
+  data(){
+    return {
+      input:''
+    }
+  },
+  methods:{
+    inputVal(val){
+      this.$emit('inputVal',val)
+    }
   }
 }
 </script>
@@ -19,11 +29,11 @@ export default {
 <style scoped lang="scss">
   .input {
     display: flex;
-    .name {
+    p {
       margin-right: 5px;
       line-height: 28px;
       font-size: 13px;
-      width: 35px;
+      white-space:nowrap;
     }
   }
 </style>

@@ -1,12 +1,13 @@
 <template>
   <div class="select">
     <p>{{ name }}</p>
-    <el-select v-model="value" placeholder="请选择">
+    <el-select v-model="value" placeholder="请选择"  @change="chanegVal">
       <el-option
         v-for="item in options"
         :key="item.value"
         :label="item.label"
-        :value="item.value">
+        :value="item.value"
+       >
       </el-option>
     </el-select>
   </div>
@@ -17,11 +18,23 @@ export default {
   props:{
     name:{
       type:String,
-      require:true
+      require:true,
+      default:() => {}
     },
-    value:{
+    options:{
       type:Array,
-      // require:true
+      // require:true,
+      default:() => {}
+    }
+  },
+  data(){
+    return {
+      value:''
+    }
+  },
+  methods:{
+    chanegVal(val){
+      this.$emit('selected',val)
     }
   }
 }

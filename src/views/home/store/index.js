@@ -6,7 +6,9 @@ import {
   selectLiteratureInfoApi,
   getModelDatasetApi,
   getDictDatasetApi,
-  getDictSuspectApi
+  getDictSuspectApi,
+  literatureStatisticsApi,
+  suspectedPageInfoApi
 } from '@/api/home.js'
 
 const state = {
@@ -18,7 +20,9 @@ const state = {
   bwdValueList: {},
   eventValueList: {},
   dictValueList: {},
-  dictSuspectList: []
+  dictSuspectList: [],
+  literatureStatistics: [],
+  suspectedPageInfo: []
 }
 const getters = {
   bwdValueListCount(state) {
@@ -219,6 +223,12 @@ const getters = {
         name: item.docName
       }
     })
+  },
+  newLiteratureStatisticsX(state) {
+    return state.literatureStatistics.map(item => item.date)
+  },
+  newLiteratureStatisticsY(state) {
+    return state.literatureStatistics.map(item => +item.totalcount)
   }
 }
 
@@ -237,6 +247,21 @@ const mutations = {
   },
   setSelectLiteratureInfo(state, val) {
     state.selectLiteratureInfo = val
+  },
+  setBwdData(state, value) {
+    state.bwdValueList = value
+  },
+  setEventData(state, value) {
+    state.eventValueList = value
+  },
+  setDictData(state, value) {
+    state.dictValueList = value
+  },
+  setSuspectData(state, value) {
+    state.dictSuspectList = value
+  },
+  setLiteratureStatistics(state, val) {
+    state.literatureStatistics = val
   }
 }
 const actions = {
@@ -275,6 +300,10 @@ const actions = {
   async querySuspectData({ commit }) {
     const { value } = await getDictSuspectApi()
     commit('setSuspectData', value)
+  },
+  async getLiteratureStatistics({ state, commit }) {
+    const { value } = await literatureStatisticsApi()
+    commit('setLiteratureStatistics', value)
   }
 }
 
@@ -284,17 +313,5 @@ export default {
   getters,
   mutations,
   actions,
-  getters,
-  setBwdData(state, value) {
-    state.bwdValueList = value
-  },
-  setEventData(state, value) {
-    state.eventValueList = value
-  },
-  setDictData(state, value) {
-    state.dictValueList = value
-  },
-  setSuspectData(state, value) {
-    state.dictSuspectList = value
-  }
+  getters
 }
