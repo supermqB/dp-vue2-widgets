@@ -47,9 +47,10 @@ const processColumnList = list => {
       valueRangeOrDomainVersion: item.valueDomainName
         ? `${item.valueDomainName}\x0a:\x0a${item.valueDomainVersion}`
         : item.valueRange,
-      primaryKeyFlag: parseInt(item.primaryKeyFlag),
-      requiredFlag: parseInt(item.requiredFlag),
-      indexFlag: parseInt(item.indexFlag)
+      primaryKeyFlag:
+        item.primaryKeyFlag === '' ? 0 : parseInt(item.primaryKeyFlag),
+      requiredFlag: item.requiredFlag === '' ? 0 : parseInt(item.requiredFlag),
+      indexFlag: item.indexFlag === '' ? 0 : parseInt(item.indexFlag)
     })
   })
 }
