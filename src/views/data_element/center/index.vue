@@ -350,7 +350,9 @@ export default {
         }
       }
       .el-form-item__label {
-        width: 45px;
+        width: 75px;
+        text-align: left;
+        padding-left: 10px;
       }
     }
   }

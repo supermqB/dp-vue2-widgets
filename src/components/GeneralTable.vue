@@ -49,7 +49,11 @@
                 rowAction({ rowIdx, row, column }, action.callback)
               "
             >
-              {{ action.name }}
+              {{
+                typeof action.name == 'function'
+                  ? action.name(row)
+                  : action.name
+              }}
             </component>
           </template>
         </el-table-column>
@@ -70,7 +74,7 @@
   </div>
 </template>
 <script>
-  import { cloneDeep } from 'lodash'
+import { cloneDeep } from 'lodash'
 export default {
   props: {
     tableConfig: {
@@ -95,7 +99,7 @@ export default {
     },
     isShowSelection: {
       type: Boolean,
-      default: () => true
+      default: () => false
     }
   },
   data() {
@@ -129,14 +133,15 @@ export default {
     setCurrentRow(row) {
       this.$refs.el_table.setCurrentRow(row)
     },
-    typeProps(obj, row) {
-      const res = cloneDeep(obj)
-      Object.keys(res).forEach(key => {
-        if (typeof res[key] === 'function') {
-          res[key] = res[key](row)
-        }
-      })
-      return res
+    typeProps(propDefs, row) {
+      let props = {}
+      for (let key in propDefs) {
+        props[key] =
+          typeof propDefs[key] == 'function'
+            ? propDefs[key](row)
+            : propDefs[key]
+      }
+      return props
     }
   }
 }
