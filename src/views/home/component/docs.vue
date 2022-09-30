@@ -136,8 +136,8 @@ const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpe
               "show": false
             },
             // 类目数据，在类目轴（type: 'category'）中有效。
-            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-
+            // data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            data:[]
           },
           //直角坐标系 grid 中的 y 轴，
           yAxis: {
@@ -164,55 +164,32 @@ const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpe
           series: [{
             type: 'line', //折线图是用折线将各个数据点标志连接起来的图表，用于展现数据的变化趋势。和全局设置type效果一样,表示折线图
             // 系列中的数据内容数组。数组项通常为具体的数据项。
-            data: [{
-                value: 1010,
-                date: '2019年1月'
-              },
-              {
-                value: 1020,
-                date: '2019年2月'
-              },
-              {
-                value: 1070,
-                date: '2019年3月'
-              },
-              {
-                value: 1001,
-                date: '2019年4月'
-              },
-              {
-                value: 1800,
-                date: '2019年5月'
-              },
-              {
-                value: 1200,
-                date: '2019年6月'
-              },
-              {
-                value: 1300,
-                date: '2019年7月'
-              },
-              {
-                value: 1030,
-                date: '2019年8月'
-              },
-              {
-                value: 1050,
-                date: '2019年9月'
-              },
-              {
-                value: 1800,
-                date: '2019年10月'
-              },
-              {
-                value: 1003,
-                date: '2019年11月'
-              },
-              {
-                value: 1070,
-                date: '2019年12月'
-              },
-            ],
+            data:[],
+            // data: [
+            //     1010,
+              
+            //     1020,
+              
+            //     1070,
+              
+            //     1001,
+              
+            //     180000,
+              
+            //     1200,
+              
+            //     1300,
+              
+            //     1030,
+              
+            //     1050,
+              
+            //     1800,
+              
+            //     1003,
+              
+            //     1070,
+            // ],
             // 折线条的样式
             lineStyle: {
               color: '#FFB600',
@@ -235,18 +212,24 @@ const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpe
     },
     computed:{
       ...mapState(['selectLiteratureInfo']),
-      ...mapGetters(['newSelectLiteratureInfo'])
+      ...mapGetters(['newSelectLiteratureInfo','newLiteratureStatisticsX','newLiteratureStatisticsY'])
     },
     methods:{
-      ...mapActions(['getSelectLiteratureInfo'])
+      ...mapActions(['getSelectLiteratureInfo','getLiteratureStatistics'])
     },
     async mounted(){
       await this.getSelectLiteratureInfo()
+      await this.getLiteratureStatistics()
     },
     watch:{
       newSelectLiteratureInfo(value){
         this.defaultOption.series[0].data = value
-        console.log(newSelectLiteratureInfo);
+      },
+      newLiteratureStatisticsX(value){
+        this.lineOption.xAxis.data = value
+      },
+      newLiteratureStatisticsY(value){
+        this.lineOption.series[0].data = value
       }
     }
   }

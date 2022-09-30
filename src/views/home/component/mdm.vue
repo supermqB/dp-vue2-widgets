@@ -43,14 +43,22 @@
             <div class="completed">
               <p>已完成</p>
               <div class="count">
-                <i>100</i>
+                <i>{{ 
+                  dictSuspectList.length
+                  ?dictSuspectList[0].completed
+                  :''
+                   }}</i>
                 <span>条</span>
               </div>
             </div>
             <div class="undone">
               <p>待完成</p>
               <div class="count">
-                <i>100</i>
+                <i>{{ 
+                  dictSuspectList.length
+                  ?dictSuspectList[0].unfinished 
+                  :''
+                  }}</i>
                 <span>条</span>
               </div>
             </div>
@@ -58,10 +66,10 @@
           <div class="rightSource">
             <div class="source">
               <p class="sourceTitle">疑似主要来源 (TOP10)</p>
-              <div class="sourceMsg" v-for="i in 10" :key="i">
-                <div class="ranking">{{ i }}</div>
-                <p>学历代码</p>
-                <span class="num">999</span>
+              <div class="sourceMsg" v-for="(item,index) in dictSuspectSource" :key="index">
+                <div class="ranking">{{ index + 1 }}</div>
+                <p>{{ item.source }}</p>
+                <span class="num">{{  item.count  }}</span>
                 <span class="unit">次</span>
               </div>
             </div>
@@ -238,8 +246,8 @@ const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpe
       }
     },
     computed:{
-      ...mapState(['selectIndexSource']),
-      ...mapGetters(['newQueryIndexInfoY','newQueryIndexInfoX'])
+      ...mapState(['selectIndexSource','dictSuspectList']),
+      ...mapGetters(['newQueryIndexInfoY','newQueryIndexInfoX','dictSuspectSource'])
     },
     methods:{
       ...mapActions(['getQueryIndexInfo','getSelectIndexSource'])
