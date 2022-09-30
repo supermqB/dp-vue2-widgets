@@ -55,41 +55,7 @@ const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpe
   export default {
     data() {
       return {
-        sliderValue:'0',
-        tableData: [{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        },{
-          category:'全部',
-          num:999
-        }],
+        // sliderValue:'0',
         defaultOption: {
            legend: {
             bottom: '5%',
@@ -97,7 +63,7 @@ const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpe
             itemGap:16,
             itemHeight: 20,
             itemWidth: 10,
-          },
+            },
           series: [
             {
               name: 'Nightingale Chart',
@@ -116,14 +82,14 @@ const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpe
                 length:10,
                 length2:45
               },
-              // data:[]
-              data: [
-                { value: 40, name: '专著' },
-                { value: 38, name: '论文' },
-                { value: 32, name: '期刊' },
-                { value: 30, name: '报纸' },
-                { value: 28, name: '其他' }
-              ]
+              data:[],
+              // data: [
+              //   { value: 40, name: '专著' },
+              //   { value: 38, name: '论文' },
+              //   { value: 32, name: '期刊' },
+              //   { value: 30, name: '报纸' },
+              //   { value: 28, name: '其他' }
+              // ]
             }
           ]
         },
