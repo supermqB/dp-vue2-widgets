@@ -165,31 +165,6 @@ const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpe
             type: 'line', //折线图是用折线将各个数据点标志连接起来的图表，用于展现数据的变化趋势。和全局设置type效果一样,表示折线图
             // 系列中的数据内容数组。数组项通常为具体的数据项。
             data:[],
-            // data: [
-            //     1010,
-              
-            //     1020,
-              
-            //     1070,
-              
-            //     1001,
-              
-            //     180000,
-              
-            //     1200,
-              
-            //     1300,
-              
-            //     1030,
-              
-            //     1050,
-              
-            //     1800,
-              
-            //     1003,
-              
-            //     1070,
-            // ],
             // 折线条的样式
             lineStyle: {
               color: '#FFB600',
@@ -241,11 +216,14 @@ const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpe
     padding: 16px;
     .contents {
       display: flex;
-      justify-content: space-evenly;
+      justify-content: space-between;
+      margin-left: -16px;
       .summarize,.proportion,.sum {
-        width: 390px;
+        // width: 390px;
+        width: 100%;
         height: 380px;
         display: flex;
+        margin-left: 16px;
         flex-direction: column;
         align-items: center;
       }

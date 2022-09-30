@@ -217,7 +217,8 @@ const getters = {
     return state.queryIndexInfo.map(item => item.counts)
   },
   newSelectLiteratureInfo(state) {
-    return state.selectLiteratureInfo.map(item => {
+    const arr = state.selectLiteratureInfo.filter(item => item.docType !== null)
+    return arr.map(item => {
       return {
         value: item.count,
         name: item.docName
