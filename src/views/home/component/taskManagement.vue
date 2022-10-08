@@ -13,61 +13,62 @@
         <Input :name="'对象名称'" @inputVal="inputObJectName"></Input>
         <Input :name="'操作人'" @inputVal="inputOperator"></Input>
         <Select :name="'状态'" :options="stateOption" @selected='selectState'></Select>
-        <el-button>查询</el-button>
+        <el-button @click="inquire">查询</el-button>
       </div>
 
       <!-- 表格展示内容 -->
        <el-table 
-        :data="tableData"
+        :data="suspectedPageInfo"
         border
         style="width: 100%">
         <el-table-column
           align="center"
-          prop="1"
           label="序号"
           width="80"
+          type="index"
+          :index="indexMethod"
           >
         </el-table-column>
         <el-table-column
           align="center"
-          prop="2"
+          prop="entity"
           label="系统模块"
           >
         </el-table-column>
         <el-table-column
           align="center"
-          prop="3"
+          prop="userName"
           label="任务来源"
           >
         </el-table-column>
         <el-table-column
           align="center"
-          prop="4"
+          prop="identifier"
           label="对象名称"
           >
         </el-table-column>
         <el-table-column
           align="center"
-          prop="5"
+          prop="nameCn"
           label="任务内容"
           >
         </el-table-column>
         <el-table-column
           align="center"
-          prop="6"
+          prop="updateBy"
           label="操作人"
           width="80"
           >
         </el-table-column>
         <el-table-column
           align="center"
-          prop="7"
+          prop="state"
           label="任务状态"
           >
         </el-table-column>
         <el-table-column
           align="center"
-          prop="8"
+          prop="updateTime"
           label="状态时间"
           >
         </el-table-column>
@@ -75,21 +76,23 @@
       
 
       <!-- 分页器 -->
-      <!-- <el-pagination
-        style="float: right; padding: 3px 0"
+      <el-pagination
+        style="float: right; padding: 20px 0 60px 0"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        :current-page.sync="pageInfo.curPage"
+        :page-size.sync="pageInfo.pageSize"
+        :page-sizes="[5, 10, 20, 50]"
         layout="total, prev, pager, next, sizes, jumper"
-        :total="400">
-      </el-pagination> -->
+        :total="pageInfo.totalSize">
+      </el-pagination>
 
     </el-card>
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('home')
 import Select from './component/select.vue'
 import Input from './component/input.vue'
 export default {
@@ -100,12 +103,6 @@ export default {
  
   data() {
     return {
-      taskOption:{
-        systemModule:'',
-        objectName:'',
-        operator:'',
-        taskStatus:''
-      },
       modelOptions:[
         {label:'请选择',value:'请选择'},
         {label:'值域',value:'值域'},
@@ -115,21 +112,11 @@ export default {
         {label:'请选择',value:'请选择'},
         {label:'已完成',value:1},
         {label:'未完成',value:0}
-      ],
-
-      tableData:[
-        {
-          1:213123214,
-          2:2131223123213214,
-          3:213132432423214,
-          4:'我为七万去问我去饿的武器去问我去饿武器回去我i的话',
-          5:21313232432423432432423214,
-          6:213123214,
-          7:213123232432432432414,
-          8:213125353214,
-        }
       ]
     }
+  },
+  computed:{
+      ...mapState(['taskOption','suspectedPageInfo','pageInfo']),
   },
   props: {
     showCard: {
@@ -138,6 +125,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['getSuspectedPageInfo','getSuspectedPageInfo']),
+    ...mapMutations(['setCurPage','setPageSize']),
     closeCard() {
       this.$emit('update:showCard','')
       console.log(this.showCard);
@@ -153,6 +142,20 @@ export default {
     },
     inputOperator(val){
        this.taskOption.operator = val
+    },
+    async inquire(){
+      await  this.getSuspectedPageInfo()
+    },
+    indexMethod(index){
+      return index + 1
+    },
+    //页
+    handleSizeChange(v){
+      this.getSuspectedPageInfo()
+    },
+    //展示条数
+    handleCurrentChange(v){
+      this.getSuspectedPageInfo()
     }
   },
   watch:{
@@ -162,15 +165,19 @@ export default {
       },
       deep:true
     }
+  },
+  async mounted(){
+   await this.getSuspectedPageInfo()
+   await console.log(this.suspectedPageInfo,22333333);
   }
 }
 </script>
 
 <style scopet lang="scss" >
   .boxCard {
-    margin-top: 41px;
-    width: 100%;
-    height: 100%;
+    // width: 100%;
+    // height: 80%;
+    overflow: scroll;
     .el-card__header {
       padding: 5px 10px;
     }

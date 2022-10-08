@@ -341,6 +341,7 @@ export default {
       margin-right: 16px;
       flex: 1;
       width: 100%;
+      overflow: hidden;
     }
     .left {
       align-items: center;

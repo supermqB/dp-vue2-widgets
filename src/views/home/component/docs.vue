@@ -10,11 +10,10 @@
           <p>分类汇总</p>
         </div>
         <el-table
-          border
-          :data="selectLiteratureInfo"
+          :data="tableSelectLiteratureInfo"
           :header-cell-style="{height:'27px',padding:'0 0 0 15px'}"
           :cell-style="{height:'27px',padding:'0 0 0 15px'}"
-          style="width: 350px">
+          style="width: 350px; height:100%">
           <el-table-column prop="docName" label="分类" width="259px">
             </el-table-column>
           <el-table-column prop="count" label="数量" width="90px">
@@ -55,9 +54,9 @@ const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpe
   export default {
     data() {
       return {
-        // sliderValue:'0',
         defaultOption: {
            legend: {
+            selectedMode: false,
             bottom: '5%',
             icon:'circle',
             itemGap:16,
@@ -187,7 +186,7 @@ const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpe
     },
     computed:{
       ...mapState(['selectLiteratureInfo']),
-      ...mapGetters(['newSelectLiteratureInfo','newLiteratureStatisticsX','newLiteratureStatisticsY'])
+      ...mapGetters(['newSelectLiteratureInfo','newLiteratureStatisticsX','newLiteratureStatisticsY','tableSelectLiteratureInfo'])
     },
     methods:{
       ...mapActions(['getSelectLiteratureInfo','getLiteratureStatistics'])
@@ -212,13 +211,19 @@ const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpe
 
 <style scoped lang="scss">
   @import "./commonCss.scss";
+  // 1px solid #EBEEF5
   .docs {
     padding: 16px;
     .contents {
       display: flex;
       justify-content: space-between;
       margin-left: -16px;
+      .el-table--border::after {
+        height: 0;
+      }
+      
       .summarize,.proportion,.sum {
+        padding: 0 16px;
         // width: 390px;
         width: 100%;
         height: 380px;
@@ -227,7 +232,9 @@ const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpe
         flex-direction: column;
         align-items: center;
       }
-      
+      ::v-deep.summarize .el-table__cell{
+        border: 1px solid #EBEEF5;
+      }
     }
   }
 

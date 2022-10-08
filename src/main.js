@@ -6,9 +6,12 @@ import './lib/ui/prod' // UI 正式库
 
 Vue.config.productionTip = false
 
+import moment from 'moment'
 import tab from './utils/tab'
 
 Vue.prototype.$tab = tab
+Vue.prototype.$moment = moment
+moment.locale('zh-cn')
 
 import App from './App.vue'
 import router from './router'

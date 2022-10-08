@@ -10,6 +10,7 @@ import {
   literatureStatisticsApi,
   suspectedPageInfoApi
 } from '@/api/home.js'
+import moment from 'moment'
 
 const state = {
   generalView: {},
@@ -22,7 +23,18 @@ const state = {
   dictValueList: {},
   dictSuspectList: [],
   literatureStatistics: [],
-  suspectedPageInfo: []
+  suspectedPageInfo: [],
+  pageInfo: {
+    curPage: 1,
+    pageSize: 5,
+    totalSize: 400
+  },
+  taskOption: {
+    systemModule: '',
+    objectName: '',
+    operator: '',
+    taskStatus: ''
+  }
 }
 const getters = {
   bwdValueListCount(state) {
@@ -82,6 +94,9 @@ const getters = {
   },
   dictSuspectSource(state) {
     return state.dictSuspectList.length ? state.dictSuspectList[1].list : []
+  },
+  mdmSuspectSource(state) {
+    return state.dictSuspectList.length ? state.dictSuspectList[0].list : []
   },
   summaryList(state) {
     return [
@@ -230,6 +245,9 @@ const getters = {
   },
   newLiteratureStatisticsY(state) {
     return state.literatureStatistics.map(item => +item.totalcount)
+  },
+  tableSelectLiteratureInfo(state) {
+    return state.selectLiteratureInfo.filter(item => item.docType !== null)
   }
 }
 
@@ -263,6 +281,28 @@ const mutations = {
   },
   setLiteratureStatistics(state, val) {
     state.literatureStatistics = val
+  },
+  setSuspectedPageInfo(state, val) {
+    state.suspectedPageInfo = val
+  },
+  newSuspectedPageInfo(state) {
+    return state.suspectedPageInfo.forEach(
+      item => (
+        (item.state = Number(item.state) ? '已完成' : '未完成'),
+        (item.updateTime = moment(item.updateTime).format(
+          'YYYY年MM月DD日HH时mm分'
+        ))
+      )
+    )
+  },
+  setTotalSize(state, val) {
+    state.pageInfo.totalSize = val
+  },
+  setCurPage(state, val) {
+    state.pageInfo.curPage = val
+  },
+  setPageSize(state, val) {
+    state.pageInfo.pageSize = val
   }
 }
 const actions = {
@@ -305,6 +345,16 @@ const actions = {
   async getLiteratureStatistics({ state, commit }) {
     const { value } = await literatureStatisticsApi()
     commit('setLiteratureStatistics', value)
+  },
+  async getSuspectedPageInfo({ state, commit }) {
+    const { value } = await suspectedPageInfoApi(state.taskOption, {
+      size: state.pageInfo.pageSize,
+      current: state.pageInfo.curPage
+    })
+    commit('setSuspectedPageInfo', value.list)
+    commit('newSuspectedPageInfo')
+    commit('setTotalSize', value.total)
+    console.log(value, 222222222222)
   }
 }
 

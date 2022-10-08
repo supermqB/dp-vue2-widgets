@@ -59,10 +59,11 @@ export const literatureStatisticsApi = () => {
     url: '/homePage/literatureStatistics'
   })
 }
-export const suspectedPageInfoApi = data => {
+export const suspectedPageInfoApi = (data = {}, params = {}) => {
   return request({
     method: 'post',
-    url: '/homePage/suspectedPageInfo ',
-    data
+    url: '/homePage/suspectedPageInfo',
+    data,
+    params
   })
 }

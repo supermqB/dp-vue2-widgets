@@ -11,11 +11,11 @@
         </el-badge> -->
       </div>
     </div>
-    <div v-if="showCard === '' " style="height:100%">
+    <div v-if="showCard === '' " style="height:calc(100% - 41px)">
       <div class="summary" >
         <Summary :list="summaryList"></Summary>
       </div>
-      <div class="detail">
+      <div class="detail" style="height: calc(100% - 150px);">
         <div class="components">
           <component
             v-for="item in summaryComponentList"

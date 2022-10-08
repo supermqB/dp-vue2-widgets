@@ -20,7 +20,7 @@
           <div class="spot"></div>
           <p>依据排行</p>
         </div>
-        <p class="sourceTitle">疑似主要来源 (TOP10)</p>
+        <p class="sourceTitle">依据排行</p>
         <div class="source">
           <div class="sourceMsg" v-for="(item,index) in selectIndexSource" :key="index">
             <i class="numIcon">{{ index + 1 }}</i>
@@ -65,8 +65,8 @@
           </div>
           <div class="rightSource">
             <div class="source">
-              <p class="sourceTitle">疑似主要来源 (TOP10)</p>
-              <div class="sourceMsg" v-for="(item,index) in dictSuspectSource" :key="index">
+              <p class="sourceTitle">疑似主要来源</p>
+              <div class="sourceMsg" v-for="(item,index) in mdmSuspectSource" :key="index">
                 <div class="ranking">{{ index + 1 }}</div>
                 <p>{{ item.source }}</p>
                 <span class="num">{{  item.count  }}</span>
@@ -247,7 +247,7 @@ const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpe
     },
     computed:{
       ...mapState(['selectIndexSource','dictSuspectList']),
-      ...mapGetters(['newQueryIndexInfoY','newQueryIndexInfoX','dictSuspectSource'])
+      ...mapGetters(['newQueryIndexInfoY','newQueryIndexInfoX','mdmSuspectSource'])
     },
     methods:{
       ...mapActions(['getQueryIndexInfo','getSelectIndexSource'])
