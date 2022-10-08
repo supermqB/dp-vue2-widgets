@@ -25,7 +25,7 @@
       <div class="left boxShadow">
         <div class="title">
           <div class="spot"></div>
-          <p>医院种类比例</p>
+          <p>分类占比</p>
         </div>
         <VueEcharts
           :option="defaultOption"
@@ -70,6 +70,7 @@ import Title from '../common/title.vue'
               `${name} ${Number(value).toLocaleString()} 条`,
           },
           legend: {
+            selectedMode: false,
             top: 'bottom',
             textStyle:{
               fontSize:11

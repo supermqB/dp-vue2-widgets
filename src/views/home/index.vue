@@ -3,19 +3,19 @@
     <div class="header">
       <Breadcrumb baseLabel="首页"></Breadcrumb>
       <div class="badge">
-        <el-badge :value="100" :max="99">
+        <!-- <el-badge :value="100" :max="99"> -->
           <img :src="TaskIcon" @click="taskManagementOpen" class="taskManagement"/>
-        </el-badge>
+        <!-- </el-badge> -->
         <!-- <el-badge :value="12">
           <img :src="LogIcon" @click="logOpen" class="taskManagement"/>
         </el-badge> -->
       </div>
     </div>
-    <div v-if="showCard === '' " style="height:100%">
+    <div v-if="showCard === '' " style="height:calc(100% - 41px)">
       <div class="summary" >
         <Summary :list="summaryList"></Summary>
       </div>
-      <div class="detail">
+      <div class="detail" style="height: calc(100% - 150px);">
         <div class="components">
           <component
             v-for="item in summaryComponentList"
@@ -115,6 +115,8 @@
 .homePageWrap {
   flex-direction: column;
   height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
   .header {
     height: 41px;
     display: flex;
