@@ -35,7 +35,7 @@
     <div class="content">
       <Table
         ref="columnTable"
-        :tableConfig="tableCfg"
+        :tableConfig="tableConfig"
         :tableData="columnList"
         :pageInfo="pageInfo"
         @row-changed="val => setCurrentColumn(val.id)"
@@ -92,11 +92,10 @@
 import Form from '@/components/Form.vue'
 import Table from '@/components/GeneralTable.vue'
 import formCfg from './config/searchForm'
-import tableConfig from './config/tableColumn'
+import tableConfigGen from './config/tableColumn'
 import Dialog from '@/components/Dialog.vue'
 import Breadcrumb from '@/components/header/Breadcrumb.vue'
 import State from '@/components/state/IsRunning.vue'
-import { RUNNINGSTATE } from '@/utils/const'
 import { columnCfg, columnRule } from './config/columnForm'
 import { adSearchCfg } from './config/adSearchForm'
 import Upload from '@/components/form/Upload.vue'
@@ -117,11 +116,10 @@ export default {
   data() {
     return {
       formCfg,
-      tableConfig,
+      tableConfig: tableConfigGen.apply(this),
       columnCfg,
       columnRule,
       adSearchCfg,
-      RUNNINGSTATE,
       file: null
     }
   },
@@ -138,43 +136,7 @@ export default {
       currentCatalog: 'currentCatalog',
       valueVersionList: 'valueVersionList',
       dataElement: 'dataElement'
-    }),
-    tableCfg() {
-      if (!this.tableConfig.length) {
-        return [
-          {
-            colConfig: {
-              property: '',
-              label: '',
-              minWidth: 150
-            }
-          }
-        ]
-      } else {
-        return [
-          ...this.tableConfig,
-          {
-            colConfig: {
-              property: 'state',
-              label: '操作',
-              minWidth: 150,
-              fixed: 'right'
-            },
-            actions: [
-              {
-                type: 'el-button',
-                name: '编辑',
-                typeProps: {
-                  type: 'text',
-                  disabled: this.currentCatalogItem.state === RUNNINGSTATE
-                },
-                callback: (index, data, row) => this.onclickEditColumn(row)
-              }
-            ]
-          }
-        ]
-      }
-    }
+    })
   },
   mounted() {},
   methods: {

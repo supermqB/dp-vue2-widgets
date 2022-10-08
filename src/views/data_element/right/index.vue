@@ -46,7 +46,7 @@ export default {
     #tab-1 {
       margin-left: 0px;
     }
-    .el-tabs__item {
+/*     .el-tabs__item {
       height: 28px;
       margin: 6px;
       line-height: 26px;
@@ -54,7 +54,7 @@ export default {
       &.is-active {
         border: 1px solid #1890ff;
       }
-    }
+    } */
   }
 
   .el-tabs__item {

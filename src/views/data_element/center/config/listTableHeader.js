@@ -1,13 +1,13 @@
 export function getListTableHeader() {
   return [
-    {
+    /*     {
       colConfig: {
         property: 'id',
         label: '序号',
         width: 55,
         fixed: true
       }
-    },
+    }, */
     {
       colConfig: {
         property: 'identifier',
@@ -42,7 +42,21 @@ export function getListTableHeader() {
         property: 'nameCn',
         label: '名称',
         minWidth: 200
-      }
+      },
+      actions: [
+        {
+          type: 'el-button',
+          typeProps: {
+            type: 'text',
+            round: false
+          },
+          id: 'edit',
+          name: row => row.nameCn,
+          callback: (idx, tableData) => {
+            this.openEditDialog()
+          }
+        }
+      ]
     },
     {
       colConfig: {
@@ -95,8 +109,8 @@ export function getListTableHeader() {
           return { 0: '停用', 1: '待提交', 2: '待审核', 3: '启用' }[val]
         }
       }
-    },
-    {
+    } /*,
+     {
       colConfig: {
         property: '',
         label: '操作',
@@ -117,6 +131,6 @@ export function getListTableHeader() {
           }
         }
       ]
-    }
+    } */
   ]
 }

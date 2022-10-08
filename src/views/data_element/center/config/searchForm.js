@@ -12,7 +12,7 @@ export default function getFormConfig() {
         { label: '日期型(D)', value: 'D' },
         { label: '时间型(DT)', value: 'DT' }
       ],
-      label: '类型',
+      label: '类\xa0\xa0\xa0\xa0型',
       id: 'type',
       elOptions: {
         clearable: true
@@ -31,7 +31,7 @@ export default function getFormConfig() {
         placeholder: '请输入并选择',
         clearable: true
       },
-      label: '词性',
+      label: '实体类型',
       id: 'wordSpeech'
     },
     {
@@ -46,7 +46,7 @@ export default function getFormConfig() {
       elOptions: {
         clearable: true
       },
-      label: '状态',
+      label: '状\xa0\xa0\xa0\xa0态',
       id: 'state'
     }
   ]
