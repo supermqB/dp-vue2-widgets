@@ -61,7 +61,7 @@ const getters = {
         value: item.desc,
         textStyle: {
           align: 'middle',
-          padding: [0, 90, 0, 0]
+          padding: [0, 75, 0, 0]
         }
       }
     })

@@ -114,10 +114,10 @@ export default {
         },
         legend: {
           data: ['值域目录（组）', '值域明细（条）'],
-          width: '500px',
+          width: '100%',
           orient: 'horizontal',
-          itemGap: 80,
-          left: '35%'
+          // itemGap: 40,
+          left: '34%'
         },
         axisPointer: {
           link: { xAxisIndex: 'all' }
@@ -125,15 +125,15 @@ export default {
         grid: [
           {
             left: '3%',
-            right: '50%',
             bottom: '3%',
-            width: '45%',
+            width: '40%',
             containLabel: true
           },
           {
             right: '3%',
+            left: '45%',
             bottom: '3%',
-            width: '45%',
+            width: '50%',
             containLabel: true
           }
         ],
@@ -341,6 +341,7 @@ export default {
       margin-right: 16px;
       flex: 1;
       width: 100%;
+      overflow: hidden;
     }
     .left {
       align-items: center;
