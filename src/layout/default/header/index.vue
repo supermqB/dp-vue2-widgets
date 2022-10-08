@@ -18,7 +18,6 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  height: 48px;
   background: #001529;
   display: flex;
   justify-content: space-between;
