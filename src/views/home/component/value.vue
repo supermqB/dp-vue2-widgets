@@ -52,7 +52,7 @@
           </div>
           <div class="suspectData">
             <div class="source">
-              <p class="sourceTitle">疑似主要来源 (TOP10)</p>
+              <p class="sourceTitle">疑似主要来源</p>
               <div
                 class="sourceMsg"
                 v-for="(item, index) in this.dictSuspectSource"
@@ -143,9 +143,14 @@ export default {
             boundaryGap: [0, 0.01],
             inverse: true,
             position: 'right',
-            axisLine: { onZero: true },
             axisLabel: {
               color: '#606266'
+            },
+            max: value => {
+              return isNaN(value.max) ? 250 : null
+            },
+            min: value => {
+              return isNaN(value.min) ? 0 : null
             },
             splitLine: {
               lineStyle: {
@@ -158,10 +163,16 @@ export default {
             type: 'value',
             gridIndex: 1,
             boundaryGap: [0, 0.01],
-            axisLine: { onZero: true },
             axisLabel: {
               color: '#606266'
             },
+            max: value => {
+              return isNaN(value.max) ? 30000 : null
+            },
+            min: value => {
+              return isNaN(value.min) ? 0 : null
+            },
+            splitNumber: 4,
             splitLine: {
               lineStyle: {
                 color: '#EEEEEE',
@@ -247,7 +258,8 @@ export default {
           itemWidth: 10,
           itemStyle: {
             borderCap: 'round'
-          }
+          },
+          selectedMode: false
         },
         series: [
           {
