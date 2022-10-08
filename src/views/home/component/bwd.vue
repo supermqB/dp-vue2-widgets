@@ -202,6 +202,8 @@ export default {
   .right {
     margin-right: 16px;
     flex: 1;
+    width: 100%;
+    overflow: hidden;
   }
 }
 </style>
