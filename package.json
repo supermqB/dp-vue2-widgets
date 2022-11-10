@@ -6,10 +6,6 @@
   "browser": "dist/dp-vue2-widgets.esm.js",
   "module": "dist/dp-vue2-widgets.esm.js",
   "unpkg": "dist/dp-vue2-widgets.min.js",
-  "files": [
-    "dist/*",
-    "src/**/*.vue"
-  ],
   "scripts": {
     "serve": "vue-cli-service serve dev/serve.js",
     "prebuild": "rimraf ./dist",

@@ -6,3 +6,5 @@ export { default as SideCatalog } from "./SideCatalog.vue";
 export { default as Form } from "./Form.vue";
 export { default as SearchBar } from "./SearchBar.vue";
 export { default as Statistics } from "./Statistics.vue";
+export { default as Dialog } from "./Dialog.vue";
+export { default as CatalogButtons } from "./CatalogButtons"

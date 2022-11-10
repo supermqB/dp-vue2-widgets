@@ -1,19 +1,28 @@
 <script>
 import Vue from "vue";
-// Uncomment import and local "components" registration if library is not registered globally.
-// import { DpVue2WidgetsSample } from '@/entry.esm';
+import ElementUI from "element-ui";
+
+Vue.use(ElementUI);
+
+import "../dist/theme-dp-ui/index.css";
+import { Title, Dialog,CatalogButtons } from "@/entry";
 
 export default Vue.extend({
+  components: { Title, Dialog },
   name: "ServeDev",
-  // components: {
-  //  DpVue2WidgetsSample,
-  // }
+  methods: {
+    openDlg() {
+      this.$refs.dlg.toggleOpen();
+    },
+  },
 });
 </script>
 
 <template>
   <div id="app">
-    <dp-vue2-widgets-sample />
-    <dp-title :title="'test title'"></dp-title>
+    <Title :title="'test'" />
+    <el-button @click="openDlg">open dialog</el-button>
+    <Dialog :title="'弹框标题'" ref="dlg">test</Dialog>
+    <CatalogButtons/>
   </div>
 </template>
