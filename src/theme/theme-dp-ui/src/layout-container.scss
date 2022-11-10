@@ -1,0 +1,45 @@
+.el-container.dp-layout-container {
+    height: 100%;
+    background-color: #eef0f5;
+    .el-aside,
+    .el-main {
+        background-color: #ffffff;
+        position:relative;
+        // overflow:hidden;
+    }
+
+    .el-main {
+        padding: 0;
+    }
+
+    .el-aside.aside-left {
+        border-right: 1px solid #E5E5E5;
+    }
+    
+    .el-aside.aside-right {
+        border-left: 1px solid #E5E5E5;
+    }
+
+    .el-container.is-vertical {
+        height: 100%;
+        background-color: #eef0f5;
+      
+        .el-main {
+            padding: 0;
+            background-color: #ffffff;
+            flex-basis: 0%;
+            flex-grow: 1;
+            flex-shrink: 0;
+            min-height: 0;
+        }
+        .el-main + .el-main {
+            flex-grow: 0;
+            flex-shrink: 1;
+            flex-basis: 50%;
+            min-height: 0;
+            border-top: 1px solid #e5e5e5;
+        }
+    }
+}
+  
+  

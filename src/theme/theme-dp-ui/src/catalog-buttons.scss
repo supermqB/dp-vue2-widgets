@@ -1,0 +1,25 @@
+.dpui_catalogbuttons_wraper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  li {
+    width: 16px;
+    height: 16px;
+    margin-left: 2px;
+    cursor: pointer;
+    background-size: cover;
+    &.add {
+      background-image: url('img/icons/add.svg');
+      &:hover {
+        background-image: url('img/icons/add_hover.svg');
+      }
+    }
+    &.delete {
+      background-image: url('img/icons/delete.svg');
+      &:hover {
+        background-image: url('img/icons/delete_hover.svg');
+      }
+    }
+  }
+}

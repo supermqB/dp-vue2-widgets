@@ -300,11 +300,10 @@ var __vue_module_identifier__$6 = "data-v-7dbd78ee";
 var __vue_is_functional_template__$6 = false;
 /* style inject shadow dom */
 
-var __vue_component__$b = /*#__PURE__*/normalizeComponent({
+var __vue_component__$6 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$6,
   staticRenderFns: __vue_staticRenderFns__$6
-}, __vue_inject_styles__$6, __vue_script__$6, __vue_scope_id__$6, __vue_is_functional_template__$6, __vue_module_identifier__$6, false, undefined, createInjectorSSR, undefined);
-var __vue_component__$c = __vue_component__$b;//
+}, __vue_inject_styles__$6, __vue_script__$6, __vue_scope_id__$6, __vue_is_functional_template__$6, __vue_module_identifier__$6, false, undefined, createInjectorSSR, undefined);//
 //
 //
 //
@@ -408,11 +407,10 @@ var __vue_module_identifier__$5 = "data-v-3d665390";
 var __vue_is_functional_template__$5 = false;
 /* style inject shadow dom */
 
-var __vue_component__$9 = /*#__PURE__*/normalizeComponent({
+var __vue_component__$5 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$5,
   staticRenderFns: __vue_staticRenderFns__$5
-}, __vue_inject_styles__$5, __vue_script__$5, __vue_scope_id__$5, __vue_is_functional_template__$5, __vue_module_identifier__$5, false, undefined, createInjectorSSR, undefined);
-var __vue_component__$a = __vue_component__$9;//
+}, __vue_inject_styles__$5, __vue_script__$5, __vue_scope_id__$5, __vue_is_functional_template__$5, __vue_module_identifier__$5, false, undefined, createInjectorSSR, undefined);//
 //
 //
 //
@@ -728,11 +726,10 @@ var __vue_module_identifier__$4 = "data-v-23fd593c";
 var __vue_is_functional_template__$4 = false;
 /* style inject shadow dom */
 
-var __vue_component__$7 = /*#__PURE__*/normalizeComponent({
+var __vue_component__$4 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$4,
   staticRenderFns: __vue_staticRenderFns__$4
-}, __vue_inject_styles__$4, __vue_script__$4, __vue_scope_id__$4, __vue_is_functional_template__$4, __vue_module_identifier__$4, false, undefined, createInjectorSSR, undefined);
-var __vue_component__$8 = __vue_component__$7;function getTreeParentNodes(tree, key) {
+}, __vue_inject_styles__$4, __vue_script__$4, __vue_scope_id__$4, __vue_is_functional_template__$4, __vue_module_identifier__$4, false, undefined, createInjectorSSR, undefined);function getTreeParentNodes(tree, key) {
   if (!tree) return [];
   var _iterator2 = _createForOfIteratorHelper(tree),
     _step2;
@@ -961,11 +958,10 @@ var __vue_module_identifier__$3 = "data-v-9fe57794";
 var __vue_is_functional_template__$3 = false;
 /* style inject shadow dom */
 
-var __vue_component__$5 = /*#__PURE__*/normalizeComponent({
+var __vue_component__$3 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$3,
   staticRenderFns: __vue_staticRenderFns__$3
-}, __vue_inject_styles__$3, __vue_script__$3, __vue_scope_id__$3, __vue_is_functional_template__$3, __vue_module_identifier__$3, false, undefined, createInjectorSSR, undefined);
-var __vue_component__$6 = __vue_component__$5;//
+}, __vue_inject_styles__$3, __vue_script__$3, __vue_scope_id__$3, __vue_is_functional_template__$3, __vue_module_identifier__$3, false, undefined, createInjectorSSR, undefined);//
 //
 //
 //
@@ -1091,11 +1087,10 @@ var __vue_is_functional_template__$2 = false;
 
 /* style inject shadow dom */
 
-var __vue_component__$4 = /*#__PURE__*/normalizeComponent({
+var __vue_component__$2 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$2,
   staticRenderFns: __vue_staticRenderFns__$2
-}, __vue_inject_styles__$2, __vue_script__$2, __vue_scope_id__$2, __vue_is_functional_template__$2, __vue_module_identifier__$2, false, undefined, undefined, undefined);
-var Form = __vue_component__$4;var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+}, __vue_inject_styles__$2, __vue_script__$2, __vue_scope_id__$2, __vue_is_functional_template__$2, __vue_module_identifier__$2, false, undefined, undefined, undefined);var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, basedir, module) {
 	return module = {
@@ -18367,7 +18362,7 @@ function commonjsRequire () {
     }
   },
   components: {
-    Form: Form
+    Form: __vue_component__$2
   }
 };/* script */
 var __vue_script__$1 = script$1;
@@ -18416,11 +18411,10 @@ var __vue_module_identifier__$1 = "data-v-7757660a";
 var __vue_is_functional_template__$1 = false;
 /* style inject shadow dom */
 
-var __vue_component__$2 = /*#__PURE__*/normalizeComponent({
+var __vue_component__$1 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$1,
   staticRenderFns: __vue_staticRenderFns__$1
-}, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, false, undefined, createInjectorSSR, undefined);
-var __vue_component__$3 = __vue_component__$2;var wan = 9999;
+}, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, false, undefined, createInjectorSSR, undefined);var wan = 9999;
 var yi = 99999999;
 function unitFmt(num) {
   if (num > yi) {
@@ -18496,8 +18490,7 @@ var __vue_is_functional_template__ = false;
 var __vue_component__ = /*#__PURE__*/normalizeComponent({
   render: __vue_render__,
   staticRenderFns: __vue_staticRenderFns__
-}, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, false, undefined, createInjectorSSR, undefined);
-var __vue_component__$1 = __vue_component__;/* eslint-disable import/prefer-default-export */var components$1=/*#__PURE__*/Object.freeze({__proto__:null,Title:__vue_component__$c,ButtonGroup:__vue_component__$a,GeneralTable:__vue_component__$8,SideCatalog:__vue_component__$6,Form:Form,SearchBar:__vue_component__$3,Statistics:__vue_component__$1});// install function executed by Vue.use()
+}, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, false, undefined, createInjectorSSR, undefined);/* eslint-disable import/prefer-default-export */var components$1=/*#__PURE__*/Object.freeze({__proto__:null,Title:__vue_component__$6,ButtonGroup:__vue_component__$5,GeneralTable:__vue_component__$4,SideCatalog:__vue_component__$3,Form:__vue_component__$2,SearchBar:__vue_component__$1,Statistics:__vue_component__});// install function executed by Vue.use()
 var install = function installDpVue2Widgets(Vue) {
   Object.entries(components$1).forEach(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
@@ -18505,7 +18498,7 @@ var install = function installDpVue2Widgets(Vue) {
       component = _ref2[1];
     Vue.component(componentName, component);
   });
-};var components=/*#__PURE__*/Object.freeze({__proto__:null,'default':install,Title:__vue_component__$c,ButtonGroup:__vue_component__$a,GeneralTable:__vue_component__$8,SideCatalog:__vue_component__$6,Form:Form,SearchBar:__vue_component__$3,Statistics:__vue_component__$1});// Attach named exports directly to plugin. IIFE/CJS will
+};var components=/*#__PURE__*/Object.freeze({__proto__:null,'default':install,Title:__vue_component__$6,ButtonGroup:__vue_component__$5,GeneralTable:__vue_component__$4,SideCatalog:__vue_component__$3,Form:__vue_component__$2,SearchBar:__vue_component__$1,Statistics:__vue_component__});// Attach named exports directly to plugin. IIFE/CJS will
 // only expose one global var, with component exports exposed as properties of
 // that global var (eg. plugin.component)
 Object.entries(components).forEach(function (_ref) {

@@ -148,11 +148,10 @@ const __vue_is_functional_template__$6 = false;
 
 /* style inject shadow dom */
 
-const __vue_component__$b = /*#__PURE__*/normalizeComponent({
+const __vue_component__$6 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$6,
   staticRenderFns: __vue_staticRenderFns__$6
 }, __vue_inject_styles__$6, __vue_script__$6, __vue_scope_id__$6, __vue_is_functional_template__$6, __vue_module_identifier__$6, false, undefined, undefined, undefined);
-var __vue_component__$c = __vue_component__$b;
 
 //
 //
@@ -262,11 +261,10 @@ const __vue_is_functional_template__$5 = false;
 
 /* style inject shadow dom */
 
-const __vue_component__$9 = /*#__PURE__*/normalizeComponent({
+const __vue_component__$5 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$5,
   staticRenderFns: __vue_staticRenderFns__$5
 }, __vue_inject_styles__$5, __vue_script__$5, __vue_scope_id__$5, __vue_is_functional_template__$5, __vue_module_identifier__$5, false, undefined, undefined, undefined);
-var __vue_component__$a = __vue_component__$9;
 
 //
 //
@@ -579,11 +577,10 @@ const __vue_is_functional_template__$4 = false;
 
 /* style inject shadow dom */
 
-const __vue_component__$7 = /*#__PURE__*/normalizeComponent({
+const __vue_component__$4 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$4,
   staticRenderFns: __vue_staticRenderFns__$4
 }, __vue_inject_styles__$4, __vue_script__$4, __vue_scope_id__$4, __vue_is_functional_template__$4, __vue_module_identifier__$4, false, undefined, undefined, undefined);
-var __vue_component__$8 = __vue_component__$7;
 
 function getTreeParentNodes(tree, key) {
   if (!tree) return [];
@@ -804,11 +801,10 @@ const __vue_is_functional_template__$3 = false;
 
 /* style inject shadow dom */
 
-const __vue_component__$5 = /*#__PURE__*/normalizeComponent({
+const __vue_component__$3 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$3,
   staticRenderFns: __vue_staticRenderFns__$3
 }, __vue_inject_styles__$3, __vue_script__$3, __vue_scope_id__$3, __vue_is_functional_template__$3, __vue_module_identifier__$3, false, undefined, undefined, undefined);
-var __vue_component__$6 = __vue_component__$5;
 
 //
 //
@@ -938,11 +934,10 @@ const __vue_is_functional_template__$2 = false;
 
 /* style inject shadow dom */
 
-const __vue_component__$4 = /*#__PURE__*/normalizeComponent({
+const __vue_component__$2 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$2,
   staticRenderFns: __vue_staticRenderFns__$2
 }, __vue_inject_styles__$2, __vue_script__$2, __vue_scope_id__$2, __vue_is_functional_template__$2, __vue_module_identifier__$2, false, undefined, undefined, undefined);
-var Form = __vue_component__$4;
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -18219,7 +18214,7 @@ var script$1 = {
     }
   },
   components: {
-    Form
+    Form: __vue_component__$2
   }
 };
 
@@ -18269,11 +18264,10 @@ const __vue_is_functional_template__$1 = false;
 
 /* style inject shadow dom */
 
-const __vue_component__$2 = /*#__PURE__*/normalizeComponent({
+const __vue_component__$1 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$1,
   staticRenderFns: __vue_staticRenderFns__$1
 }, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, false, undefined, undefined, undefined);
-var __vue_component__$3 = __vue_component__$2;
 
 const wan = 9999;
 const yi = 99999999;
@@ -18363,19 +18357,18 @@ const __vue_component__ = /*#__PURE__*/normalizeComponent({
   render: __vue_render__,
   staticRenderFns: __vue_staticRenderFns__
 }, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, false, undefined, undefined, undefined);
-var __vue_component__$1 = __vue_component__;
 
 /* eslint-disable import/prefer-default-export */
 
 var components = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  Title: __vue_component__$c,
-  ButtonGroup: __vue_component__$a,
-  GeneralTable: __vue_component__$8,
-  SideCatalog: __vue_component__$6,
-  Form: Form,
-  SearchBar: __vue_component__$3,
-  Statistics: __vue_component__$1
+  Title: __vue_component__$6,
+  ButtonGroup: __vue_component__$5,
+  GeneralTable: __vue_component__$4,
+  SideCatalog: __vue_component__$3,
+  Form: __vue_component__$2,
+  SearchBar: __vue_component__$1,
+  Statistics: __vue_component__
 });
 
 // Import vue components
@@ -18388,4 +18381,4 @@ const install = function installDpVue2Widgets(Vue) {
   });
 };
 
-export { __vue_component__$a as ButtonGroup, Form, __vue_component__$8 as GeneralTable, __vue_component__$3 as SearchBar, __vue_component__$6 as SideCatalog, __vue_component__$1 as Statistics, __vue_component__$c as Title, install as default };
+export { __vue_component__$5 as ButtonGroup, __vue_component__$2 as Form, __vue_component__$4 as GeneralTable, __vue_component__$1 as SearchBar, __vue_component__$3 as SideCatalog, __vue_component__ as Statistics, __vue_component__$6 as Title, install as default };

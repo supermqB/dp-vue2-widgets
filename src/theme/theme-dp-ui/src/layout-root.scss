@@ -1,0 +1,8 @@
+.el-container.dp-layout-root {
+    height: 100%;
+    .el-header,
+    .el-main,
+    .el-footer {
+        padding: 0;
+    }
+}

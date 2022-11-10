@@ -1,0 +1,23 @@
+.dp-title-line {
+    height: 100%;
+    box-sizing: border-box;
+    border-bottom: 1px solid #e5e5e5;
+    position: relative;
+    &__wrapper {
+        position: absolute;
+        height: calc(100% + 1px);
+        display: inline-block;
+        box-sizing: border-box;
+        padding-left: 6px;
+        padding-right: 16px;
+        border-bottom: 2px solid #2F63B9;
+        &-text {
+            color: #333333;
+            font-size: 15px;
+            font-weight: bold;            
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+}

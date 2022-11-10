@@ -1,0 +1,19 @@
+.el-table th.el-table__cell,
+.el-table td.el-table__cell {
+    height: 36px;
+    padding: 0;
+    .cell {
+        padding: 0 6px;
+    }
+}
+
+.el-table th.el-table__cell {
+    background-color: #F5F7FA;
+    font-size: 13px;
+    color: rgba(0,0,0,0.65);
+}
+
+.el-table--border .el-table__cell:first-child .cell {
+    padding-left: 6px;
+}
+

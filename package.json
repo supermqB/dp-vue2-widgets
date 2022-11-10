@@ -10,11 +10,11 @@
     "dist/*",
     "src/**/*.vue"
   ],
-  "sideEffects": false,
   "scripts": {
     "serve": "vue-cli-service serve dev/serve.js",
     "prebuild": "rimraf ./dist",
-    "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
+    "dist:theme": "gulp build --gulpfile src/theme/theme-dp-ui/gulpfile.js && cp-cli src/theme/theme-dp-ui/lib dist/theme-dp-ui",
+    "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js && npm run dist:theme",
     "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
     "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
     "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
@@ -30,6 +30,11 @@
     "@vue/cli-plugin-babel": "^4.5.13",
     "@vue/cli-service": "^4.5.13",
     "cross-env": "^7.0.3",
+    "element-ui": "^2.15.10",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-sass": "^5.1.0",
     "lodash": "^4.17.21",
     "minimist": "^1.2.5",
     "node-sass": "^4.14.1",
@@ -49,5 +54,8 @@
   },
   "engines": {
     "node": ">=12"
+  },
+  "dependencies": {
+    "cp-cli": "^2.0.0"
   }
 }

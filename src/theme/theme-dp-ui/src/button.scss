@@ -1,0 +1,62 @@
+.el-button {
+    height: 28px;
+}
+// .el-button,
+// .el-button.is-round {
+//     padding: 6.5px 14px;
+// }
+
+// .el-button.is-circle {
+//     padding: 6.5px;
+// }
+
+// 次要按钮
+.el-button--primary.is-plain {
+    color: $--color-primary;
+    background: $--color-white;
+    border-color: $--color-primary;
+  
+    &:hover,
+    &:focus {
+        color: $--color-primary;
+        background: mix($--color-primary, $--color-white, $--button-active-shade-percent);
+        border-color: $--color-primary;
+    }
+  
+    &:active {
+        color: $--color-primary;
+        background: mix($--color-primary, $--color-white, $--button-active-shade-percent);
+        border-color: $--color-primary;
+    }
+  
+    &.is-disabled {
+      &,
+      &:hover,
+      &:focus,
+      &:active {
+        color: mix($--color-white, $--color-primary, 50%);
+        background-color: $--color-white;
+        border-color: mix($--color-white, $--color-primary, 50%);
+      }
+    }
+}
+
+.el-button.el-button--text {
+    padding: 0;
+    &.is-disabled {
+        color: mix($--color-white, $--color-primary, 50%);
+    }
+}
+
+.el-button--default.is-plain {
+    border: 1px solid #DCDFE6;
+}
+
+.el-button--danger.is-plain,
+.el-button--danger.is-plain.is-disabled {
+    background-color: #FFFFFF;
+}
+
+.el-button.is-dash {
+    border-style: dashed;
+}
