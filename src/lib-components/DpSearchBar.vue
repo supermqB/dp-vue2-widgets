@@ -10,25 +10,31 @@
 /* 配置参考 src/views/data_elem_new/config/searchForm.js */
 import Form from './Form.vue'
 import { debounce } from 'lodash'
-import { keysObject } from '../utils/lang'
 export default {
+  model: {
+    prop: 'searchForm',
+    event: 'onChanged'
+  },
   props: {
     inputConfigs: {
       type: Array,
       default: () => {
         return []
       }
+    },
+    searchForm: {
+      type: Object,
+      default: () => ({})
     }
   },
   data: () => {
     return {
-      searchForm: {},
       lastSearchForm: { searchText: '' }
     }
   },
   computed: {
     searchFormConfig() {
-      let cfg = [
+      return [
         ...this.inputConfigs,
         {
           type: 'el-input',
@@ -41,8 +47,6 @@ export default {
           }
         }
       ]
-      this.searchForm = keysObject(cfg, 'id', 'defaultValue')
-      return cfg
     }
   },
   watch: {
@@ -53,6 +57,8 @@ export default {
             return this.lastSearchForm[ok] != ov
           })
         ) {
+          this.lastSearchForm = { ...this.searchForm }
+          this.$emit('onChanged', { ...newForm })
           this.__onSearch()
         }
       },
@@ -66,8 +72,7 @@ export default {
   },
   methods: {
     onSearch() {
-      let lastSearchForm = (this.lastSearchForm = { ...this.searchForm })
-      this.$emit('onSearch', lastSearchForm)
+      this.$emit('onSearch', this.lastSearchForm)
     }
   },
   components: {
