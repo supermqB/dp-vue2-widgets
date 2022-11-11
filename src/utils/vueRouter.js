@@ -21,13 +21,15 @@ const generateRouter = config => {
   const {
     VueRouter,
     routesConfig = [],
-    isQiankun = false,
+    isQiankun = window.__POWERED_BY_QIANKUN__,
     layout = DpLayout,
     title = '',
-    base = process.env.BASE_URL
+    base = window.__POWERED_BY_QIANKUN__
+      ? process.env.VUE_APP_QIANKUN_ROUTER_BASE
+      : process.env.VUE_APP_REAL_ROUTER_BASE
   } = config
 
-  if (isQiankun) {
+  if (!!isQiankun) {
     layout = DpLayoutBlank
   }
 
