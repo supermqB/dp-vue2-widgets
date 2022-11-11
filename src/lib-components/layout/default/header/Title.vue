@@ -39,6 +39,7 @@ export default {
     width: 124px;
     line-height: 22px;
     margin-left: 12px;
+    white-space: nowrap;
   }
 }
 </style>

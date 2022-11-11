@@ -3,14 +3,14 @@
 // Vue.use(VueRouter)
 import { DpLayout, DpLayoutBlank, DpDefaultPage } from '@/entry'
 
-const genrateMenuItems = routesConfig => {
+const generateMenuItems = routesConfig => {
   let items = []
   routesConfig.map(v => {
     if (v.hidden !== true) {
       items.push({
         value: v.name,
         label: v.meta?.title ?? v.name,
-        children: v.children ? getItems(v.children) : undefined
+        children: v.children ? generateMenuItems(v.children) : undefined
       })
     }
   })
@@ -41,7 +41,7 @@ const generateRouter = config => {
         path: '/',
         redirect: { name: redirectName },
         component: layout,
-        props: { title, menuItems: genrateMenuItems(routesConfig) },
+        props: { title, menuItems: generateMenuItems(routesConfig) },
         children: routesConfig
         // children: routesConfig.concat({
         //   path: '*',
