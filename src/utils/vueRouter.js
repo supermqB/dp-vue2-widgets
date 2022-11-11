@@ -18,7 +18,7 @@ const generateMenuItems = routesConfig => {
 }
 
 const generateRouter = config => {
-  const {
+  let {
     VueRouter,
     routesConfig = [],
     isQiankun = window.__POWERED_BY_QIANKUN__,
