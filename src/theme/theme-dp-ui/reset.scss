@@ -1,0 +1,34 @@
+html,
+body,
+#app {
+  height: 100%;
+}
+* {
+  font-family: 'PingFang SC', 'PingFang SC Bold', Helvetica, 'Microsoft YaHei',
+    Arial, Helvetica;
+}
+body,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+form,
+dl,
+dt,
+dd,
+figure {
+  margin: 0px;
+  padding: 0px;
+}
+ul {
+  list-style: none;
+}
+img {
+  border-style: none;
+}
