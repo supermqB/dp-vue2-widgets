@@ -2,7 +2,7 @@
   "name": "dp-vue2-widgets",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/dp-vue2-widgets.esm.js",
+  "main": "dist/dp-vue2-widgets.ssr.js",
   "browser": "dist/dp-vue2-widgets.esm.js",
   "module": "dist/dp-vue2-widgets.esm.js",
   "unpkg": "dist/dp-vue2-widgets.min.js",
