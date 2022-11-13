@@ -1,0 +1,76 @@
+@mixin compact-form {
+  display: flex;
+  .el-form-item {
+    margin-bottom: 0px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: flex-end;
+    .el-select {
+      width: 165px;
+    }
+  }
+  .el-form-item__label {
+    text-align: left;
+    padding-left: 10px;
+  }
+}
+
+@mixin col-direct-form($form_height: 320px, $item_width: 380px) {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-content: space-between;
+  height: $form_height;
+  margin-right: 50px;
+  flex-wrap: wrap;
+  .el-form-item {
+    width: $item_width;
+    display: flex;
+    justify-content: flex-end;
+    min-height: 44px;
+    margin: 0px;
+    overflow: hidden;
+    .el-input,
+    .el-textarea {
+      width: 270px;
+      .el-textarea__inner {
+        padding: 5px 8px;
+        height: 90px;
+      }
+    }
+  }
+}
+
+@mixin row-direct-form($item-width: 200px) {
+  display: flex;
+  position: relative;
+  align-content: space-around;
+  flex-wrap: wrap;
+  .el-form-item__label {
+    line-height: 20px;
+  }
+  .el-form-item {
+    width: $item-width;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    min-height: 28px;
+    margin: 0px;
+    overflow: hidden;
+    margin-left: 65px;
+    .el-form-item__label {
+      text-align: start;
+      margin-top: 5px;
+      margin-bottom: -5px;
+    }
+    .el-input,
+    .el-textarea {
+      width: $item-width;
+      .el-textarea__inner {
+        padding: 5px 8px;
+        height: 90px;
+        margin-bottom: 50px;
+      }
+    }
+  }
+}

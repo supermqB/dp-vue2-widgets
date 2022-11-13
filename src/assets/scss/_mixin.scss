@@ -1,0 +1,11 @@
+@mixin ellipsisNoWrap() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin tableArea {
+  margin-top: -6px;
+  padding-bottom: 6px;
+  flex: 1;
+}
