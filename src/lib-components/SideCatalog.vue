@@ -219,7 +219,10 @@ export default {
 }
 
 ::v-deep .el-tree-node.is-current > .el-tree-node__content {
-  background-color: #d8fffe !important;
+  background-color: #f2f6ff !important;
+  /* .treeNode .label {
+    color: #2f63b9;
+  } */
 }
 ::v-deep .el-tree-node:focus > .el-tree-node__content {
   background-color: transparent;

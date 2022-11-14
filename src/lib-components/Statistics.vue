@@ -71,14 +71,12 @@ ul {
     width: 50%;
     max-width: 150px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     .label {
       color: #999999;
     }
     .value {
-      /* display: inline-block;
-      width: 100px; */
+        padding-left: 6px;
     }
     .numerator {
       color: #2f63b9;
