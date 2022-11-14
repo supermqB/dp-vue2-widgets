@@ -36,10 +36,11 @@
 import { reMapTree, getTreeParentNodes } from '@/utils/lang'
 
 const reMapFunc = node => {
-  const ids = node.id.split('-')
+  const { id, state, type } = node
+  const ids = id.split('-')
   return Object.assign({}, node, {
-    type: ids[0],
-    state: !!(node.state * 1)
+    type: type ? type : ids[0],
+    state: !!(state * 1)
   })
 }
 
@@ -148,7 +149,6 @@ export default {
   }
 }
 </script>
-
 
 <style scoped lang="scss">
 .wrap {
