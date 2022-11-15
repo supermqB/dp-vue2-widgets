@@ -1,6 +1,7 @@
 const wan = 9999
 const yi = 99999999
 export function unitFmt(num) {
+  // num = 1 * num
   if (num > yi) {
     return (num / 100000000).toFixed(2) + '亿'
   }

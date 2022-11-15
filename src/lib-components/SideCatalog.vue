@@ -22,9 +22,12 @@
         "
       >
         <p class="label">
-          <i v-if="data.state"></i>
-          <span v-else class="blank"></span>
-          <span :title="data.label">{{ data.label }}</span>
+          <span>
+            <i v-if="data.state"></i>
+            <span v-else class="blank"></span>
+            <span>{{ data.label }}</span>
+          </span>
+          <span>{{ 'number' in data ? unitFmt(data.number) : '' }}</span>
         </p>
         <div class="disabled" v-if="!node.isLeaf"></div>
       </div>
@@ -34,6 +37,7 @@
 
 <script>
 import { reMapTree, getTreeParentNodes } from '@/utils/lang'
+import { unitFmt } from '@/utils/format'
 
 const reMapFunc = node => {
   const { id, state, type } = node
@@ -74,6 +78,9 @@ export default {
     }
   },
   methods: {
+    unitFmt(num) {
+      return unitFmt(num)
+    },
     isDisabledByType(type) {
       if (!this.disabledTypes.length) {
         return false
@@ -178,7 +185,7 @@ export default {
     text-overflow: ellipsis;
     white-space: nowrap;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     i {
       display: inline-block;

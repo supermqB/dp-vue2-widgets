@@ -768,6 +768,29 @@ var lang = /*#__PURE__*/Object.freeze({
   objectKeysToNull: objectKeysToNull
 });
 
+const wan = 9999;
+const yi = 99999999;
+function unitFmt(num) {
+  // num = 1 * num
+  if (num > yi) {
+    return (num / 100000000).toFixed(2) + '亿';
+  }
+  if (num > wan) {
+    return (num / 10000).toFixed(2) + '万';
+  }
+  return num + '';
+}
+function stdTimeFmt(time) {
+  if (time.indexOf('.') == -1) return time;
+  return time.substr(0, time.indexOf('.'));
+}
+
+var format = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  unitFmt: unitFmt,
+  stdTimeFmt: stdTimeFmt
+});
+
 //
 const reMapFunc = node => {
   const {
@@ -812,6 +835,9 @@ var script$j = {
     }
   },
   methods: {
+    unitFmt(num) {
+      return unitFmt(num);
+    },
     isDisabledByType(type) {
       if (!this.disabledTypes.length) {
         return false;
@@ -889,7 +915,7 @@ var script$j = {
   }
 };
 
-var css_248z$d = ".wrap[data-v-52742a9e]{width:100%;height:100%;overflow-x:hidden;display:flex;flex-direction:column}.wrap .treeWrap[data-v-52742a9e]{flex:1;overflow:auto}.treeNode[data-v-52742a9e]{width:100%;height:100%;padding-top:2px;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px}.treeNode .label[data-v-52742a9e]{width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;justify-content:flex-start;align-items:center}.treeNode .label i[data-v-52742a9e]{display:inline-block;width:5px;height:5px;margin-right:3px;margin-bottom:2px;border-radius:5px;background-color:#f56c6c}.treeNode .label .blank[data-v-52742a9e]{display:inline-block;margin-right:3px;margin-bottom:2px;width:5px;height:5px}.disabled[data-v-52742a9e]{position:absolute;left:0;width:100%;height:100%;z-index:10}[data-v-52742a9e] .el-tree-node__content{height:36px;position:relative}[data-v-52742a9e] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-52742a9e] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-52742a9e] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}";
+var css_248z$d = ".wrap[data-v-1f95d644]{width:100%;height:100%;overflow-x:hidden;display:flex;flex-direction:column}.wrap .treeWrap[data-v-1f95d644]{flex:1;overflow:auto}.treeNode[data-v-1f95d644]{width:100%;height:100%;padding-top:2px;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px}.treeNode .label[data-v-1f95d644]{width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;justify-content:space-between;align-items:center}.treeNode .label i[data-v-1f95d644]{display:inline-block;width:5px;height:5px;margin-right:3px;margin-bottom:2px;border-radius:5px;background-color:#f56c6c}.treeNode .label .blank[data-v-1f95d644]{display:inline-block;margin-right:3px;margin-bottom:2px;width:5px;height:5px}.disabled[data-v-1f95d644]{position:absolute;left:0;width:100%;height:100%;z-index:10}[data-v-1f95d644] .el-tree-node__content{height:36px;position:relative}[data-v-1f95d644] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-1f95d644] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-1f95d644] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}";
 styleInject(css_248z$d);
 
 /* script */
@@ -931,13 +957,9 @@ var __vue_render__$k = function () {
           }
         }, [_c('p', {
           staticClass: "label"
-        }, [data.state ? _c('i') : _c('span', {
+        }, [_c('span', [data.state ? _c('i') : _c('span', {
           staticClass: "blank"
-        }), _vm._v(" "), _c('span', {
-          attrs: {
-            "title": data.label
-          }
-        }, [_vm._v(_vm._s(data.label))])]), _vm._v(" "), !node.isLeaf ? _c('div', {
+        }), _vm._v(" "), _c('span', [_vm._v(_vm._s(data.label))])]), _vm._v(" "), _c('span', [_vm._v(_vm._s('number' in data ? _vm.unitFmt(data.number) : ''))])]), _vm._v(" "), !node.isLeaf ? _c('div', {
           staticClass: "disabled"
         }) : _vm._e()]);
       }
@@ -949,7 +971,7 @@ var __vue_staticRenderFns__$k = [];
 /* style */
 const __vue_inject_styles__$k = undefined;
 /* scoped */
-const __vue_scope_id__$k = "data-v-52742a9e";
+const __vue_scope_id__$k = "data-v-1f95d644";
 /* module identifier */
 const __vue_module_identifier__$k = undefined;
 /* functional template */
@@ -18543,28 +18565,6 @@ const __vue_component__$h = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$h,
   staticRenderFns: __vue_staticRenderFns__$h
 }, __vue_inject_styles__$h, __vue_script__$g, __vue_scope_id__$h, __vue_is_functional_template__$h, __vue_module_identifier__$h, false, undefined, undefined, undefined);
-
-const wan = 9999;
-const yi = 99999999;
-function unitFmt(num) {
-  if (num > yi) {
-    return (num / 100000000).toFixed(2) + '亿';
-  }
-  if (num > wan) {
-    return (num / 10000).toFixed(2) + '万';
-  }
-  return num + '';
-}
-function stdTimeFmt(time) {
-  if (time.indexOf('.') == -1) return time;
-  return time.substr(0, time.indexOf('.'));
-}
-
-var format = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  unitFmt: unitFmt,
-  stdTimeFmt: stdTimeFmt
-});
 
 //
 var script$f = {
