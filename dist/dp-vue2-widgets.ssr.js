@@ -19230,6 +19230,19 @@ var __vue_component__$b = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var script$9 = {
   name: 'menuItem',
@@ -19249,7 +19262,8 @@ var __vue_render__$a = function __vue_render__() {
   }, [!_vm.item.children || _vm.item.children.length == 0 ? [_c('el-menu-item', {
     key: _vm.item.value,
     attrs: {
-      "index": _vm.item.value
+      "index": _vm.item.value,
+      "redirect": _vm.item.redirect
     }
   }, [_c('span', [_vm._v(_vm._s(_vm.item.label))])])] : _vm._e(), _vm._ssrNode(" "), _vm.item.children && _vm.item.children.length > 0 ? [_c('el-submenu', {
     key: _vm.item.value,
@@ -19277,7 +19291,7 @@ var __vue_inject_styles__$a = undefined;
 /* scoped */
 var __vue_scope_id__$a = undefined;
 /* module identifier */
-var __vue_module_identifier__$a = "data-v-64577c0c";
+var __vue_module_identifier__$a = "data-v-7961916b";
 /* functional template */
 var __vue_is_functional_template__$a = false;
 /* style inject */
@@ -19388,10 +19402,19 @@ var script$7 = {
     }
   },
   methods: {
-    handleSelect: function handleSelect(idx) {
-      this.$router.push({
-        name: idx
-      });
+    handleSelect: function handleSelect(idx, idxPath, item) {
+      var _item$$attrs;
+      if (idx != null) {
+        this.$router.push({
+          name: idx
+        });
+      } else if ((_item$$attrs = item.$attrs) !== null && _item$$attrs !== void 0 && _item$$attrs.redirect) {
+        var _item$$attrs2;
+        this.$router.push({
+          path: (_item$$attrs2 = item.$attrs) === null || _item$$attrs2 === void 0 ? void 0 : _item$$attrs2.redirect
+        });
+      }
+      // this.$router.push({ name: idx })
     }
   }
 };/* script */
@@ -19419,16 +19442,16 @@ var __vue_staticRenderFns__$8 = [];
 /* style */
 var __vue_inject_styles__$8 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-4b951a42_0", {
-    source: ".header-menu[data-v-4b951a42]{text-align:center}",
+  inject("data-v-403a06b3_0", {
+    source: ".header-menu[data-v-403a06b3]{text-align:center}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$8 = "data-v-4b951a42";
+var __vue_scope_id__$8 = "data-v-403a06b3";
 /* module identifier */
-var __vue_module_identifier__$8 = "data-v-4b951a42";
+var __vue_module_identifier__$8 = "data-v-403a06b3";
 /* functional template */
 var __vue_is_functional_template__$8 = false;
 /* style inject shadow dom */

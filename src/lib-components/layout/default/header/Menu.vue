@@ -22,8 +22,13 @@ export default {
     }
   },
   methods: {
-    handleSelect(idx) {
-      this.$router.push({ name: idx })
+    handleSelect(idx, idxPath, item) {
+      if (idx != null) {
+        this.$router.push({ name: idx })
+      } else if (item.$attrs?.redirect) {
+        this.$router.push({ path: item.$attrs?.redirect })
+      }
+      // this.$router.push({ name: idx })
     }
   }
 }
