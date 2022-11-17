@@ -1,0 +1,29 @@
+.demo-layout-container\.html {
+    .container {
+        height: 300px;
+        background-color: #FFFFFF;
+        color: #333;
+
+        .section {
+            display: flex;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .asideLeft,
+        .asideRight {
+            background-color: #B3C0D1;
+        }
+
+        .el-header,
+        .el-footer {
+            background-color: #b3d6ce;
+        }
+
+        .main,
+        .mainBottom {
+            background-color: #D9DEE3;
+        }
+    }
+}

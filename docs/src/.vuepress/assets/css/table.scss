@@ -1,0 +1,9 @@
+.demo-table\.html {
+    table {
+        margin: 0
+    }
+
+    tr:nth-child(2n) {
+        background-color: #FFFFFF
+    }
+}
