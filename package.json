@@ -15,6 +15,16 @@
     "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
     "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
   },
+  "repository": {
+    "type": "git",
+    "url": "http://172.16.180.219:9001/bigdata-platform/sixdatarepo/dp-vue2-widgets"
+  },
+  "keywords": [
+    "UI 组件库",
+    "数据平台部",
+    "基于 element-ui"
+  ],
+  "author": "数据平台部",
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
