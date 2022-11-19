@@ -19431,12 +19431,12 @@ var script$5 = {
     HeaderUser: __vue_component__$7
   },
   props: {
-    title: String,
+    titleText: String,
     menuItems: Array
   }
 };
 
-var css_248z$2 = ".header[data-v-f9bc5bd2]{height:100%;background:#2f63b9;display:flex;justify-content:space-between}.header-title[data-v-f9bc5bd2]{justify-content:flex-start;width:280px;flex:none}.header-user[data-v-f9bc5bd2]{justify-content:flex-end;width:200px;flex:none}.header-menu[data-v-f9bc5bd2]{flex-grow:1;overflow:auto}";
+var css_248z$2 = ".header[data-v-4ebe4d8a]{height:100%;background:#2f63b9;display:flex;justify-content:space-between}.header-title[data-v-4ebe4d8a]{justify-content:flex-start;width:280px;flex:none}.header-user[data-v-4ebe4d8a]{justify-content:flex-end;width:200px;flex:none}.header-menu[data-v-4ebe4d8a]{flex-grow:1;overflow:auto}";
 styleInject(css_248z$2);
 
 /* script */
@@ -19451,7 +19451,7 @@ var __vue_render__$6 = function () {
   }, [_c('HeaderTitle', {
     staticClass: "header-title",
     attrs: {
-      "title": _vm.title
+      "titleText": _vm.titleText
     }
   }), _vm._v(" "), _c('HeaderMenu', {
     staticClass: "header-menu",
@@ -19467,7 +19467,7 @@ var __vue_staticRenderFns__$6 = [];
 /* style */
 const __vue_inject_styles__$6 = undefined;
 /* scoped */
-const __vue_scope_id__$6 = "data-v-f9bc5bd2";
+const __vue_scope_id__$6 = "data-v-4ebe4d8a";
 /* module identifier */
 const __vue_module_identifier__$6 = undefined;
 /* functional template */

@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <HeaderTitle class="header-title" :title="title" />
+    <HeaderTitle class="header-title" :titleText="titleText" />
     <HeaderMenu class="header-menu" :items="menuItems" />
     <HeaderUser class="header-user" />
   </div>
@@ -14,7 +14,7 @@ export default {
   name: 'AppHeader',
   components: { HeaderTitle, HeaderMenu, HeaderUser },
   props: {
-    title: String,
+    titleText: String,
     menuItems: Array
   }
 }

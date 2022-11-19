@@ -19514,7 +19514,7 @@ var script$5 = {
     HeaderUser: __vue_component__$7
   },
   props: {
-    title: String,
+    titleText: String,
     menuItems: Array
   }
 };/* script */
@@ -19530,7 +19530,7 @@ var __vue_render__$6 = function __vue_render__() {
   }, [_c('HeaderTitle', {
     staticClass: "header-title",
     attrs: {
-      "title": _vm.title
+      "titleText": _vm.titleText
     }
   }), _vm._ssrNode(" "), _c('HeaderMenu', {
     staticClass: "header-menu",
@@ -19546,16 +19546,16 @@ var __vue_staticRenderFns__$6 = [];
 /* style */
 var __vue_inject_styles__$6 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-f9bc5bd2_0", {
-    source: ".header[data-v-f9bc5bd2]{height:100%;background:#2f63b9;display:flex;justify-content:space-between}.header-title[data-v-f9bc5bd2]{justify-content:flex-start;width:280px;flex:none}.header-user[data-v-f9bc5bd2]{justify-content:flex-end;width:200px;flex:none}.header-menu[data-v-f9bc5bd2]{flex-grow:1;overflow:auto}",
+  inject("data-v-4ebe4d8a_0", {
+    source: ".header[data-v-4ebe4d8a]{height:100%;background:#2f63b9;display:flex;justify-content:space-between}.header-title[data-v-4ebe4d8a]{justify-content:flex-start;width:280px;flex:none}.header-user[data-v-4ebe4d8a]{justify-content:flex-end;width:200px;flex:none}.header-menu[data-v-4ebe4d8a]{flex-grow:1;overflow:auto}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$6 = "data-v-f9bc5bd2";
+var __vue_scope_id__$6 = "data-v-4ebe4d8a";
 /* module identifier */
-var __vue_module_identifier__$6 = "data-v-f9bc5bd2";
+var __vue_module_identifier__$6 = "data-v-4ebe4d8a";
 /* functional template */
 var __vue_is_functional_template__$6 = false;
 /* style inject shadow dom */
