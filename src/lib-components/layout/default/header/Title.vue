@@ -1,7 +1,7 @@
 <template>
   <div class="header-title">
     <div class="header-title__logo"></div>
-    <div class="header-title__text">{{ title }}</div>
+    <div class="header-title__text">{{ titleText }}</div>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 export default {
   name: 'HeaderTitle',
   props: {
-    title: String
+    titleText: String
   }
 }
 </script>

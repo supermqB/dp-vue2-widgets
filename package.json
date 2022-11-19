@@ -1,6 +1,6 @@
 {
   "name": "dp-vue2-widgets",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/dp-vue2-widgets.ssr.js",
   "browser": "dist/dp-vue2-widgets.esm.js",

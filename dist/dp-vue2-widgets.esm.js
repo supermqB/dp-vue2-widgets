@@ -19064,11 +19064,11 @@ const __vue_component__$c = /*#__PURE__*/normalizeComponent({
 var script$a = {
   name: 'HeaderTitle',
   props: {
-    title: String
+    titleText: String
   }
 };
 
-var css_248z$5 = ".header-title[data-v-0128fad8]{position:relative;width:128px;display:flex;align-items:center;justify-content:space-between}.header-title__logo[data-v-0128fad8]{margin-left:16px;width:20px;height:20px;border-radius:50%;background:#d8d8d8;border:1px solid #979797}.header-title__text[data-v-0128fad8]{font-family:PingFangSC-Medium;font-size:16px;color:#fff;letter-spacing:.16px;width:124px;line-height:22px;margin-left:12px;white-space:nowrap}";
+var css_248z$5 = ".header-title[data-v-5bb36298]{position:relative;width:128px;display:flex;align-items:center;justify-content:space-between}.header-title__logo[data-v-5bb36298]{margin-left:16px;width:20px;height:20px;border-radius:50%;background:#d8d8d8;border:1px solid #979797}.header-title__text[data-v-5bb36298]{font-family:PingFangSC-Medium;font-size:16px;color:#fff;letter-spacing:.16px;width:124px;line-height:22px;margin-left:12px;white-space:nowrap}";
 styleInject(css_248z$5);
 
 /* script */
@@ -19084,14 +19084,14 @@ var __vue_render__$b = function () {
     staticClass: "header-title__logo"
   }), _vm._v(" "), _c('div', {
     staticClass: "header-title__text"
-  }, [_vm._v(_vm._s(_vm.title))])]);
+  }, [_vm._v(_vm._s(_vm.titleText))])]);
 };
 var __vue_staticRenderFns__$b = [];
 
 /* style */
 const __vue_inject_styles__$b = undefined;
 /* scoped */
-const __vue_scope_id__$b = "data-v-0128fad8";
+const __vue_scope_id__$b = "data-v-5bb36298";
 /* module identifier */
 const __vue_module_identifier__$b = undefined;
 /* functional template */
@@ -19624,7 +19624,7 @@ var __vue_render__$3 = function () {
       fn: function () {
         return [_c('AppHeader', {
           attrs: {
-            "title": _vm.title,
+            "titleText": _vm.title,
             "menuItems": _vm.menuItems
           }
         })];

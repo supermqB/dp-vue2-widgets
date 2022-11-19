@@ -1,7 +1,7 @@
 <template>
   <dp-layout-root>
     <template #header>
-      <AppHeader :title="title" :menuItems="menuItems" />
+      <AppHeader :titleText="title" :menuItems="menuItems" />
     </template>
     <template #main>
       <AppMain />

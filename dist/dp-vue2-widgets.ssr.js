@@ -19177,7 +19177,7 @@ var __vue_component__$c = /*#__PURE__*/normalizeComponent({
 var script$a = {
   name: 'HeaderTitle',
   props: {
-    title: String
+    titleText: String
   }
 };/* script */
 var __vue_script__$a = script$a;
@@ -19189,23 +19189,23 @@ var __vue_render__$b = function __vue_render__() {
   var _c = _vm._self._c || _h;
   return _c('div', {
     staticClass: "header-title"
-  }, [_vm._ssrNode("<div class=\"header-title__logo\" data-v-0128fad8></div> <div class=\"header-title__text\" data-v-0128fad8>" + _vm._ssrEscape(_vm._s(_vm.title)) + "</div>")]);
+  }, [_vm._ssrNode("<div class=\"header-title__logo\" data-v-5bb36298></div> <div class=\"header-title__text\" data-v-5bb36298>" + _vm._ssrEscape(_vm._s(_vm.titleText)) + "</div>")]);
 };
 var __vue_staticRenderFns__$b = [];
 
 /* style */
 var __vue_inject_styles__$b = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-0128fad8_0", {
-    source: ".header-title[data-v-0128fad8]{position:relative;width:128px;display:flex;align-items:center;justify-content:space-between}.header-title__logo[data-v-0128fad8]{margin-left:16px;width:20px;height:20px;border-radius:50%;background:#d8d8d8;border:1px solid #979797}.header-title__text[data-v-0128fad8]{font-family:PingFangSC-Medium;font-size:16px;color:#fff;letter-spacing:.16px;width:124px;line-height:22px;margin-left:12px;white-space:nowrap}",
+  inject("data-v-5bb36298_0", {
+    source: ".header-title[data-v-5bb36298]{position:relative;width:128px;display:flex;align-items:center;justify-content:space-between}.header-title__logo[data-v-5bb36298]{margin-left:16px;width:20px;height:20px;border-radius:50%;background:#d8d8d8;border:1px solid #979797}.header-title__text[data-v-5bb36298]{font-family:PingFangSC-Medium;font-size:16px;color:#fff;letter-spacing:.16px;width:124px;line-height:22px;margin-left:12px;white-space:nowrap}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$b = "data-v-0128fad8";
+var __vue_scope_id__$b = "data-v-5bb36298";
 /* module identifier */
-var __vue_module_identifier__$b = "data-v-0128fad8";
+var __vue_module_identifier__$b = "data-v-5bb36298";
 /* functional template */
 var __vue_is_functional_template__$b = false;
 /* style inject shadow dom */
@@ -19689,7 +19689,7 @@ var __vue_render__$3 = function __vue_render__() {
       fn: function fn() {
         return [_c('AppHeader', {
           attrs: {
-            "title": _vm.title,
+            "titleText": _vm.title,
             "menuItems": _vm.menuItems
           }
         })];
@@ -19717,7 +19717,7 @@ var __vue_inject_styles__$3 = undefined;
 /* scoped */
 var __vue_scope_id__$3 = undefined;
 /* module identifier */
-var __vue_module_identifier__$3 = "data-v-0deafcf6";
+var __vue_module_identifier__$3 = "data-v-9f96c4dc";
 /* functional template */
 var __vue_is_functional_template__$3 = false;
 /* style inject */
