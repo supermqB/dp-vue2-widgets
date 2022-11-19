@@ -14,7 +14,13 @@ const routesConfig = [
     component: () => import('../views/Home.vue')
   },
   {
-    path: '/login',
+    path: 'test',
+    name: 'test',
+    meta: { title: 'test' },
+    component: () => import('../views/Test.vue')
+  },
+  {
+    path: 'login',
     name: 'login',
     meta: { title: '登录' },
     component: () => import('../views/Login.vue')
@@ -34,6 +40,6 @@ export default utils.vueRouter.generateRouter({
   VueRouter, // VueRouter对象
   routesConfig, // routes配置
   // layout, // 布局组件
-  title, // 系统标题
-  base: process.env.BASE_URL // router BaseUrl
+  title // 系统标题
+  // base: process.env.BASE_URL // router BaseUrl
 })

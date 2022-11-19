@@ -1,6 +1,5 @@
 /* eslint-disable import/prefer-default-export */
 export { default as Title } from './Title.vue'
-export { default as DpTitle } from './Title.vue'
 export { default as ButtonGroup } from './ButtonGroup.vue'
 export { default as DpButtonGroup } from './ButtonGroup.vue'
 export { default as GeneralTable } from './GeneralTable.vue'
@@ -18,6 +17,7 @@ export { default as DpDialog } from './Dialog.vue'
 export { default as CatalogButtons } from './CatalogButtons'
 export { default as DpCatalogButtons } from './CatalogButtons'
 
+/* layout */
 export { default as DpLayoutRoot } from './layout/Root.vue'
 export { default as DpLayoutContainer } from './layout/Container.vue'
 export { default as DpLayout } from './layout/default'
@@ -28,4 +28,9 @@ export { default as DpHeaderNav } from './header-nav'
 export { default as DpDefaultPage } from './DefaultPage'
 export { default as DpLoginPage } from './LoginPage'
 
+/* table */
 export { default as DpStatisticsTable } from './table/statistics-table'
+
+/* title */
+export { default as DpTitle } from './title/main'
+export { default as DpSubTitle } from './title/sub'
