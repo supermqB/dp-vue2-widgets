@@ -27,3 +27,5 @@ export { default as DpHeaderNav } from './header-nav'
 
 export { default as DpDefaultPage } from './DefaultPage'
 export { default as DpLoginPage } from './LoginPage'
+
+export { default as DpStatisticsTable } from './table/statistics-table'
