@@ -34,7 +34,7 @@ export default {
       type: Array,
       default: () => []
     },
-    logoutEvent: Object
+    logoutEvent: Function
   }
 }
 </script>

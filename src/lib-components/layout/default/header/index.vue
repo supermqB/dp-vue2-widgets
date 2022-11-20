@@ -16,7 +16,7 @@ export default {
   props: {
     titleText: String,
     menuItems: Array,
-    logoutEvent: Object
+    logoutEvent: Function
   }
 }
 </script>

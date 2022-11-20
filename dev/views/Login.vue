@@ -1,12 +1,3 @@
 <template>
-  <dp-login-page />
+  <dp-login-page app-title="示例系统" />
 </template>
-
-<script>
-import { DpLoginPage } from '@/entry'
-export default {
-  components: { DpLoginPage }
-}
-</script>
-
-<style></style>

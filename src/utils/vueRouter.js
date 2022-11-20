@@ -21,7 +21,7 @@ const generateRouter = config => {
     blankRoutesConfig = [], // 空白路由配置 （没有layout视图包裹, 常用于登录页面)
     isQiankun = window.__POWERED_BY_QIANKUN__,
     layout = DpLayout,
-    logoutEvent = null,
+    logoutEvent = () => {},
     title = '',
     base = window.__POWERED_BY_QIANKUN__
       ? process.env.VUE_APP_QIANKUN_ROUTER_BASE

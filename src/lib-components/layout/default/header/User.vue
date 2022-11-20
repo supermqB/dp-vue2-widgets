@@ -19,7 +19,7 @@
 export default {
   name: 'HeaderUser',
   props: {
-    logoutEvent: Object
+    logoutEvent: Function
   },
   methods: {
     handleCommand(command) {

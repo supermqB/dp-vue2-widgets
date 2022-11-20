@@ -19384,7 +19384,7 @@ const __vue_component__$d = /*#__PURE__*/normalizeComponent({
 var script$b = {
   name: 'HeaderUser',
   props: {
-    logoutEvent: Object
+    logoutEvent: Function
   },
   methods: {
     handleCommand(command) {
@@ -19397,7 +19397,7 @@ var script$b = {
   }
 };
 
-var css_248z$9 = ".header-user[data-v-1fd96eb0]{width:56px;display:flex;align-items:center}.header-user__info[data-v-1fd96eb0]{color:#fff;margin:16px}.header-user__avatar[data-v-1fd96eb0]{width:16px;height:16px;padding:4px;border-radius:50%;margin-right:20px}.header-user__avatar i[data-v-1fd96eb0]{font-size:16px;color:rgba(255,255,255,.7)}";
+var css_248z$9 = ".header-user[data-v-155d0989]{width:56px;display:flex;align-items:center}.header-user__info[data-v-155d0989]{color:#fff;margin:16px}.header-user__avatar[data-v-155d0989]{width:16px;height:16px;padding:4px;border-radius:50%;margin-right:20px}.header-user__avatar i[data-v-155d0989]{font-size:16px;color:rgba(255,255,255,.7)}";
 styleInject(css_248z$9);
 
 /* script */
@@ -19435,7 +19435,7 @@ var __vue_staticRenderFns__$c = [];
 /* style */
 const __vue_inject_styles__$c = undefined;
 /* scoped */
-const __vue_scope_id__$c = "data-v-1fd96eb0";
+const __vue_scope_id__$c = "data-v-155d0989";
 /* module identifier */
 const __vue_module_identifier__$c = undefined;
 /* functional template */
@@ -19462,11 +19462,11 @@ var script$a = {
   props: {
     titleText: String,
     menuItems: Array,
-    logoutEvent: Object
+    logoutEvent: Function
   }
 };
 
-var css_248z$8 = ".header[data-v-7076aec1]{height:100%;background:#2f63b9;display:flex;justify-content:space-between}.header-title[data-v-7076aec1]{justify-content:flex-start;width:280px;flex:none}.header-user[data-v-7076aec1]{justify-content:flex-end;width:200px;flex:none}.header-menu[data-v-7076aec1]{flex-grow:1;overflow:auto}";
+var css_248z$8 = ".header[data-v-2d57ea9a]{height:100%;background:#2f63b9;display:flex;justify-content:space-between}.header-title[data-v-2d57ea9a]{justify-content:flex-start;width:280px;flex:none}.header-user[data-v-2d57ea9a]{justify-content:flex-end;width:200px;flex:none}.header-menu[data-v-2d57ea9a]{flex-grow:1;overflow:auto}";
 styleInject(css_248z$8);
 
 /* script */
@@ -19500,7 +19500,7 @@ var __vue_staticRenderFns__$b = [];
 /* style */
 const __vue_inject_styles__$b = undefined;
 /* scoped */
-const __vue_scope_id__$b = "data-v-7076aec1";
+const __vue_scope_id__$b = "data-v-2d57ea9a";
 /* module identifier */
 const __vue_module_identifier__$b = undefined;
 /* functional template */
@@ -19640,7 +19640,7 @@ var script$7 = {
       type: Array,
       default: () => []
     },
-    logoutEvent: Object
+    logoutEvent: Function
   }
 };
 
@@ -20501,7 +20501,7 @@ const generateRouter = config => {
     // 空白路由配置 （没有layout视图包裹, 常用于登录页面)
     isQiankun = window.__POWERED_BY_QIANKUN__,
     layout = __vue_component__$8,
-    logoutEvent = null,
+    logoutEvent = () => {},
     title = '',
     base = window.__POWERED_BY_QIANKUN__ ? process.env.VUE_APP_QIANKUN_ROUTER_BASE : process.env.VUE_APP_REAL_ROUTER_BASE
   } = config;

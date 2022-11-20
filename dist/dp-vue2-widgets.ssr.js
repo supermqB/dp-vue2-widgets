@@ -19480,7 +19480,7 @@ var __vue_component__$d = /*#__PURE__*/normalizeComponent({
 var script$b = {
   name: 'HeaderUser',
   props: {
-    logoutEvent: Object
+    logoutEvent: Function
   },
   methods: {
     handleCommand: function handleCommand(command) {
@@ -19527,16 +19527,16 @@ var __vue_staticRenderFns__$c = [];
 /* style */
 var __vue_inject_styles__$c = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-1fd96eb0_0", {
-    source: ".header-user[data-v-1fd96eb0]{width:56px;display:flex;align-items:center}.header-user__info[data-v-1fd96eb0]{color:#fff;margin:16px}.header-user__avatar[data-v-1fd96eb0]{width:16px;height:16px;padding:4px;border-radius:50%;margin-right:20px}.header-user__avatar i[data-v-1fd96eb0]{font-size:16px;color:rgba(255,255,255,.7)}",
+  inject("data-v-155d0989_0", {
+    source: ".header-user[data-v-155d0989]{width:56px;display:flex;align-items:center}.header-user__info[data-v-155d0989]{color:#fff;margin:16px}.header-user__avatar[data-v-155d0989]{width:16px;height:16px;padding:4px;border-radius:50%;margin-right:20px}.header-user__avatar i[data-v-155d0989]{font-size:16px;color:rgba(255,255,255,.7)}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$c = "data-v-1fd96eb0";
+var __vue_scope_id__$c = "data-v-155d0989";
 /* module identifier */
-var __vue_module_identifier__$c = "data-v-1fd96eb0";
+var __vue_module_identifier__$c = "data-v-155d0989";
 /* functional template */
 var __vue_is_functional_template__$c = false;
 /* style inject shadow dom */
@@ -19555,7 +19555,7 @@ var script$a = {
   props: {
     titleText: String,
     menuItems: Array,
-    logoutEvent: Object
+    logoutEvent: Function
   }
 };/* script */
 var __vue_script__$a = script$a;
@@ -19589,16 +19589,16 @@ var __vue_staticRenderFns__$b = [];
 /* style */
 var __vue_inject_styles__$b = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-7076aec1_0", {
-    source: ".header[data-v-7076aec1]{height:100%;background:#2f63b9;display:flex;justify-content:space-between}.header-title[data-v-7076aec1]{justify-content:flex-start;width:280px;flex:none}.header-user[data-v-7076aec1]{justify-content:flex-end;width:200px;flex:none}.header-menu[data-v-7076aec1]{flex-grow:1;overflow:auto}",
+  inject("data-v-2d57ea9a_0", {
+    source: ".header[data-v-2d57ea9a]{height:100%;background:#2f63b9;display:flex;justify-content:space-between}.header-title[data-v-2d57ea9a]{justify-content:flex-start;width:280px;flex:none}.header-user[data-v-2d57ea9a]{justify-content:flex-end;width:200px;flex:none}.header-menu[data-v-2d57ea9a]{flex-grow:1;overflow:auto}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$b = "data-v-7076aec1";
+var __vue_scope_id__$b = "data-v-2d57ea9a";
 /* module identifier */
-var __vue_module_identifier__$b = "data-v-7076aec1";
+var __vue_module_identifier__$b = "data-v-2d57ea9a";
 /* functional template */
 var __vue_is_functional_template__$b = false;
 /* style inject shadow dom */
@@ -19717,7 +19717,7 @@ var script$7 = {
         return [];
       }
     },
-    logoutEvent: Object
+    logoutEvent: Function
   }
 };/* script */
 var __vue_script__$7 = script$7;
@@ -19762,7 +19762,7 @@ var __vue_inject_styles__$8 = undefined;
 /* scoped */
 var __vue_scope_id__$8 = undefined;
 /* module identifier */
-var __vue_module_identifier__$8 = "data-v-06149052";
+var __vue_module_identifier__$8 = "data-v-7720b944";
 /* functional template */
 var __vue_is_functional_template__$8 = false;
 /* style inject */
@@ -20451,7 +20451,7 @@ var generateRouter = function generateRouter(config) {
     _config$layout = config.layout,
     layout = _config$layout === void 0 ? __vue_component__$8 : _config$layout,
     _config$logoutEvent = config.logoutEvent,
-    logoutEvent = _config$logoutEvent === void 0 ? null : _config$logoutEvent,
+    logoutEvent = _config$logoutEvent === void 0 ? function () {} : _config$logoutEvent,
     _config$title = config.title,
     title = _config$title === void 0 ? '' : _config$title,
     _config$base = config.base,
