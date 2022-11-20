@@ -34,3 +34,6 @@ export { default as DpStatisticsTable } from './table/statistics-table'
 /* title */
 export { default as DpTitle } from './title/main'
 export { default as DpSubtitle } from './title/sub'
+
+/* button */
+export { default as DpIconButton } from './button/DpIconButton.vue'
