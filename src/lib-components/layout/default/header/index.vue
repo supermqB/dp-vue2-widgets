@@ -2,7 +2,7 @@
   <div class="header">
     <HeaderTitle class="header-title" :titleText="titleText" />
     <HeaderMenu class="header-menu" :items="menuItems" />
-    <HeaderUser class="header-user" />
+    <HeaderUser class="header-user" :logoutEvent="logoutEvent" />
   </div>
 </template>
 
@@ -15,7 +15,8 @@ export default {
   components: { HeaderTitle, HeaderMenu, HeaderUser },
   props: {
     titleText: String,
-    menuItems: Array
+    menuItems: Array,
+    logoutEvent: Object
   }
 }
 </script>

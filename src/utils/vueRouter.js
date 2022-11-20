@@ -1,6 +1,3 @@
-// import Vue from 'vue'
-// import VueRouter from 'vue-router'
-// Vue.use(VueRouter)
 import { DpLayout, DpLayoutBlank, DpDefaultPage } from '@/entry'
 
 const generateMenuItems = routesConfig => {
@@ -20,9 +17,11 @@ const generateMenuItems = routesConfig => {
 const generateRouter = config => {
   let {
     VueRouter,
-    routesConfig = [],
+    routesConfig = [], // 路由配置 (放在layout下)
+    blankRoutesConfig = [], // 空白路由配置 （没有layout视图包裹, 常用于登录页面)
     isQiankun = window.__POWERED_BY_QIANKUN__,
     layout = DpLayout,
+    logoutEvent = null,
     title = '',
     base = window.__POWERED_BY_QIANKUN__
       ? process.env.VUE_APP_QIANKUN_ROUTER_BASE
@@ -38,22 +37,25 @@ const generateRouter = config => {
   const router = new VueRouter({
     mode: 'history',
     base,
-    routes: [
+    routes: blankRoutesConfig.concat([
       {
         path: '/',
         redirect: { name: redirectName },
         component: layout,
-        props: { title, menuItems: generateMenuItems(routesConfig) },
-        children: routesConfig
-        // children: routesConfig.concat({
-        //   path: '*',
-        //   name: '404',
-        //   meta: { title: '404' },
-        //   hidden: true,
-        //   component: DpDefaultPage
-        // })
+        props: {
+          title,
+          menuItems: generateMenuItems(routesConfig),
+          logoutEvent
+        },
+        children: routesConfig.concat({
+          path: '*',
+          name: '404',
+          meta: { title: '404' },
+          hidden: true,
+          component: DpDefaultPage
+        })
       }
-    ]
+    ])
   })
 
   const originalPush = VueRouter.prototype.push

@@ -1,7 +1,11 @@
 <template>
   <dp-layout-root>
     <template #header>
-      <AppHeader :titleText="title" :menuItems="menuItems" />
+      <AppHeader
+        :titleText="title"
+        :menuItems="menuItems"
+        :logoutEvent="logoutEvent"
+      />
     </template>
     <template #main>
       <AppMain />
@@ -29,7 +33,8 @@ export default {
     menuItems: {
       type: Array,
       default: () => []
-    }
+    },
+    logoutEvent: Object
   }
 }
 </script>

@@ -1,15 +1,35 @@
 <template>
   <div class="header-user">
-    <div class="header-user__info">
-      <i class="el-icon-warning-outline" />
-    </div>
-    <div class="header-user__avatar"></div>
+    <el-dropdown @command="handleCommand">
+      <span class="el-dropdown-link">
+        <div class="header-user__avatar">
+          <i class="el-icon-user-solid" />
+        </div>
+      </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item command="logout">
+          <span>退出</span>
+        </el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HeaderUser'
+  name: 'HeaderUser',
+  props: {
+    logoutEvent: Object
+  },
+  methods: {
+    handleCommand(command) {
+      if (command == 'logout') {
+        if (this.logoutEvent !== null) {
+          this.logoutEvent()
+        }
+      }
+    }
+  }
 }
 </script>
 
@@ -19,17 +39,19 @@ export default {
   display: flex;
   align-items: center;
   &__info {
-    color: #78838e;
+    color: #fff;
     margin: 16px;
-    // background-color: rgb(222, 212, 212);
-    // background-image: url('~@/assets/images/layout/default/header/user/info.svg');
   }
   &__avatar {
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
+    padding: 4px;
     border-radius: 50%;
-    background: #78838e;
-    margin-right: 12px;
+    margin-right: 20px;
+    i {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.7);
+    }
   }
 }
 </style>
