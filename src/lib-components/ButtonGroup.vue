@@ -81,9 +81,6 @@ export default {
   white-space: nowrap;
   .group {
     padding: 0 6px;
-    .el-button {
-      width: 59px;
-    }
     .el-button + .el-button {
       margin-left: 6px;
     }

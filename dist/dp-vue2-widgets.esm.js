@@ -213,7 +213,7 @@ var script$p = {
   }
 };
 
-var css_248z$k = ".btn_grp_wrapper{display:flex;white-space:nowrap}.btn_grp_wrapper .group{padding:0 6px}.btn_grp_wrapper .group .el-button{width:59px}.btn_grp_wrapper .group .el-button+.el-button{margin-left:6px}.btn_grp_wrapper .group+.group{border-left:1px solid silver}";
+var css_248z$k = ".btn_grp_wrapper{display:flex;white-space:nowrap}.btn_grp_wrapper .group{padding:0 6px}.btn_grp_wrapper .group .el-button+.el-button{margin-left:6px}.btn_grp_wrapper .group+.group{border-left:1px solid silver}";
 styleInject(css_248z$k);
 
 /* script */
@@ -20375,7 +20375,7 @@ var components$1 = /*#__PURE__*/Object.freeze({
   DpLoginPage: __vue_component__$4,
   DpStatisticsTable: __vue_component__$2,
   DpTitle: __vue_component__$1,
-  DpSubTitle: __vue_component__
+  DpSubtitle: __vue_component__
 });
 
 // Import vue components
@@ -20417,7 +20417,7 @@ var components = /*#__PURE__*/Object.freeze({
   DpLoginPage: __vue_component__$4,
   DpStatisticsTable: __vue_component__$2,
   DpTitle: __vue_component__$1,
-  DpSubTitle: __vue_component__
+  DpSubtitle: __vue_component__
 });
 
 // import Vue from 'vue'
@@ -20497,4 +20497,4 @@ Object.entries(components).forEach(_ref => {
   }
 });
 
-export { __vue_component__$q as ButtonGroup, __vue_component__$i as CatalogButtons, __vue_component__$j as Dialog, __vue_component__$q as DpButtonGroup, __vue_component__$i as DpCatalogButtons, __vue_component__$5 as DpDefaultPage, __vue_component__$j as DpDialog, __vue_component__$n as DpForm, __vue_component__$p as DpGeneralTable, __vue_component__$d as DpHeaderNav, __vue_component__$7 as DpLayout, __vue_component__$6 as DpLayoutBlank, __vue_component__$g as DpLayoutContainer, __vue_component__$h as DpLayoutRoot, __vue_component__$4 as DpLoginPage, __vue_component__$l as DpSearchBar, __vue_component__$o as DpSideCatalog, __vue_component__$k as DpStatistics, __vue_component__$2 as DpStatisticsTable, __vue_component__ as DpSubTitle, __vue_component__$1 as DpTitle, __vue_component__$n as Form, __vue_component__$p as GeneralTable, __vue_component__$m as SearchBar, __vue_component__$o as SideCatalog, __vue_component__$k as Statistics, __vue_component__$r as Title, install as default, index as utils };
+export { __vue_component__$q as ButtonGroup, __vue_component__$i as CatalogButtons, __vue_component__$j as Dialog, __vue_component__$q as DpButtonGroup, __vue_component__$i as DpCatalogButtons, __vue_component__$5 as DpDefaultPage, __vue_component__$j as DpDialog, __vue_component__$n as DpForm, __vue_component__$p as DpGeneralTable, __vue_component__$d as DpHeaderNav, __vue_component__$7 as DpLayout, __vue_component__$6 as DpLayoutBlank, __vue_component__$g as DpLayoutContainer, __vue_component__$h as DpLayoutRoot, __vue_component__$4 as DpLoginPage, __vue_component__$l as DpSearchBar, __vue_component__$o as DpSideCatalog, __vue_component__$k as DpStatistics, __vue_component__$2 as DpStatisticsTable, __vue_component__ as DpSubtitle, __vue_component__$1 as DpTitle, __vue_component__$n as Form, __vue_component__$p as GeneralTable, __vue_component__$m as SearchBar, __vue_component__$o as SideCatalog, __vue_component__$k as Statistics, __vue_component__$r as Title, install as default, index as utils };

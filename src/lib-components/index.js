@@ -33,4 +33,4 @@ export { default as DpStatisticsTable } from './table/statistics-table'
 
 /* title */
 export { default as DpTitle } from './title/main'
-export { default as DpSubTitle } from './title/sub'
+export { default as DpSubtitle } from './title/sub'

@@ -1,62 +1,78 @@
 .el-button {
-    height: 28px;
+  height: 28px;
+  //   min-width: 59px;
+  text-align: justify;
+  span {
+    display: inline-block;
+    min-width: 33px;
+    text-align: justify;
+    text-align-last: justify;
+  }
 }
-// .el-button,
-// .el-button.is-round {
-//     padding: 6.5px 14px;
-// }
+.el-button,
+.el-button.is-round {
+  padding: 6.5px 12px;
+}
 
-// .el-button.is-circle {
-//     padding: 6.5px;
-// }
+.el-button.is-circle {
+  padding: 6.5px;
+}
 
 // 次要按钮
 .el-button--primary.is-plain {
+  color: $--color-primary;
+  background: $--color-white;
+  border-color: $--color-primary;
+
+  &:hover,
+  &:focus {
     color: $--color-primary;
-    background: $--color-white;
+    background: mix(
+      $--color-primary,
+      $--color-white,
+      $--button-active-shade-percent
+    );
     border-color: $--color-primary;
-  
+  }
+
+  &:active {
+    color: $--color-primary;
+    background: mix(
+      $--color-primary,
+      $--color-white,
+      $--button-active-shade-percent
+    );
+    border-color: $--color-primary;
+  }
+
+  &.is-disabled {
+    &,
     &:hover,
-    &:focus {
-        color: $--color-primary;
-        background: mix($--color-primary, $--color-white, $--button-active-shade-percent);
-        border-color: $--color-primary;
-    }
-  
+    &:focus,
     &:active {
-        color: $--color-primary;
-        background: mix($--color-primary, $--color-white, $--button-active-shade-percent);
-        border-color: $--color-primary;
+      color: mix($--color-white, $--color-primary, 50%);
+      background-color: $--color-white;
+      border-color: mix($--color-white, $--color-primary, 50%);
     }
-  
-    &.is-disabled {
-      &,
-      &:hover,
-      &:focus,
-      &:active {
-        color: mix($--color-white, $--color-primary, 50%);
-        background-color: $--color-white;
-        border-color: mix($--color-white, $--color-primary, 50%);
-      }
-    }
+  }
 }
 
 .el-button.el-button--text {
-    padding: 0;
-    &.is-disabled {
-        color: mix($--color-white, $--color-primary, 50%);
-    }
+  padding: 0;
+  &.is-disabled {
+    color: mix($--color-white, $--color-primary, 50%);
+  }
 }
 
 .el-button--default.is-plain {
-    border: 1px solid #DCDFE6;
+  border: 1px solid #dcdfe6;
 }
 
 .el-button--danger.is-plain,
 .el-button--danger.is-plain.is-disabled {
-    background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .el-button.is-dash {
-    border-style: dashed;
+  border-style: dashed;
 }
