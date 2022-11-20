@@ -5,10 +5,11 @@ import Dev from './serve.vue'
 // library as a whole, comment/remove this import and it's corresponding "Vue.use" call
 
 import ElementUI from 'element-ui'
-import DpVue2Widgets from '@/entry.esm'
+import DpVue2Widgets from '@/entry'
 Vue.use(ElementUI)
 Vue.use(DpVue2Widgets)
-import '../dist/theme-dp-ui/index.css'
+// import '../dist/theme-dp-ui/index.css'
+import '../src/theme/theme-dp-ui/src/index.scss'
 
 import router from './router'
 

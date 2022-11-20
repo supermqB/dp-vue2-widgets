@@ -4,7 +4,7 @@ Vue.use(VueRouter)
 
 import { utils } from '@/entry'
 
-import { DpDefaultPage } from '@/entry'
+import { DpDefaultPage, DpLayoutBlank } from '@/entry'
 
 const routesConfig = [
   {
@@ -17,7 +17,27 @@ const routesConfig = [
     path: 'test',
     name: 'test',
     meta: { title: 'test' },
-    component: () => import('../views/Test.vue')
+    component: DpLayoutBlank,
+    children: [
+      {
+        path: 'test1',
+        name: 'test1',
+        meta: { title: 'test1' },
+        component: () => import('../views/test/test-1')
+      },
+      {
+        path: 'test2',
+        name: 'test2',
+        meta: { title: 'test2' },
+        component: () => import('../views/test/test-2')
+      }
+    ]
+  },
+  {
+    path: 'button',
+    name: 'button',
+    meta: { title: '按钮' },
+    component: () => import('../views/Button.vue')
   },
   {
     path: 'login',
