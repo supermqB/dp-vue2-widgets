@@ -18974,7 +18974,7 @@ var script$f = {
     },
     asideLeftMaxWidth: {
       type: String,
-      default: '345px'
+      default: 'auto'
     },
     asideRightWidth: {
       type: String,

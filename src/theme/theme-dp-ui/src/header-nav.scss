@@ -8,6 +8,7 @@
     &--horizontal > span.menu-item {
       float: left;
       overflow: hidden;
+      // margin-right: 10px;
       & .el-menu-item,
       & .el-submenu {
         float: left;
@@ -21,11 +22,13 @@
       text-align: center;
       border: none;
       font-size: 14px;
-      &.is-active{
-        border-bottom: 5px solid #2baae2;
-        border-bottom-color: #2baae2 !important;
+      &.is-active {
+        background-color: #1890ff !important;
+        // border-bottom: 5px solid #2baae2;
+        // border-bottom-color: #2baae2 !important;
       }
       &:hover {
+        background-color: #1890ff !important;
         color: #fff !important;
       }
       > span {
@@ -55,11 +58,11 @@
       &.is-active {
         & .el-submenu__title {
           color: #fff !important;
-          background-color: #396abc !important;
+          background-color: #1890ff !important;
           transition: none;
           box-shadow: none !important;
-          border-bottom: 5px solid #2baae2;
-          border-bottom-color: #2baae2 !important;
+          // border-bottom: 5px solid #2baae2;
+          // border-bottom-color: #2baae2 !important;
         }
       }
 
@@ -81,7 +84,7 @@
         }
         &:hover {
           color: #fff !important;
-          background-color: #2f63b9 !important;
+          background-color: #1890ff !important;
           transition: none;
         }
       }
