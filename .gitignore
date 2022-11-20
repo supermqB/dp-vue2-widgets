@@ -18,3 +18,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+
+
+/docs/src/.vuepress/dist
+yarn.lock

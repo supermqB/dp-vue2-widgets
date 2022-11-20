@@ -6,7 +6,7 @@ const generateMenuItems = routesConfig => {
     if (v.hidden !== true) {
       items.push({
         value: v.name,
-        label: v.meta?.title ?? v.name,
+        label: v.meta && v.meta.title ? v.meta.title : v.name,
         children: v.children ? generateMenuItems(v.children) : undefined
       })
     }
@@ -37,7 +37,7 @@ const generateRouter = config => {
   const router = new VueRouter({
     mode: 'history',
     base,
-    routes: blankRoutesConfig.concat([
+    routes: [
       {
         path: '/',
         redirect: { name: redirectName },
@@ -47,15 +47,25 @@ const generateRouter = config => {
           menuItems: generateMenuItems(routesConfig),
           logoutEvent
         },
-        children: routesConfig.concat({
-          path: '*',
-          name: '404',
-          meta: { title: '404' },
-          hidden: true,
-          component: DpDefaultPage
-        })
+        children: routesConfig
       }
-    ])
+    ]
+      .concat(blankRoutesConfig)
+      .concat([
+        {
+          path: '*',
+          hidden: true,
+          component: layout,
+          children: [
+            {
+              path: '*',
+              name: '404',
+              meta: { title: '404' },
+              component: DpDefaultPage
+            }
+          ]
+        }
+      ])
   })
 
   const originalPush = VueRouter.prototype.push

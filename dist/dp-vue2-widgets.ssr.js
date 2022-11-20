@@ -20430,10 +20430,9 @@ var install = function installDpVue2Widgets(Vue) {
   var items = [];
   routesConfig.map(function (v) {
     if (v.hidden !== true) {
-      var _v$meta$title, _v$meta;
       items.push({
         value: v.name,
-        label: (_v$meta$title = (_v$meta = v.meta) === null || _v$meta === void 0 ? void 0 : _v$meta.title) !== null && _v$meta$title !== void 0 ? _v$meta$title : v.name,
+        label: v.meta && v.meta.title ? v.meta.title : v.name,
         children: v.children ? generateMenuItems(v.children) : undefined
       });
     }
@@ -20463,7 +20462,7 @@ var generateRouter = function generateRouter(config) {
   var router = new VueRouter({
     mode: 'history',
     base: base,
-    routes: blankRoutesConfig.concat([{
+    routes: [{
       path: '/',
       redirect: {
         name: redirectName
@@ -20474,16 +20473,20 @@ var generateRouter = function generateRouter(config) {
         menuItems: generateMenuItems(routesConfig),
         logoutEvent: logoutEvent
       },
-      children: routesConfig.concat({
+      children: routesConfig
+    }].concat(blankRoutesConfig).push({
+      path: '*',
+      hidden: true,
+      component: layout,
+      children: [{
         path: '*',
         name: '404',
         meta: {
           title: '404'
         },
-        hidden: true,
         component: __vue_component__$6
-      })
-    }])
+      }]
+    })
   });
   var originalPush = VueRouter.prototype.push;
   VueRouter.prototype.push = function push(location) {

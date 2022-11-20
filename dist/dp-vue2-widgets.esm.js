@@ -20482,10 +20482,9 @@ const generateMenuItems = routesConfig => {
   let items = [];
   routesConfig.map(v => {
     if (v.hidden !== true) {
-      var _v$meta;
       items.push({
         value: v.name,
-        label: ((_v$meta = v.meta) === null || _v$meta === void 0 ? void 0 : _v$meta.title) ?? v.name,
+        label: v.meta && v.meta.title ? v.meta.title : v.name,
         children: v.children ? generateMenuItems(v.children) : undefined
       });
     }
@@ -20512,7 +20511,7 @@ const generateRouter = config => {
   const router = new VueRouter({
     mode: 'history',
     base,
-    routes: blankRoutesConfig.concat([{
+    routes: [{
       path: '/',
       redirect: {
         name: redirectName
@@ -20523,15 +20522,19 @@ const generateRouter = config => {
         menuItems: generateMenuItems(routesConfig),
         logoutEvent
       },
-      children: routesConfig.concat({
+      children: routesConfig
+    }].concat(blankRoutesConfig).concat([{
+      path: '*',
+      hidden: true,
+      component: layout,
+      children: [{
         path: '*',
         name: '404',
         meta: {
           title: '404'
         },
-        hidden: true,
         component: __vue_component__$6
-      })
+      }]
     }])
   });
   const originalPush = VueRouter.prototype.push;

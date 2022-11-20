@@ -9,8 +9,9 @@
   "scripts": {
     "serve": "vue-cli-service serve dev/serve.js",
     "prebuild": "rimraf ./dist",
+    "dist:component": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
     "dist:theme": "gulp build --gulpfile src/theme/theme-dp-ui/gulpfile.js && cp-cli src/theme/theme-dp-ui/lib dist/theme-dp-ui",
-    "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js && npm run dist:theme",
+    "build": "npm run dist:component && npm run dist:theme",
     "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
     "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
     "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
