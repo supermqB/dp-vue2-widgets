@@ -20362,12 +20362,19 @@ var __vue_component__$1 = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var script = {
   name: 'DpIconButton',
   props: {
     text: String,
-    icon: String
+    icon: String,
+    disabled: Boolean
   },
   methods: {
     handleClick: function handleClick() {
@@ -20386,7 +20393,8 @@ var __vue_render__ = function __vue_render__() {
     staticClass: "icon-button",
     attrs: {
       "type": "primary",
-      "plain": ""
+      "plain": "",
+      "disabled": _vm.disabled
     },
     on: {
       "click": _vm.handleClick
@@ -20406,16 +20414,16 @@ var __vue_staticRenderFns__ = [];
 /* style */
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-10a1abac_0", {
-    source: ".icon-button[data-v-10a1abac]{padding-left:8px;padding-right:8px}.icon-button[data-v-10a1abac] >span{min-width:auto;display:flex}.icon-button__text[data-v-10a1abac]{min-width:26px;display:block}.icon-button__icon[data-v-10a1abac]{margin-left:3px;width:12px;height:12px;display:block;flex:0 0 12px;position:relative}.icon-button__icon>img[data-v-10a1abac]{position:absolute;top:1px}",
+  inject("data-v-afbf66be_0", {
+    source: ".icon-button[data-v-afbf66be]{padding-left:8px;padding-right:8px}.icon-button[data-v-afbf66be] >span{min-width:auto;display:flex}.icon-button__text[data-v-afbf66be]{min-width:26px;display:block}.icon-button__icon[data-v-afbf66be]{margin-left:3px;width:12px;height:12px;display:block;flex:0 0 12px;position:relative}.icon-button__icon>img[data-v-afbf66be]{position:absolute;top:1px}.icon-button.is-disabled .icon-button__icon[data-v-afbf66be]{opacity:.5}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__ = "data-v-10a1abac";
+var __vue_scope_id__ = "data-v-afbf66be";
 /* module identifier */
-var __vue_module_identifier__ = "data-v-10a1abac";
+var __vue_module_identifier__ = "data-v-afbf66be";
 /* functional template */
 var __vue_is_functional_template__ = false;
 /* style inject shadow dom */

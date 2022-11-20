@@ -20353,12 +20353,19 @@ const __vue_component__$1 = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var script = {
   name: 'DpIconButton',
   props: {
     text: String,
-    icon: String
+    icon: String,
+    disabled: Boolean
   },
   methods: {
     handleClick() {
@@ -20367,7 +20374,7 @@ var script = {
   }
 };
 
-var css_248z = ".icon-button[data-v-10a1abac]{padding-left:8px;padding-right:8px}.icon-button[data-v-10a1abac] >span{min-width:auto;display:flex}.icon-button__text[data-v-10a1abac]{min-width:26px;display:block}.icon-button__icon[data-v-10a1abac]{margin-left:3px;width:12px;height:12px;display:block;flex:0 0 12px;position:relative}.icon-button__icon>img[data-v-10a1abac]{position:absolute;top:1px}";
+var css_248z = ".icon-button[data-v-afbf66be]{padding-left:8px;padding-right:8px}.icon-button[data-v-afbf66be] >span{min-width:auto;display:flex}.icon-button__text[data-v-afbf66be]{min-width:26px;display:block}.icon-button__icon[data-v-afbf66be]{margin-left:3px;width:12px;height:12px;display:block;flex:0 0 12px;position:relative}.icon-button__icon>img[data-v-afbf66be]{position:absolute;top:1px}.icon-button.is-disabled .icon-button__icon[data-v-afbf66be]{opacity:.5}";
 styleInject(css_248z);
 
 /* script */
@@ -20381,7 +20388,8 @@ var __vue_render__ = function () {
     staticClass: "icon-button",
     attrs: {
       "type": "primary",
-      "plain": ""
+      "plain": "",
+      "disabled": _vm.disabled
     },
     on: {
       "click": _vm.handleClick
@@ -20401,7 +20409,7 @@ var __vue_staticRenderFns__ = [];
 /* style */
 const __vue_inject_styles__ = undefined;
 /* scoped */
-const __vue_scope_id__ = "data-v-10a1abac";
+const __vue_scope_id__ = "data-v-afbf66be";
 /* module identifier */
 const __vue_module_identifier__ = undefined;
 /* functional template */

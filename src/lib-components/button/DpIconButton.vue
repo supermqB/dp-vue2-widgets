@@ -1,5 +1,11 @@
 <template>
-  <el-button type="primary" plain class="icon-button" @click="handleClick">
+  <el-button
+    type="primary"
+    plain
+    class="icon-button"
+    @click="handleClick"
+    :disabled="disabled"
+  >
     <span class="icon-button__text">{{ text }}</span>
     <span class="icon-button__icon"><img :src="icon" /></span>
   </el-button>
@@ -10,7 +16,8 @@ export default {
   name: 'DpIconButton',
   props: {
     text: String,
-    icon: String
+    icon: String,
+    disabled: Boolean
   },
   methods: {
     handleClick() {
@@ -42,6 +49,12 @@ export default {
     > img {
       position: absolute;
       top: 1px;
+    }
+  }
+
+  &.is-disabled {
+    .icon-button__icon {
+      opacity: 0.5;
     }
   }
 }

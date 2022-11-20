@@ -44,7 +44,24 @@
 
     <div class="button-page__line">
       <dp-subtitle text="带图标按钮(dp-icon-button)" />
-      <dp-icon-button text="检索" :icon="searchIcon" @click="handleClick" />
+      <div>
+        <dp-icon-button text="检索" :icon="searchIcon" @click="handleClick" />
+        <dp-icon-button
+          text="检索"
+          :icon="searchIcon"
+          @click="handleClick"
+          disabled
+        />
+      </div>
+      <div>
+        <dp-icon-button text="三个字" :icon="searchIcon" @click="handleClick" />
+        <dp-icon-button
+          text="三个字"
+          :icon="searchIcon"
+          @click="handleClick"
+          disabled
+        />
+      </div>
     </div>
 
     <div class="button-page__line">
