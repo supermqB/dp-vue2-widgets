@@ -107,7 +107,8 @@ module.exports = {
           children: getPaths('basic', [
             'layout-root',
             'layout-container',
-            'title'
+            'title',
+            'icon-button'
           ])
         },
         {
