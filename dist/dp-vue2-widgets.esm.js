@@ -344,6 +344,19 @@ const __vue_component__$r = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var script$p = {
   props: {
@@ -382,6 +395,11 @@ var script$p = {
     bottomTip: {
       type: String,
       default: () => ``
+    },
+    // 是否显示序号
+    showIndex: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -440,7 +458,7 @@ var script$p = {
   }
 };
 
-var css_248z$l = ".el_table_wrapper[data-v-34b594de]{height:100%;display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-34b594de]{flex-grow:1;padding:6px 6px 0 6px;box-sizing:border-box}";
+var css_248z$l = ".el_table_wrapper[data-v-28fb34bf]{height:100%;display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-28fb34bf]{flex-grow:1;padding:6px 6px 0 6px;box-sizing:border-box}";
 styleInject(css_248z$l);
 
 var css_248z$k = ".el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{height:300px;overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}";
@@ -457,7 +475,7 @@ var __vue_render__$q = function () {
     staticClass: "el_table_wrapper"
   }, [_c('div', {
     staticClass: "table_container"
-  }, [_c('el-table', {
+  }, [_c('el-table', _vm._g(_vm._b({
     ref: "el_table",
     attrs: {
       "data": _vm.tableData,
@@ -471,7 +489,7 @@ var __vue_render__$q = function () {
       "current-change": _vm.rowChangeHandler,
       "selection-change": _vm.selChgHandler
     }
-  }, [_vm.multipleSelect && _vm.isShowSelection ? _c('el-table-column', {
+  }, 'el-table', _vm.$attrs, false), _vm.$listeners), [_vm.multipleSelect && _vm.isShowSelection ? _c('el-table-column', {
     attrs: {
       "type": "selection",
       "width": "30",
@@ -500,6 +518,20 @@ var __vue_render__$q = function () {
             expression: "selectedIdx"
           }
         }) : _c('span', [_vm._v(_vm._s($index + 1))])];
+      }
+    }])
+  }) : _vm.showIndex ? _c('el-table-column', {
+    attrs: {
+      "label": "序号",
+      "width": "50",
+      "align": "center",
+      "fixed": ""
+    },
+    scopedSlots: _vm._u([{
+      key: "default",
+      fn: function (ref) {
+        var $index = ref.$index;
+        return [_vm._v("\n          " + _vm._s($index + 1 + (_vm.pageInfo.curPage - 1) * _vm.pageInfo.pageSize) + "\n        ")];
       }
     }])
   }) : _vm._e(), _vm._v(" "), _vm._l(_vm.tableConfig, function (col) {
@@ -572,7 +604,7 @@ var __vue_staticRenderFns__$q = [];
 /* style */
 const __vue_inject_styles__$q = undefined;
 /* scoped */
-const __vue_scope_id__$q = "data-v-34b594de";
+const __vue_scope_id__$q = "data-v-28fb34bf";
 /* module identifier */
 const __vue_module_identifier__$q = undefined;
 /* functional template */
@@ -1024,6 +1056,7 @@ const __vue_component__$p = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
 
 var script$n = {
   props: {
@@ -1074,14 +1107,14 @@ var __vue_render__$o = function () {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('el-form', {
+  return _c('el-form', _vm._b({
     ref: "el_form",
     attrs: {
       "model": _vm.formData,
       "rules": _vm.formRule,
       "show-message": false
     }
-  }, _vm._l(_vm.formCfg, function (cfg) {
+  }, 'el-form', _vm.$attrs, false), _vm._l(_vm.formCfg, function (cfg) {
     return _c('el-form-item', {
       key: cfg.id,
       class: cfg.clazzName,
