@@ -19707,7 +19707,7 @@ var script$7 = {
     DpLayoutRoot: __vue_component__$i
   },
   props: {
-    title: {
+    titleText: {
       type: String,
       default: '项目标题'
     },
@@ -19733,7 +19733,7 @@ var __vue_render__$8 = function __vue_render__() {
       fn: function fn() {
         return [_c('AppHeader', {
           attrs: {
-            "titleText": _vm.title,
+            "titleText": _vm.titleText,
             "menuItems": _vm.menuItems,
             "logoutEvent": _vm.logoutEvent
           }
@@ -19762,7 +19762,7 @@ var __vue_inject_styles__$8 = undefined;
 /* scoped */
 var __vue_scope_id__$8 = undefined;
 /* module identifier */
-var __vue_module_identifier__$8 = "data-v-7720b944";
+var __vue_module_identifier__$8 = "data-v-57a3adfe";
 /* functional template */
 var __vue_is_functional_template__$8 = false;
 /* style inject */
@@ -20055,9 +20055,9 @@ var __vue_staticRenderFns__$4 = [];
 /* style */
 var __vue_inject_styles__$4 = undefined;
 /* scoped */
-var __vue_scope_id__$4 = "data-v-6f573ece";
+var __vue_scope_id__$4 = "data-v-63049128";
 /* module identifier */
-var __vue_module_identifier__$4 = "data-v-6f573ece";
+var __vue_module_identifier__$4 = "data-v-63049128";
 /* functional template */
 var __vue_is_functional_template__$4 = false;
 /* style inject */
@@ -20071,10 +20071,8 @@ var __vue_component__$4 = /*#__PURE__*/normalizeComponent({
   staticRenderFns: __vue_staticRenderFns__$4
 }, __vue_inject_styles__$4, __vue_script__$4, __vue_scope_id__$4, __vue_is_functional_template__$4, __vue_module_identifier__$4, false, undefined, undefined, undefined);//
 var script$3 = {
-  name: 'DpStatisticsTable',
-  // 统计表
   components: {
-    CompColumn: __vue_component__$4
+    tableColumn: __vue_component__$4
   },
   props: {
     tableTitle: {
@@ -20095,6 +20093,10 @@ var script$3 = {
       // 最后一行合并的列数
       type: Number,
       default: 1
+    },
+    lastColText: {
+      type: String,
+      default: '合计'
     },
     callback: {
       // 自定义合并
@@ -20172,7 +20174,7 @@ var script$3 = {
       } else {
         // 默认处理
         // 处理最后一行合并列col
-        if (row[this.groupBy] === this.data[this.data.length - 1][this.groupBy]) {
+        if (row[this.groupBy] === this.lastColText) {
           if (columnIndex === 0) {
             return {
               rowspan: 1,
@@ -20206,44 +20208,49 @@ var __vue_render__$3 = function __vue_render__() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('el-table', {
+  return _c('div', {
+    staticClass: "table-container"
+  }, [_c('el-table', {
     staticStyle: {
       "width": "100%"
     },
     attrs: {
-      "data": _vm.data,
       "height": "100%",
+      "data": _vm.data,
       "span-method": _vm.spanMethod
     }
   }, _vm._l(_vm.tableTitle, function (item) {
-    return _c('CompColumn', {
+    return _c('tableColumn', {
       key: item.prop,
       attrs: {
         "item": item
       }
     });
-  }), 1);
+  }), 1)], 1);
 };
 var __vue_staticRenderFns__$3 = [];
 
 /* style */
-var __vue_inject_styles__$3 = undefined;
+var __vue_inject_styles__$3 = function __vue_inject_styles__(inject) {
+  if (!inject) return;
+  inject("data-v-32865fd8_0", {
+    source: ".table-container[data-v-32865fd8]{height:100%}",
+    map: undefined,
+    media: undefined
+  });
+};
 /* scoped */
-var __vue_scope_id__$3 = "data-v-c3fd4df8";
+var __vue_scope_id__$3 = "data-v-32865fd8";
 /* module identifier */
-var __vue_module_identifier__$3 = "data-v-c3fd4df8";
+var __vue_module_identifier__$3 = "data-v-32865fd8";
 /* functional template */
 var __vue_is_functional_template__$3 = false;
-/* style inject */
-
-/* style inject SSR */
-
 /* style inject shadow dom */
 
 var __vue_component__$3 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$3,
   staticRenderFns: __vue_staticRenderFns__$3
-}, __vue_inject_styles__$3, __vue_script__$3, __vue_scope_id__$3, __vue_is_functional_template__$3, __vue_module_identifier__$3, false, undefined, undefined, undefined);//
+}, __vue_inject_styles__$3, __vue_script__$3, __vue_scope_id__$3, __vue_is_functional_template__$3, __vue_module_identifier__$3, false, undefined, createInjectorSSR, undefined);//
 //
 //
 //
@@ -20469,12 +20476,12 @@ var generateRouter = function generateRouter(config) {
       },
       component: layout,
       props: {
-        title: title,
+        titleText: title,
         menuItems: generateMenuItems(routesConfig),
         logoutEvent: logoutEvent
       },
       children: routesConfig
-    }].concat(blankRoutesConfig).push({
+    }].concat(blankRoutesConfig).concat([{
       path: '*',
       hidden: true,
       component: layout,
@@ -20486,7 +20493,7 @@ var generateRouter = function generateRouter(config) {
         },
         component: __vue_component__$6
       }]
-    })
+    }])
   });
   var originalPush = VueRouter.prototype.push;
   VueRouter.prototype.push = function push(location) {

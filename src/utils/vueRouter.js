@@ -43,7 +43,7 @@ const generateRouter = config => {
         redirect: { name: redirectName },
         component: layout,
         props: {
-          title,
+          titleText: title,
           menuItems: generateMenuItems(routesConfig),
           logoutEvent
         },

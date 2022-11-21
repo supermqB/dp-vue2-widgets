@@ -19632,7 +19632,7 @@ var script$7 = {
     DpLayoutRoot: __vue_component__$i
   },
   props: {
-    title: {
+    titleText: {
       type: String,
       default: '项目标题'
     },
@@ -19658,7 +19658,7 @@ var __vue_render__$8 = function () {
       fn: function () {
         return [_c('AppHeader', {
           attrs: {
-            "titleText": _vm.title,
+            "titleText": _vm.titleText,
             "menuItems": _vm.menuItems,
             "logoutEvent": _vm.logoutEvent
           }
@@ -20017,7 +20017,7 @@ var __vue_staticRenderFns__$4 = [];
 /* style */
 const __vue_inject_styles__$4 = undefined;
 /* scoped */
-const __vue_scope_id__$4 = "data-v-6f573ece";
+const __vue_scope_id__$4 = "data-v-63049128";
 /* module identifier */
 const __vue_module_identifier__$4 = undefined;
 /* functional template */
@@ -20035,10 +20035,8 @@ const __vue_component__$4 = /*#__PURE__*/normalizeComponent({
 
 //
 var script$3 = {
-  name: 'DpStatisticsTable',
-  // 统计表
   components: {
-    CompColumn: __vue_component__$4
+    tableColumn: __vue_component__$4
   },
   props: {
     tableTitle: {
@@ -20055,6 +20053,10 @@ var script$3 = {
       // 最后一行合并的列数
       type: Number,
       default: 1
+    },
+    lastColText: {
+      type: String,
+      default: '合计'
     },
     callback: {
       // 自定义合并
@@ -20134,7 +20136,7 @@ var script$3 = {
       } else {
         // 默认处理
         // 处理最后一行合并列col
-        if (row[this.groupBy] === this.data[this.data.length - 1][this.groupBy]) {
+        if (row[this.groupBy] === this.lastColText) {
           if (columnIndex === 0) {
             return {
               rowspan: 1,
@@ -20162,7 +20164,7 @@ var script$3 = {
   }
 };
 
-var css_248z$3 = "";
+var css_248z$3 = ".table-container[data-v-32865fd8]{height:100%}";
 styleInject(css_248z$3);
 
 /* script */
@@ -20172,30 +20174,32 @@ var __vue_render__$3 = function () {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('el-table', {
+  return _c('div', {
+    staticClass: "table-container"
+  }, [_c('el-table', {
     staticStyle: {
       "width": "100%"
     },
     attrs: {
-      "data": _vm.data,
       "height": "100%",
+      "data": _vm.data,
       "span-method": _vm.spanMethod
     }
   }, _vm._l(_vm.tableTitle, function (item) {
-    return _c('CompColumn', {
+    return _c('tableColumn', {
       key: item.prop,
       attrs: {
         "item": item
       }
     });
-  }), 1);
+  }), 1)], 1);
 };
 var __vue_staticRenderFns__$3 = [];
 
 /* style */
 const __vue_inject_styles__$3 = undefined;
 /* scoped */
-const __vue_scope_id__$3 = "data-v-c3fd4df8";
+const __vue_scope_id__$3 = "data-v-32865fd8";
 /* module identifier */
 const __vue_module_identifier__$3 = undefined;
 /* functional template */
@@ -20518,7 +20522,7 @@ const generateRouter = config => {
       },
       component: layout,
       props: {
-        title,
+        titleText: title,
         menuItems: generateMenuItems(routesConfig),
         logoutEvent
       },

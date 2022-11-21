@@ -1,56 +1,51 @@
 <template>
-  <el-table
-    :data="data"
-    height="100%"
-    style="width: 100%"
-    :span-method="spanMethod"
-  >
-    <CompColumn v-for="item in tableTitle" :key="item.prop" :item="item" />
-  </el-table>
+  <div class="table-container">
+    <el-table height="100%" :data="data" style="width: 100%" :span-method="spanMethod">
+      <tableColumn v-for="item in tableTitle" :key="item.prop" :item="item"></tableColumn>
+    </el-table>
+  </div>
 </template>
 <script>
-import CompColumn from './Column.vue'
+import tableColumn from './tableColumn.vue'
 export default {
-  name: 'DpStatisticsTable', // 统计表
-  components: { CompColumn },
+  components: {
+    tableColumn
+  },
   props: {
-    tableTitle: {
-      // 多表头
+    tableTitle: { // 多表头
       type: Array,
       default: () => []
     },
-    data: {
-      // 数据
+    data: { // 数据
       type: Array,
       default: () => []
     },
-    lastColIndex: {
-      // 最后一行合并的列数
+    lastColIndex: { // 最后一行合并的列数
       type: Number,
       default: 1
     },
-    callback: {
-      // 自定义合并
+    lastColText: {
+      type: String,
+      default: '合计'
+    },
+    callback: { // 自定义合并
       default: null
     },
-    columnIndex: {
-      // 需要修改的列（暂时不用,默认0）
+    columnIndex: { // 需要修改的列（暂时不用,默认0）
       type: [Number, Array],
       default: 0
-    }
+    },
   },
   data() {
     return {
-      rowArr: [] // 合并行集合
+      rowArr: [], // 合并行集合
     }
   },
   computed: {
-    groupBy() {
-      // 合并行的依据字段
+    groupBy() { // 合并行的依据字段
       return this.tableTitle[0].prop
     },
-    lastCloArr() {
-      // 最后一行合并列集合
+    lastCloArr() { // 最后一行合并列集合
       let arr = []
       for (let i = 1; i < this.lastColIndex; i++) {
         arr.push(i)
@@ -67,8 +62,7 @@ export default {
     }
   },
   methods: {
-    getarr() {
-      // 判断
+    getarr() { // 判断
       const data = this.data
       let pos = 0
       for (var i = 0; i < data.length; i++) {
@@ -90,15 +84,14 @@ export default {
 
     // 当前行row、当前列column、当前行号rowIndex、当前列号columnIndex四个属性
     spanMethod({ row, column, rowIndex, columnIndex }) {
+
       if (typeof this.callback === 'function') {
         // 有自定义使用自定义
         return this.callback({ row, column, rowIndex, columnIndex })
       } else {
         // 默认处理
         // 处理最后一行合并列col
-        if (
-          row[this.groupBy] === this.data[this.data.length - 1][this.groupBy]
-        ) {
+        if (row[this.groupBy] === this.lastColText) {
           if (columnIndex === 0) {
             return {
               rowspan: 1,
@@ -113,11 +106,7 @@ export default {
           }
         }
         // 处理合并行row
-        if (
-          (Array.isArray(this.columnIndex) &&
-            this.columnIndex.includes(columnIndex)) ||
-          columnIndex === this.columnIndex
-        ) {
+        if (Array.isArray(this.columnIndex) && this.columnIndex.includes(columnIndex) || columnIndex === this.columnIndex) {
           const _row = this.rowArr[rowIndex]
           const _col = _row > 0 ? 1 : 0
           return {
@@ -126,8 +115,13 @@ export default {
           }
         }
       }
+
     }
-  }
+  },
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang='scss' scoped>
+.table-container {
+  height: 100%;
+}
+</style>

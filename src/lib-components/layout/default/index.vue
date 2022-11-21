@@ -2,7 +2,7 @@
   <dp-layout-root>
     <template #header>
       <AppHeader
-        :titleText="title"
+        :titleText="titleText"
         :menuItems="menuItems"
         :logoutEvent="logoutEvent"
       />
@@ -26,7 +26,7 @@ export default {
   name: 'DefaultLayout',
   components: { AppHeader, AppMain, AppFooter, DpLayoutRoot },
   props: {
-    title: {
+    titleText: {
       type: String,
       default: '项目标题'
     },
