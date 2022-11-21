@@ -213,7 +213,7 @@ var script$q = {
   }
 };
 
-var css_248z$m = ".btn_grp_wrapper{display:flex;height:100%;align-items:center}.btn_grp_wrapper .group{height:28px;line-height:24px}.btn_grp_wrapper .group .el-button+.el-button{margin-left:6px}.btn_grp_wrapper .group+.group{border-left:1px solid #95a8c7;padding-left:6px;margin-left:6px}";
+var css_248z$m = ".btn_grp_wrapper{display:flex;padding:0 6px;height:100%;align-items:center}.btn_grp_wrapper .group{height:28px;line-height:24px}.btn_grp_wrapper .group .el-button+.el-button{margin-left:6px}.btn_grp_wrapper .group+.group{border-left:1px solid #95a8c7;padding-left:6px;margin-left:6px}";
 styleInject(css_248z$m);
 
 /* script */
@@ -343,6 +343,7 @@ const __vue_component__$r = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
 
 var script$p = {
   props: {
@@ -373,6 +374,10 @@ var script$p = {
     isShowSelection: {
       type: Boolean,
       default: () => false
+    },
+    selectable: {
+      type: Function,
+      default: () => true
     },
     bottomTip: {
       type: String,
@@ -435,7 +440,7 @@ var script$p = {
   }
 };
 
-var css_248z$l = ".el_table_wrapper[data-v-65eb5792]{height:100%;display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-65eb5792]{flex-grow:1;padding:6px 6px 0 6px;box-sizing:border-box}";
+var css_248z$l = ".el_table_wrapper[data-v-34b594de]{height:100%;display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-34b594de]{flex-grow:1;padding:6px 6px 0 6px;box-sizing:border-box}";
 styleInject(css_248z$l);
 
 var css_248z$k = ".el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{height:300px;overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}";
@@ -470,7 +475,8 @@ var __vue_render__$q = function () {
     attrs: {
       "type": "selection",
       "width": "30",
-      "fixed": ""
+      "fixed": "",
+      "selectable": _vm.selectable
     }
   }) : _vm.isShowSelection ? _c('el-table-column', {
     attrs: {
@@ -566,7 +572,7 @@ var __vue_staticRenderFns__$q = [];
 /* style */
 const __vue_inject_styles__$q = undefined;
 /* scoped */
-const __vue_scope_id__$q = "data-v-65eb5792";
+const __vue_scope_id__$q = "data-v-34b594de";
 /* module identifier */
 const __vue_module_identifier__$q = undefined;
 /* functional template */

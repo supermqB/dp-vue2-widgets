@@ -78,16 +78,12 @@ export default {
 <style lang="scss">
 .btn_grp_wrapper {
   display: flex;
-  // white-space: nowrap;
+  padding: 0 6px;
   height: 100%;
   align-items: center;
-  // justify-items: center;
   .group {
     height: 28px;
     line-height: 24px;
-    // display: inline-block;
-
-    // padding: 0 6px;
     .el-button + .el-button {
       margin-left: 6px;
     }

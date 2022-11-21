@@ -17,6 +17,7 @@
           width="30"
           fixed
           v-if="multipleSelect && isShowSelection"
+          :selectable="selectable"
         >
         </el-table-column>
         <el-table-column width="30" fixed v-else-if="isShowSelection">
@@ -105,6 +106,10 @@ export default {
     isShowSelection: {
       type: Boolean,
       default: () => false
+    },
+    selectable: {
+      type: Function,
+      default: () => true
     },
     bottomTip: {
       type: String,
