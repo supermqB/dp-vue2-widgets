@@ -49,6 +49,12 @@
           :key="col.colConfig.property"
           show-overflow-tooltip
         >
+          <template v-if="col.header" slot="header">
+            <span :style="{'margin-right': '5px'}">{{ col.header.name || col.colConfig.label }}</span>
+            <el-tooltip effect="dark" :content="col.header.content" placement="top">
+              <i class="el-icon-warning-outline"></i>
+            </el-tooltip>
+          </template>
           <template
             #default="{ $index: rowIdx, row, column }"
             v-if="col.actions != null"

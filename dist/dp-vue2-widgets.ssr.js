@@ -501,6 +501,12 @@ var __vue_component__$r = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var script$p = {
   props: {
@@ -626,7 +632,7 @@ var __vue_render__$q = function __vue_render__() {
   var _c = _vm._self._c || _h;
   return _c('div', {
     staticClass: "el_table_wrapper"
-  }, [_vm._ssrNode("<div class=\"table_container\" data-v-28fb34bf>", "</div>", [_c('el-table', _vm._g(_vm._b({
+  }, [_vm._ssrNode("<div class=\"table_container\" data-v-02068d6c>", "</div>", [_c('el-table', _vm._g(_vm._b({
     ref: "el_table",
     attrs: {
       "data": _vm.tableData,
@@ -722,8 +728,22 @@ var __vue_render__$q = function __vue_render__() {
           });
         }
       } : null], null, true)
-    }, 'el-table-column', col.colConfig, false));
-  })], 2)], 1), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"table_footer\" data-v-28fb34bf>", "</div>", [_vm._ssrNode("<div class=\"bottomTip\" data-v-28fb34bf>" + _vm._s(_vm.bottomTip) + "</div> "), _vm.pageInfo != null ? _c('el-pagination', {
+    }, 'el-table-column', col.colConfig, false), [col.header ? _c('template', {
+      slot: "header"
+    }, [_c('span', {
+      style: {
+        'margin-right': '5px'
+      }
+    }, [_vm._v(_vm._s(col.header.name || col.colConfig.label))]), _vm._v(" "), _c('el-tooltip', {
+      attrs: {
+        "effect": "dark",
+        "content": col.header.content,
+        "placement": "top"
+      }
+    }, [_c('i', {
+      staticClass: "el-icon-warning-outline"
+    })])], 1) : _vm._e()], 2);
+  })], 2)], 1), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"table_footer\" data-v-02068d6c>", "</div>", [_vm._ssrNode("<div class=\"bottomTip\" data-v-02068d6c>" + _vm._s(_vm.bottomTip) + "</div> "), _vm.pageInfo != null ? _c('el-pagination', {
     attrs: {
       "current-page": _vm.pageInfo.curPage,
       "page-sizes": [5, 10, 20, 50],
@@ -748,20 +768,20 @@ var __vue_staticRenderFns__$q = [];
 /* style */
 var __vue_inject_styles__$q = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-28fb34bf_0", {
-    source: ".el_table_wrapper[data-v-28fb34bf]{height:100%;display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-28fb34bf]{flex-grow:1;padding:6px 6px 0 6px;box-sizing:border-box}",
+  inject("data-v-02068d6c_0", {
+    source: ".el_table_wrapper[data-v-02068d6c]{height:100%;display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-02068d6c]{flex-grow:1;padding:6px 6px 0 6px;box-sizing:border-box}",
     map: undefined,
     media: undefined
-  }), inject("data-v-28fb34bf_1", {
+  }), inject("data-v-02068d6c_1", {
     source: ".el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{height:300px;overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$q = "data-v-28fb34bf";
+var __vue_scope_id__$q = "data-v-02068d6c";
 /* module identifier */
-var __vue_module_identifier__$q = "data-v-28fb34bf";
+var __vue_module_identifier__$q = "data-v-02068d6c";
 /* functional template */
 var __vue_is_functional_template__$q = false;
 /* style inject shadow dom */
