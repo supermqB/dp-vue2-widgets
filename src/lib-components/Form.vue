@@ -2,6 +2,7 @@
   <el-form
     ref="el_form"
     :model="formData"
+    v-bind="$attrs"
     :rules="formRule"
     :show-message="false"
   >

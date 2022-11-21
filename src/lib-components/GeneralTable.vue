@@ -3,6 +3,8 @@
     <div class="table_container">
       <el-table
         :data="tableData"
+        v-bind="$attrs"
+        v-on="$listeners"
         height="100%"
         width="100%"
         highlight-current-row
@@ -28,6 +30,17 @@
               v-if="isShowRadio"
             ></el-radio>
             <span v-else>{{ $index + 1 }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="序号"
+          v-else-if="showIndex"
+          width="50"
+          align="center"
+          fixed
+        >
+          <template v-slot="{ $index }">
+            {{ $index + 1 + (pageInfo.curPage - 1) * pageInfo.pageSize }}
           </template>
         </el-table-column>
         <el-table-column
@@ -114,6 +127,11 @@ export default {
     bottomTip: {
       type: String,
       default: () => ``
+    },
+    // 是否显示序号
+    showIndex: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
