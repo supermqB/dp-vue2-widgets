@@ -74,7 +74,7 @@ export default {
   .el-main {
     background-color: #ffffff;
     position: relative;
-    // overflow:hidden;
+    overflow: hidden;
   }
 
   .el-main {
