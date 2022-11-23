@@ -2,6 +2,7 @@
   <el-dialog
     :visible.sync="isOpen"
     class="dp_dialog"
+    :top="top"
     :close-on-click-modal="false"
     @closed="onClosed"
   >
@@ -34,6 +35,10 @@ export default {
     closeAfterConfirm: {
       type: Boolean,
       default: false
+    },
+    top: {
+      type: String,
+      default: '15vh'
     }
   },
   data() {
