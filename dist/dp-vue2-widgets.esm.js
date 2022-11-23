@@ -18716,6 +18716,10 @@ var script$j = {
     closeAfterConfirm: {
       type: Boolean,
       default: false
+    },
+    top: {
+      type: String,
+      default: '15vh'
     }
   },
   data() {
@@ -18754,6 +18758,7 @@ var __vue_render__$k = function () {
     staticClass: "dp_dialog",
     attrs: {
       "visible": _vm.isOpen,
+      "top": _vm.top,
       "close-on-click-modal": false
     },
     on: {

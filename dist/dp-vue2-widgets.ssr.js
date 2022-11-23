@@ -18851,6 +18851,10 @@ var script$j = {
     closeAfterConfirm: {
       type: Boolean,
       default: false
+    },
+    top: {
+      type: String,
+      default: '15vh'
     }
   },
   data: function data() {
@@ -18885,6 +18889,7 @@ var __vue_render__$k = function __vue_render__() {
     staticClass: "dp_dialog",
     attrs: {
       "visible": _vm.isOpen,
+      "top": _vm.top,
       "close-on-click-modal": false
     },
     on: {
@@ -18932,7 +18937,7 @@ var __vue_staticRenderFns__$k = [];
 /* style */
 var __vue_inject_styles__$k = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-2349442e_0", {
+  inject("data-v-1b18a1d8_0", {
     source: ".dpui_dialogTitle{height:23px!important;position:relative;bottom:4px}.dpui_dialogTitle .dp-subtitle__text{font-size:15px;top:5px;color:#333}",
     map: undefined,
     media: undefined
@@ -18941,7 +18946,7 @@ var __vue_inject_styles__$k = function __vue_inject_styles__(inject) {
 /* scoped */
 var __vue_scope_id__$k = undefined;
 /* module identifier */
-var __vue_module_identifier__$k = "data-v-2349442e";
+var __vue_module_identifier__$k = "data-v-1b18a1d8";
 /* functional template */
 var __vue_is_functional_template__$k = false;
 /* style inject shadow dom */
