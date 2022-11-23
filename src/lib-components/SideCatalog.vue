@@ -158,6 +158,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.dpui_sideCatalog_wrapper{
+  overflow-y: auto;
+}
 .wrap {
   width: 100%;
   height: 100%;
