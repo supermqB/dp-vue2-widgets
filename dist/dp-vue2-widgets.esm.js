@@ -973,7 +973,7 @@ var script$o = {
   }
 };
 
-var css_248z$j = ".wrap[data-v-1f95d644]{width:100%;height:100%;overflow-x:hidden;display:flex;flex-direction:column}.wrap .treeWrap[data-v-1f95d644]{flex:1;overflow:auto}.treeNode[data-v-1f95d644]{width:100%;height:100%;padding-top:2px;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px}.treeNode .label[data-v-1f95d644]{width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;justify-content:space-between;align-items:center}.treeNode .label i[data-v-1f95d644]{display:inline-block;width:5px;height:5px;margin-right:3px;margin-bottom:2px;border-radius:5px;background-color:#f56c6c}.treeNode .label .blank[data-v-1f95d644]{display:inline-block;margin-right:3px;margin-bottom:2px;width:5px;height:5px}.disabled[data-v-1f95d644]{position:absolute;left:0;width:100%;height:100%;z-index:10}[data-v-1f95d644] .el-tree-node__content{height:36px;position:relative}[data-v-1f95d644] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-1f95d644] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-1f95d644] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}";
+var css_248z$j = ".dpui_sideCatalog_wrapper[data-v-7d308986]{overflow-y:auto}.wrap[data-v-7d308986]{width:100%;height:100%;overflow-x:hidden;display:flex;flex-direction:column}.wrap .treeWrap[data-v-7d308986]{flex:1;overflow:auto}.treeNode[data-v-7d308986]{width:100%;height:100%;padding-top:2px;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px}.treeNode .label[data-v-7d308986]{width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;justify-content:space-between;align-items:center}.treeNode .label i[data-v-7d308986]{display:inline-block;width:5px;height:5px;margin-right:3px;margin-bottom:2px;border-radius:5px;background-color:#f56c6c}.treeNode .label .blank[data-v-7d308986]{display:inline-block;margin-right:3px;margin-bottom:2px;width:5px;height:5px}.disabled[data-v-7d308986]{position:absolute;left:0;width:100%;height:100%;z-index:10}[data-v-7d308986] .el-tree-node__content{height:36px;position:relative}[data-v-7d308986] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-7d308986] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-7d308986] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}";
 styleInject(css_248z$j);
 
 /* script */
@@ -1029,7 +1029,7 @@ var __vue_staticRenderFns__$p = [];
 /* style */
 const __vue_inject_styles__$p = undefined;
 /* scoped */
-const __vue_scope_id__$p = "data-v-1f95d644";
+const __vue_scope_id__$p = "data-v-7d308986";
 /* module identifier */
 const __vue_module_identifier__$p = undefined;
 /* functional template */
@@ -18716,6 +18716,10 @@ var script$j = {
     closeAfterConfirm: {
       type: Boolean,
       default: false
+    },
+    top: {
+      type: String,
+      default: '15vh'
     }
   },
   data() {
@@ -18754,6 +18758,7 @@ var __vue_render__$k = function () {
     staticClass: "dp_dialog",
     attrs: {
       "visible": _vm.isOpen,
+      "top": _vm.top,
       "close-on-click-modal": false
     },
     on: {

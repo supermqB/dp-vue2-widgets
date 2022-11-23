@@ -1187,16 +1187,16 @@ var __vue_staticRenderFns__$p = [];
 /* style */
 var __vue_inject_styles__$p = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-1f95d644_0", {
-    source: ".wrap[data-v-1f95d644]{width:100%;height:100%;overflow-x:hidden;display:flex;flex-direction:column}.wrap .treeWrap[data-v-1f95d644]{flex:1;overflow:auto}.treeNode[data-v-1f95d644]{width:100%;height:100%;padding-top:2px;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px}.treeNode .label[data-v-1f95d644]{width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;justify-content:space-between;align-items:center}.treeNode .label i[data-v-1f95d644]{display:inline-block;width:5px;height:5px;margin-right:3px;margin-bottom:2px;border-radius:5px;background-color:#f56c6c}.treeNode .label .blank[data-v-1f95d644]{display:inline-block;margin-right:3px;margin-bottom:2px;width:5px;height:5px}.disabled[data-v-1f95d644]{position:absolute;left:0;width:100%;height:100%;z-index:10}[data-v-1f95d644] .el-tree-node__content{height:36px;position:relative}[data-v-1f95d644] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-1f95d644] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-1f95d644] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}",
+  inject("data-v-7d308986_0", {
+    source: ".dpui_sideCatalog_wrapper[data-v-7d308986]{overflow-y:auto}.wrap[data-v-7d308986]{width:100%;height:100%;overflow-x:hidden;display:flex;flex-direction:column}.wrap .treeWrap[data-v-7d308986]{flex:1;overflow:auto}.treeNode[data-v-7d308986]{width:100%;height:100%;padding-top:2px;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px}.treeNode .label[data-v-7d308986]{width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;justify-content:space-between;align-items:center}.treeNode .label i[data-v-7d308986]{display:inline-block;width:5px;height:5px;margin-right:3px;margin-bottom:2px;border-radius:5px;background-color:#f56c6c}.treeNode .label .blank[data-v-7d308986]{display:inline-block;margin-right:3px;margin-bottom:2px;width:5px;height:5px}.disabled[data-v-7d308986]{position:absolute;left:0;width:100%;height:100%;z-index:10}[data-v-7d308986] .el-tree-node__content{height:36px;position:relative}[data-v-7d308986] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-7d308986] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-7d308986] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$p = "data-v-1f95d644";
+var __vue_scope_id__$p = "data-v-7d308986";
 /* module identifier */
-var __vue_module_identifier__$p = "data-v-1f95d644";
+var __vue_module_identifier__$p = "data-v-7d308986";
 /* functional template */
 var __vue_is_functional_template__$p = false;
 /* style inject shadow dom */
@@ -18851,6 +18851,10 @@ var script$j = {
     closeAfterConfirm: {
       type: Boolean,
       default: false
+    },
+    top: {
+      type: String,
+      default: '15vh'
     }
   },
   data: function data() {
@@ -18885,6 +18889,7 @@ var __vue_render__$k = function __vue_render__() {
     staticClass: "dp_dialog",
     attrs: {
       "visible": _vm.isOpen,
+      "top": _vm.top,
       "close-on-click-modal": false
     },
     on: {
@@ -18932,7 +18937,7 @@ var __vue_staticRenderFns__$k = [];
 /* style */
 var __vue_inject_styles__$k = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-2349442e_0", {
+  inject("data-v-1b18a1d8_0", {
     source: ".dpui_dialogTitle{height:23px!important;position:relative;bottom:4px}.dpui_dialogTitle .dp-subtitle__text{font-size:15px;top:5px;color:#333}",
     map: undefined,
     media: undefined
@@ -18941,7 +18946,7 @@ var __vue_inject_styles__$k = function __vue_inject_styles__(inject) {
 /* scoped */
 var __vue_scope_id__$k = undefined;
 /* module identifier */
-var __vue_module_identifier__$k = "data-v-2349442e";
+var __vue_module_identifier__$k = "data-v-1b18a1d8";
 /* functional template */
 var __vue_is_functional_template__$k = false;
 /* style inject shadow dom */
