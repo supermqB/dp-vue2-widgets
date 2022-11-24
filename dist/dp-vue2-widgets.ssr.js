@@ -18729,6 +18729,10 @@ var script$l = {
     closeAfterConfirm: {
       type: Boolean,
       default: false
+    },
+    top: {
+      type: String,
+      default: '15vh'
     }
   },
   data: function data() {
@@ -18763,6 +18767,7 @@ var __vue_render__$m = function __vue_render__() {
     staticClass: "dp_dialog",
     attrs: {
       "visible": _vm.isOpen,
+      "top": _vm.top,
       "close-on-click-modal": false
     },
     on: {
@@ -18810,7 +18815,7 @@ var __vue_staticRenderFns__$m = [];
 /* style */
 var __vue_inject_styles__$m = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-2349442e_0", {
+  inject("data-v-1b18a1d8_0", {
     source: ".dpui_dialogTitle{height:23px!important;position:relative;bottom:4px}.dpui_dialogTitle .dp-subtitle__text{font-size:15px;top:5px;color:#333}",
     map: undefined,
     media: undefined
@@ -18819,7 +18824,7 @@ var __vue_inject_styles__$m = function __vue_inject_styles__(inject) {
 /* scoped */
 var __vue_scope_id__$m = undefined;
 /* module identifier */
-var __vue_module_identifier__$m = "data-v-2349442e";
+var __vue_module_identifier__$m = "data-v-1b18a1d8";
 /* functional template */
 var __vue_is_functional_template__$m = false;
 /* style inject shadow dom */
@@ -19387,6 +19392,11 @@ var __vue_component__$f = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
 
 var script$d = {
   name: 'AppMain'
@@ -19398,19 +19408,26 @@ var __vue_render__$e = function __vue_render__() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('transition', {
+  return _c('div', {
+    staticClass: "expand_div"
+  }, [_c('transition', {
     attrs: {
       "name": "app-fade",
       "mode": "out-in"
     }
-  }, [_c('keep-alive', [_c('router-view')], 1)], 1);
+  }, [_c('keep-alive', [_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 1)], 1), _vm._ssrNode(" "), _c('transition', {
+    attrs: {
+      "name": "app-fade",
+      "mode": "out-in"
+    }
+  }, [!_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 1)], 2);
 };
 var __vue_staticRenderFns__$e = [];
 
 /* style */
 var __vue_inject_styles__$e = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-19482ed0_0", {
+  inject("data-v-cd054614_0", {
     source: ".app-fade-enter{opacity:0}.app-fade-leave{opacity:1}.app-fade-enter-active{transition:opacity .1s}.app-fade-leave-active{opacity:0;transition:opacity .1s}",
     map: undefined,
     media: undefined
@@ -19419,7 +19436,7 @@ var __vue_inject_styles__$e = function __vue_inject_styles__(inject) {
 /* scoped */
 var __vue_scope_id__$e = undefined;
 /* module identifier */
-var __vue_module_identifier__$e = "data-v-19482ed0";
+var __vue_module_identifier__$e = "data-v-cd054614";
 /* functional template */
 var __vue_is_functional_template__$e = false;
 /* style inject shadow dom */
@@ -19555,7 +19572,9 @@ var __vue_render__$b = function __vue_render__() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('keep-alive', [_c('router-view')], 1);
+  return _c('div', {
+    staticClass: "expand_div"
+  }, [_c('keep-alive', [_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 1), _vm._ssrNode(" "), !_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 2);
 };
 var __vue_staticRenderFns__$b = [];
 
@@ -19564,7 +19583,7 @@ var __vue_inject_styles__$b = undefined;
 /* scoped */
 var __vue_scope_id__$b = undefined;
 /* module identifier */
-var __vue_module_identifier__$b = "data-v-5383b356";
+var __vue_module_identifier__$b = "data-v-58d2a3da";
 /* functional template */
 var __vue_is_functional_template__$b = false;
 /* style inject */

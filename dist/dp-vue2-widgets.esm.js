@@ -18591,6 +18591,10 @@ var script$l = {
     closeAfterConfirm: {
       type: Boolean,
       default: false
+    },
+    top: {
+      type: String,
+      default: '15vh'
     }
   },
   data() {
@@ -18629,6 +18633,7 @@ var __vue_render__$m = function () {
     staticClass: "dp_dialog",
     attrs: {
       "visible": _vm.isOpen,
+      "top": _vm.top,
       "close-on-click-modal": false
     },
     on: {
@@ -19286,6 +19291,11 @@ const __vue_component__$f = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
 
 var script$d = {
   name: 'AppMain'
@@ -19301,12 +19311,19 @@ var __vue_render__$e = function () {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('transition', {
+  return _c('div', {
+    staticClass: "expand_div"
+  }, [_c('transition', {
     attrs: {
       "name": "app-fade",
       "mode": "out-in"
     }
-  }, [_c('keep-alive', [_c('router-view')], 1)], 1);
+  }, [_c('keep-alive', [_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 1)], 1), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "app-fade",
+      "mode": "out-in"
+    }
+  }, [!_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 1)], 1);
 };
 var __vue_staticRenderFns__$e = [];
 
@@ -19471,7 +19488,9 @@ var __vue_render__$b = function () {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('keep-alive', [_c('router-view')], 1);
+  return _c('div', {
+    staticClass: "expand_div"
+  }, [_c('keep-alive', [_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 1), _vm._v(" "), !_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 1);
 };
 var __vue_staticRenderFns__$b = [];
 
