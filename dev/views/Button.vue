@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import searchIcon from '../assets/images/icons/filter.png'
+import searchIcon from '@/assets/images/icons/filter.png'
 export default {
   data() {
     return {

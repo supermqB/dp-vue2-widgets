@@ -14,6 +14,12 @@ const routesConfig = [
     component: () => import('../views/Home.vue')
   },
   {
+    path: 'grid',
+    name: 'grid',
+    meta: { title: '布局' },
+    component: () => import('../views/Grid.vue')
+  },
+  {
     path: 'test',
     name: 'test',
     meta: { title: 'test' },
@@ -50,13 +56,27 @@ const routesConfig = [
         name: 'general',
         meta: { title: '通用表格' },
         component: () => import('../views/table/general')
+      },
+      {
+        path: 'statistics',
+        name: 'statistics',
+        meta: { title: '统计表格' },
+        component: () => import('../views/table/statistics')
       }
-      // {
-      //   path: 'statistics',
-      //   name: 'statistics',
-      //   meta: { title: '统计表格' },
-      //   component: () => import('../views/table/statistics')
-      // }
+    ]
+  },
+  {
+    path: 'form',
+    name: 'form',
+    meta: { title: '表单' },
+    component: DpLayoutBlank,
+    children: [
+      {
+        path: 'search-bar',
+        name: 'search-bar',
+        meta: { title: '检索框' },
+        component: () => import('../views/form/search-bar')
+      }
     ]
   }
 ]

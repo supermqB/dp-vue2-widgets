@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import DpHeaderNav from '../../../header-nav'
+// import DpHeaderNav from '../../../header-nav'
 export default {
   name: 'HeaderMenu',
-  components: { DpHeaderNav },
+  // components: { DpHeaderNav },
   props: {
     items: Array
   },

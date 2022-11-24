@@ -5,35 +5,39 @@ export { default as DpButtonGroup } from './ButtonGroup.vue'
 export { default as GeneralTable } from './GeneralTable.vue'
 export { default as DpGeneralTable } from './GeneralTable.vue'
 export { default as SideCatalog } from './SideCatalog.vue'
-export { default as DpSideCatalog } from './SideCatalog.vue'
+// export { default as DpSideCatalog } from './SideCatalog.vue'
 export { default as Form } from './Form.vue'
-export { default as DpForm } from './Form.vue'
 export { default as SearchBar } from './SearchBar.vue'
-export { default as DpSearchBar } from './DpSearchBar.vue'
 export { default as Statistics } from './Statistics.vue'
-export { default as DpStatistics } from './Statistics.vue'
+// export { default as DpStatistics } from './Statistics.vue'
 export { default as Dialog } from './Dialog.vue'
-export { default as DpDialog } from './Dialog.vue'
+// export { default as DpDialog } from './Dialog.vue'
 export { default as CatalogButtons } from './CatalogButtons'
-export { default as DpCatalogButtons } from './CatalogButtons'
+// export { default as DpCatalogButtons } from './CatalogButtons'
 
 /* layout */
-export { default as DpLayoutRoot } from './layout/Root.vue'
-export { default as DpLayoutContainer } from './layout/Container.vue'
+export { default as DpLayoutRoot } from './layout/Root'
+export { default as DpLayoutContainer } from './layout/Container'
 export { default as DpLayout } from './layout/default'
-export { default as DpLayoutBlank } from './layout/Blank.vue'
+export { default as DpLayoutBlank } from './layout/Blank'
 
-export { default as DpHeaderNav } from './header-nav'
+export { default as DpHeaderNav } from './layout/header-nav'
 
 export { default as DpDefaultPage } from './DefaultPage'
 export { default as DpLoginPage } from './LoginPage'
 
-/* table */
-export { default as DpStatisticsTable } from './table/statistics-table'
+/* common */
+// title
+export { default as DpTitle } from './common/title/main' // 标题
+export { default as DpSubtitle } from './common/title/sub' // 副标题
+// button
+export { default as DpIconButton } from './common/button/DpIconButton' // 带图标按钮
 
-/* title */
-export { default as DpTitle } from './title/main'
-export { default as DpSubtitle } from './title/sub'
+/* data-input */
+// form
+export { default as DpForm } from './data-input/form/index' // 基础表单
+export { default as DpSearchBar } from './data-input/form/search-bar' // 检索框
 
-/* button */
-export { default as DpIconButton } from './button/DpIconButton.vue'
+/* data-display */
+// table
+export { default as DpStatisticsTable } from './data-display/table/statistics' // 统计表格
