@@ -19587,6 +19587,11 @@ const __vue_component__$b = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
 
 var script$9 = {
   name: 'AppMain'
@@ -19602,12 +19607,19 @@ var __vue_render__$a = function () {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('transition', {
+  return _c('div', {
+    staticClass: "expand_div"
+  }, [_c('transition', {
     attrs: {
       "name": "app-fade",
       "mode": "out-in"
     }
-  }, [_c('keep-alive', [_c('router-view')], 1)], 1);
+  }, [_c('keep-alive', [_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 1)], 1), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "app-fade",
+      "mode": "out-in"
+    }
+  }, [!_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 1)], 1);
 };
 var __vue_staticRenderFns__$a = [];
 
@@ -19772,7 +19784,9 @@ var __vue_render__$7 = function () {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('keep-alive', [_c('router-view')], 1);
+  return _c('div', {
+    staticClass: "expand_div"
+  }, [_c('keep-alive', [_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 1), _vm._v(" "), !_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 1);
 };
 var __vue_staticRenderFns__$7 = [];
 

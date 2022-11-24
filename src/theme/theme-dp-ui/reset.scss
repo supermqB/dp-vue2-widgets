@@ -2,6 +2,10 @@ html,
 body,
 #app {
   height: 100%;
+  .expand_div {
+    height: 100%;
+    width: 100%;
+  }
 }
 * {
   font-family: 'PingFang SC', 'PingFang SC Bold', Helvetica, 'Microsoft YaHei',

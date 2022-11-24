@@ -1,5 +1,8 @@
 <template>
-  <keep-alive>
-    <router-view />
-  </keep-alive>
+  <div class="expand_div">
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
+  </div>
 </template>

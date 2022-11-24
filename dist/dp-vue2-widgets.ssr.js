@@ -19679,6 +19679,11 @@ var __vue_component__$b = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
 
 var script$9 = {
   name: 'AppMain'
@@ -19690,19 +19695,26 @@ var __vue_render__$a = function __vue_render__() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('transition', {
+  return _c('div', {
+    staticClass: "expand_div"
+  }, [_c('transition', {
     attrs: {
       "name": "app-fade",
       "mode": "out-in"
     }
-  }, [_c('keep-alive', [_c('router-view')], 1)], 1);
+  }, [_c('keep-alive', [_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 1)], 1), _vm._ssrNode(" "), _c('transition', {
+    attrs: {
+      "name": "app-fade",
+      "mode": "out-in"
+    }
+  }, [!_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 1)], 2);
 };
 var __vue_staticRenderFns__$a = [];
 
 /* style */
 var __vue_inject_styles__$a = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-0b678663_0", {
+  inject("data-v-20dd1d58_0", {
     source: ".app-fade-enter{opacity:0}.app-fade-leave{opacity:1}.app-fade-enter-active{transition:opacity .1s}.app-fade-leave-active{opacity:0;transition:opacity .1s}",
     map: undefined,
     media: undefined
@@ -19711,7 +19723,7 @@ var __vue_inject_styles__$a = function __vue_inject_styles__(inject) {
 /* scoped */
 var __vue_scope_id__$a = undefined;
 /* module identifier */
-var __vue_module_identifier__$a = "data-v-0b678663";
+var __vue_module_identifier__$a = "data-v-20dd1d58";
 /* functional template */
 var __vue_is_functional_template__$a = false;
 /* style inject shadow dom */
@@ -19847,7 +19859,9 @@ var __vue_render__$7 = function __vue_render__() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('keep-alive', [_c('router-view')], 1);
+  return _c('div', {
+    staticClass: "expand_div"
+  }, [_c('keep-alive', [_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 1), _vm._ssrNode(" "), !_vm.$route.meta.keepAlive ? _c('router-view') : _vm._e()], 2);
 };
 var __vue_staticRenderFns__$7 = [];
 
@@ -19856,7 +19870,7 @@ var __vue_inject_styles__$7 = undefined;
 /* scoped */
 var __vue_scope_id__$7 = undefined;
 /* module identifier */
-var __vue_module_identifier__$7 = "data-v-6a96f334";
+var __vue_module_identifier__$7 = "data-v-3e3f0182";
 /* functional template */
 var __vue_is_functional_template__$7 = false;
 /* style inject */
