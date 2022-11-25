@@ -120,6 +120,14 @@ module.exports = {
           title: '导航 navigation',
           collapsable: false,
           children: getPaths('navigation', ['header-nav'])
+        },
+        {
+          title: '表格 data-display',
+          collapsable: false,
+          children: getPaths('data-display', [
+            'general-table',
+            'statistics-table'
+          ])
         }
       ],
       '/': ['']

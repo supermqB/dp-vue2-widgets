@@ -33,25 +33,20 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="序号"
-          v-else-if="showIndex"
-          width="50"
-          align="center"
-          fixed
-        >
-          <template v-slot="{ $index }">
-            {{ $index + 1 + (pageInfo.curPage - 1) * pageInfo.pageSize }}
-          </template>
-        </el-table-column>
-        <el-table-column
           v-for="col in tableConfig"
           v-bind="col.colConfig"
           :key="col.colConfig.property"
           show-overflow-tooltip
         >
           <template v-if="col.header" slot="header">
-            <span :style="{'margin-right': '5px'}">{{ col.header.name || col.colConfig.label }}</span>
-            <el-tooltip effect="dark" :content="col.header.content" placement="top">
+            <span :style="{ 'margin-right': '5px' }">{{
+              col.header.name || col.colConfig.label
+            }}</span>
+            <el-tooltip
+              effect="dark"
+              :content="col.header.content"
+              placement="top"
+            >
               <i class="el-icon-warning-outline"></i>
             </el-tooltip>
           </template>
@@ -77,6 +72,7 @@
             </component>
           </template>
         </el-table-column>
+        <slot></slot>
       </el-table>
     </div>
     <div class="table_footer">
@@ -133,11 +129,6 @@ export default {
     bottomTip: {
       type: String,
       default: () => ``
-    },
-    // 是否显示序号
-    showIndex: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
