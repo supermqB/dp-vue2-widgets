@@ -102,7 +102,7 @@ module.exports = {
       '/components-dp/': [
         '',
         {
-          title: '基础',
+          title: '基础 basic',
           collapsable: false,
           children: getPaths('basic', [
             'layout-root',
@@ -112,7 +112,12 @@ module.exports = {
           ])
         },
         {
-          title: '导航',
+          title: '数据输入 data-input',
+          collapsable: false,
+          children: getPaths('data-input', ['search-bar'])
+        },
+        {
+          title: '导航 navigation',
           collapsable: false,
           children: getPaths('navigation', ['header-nav'])
         }
