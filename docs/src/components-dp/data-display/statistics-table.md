@@ -1,4 +1,4 @@
-# DpStatisticsTable 表格
+# StatisticsTable 表格
 
 ### 示例
 

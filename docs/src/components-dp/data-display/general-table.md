@@ -1,4 +1,4 @@
-# DpGeneralTable 表格
+# GeneralTable 表格
 
 ### 示例
 
