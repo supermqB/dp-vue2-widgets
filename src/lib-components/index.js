@@ -2,8 +2,7 @@
 export { default as Title } from './Title.vue'
 export { default as ButtonGroup } from './ButtonGroup.vue'
 export { default as DpButtonGroup } from './ButtonGroup.vue'
-export { default as GeneralTable } from './GeneralTable.vue'
-export { default as DpGeneralTable } from './GeneralTable.vue'
+export { default as GeneralTable } from './data-display/table/general'
 export { default as SideCatalog } from './SideCatalog.vue'
 export { default as DpSideCatalog } from './SideCatalog.vue'
 export { default as Form } from './Form.vue'
@@ -41,3 +40,4 @@ export { default as DpSearchBar } from './data-input/form/search-bar' // 检索�
 /* data-display */
 // table
 export { default as DpStatisticsTable } from './data-display/table/statistics' // 统计表格
+export { default as DpGeneralTable } from './data-display/table/general' // 通用表格

@@ -359,10 +359,6 @@ const __vue_component__$s = /*#__PURE__*/normalizeComponent({
 //
 //
 //
-//
-//
-//
-//
 
 var script$q = {
   props: {
@@ -401,11 +397,6 @@ var script$q = {
     bottomTip: {
       type: String,
       default: () => ``
-    },
-    // 是否显示序号
-    showIndex: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
@@ -464,7 +455,7 @@ var script$q = {
   }
 };
 
-var css_248z$m = ".el_table_wrapper[data-v-02068d6c]{height:100%;display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-02068d6c]{flex-grow:1;padding:6px 6px 0 6px;box-sizing:border-box}";
+var css_248z$m = ".el_table_wrapper[data-v-84d9baa2]{height:100%;display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-84d9baa2]{flex-grow:1;padding:6px 6px 0 6px;box-sizing:border-box}";
 styleInject(css_248z$m);
 
 var css_248z$l = ".el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{height:300px;overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}";
@@ -526,20 +517,6 @@ var __vue_render__$r = function () {
         }) : _c('span', [_vm._v(_vm._s($index + 1))])];
       }
     }])
-  }) : _vm.showIndex ? _c('el-table-column', {
-    attrs: {
-      "label": "序号",
-      "width": "50",
-      "align": "center",
-      "fixed": ""
-    },
-    scopedSlots: _vm._u([{
-      key: "default",
-      fn: function (ref) {
-        var $index = ref.$index;
-        return [_vm._v("\n          " + _vm._s($index + 1 + (_vm.pageInfo.curPage - 1) * _vm.pageInfo.pageSize) + "\n        ")];
-      }
-    }])
   }) : _vm._e(), _vm._v(" "), _vm._l(_vm.tableConfig, function (col) {
     return _c('el-table-column', _vm._b({
       key: col.colConfig.property,
@@ -592,7 +569,7 @@ var __vue_render__$r = function () {
     }, [_c('i', {
       staticClass: "el-icon-warning-outline"
     })])], 1) : _vm._e()], 2);
-  })], 2)], 1), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _vm._t("default")], 2)], 1), _vm._v(" "), _c('div', {
     staticClass: "table_footer"
   }, [_c('div', {
     staticClass: "bottomTip",
@@ -624,7 +601,7 @@ var __vue_staticRenderFns__$r = [];
 /* style */
 const __vue_inject_styles__$r = undefined;
 /* scoped */
-const __vue_scope_id__$r = "data-v-02068d6c";
+const __vue_scope_id__$r = "data-v-84d9baa2";
 /* module identifier */
 const __vue_module_identifier__$r = undefined;
 /* functional template */
@@ -20643,7 +20620,7 @@ const __vue_component__ = /*#__PURE__*/normalizeComponent({
 }, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, false, undefined, undefined, undefined);
 
 /* eslint-disable import/prefer-default-export */
- // 统计表格
+ // 通用表格
 
 var components$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
@@ -20651,7 +20628,6 @@ var components$1 = /*#__PURE__*/Object.freeze({
   ButtonGroup: __vue_component__$s,
   DpButtonGroup: __vue_component__$s,
   GeneralTable: __vue_component__$r,
-  DpGeneralTable: __vue_component__$r,
   SideCatalog: __vue_component__$q,
   DpSideCatalog: __vue_component__$q,
   Form: __vue_component__$p,
@@ -20674,7 +20650,8 @@ var components$1 = /*#__PURE__*/Object.freeze({
   DpIconButton: __vue_component__$4,
   DpForm: __vue_component__$3,
   DpSearchBar: __vue_component__$2,
-  DpStatisticsTable: __vue_component__
+  DpStatisticsTable: __vue_component__,
+  DpGeneralTable: __vue_component__$r
 });
 
 // Import vue components
@@ -20694,7 +20671,6 @@ var components = /*#__PURE__*/Object.freeze({
   ButtonGroup: __vue_component__$s,
   DpButtonGroup: __vue_component__$s,
   GeneralTable: __vue_component__$r,
-  DpGeneralTable: __vue_component__$r,
   SideCatalog: __vue_component__$q,
   DpSideCatalog: __vue_component__$q,
   Form: __vue_component__$p,
@@ -20717,7 +20693,8 @@ var components = /*#__PURE__*/Object.freeze({
   DpIconButton: __vue_component__$4,
   DpForm: __vue_component__$3,
   DpSearchBar: __vue_component__$2,
-  DpStatisticsTable: __vue_component__
+  DpStatisticsTable: __vue_component__,
+  DpGeneralTable: __vue_component__$r
 });
 
 const generateMenuItems = routesConfig => {
