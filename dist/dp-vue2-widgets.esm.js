@@ -20155,6 +20155,7 @@ const __vue_component__$4 = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
 
 var script$3 = {
   props: {
@@ -20211,6 +20212,11 @@ var __vue_render__$3 = function () {
       "model": _vm.model,
       "rules": _vm.rule,
       "show-message": false
+    },
+    nativeOn: {
+      "submit": function ($event) {
+        $event.preventDefault();
+      }
     }
   }, 'el-form', _vm.$attrs, false), _vm._l(_vm.configs, function (cfg) {
     return _c('el-form-item', {

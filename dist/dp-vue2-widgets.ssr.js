@@ -20188,6 +20188,7 @@ var __vue_component__$4 = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
 
 var script$3 = {
   props: {
@@ -20242,6 +20243,11 @@ var __vue_render__$3 = function __vue_render__() {
       "model": _vm.model,
       "rules": _vm.rule,
       "show-message": false
+    },
+    nativeOn: {
+      "submit": function submit($event) {
+        $event.preventDefault();
+      }
     }
   }, 'el-form', _vm.$attrs, false), _vm._l(_vm.configs, function (cfg) {
     return _c('el-form-item', {
@@ -20274,7 +20280,7 @@ var __vue_inject_styles__$3 = undefined;
 /* scoped */
 var __vue_scope_id__$3 = undefined;
 /* module identifier */
-var __vue_module_identifier__$3 = "data-v-22b4f55f";
+var __vue_module_identifier__$3 = "data-v-23f08593";
 /* functional template */
 var __vue_is_functional_template__$3 = false;
 /* style inject */
