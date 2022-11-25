@@ -1,7 +1,9 @@
 # LayoutContainer 布局容器
 
 ### 布局一： 任务区(左) + 操作区(右)
+
 ::: demo
+
 ```html
 <template>
   <dp-layout-container class="container container-1">
@@ -14,26 +16,32 @@
   </dp-layout-container>
 </template>
 ```
+
 :::
 
 ### 布局二： 操作区(左) + 工具区(右)
+
 ::: demo
+
 ```html
 <template>
   <dp-layout-container class="container container-2">
     <template #main>
       <div class="section main">Main</div>
     </template>
-     <template #asideRight>
+    <template #asideRight>
       <div class="section asideRight">AsideRight</div>
     </template>
   </dp-layout-container>
 </template>
 ```
+
 :::
 
 ### 布局三：任务区(左) + 操作区(中) + 工具区(右)
+
 ::: demo
+
 ```html
 <template>
   <dp-layout-container class="container container-3">
@@ -49,11 +57,13 @@
   </dp-layout-container>
 </template>
 ```
+
 :::
 
+### 布局四： 任务区(左) + 操作区(右)[上 下]
 
-### 布局四： 任务区(左) + 操作区(右)[上 下] 
 ::: demo
+
 ```html
 <template>
   <dp-layout-container class="container container-4" mainBottomHeight="50%">
@@ -69,5 +79,12 @@
   </dp-layout-container>
 </template>
 ```
+
 :::
 
+| 参数              | 说明                 | 类型   | 可选值 | 默认值 |
+| ----------------- | -------------------- | ------ | ------ | ------ |
+| asideLeftWidth    | 左侧侧边栏宽度       | String | --     | 25%    |
+| asideLeftMaxWidth | 左侧侧边栏宽度最大值 | String | --     | auto   |
+| asideRightWidth   | 右侧侧边栏宽度       | String | --     | 35%    |
+| mainBottomHeight  | 主体内容下侧栏目高度 | String | --     | 50%    |

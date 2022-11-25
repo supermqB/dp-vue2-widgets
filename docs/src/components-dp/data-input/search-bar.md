@@ -45,5 +45,6 @@
 | 参数            | 说明                     | 类型    | 可选值 | 默认值 |
 | --------------- | ------------------------ | ------- | ------ | ------ |
 | inputConfigs    | 表单输入框配置           | Array   | --     | []     |
+| searchForm      | 数据双向绑定 v-model     | Object  | --     |        |
 | placeholder     | 默认输入框显示的占位文本 | String  | --     | --     |
 | hideSearchInput | 是否隐藏默认显示的输入框 | Boolean | --     | false  |

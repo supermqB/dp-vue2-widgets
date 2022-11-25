@@ -1,19 +1,34 @@
 <template>
   <div class="dpui_searchBar">
     <dp-form :configs="searchFormConfig" :model="searchForm" />
-    <el-button type="primary" plain class="searchBtn" @click="onSearch"
-      >检索<span class="filter"></span
-    ></el-button>
+    <dp-icon-button
+      text="检索"
+      class="searchBtn"
+      :icon="searchIcon"
+      @click="onSearch"
+    />
   </div>
 </template>
 <script>
+/* 配置参考 src/views/data_elem_new/config/searchForm.js */
 import { debounce } from 'lodash'
-import { keysObject } from '@/utils/lang'
+import searchIcon from '@/assets/images/icons/filter.png'
+
 export default {
+  model: {
+    prop: 'searchForm',
+    event: 'onChanged'
+  },
   props: {
     inputConfigs: {
       type: Array,
-      default: () => []
+      default: () => {
+        return []
+      }
+    },
+    searchForm: {
+      type: Object,
+      default: () => ({})
     },
     placeholder: {
       type: String,
@@ -26,15 +41,15 @@ export default {
   },
   data: () => {
     return {
-      searchForm: {},
+      searchIcon,
       lastSearchForm: { searchText: '' }
     }
   },
   computed: {
     searchFormConfig() {
-      let cfg = this.inputConfigs
+      let config = this.inputConfigs
       if (!this.hideSearchInput) {
-        cfg.push({
+        config.push({
           type: 'el-input',
           label: '',
           id: 'searchText',
@@ -45,8 +60,7 @@ export default {
           }
         })
       }
-      this.searchForm = keysObject(cfg, 'id', 'defaultValue')
-      return cfg
+      return config
     }
   },
   watch: {
@@ -57,6 +71,8 @@ export default {
             return this.lastSearchForm[ok] != ov
           })
         ) {
+          this.lastSearchForm = { ...this.searchForm }
+          this.$emit('onChanged', { ...newForm })
           this.__onSearch()
         }
       },
@@ -70,8 +86,7 @@ export default {
   },
   methods: {
     onSearch() {
-      let lastSearchForm = (this.lastSearchForm = { ...this.searchForm })
-      this.$emit('onSearch', lastSearchForm)
+      this.$emit('onSearch', this.lastSearchForm)
     }
   }
 }
@@ -87,20 +102,6 @@ export default {
       margin-right: 4px;
       margin-bottom: 0;
     }
-  }
-
-  .searchBtn {
-    // padding: 5px 8px;
-    // .filter {
-    //   display: inline-block;
-    //   position: relative;
-    //   margin-left: 2px;
-    //   top: 1px;
-    //   left: 1px;
-    //   height: 12px;
-    //   width: 12px;
-    //   background-image: url('../assets/images/icons/filter.png');
-    // }
   }
 }
 </style>
