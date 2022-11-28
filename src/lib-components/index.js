@@ -41,3 +41,6 @@ export { default as DpSearchBar } from './data-input/form/search-bar' // 检索�
 // table
 export { default as DpStatisticsTable } from './data-display/table/statistics' // 统计表格
 export { default as DpGeneralTable } from './data-display/table/general' // 通用表格
+
+// tree
+export { default as DpGeneralTree } from './data-display/tree/general' // 通用树形
