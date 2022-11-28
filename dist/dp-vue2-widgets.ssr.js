@@ -375,11 +375,14 @@ var __vue_render__$s = function __vue_render__() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('div', [_vm.size == 'l1' ? _c('DpTitle', {
+  return _c('div', {
+    staticClass: "dptitle_wrapper"
+  }, [_vm.size == 'l1' || _vm.size == 'l2' ? _c('DpTitle', {
+    class: _vm.size,
     attrs: {
       "text": _vm.title
     }
-  }) : _vm._e(), _vm._ssrNode(" "), _vm.size == 'l2' ? _c('DpSubtitle', {
+  }) : _vm._e(), _vm._ssrNode(" "), _vm.size == 'l3' ? _c('DpSubtitle', {
     attrs: {
       "text": _vm.title
     }
@@ -388,23 +391,26 @@ var __vue_render__$s = function __vue_render__() {
 var __vue_staticRenderFns__$s = [];
 
 /* style */
-var __vue_inject_styles__$s = undefined;
+var __vue_inject_styles__$s = function __vue_inject_styles__(inject) {
+  if (!inject) return;
+  inject("data-v-74906470_0", {
+    source: ".dptitle_wrapper[data-v-74906470] .dp-title.l2 .dp-title__text{font-size:13px;color:#303133}.dptitle_wrapper[data-v-74906470] .dp-title.l2 .dp-title__text::before{background-color:rgba(47,99,185,.4);height:10px;width:3px}",
+    map: undefined,
+    media: undefined
+  });
+};
 /* scoped */
-var __vue_scope_id__$s = undefined;
+var __vue_scope_id__$s = "data-v-74906470";
 /* module identifier */
-var __vue_module_identifier__$s = "data-v-fe9797f2";
+var __vue_module_identifier__$s = "data-v-74906470";
 /* functional template */
 var __vue_is_functional_template__$s = false;
-/* style inject */
-
-/* style inject SSR */
-
 /* style inject shadow dom */
 
 var __vue_component__$s = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$s,
   staticRenderFns: __vue_staticRenderFns__$s
-}, __vue_inject_styles__$s, __vue_script__$r, __vue_scope_id__$s, __vue_is_functional_template__$s, __vue_module_identifier__$s, false, undefined, undefined, undefined);//
+}, __vue_inject_styles__$s, __vue_script__$r, __vue_scope_id__$s, __vue_is_functional_template__$s, __vue_module_identifier__$s, false, undefined, createInjectorSSR, undefined);//
 //
 //
 //

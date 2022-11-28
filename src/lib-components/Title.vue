@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <DpTitle :text="title" v-if="size == 'l1'" />
-    <DpSubtitle :text="title" v-if="size == 'l2'" />
+  <div class="dptitle_wrapper">
+    <DpTitle :text="title" v-if="size == 'l1' || size == 'l2'" :class="size" />
+    <DpSubtitle :text="title" v-if="size == 'l3'" />
   </div>
 </template>
 <script>
@@ -21,3 +21,18 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.dptitle_wrapper {
+  ::v-deep.dp-title.l2 {
+    .dp-title__text {
+      font-size: 13px;
+      color: #303133;
+    }
+    .dp-title__text::before {
+      background-color: #2f63b966;
+      height: 10px;
+      width: 3px;
+    }
+  }
+}
+</style>

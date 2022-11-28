@@ -42,8 +42,8 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z$o = ".dp-title[data-v-2a0b83a0]{height:40px;box-sizing:border-box;border-bottom:1px solid #e5e5e5;position:relative}.dp-title__text[data-v-2a0b83a0]{color:#333;height:39px;font-size:15px;line-height:39px;padding-left:12px}.dp-title__text[data-v-2a0b83a0]:before{content:\" \";position:absolute;width:4px;height:13px;background-color:#2f63b9;left:4px;top:14px}.dp-title__wrapper[data-v-2a0b83a0]{position:absolute;height:calc(100% + 1px);display:inline-block;box-sizing:border-box;padding-left:6px;padding-right:16px;border-bottom:2px solid #2f63b9}.dp-title__wrapper-text[data-v-2a0b83a0]{color:#333;font-size:15px;font-weight:700;position:relative;top:50%;transform:translateY(-50%)}";
-styleInject(css_248z$o);
+var css_248z$p = ".dp-title[data-v-2a0b83a0]{height:40px;box-sizing:border-box;border-bottom:1px solid #e5e5e5;position:relative}.dp-title__text[data-v-2a0b83a0]{color:#333;height:39px;font-size:15px;line-height:39px;padding-left:12px}.dp-title__text[data-v-2a0b83a0]:before{content:\" \";position:absolute;width:4px;height:13px;background-color:#2f63b9;left:4px;top:14px}.dp-title__wrapper[data-v-2a0b83a0]{position:absolute;height:calc(100% + 1px);display:inline-block;box-sizing:border-box;padding-left:6px;padding-right:16px;border-bottom:2px solid #2f63b9}.dp-title__wrapper-text[data-v-2a0b83a0]{color:#333;font-size:15px;font-weight:700;position:relative;top:50%;transform:translateY(-50%)}";
+styleInject(css_248z$p);
 
 function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier /* server only */, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
     if (typeof shadowMode !== 'boolean') {
@@ -172,8 +172,8 @@ var script$s = {
   }
 };
 
-var css_248z$n = ".dp-subtitle[data-v-63b398ff]{height:40px;display:flex;align-items:center}.dp-subtitle__text[data-v-63b398ff]{font-size:13px;padding-left:12px;padding-right:10px;color:#333}.dp-subtitle__line[data-v-63b398ff]{flex:1;content:\" \";display:block;border-bottom:1px solid #f1f1f4}";
-styleInject(css_248z$n);
+var css_248z$o = ".dp-subtitle[data-v-63b398ff]{height:40px;display:flex;align-items:center}.dp-subtitle__text[data-v-63b398ff]{font-size:13px;padding-left:12px;padding-right:10px;color:#333}.dp-subtitle__line[data-v-63b398ff]{flex:1;content:\" \";display:block;border-bottom:1px solid #f1f1f4}";
+styleInject(css_248z$o);
 
 /* script */
 const __vue_script__$s = script$s;
@@ -226,19 +226,24 @@ var script$r = {
   }
 };
 
+var css_248z$n = ".dptitle_wrapper[data-v-74906470] .dp-title.l2 .dp-title__text{font-size:13px;color:#303133}.dptitle_wrapper[data-v-74906470] .dp-title.l2 .dp-title__text::before{background-color:rgba(47,99,185,.4);height:10px;width:3px}";
+styleInject(css_248z$n);
+
 /* script */
 const __vue_script__$r = script$r;
-
 /* template */
 var __vue_render__$s = function () {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('div', [_vm.size == 'l1' ? _c('DpTitle', {
+  return _c('div', {
+    staticClass: "dptitle_wrapper"
+  }, [_vm.size == 'l1' || _vm.size == 'l2' ? _c('DpTitle', {
+    class: _vm.size,
     attrs: {
       "text": _vm.title
     }
-  }) : _vm._e(), _vm._v(" "), _vm.size == 'l2' ? _c('DpSubtitle', {
+  }) : _vm._e(), _vm._v(" "), _vm.size == 'l3' ? _c('DpSubtitle', {
     attrs: {
       "text": _vm.title
     }
@@ -249,7 +254,7 @@ var __vue_staticRenderFns__$s = [];
 /* style */
 const __vue_inject_styles__$s = undefined;
 /* scoped */
-const __vue_scope_id__$s = undefined;
+const __vue_scope_id__$s = "data-v-74906470";
 /* module identifier */
 const __vue_module_identifier__$s = undefined;
 /* functional template */
