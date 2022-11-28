@@ -24,11 +24,25 @@
       >
         <div class="tree-node-content">
           <div class="content-left">
-            <span v-if="data.state" class="red-circle"></span>
+            <span
+              v-if="isShowRedDot"
+              :class="['blank', { 'red-circle': data.state }]"
+            ></span>
             <span class="label">{{ data.label }}</span>
           </div>
-          <div class="content-right">
-            <span>{{ 'number' in data ? unitFmt(data.number) : '' }}</span>
+          <div class="content-right" :style="{ width: rightWidth }">
+            <span>{{ showNumber(data) }}</span>
+            <component
+              v-for="(btn, index) in data.btns"
+              :key="index"
+              :is="btn.type"
+              v-bind="btn.config"
+            >
+              <span v-if="btn.name" @click.stop="btn.click(data, node)">{{
+                btn.name
+              }}</span>
+              <slot v-else :name="btn.type" :data="data" :row="btn"></slot>
+            </component>
             <slot :data="data" :node="node"></slot>
           </div>
         </div>
@@ -54,9 +68,17 @@ const reMapFunc = node => {
 export default {
   name: 'GeneralTree',
   props: {
+    /**
+     * id-String:唯一标识
+     * label-String:名称
+     * children-Array:子数组集合
+     * state-Boolean:是否显示红点（非必填）
+     * number-String/Number:右侧数字（非必填）
+     * btns-Array:按钮或图标集合
+     */
     data: {
       type: Array,
-      default: () => [] // id, label, state: 是否显示红点，非必填(true, false), number 非必要
+      default: () => []
     },
     bind: {
       type: Object,
@@ -93,6 +115,21 @@ export default {
     searchText: {
       type: String,
       default: ''
+    },
+    // 是否显示红点异常
+    isShowRedDot: {
+      type: Boolean,
+      default: true
+    },
+    // 是否进行数字转换
+    isConvertUnits: {
+      type: Boolean,
+      default: true
+    },
+    // 右侧宽度
+    rightWidth: {
+      type: String,
+      default: '10px'
     }
   },
   computed: {
@@ -102,6 +139,11 @@ export default {
   },
   methods: {
     unitFmt,
+    // 处理数字
+    showNumber({ number }) {
+      if (number === undefined || number === null) return ''
+      return this.isConvertUnits ? unitFmt(number) : number
+    },
     isDisabledByType(type) {
       if (!this.disabledTypes.length) {
         return false
@@ -211,13 +253,16 @@ export default {
         align-items: center;
         margin-right: 10px;
         overflow: hidden;
-        .red-circle {
+        .blank {
           width: 5px;
           height: 5px;
-          margin-right: 3px;
           border-radius: 5px;
-          background-color: #f56c6c;
+          margin-right: 3px;
+          &.red-circle {
+            background-color: #f56c6c;
+          }
         }
+
         .label {
           flex: 1;
           overflow: hidden;
@@ -227,6 +272,16 @@ export default {
       }
       .content-right {
         min-width: 10px;
+        max-width: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        i,
+        img,
+        .el-button,
+        .el-link {
+          margin-left: 10px;
+        }
       }
     }
   }

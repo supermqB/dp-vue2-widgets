@@ -6,12 +6,18 @@
         <div class="tree-box">
           <dp-general-tree
             :data="treeData"
-            :bind="bind"
             :defaultExpandAll="defaultExpandAll"
             :currentNodeKey="currentNodeKey"
+            :isShowRedDot="isShowRedDot"
+            :isConvertUnits="isConvertUnits"
+            :rightWidth="rightWidth"
+            @onNodeSelected="onNodeSelected"
           >
             <template v-slot="{ data, node }">
-              <i :class="data.icon" @click="() => handleClick(node, data)"></i>
+              <i :class="data.icon" @click.stop="handleClick(data, node)"></i>
+            </template>
+            <template #el-button="{ data, row }">
+              <span @click.stop="handleButton(data, row)">{{ row.name }}</span>
             </template>
           </dp-general-tree>
         </div>
@@ -44,57 +50,83 @@
 export default {
   data() {
     return {
-      bind: {
-        'icon-class': 'el-icon-menu'
-      },
       defaultExpandAll: true,
+      isShowRedDot: true,
+      isConvertUnits: true,
+      rightWidth: '80px',
       treeData: [
         {
           id: '1',
           label: '一级',
-          state: true,
-          number: 12300,
           children: [
             {
               id: '1-1',
               label:
                 '我是一级1-1我是一级1-1我是一级1-1我是一级1-1我是一级1-1我是一级1-1我是一级1-1',
-              state: true,
-              icon: 'el-icon-circle-plus-outline',
               children: [
                 {
                   id: '1-1-1',
                   label: '我是一级1-1-1',
                   icon: 'el-icon-delete'
                 }
-              ]
+              ],
+              state: true,
+              icon: 'el-icon-circle-plus-outline'
             },
             {
               id: '1-2',
               label: '我是一级1-2',
-
+              children: [],
               state: false,
-              icon: 'el-icon-circle-plus-outline',
-              children: []
+              btns: [
+                {
+                  type: 'el-link',
+                  name: '编辑',
+                  config: {
+                    type: 'primary'
+                  },
+                  click: this.handleIcon
+                },
+                {
+                  type: 'el-link',
+                  name: '删除',
+                  config: {
+                    type: 'danger'
+                  },
+                  click: this.handleIcon
+                }
+              ]
+            },
+            {
+              id: '1-3',
+              label: '我是一级1-3',
+              children: [],
+              state: true,
+              number: '200+'
             }
-          ]
+          ],
+          state: true,
+          number: 22300
         },
         {
           id: '2',
           label: '二级',
-          state: false,
-          number: 120,
+          children: [],
           children: [
             {
               id: '2-1',
               label: '我是二级1-1',
               state: true,
-              children: []
-            },
-            {
-              id: '2-2',
-              label: '我是二级1-2',
-              children: []
+              btns: [
+                {
+                  type: 'el-button',
+                  name: '按钮',
+                  config: {
+                    size: 'mini'
+                  },
+                  click: this.handleIcon
+                }
+              ]
             }
           ]
         }
@@ -153,8 +185,17 @@ export default {
     pageChange(val) {
       console.log(val, '此处可调接口')
     },
-    handleClick(node, data) {
-      console.log(node, '点击', data)
+    handleClick(data, node) {
+      console.log(data, '点击', node)
+    },
+    handleIcon(data, node) {
+      console.log(data, '点击图标', node)
+    },
+    handleButton(data, row) {
+      console.log(data, '点击按钮', row)
+    },
+    onNodeSelected(node) {
+      console.log('点击当前行', node)
     }
   }
 }
@@ -169,6 +210,7 @@ export default {
     flex: 1;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 }
 </style>
