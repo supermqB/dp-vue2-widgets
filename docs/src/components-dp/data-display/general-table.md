@@ -1,4 +1,4 @@
-# GeneralTable 表格
+# GeneralTable 通用表格
 
 ### 示例
 

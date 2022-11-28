@@ -36,6 +36,8 @@ import 'dp-vue2-widgets/dist/theme-dp-ui/index.css'
 
 ## 访问文档
 
+[文档在线地址](http://172.16.29.76:10020)
+
 进入 docs 目录
 
 ```

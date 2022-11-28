@@ -117,17 +117,17 @@ module.exports = {
           children: getPaths('data-input', ['search-bar'])
         },
         {
-          title: '导航 navigation',
-          collapsable: false,
-          children: getPaths('navigation', ['header-nav'])
-        },
-        {
-          title: '表格 data-display',
+          title: '数据显示 data-display',
           collapsable: false,
           children: getPaths('data-display', [
             'general-table',
             'statistics-table'
           ])
+        },
+        {
+          title: '导航 navigation',
+          collapsable: false,
+          children: getPaths('navigation', ['header-nav'])
         }
       ],
       '/': ['']
