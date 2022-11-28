@@ -36,6 +36,7 @@ export { default as DpIconButton } from './common/button/DpIconButton' // 带图
 // form
 export { default as DpForm } from './data-input/form/index' // 基础表单
 export { default as DpSearchBar } from './data-input/form/search-bar' // 检索框
+export { default as DpQueryBar } from './data-input/form/query-bar'
 
 /* data-display */
 // table

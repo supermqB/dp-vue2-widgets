@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "async-validator": "1.11.5",
-    "dp-vue2-widgets": "git+http://gulingjun:3V-w9MP_9Rh9nSbAQQfh@172.16.180.219:9001/bigdata-platform/sixdatarepo/dp-vue2-widgets.git",
+    "dp-vue2-widgets": "git+http://gulingjun:3V-w9MP_9Rh9nSbAQQfh@172.16.29.76:9001/bigdata-platform/sixdatarepo/dp-vue2-widgets.git",
     "element-ui": "^2.15.9",
     "vuepress-plugin-demo-container": "^0.2.0"
   }
