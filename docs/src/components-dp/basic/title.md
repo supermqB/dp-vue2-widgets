@@ -6,7 +6,9 @@
 
 ```html
 <template>
-  <dp-title text="标题内容" />
+  <div style="height:40px">
+    <dp-title text="标题内容" />
+  </div>
 </template>
 ```
 
