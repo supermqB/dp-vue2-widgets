@@ -1,9 +1,12 @@
 <template>
-  <div class="title_wrapper">
-    <div :class="['title', size]">{{ title }}</div>
+  <div>
+    <DpTitle :text="title" v-if="size == 'l1'" />
+    <DpSubtitle :text="title" v-if="size == 'l2'" />
   </div>
 </template>
 <script>
+import DpTitle from '@/lib-components/common/title/main'
+import DpSubtitle from '@/lib-components/common/title/sub'
 export default {
   props: {
     title: String,
@@ -11,27 +14,10 @@ export default {
       type: String /*l1, l2, l3*/,
       default: () => 'l1'
     }
+  },
+  components: {
+    DpTitle,
+    DpSubtitle
   }
 }
 </script>
-<style lang="scss" scoped>
-.title_wrapper {
-  .title {
-    display: inline-block;
-    color: #2f63b9;
-    padding: 6px;
-    margin: 0 6px;
-    border-bottom: 2px solid #2f63b9;
-    &.l1 {
-      font-size: 16px;
-      height: 40px;
-      box-sizing: border-box;
-      padding: 12px 6px;
-      font-weight: bold;
-    }
-    &.l2 {
-      font-size: 13px;
-    }
-  }
-}
-</style>
