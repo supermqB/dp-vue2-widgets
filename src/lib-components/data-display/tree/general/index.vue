@@ -119,7 +119,7 @@ export default {
     // 是否显示红点异常
     isShowRedDot: {
       type: Boolean,
-      default: true
+      default: false
     },
     // 是否进行数字转换
     isConvertUnits: {
