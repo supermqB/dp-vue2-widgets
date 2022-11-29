@@ -81,7 +81,7 @@
     <div class="table_footer">
       <div class="bottomTip" v-html="bottomTip"></div>
       <el-pagination
-        v-if="pageInfo != null"
+        v-if="showPaging"
         @size-change="sizeChangeHandler"
         @current-change="pageChangeHandler"
         :current-page.sync="pageInfo.curPage"
@@ -147,12 +147,13 @@ export default {
   computed: {
     tableHeight() {
       return this.autopageThreshold
-        ? `${
-            Math.min(this.tableData.length, this.autopageThreshold) * 36 +
-            36 +
-            6
-          }px`
+        ? `${Math.max(Math.min(this.tableData.length, this.autopageThreshold), 2) * 36 + 36 + 7}px`
         : '300px'
+    },
+    showPaging() {
+      return (
+        this.tableData.length > this.autopageThreshold && this.pageInfo != null
+      )
     }
   },
   watch: {
