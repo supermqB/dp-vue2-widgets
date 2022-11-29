@@ -121,7 +121,8 @@ module.exports = {
           collapsable: false,
           children: getPaths('data-display', [
             'general-table',
-            'statistics-table'
+            'statistics-table',
+            'tree'
           ])
         },
         {

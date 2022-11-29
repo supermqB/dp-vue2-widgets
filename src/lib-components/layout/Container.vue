@@ -83,6 +83,8 @@ export default {
 
   .el-aside.aside-left {
     border-right: 1px solid #e5e5e5;
+    display: flex;
+    flex-direction: column;
   }
 
   .el-aside.aside-right {
