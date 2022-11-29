@@ -5,7 +5,7 @@
       v-bind="bind"
       class="tree-wrap"
       :node-key="nodeKey"
-      :data="data"
+      :data="treeList"
       :current-node-key="currentNodeKey"
       :expand-on-click-node="expandOnClickNode"
       :default-expand-all="defaultExpandAll"
@@ -18,12 +18,12 @@
         <div class="tree-node-content">
           <div class="content-left">
             <span
-              v-if="isShowRedDot"
+              v-if="showState"
               :class="['blank', { 'red-circle': data.state }]"
             ></span>
             <span class="label">{{ data.label }}</span>
           </div>
-          <div class="content-right" :style="{ width: rightWidth }">
+          <div class="content-right" :style="{ width: slotWidth }">
             <span>{{ showNumber(data) }}</span>
             <component
               v-for="(btn, index) in data.btns"
@@ -46,7 +46,21 @@
 
 <script>
 import { unitFmt } from '@/utils/format'
-import { noEmptyArray, getNodeKey } from '@/utils/lang'
+import {
+  reMapTree,
+  getTreeParentNodes,
+  noEmptyArray,
+  getNodeKey
+} from '@/utils/lang'
+
+const reMapFunc = node => {
+  const { id, state, type } = node
+  const ids = id.split('-')
+  return Object.assign({}, node, {
+    type: type ? type : ids[0],
+    state: !!(state * 1)
+  })
+}
 
 export default {
   name: 'GeneralTree',
@@ -88,31 +102,34 @@ export default {
       type: Number,
       default: 12
     },
-    // 是否显示红点异常
-    isShowRedDot: {
+    // 是否显示状态标识
+    showState: {
       type: Boolean,
       default: true
     },
     // 是否进行数字转换
-    isConvertUnits: {
+    numTransform: {
       type: Boolean,
       default: true
     },
-    // 右侧宽度
-    rightWidth: {
+    // 右侧插槽宽度
+    slotWidth: {
       type: String,
       default: 'auto'
     },
-    // 是否点击父级叶节点触发其他事件
-    isParentLeaf: {
+    // 是否允许选中非叶节点
+    allowSelectNonleaf: {
       type: Boolean,
       default: false
     }
   },
   computed: {
+    treeList() {
+      return reMapTree(this.data, reMapFunc)
+    },
     // 获取默认当前选中的节点
     currentNodeKey() {
-      return getNodeKey(this.data, this.isParentLeaf, this.nodeKey)
+      return getNodeKey(this.treeList, this.allowSelectNonleaf, this.nodeKey)
     }
   },
   watch: {
@@ -127,13 +144,23 @@ export default {
     // 处理数字
     showNumber({ number }) {
       if (number === undefined || number === null) return ''
-      return this.isConvertUnits ? unitFmt(number) : number
+      return this.numTransform ? unitFmt(number) : number
     },
     handleNodeClick() {
       setTimeout(() => {
         if (this.$refs.sideTree) {
           const node = this.$refs.sideTree.getCurrentNode()
-          if (!node || (noEmptyArray(node.children) && !this.isParentLeaf)) {
+          if (!node) return
+          const list = getTreeParentNodes(this.treeList, node.id)
+          const { id, type, label } = node
+          const ids = id.split('-')
+          this.$emit('onItemSelected', {
+            id: ids.length > 1 ? ids[1] : ids[0],
+            type,
+            label,
+            list: list.map(item => item.id).join('.')
+          })
+          if (noEmptyArray(node.children) && !this.allowSelectNonleaf) {
             return false
           }
           this.$emit('onNodeSelected', { ...node })

@@ -7,7 +7,7 @@
           <dp-tree
             :data="treeData"
             :defaultExpandAll="defaultExpandAll"
-            :rightWidth="rightWidth"
+            :slotWidth="slotWidth"
             @onNodeSelected="onNodeSelected"
             @node-expand="handleExpand"
           >
@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       defaultExpandAll: true,
-      rightWidth: '80px',
+      slotWidth: '80px',
       treeData: [
         {
           id: '1',
