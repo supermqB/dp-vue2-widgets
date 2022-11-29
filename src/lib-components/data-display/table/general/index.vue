@@ -1,6 +1,9 @@
 <template>
-  <div class="el_table_wrapper">
-    <div class="table_container">
+  <div
+    class="el_table_wrapper"
+    :style="{ height: autopageThreshold ? 'auto' : '100%' }"
+  >
+    <div class="table_container" :style="{ height: tableHeight }">
       <el-table
         :data="tableData"
         v-bind="$attrs"
@@ -129,11 +132,27 @@ export default {
     bottomTip: {
       type: String,
       default: () => ``
+    },
+    autopageThreshold: {
+      /* lazy to show pagination, and has auto height according to items' count. */
+      type: Number,
+      default: () => 0
     }
   },
   data() {
     return {
       selectedIdx: 0
+    }
+  },
+  computed: {
+    tableHeight() {
+      return this.autopageThreshold
+        ? `${
+            Math.min(this.tableData.length, this.autopageThreshold) * 36 +
+            36 +
+            6
+          }px`
+        : '300px'
     }
   },
   watch: {
@@ -182,7 +201,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .el_table_wrapper {
-  height: 100%;
   display: flex;
   flex-direction: column;
   .table_container {
@@ -199,7 +217,6 @@ export default {
 }
 .el_table_wrapper {
   .table_container {
-    height: 300px; /*table default height*/
     overflow: auto;
     .el-table {
       font-size: 13px;

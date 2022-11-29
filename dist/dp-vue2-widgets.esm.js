@@ -476,6 +476,9 @@ const __vue_component__$r = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
 
 var script$p = {
   props: {
@@ -514,12 +517,22 @@ var script$p = {
     bottomTip: {
       type: String,
       default: () => ``
+    },
+    autopageThreshold: {
+      /* lazy to show pagination, and has auto height according to items' count. */
+      type: Number,
+      default: () => 0
     }
   },
   data() {
     return {
       selectedIdx: 0
     };
+  },
+  computed: {
+    tableHeight() {
+      return this.autopageThreshold ? `${Math.min(this.tableData.length, this.autopageThreshold) * 36 + 36 + 6}px` : '300px';
+    }
   },
   watch: {
     currentRow(row) {
@@ -572,10 +585,10 @@ var script$p = {
   }
 };
 
-var css_248z$l = ".el_table_wrapper[data-v-8d14d94e]{height:100%;display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-8d14d94e]{flex-grow:1;padding:6px 6px 0 6px;box-sizing:border-box}";
+var css_248z$l = ".el_table_wrapper[data-v-472f14d1]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-472f14d1]{flex-grow:1;padding:6px 6px 0 6px;box-sizing:border-box}";
 styleInject(css_248z$l);
 
-var css_248z$k = ".el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{height:300px;overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}";
+var css_248z$k = ".el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}";
 styleInject(css_248z$k);
 
 /* script */
@@ -586,9 +599,15 @@ var __vue_render__$q = function () {
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c('div', {
-    staticClass: "el_table_wrapper"
+    staticClass: "el_table_wrapper",
+    style: {
+      height: _vm.autopageThreshold ? 'auto' : '100%'
+    }
   }, [_c('div', {
-    staticClass: "table_container"
+    staticClass: "table_container",
+    style: {
+      height: _vm.tableHeight
+    }
   }, [_c('el-table', _vm._g(_vm._b({
     ref: "el_table",
     attrs: {
@@ -718,7 +737,7 @@ var __vue_staticRenderFns__$q = [];
 /* style */
 const __vue_inject_styles__$q = undefined;
 /* scoped */
-const __vue_scope_id__$q = "data-v-8d14d94e";
+const __vue_scope_id__$q = "data-v-472f14d1";
 /* module identifier */
 const __vue_module_identifier__$q = undefined;
 /* functional template */
