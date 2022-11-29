@@ -1,6 +1,7 @@
 # Tree 树形控件
 
 该组件可以使用 ElementUI 里 Tree 内部传参和方法。
+可以在 data 里配置 state(是否单个显示红点标识)、number(右侧数字)、btns(按钮或图标集合)，也可以使用默认插槽或具名插槽处理业务逻辑，使用方式可以看以下示例。
 
 ### 示例
 
@@ -12,6 +13,7 @@
     :data="treeData"
     :defaultExpandAll="defaultExpandAll"
     :slotWidth="slotWidth"
+    :bind="bind"
     @onNodeSelected="onNodeSelected"
     @node-expand="handleExpand"
   >
@@ -30,6 +32,9 @@
       return {
         defaultExpandAll: true,
         slotWidth: '80px',
+        bind: {
+          'icon-class': 'el-icon-menu' // 自定义树节点的图标
+        },
         treeData: [
           {
             id: '1',
@@ -135,15 +140,16 @@
 
 ### 参数说明
 
-| 参数               | 说明                                 | 类型    | 可选值 | 默认值 |
-| ------------------ | ------------------------------------ | ------- | ------ | ------ |
-| data               | 展示数据                             | array   | -      | -      |
-| bind               | 其他传参                             | object  | -      | -      |
-| nodeKey            | 每个树节点用来作为唯一标识的属性     | string  | -      | id     |
-| expandOnClickNode  | 是否在点击节点的时候展开或者收缩节点 | boolean | -      | true   |
-| defaultExpandAll   | 是否默认展开所有节点                 | boolean | -      | false  |
-| indent             | 相邻级节点间的水平缩进，单位为像素   | number  | -      | 12     |
-| showState          | 是否显示状态标识                     | boolean | -      | true   |
-| numTransform       | 是否进行数字转换                     | boolean | -      | true   |
-| slotWidth          | 右侧插槽宽度                         | string  | -      | auto   |
-| allowSelectNonleaf | 是否允许选中非叶节点                 | boolean | -      | false  |
+| 参数               | 说明                                 | 类型           | 可选值 | 默认值                     |
+| ------------------ | ------------------------------------ | -------------- | ------ | -------------------------- |
+| data               | 展示数据                             | array          | -      | -                          |
+| bind               | 其他传参                             | object         | -      | -                          |
+| nodeKey            | 每个树节点用来作为唯一标识的属性     | string         | -      | id                         |
+| expandOnClickNode  | 是否在点击节点的时候展开或者收缩节点 | boolean        | -      | true                       |
+| defaultExpandAll   | 是否默认展开所有节点                 | boolean        | -      | false                      |
+| indent             | 相邻级节点间的水平缩进，单位为像素   | number         | -      | 12                         |
+| showState          | 是否显示状态标识                     | boolean        | -      | true                       |
+| numTransform       | 是否进行数字转换                     | boolean        | -      | true                       |
+| slotWidth          | 右侧插槽宽度                         | string         | -      | auto                       |
+| allowSelectNonleaf | 是否允许选中非叶节点                 | boolean        | -      | false                      |
+| onNodeSelected     | 节点被点击时的回调                   | function(node) | -      | 参数为：该节点所对应的对象 |
