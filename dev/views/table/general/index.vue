@@ -4,14 +4,12 @@
       <div class="section asideLeft">
         <dp-title text="大标题22" />
         <div class="tree-box">
-          <dp-general-tree
+          <dp-tree
             :data="treeData"
             :defaultExpandAll="defaultExpandAll"
-            :currentNodeKey="currentNodeKey"
-            :isShowRedDot="isShowRedDot"
-            :isConvertUnits="isConvertUnits"
             :rightWidth="rightWidth"
             @onNodeSelected="onNodeSelected"
+            @node-expand="handleExpand"
           >
             <template v-slot="{ data, node }">
               <i :class="data.icon" @click.stop="handleClick(data, node)"></i>
@@ -19,7 +17,7 @@
             <template #el-button="{ data, row }">
               <span @click.stop="handleButton(data, row)">{{ row.name }}</span>
             </template>
-          </dp-general-tree>
+          </dp-tree>
         </div>
       </div>
     </template>
@@ -51,8 +49,6 @@ export default {
   data() {
     return {
       defaultExpandAll: true,
-      isShowRedDot: true,
-      isConvertUnits: true,
       rightWidth: '80px',
       treeData: [
         {
@@ -131,7 +127,6 @@ export default {
           ]
         }
       ],
-      currentNodeKey: '1',
       tableData: [
         {
           date: '2016-05-02',
@@ -196,6 +191,9 @@ export default {
     },
     onNodeSelected(node) {
       console.log('点击当前行', node)
+    },
+    handleExpand(item, node, self) {
+      console.log(item, node, self, '节点展开')
     }
   }
 }

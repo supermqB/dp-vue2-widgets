@@ -5,23 +5,16 @@
       v-bind="bind"
       class="tree-wrap"
       :node-key="nodeKey"
-      :data="treeList"
+      :data="data"
       :current-node-key="currentNodeKey"
       :expand-on-click-node="expandOnClickNode"
       :default-expand-all="defaultExpandAll"
       :indent="indent"
       highlight-current
-      :filter-node-method="filterNodeMethod"
       @node-click="handleNodeClick"
+      v-on="$listeners"
     >
-      <div
-        class="tree-node"
-        slot-scope="{ node, data }"
-        @click="
-          event =>
-            isDisabledByType(data.type) ? event.stopPropagation() : null
-        "
-      >
+      <div class="tree-node" slot-scope="{ node, data }">
         <div class="tree-node-content">
           <div class="content-left">
             <span
@@ -46,24 +39,14 @@
             <slot :data="data" :node="node"></slot>
           </div>
         </div>
-        <div v-if="!node.isLeaf" class="disabled"></div>
       </div>
     </el-tree>
   </div>
 </template>
 
 <script>
-import { reMapTree, getTreeParentNodes } from '@/utils/lang'
 import { unitFmt } from '@/utils/format'
-
-const reMapFunc = node => {
-  const { id, state, type } = node
-  const ids = id.split('-')
-  return Object.assign({}, node, {
-    type: type ? type : ids[0],
-    state: !!(state * 1)
-  })
-}
+import { noEmptyArray, getNodeKey } from '@/utils/lang'
 
 export default {
   name: 'GeneralTree',
@@ -80,6 +63,7 @@ export default {
       type: Array,
       default: () => []
     },
+    // 其他传参
     bind: {
       type: Object,
       default: () => {}
@@ -88,10 +72,6 @@ export default {
     nodeKey: {
       type: String,
       default: 'id'
-    },
-    // 当前选中的节点
-    currentNodeKey: {
-      type: [String, Number]
     },
     // 是否在点击节点的时候展开或者收缩节点， 默认值为 true，如果为 false，则只有点箭头图标的时候才会展开或者收缩节点。
     expandOnClickNode: {
@@ -108,18 +88,10 @@ export default {
       type: Number,
       default: 12
     },
-    disabledTypes: {
-      type: Array,
-      default: () => []
-    },
-    searchText: {
-      type: String,
-      default: ''
-    },
     // 是否显示红点异常
     isShowRedDot: {
       type: Boolean,
-      default: false
+      default: true
     },
     // 是否进行数字转换
     isConvertUnits: {
@@ -129,92 +101,44 @@ export default {
     // 右侧宽度
     rightWidth: {
       type: String,
-      default: '10px'
+      default: 'auto'
+    },
+    // 是否点击父级叶节点触发其他事件
+    isParentLeaf: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
-    treeList() {
-      return reMapTree(this.data, reMapFunc)
+    // 获取默认当前选中的节点
+    currentNodeKey() {
+      return getNodeKey(this.data, this.isParentLeaf, this.nodeKey)
+    }
+  },
+  watch: {
+    data: {
+      handler() {
+        this.handleNodeClick()
+      },
+      immediate: true
     }
   },
   methods: {
-    unitFmt,
     // 处理数字
     showNumber({ number }) {
       if (number === undefined || number === null) return ''
       return this.isConvertUnits ? unitFmt(number) : number
     },
-    isDisabledByType(type) {
-      if (!this.disabledTypes.length) {
-        return false
-      } else {
-        return this.disabledTypes.indexOf(type) > -1
-      }
-    },
-    filter(val) {
-      if (this.$refs.sideTree) this.$refs.sideTree.filter(val)
-    },
-    handleNodeClick(node) {
-      this.emitItemSelected()
-    },
-    filterNodeMethod(value, data) {
-      if (!value) return true
-      return data.label.indexOf(value) > -1
-    },
-    setCurrent() {
-      this.$nextTick(() => {
-        this.$refs.sideTree.setCurrentKey(this.currentNodeKey)
-        const selected = this.$refs.sideTree.getCurrentNode()
-        if (
-          selected &&
-          this.$refs.sideTree.getNode(selected) &&
-          this.$refs.sideTree.getNode(selected).parent
-        ) {
-          this.expandParents(this.$refs.sideTree.getNode(selected).parent)
-        }
-        this.emitItemSelected()
-        this.filter(this.searchText)
-      })
-    },
-    expandParents(node) {
-      node.expanded = true
-      if (node.parent) {
-        this.expandParents(node.parent)
-      }
-    },
-    emitItemSelected() {
+    handleNodeClick() {
       setTimeout(() => {
         if (this.$refs.sideTree) {
           const node = this.$refs.sideTree.getCurrentNode()
-          if (!node) return
-          const list = getTreeParentNodes(this.treeList, node.id)
-          const { id, type, label } = node
-          const ids = id.split('-')
-          this.$emit('onItemSelected', {
-            id: ids.length > 1 ? ids[1] : ids[0],
-            type,
-            label,
-            list: list.map(item => item.id).join('.')
-          })
+          if (!node || (noEmptyArray(node.children) && !this.isParentLeaf)) {
+            return false
+          }
           this.$emit('onNodeSelected', { ...node })
         }
-      })
-    }
-  },
-  watch: {
-    searchText: {
-      handler() {
-        this.filter(this.searchText)
-      }
-    },
-    currentNodeKey: {
-      handler() {
-        this.setCurrent()
-      },
-      immediate: true
-    },
-    data() {
-      this.setCurrent()
+      }, 100)
     }
   }
 }
@@ -272,10 +196,10 @@ export default {
       }
       .content-right {
         min-width: 10px;
-        max-width: 120px;
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        overflow: hidden;
         i,
         img,
         .el-button,
@@ -284,14 +208,6 @@ export default {
         }
       }
     }
-  }
-
-  .disabled {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
   }
 }
 

@@ -43,4 +43,4 @@ export { default as DpStatisticsTable } from './data-display/table/statistics' /
 export { default as DpGeneralTable } from './data-display/table/general' // 通用表格
 
 // tree
-export { default as DpGeneralTree } from './data-display/tree/general' // 通用树形
+export { default as DpTree } from './data-display/tree/general' // 通用树形
