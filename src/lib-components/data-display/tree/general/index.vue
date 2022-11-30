@@ -1,66 +1,50 @@
 <template>
-  <div class="tree-general">
-    <el-tree
-      ref="sideTree"
-      v-bind="bind"
-      class="tree-wrap"
-      :node-key="nodeKey"
-      :data="treeList"
-      :current-node-key="currentNodeKey"
-      :expand-on-click-node="expandOnClickNode"
-      :default-expand-all="defaultExpandAll"
-      :indent="indent"
-      highlight-current
-      @node-click="handleNodeClick"
-      v-on="$listeners"
-    >
-      <div class="tree-node" slot-scope="{ node, data }">
-        <div class="tree-node-content">
-          <div class="content-left">
-            <span
-              v-if="showState"
-              :class="['blank', { 'red-circle': data.state }]"
-            ></span>
-            <span class="label">{{ data.label }}</span>
-          </div>
-          <div class="content-right" :style="{ width: slotWidth }">
-            <span>{{ showNumber(data) }}</span>
-            <component
-              v-for="(btn, index) in data.btns"
-              :key="index"
-              :is="btn.type"
-              v-bind="btn.config"
-            >
-              <span v-if="btn.name" @click.stop="btn.click(data, node)">{{
-                btn.name
-              }}</span>
-              <slot v-else :name="btn.type" :data="data" :row="btn"></slot>
-            </component>
-            <slot :data="data" :node="node"></slot>
-          </div>
+  <el-tree
+    ref="sideTree"
+    v-bind="bind"
+    class="tree-wrap"
+    :node-key="nodeKey"
+    :data="treeList"
+    :current-node-key="curNodeKey"
+    :expand-on-click-node="expandOnClickNode"
+    :default-expand-all="defaultExpandAll"
+    :indent="indent"
+    highlight-current
+    :filter-node-method="filterNodeMethod"
+    @node-click="handleNodeClick"
+    v-on="$listeners"
+  >
+    <div class="tree-node" slot-scope="{ node, data }">
+      <div class="tree-node-content">
+        <div class="content-left">
+          <span
+            v-if="showState"
+            :class="['blank', { 'red-circle': data.state }]"
+          ></span>
+          <span class="label">{{ data.label }}</span>
+        </div>
+        <div class="content-right" :style="{ width: slotWidth }">
+          <span>{{ showNumber(data) }}</span>
+          <component
+            v-for="(btn, index) in data.btns"
+            :key="index"
+            :is="btn.type"
+            v-bind="btn.config"
+          >
+            <span v-if="btn.name" @click.stop="btn.click(data, node)">{{
+              btn.name
+            }}</span>
+            <slot v-else :name="btn.type" :data="data" :row="btn"></slot>
+          </component>
+          <slot :data="data" :node="node"></slot>
         </div>
       </div>
-    </el-tree>
-  </div>
+    </div>
+  </el-tree>
 </template>
 
 <script>
 import { unitFmt } from '@/utils/format'
-import {
-  reMapTree,
-  getTreeParentNodes,
-  noEmptyArray,
-  getNodeKey
-} from '@/utils/lang'
-
-const reMapFunc = node => {
-  const { id, state, type } = node
-  const ids = id.split('-')
-  return Object.assign({}, node, {
-    type: type ? type : ids[0],
-    state: !!(state * 1)
-  })
-}
 
 export default {
   name: 'GeneralTree',
@@ -112,6 +96,10 @@ export default {
       type: Boolean,
       default: true
     },
+    numTransformFunc: {
+      type: Function,
+      default: unitFmt
+    },
     // 右侧插槽宽度
     slotWidth: {
       type: String,
@@ -121,22 +109,60 @@ export default {
     allowSelectNonleaf: {
       type: Boolean,
       default: false
+    },
+    // 当前选中的节点
+    currentNodeKey: {
+      type: [String, Number]
+    },
+    // 模糊搜索传值
+    searchText: {
+      type: String,
+      default: ''
+    }
+  },
+  data() {
+    return {
+      curNodeKey: '' // 当前选中节点
     }
   },
   computed: {
+    // 根据 this.data 构建组件需要的 数据结构
     treeList() {
-      return reMapTree(this.data, reMapFunc)
-    },
-    // 获取默认当前选中的节点
-    currentNodeKey() {
-      return getNodeKey(this.treeList, this.allowSelectNonleaf, this.nodeKey)
+      const buildTree = tree => {
+        if (!tree) return null
+
+        return tree.map(node => {
+          const children = buildTree(node.children)
+          return Object.assign(
+            {},
+            (node => {
+              const { id, state, type } = node
+              const ids = id.split('-')
+              return Object.assign({}, node, {
+                type: type ? type : ids[0],
+                state: !!(state * 1)
+              })
+            })(node),
+            { children }
+          )
+        })
+      }
+
+      return buildTree(this.data)
     }
   },
   watch: {
+    searchText(val) {
+      this.filter(val)
+    },
     data: {
-      handler() {
+      handler(val) {
+        this.curNodeKey = this.currentNodeKey
+          ? this.currentNodeKey
+          : this.getNodeKey(val, this.allowSelectNonleaf, this.nodeKey)
         this.handleNodeClick()
       },
+      deep: true,
       immediate: true
     }
   },
@@ -144,11 +170,49 @@ export default {
     // 处理数字
     showNumber({ number }) {
       if (number === undefined || number === null) return ''
-      return this.numTransform ? unitFmt(number) : number
+      return this.numTransform ? this.numTransformFunc(number) : number
+    },
+    /**
+     * 获取默认currentNodeKey
+     * @param {*} list 树形集合
+     * @param {*} allowSelectNonleaf 是否点击父级叶节点触发其他事件
+     * @param {*} keyId 唯一标识属性，默认id
+     * @returns
+     */
+    getNodeKey(list, allowSelectNonleaf = false, keyId = 'id') {
+      let res = ''
+      list.forEach(item => {
+        if (res) {
+          return
+        }
+        if (allowSelectNonleaf) {
+          res = item[keyId]
+        } else {
+          if (Array.isArray(item.children)) {
+            res = this.getNodeKey(item.children)
+          } else {
+            res = item[keyId]
+          }
+        }
+      })
+      return res
     },
     handleNodeClick() {
       setTimeout(() => {
         if (this.$refs.sideTree) {
+          const getTreeParentNodes = (tree, key) => {
+            if (!tree) return []
+            for (let node of tree) {
+              if (node.id === key) {
+                return [node]
+              } else {
+                const res = getTreeParentNodes(node.children, key)
+                if (res && res.length) return [node, ...res]
+              }
+            }
+            return []
+          }
+
           const node = this.$refs.sideTree.getCurrentNode()
           if (!node) return
           const list = getTreeParentNodes(this.treeList, node.id)
@@ -160,79 +224,81 @@ export default {
             label,
             list: list.map(item => item.id).join('.')
           })
-          if (noEmptyArray(node.children) && !this.allowSelectNonleaf) {
+          if (Array.isArray(node.children) && !this.allowSelectNonleaf) {
             return false
           }
           this.$emit('onNodeSelected', { ...node })
         }
       }, 100)
+    },
+    filter(val) {
+      if (this.$refs.sideTree) this.$refs.sideTree.filter(val)
+    },
+    // 对树节点进行筛选时执行的方法，返回true显示，返回false隐藏
+    filterNodeMethod(value, data) {
+      if (!value) return true
+      return data.label.indexOf(value) > -1
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.tree-general {
+.tree-wrap {
   height: 100%;
   overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
   overflow-y: auto;
-  .tree-wrap {
+}
+.tree-node {
+  width: 100%;
+  height: 100%;
+  padding-right: 10px;
+  display: flex;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  overflow: hidden;
+  &-content {
     flex: 1;
-    overflow: auto;
-  }
-  .tree-node {
-    width: 100%;
-    height: 100%;
-    padding-right: 10px;
     display: flex;
-    box-sizing: border-box;
     justify-content: space-between;
     align-items: center;
-    font-size: 13px;
     overflow: hidden;
-    &-content {
+    .content-left {
       flex: 1;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      margin-right: 10px;
       overflow: hidden;
-      .content-left {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        margin-right: 10px;
-        overflow: hidden;
-        .blank {
-          width: 5px;
-          height: 5px;
-          border-radius: 5px;
-          margin-right: 3px;
-          &.red-circle {
-            background-color: #f56c6c;
-          }
-        }
-
-        .label {
-          flex: 1;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+      .blank {
+        width: 5px;
+        height: 5px;
+        border-radius: 5px;
+        margin-right: 3px;
+        &.red-circle {
+          background-color: #f56c6c;
         }
       }
-      .content-right {
-        min-width: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
+
+      .label {
+        flex: 1;
         overflow: hidden;
-        i,
-        img,
-        .el-button,
-        .el-link {
-          margin-left: 10px;
-        }
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    .content-right {
+      min-width: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      overflow: hidden;
+      i,
+      img,
+      .el-button,
+      .el-link {
+        margin-left: 10px;
       }
     }
   }

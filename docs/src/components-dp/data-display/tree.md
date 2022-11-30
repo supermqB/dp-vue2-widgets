@@ -152,4 +152,6 @@
 | numTransform       | 是否进行数字转换                     | boolean        | -      | true                       |
 | slotWidth          | 右侧插槽宽度                         | string         | -      | auto                       |
 | allowSelectNonleaf | 是否允许选中非叶节点                 | boolean        | -      | false                      |
+| currentNodeKey     | 当前选中的节点                       | string         | -      | -                          |
+| searchText         | 模糊搜索传值                         | string         | -      | -                          |
 | onNodeSelected     | 节点被点击时的回调                   | function(node) | -      | 参数为：该节点所对应的对象 |
