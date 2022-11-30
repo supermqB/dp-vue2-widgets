@@ -164,7 +164,7 @@ export default {
     showPaging() {
       let totalSize = Math.max(
         this.tableData.length,
-        this.pageInfo.totalSize || 0
+        this.pageInfo && this.pageInfo.totalSize || 0
       )
       return totalSize > this.autopageThreshold && this.pageInfo != null
     }

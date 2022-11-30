@@ -537,7 +537,7 @@ var script$q = {
       return this.autopageThreshold ? `${Math.max(Math.min(this.tableData.length, this.autopageThreshold), 2 /* show 2 rows if there is no item*/) * 36 + 36 /* table header */ + 13 /* table vertical padding. */}px` : '300px';
     },
     showPaging() {
-      let totalSize = Math.max(this.tableData.length, this.pageInfo.totalSize || 0);
+      let totalSize = Math.max(this.tableData.length, this.pageInfo && this.pageInfo.totalSize || 0);
       return totalSize > this.autopageThreshold && this.pageInfo != null;
     }
   },
@@ -592,7 +592,7 @@ var script$q = {
   }
 };
 
-var css_248z$n = ".el_table_wrapper[data-v-614697d1]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-614697d1]{flex-grow:1;padding:6px 6px 0 6px;box-sizing:border-box}";
+var css_248z$n = ".el_table_wrapper[data-v-aef2fb90]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-aef2fb90]{flex-grow:1;padding:6px 6px 0 6px;box-sizing:border-box}";
 styleInject(css_248z$n);
 
 var css_248z$m = ".el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}";
@@ -745,7 +745,7 @@ var __vue_staticRenderFns__$r = [];
 /* style */
 const __vue_inject_styles__$r = undefined;
 /* scoped */
-const __vue_scope_id__$r = "data-v-614697d1";
+const __vue_scope_id__$r = "data-v-aef2fb90";
 /* module identifier */
 const __vue_module_identifier__$r = undefined;
 /* functional template */
@@ -925,36 +925,6 @@ const objectKeysToNull = function (obj) {
 //   return tree.find(node => )
 // }
 
-// 判断非空数组
-function noEmptyArray(list) {
-  return Array.isArray(list) && list.length > 0;
-}
-
-/**
- * 获取默认currentNodeKey
- * @param {*} list 树形集合
- * @param {*} isParentLeaf 是否点击父级叶节点触发其他事件
- * @param {*} keyId 唯一标识属性，默认id
- * @returns
- */
-const getNodeKey = function (list) {
-  let isParentLeaf = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  let keyId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'id';
-  if (!noEmptyArray(list)) return '';
-  const id = list[0][keyId];
-  const {
-    children
-  } = list[0];
-  // 如果点击父节点需要传参，就默认取第一个父节点
-  if (isParentLeaf) return id;
-  // 如果有子级就取子级下的第一条，否则取自身
-  if (noEmptyArray(children)) {
-    return getNodeKey(children);
-  } else {
-    return id;
-  }
-};
-
 var lang = /*#__PURE__*/Object.freeze({
   __proto__: null,
   keysObject: keysObject,
@@ -974,9 +944,7 @@ var lang = /*#__PURE__*/Object.freeze({
   getFirstActiveNode: getFirstActiveNode,
   getFirstNode: getFirstNode,
   getFirstLeafNode: getFirstLeafNode,
-  objectKeysToNull: objectKeysToNull,
-  noEmptyArray: noEmptyArray,
-  getNodeKey: getNodeKey
+  objectKeysToNull: objectKeysToNull
 });
 
 const wan = 9999;
@@ -1003,7 +971,7 @@ var format = /*#__PURE__*/Object.freeze({
 });
 
 //
-const reMapFunc$1 = node => {
+const reMapFunc = node => {
   const {
     id,
     state,
@@ -1042,7 +1010,7 @@ var script$p = {
   },
   computed: {
     treeList() {
-      return reMapTree(this.data, reMapFunc$1);
+      return reMapTree(this.data, reMapFunc);
     }
   },
   methods: {
@@ -20800,18 +20768,6 @@ const __vue_component__$1 = /*#__PURE__*/normalizeComponent({
 }, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, false, undefined, undefined, undefined);
 
 //
-const reMapFunc = node => {
-  const {
-    id,
-    state,
-    type
-  } = node;
-  const ids = id.split('-');
-  return Object.assign({}, node, {
-    type: type ? type : ids[0],
-    state: !!(state * 1)
-  });
-};
 var script = {
   name: 'GeneralTree',
   props: {
@@ -20862,6 +20818,10 @@ var script = {
       type: Boolean,
       default: true
     },
+    numTransformFunc: {
+      type: Function,
+      default: unitFmt
+    },
     // 右侧插槽宽度
     slotWidth: {
       type: String,
@@ -20871,22 +20831,59 @@ var script = {
     allowSelectNonleaf: {
       type: Boolean,
       default: false
+    },
+    // 当前选中的节点
+    currentNodeKey: {
+      type: [String, Number]
+    },
+    // 模糊搜索传值
+    searchText: {
+      type: String,
+      default: ''
     }
   },
+  data() {
+    return {
+      curNodeKey: '' // 当前选中节点
+    };
+  },
+
   computed: {
+    // 根据 this.data 构建组件需要的 数据结构
     treeList() {
-      return reMapTree(this.data, reMapFunc);
-    },
-    // 获取默认当前选中的节点
-    currentNodeKey() {
-      return getNodeKey(this.treeList, this.allowSelectNonleaf, this.nodeKey);
+      const buildTree = tree => {
+        if (!tree) return null;
+        return tree.map(node => {
+          const children = buildTree(node.children);
+          return Object.assign({}, (node => {
+            const {
+              id,
+              state,
+              type
+            } = node;
+            const ids = id.split('-');
+            return Object.assign({}, node, {
+              type: type ? type : ids[0],
+              state: !!(state * 1)
+            });
+          })(node), {
+            children
+          });
+        });
+      };
+      return buildTree(this.data);
     }
   },
   watch: {
+    searchText(val) {
+      this.filter(val);
+    },
     data: {
-      handler() {
+      handler(val) {
+        this.curNodeKey = this.currentNodeKey ? this.currentNodeKey : this.getNodeKey(val, this.allowSelectNonleaf, this.nodeKey);
         this.handleNodeClick();
       },
+      deep: true,
       immediate: true
     }
   },
@@ -20897,11 +20894,50 @@ var script = {
         number
       } = _ref;
       if (number === undefined || number === null) return '';
-      return this.numTransform ? unitFmt(number) : number;
+      return this.numTransform ? this.numTransformFunc(number) : number;
+    },
+    /**
+     * 获取默认currentNodeKey
+     * @param {*} list 树形集合
+     * @param {*} allowSelectNonleaf 是否点击父级叶节点触发其他事件
+     * @param {*} keyId 唯一标识属性，默认id
+     * @returns
+     */
+    getNodeKey(list) {
+      let allowSelectNonleaf = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      let keyId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'id';
+      let res = '';
+      list.forEach(item => {
+        if (res) {
+          return;
+        }
+        if (allowSelectNonleaf) {
+          res = item[keyId];
+        } else {
+          if (Array.isArray(item.children)) {
+            res = this.getNodeKey(item.children);
+          } else {
+            res = item[keyId];
+          }
+        }
+      });
+      return res;
     },
     handleNodeClick() {
       setTimeout(() => {
         if (this.$refs.sideTree) {
+          const getTreeParentNodes = (tree, key) => {
+            if (!tree) return [];
+            for (let node of tree) {
+              if (node.id === key) {
+                return [node];
+              } else {
+                const res = getTreeParentNodes(node.children, key);
+                if (res && res.length) return [node, ...res];
+              }
+            }
+            return [];
+          };
           const node = this.$refs.sideTree.getCurrentNode();
           if (!node) return;
           const list = getTreeParentNodes(this.treeList, node.id);
@@ -20917,7 +20953,7 @@ var script = {
             label,
             list: list.map(item => item.id).join('.')
           });
-          if (noEmptyArray(node.children) && !this.allowSelectNonleaf) {
+          if (Array.isArray(node.children) && !this.allowSelectNonleaf) {
             return false;
           }
           this.$emit('onNodeSelected', {
@@ -20925,11 +20961,19 @@ var script = {
           });
         }
       }, 100);
+    },
+    filter(val) {
+      if (this.$refs.sideTree) this.$refs.sideTree.filter(val);
+    },
+    // 对树节点进行筛选时执行的方法，返回true显示，返回false隐藏
+    filterNodeMethod(value, data) {
+      if (!value) return true;
+      return data.label.indexOf(value) > -1;
     }
   }
 };
 
-var css_248z = ".tree-general[data-v-7af3235d]{height:100%;overflow-x:hidden;display:flex;flex-direction:column;overflow-y:auto}.tree-general .tree-wrap[data-v-7af3235d]{flex:1;overflow:auto}.tree-general .tree-node[data-v-7af3235d]{width:100%;height:100%;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px;overflow:hidden}.tree-general .tree-node-content[data-v-7af3235d]{flex:1;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.tree-general .tree-node-content .content-left[data-v-7af3235d]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-general .tree-node-content .content-left .blank[data-v-7af3235d]{width:5px;height:5px;border-radius:5px;margin-right:3px}.tree-general .tree-node-content .content-left .blank.red-circle[data-v-7af3235d]{background-color:#f56c6c}.tree-general .tree-node-content .content-left .label[data-v-7af3235d]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-general .tree-node-content .content-right[data-v-7af3235d]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-general .tree-node-content .content-right .el-button[data-v-7af3235d],.tree-general .tree-node-content .content-right .el-link[data-v-7af3235d],.tree-general .tree-node-content .content-right i[data-v-7af3235d],.tree-general .tree-node-content .content-right img[data-v-7af3235d]{margin-left:10px}[data-v-7af3235d] .el-tree-node__content{height:36px;position:relative}[data-v-7af3235d] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-7af3235d] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-7af3235d] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}";
+var css_248z = ".tree-wrap[data-v-c2452fb6]{height:100%;overflow-x:hidden;overflow-y:auto}.tree-node[data-v-c2452fb6]{width:100%;height:100%;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px;overflow:hidden}.tree-node-content[data-v-c2452fb6]{flex:1;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.tree-node-content .content-left[data-v-c2452fb6]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-node-content .content-left .blank[data-v-c2452fb6]{width:5px;height:5px;border-radius:5px;margin-right:3px}.tree-node-content .content-left .blank.red-circle[data-v-c2452fb6]{background-color:#f56c6c}.tree-node-content .content-left .label[data-v-c2452fb6]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-node-content .content-right[data-v-c2452fb6]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-node-content .content-right .el-button[data-v-c2452fb6],.tree-node-content .content-right .el-link[data-v-c2452fb6],.tree-node-content .content-right i[data-v-c2452fb6],.tree-node-content .content-right img[data-v-c2452fb6]{margin-left:10px}[data-v-c2452fb6] .el-tree-node__content{height:36px;position:relative}[data-v-c2452fb6] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-c2452fb6] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-c2452fb6] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}";
 styleInject(css_248z);
 
 /* script */
@@ -20939,19 +20983,18 @@ var __vue_render__ = function () {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('div', {
-    staticClass: "tree-general"
-  }, [_c('el-tree', _vm._g(_vm._b({
+  return _c('el-tree', _vm._g(_vm._b({
     ref: "sideTree",
     staticClass: "tree-wrap",
     attrs: {
       "node-key": _vm.nodeKey,
       "data": _vm.treeList,
-      "current-node-key": _vm.currentNodeKey,
+      "current-node-key": _vm.curNodeKey,
       "expand-on-click-node": _vm.expandOnClickNode,
       "default-expand-all": _vm.defaultExpandAll,
       "indent": _vm.indent,
-      "highlight-current": ""
+      "highlight-current": "",
+      "filter-node-method": _vm.filterNodeMethod
     },
     on: {
       "node-click": _vm.handleNodeClick
@@ -20999,14 +21042,14 @@ var __vue_render__ = function () {
         })], 2)])]);
       }
     }], null, true)
-  }, 'el-tree', _vm.bind, false), _vm.$listeners))], 1);
+  }, 'el-tree', _vm.bind, false), _vm.$listeners));
 };
 var __vue_staticRenderFns__ = [];
 
 /* style */
 const __vue_inject_styles__ = undefined;
 /* scoped */
-const __vue_scope_id__ = "data-v-7af3235d";
+const __vue_scope_id__ = "data-v-c2452fb6";
 /* module identifier */
 const __vue_module_identifier__ = undefined;
 /* functional template */
