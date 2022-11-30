@@ -20730,7 +20730,7 @@ var script$1 = {
   }
 };
 
-var css_248z$2 = ".el_table_wrapper[data-v-8b537818]{height:100%;display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-8b537818]{flex-grow:1;padding:6px 6px 6px 6px;box-sizing:border-box}";
+var css_248z$2 = ".el_table_wrapper[data-v-4d3509b5]{height:100%;display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-4d3509b5]{flex-grow:1;padding:6px 6px 6px 6px;box-sizing:border-box}";
 styleInject(css_248z$2);
 
 var css_248z$1 = ".el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{height:300px;overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}";
@@ -20755,7 +20755,7 @@ var __vue_render__$1 = function () {
       "height": "100%",
       "data": _vm.data,
       "span-method": _vm.spanMethod,
-      "stripe": ""
+      "border": ""
     }
   }, _vm._l(_vm.tableTitle, function (item) {
     return _c('tableColumn', {
@@ -20771,7 +20771,7 @@ var __vue_staticRenderFns__$1 = [];
 /* style */
 const __vue_inject_styles__$1 = undefined;
 /* scoped */
-const __vue_scope_id__$1 = "data-v-8b537818";
+const __vue_scope_id__$1 = "data-v-4d3509b5";
 /* module identifier */
 const __vue_module_identifier__$1 = undefined;
 /* functional template */
