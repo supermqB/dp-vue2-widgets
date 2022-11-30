@@ -20902,8 +20902,12 @@ var script = {
     },
     data: {
       handler(val) {
+        // 没有设置默认node(currentNodeKey)，自动获取第一个可选择的节点
         this.curNodeKey = this.currentNodeKey ? this.currentNodeKey : this.getNodeKey(val, this.allowSelectNonleaf, this.nodeKey);
-        this.handleNodeClick();
+        this.$nextTick(() => {
+          this.$refs.sideTree.setCurrentKey(this.curNodeKey);
+          this.handleNodeClick();
+        });
       },
       deep: true,
       immediate: true
@@ -20995,7 +20999,7 @@ var script = {
   }
 };
 
-var css_248z = ".tree-wrap[data-v-c2452fb6]{height:100%;overflow-x:hidden;overflow-y:auto}.tree-node[data-v-c2452fb6]{width:100%;height:100%;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px;overflow:hidden}.tree-node-content[data-v-c2452fb6]{flex:1;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.tree-node-content .content-left[data-v-c2452fb6]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-node-content .content-left .blank[data-v-c2452fb6]{width:5px;height:5px;border-radius:5px;margin-right:3px}.tree-node-content .content-left .blank.red-circle[data-v-c2452fb6]{background-color:#f56c6c}.tree-node-content .content-left .label[data-v-c2452fb6]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-node-content .content-right[data-v-c2452fb6]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-node-content .content-right .el-button[data-v-c2452fb6],.tree-node-content .content-right .el-link[data-v-c2452fb6],.tree-node-content .content-right i[data-v-c2452fb6],.tree-node-content .content-right img[data-v-c2452fb6]{margin-left:10px}[data-v-c2452fb6] .el-tree-node__content{height:36px;position:relative}[data-v-c2452fb6] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-c2452fb6] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-c2452fb6] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}";
+var css_248z = ".tree-wrap[data-v-2f68f39e]{height:100%;overflow-x:hidden;overflow-y:auto}.tree-node[data-v-2f68f39e]{width:100%;height:100%;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px;overflow:hidden}.tree-node-content[data-v-2f68f39e]{flex:1;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.tree-node-content .content-left[data-v-2f68f39e]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-node-content .content-left .blank[data-v-2f68f39e]{width:5px;height:5px;border-radius:5px;margin-right:3px}.tree-node-content .content-left .blank.red-circle[data-v-2f68f39e]{background-color:#f56c6c}.tree-node-content .content-left .label[data-v-2f68f39e]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-node-content .content-right[data-v-2f68f39e]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-node-content .content-right .el-button[data-v-2f68f39e],.tree-node-content .content-right .el-link[data-v-2f68f39e],.tree-node-content .content-right i[data-v-2f68f39e],.tree-node-content .content-right img[data-v-2f68f39e]{margin-left:10px}[data-v-2f68f39e] .el-tree-node__content{height:36px;position:relative}[data-v-2f68f39e] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-2f68f39e] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-2f68f39e] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}";
 styleInject(css_248z);
 
 /* script */
@@ -21071,7 +21075,7 @@ var __vue_staticRenderFns__ = [];
 /* style */
 const __vue_inject_styles__ = undefined;
 /* scoped */
-const __vue_scope_id__ = "data-v-c2452fb6";
+const __vue_scope_id__ = "data-v-2f68f39e";
 /* module identifier */
 const __vue_module_identifier__ = undefined;
 /* functional template */

@@ -8,6 +8,7 @@
             :data="treeData"
             :defaultExpandAll="defaultExpandAll"
             :slotWidth="slotWidth"
+            :currentNodeKey="currentNodeKey"
             @onNodeSelected="onNodeSelected"
           >
             <template v-slot="{ data, node }">
@@ -49,82 +50,8 @@ export default {
     return {
       defaultExpandAll: true,
       slotWidth: '80px',
-      treeData: [
-        {
-          id: '1',
-          label: '一级',
-          children: [
-            {
-              id: '1-1',
-              label:
-                '我是一级1-1我是一级1-1我是一级1-1我是一级1-1我是一级1-1我是一级1-1我是一级1-1',
-              children: null,
-              state: true,
-              icon: 'el-icon-circle-plus-outline'
-            },
-            {
-              id: '1-2',
-              label: '我是一级1-2',
-              children: null,
-              state: false,
-              btns: [
-                {
-                  type: 'el-link',
-                  name: '编辑',
-                  config: {
-                    type: 'primary'
-                  },
-                  click: this.handleIcon
-                },
-                {
-                  type: 'el-link',
-                  name: '删除',
-                  config: {
-                    type: 'danger'
-                  },
-                  click: this.handleIcon
-                }
-              ]
-            },
-            {
-              id: '1-3',
-              label: '我是一级1-3',
-              children: [
-                {
-                  id: '1-3-1',
-                  label: '我是一级1-3-1',
-                  icon: 'el-icon-delete'
-                }
-              ],
-              state: true,
-              number: '200+'
-            }
-          ],
-          state: true,
-          number: 22300
-        },
-        {
-          id: '2',
-          label: '二级',
-          children: [
-            {
-              id: '2-1',
-              label: '我是二级1-1',
-              state: true,
-              btns: [
-                {
-                  type: 'el-button',
-                  name: '按钮',
-                  config: {
-                    size: 'mini'
-                  },
-                  click: this.handleIcon
-                }
-              ]
-            }
-          ]
-        }
-      ],
+      currentNodeKey: '',
+      treeData: [],
       tableData: [
         {
           date: '2016-05-02',
@@ -173,7 +100,128 @@ export default {
       }
     }
   },
-  mounted() {},
+  mounted() {
+    const treeData1 = [
+      {
+        defaultEngine: 0,
+        engineId: '1597064999772295170',
+        engineName: '测试使用',
+        engineState: '0',
+        id: '1597064999772295170',
+        ip: null,
+        label: '测试使用1',
+        state: 0
+      },
+      {
+        defaultEngine: 0,
+        engineId: '1597064919772295170',
+        engineName: '测试使用',
+        engineState: '0',
+        id: '1597064999372295170',
+        ip: null,
+        label: '测试使用2',
+        state: 0
+      },
+
+      {
+        defaultEngine: 0,
+        engineId: '1597064999772295170',
+        engineName: '测试使用',
+        engineState: '0',
+        id: '1597064999772291170',
+        ip: null,
+        label: '测试使用3',
+        state: 0
+      }
+    ]
+
+    const treeData2 = [
+      {
+        id: '1',
+        label: '一级',
+        children: [
+          {
+            id: '1-1',
+            label:
+              '我是一级1-1我是一级1-1我是一级1-1我是一级1-1我是一级1-1我是一级1-1我是一级1-1',
+            children: null,
+            state: true,
+            icon: 'el-icon-circle-plus-outline'
+          },
+          {
+            id: '1-2',
+            label: '我是一级1-2',
+            children: null,
+            state: false,
+            btns: [
+              {
+                type: 'el-link',
+                name: '编辑',
+                config: {
+                  type: 'primary'
+                },
+                click: this.handleIcon
+              },
+              {
+                type: 'el-link',
+                name: '删除',
+                config: {
+                  type: 'danger'
+                },
+                click: this.handleIcon
+              }
+            ]
+          },
+          {
+            id: '1-3',
+            label: '我是一级1-3',
+            children: [
+              {
+                id: '1-3-1',
+                label: '我是一级1-3-1',
+                icon: 'el-icon-delete'
+              }
+            ],
+            state: true,
+            number: '200+'
+          }
+        ],
+        state: true,
+        number: 22300
+      },
+      {
+        id: '2',
+        label: '二级',
+        children: [
+          {
+            id: '2-1',
+            label: '我是二级1-1',
+            state: true,
+            btns: [
+              {
+                type: 'el-button',
+                name: '按钮',
+                config: {
+                  size: 'mini'
+                },
+                click: this.handleIcon
+              }
+            ]
+          }
+        ]
+      }
+    ]
+
+    // setTimeout(() => {
+    //   this.treeData = treeData1
+    //   this.currentNodeKey = '1597064999372295170'
+    // }, 1000)
+
+    setTimeout(() => {
+      this.treeData = treeData2
+      // this.currentNodeKey = '2-1'
+    }, 1000)
+  },
   methods: {
     // 页码或每页条数改变
     pageChange(val) {
