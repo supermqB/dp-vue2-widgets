@@ -36,6 +36,12 @@ const routesConfig = [
         name: 'test2',
         meta: { title: 'test2' },
         component: () => import('../views/test/test-2')
+      },
+      {
+        path: 'gulingjun',
+        name: 'gulingjun',
+        meta: { title: 'gulingjun' },
+        component: () => import('../views/test/gulingjun')
       }
     ]
   },

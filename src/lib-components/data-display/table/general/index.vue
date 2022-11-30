@@ -151,20 +151,21 @@ export default {
     tableHeight() {
       return this.autopageThreshold
         ? `${
-            Math.max(
-              Math.min(this.tableData.length, this.autopageThreshold),
-              2
-            ) *
+            (this.tableData.length
+              ? Math.min(this.tableData.length, this.autopageThreshold)
+              : 2) /* show 2 rows if there is no item*/ *
               36 +
-            36 +
-            7
+            36 /* table header */ +
+            13 /* table vertical padding. */
           }px`
         : '300px'
     },
     showPaging() {
-      return (
-        this.tableData.length > this.autopageThreshold && this.pageInfo != null
+      let totalSize = Math.max(
+        this.tableData.length,
+        (this.pageInfo && this.pageInfo.totalSize) || 0
       )
+      return totalSize > this.autopageThreshold && this.pageInfo != null
     }
   },
   watch: {

@@ -138,18 +138,26 @@
 
 :::
 
-### 参数说明
+### 参数说明 props
 
-| 参数               | 说明                                 | 类型           | 可选值 | 默认值                     |
-| ------------------ | ------------------------------------ | -------------- | ------ | -------------------------- |
-| data               | 展示数据                             | array          | -      | -                          |
-| bind               | 其他传参                             | object         | -      | -                          |
-| nodeKey            | 每个树节点用来作为唯一标识的属性     | string         | -      | id                         |
-| expandOnClickNode  | 是否在点击节点的时候展开或者收缩节点 | boolean        | -      | true                       |
-| defaultExpandAll   | 是否默认展开所有节点                 | boolean        | -      | false                      |
-| indent             | 相邻级节点间的水平缩进，单位为像素   | number         | -      | 12                         |
-| showState          | 是否显示状态标识                     | boolean        | -      | true                       |
-| numTransform       | 是否进行数字转换                     | boolean        | -      | true                       |
-| slotWidth          | 右侧插槽宽度                         | string         | -      | auto                       |
-| allowSelectNonleaf | 是否允许选中非叶节点                 | boolean        | -      | false                      |
-| onNodeSelected     | 节点被点击时的回调                   | function(node) | -      | 参数为：该节点所对应的对象 |
+| 参数               | 说明                                 | 类型     | 可选值 | 默认值  |
+| ------------------ | ------------------------------------ | -------- | ------ | ------- |
+| data               | 展示数据                             | array    | -      | -       |
+| bind               | 其他传参                             | object   | -      | -       |
+| nodeKey            | 每个树节点用来作为唯一标识的属性     | string   | -      | id      |
+| expandOnClickNode  | 是否在点击节点的时候展开或者收缩节点 | boolean  | -      | true    |
+| defaultExpandAll   | 是否默认展开所有节点                 | boolean  | -      | false   |
+| indent             | 相邻级节点间的水平缩进，单位为像素   | number   | -      | 12      |
+| showState          | 是否显示状态标识                     | boolean  | -      | true    |
+| numTransform       | 是否进行数字转换                     | boolean  | -      | true    |
+| numTransformFunc   | 数字转换使用的方法                   | Function | -      | unitFmt |
+| slotWidth          | 右侧插槽宽度                         | string   | -      | auto    |
+| allowSelectNonleaf | 是否允许选中非叶节点                 | boolean  | -      | false   |
+| currentNodeKey     | 当前选中的节点                       | string   | -      | -       |
+| searchText         | 模糊搜索传值                         | string   | -      | -       |
+
+### 事件说明 event
+
+| 参数           | 说明               | 类型           | 可选值 | 默认值                     |
+| -------------- | ------------------ | -------------- | ------ | -------------------------- |
+| onNodeSelected | 节点被点击时的回调 | function(node) | -      | 参数为：该节点所对应的对象 |

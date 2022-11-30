@@ -126,6 +126,11 @@ module.exports = {
           ])
         },
         {
+          title: '交互 interaction',
+          collapsable: false,
+          children: getPaths('interaction', ['dialog'])
+        },
+        {
           title: '导航 navigation',
           collapsable: false,
           children: getPaths('navigation', ['header-nav'])
