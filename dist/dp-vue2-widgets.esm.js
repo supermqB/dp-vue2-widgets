@@ -20555,6 +20555,12 @@ const __vue_component__$3 = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var script$2 = {
   name: 'tableColumn',
@@ -20581,7 +20587,21 @@ var __vue_render__$2 = function () {
     attrs: {
       "show-overflow-tooltip": true
     }
-  }, 'el-table-column', _vm.item, false), [_vm.item.children ? _vm._l(_vm.item.children, function (i) {
+  }, 'el-table-column', _vm.item, false), [_vm.item.header ? _c('template', {
+    slot: "header"
+  }, [_c('span', {
+    style: {
+      'margin-right': '5px'
+    }
+  }, [_vm._v(_vm._s(_vm.item.label))]), _vm._v(" "), _c('el-tooltip', {
+    attrs: {
+      "effect": "dark",
+      "content": _vm.item.header.content,
+      "placement": "top"
+    }
+  }, [_c('i', {
+    staticClass: "el-icon-warning-outline"
+  })])], 1) : _vm._e(), _vm._v(" "), _vm.item.children ? _vm._l(_vm.item.children, function (i) {
     return _c('tableColumn', {
       key: i.prop,
       attrs: {
@@ -20595,7 +20615,7 @@ var __vue_staticRenderFns__$2 = [];
 /* style */
 const __vue_inject_styles__$2 = undefined;
 /* scoped */
-const __vue_scope_id__$2 = "data-v-6f573ece";
+const __vue_scope_id__$2 = "data-v-405a918c";
 /* module identifier */
 const __vue_module_identifier__$2 = undefined;
 /* functional template */
