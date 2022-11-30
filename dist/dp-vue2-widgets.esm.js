@@ -537,7 +537,7 @@ var script$q = {
       return this.autopageThreshold ? `${Math.max(Math.min(this.tableData.length, this.autopageThreshold), 2 /* show 2 rows if there is no item*/) * 36 + 36 /* table header */ + 13 /* table vertical padding. */}px` : '300px';
     },
     showPaging() {
-      let totalSize = Math.max(this.tableData.length, this.pageInfo.totalSize || 0);
+      let totalSize = Math.max(this.tableData.length, this.pageInfo && this.pageInfo.totalSize || 0);
       return totalSize > this.autopageThreshold && this.pageInfo != null;
     }
   },
@@ -592,7 +592,7 @@ var script$q = {
   }
 };
 
-var css_248z$m = ".el_table_wrapper[data-v-729a0ca4]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-729a0ca4]{flex-grow:1;padding:6px 6px 0 6px;box-sizing:border-box}";
+var css_248z$m = ".el_table_wrapper[data-v-5d166fd1]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-5d166fd1]{flex-grow:1;padding:6px 6px 0 6px;box-sizing:border-box}";
 styleInject(css_248z$m);
 
 var css_248z$l = ".el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}";
@@ -745,7 +745,7 @@ var __vue_staticRenderFns__$r = [];
 /* style */
 const __vue_inject_styles__$r = undefined;
 /* scoped */
-const __vue_scope_id__$r = "data-v-729a0ca4";
+const __vue_scope_id__$r = "data-v-5d166fd1";
 /* module identifier */
 const __vue_module_identifier__$r = undefined;
 /* functional template */
