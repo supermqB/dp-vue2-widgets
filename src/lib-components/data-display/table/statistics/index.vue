@@ -144,7 +144,7 @@ export default {
   flex-direction: column;
   .table_container {
     flex-grow: 1;
-    padding: 6px 6px 0 6px;
+    padding: 6px 6px 6px 6px;
     box-sizing: border-box;
   }
 }
@@ -172,32 +172,6 @@ export default {
         .el-button {
           padding: 0;
         }
-      }
-    }
-  }
-  .table_footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 6px;
-    .bottomTip {
-      font-size: 12px;
-      color: #9c9c9c;
-      .highlight {
-        color: red;
-      }
-    }
-    .el-pagination .el-select .el-input {
-      width: 85px;
-    }
-    .el-input--mini .el-input__inner {
-      height: 20px;
-      line-height: 20px;
-    }
-    .el-pagination__editor.el-input {
-      width: 40px;
-      .el-input__inner {
-        height: 20px;
       }
     }
   }
