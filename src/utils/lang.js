@@ -178,24 +178,3 @@ export const objectKeysToNull = (obj, exclude = []) => {
 export function noEmptyArray(list) {
   return Array.isArray(list) && list.length > 0
 }
-
-/**
- * 获取默认currentNodeKey
- * @param {*} list 树形集合
- * @param {*} isParentLeaf 是否点击父级叶节点触发其他事件
- * @param {*} keyId 唯一标识属性，默认id
- * @returns
- */
-export const getNodeKey = (list, isParentLeaf = false, keyId = 'id') => {
-  if (!noEmptyArray(list)) return ''
-  const id = list[0][keyId]
-  const { children } = list[0]
-  // 如果点击父节点需要传参，就默认取第一个父节点
-  if (isParentLeaf) return id
-  // 如果有子级就取子级下的第一条，否则取自身
-  if (noEmptyArray(children)) {
-    return getNodeKey(children)
-  } else {
-    return id
-  }
-}
