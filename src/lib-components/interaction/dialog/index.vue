@@ -67,6 +67,7 @@ $spacing16: 16px;
     height: 46px;
     padding: $spacing16 $spacing16 0;
     box-sizing: border-box;
+    border-bottom: 1px solid #e5e5e5;
     .el-dialog__title {
       font-size: 16px;
       color: #303133;
@@ -89,6 +90,7 @@ $spacing16: 16px;
     justify-content: flex-end;
     align-items: center;
     padding: 0 $spacing16;
+    border-top: 1px solid #e5e5e5;
     .el-button + .el-button {
       margin-left: 6px;
     }
