@@ -157,10 +157,15 @@ export default {
     },
     data: {
       handler(val) {
+        // 没有设置默认node(currentNodeKey)，自动获取第一个可选择的节点
         this.curNodeKey = this.currentNodeKey
           ? this.currentNodeKey
           : this.getNodeKey(val, this.allowSelectNonleaf, this.nodeKey)
-        this.handleNodeClick()
+
+        this.$nextTick(() => {
+          this.$refs.sideTree.setCurrentKey(this.curNodeKey)
+          this.handleNodeClick()
+        })
       },
       deep: true,
       immediate: true
