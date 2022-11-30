@@ -10,6 +10,7 @@ Vue.use(ElementUI)
 Vue.use(DpVue2Widgets)
 // import '../dist/theme-dp-ui/index.css'
 import '../src/theme/theme-dp-ui/src/index.scss'
+import '../src/theme/theme-dp-ui/scrollbar.scss'
 
 import router from './router'
 

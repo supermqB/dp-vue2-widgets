@@ -8,7 +8,19 @@ function compile() {
     .pipe(sass())
     .pipe(
       autoprefixer({
-        cascade: false,
+        cascade: false
+      })
+    )
+    .pipe(cssmin())
+    .pipe(dest('./lib'))
+}
+
+function compileScrollbar() {
+  return src('./scrollbar.scss')
+    .pipe(sass())
+    .pipe(
+      autoprefixer({
+        cascade: false
       })
     )
     .pipe(cssmin())
@@ -23,5 +35,5 @@ function copyimg() {
   return src('./src/img/**').pipe(cssmin()).pipe(dest('./lib/img'))
 }
 
-exports.build = series(compile, copyimg)
+exports.build = series(compile, compileScrollbar, copyimg)
 // exports.build = series(compile, copyfont)
