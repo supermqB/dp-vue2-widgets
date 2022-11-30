@@ -10,7 +10,7 @@ export { default as SearchBar } from './SearchBar.vue'
 export { default as Statistics } from './Statistics.vue'
 export { default as DpStatistics } from './Statistics.vue'
 export { default as Dialog } from './Dialog.vue'
-export { default as DpDialog } from './Dialog.vue'
+// export { default as DpDialog } from './Dialog.vue'
 export { default as CatalogButtons } from './CatalogButtons'
 export { default as DpCatalogButtons } from './CatalogButtons'
 
@@ -45,3 +45,6 @@ export { default as DpGeneralTable } from './data-display/table/general' // 通�
 
 // tree
 export { default as DpTree } from './data-display/tree/general' // 通用树形
+
+// interaction
+export { default as DpDialog } from './interaction/dialog' // 对话框
