@@ -3,7 +3,10 @@
     class="el_table_wrapper"
     :style="{ height: autopageThreshold ? 'auto' : '100%' }"
   >
-    <div class="table_container" :style="{ height: tableHeight }">
+    <div
+      class="table_container"
+      :style="{ height: tableHeight, paddingBottom: showPaging ? '0' : '6px' }"
+    >
       <el-table
         :data="tableData"
         v-bind="$attrs"
@@ -147,7 +150,15 @@ export default {
   computed: {
     tableHeight() {
       return this.autopageThreshold
-        ? `${Math.max(Math.min(this.tableData.length, this.autopageThreshold), 2) * 36 + 36 + 7}px`
+        ? `${
+            Math.max(
+              Math.min(this.tableData.length, this.autopageThreshold),
+              2
+            ) *
+              36 +
+            36 +
+            7
+          }px`
         : '300px'
     },
     showPaging() {
