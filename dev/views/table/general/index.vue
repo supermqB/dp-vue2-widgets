@@ -9,7 +9,6 @@
             :defaultExpandAll="defaultExpandAll"
             :slotWidth="slotWidth"
             @onNodeSelected="onNodeSelected"
-            @node-expand="handleExpand"
           >
             <template v-slot="{ data, node }">
               <i :class="data.icon" @click.stop="handleClick(data, node)"></i>
@@ -59,20 +58,14 @@ export default {
               id: '1-1',
               label:
                 '我是一级1-1我是一级1-1我是一级1-1我是一级1-1我是一级1-1我是一级1-1我是一级1-1',
-              children: [
-                {
-                  id: '1-1-1',
-                  label: '我是一级1-1-1',
-                  icon: 'el-icon-delete'
-                }
-              ],
+              children: null,
               state: true,
               icon: 'el-icon-circle-plus-outline'
             },
             {
               id: '1-2',
               label: '我是一级1-2',
-              children: [],
+              children: null,
               state: false,
               btns: [
                 {
@@ -96,7 +89,13 @@ export default {
             {
               id: '1-3',
               label: '我是一级1-3',
-              children: [],
+              children: [
+                {
+                  id: '1-3-1',
+                  label: '我是一级1-3-1',
+                  icon: 'el-icon-delete'
+                }
+              ],
               state: true,
               number: '200+'
             }
@@ -107,7 +106,6 @@ export default {
         {
           id: '2',
           label: '二级',
-          children: [],
           children: [
             {
               id: '2-1',
@@ -175,6 +173,7 @@ export default {
       }
     }
   },
+  mounted() {},
   methods: {
     // 页码或每页条数改变
     pageChange(val) {
@@ -191,9 +190,6 @@ export default {
     },
     onNodeSelected(node) {
       console.log('点击当前行', node)
-    },
-    handleExpand(item, node, self) {
-      console.log(item, node, self, '节点展开')
     }
   }
 }
