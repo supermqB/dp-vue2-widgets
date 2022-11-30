@@ -6,6 +6,7 @@
         :data="data"
         style="width: 100%"
         :span-method="spanMethod"
+        stripe
       >
         <tableColumn v-for="item in tableTitle" :key="item.prop" :item="item" />
       </el-table>
