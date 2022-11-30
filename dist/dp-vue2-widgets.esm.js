@@ -19193,13 +19193,15 @@ var script$g = {
   },
   methods: {
     handleSelect(idx, idxPath, item) {
+      var _item$$attrs;
       if (idx != null) {
         this.$router.push({
           name: idx
         });
-      } else if (item.$attrs?.redirect) {
+      } else if ((_item$$attrs = item.$attrs) !== null && _item$$attrs !== void 0 && _item$$attrs.redirect) {
+        var _item$$attrs2;
         this.$router.push({
-          path: item.$attrs?.redirect
+          path: (_item$$attrs2 = item.$attrs) === null || _item$$attrs2 === void 0 ? void 0 : _item$$attrs2.redirect
         });
       }
       // this.$router.push({ name: idx })
