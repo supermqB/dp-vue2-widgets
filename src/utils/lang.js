@@ -173,8 +173,3 @@ export const objectKeysToNull = (obj, exclude = []) => {
 //   }
 //   return tree.find(node => )
 // }
-
-// 判断非空数组
-export function noEmptyArray(list) {
-  return Array.isArray(list) && list.length > 0
-}

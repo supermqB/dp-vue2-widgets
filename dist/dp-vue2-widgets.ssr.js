@@ -1106,11 +1106,7 @@ var objectKeysToNull = function objectKeysToNull(obj) {
 //   }
 //   return tree.find(node => )
 // }
-
-// 判断非空数组
-function noEmptyArray(list) {
-  return Array.isArray(list) && list.length > 0;
-}var lang=/*#__PURE__*/Object.freeze({__proto__:null,keysObject:keysObject,isEmpty:isEmpty,toFixedNumStr:toFixedNumStr,toPrecentStr:toPrecentStr,clone:clone,keysClone:keysClone,getMax:getMax,getMaxNumber:getMaxNumber,treeTraverse:treeTraverse,treeFilter:treeFilter,treeSome:treeSome,treeFind:treeFind,getTreeParentNodes:getTreeParentNodes,reMapTree:reMapTree,getFirstActiveNode:getFirstActiveNode,getFirstNode:getFirstNode,getFirstLeafNode:getFirstLeafNode,objectKeysToNull:objectKeysToNull,noEmptyArray:noEmptyArray});var wan = 9999;
+var lang=/*#__PURE__*/Object.freeze({__proto__:null,keysObject:keysObject,isEmpty:isEmpty,toFixedNumStr:toFixedNumStr,toPrecentStr:toPrecentStr,clone:clone,keysClone:keysClone,getMax:getMax,getMaxNumber:getMaxNumber,treeTraverse:treeTraverse,treeFilter:treeFilter,treeSome:treeSome,treeFind:treeFind,getTreeParentNodes:getTreeParentNodes,reMapTree:reMapTree,getFirstActiveNode:getFirstActiveNode,getFirstNode:getFirstNode,getFirstLeafNode:getFirstLeafNode,objectKeysToNull:objectKeysToNull});var wan = 9999;
 var yi = 99999999;
 function unitFmt(num) {
   // num = 1 * num
@@ -1125,7 +1121,7 @@ function unitFmt(num) {
 function stdTimeFmt(time) {
   if (time.indexOf('.') == -1) return time;
   return time.substr(0, time.indexOf('.'));
-}var format=/*#__PURE__*/Object.freeze({__proto__:null,unitFmt:unitFmt,stdTimeFmt:stdTimeFmt});var reMapFunc$1 = function reMapFunc(node) {
+}var format=/*#__PURE__*/Object.freeze({__proto__:null,unitFmt:unitFmt,stdTimeFmt:stdTimeFmt});var reMapFunc = function reMapFunc(node) {
   var id = node.id,
     state = node.state,
     type = node.type;
@@ -1166,7 +1162,7 @@ var script$p = {
   },
   computed: {
     treeList: function treeList() {
-      return reMapTree(this.data, reMapFunc$1);
+      return reMapTree(this.data, reMapFunc);
     }
   },
   methods: {
@@ -20790,17 +20786,7 @@ var __vue_is_functional_template__$1 = false;
 var __vue_component__$1 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$1,
   staticRenderFns: __vue_staticRenderFns__$1
-}, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, false, undefined, createInjectorSSR, undefined);var reMapFunc = function reMapFunc(node) {
-  var id = node.id,
-    state = node.state,
-    type = node.type;
-  var ids = id.split('-');
-  return Object.assign({}, node, {
-    type: type ? type : ids[0],
-    state: !!(state * 1)
-  });
-};
-var script = {
+}, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, false, undefined, createInjectorSSR, undefined);var script = {
   name: 'GeneralTree',
   props: {
     /**
@@ -20852,6 +20838,10 @@ var script = {
       type: Boolean,
       default: true
     },
+    numTransformFunc: {
+      type: Function,
+      default: unitFmt
+    },
     // 右侧插槽宽度
     slotWidth: {
       type: String,
@@ -20879,8 +20869,27 @@ var script = {
   },
 
   computed: {
+    // 根据 this.data 构建组件需要的 数据结构
     treeList: function treeList() {
-      return reMapTree(this.data, reMapFunc);
+      var buildTree = function buildTree(tree) {
+        if (!tree) return null;
+        return tree.map(function (node) {
+          var children = buildTree(node.children);
+          return Object.assign({}, function (node) {
+            var id = node.id,
+              state = node.state,
+              type = node.type;
+            var ids = id.split('-');
+            return Object.assign({}, node, {
+              type: type ? type : ids[0],
+              state: !!(state * 1)
+            });
+          }(node), {
+            children: children
+          });
+        });
+      };
+      return buildTree(this.data);
     }
   },
   watch: {
@@ -20901,7 +20910,7 @@ var script = {
     showNumber: function showNumber(_ref) {
       var number = _ref.number;
       if (number === undefined || number === null) return '';
-      return this.numTransform ? unitFmt(number) : number;
+      return this.numTransform ? this.numTransformFunc(number) : number;
     },
     /**
      * 获取默认currentNodeKey
@@ -20935,6 +20944,27 @@ var script = {
       var _this2 = this;
       setTimeout(function () {
         if (_this2.$refs.sideTree) {
+          var getTreeParentNodes = function getTreeParentNodes(tree, key) {
+            if (!tree) return [];
+            var _iterator = _createForOfIteratorHelper(tree),
+              _step;
+            try {
+              for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                var _node = _step.value;
+                if (_node.id === key) {
+                  return [_node];
+                } else {
+                  var res = getTreeParentNodes(_node.children, key);
+                  if (res && res.length) return [_node].concat(_toConsumableArray(res));
+                }
+              }
+            } catch (err) {
+              _iterator.e(err);
+            } finally {
+              _iterator.f();
+            }
+            return [];
+          };
           var node = _this2.$refs.sideTree.getCurrentNode();
           if (!node) return;
           var list = getTreeParentNodes(_this2.treeList, node.id);
@@ -21040,16 +21070,16 @@ var __vue_staticRenderFns__ = [];
 /* style */
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-6a5b188c_0", {
-    source: ".tree-wrap[data-v-6a5b188c]{height:100%;overflow-x:hidden;overflow-y:auto}.tree-node[data-v-6a5b188c]{width:100%;height:100%;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px;overflow:hidden}.tree-node-content[data-v-6a5b188c]{flex:1;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.tree-node-content .content-left[data-v-6a5b188c]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-node-content .content-left .blank[data-v-6a5b188c]{width:5px;height:5px;border-radius:5px;margin-right:3px}.tree-node-content .content-left .blank.red-circle[data-v-6a5b188c]{background-color:#f56c6c}.tree-node-content .content-left .label[data-v-6a5b188c]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-node-content .content-right[data-v-6a5b188c]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-node-content .content-right .el-button[data-v-6a5b188c],.tree-node-content .content-right .el-link[data-v-6a5b188c],.tree-node-content .content-right i[data-v-6a5b188c],.tree-node-content .content-right img[data-v-6a5b188c]{margin-left:10px}[data-v-6a5b188c] .el-tree-node__content{height:36px;position:relative}[data-v-6a5b188c] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-6a5b188c] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-6a5b188c] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}",
+  inject("data-v-c2452fb6_0", {
+    source: ".tree-wrap[data-v-c2452fb6]{height:100%;overflow-x:hidden;overflow-y:auto}.tree-node[data-v-c2452fb6]{width:100%;height:100%;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px;overflow:hidden}.tree-node-content[data-v-c2452fb6]{flex:1;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.tree-node-content .content-left[data-v-c2452fb6]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-node-content .content-left .blank[data-v-c2452fb6]{width:5px;height:5px;border-radius:5px;margin-right:3px}.tree-node-content .content-left .blank.red-circle[data-v-c2452fb6]{background-color:#f56c6c}.tree-node-content .content-left .label[data-v-c2452fb6]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-node-content .content-right[data-v-c2452fb6]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-node-content .content-right .el-button[data-v-c2452fb6],.tree-node-content .content-right .el-link[data-v-c2452fb6],.tree-node-content .content-right i[data-v-c2452fb6],.tree-node-content .content-right img[data-v-c2452fb6]{margin-left:10px}[data-v-c2452fb6] .el-tree-node__content{height:36px;position:relative}[data-v-c2452fb6] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-c2452fb6] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-c2452fb6] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__ = "data-v-6a5b188c";
+var __vue_scope_id__ = "data-v-c2452fb6";
 /* module identifier */
-var __vue_module_identifier__ = "data-v-6a5b188c";
+var __vue_module_identifier__ = "data-v-c2452fb6";
 /* functional template */
 var __vue_is_functional_template__ = false;
 /* style inject shadow dom */

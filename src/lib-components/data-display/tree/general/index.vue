@@ -45,16 +45,6 @@
 
 <script>
 import { unitFmt } from '@/utils/format'
-import { reMapTree, getTreeParentNodes, noEmptyArray } from '@/utils/lang'
-
-const reMapFunc = node => {
-  const { id, state, type } = node
-  const ids = id.split('-')
-  return Object.assign({}, node, {
-    type: type ? type : ids[0],
-    state: !!(state * 1)
-  })
-}
 
 export default {
   name: 'GeneralTree',
@@ -106,6 +96,10 @@ export default {
       type: Boolean,
       default: true
     },
+    numTransformFunc: {
+      type: Function,
+      default: unitFmt
+    },
     // 右侧插槽宽度
     slotWidth: {
       type: String,
@@ -132,8 +126,29 @@ export default {
     }
   },
   computed: {
+    // 根据 this.data 构建组件需要的 数据结构
     treeList() {
-      return reMapTree(this.data, reMapFunc)
+      const buildTree = tree => {
+        if (!tree) return null
+
+        return tree.map(node => {
+          const children = buildTree(node.children)
+          return Object.assign(
+            {},
+            (node => {
+              const { id, state, type } = node
+              const ids = id.split('-')
+              return Object.assign({}, node, {
+                type: type ? type : ids[0],
+                state: !!(state * 1)
+              })
+            })(node),
+            { children }
+          )
+        })
+      }
+
+      return buildTree(this.data)
     }
   },
   watch: {
@@ -155,7 +170,7 @@ export default {
     // 处理数字
     showNumber({ number }) {
       if (number === undefined || number === null) return ''
-      return this.numTransform ? unitFmt(number) : number
+      return this.numTransform ? this.numTransformFunc(number) : number
     },
     /**
      * 获取默认currentNodeKey
@@ -185,6 +200,19 @@ export default {
     handleNodeClick() {
       setTimeout(() => {
         if (this.$refs.sideTree) {
+          const getTreeParentNodes = (tree, key) => {
+            if (!tree) return []
+            for (let node of tree) {
+              if (node.id === key) {
+                return [node]
+              } else {
+                const res = getTreeParentNodes(node.children, key)
+                if (res && res.length) return [node, ...res]
+              }
+            }
+            return []
+          }
+
           const node = this.$refs.sideTree.getCurrentNode()
           if (!node) return
           const list = getTreeParentNodes(this.treeList, node.id)
