@@ -1,13 +1,16 @@
 <template>
-  <div class="table-container">
-    <el-table
-      height="100%"
-      :data="data"
-      style="width: 100%"
-      :span-method="spanMethod"
-    >
-      <tableColumn v-for="item in tableTitle" :key="item.prop" :item="item" />
-    </el-table>
+  <div class="el_table_wrapper">
+    <div class="table_container">
+      <el-table
+        height="100%"
+        :data="data"
+        style="width: 100%"
+        :span-method="spanMethod"
+        border
+      >
+        <tableColumn v-for="item in tableTitle" :key="item.prop" :item="item" />
+      </el-table>
+    </div>
   </div>
 </template>
 <script>
@@ -136,7 +139,43 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.table-container {
+.el_table_wrapper {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  .table_container {
+    flex-grow: 1;
+    padding: 6px 6px 6px 6px;
+    box-sizing: border-box;
+  }
 }
 </style>
+
+<style lang="scss">
+.el-table__body tr.current-row > td {
+  background-color: #f2f6ff !important;
+}
+.el_table_wrapper {
+  .table_container {
+    height: 300px; /*table default height*/
+    overflow: auto;
+    .el-table {
+      font-size: 13px;
+      .el-table__body-wrapper.is-scrolling-right {
+        padding-right: 6px;
+      }
+      .el-table_1_column_1 {
+        .el-radio__label {
+          display: none;
+        }
+      }
+      .cell {
+        .el-button {
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+</style>
+

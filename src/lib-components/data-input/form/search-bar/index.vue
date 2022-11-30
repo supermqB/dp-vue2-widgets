@@ -49,16 +49,18 @@ export default {
     searchFormConfig() {
       let config = this.inputConfigs
       if (!this.hideSearchInput) {
-        config.push({
-          type: 'el-input',
-          label: '',
-          id: 'searchText',
-          elOptions: {
-            clearable: true,
-            placeholder: this.placeholder,
-            suffixIcon: 'el-icon-search'
-          }
-        })
+        config = [
+          ...config,
+          {
+            type: 'el-input',
+            label: '',
+            id: 'searchText',
+            elOptions: {
+              clearable: true,
+              placeholder: this.placeholder,
+              suffixIcon: 'el-icon-search'
+            }
+          }]
       }
       return config
     }
