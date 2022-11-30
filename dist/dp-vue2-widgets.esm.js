@@ -20311,7 +20311,7 @@ var script$4 = {
     searchFormConfig() {
       let config = this.inputConfigs;
       if (!this.hideSearchInput) {
-        config.push({
+        config = [...config, {
           type: 'el-input',
           label: '',
           id: 'searchText',
@@ -20320,7 +20320,7 @@ var script$4 = {
             placeholder: this.placeholder,
             suffixIcon: 'el-icon-search'
           }
-        });
+        }];
       }
       return config;
     }
@@ -20356,7 +20356,7 @@ var script$4 = {
   }
 };
 
-var css_248z$5 = ".dpui_searchBar[data-v-58a14d29]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-58a14d29]  .el-form{display:flex}.dpui_searchBar[data-v-58a14d29]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}";
+var css_248z$5 = ".dpui_searchBar[data-v-d12f5e72]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-d12f5e72]  .el-form{display:flex}.dpui_searchBar[data-v-d12f5e72]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}";
 styleInject(css_248z$5);
 
 /* script */
@@ -20389,7 +20389,7 @@ var __vue_staticRenderFns__$4 = [];
 /* style */
 const __vue_inject_styles__$4 = undefined;
 /* scoped */
-const __vue_scope_id__$4 = "data-v-58a14d29";
+const __vue_scope_id__$4 = "data-v-d12f5e72";
 /* module identifier */
 const __vue_module_identifier__$4 = undefined;
 /* functional template */
@@ -20523,6 +20523,12 @@ const __vue_component__$3 = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var script$2 = {
   name: 'tableColumn',
@@ -20549,7 +20555,21 @@ var __vue_render__$2 = function () {
     attrs: {
       "show-overflow-tooltip": true
     }
-  }, 'el-table-column', _vm.item, false), [_vm.item.children ? _vm._l(_vm.item.children, function (i) {
+  }, 'el-table-column', _vm.item, false), [_vm.item.header ? _c('template', {
+    slot: "header"
+  }, [_c('span', {
+    style: {
+      'margin-right': '5px'
+    }
+  }, [_vm._v(_vm._s(_vm.item.label))]), _vm._v(" "), _c('el-tooltip', {
+    attrs: {
+      "effect": "dark",
+      "content": _vm.item.header.content,
+      "placement": "top"
+    }
+  }, [_c('i', {
+    staticClass: "el-icon-warning-outline"
+  })])], 1) : _vm._e(), _vm._v(" "), _vm.item.children ? _vm._l(_vm.item.children, function (i) {
     return _c('tableColumn', {
       key: i.prop,
       attrs: {
@@ -20563,7 +20583,7 @@ var __vue_staticRenderFns__$2 = [];
 /* style */
 const __vue_inject_styles__$2 = undefined;
 /* scoped */
-const __vue_scope_id__$2 = "data-v-6f573ece";
+const __vue_scope_id__$2 = "data-v-405a918c";
 /* module identifier */
 const __vue_module_identifier__$2 = undefined;
 /* functional template */

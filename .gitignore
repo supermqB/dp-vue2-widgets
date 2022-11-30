@@ -23,3 +23,4 @@ yarn-error.log*
 /docs/src/.vuepress/dist
 yarn.lock
 package-lock.json
+test.sh
