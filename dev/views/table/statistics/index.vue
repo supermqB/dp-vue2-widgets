@@ -7,12 +7,14 @@
       </div>
     </template>
     <template #main>
-      <dp-statistics-table
-        :tableTitle="tableTitle"
-        :data="data"
-        v-loading="loading"
-        :lastColIndex="2"
-      />
+      <div class="section main">
+        <dp-statistics-table
+          :tableTitle="tableTitle"
+          :data="data"
+          v-loading="loading"
+          :lastColIndex="2"
+        />
+      </div>
     </template>
   </dp-layout-container>
 </template>
@@ -423,4 +425,10 @@ export default {
   }
 }
 </script>
-<style></style>
+<style lang="scss" scoped>
+.main {
+  // height: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+}
+</style>
