@@ -19136,6 +19136,14 @@ var __vue_component__$l = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 var script$j = {
   name: 'DpLayoutContainer',
@@ -19155,6 +19163,21 @@ var script$j = {
     mainBottomHeight: {
       type: String,
       default: '50%'
+    },
+    // 是否拖拽
+    drag: {
+      type: Boolean,
+      default: false
+    },
+    // 拖拽最小百分比
+    dragMinPercent: {
+      type: Number,
+      default: 0.2
+    },
+    // 拖拽最大百分比
+    dragMaxPercent: {
+      type: Number,
+      default: 0.38
     }
   },
   computed: {
@@ -19176,6 +19199,16 @@ var __vue_render__$k = function __vue_render__() {
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c('el-container', {
+    directives: [{
+      name: "draggable",
+      rawName: "v-draggable",
+      value: {
+        enable: _vm.drag,
+        minPercent: _vm.dragMinPercent,
+        maxPercent: _vm.dragMaxPercent
+      },
+      expression: "{\n    enable: drag,\n    minPercent: dragMinPercent,\n    maxPercent: dragMaxPercent\n  }"
+    }],
     staticClass: "dp-layout-container"
   }, [_vm.hasSlot.asideLeft ? _c('el-aside', {
     staticClass: "aside-left",
@@ -19185,7 +19218,12 @@ var __vue_render__$k = function __vue_render__() {
     attrs: {
       "width": _vm.asideLeftWidth
     }
-  }, [_vm._t("asideLeft")], 2) : _vm._e(), _vm._v(" "), _vm.hasSlot.main ? _c('el-main', [!_vm.hasSlot.mainBottom ? [_vm._t("main")] : [_c('el-container', {
+  }, [_vm._t("asideLeft")], 2) : _vm._e(), _vm._v(" "), _vm.drag ? _c('div', {
+    staticClass: "drag",
+    style: {
+      left: _vm.asideLeftWidth
+    }
+  }) : _vm._e(), _vm._v(" "), _vm.hasSlot.main ? _c('el-main', [!_vm.hasSlot.mainBottom ? [_vm._t("main")] : [_c('el-container', {
     attrs: {
       "direction": "vertical"
     }
@@ -19205,8 +19243,8 @@ var __vue_staticRenderFns__$k = [];
 /* style */
 var __vue_inject_styles__$k = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-09d9cb1f_0", {
-    source: ".el-container.dp-layout-container{height:100%;background-color:#eef0f5}.el-container.dp-layout-container .el-aside,.el-container.dp-layout-container .el-main{background-color:#fff;position:relative;overflow:hidden}.el-container.dp-layout-container .el-main{padding:0}.el-container.dp-layout-container .el-aside.aside-left{border-right:1px solid #e5e5e5;display:flex;flex-direction:column}.el-container.dp-layout-container .el-aside.aside-right{border-left:1px solid #e5e5e5}.el-container.dp-layout-container .el-container.is-vertical{height:100%;background-color:#eef0f5}.el-container.dp-layout-container .el-container.is-vertical .el-main{padding:0;background-color:#fff;flex-basis:0%;flex-grow:1;flex-shrink:0;min-height:0}.el-container.dp-layout-container .el-container.is-vertical .el-main+.el-main{flex-grow:0;flex-shrink:1;flex-basis:50%;min-height:0;border-top:1px solid #e5e5e5}",
+  inject("data-v-6cec0f45_0", {
+    source: ".el-container.dp-layout-container{height:100%;background-color:#eef0f5;position:relative}.el-container.dp-layout-container .el-aside,.el-container.dp-layout-container .el-main{background-color:#fff;position:relative;overflow:hidden}.el-container.dp-layout-container .el-main{padding:0}.el-container.dp-layout-container .drag{width:3px;height:100%;background:0 0;position:absolute;top:0;z-index:2}.el-container.dp-layout-container .drag:hover{background:#2f63b9}.el-container.dp-layout-container .el-aside.aside-left{border-right:1px solid #e5e5e5;display:flex;flex-direction:column}.el-container.dp-layout-container .el-aside.aside-right{border-left:1px solid #e5e5e5}.el-container.dp-layout-container .el-container.is-vertical{height:100%;background-color:#eef0f5}.el-container.dp-layout-container .el-container.is-vertical .el-main{padding:0;background-color:#fff;flex-basis:0%;flex-grow:1;flex-shrink:0;min-height:0}.el-container.dp-layout-container .el-container.is-vertical .el-main+.el-main{flex-grow:0;flex-shrink:1;flex-basis:50%;min-height:0;border-top:1px solid #e5e5e5}",
     map: undefined,
     media: undefined
   });
@@ -19214,7 +19252,7 @@ var __vue_inject_styles__$k = function __vue_inject_styles__(inject) {
 /* scoped */
 var __vue_scope_id__$k = undefined;
 /* module identifier */
-var __vue_module_identifier__$k = "data-v-09d9cb1f";
+var __vue_module_identifier__$k = "data-v-6cec0f45";
 /* functional template */
 var __vue_is_functional_template__$k = false;
 /* style inject shadow dom */
@@ -21247,13 +21285,59 @@ var __vue_component__ = /*#__PURE__*/normalizeComponent({
   staticRenderFns: __vue_staticRenderFns__
 }, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, false, undefined, createInjectorSSR, undefined);/* eslint-disable import/prefer-default-export */
  // 对话框
-var components$1=/*#__PURE__*/Object.freeze({__proto__:null,Title:__vue_component__$u,ButtonGroup:__vue_component__$t,DpButtonGroup:__vue_component__$t,GeneralTable:__vue_component__$s,SideCatalog:__vue_component__$r,DpSideCatalog:__vue_component__$r,Form:__vue_component__$q,SearchBar:__vue_component__$p,Statistics:__vue_component__$o,DpStatistics:__vue_component__$o,Dialog:__vue_component__$n,CatalogButtons:__vue_component__$m,DpCatalogButtons:__vue_component__$m,DpLayoutRoot:__vue_component__$l,DpLayoutContainer:__vue_component__$k,DpLayout:__vue_component__$d,DpLayoutBlank:__vue_component__$c,DpHeaderNav:__vue_component__$a,DpDefaultPage:__vue_component__$9,DpLoginPage:__vue_component__$8,DpTitle:__vue_component__$w,DpSubtitle:__vue_component__$v,DpIconButton:__vue_component__$7,DpForm:__vue_component__$6,DpSearchBar:__vue_component__$5,DpQueryBar:__vue_component__$4,DpStatisticsTable:__vue_component__$2,DpGeneralTable:__vue_component__$s,DpTree:__vue_component__$1,DpDialog:__vue_component__});// install function executed by Vue.use()
+var components$1=/*#__PURE__*/Object.freeze({__proto__:null,Title:__vue_component__$u,ButtonGroup:__vue_component__$t,DpButtonGroup:__vue_component__$t,GeneralTable:__vue_component__$s,SideCatalog:__vue_component__$r,DpSideCatalog:__vue_component__$r,Form:__vue_component__$q,SearchBar:__vue_component__$p,Statistics:__vue_component__$o,DpStatistics:__vue_component__$o,Dialog:__vue_component__$n,CatalogButtons:__vue_component__$m,DpCatalogButtons:__vue_component__$m,DpLayoutRoot:__vue_component__$l,DpLayoutContainer:__vue_component__$k,DpLayout:__vue_component__$d,DpLayoutBlank:__vue_component__$c,DpHeaderNav:__vue_component__$a,DpDefaultPage:__vue_component__$9,DpLoginPage:__vue_component__$8,DpTitle:__vue_component__$w,DpSubtitle:__vue_component__$v,DpIconButton:__vue_component__$7,DpForm:__vue_component__$6,DpSearchBar:__vue_component__$5,DpQueryBar:__vue_component__$4,DpStatisticsTable:__vue_component__$2,DpGeneralTable:__vue_component__$s,DpTree:__vue_component__$1,DpDialog:__vue_component__});// v-draggable: 拖拽容器
+var draggable = {
+  name: 'draggable',
+  value: {
+    bind: function bind(el, binding) {
+      if (!binding.value.enable) return; // 如果false就不拖动了
+      var bodyW = document.body.clientWidth; // 获取父级的可是宽度
+      var leftDom = el.children[0]; // 获取左侧dom
+      var dragDom = el.children[1]; // 获取拖拽dom
+      dragDom.style.cursor = 'ew-resize';
+      dragDom.onmousedown = function (e) {
+        dragDom.style.width = '3px';
+        dragDom.style.background = 'rgb(47, 99, 185)';
+        document.onmousemove = function (e) {
+          e.stopPropagation();
+          var x = e.pageX;
+          var minW = bodyW * (binding.value.minPercent ? binding.value.minPercent : 0.2);
+          var maxW = bodyW * (binding.value.maxPercent ? binding.value.maxPercent : 0.38);
+          if (x < minW) {
+            x = minW;
+          } else if (x > maxW) {
+            x = maxW;
+          }
+          var widthProgress = parseInt(x / bodyW * 100) + '%';
+          leftDom.style.width = dragDom.style.left = widthProgress;
+        };
+        document.onmouseup = function () {
+          dragDom.style.width = '1px';
+          dragDom.style.background = '#e5e5e5';
+          document.onmousemove = document.onmouseup = null;
+        };
+      };
+    }
+  }
+};var directives = [draggable];// install function executed by Vue.use()
 var install = function installDpVue2Widgets(Vue) {
   Object.entries(components$1).forEach(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
       componentName = _ref2[0],
       component = _ref2[1];
     Vue.component(componentName, component);
+  });
+
+  // 注册全局指令
+  directives.forEach(function (directive) {
+    // 判断是否是数组
+    if (Array.isArray(directive)) {
+      directive.forEach(function (data) {
+        Vue.directive(data.name, data.value);
+      });
+    } else {
+      Vue.directive(directive.name, directive.value);
+    }
   });
 };var components=/*#__PURE__*/Object.freeze({__proto__:null,'default':install,Title:__vue_component__$u,ButtonGroup:__vue_component__$t,DpButtonGroup:__vue_component__$t,GeneralTable:__vue_component__$s,SideCatalog:__vue_component__$r,DpSideCatalog:__vue_component__$r,Form:__vue_component__$q,SearchBar:__vue_component__$p,Statistics:__vue_component__$o,DpStatistics:__vue_component__$o,Dialog:__vue_component__$n,CatalogButtons:__vue_component__$m,DpCatalogButtons:__vue_component__$m,DpLayoutRoot:__vue_component__$l,DpLayoutContainer:__vue_component__$k,DpLayout:__vue_component__$d,DpLayoutBlank:__vue_component__$c,DpHeaderNav:__vue_component__$a,DpDefaultPage:__vue_component__$9,DpLoginPage:__vue_component__$8,DpTitle:__vue_component__$w,DpSubtitle:__vue_component__$v,DpIconButton:__vue_component__$7,DpForm:__vue_component__$6,DpSearchBar:__vue_component__$5,DpQueryBar:__vue_component__$4,DpStatisticsTable:__vue_component__$2,DpGeneralTable:__vue_component__$s,DpTree:__vue_component__$1,DpDialog:__vue_component__});var generateMenuItems = function generateMenuItems(routesConfig) {
   var items = [];
