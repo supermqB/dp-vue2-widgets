@@ -1,11 +1,11 @@
 <template>
   <div class="expand_div">
-    <transition name="app-fade" mode="out-in">
+    <transition name="el-fade-in">
       <keep-alive>
         <router-view v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>
     </transition>
-    <transition name="app-fade" mode="out-in">
+    <transition name="el-fade-in">
       <router-view v-if="!$route.meta.keepAlive"></router-view>
     </transition>
   </div>
@@ -15,18 +15,3 @@ export default {
   name: 'AppMain'
 }
 </script>
-<style>
-.app-fade-enter {
-  opacity: 0;
-}
-.app-fade-leave {
-  opacity: 1;
-}
-.app-fade-enter-active {
-  transition: opacity 0.1s;
-}
-.app-fade-leave-active {
-  opacity: 0;
-  transition: opacity 0.1s;
-}
-</style>
