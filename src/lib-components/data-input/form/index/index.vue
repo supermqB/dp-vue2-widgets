@@ -4,7 +4,7 @@
     :model="model"
     v-bind="$attrs"
     :rules="rule"
-    :show-message="false"
+    :show-message="showMessage"
     @submit.native.prevent
   >
     <el-form-item
@@ -41,6 +41,11 @@ export default {
       default: () => {
         return {}
       }
+    },
+    // 是否显示检验不通过信息
+    showMessage: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {

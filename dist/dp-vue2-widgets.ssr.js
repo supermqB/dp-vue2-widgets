@@ -20245,6 +20245,11 @@ var script$6 = {
       default: function _default() {
         return {};
       }
+    },
+    // 是否显示检验不通过信息
+    showMessage: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -20288,7 +20293,7 @@ var __vue_render__$6 = function __vue_render__() {
     attrs: {
       "model": _vm.model,
       "rules": _vm.rule,
-      "show-message": false
+      "show-message": _vm.showMessage
     },
     nativeOn: {
       "submit": function submit($event) {
@@ -20326,7 +20331,7 @@ var __vue_inject_styles__$6 = undefined;
 /* scoped */
 var __vue_scope_id__$6 = undefined;
 /* module identifier */
-var __vue_module_identifier__$6 = "data-v-23f08593";
+var __vue_module_identifier__$6 = "data-v-06131080";
 /* functional template */
 var __vue_is_functional_template__$6 = false;
 /* style inject */
@@ -20544,12 +20549,12 @@ var __vue_render__$4 = function __vue_render__() {
   var _c = _vm._self._c || _h;
   return _c('div', {
     staticClass: "dpui_searchBar"
-  }, [_c('dp-form', {
+  }, [_c('dp-form', _vm._b({
     attrs: {
       "configs": _vm.inputConfigs,
       "model": _vm.searchForm
     }
-  }), _vm._ssrNode(" "), _c('el-button', {
+  }, 'dp-form', _vm.$attrs, false)), _vm._ssrNode(" "), _c('el-button', {
     staticClass: "searchBtn",
     attrs: {
       "type": "primary",
@@ -20565,16 +20570,16 @@ var __vue_staticRenderFns__$4 = [];
 /* style */
 var __vue_inject_styles__$4 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-e49b6fd6_0", {
-    source: ".dpui_searchBar[data-v-e49b6fd6]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-e49b6fd6]  .el-form{display:flex}.dpui_searchBar[data-v-e49b6fd6]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}",
+  inject("data-v-2d91921d_0", {
+    source: ".dpui_searchBar[data-v-2d91921d]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-2d91921d]  .el-form{display:flex}.dpui_searchBar[data-v-2d91921d]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$4 = "data-v-e49b6fd6";
+var __vue_scope_id__$4 = "data-v-2d91921d";
 /* module identifier */
-var __vue_module_identifier__$4 = "data-v-e49b6fd6";
+var __vue_module_identifier__$4 = "data-v-2d91921d";
 /* functional template */
 var __vue_is_functional_template__$4 = false;
 /* style inject shadow dom */
@@ -21018,10 +21023,8 @@ var script$1 = {
         });
       },
       deep: true
-      // immediate: true
     }
   },
-
   methods: {
     // 数字格式化
     numFormat: function numFormat(number) {
@@ -21159,16 +21162,16 @@ var __vue_staticRenderFns__$1 = [];
 /* style */
 var __vue_inject_styles__$1 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-c4852980_0", {
-    source: ".tree-wrap[data-v-c4852980]{height:100%;overflow-x:hidden;overflow-y:auto}.tree-node[data-v-c4852980]{width:100%;height:100%;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px;overflow:hidden}.tree-node-content[data-v-c4852980]{flex:1;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.tree-node-content .content-left[data-v-c4852980]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-node-content .content-left .blank[data-v-c4852980]{width:5px;height:5px;border-radius:5px;margin-right:3px}.tree-node-content .content-left .blank.red-circle[data-v-c4852980]{background-color:#f56c6c}.tree-node-content .content-left .label[data-v-c4852980]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-node-content .content-right[data-v-c4852980]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-node-content .content-right .el-button[data-v-c4852980],.tree-node-content .content-right .el-link[data-v-c4852980],.tree-node-content .content-right i[data-v-c4852980],.tree-node-content .content-right img[data-v-c4852980]{margin-left:10px}[data-v-c4852980] .el-tree-node__content{height:36px;position:relative}[data-v-c4852980] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-c4852980] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-c4852980] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}",
+  inject("data-v-0b618d7c_0", {
+    source: ".tree-wrap[data-v-0b618d7c]{height:100%;overflow-x:hidden;overflow-y:auto}.tree-node[data-v-0b618d7c]{width:100%;height:100%;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px;overflow:hidden}.tree-node-content[data-v-0b618d7c]{flex:1;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.tree-node-content .content-left[data-v-0b618d7c]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-node-content .content-left .blank[data-v-0b618d7c]{width:5px;height:5px;border-radius:5px;margin-right:3px}.tree-node-content .content-left .blank.red-circle[data-v-0b618d7c]{background-color:#f56c6c}.tree-node-content .content-left .label[data-v-0b618d7c]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-node-content .content-right[data-v-0b618d7c]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-node-content .content-right .el-button[data-v-0b618d7c],.tree-node-content .content-right .el-link[data-v-0b618d7c],.tree-node-content .content-right i[data-v-0b618d7c],.tree-node-content .content-right img[data-v-0b618d7c]{margin-left:10px}[data-v-0b618d7c] .el-tree-node__content{height:36px;position:relative}[data-v-0b618d7c] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-0b618d7c] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-0b618d7c] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$1 = "data-v-c4852980";
+var __vue_scope_id__$1 = "data-v-0b618d7c";
 /* module identifier */
-var __vue_module_identifier__$1 = "data-v-c4852980";
+var __vue_module_identifier__$1 = "data-v-0b618d7c";
 /* functional template */
 var __vue_is_functional_template__$1 = false;
 /* style inject shadow dom */
