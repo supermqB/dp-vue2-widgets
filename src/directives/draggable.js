@@ -3,7 +3,7 @@ export default {
   name: 'draggable',
   value: {
     bind(el, binding) {
-      if (!binding.value) return // 如果false就不拖动了
+      if (!binding.value.enable) return // 如果false就不拖动了
       let bodyW = document.body.clientWidth // 获取父级的可是宽度
       let leftDom = el.children[0] // 获取左侧dom
       let dragDom = el.children[1] // 获取拖拽dom
@@ -14,8 +14,10 @@ export default {
         document.onmousemove = function (e) {
           e.stopPropagation()
           let x = e.pageX
-          let minW = bodyW * 0.2
-          let maxW = bodyW * 0.38
+          let minW =
+            bodyW * (binding.value.minPercent ? binding.value.minPercent : 0.2)
+          let maxW =
+            bodyW * (binding.value.maxPercent ? binding.value.maxPercent : 0.38)
           if (x < minW) {
             x = minW
           } else if (x > maxW) {

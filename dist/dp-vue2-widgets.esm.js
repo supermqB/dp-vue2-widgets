@@ -19025,6 +19025,14 @@ const __vue_component__$l = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 var script$j = {
   name: 'DpLayoutContainer',
@@ -19044,6 +19052,21 @@ var script$j = {
     mainBottomHeight: {
       type: String,
       default: '50%'
+    },
+    // 是否拖拽
+    drag: {
+      type: Boolean,
+      default: false
+    },
+    // 拖拽最小百分比
+    dragMinPercent: {
+      type: Number,
+      default: 0.2
+    },
+    // 拖拽最大百分比
+    dragMaxPercent: {
+      type: Number,
+      default: 0.38
     }
   },
   computed: {
@@ -19058,7 +19081,7 @@ var script$j = {
   }
 };
 
-var css_248z$g = ".el-container.dp-layout-container{height:100%;background-color:#eef0f5}.el-container.dp-layout-container .el-aside,.el-container.dp-layout-container .el-main{background-color:#fff;position:relative;overflow:hidden}.el-container.dp-layout-container .el-main{padding:0}.el-container.dp-layout-container .el-aside.aside-left{border-right:1px solid #e5e5e5;display:flex;flex-direction:column}.el-container.dp-layout-container .el-aside.aside-right{border-left:1px solid #e5e5e5}.el-container.dp-layout-container .el-container.is-vertical{height:100%;background-color:#eef0f5}.el-container.dp-layout-container .el-container.is-vertical .el-main{padding:0;background-color:#fff;flex-basis:0%;flex-grow:1;flex-shrink:0;min-height:0}.el-container.dp-layout-container .el-container.is-vertical .el-main+.el-main{flex-grow:0;flex-shrink:1;flex-basis:50%;min-height:0;border-top:1px solid #e5e5e5}";
+var css_248z$g = ".el-container.dp-layout-container{height:100%;background-color:#eef0f5;position:relative}.el-container.dp-layout-container .el-aside,.el-container.dp-layout-container .el-main{background-color:#fff;position:relative;overflow:hidden}.el-container.dp-layout-container .el-main{padding:0}.el-container.dp-layout-container .drag{width:3px;height:100%;background:0 0;position:absolute;top:0;z-index:2}.el-container.dp-layout-container .drag:hover{background:#2f63b9}.el-container.dp-layout-container .el-aside.aside-left{border-right:1px solid #e5e5e5;display:flex;flex-direction:column}.el-container.dp-layout-container .el-aside.aside-right{border-left:1px solid #e5e5e5}.el-container.dp-layout-container .el-container.is-vertical{height:100%;background-color:#eef0f5}.el-container.dp-layout-container .el-container.is-vertical .el-main{padding:0;background-color:#fff;flex-basis:0%;flex-grow:1;flex-shrink:0;min-height:0}.el-container.dp-layout-container .el-container.is-vertical .el-main+.el-main{flex-grow:0;flex-shrink:1;flex-basis:50%;min-height:0;border-top:1px solid #e5e5e5}";
 styleInject(css_248z$g);
 
 /* script */
@@ -19069,6 +19092,16 @@ var __vue_render__$k = function () {
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c('el-container', {
+    directives: [{
+      name: "draggable",
+      rawName: "v-draggable",
+      value: {
+        enable: _vm.drag,
+        minPercent: _vm.dragMinPercent,
+        maxPercent: _vm.dragMaxPercent
+      },
+      expression: "{\n    enable: drag,\n    minPercent: dragMinPercent,\n    maxPercent: dragMaxPercent\n  }"
+    }],
     staticClass: "dp-layout-container"
   }, [_vm.hasSlot.asideLeft ? _c('el-aside', {
     staticClass: "aside-left",
@@ -19078,7 +19111,12 @@ var __vue_render__$k = function () {
     attrs: {
       "width": _vm.asideLeftWidth
     }
-  }, [_vm._t("asideLeft")], 2) : _vm._e(), _vm._v(" "), _vm.hasSlot.main ? _c('el-main', [!_vm.hasSlot.mainBottom ? [_vm._t("main")] : [_c('el-container', {
+  }, [_vm._t("asideLeft")], 2) : _vm._e(), _vm._v(" "), _vm.drag ? _c('div', {
+    staticClass: "drag",
+    style: {
+      left: _vm.asideLeftWidth
+    }
+  }) : _vm._e(), _vm._v(" "), _vm.hasSlot.main ? _c('el-main', [!_vm.hasSlot.mainBottom ? [_vm._t("main")] : [_c('el-container', {
     attrs: {
       "direction": "vertical"
     }
@@ -21258,6 +21296,44 @@ var components$1 = /*#__PURE__*/Object.freeze({
   DpDialog: __vue_component__
 });
 
+// v-draggable: 拖拽容器
+var draggable = {
+  name: 'draggable',
+  value: {
+    bind(el, binding) {
+      if (!binding.value.enable) return; // 如果false就不拖动了
+      let bodyW = document.body.clientWidth; // 获取父级的可是宽度
+      let leftDom = el.children[0]; // 获取左侧dom
+      let dragDom = el.children[1]; // 获取拖拽dom
+      dragDom.style.cursor = 'ew-resize';
+      dragDom.onmousedown = function (e) {
+        dragDom.style.width = '3px';
+        dragDom.style.background = 'rgb(47, 99, 185)';
+        document.onmousemove = function (e) {
+          e.stopPropagation();
+          let x = e.pageX;
+          let minW = bodyW * (binding.value.minPercent ? binding.value.minPercent : 0.2);
+          let maxW = bodyW * (binding.value.maxPercent ? binding.value.maxPercent : 0.38);
+          if (x < minW) {
+            x = minW;
+          } else if (x > maxW) {
+            x = maxW;
+          }
+          let widthProgress = parseInt(x / bodyW * 100) + '%';
+          leftDom.style.width = dragDom.style.left = widthProgress;
+        };
+        document.onmouseup = function () {
+          dragDom.style.width = '1px';
+          dragDom.style.background = '#e5e5e5';
+          document.onmousemove = document.onmouseup = null;
+        };
+      };
+    }
+  }
+};
+
+const directives = [draggable];
+
 // Import vue components
 
 // install function executed by Vue.use()
@@ -21265,6 +21341,18 @@ const install = function installDpVue2Widgets(Vue) {
   Object.entries(components$1).forEach(_ref => {
     let [componentName, component] = _ref;
     Vue.component(componentName, component);
+  });
+
+  // 注册全局指令
+  directives.forEach(directive => {
+    // 判断是否是数组
+    if (Array.isArray(directive)) {
+      directive.forEach(data => {
+        Vue.directive(data.name, data.value);
+      });
+    } else {
+      Vue.directive(directive.name, directive.value);
+    }
   });
 };
 

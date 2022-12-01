@@ -1,5 +1,12 @@
 <template>
-  <el-container class="dp-layout-container" v-draggable="isDrag">
+  <el-container
+    class="dp-layout-container"
+    v-draggable="{
+      enable: drag,
+      minPercent: dragMinPercent,
+      maxPercent: dragMaxPercent
+    }"
+  >
     <el-aside
       :width="asideLeftWidth"
       v-if="hasSlot.asideLeft"
@@ -8,7 +15,7 @@
     >
       <slot name="asideLeft" />
     </el-aside>
-    <div v-if="isDrag" class="drag" :style="{ left: asideLeftWidth }"></div>
+    <div v-if="drag" class="drag" :style="{ left: asideLeftWidth }"></div>
     <el-main v-if="hasSlot.main">
       <template v-if="!hasSlot.mainBottom">
         <slot name="main" />
@@ -55,9 +62,19 @@ export default {
       default: '50%'
     },
     // 是否拖拽
-    isDrag: {
+    drag: {
       type: Boolean,
       default: false
+    },
+    // 拖拽最小百分比
+    dragMinPercent: {
+      type: Number,
+      default: 0.2
+    },
+    // 拖拽最大百分比
+    dragMaxPercent: {
+      type: Number,
+      default: 0.38
     }
   },
   computed: {
@@ -88,15 +105,15 @@ export default {
     padding: 0;
   }
   .drag {
-    width: 1px;
+    width: 3px;
     height: 100%;
-    background: #e5e5e5;
+    background: transparent;
     position: absolute;
     top: 0;
-    left: 25%;
+    // left: 25%;
     z-index: 2;
     &:hover {
-      width: 3px;
+      // width: 3px;
       background: rgb(47, 99, 185);
     }
   }

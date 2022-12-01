@@ -1,5 +1,5 @@
 <template>
-  <dp-layout-container :isDrag="true">
+  <dp-layout-container drag>
     <template #asideLeft>
       <div class="section asideLeft">
         <dp-title text="大标题22" />
