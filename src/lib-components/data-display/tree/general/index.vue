@@ -1,6 +1,6 @@
 <template>
   <el-tree
-    ref="sideTree"
+    ref="dpTree"
     v-bind="bind"
     class="tree-wrap"
     :node-key="nodeKey"
@@ -8,6 +8,7 @@
     :current-node-key="curNodeKey"
     :expand-on-click-node="expandOnClickNode"
     :default-expand-all="defaultExpandAll"
+    :default-expanded-keys="expandKeys"
     :indent="indent"
     highlight-current
     :filter-node-method="filterNodeMethod"
@@ -24,7 +25,9 @@
           <span class="label">{{ data.label }}</span>
         </div>
         <div class="content-right" :style="{ width: slotWidth }">
-          <span>{{ showNumber(data) }}</span>
+          <span v-if="data.number !== undefined && data.number !== null">{{
+            numFormat(data.number)
+          }}</span>
           <component
             v-for="(btn, index) in data.btns"
             :key="index"
@@ -45,6 +48,46 @@
 
 <script>
 import { unitFmt } from '@/utils/format'
+
+/**
+ * 获取可选中的第一个节点
+ * @param {*} listData 树形数据
+ * @param {*} parentKeys 记录当前节点所有祖辈节点的值 (用于默认展开)
+ * @param {*} allowSelectNonleaf 是否允许选中非叶节点(触发选中事件)
+ * @param {*} keyId 唯一标识属性，默认id
+ * @returns
+ */
+const getDefaultNode = (
+  listData,
+  parentKeys,
+  allowSelectNonleaf = false,
+  keyId = 'id'
+) => {
+  let res = ''
+  // let _parentKeys = [...parentKeys]
+  listData.forEach(item => {
+    if (res) {
+      return
+    }
+    if (allowSelectNonleaf) {
+      res = item[keyId]
+    } else {
+      if (Array.isArray(item.children)) {
+        let _parentKeys
+        ;({ res, parentKeys: _parentKeys } = getDefaultNode(item.children, [
+          ...parentKeys,
+          item[keyId]
+        ]))
+        if (res) {
+          parentKeys = _parentKeys
+        }
+      } else {
+        res = item[keyId]
+      }
+    }
+  })
+  return { res, parentKeys }
+}
 
 export default {
   name: 'GeneralTree',
@@ -96,6 +139,7 @@ export default {
       type: Boolean,
       default: true
     },
+    // 数字转换使用的方法
     numTransformFunc: {
       type: Function,
       default: unitFmt
@@ -122,7 +166,8 @@ export default {
   },
   data() {
     return {
-      curNodeKey: '' // 当前选中节点
+      curNodeKey: '', // 当前选中节点
+      expandKeys: [] // 默认展开节点
     }
   },
   computed: {
@@ -157,54 +202,41 @@ export default {
     },
     data: {
       handler(val) {
-        // 没有设置默认node(currentNodeKey)，自动获取第一个可选择的节点
-        this.curNodeKey = this.currentNodeKey
-          ? this.currentNodeKey
-          : this.getNodeKey(val, this.allowSelectNonleaf, this.nodeKey)
+        if (!this.currentNodeKey) {
+          // 没有设置默认node(currentNodeKey)，自动获取第一个可选择的节点
+          let res = '',
+            parentKeys = []
+          ;({ res, parentKeys } = getDefaultNode(
+            val,
+            [],
+            this.allowSelectNonleaf,
+            this.nodeKey
+          ))
+          this.curNodeKey = res
+          // console.log(parentKeys)
+          this.expandKeys = parentKeys
+        } else {
+          this.curNodeKey = this.currentNodeKey
+        }
 
         this.$nextTick(() => {
-          this.$refs.sideTree.setCurrentKey(this.curNodeKey)
+          this.$refs.dpTree.setCurrentKey(this.curNodeKey)
           this.handleNodeClick()
         })
       },
-      deep: true,
-      immediate: true
+      deep: true
+      // immediate: true
     }
   },
   methods: {
-    // 处理数字
-    showNumber({ number }) {
-      if (number === undefined || number === null) return ''
+    // 数字格式化
+    numFormat(number) {
       return this.numTransform ? this.numTransformFunc(number) : number
     },
-    /**
-     * 获取默认currentNodeKey
-     * @param {*} list 树形集合
-     * @param {*} allowSelectNonleaf 是否点击父级叶节点触发其他事件
-     * @param {*} keyId 唯一标识属性，默认id
-     * @returns
-     */
-    getNodeKey(list, allowSelectNonleaf = false, keyId = 'id') {
-      let res = ''
-      list.forEach(item => {
-        if (res) {
-          return
-        }
-        if (allowSelectNonleaf) {
-          res = item[keyId]
-        } else {
-          if (Array.isArray(item.children)) {
-            res = this.getNodeKey(item.children)
-          } else {
-            res = item[keyId]
-          }
-        }
-      })
-      return res
-    },
+    // 处理节点的点击事件
     handleNodeClick() {
       setTimeout(() => {
-        if (this.$refs.sideTree) {
+        if (this.$refs.dpTree) {
           const getTreeParentNodes = (tree, key) => {
             if (!tree) return []
             for (let node of tree) {
@@ -218,7 +250,7 @@ export default {
             return []
           }
 
-          const node = this.$refs.sideTree.getCurrentNode()
+          const node = this.$refs.dpTree.getCurrentNode()
           if (!node) return
           const list = getTreeParentNodes(this.treeList, node.id)
           const { id, type, label } = node
@@ -237,7 +269,7 @@ export default {
       }, 100)
     },
     filter(val) {
-      if (this.$refs.sideTree) this.$refs.sideTree.filter(val)
+      if (this.$refs.dpTree) this.$refs.dpTree.filter(val)
     },
     // 对树节点进行筛选时执行的方法，返回true显示，返回false隐藏
     filterNodeMethod(value, data) {

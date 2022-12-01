@@ -48,7 +48,7 @@
 export default {
   data() {
     return {
-      defaultExpandAll: true,
+      defaultExpandAll: false,
       slotWidth: '80px',
       currentNodeKey: '',
       treeData: [],
@@ -144,14 +144,14 @@ export default {
             id: '1-1',
             label:
               '我是一级1-1我是一级1-1我是一级1-1我是一级1-1我是一级1-1我是一级1-1我是一级1-1',
-            children: null,
+            children: [],
             state: true,
             icon: 'el-icon-circle-plus-outline'
           },
           {
             id: '1-2',
             label: '我是一级1-2',
-            children: null,
+            children: [],
             state: false,
             btns: [
               {
@@ -179,7 +179,8 @@ export default {
               {
                 id: '1-3-1',
                 label: '我是一级1-3-1',
-                icon: 'el-icon-delete'
+                icon: 'el-icon-delete',
+                children: []
               }
             ],
             state: true,

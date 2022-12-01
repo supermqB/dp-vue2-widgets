@@ -20828,6 +20828,46 @@ const __vue_component__$2 = /*#__PURE__*/normalizeComponent({
 }, __vue_inject_styles__$2, __vue_script__$2, __vue_scope_id__$2, __vue_is_functional_template__$2, __vue_module_identifier__$2, false, undefined, undefined, undefined);
 
 //
+
+/**
+ * 获取可选中的第一个节点
+ * @param {*} listData 树形数据
+ * @param {*} parentKeys 记录当前节点所有祖辈节点的值 (用于默认展开)
+ * @param {*} allowSelectNonleaf 是否允许选中非叶节点(触发选中事件)
+ * @param {*} keyId 唯一标识属性，默认id
+ * @returns
+ */
+const getDefaultNode = function (listData, parentKeys) {
+  let allowSelectNonleaf = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  let keyId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'id';
+  let res = '';
+  // let _parentKeys = [...parentKeys]
+  listData.forEach(item => {
+    if (res) {
+      return;
+    }
+    if (allowSelectNonleaf) {
+      res = item[keyId];
+    } else {
+      if (Array.isArray(item.children)) {
+        let _parentKeys;
+        ({
+          res,
+          parentKeys: _parentKeys
+        } = getDefaultNode(item.children, [...parentKeys, item[keyId]]));
+        if (res) {
+          parentKeys = _parentKeys;
+        }
+      } else {
+        res = item[keyId];
+      }
+    }
+  });
+  return {
+    res,
+    parentKeys
+  };
+};
 var script$1 = {
   name: 'GeneralTree',
   props: {
@@ -20878,6 +20918,7 @@ var script$1 = {
       type: Boolean,
       default: true
     },
+    // 数字转换使用的方法
     numTransformFunc: {
       type: Function,
       default: unitFmt
@@ -20904,7 +20945,9 @@ var script$1 = {
   },
   data() {
     return {
-      curNodeKey: '' // 当前选中节点
+      curNodeKey: '',
+      // 当前选中节点
+      expandKeys: [] // 默认展开节点
     };
   },
 
@@ -20940,56 +20983,39 @@ var script$1 = {
     },
     data: {
       handler(val) {
-        // 没有设置默认node(currentNodeKey)，自动获取第一个可选择的节点
-        this.curNodeKey = this.currentNodeKey ? this.currentNodeKey : this.getNodeKey(val, this.allowSelectNonleaf, this.nodeKey);
+        if (!this.currentNodeKey) {
+          // 没有设置默认node(currentNodeKey)，自动获取第一个可选择的节点
+          let res = '',
+            parentKeys = [];
+          ({
+            res,
+            parentKeys
+          } = getDefaultNode(val, [], this.allowSelectNonleaf, this.nodeKey));
+          this.curNodeKey = res;
+          // console.log(parentKeys)
+          this.expandKeys = parentKeys;
+        } else {
+          this.curNodeKey = this.currentNodeKey;
+        }
         this.$nextTick(() => {
-          this.$refs.sideTree.setCurrentKey(this.curNodeKey);
+          this.$refs.dpTree.setCurrentKey(this.curNodeKey);
           this.handleNodeClick();
         });
       },
-      deep: true,
-      immediate: true
+      deep: true
+      // immediate: true
     }
   },
+
   methods: {
-    // 处理数字
-    showNumber(_ref) {
-      let {
-        number
-      } = _ref;
-      if (number === undefined || number === null) return '';
+    // 数字格式化
+    numFormat(number) {
       return this.numTransform ? this.numTransformFunc(number) : number;
     },
-    /**
-     * 获取默认currentNodeKey
-     * @param {*} list 树形集合
-     * @param {*} allowSelectNonleaf 是否点击父级叶节点触发其他事件
-     * @param {*} keyId 唯一标识属性，默认id
-     * @returns
-     */
-    getNodeKey(list) {
-      let allowSelectNonleaf = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      let keyId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'id';
-      let res = '';
-      list.forEach(item => {
-        if (res) {
-          return;
-        }
-        if (allowSelectNonleaf) {
-          res = item[keyId];
-        } else {
-          if (Array.isArray(item.children)) {
-            res = this.getNodeKey(item.children);
-          } else {
-            res = item[keyId];
-          }
-        }
-      });
-      return res;
-    },
+    // 处理节点的点击事件
     handleNodeClick() {
       setTimeout(() => {
-        if (this.$refs.sideTree) {
+        if (this.$refs.dpTree) {
           const getTreeParentNodes = (tree, key) => {
             if (!tree) return [];
             for (let node of tree) {
@@ -21002,7 +21028,7 @@ var script$1 = {
             }
             return [];
           };
-          const node = this.$refs.sideTree.getCurrentNode();
+          const node = this.$refs.dpTree.getCurrentNode();
           if (!node) return;
           const list = getTreeParentNodes(this.treeList, node.id);
           const {
@@ -21027,7 +21053,7 @@ var script$1 = {
       }, 100);
     },
     filter(val) {
-      if (this.$refs.sideTree) this.$refs.sideTree.filter(val);
+      if (this.$refs.dpTree) this.$refs.dpTree.filter(val);
     },
     // 对树节点进行筛选时执行的方法，返回true显示，返回false隐藏
     filterNodeMethod(value, data) {
@@ -21037,7 +21063,7 @@ var script$1 = {
   }
 };
 
-var css_248z$1 = ".tree-wrap[data-v-2f68f39e]{height:100%;overflow-x:hidden;overflow-y:auto}.tree-node[data-v-2f68f39e]{width:100%;height:100%;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px;overflow:hidden}.tree-node-content[data-v-2f68f39e]{flex:1;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.tree-node-content .content-left[data-v-2f68f39e]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-node-content .content-left .blank[data-v-2f68f39e]{width:5px;height:5px;border-radius:5px;margin-right:3px}.tree-node-content .content-left .blank.red-circle[data-v-2f68f39e]{background-color:#f56c6c}.tree-node-content .content-left .label[data-v-2f68f39e]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-node-content .content-right[data-v-2f68f39e]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-node-content .content-right .el-button[data-v-2f68f39e],.tree-node-content .content-right .el-link[data-v-2f68f39e],.tree-node-content .content-right i[data-v-2f68f39e],.tree-node-content .content-right img[data-v-2f68f39e]{margin-left:10px}[data-v-2f68f39e] .el-tree-node__content{height:36px;position:relative}[data-v-2f68f39e] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-2f68f39e] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-2f68f39e] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}";
+var css_248z$1 = ".tree-wrap[data-v-c4852980]{height:100%;overflow-x:hidden;overflow-y:auto}.tree-node[data-v-c4852980]{width:100%;height:100%;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;font-size:13px;overflow:hidden}.tree-node-content[data-v-c4852980]{flex:1;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.tree-node-content .content-left[data-v-c4852980]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-node-content .content-left .blank[data-v-c4852980]{width:5px;height:5px;border-radius:5px;margin-right:3px}.tree-node-content .content-left .blank.red-circle[data-v-c4852980]{background-color:#f56c6c}.tree-node-content .content-left .label[data-v-c4852980]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-node-content .content-right[data-v-c4852980]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-node-content .content-right .el-button[data-v-c4852980],.tree-node-content .content-right .el-link[data-v-c4852980],.tree-node-content .content-right i[data-v-c4852980],.tree-node-content .content-right img[data-v-c4852980]{margin-left:10px}[data-v-c4852980] .el-tree-node__content{height:36px;position:relative}[data-v-c4852980] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-c4852980] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-c4852980] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}";
 styleInject(css_248z$1);
 
 /* script */
@@ -21048,7 +21074,7 @@ var __vue_render__$1 = function () {
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c('el-tree', _vm._g(_vm._b({
-    ref: "sideTree",
+    ref: "dpTree",
     staticClass: "tree-wrap",
     attrs: {
       "node-key": _vm.nodeKey,
@@ -21056,6 +21082,7 @@ var __vue_render__$1 = function () {
       "current-node-key": _vm.curNodeKey,
       "expand-on-click-node": _vm.expandOnClickNode,
       "default-expand-all": _vm.defaultExpandAll,
+      "default-expanded-keys": _vm.expandKeys,
       "indent": _vm.indent,
       "highlight-current": "",
       "filter-node-method": _vm.filterNodeMethod
@@ -21085,7 +21112,7 @@ var __vue_render__$1 = function () {
           style: {
             width: _vm.slotWidth
           }
-        }, [_c('span', [_vm._v(_vm._s(_vm.showNumber(data)))]), _vm._v(" "), _vm._l(data.btns, function (btn, index) {
+        }, [data.number !== undefined && data.number !== null ? _c('span', [_vm._v(_vm._s(_vm.numFormat(data.number)))]) : _vm._e(), _vm._v(" "), _vm._l(data.btns, function (btn, index) {
           return _c(btn.type, _vm._b({
             key: index,
             tag: "component"
@@ -21113,7 +21140,7 @@ var __vue_staticRenderFns__$1 = [];
 /* style */
 const __vue_inject_styles__$1 = undefined;
 /* scoped */
-const __vue_scope_id__$1 = "data-v-2f68f39e";
+const __vue_scope_id__$1 = "data-v-c4852980";
 /* module identifier */
 const __vue_module_identifier__$1 = undefined;
 /* functional template */
