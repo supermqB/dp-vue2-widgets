@@ -2,6 +2,7 @@ import Element from 'element-ui'
 import DpVue2Widgets from 'dp-vue2-widgets'
 
 import 'dp-vue2-widgets/dist/theme-dp-ui/index.css'
+import 'dp-vue2-widgets/dist/theme-dp-ui/scrollbar.css'
 
 import './assets/css/index.scss'
 
