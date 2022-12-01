@@ -114,7 +114,7 @@ module.exports = {
         {
           title: '数据输入 data-input',
           collapsable: false,
-          children: getPaths('data-input', ['search-bar'])
+          children: getPaths('data-input', ['search-bar', 'query-bar', 'form'])
         },
         {
           title: '数据显示 data-display',

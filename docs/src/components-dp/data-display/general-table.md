@@ -92,7 +92,7 @@
 
 :::
 
-### 参数说明
+### 参数说明 props
 
 | 参数            | 说明                                                                                                   | 类型                 | 可选值 | 默认值                                  |
 | --------------- | ------------------------------------------------------------------------------------------------------ | -------------------- | ------ | --------------------------------------- | --- |
@@ -104,10 +104,15 @@
 | type            | actions 数组下组件类型，如：el-button，div                                                             | String               | --     | --                                      |
 | typeProps       | actions 数组下组件类型的配置，如：size，style，class                                                   | Object               | --     | --                                      |
 | pageInfo        | 配置代表显示分页                                                                                       | Object               | --     | {curPage: 1, pageSize: 10,totalSize: 0} |
-| @page-changed   | 页码或每页条数改变时的方法                                                                             | Function             | --     | --                                      |
 | currentRow      | 设置当前高亮行                                                                                         | Object               | --     | --                                      |
 | multipleSelect  | 是否显示多选框                                                                                         | Boolean              | --     | false                                   |
 | isShowRadio     | 是否显示单选框                                                                                         | Boolean              | --     | true                                    |
 | isShowSelection | 是否显示左侧固定列，可以是序号                                                                         | Boolean              | --     | false                                   |
 | selectable      | 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选 | Function(row, index) | --     |                                         |
 | bottomTip       | 表格底部文字描述                                                                                       | String               | --     | ''                                      |     |
+
+### 事件说明 event
+
+| 参数        | 说明                       | 类型     | 可选值 | 默认值 |
+| ----------- | -------------------------- | -------- | ------ | ------ |
+| pageChanged | 页码或每页条数改变时的方法 | Function | --     | --     |

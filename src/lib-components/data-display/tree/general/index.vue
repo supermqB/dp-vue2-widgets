@@ -167,8 +167,7 @@ export default {
           this.handleNodeClick()
         })
       },
-      deep: true,
-      immediate: true
+      deep: true
     }
   },
   methods: {

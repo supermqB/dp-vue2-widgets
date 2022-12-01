@@ -1,6 +1,6 @@
 <template>
   <div class="dpui_searchBar">
-    <dp-form :configs="inputConfigs" :model="searchForm" />
+    <dp-form :configs="inputConfigs" :model="searchForm" v-bind="$attrs" />
     <el-button type="primary" plain class="searchBtn" @click="onSearch">{{
       queryName
     }}</el-button>
