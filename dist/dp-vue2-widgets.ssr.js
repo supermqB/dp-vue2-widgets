@@ -20803,11 +20803,10 @@ var __vue_render__$2 = function __vue_render__() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('div', {
-    staticClass: "el_table_wrapper"
-  }, [_vm._ssrNode("<div class=\"table_container\" data-v-4d3509b5>", "</div>", [_c('el-table', {
+  return _c('el-table', {
     staticStyle: {
-      "width": "100%"
+      "width": "100%",
+      "overflow": "auto"
     },
     attrs: {
       "height": "100%",
@@ -20822,35 +20821,28 @@ var __vue_render__$2 = function __vue_render__() {
         "item": item
       }
     });
-  }), 1)], 1)]);
+  }), 1);
 };
 var __vue_staticRenderFns__$2 = [];
 
 /* style */
-var __vue_inject_styles__$2 = function __vue_inject_styles__(inject) {
-  if (!inject) return;
-  inject("data-v-4d3509b5_0", {
-    source: ".el_table_wrapper[data-v-4d3509b5]{height:100%;display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-4d3509b5]{flex-grow:1;padding:6px 6px 6px 6px;box-sizing:border-box}",
-    map: undefined,
-    media: undefined
-  }), inject("data-v-4d3509b5_1", {
-    source: ".el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{height:300px;overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}",
-    map: undefined,
-    media: undefined
-  });
-};
+var __vue_inject_styles__$2 = undefined;
 /* scoped */
-var __vue_scope_id__$2 = "data-v-4d3509b5";
+var __vue_scope_id__$2 = undefined;
 /* module identifier */
-var __vue_module_identifier__$2 = "data-v-4d3509b5";
+var __vue_module_identifier__$2 = "data-v-eee6cdee";
 /* functional template */
 var __vue_is_functional_template__$2 = false;
+/* style inject */
+
+/* style inject SSR */
+
 /* style inject shadow dom */
 
 var __vue_component__$2 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$2,
   staticRenderFns: __vue_staticRenderFns__$2
-}, __vue_inject_styles__$2, __vue_script__$2, __vue_scope_id__$2, __vue_is_functional_template__$2, __vue_module_identifier__$2, false, undefined, createInjectorSSR, undefined);/**
+}, __vue_inject_styles__$2, __vue_script__$2, __vue_scope_id__$2, __vue_is_functional_template__$2, __vue_module_identifier__$2, false, undefined, undefined, undefined);/**
  * 获取可选中的第一个节点
  * @param {*} listData 树形数据
  * @param {*} parentKeys 记录当前节点所有祖辈节点的值 (用于默认展开)
