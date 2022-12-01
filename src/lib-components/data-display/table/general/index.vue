@@ -156,7 +156,7 @@ export default {
               : 2) /* show 2 rows if there is no item*/ *
               36 +
             36 /* table header */ +
-            13 /* table vertical padding. */
+            7 /* table vertical padding. */
           }px`
         : '300px'
     },
@@ -218,7 +218,7 @@ export default {
   flex-direction: column;
   .table_container {
     flex-grow: 1;
-    padding: 6px 6px 0 6px;
+    padding: 0 6px;
     box-sizing: border-box;
   }
 }
