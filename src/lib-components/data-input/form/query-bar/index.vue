@@ -34,9 +34,9 @@ export default {
       default: () => false
     }
   },
-  data: () => {
+  data() {
     return {
-      lastSearchForm: {}
+      lastSearchForm: { ...this.searchForm }
     }
   },
   watch: {
