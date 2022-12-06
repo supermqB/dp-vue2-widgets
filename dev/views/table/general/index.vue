@@ -8,6 +8,8 @@
             :data="treeData"
             :defaultExpandAll="defaultExpandAll"
             :slotWidth="slotWidth"
+            :isList="false"
+            :showState="true"
             :currentNodeKey="currentNodeKey"
             @onNodeSelected="onNodeSelected"
           >
@@ -120,9 +122,8 @@ export default {
         id: '1597064999372295170',
         ip: null,
         label: '测试使用2',
-        state: 0
+        state: 1
       },
-
       {
         defaultEngine: 0,
         engineId: '1597064999772295170',
@@ -151,7 +152,6 @@ export default {
           {
             id: '1-2',
             label: '我是一级1-2',
-            children: [],
             state: false,
             btns: [
               {
@@ -179,8 +179,7 @@ export default {
               {
                 id: '1-3-1',
                 label: '我是一级1-3-1',
-                icon: 'el-icon-delete',
-                children: []
+                icon: 'el-icon-delete'
               }
             ],
             state: true,

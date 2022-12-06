@@ -3,7 +3,7 @@
 该组件可以使用 ElementUI 里 Tree 内部传参和方法。
 可以在 data 里配置 state(是否单个显示红点标识)、number(右侧数字)、btns(按钮或图标集合)，也可以使用默认插槽或具名插槽处理业务逻辑，使用方式可以看以下示例。
 
-### 示例
+### 树状带异常标识
 
 ::: demo
 
@@ -33,7 +33,7 @@
         defaultExpandAll: true,
         slotWidth: '80px',
         bind: {
-          'icon-class': 'el-icon-menu' // 自定义树节点的图标
+          // 'icon-class': 'el-icon-menu' // 自定义树节点的图标
         },
         treeData: [
           {
@@ -92,7 +92,6 @@
           {
             id: '2',
             label: '二级',
-            children: [],
             children: [
               {
                 id: '2-1',
@@ -138,6 +137,105 @@
 
 :::
 
+### 列表带异常标识
+
+::: demo
+
+```html
+<template>
+  <dp-tree
+    :data="treeData"
+    :defaultExpandAll="true"
+    :isList="true"
+    :showState="true"
+    @onNodeSelected="onNodeSelected"
+  ></dp-tree>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        treeData: [
+          {
+            id: '1',
+            label: '一级',
+            state: true,
+            number: 22300
+          },
+          {
+            id: '2',
+            label: '二级',
+            state: false
+          },
+          {
+            id: '3',
+            label: '三级',
+            state: false
+          }
+        ]
+      }
+    },
+    methods: {
+      onNodeSelected(node) {
+        console.log('点击当前行', node)
+      }
+    }
+  }
+</script>
+```
+
+:::
+
+### 列表不带异常标识
+
+::: demo
+
+```html
+<template>
+  <dp-tree
+    :data="treeData"
+    :defaultExpandAll="true"
+    :isList="true"
+    :showState="false"
+    @onNodeSelected="onNodeSelected"
+  ></dp-tree>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        treeData: [
+          {
+            id: '1',
+            label: '一级',
+            state: true
+          },
+          {
+            id: '2',
+            label: '二级',
+            state: false
+          },
+          {
+            id: '3',
+            label: '三级',
+            state: false
+          }
+        ]
+      }
+    },
+    methods: {
+      onNodeSelected(node) {
+        console.log('点击当前行', node)
+      }
+    }
+  }
+</script>
+```
+
+:::
+
 ### 参数说明 props
 
 | 参数               | 说明                                 | 类型     | 可选值 | 默认值  |
@@ -155,6 +253,7 @@
 | allowSelectNonleaf | 是否允许选中非叶节点                 | boolean  | -      | false   |
 | currentNodeKey     | 当前选中的节点                       | string   | -      | -       |
 | searchText         | 模糊搜索传值                         | string   | -      | -       |
+| isList             | 是否是纯列表                         | boolean  | -      | false   |
 
 ### 事件说明 event
 

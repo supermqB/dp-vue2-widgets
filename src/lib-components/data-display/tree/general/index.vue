@@ -2,7 +2,7 @@
   <el-tree
     ref="dpTree"
     v-bind="bind"
-    class="tree-wrap"
+    :class="['tree-wrap', { 'tree-red-dot': showState, 'tree-list': isList }]"
     :node-key="nodeKey"
     :data="treeList"
     :current-node-key="curNodeKey"
@@ -16,31 +16,29 @@
     v-on="$listeners"
   >
     <div class="tree-node" slot-scope="{ node, data }">
-      <div class="tree-node-content">
-        <div class="content-left">
-          <span
-            v-if="showState"
-            :class="['blank', { 'red-circle': data.state }]"
-          ></span>
-          <span class="label">{{ data.label }}</span>
-        </div>
-        <div class="content-right" :style="{ width: slotWidth }">
-          <span v-if="data.number !== undefined && data.number !== null">{{
-            numFormat(data.number)
+      <div class="content-left">
+        <span
+          v-if="showState"
+          :class="['blank', { 'red-circle': data.state }]"
+        ></span>
+        <span class="label">{{ data.label }}</span>
+      </div>
+      <div class="content-right" :style="{ width: slotWidth }">
+        <span v-if="data.number !== undefined && data.number !== null">{{
+          numFormat(data.number)
+        }}</span>
+        <component
+          v-for="(btn, index) in data.btns"
+          :key="index"
+          :is="btn.type"
+          v-bind="btn.config"
+        >
+          <span v-if="btn.name" @click.stop="btn.click(data, node)">{{
+            btn.name
           }}</span>
-          <component
-            v-for="(btn, index) in data.btns"
-            :key="index"
-            :is="btn.type"
-            v-bind="btn.config"
-          >
-            <span v-if="btn.name" @click.stop="btn.click(data, node)">{{
-              btn.name
-            }}</span>
-            <slot v-else :name="btn.type" :data="data" :row="btn"></slot>
-          </component>
-          <slot :data="data" :node="node"></slot>
-        </div>
+          <slot v-else :name="btn.type" :data="data" :row="btn"></slot>
+        </component>
+        <slot :data="data" :node="node"></slot>
       </div>
     </div>
   </el-tree>
@@ -127,7 +125,7 @@ export default {
     // 相邻级节点间的水平缩进，单位为像素
     indent: {
       type: Number,
-      default: 12
+      default: 14
     },
     // 是否显示状态标识
     showState: {
@@ -162,6 +160,11 @@ export default {
     searchText: {
       type: String,
       default: ''
+    },
+    // 是否是列表
+    isList: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -261,8 +264,10 @@ export default {
             list: list.map(item => item.id).join('.')
           })
           if (Array.isArray(node.children) && !this.allowSelectNonleaf) {
+            this.$refs.dpTree.setCurrentKey(this.curNodeKey)
             return false
           }
+          this.curNodeKey = node[this.nodeKey]
           this.$emit('onNodeSelected', { ...node })
         }
       }, 100)
@@ -284,23 +289,16 @@ export default {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-}
-.tree-node {
-  width: 100%;
-  height: 100%;
-  padding-right: 10px;
-  display: flex;
-  box-sizing: border-box;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-  overflow: hidden;
-  &-content {
-    flex: 1;
+  .tree-node {
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box;
+    font-size: 13px;
     overflow: hidden;
+    padding-right: 6px;
     .content-left {
       flex: 1;
       display: flex;
@@ -311,12 +309,11 @@ export default {
         width: 5px;
         height: 5px;
         border-radius: 5px;
-        margin-right: 3px;
+        margin: 0 4px 0 6px;
         &.red-circle {
           background-color: #f56c6c;
         }
       }
-
       .label {
         flex: 1;
         overflow: hidden;
@@ -338,23 +335,46 @@ export default {
       }
     }
   }
+  &.tree-list {
+    ::v-deep .el-tree-node__expand-icon {
+      display: none;
+    }
+    .tree-node {
+      padding: 0 12px;
+    }
+    &.tree-red-dot {
+      .tree-node {
+        padding: 0 6px;
+      }
+    }
+  }
+  &.tree-red-dot {
+    ::v-deep .el-tree-node__expand-icon {
+      padding: 0 4px 0 0;
+    }
+    .content-left {
+      .blank {
+        margin: 0 4px 0 0;
+      }
+    }
+  }
 }
 
-::v-deep .el-tree-node__content {
-  height: 36px;
-  position: relative;
-}
-
-::v-deep .el-tree-node__content > .el-tree-node__expand-icon {
-  z-index: 12;
-  padding: 4px;
-  display: inline-block;
-}
-
-::v-deep .el-tree-node.is-current > .el-tree-node__content {
-  background-color: #f2f6ff !important;
-}
-::v-deep .el-tree-node:focus > .el-tree-node__content {
-  background-color: transparent;
+::v-deep .el-tree-node {
+  .el-tree-node__content {
+    height: 36px;
+    position: relative;
+  }
+  .el-tree-node__expand-icon {
+    padding: 0 4px 0 6px;
+  }
+  &.is-current > .el-tree-node__content {
+    background-color: #f2f6ff !important;
+    color: #303133;
+    font-weight: bold;
+  }
+  &:focus > .el-tree-node__content {
+    background-color: transparent;
+  }
 }
 </style>
