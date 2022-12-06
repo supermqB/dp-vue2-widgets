@@ -4,11 +4,13 @@
     class="dp_dialog"
     :top="top"
     :close-on-click-modal="false"
+    :append-to-body="appendToBody"
+    :modal-append-to-body="modalAppendTobody"
     @closed="onClosed"
   >
     <slot>test slot</slot>
     <span slot="title">
-      <Title :title="title" class="dpui_dialogTitle"/>
+      <Title :title="title" class="dpui_dialogTitle" />
     </span>
     <span slot="footer" class="dialog-footer">
       <el-button @click="isOpen = false">取消</el-button>
@@ -27,6 +29,18 @@ export default {
   props: {
     title: String,
     enableConfirm: {
+      type: Boolean,
+      default: () => {
+        return true
+      }
+    },
+    appendToBody: {
+      type: Boolean,
+      default: () => {
+        return false
+      }
+    },
+    modalAppendTobody: {
       type: Boolean,
       default: () => {
         return true
