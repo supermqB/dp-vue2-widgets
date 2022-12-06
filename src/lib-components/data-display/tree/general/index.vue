@@ -270,7 +270,7 @@ export default {
           this.curNodeKey = node[this.nodeKey]
           this.$emit('onNodeSelected', { ...node })
         }
-      }, 100)
+      })
     },
     filter(val) {
       if (this.$refs.dpTree) this.$refs.dpTree.filter(val)
