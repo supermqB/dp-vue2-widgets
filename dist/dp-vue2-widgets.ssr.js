@@ -1,4 +1,31 @@
-'use strict';Object.defineProperty(exports,'__esModule',{value:true});function ownKeys(object, enumerableOnly) {
+'use strict';Object.defineProperty(exports,'__esModule',{value:true});function _iterableToArrayLimit(arr, i) {
+  var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+  if (null != _i) {
+    var _s,
+      _e,
+      _x,
+      _r,
+      _arr = [],
+      _n = !0,
+      _d = !1;
+    try {
+      if (_x = (_i = _i.call(arr)).next, 0 === i) {
+        if (Object(_i) !== _i) return;
+        _n = !1;
+      } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+    } catch (err) {
+      _d = !0, _e = err;
+    } finally {
+      try {
+        if (!_n && null != _i.return && (_r = _i.return(), Object(_r) !== _r)) return;
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+    return _arr;
+  }
+}
+function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object);
@@ -20,6 +47,7 @@ function _objectSpread2(target) {
   return target;
 }
 function _defineProperty(obj, key, value) {
+  key = _toPropertyKey(key);
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -46,30 +74,6 @@ function _arrayWithHoles(arr) {
 }
 function _iterableToArray(iter) {
   if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-function _iterableToArrayLimit(arr, i) {
-  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-  if (_i == null) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _s, _e;
-  try {
-    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-  return _arr;
 }
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
@@ -140,6 +144,20 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
       }
     }
   };
+}
+function _toPrimitive(input, hint) {
+  if (typeof input !== "object" || input === null) return input;
+  var prim = input[Symbol.toPrimitive];
+  if (prim !== undefined) {
+    var res = prim.call(input, hint || "default");
+    if (typeof res !== "object") return res;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return (hint === "string" ? String : Number)(input);
+}
+function _toPropertyKey(arg) {
+  var key = _toPrimitive(arg, "string");
+  return typeof key === "symbol" ? key : String(key);
 }//
 //
 //
@@ -18838,6 +18856,18 @@ var script$m = {
         return true;
       }
     },
+    appendToBody: {
+      type: Boolean,
+      default: function _default() {
+        return false;
+      }
+    },
+    modalAppendTobody: {
+      type: Boolean,
+      default: function _default() {
+        return true;
+      }
+    },
     closeAfterConfirm: {
       type: Boolean,
       default: false
@@ -18880,7 +18910,9 @@ var __vue_render__$n = function __vue_render__() {
     attrs: {
       "visible": _vm.isOpen,
       "top": _vm.top,
-      "close-on-click-modal": false
+      "close-on-click-modal": false,
+      "append-to-body": _vm.appendToBody,
+      "modal-append-to-body": _vm.modalAppendTobody
     },
     on: {
       "update:visible": function updateVisible($event) {
@@ -18927,7 +18959,7 @@ var __vue_staticRenderFns__$n = [];
 /* style */
 var __vue_inject_styles__$n = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-1b18a1d8_0", {
+  inject("data-v-556a49e6_0", {
     source: ".dpui_dialogTitle{height:23px!important;position:relative;bottom:4px}.dpui_dialogTitle .dp-subtitle__text{font-size:15px;top:5px;color:#333}",
     map: undefined,
     media: undefined
@@ -18936,7 +18968,7 @@ var __vue_inject_styles__$n = function __vue_inject_styles__(inject) {
 /* scoped */
 var __vue_scope_id__$n = undefined;
 /* module identifier */
-var __vue_module_identifier__$n = "data-v-1b18a1d8";
+var __vue_module_identifier__$n = "data-v-556a49e6";
 /* functional template */
 var __vue_is_functional_template__$n = false;
 /* style inject shadow dom */
@@ -21075,7 +21107,7 @@ var script$1 = {
           _this2.curNodeKey = node[_this2.nodeKey];
           _this2.$emit('onNodeSelected', _objectSpread2({}, node));
         }
-      }, 100);
+      });
     },
     filter: function filter(val) {
       if (this.$refs.dpTree) this.$refs.dpTree.filter(val);
@@ -21162,16 +21194,16 @@ var __vue_staticRenderFns__$1 = [];
 /* style */
 var __vue_inject_styles__$1 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-7d1ad3ff_0", {
-    source: ".tree-wrap[data-v-7d1ad3ff]{height:100%;overflow-x:hidden;overflow-y:auto}.tree-wrap .tree-node[data-v-7d1ad3ff]{width:100%;height:100%;display:flex;justify-content:space-between;align-items:center;box-sizing:border-box;font-size:13px;overflow:hidden;padding-right:6px}.tree-wrap .tree-node .content-left[data-v-7d1ad3ff]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-wrap .tree-node .content-left .blank[data-v-7d1ad3ff]{width:5px;height:5px;border-radius:5px;margin:0 4px 0 6px}.tree-wrap .tree-node .content-left .blank.red-circle[data-v-7d1ad3ff]{background-color:#f56c6c}.tree-wrap .tree-node .content-left .label[data-v-7d1ad3ff]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-wrap .tree-node .content-right[data-v-7d1ad3ff]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-wrap .tree-node .content-right .el-button[data-v-7d1ad3ff],.tree-wrap .tree-node .content-right .el-link[data-v-7d1ad3ff],.tree-wrap .tree-node .content-right i[data-v-7d1ad3ff],.tree-wrap .tree-node .content-right img[data-v-7d1ad3ff]{margin-left:10px}.tree-wrap.tree-list[data-v-7d1ad3ff]  .el-tree-node__expand-icon{display:none}.tree-wrap.tree-list .tree-node[data-v-7d1ad3ff]{padding:0 12px}.tree-wrap.tree-list.tree-red-dot .tree-node[data-v-7d1ad3ff]{padding:0 6px}.tree-wrap.tree-red-dot[data-v-7d1ad3ff]  .el-tree-node__expand-icon{padding:0 4px 0 0}.tree-wrap.tree-red-dot .content-left .blank[data-v-7d1ad3ff]{margin:0 4px 0 0}[data-v-7d1ad3ff] .el-tree-node .el-tree-node__content{height:36px;position:relative}[data-v-7d1ad3ff] .el-tree-node .el-tree-node__expand-icon{padding:0 4px 0 6px}[data-v-7d1ad3ff] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important;color:#303133;font-weight:700}[data-v-7d1ad3ff] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}",
+  inject("data-v-b22e3568_0", {
+    source: ".tree-wrap[data-v-b22e3568]{height:100%;overflow-x:hidden;overflow-y:auto}.tree-wrap .tree-node[data-v-b22e3568]{width:100%;height:100%;display:flex;justify-content:space-between;align-items:center;box-sizing:border-box;font-size:13px;overflow:hidden;padding-right:6px}.tree-wrap .tree-node .content-left[data-v-b22e3568]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-wrap .tree-node .content-left .blank[data-v-b22e3568]{width:5px;height:5px;border-radius:5px;margin:0 4px 0 6px}.tree-wrap .tree-node .content-left .blank.red-circle[data-v-b22e3568]{background-color:#f56c6c}.tree-wrap .tree-node .content-left .label[data-v-b22e3568]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-wrap .tree-node .content-right[data-v-b22e3568]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-wrap .tree-node .content-right .el-button[data-v-b22e3568],.tree-wrap .tree-node .content-right .el-link[data-v-b22e3568],.tree-wrap .tree-node .content-right i[data-v-b22e3568],.tree-wrap .tree-node .content-right img[data-v-b22e3568]{margin-left:10px}.tree-wrap.tree-list[data-v-b22e3568]  .el-tree-node__expand-icon{display:none}.tree-wrap.tree-list .tree-node[data-v-b22e3568]{padding:0 12px}.tree-wrap.tree-list.tree-red-dot .tree-node[data-v-b22e3568]{padding:0 6px}.tree-wrap.tree-red-dot[data-v-b22e3568]  .el-tree-node__expand-icon{padding:0 4px 0 0}.tree-wrap.tree-red-dot .content-left .blank[data-v-b22e3568]{margin:0 4px 0 0}[data-v-b22e3568] .el-tree-node .el-tree-node__content{height:36px;position:relative}[data-v-b22e3568] .el-tree-node .el-tree-node__expand-icon{padding:0 4px 0 6px}[data-v-b22e3568] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important;color:#303133;font-weight:700}[data-v-b22e3568] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$1 = "data-v-7d1ad3ff";
+var __vue_scope_id__$1 = "data-v-b22e3568";
 /* module identifier */
-var __vue_module_identifier__$1 = "data-v-7d1ad3ff";
+var __vue_module_identifier__$1 = "data-v-b22e3568";
 /* functional template */
 var __vue_is_functional_template__$1 = false;
 /* style inject shadow dom */
