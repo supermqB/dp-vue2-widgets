@@ -11,13 +11,23 @@
     @close="handleClose"
   >
     <template #default>
-      <slot></slot>
+      <div
+        class="dialog-body"
+        :style="{ 'min-height': minHight, 'max-height': maxHight }"
+      >
+        <slot></slot>
+      </div>
     </template>
     <template #footer>
-      <slot name="footer"
-        ><el-button @click="handleClose">取 消</el-button>
-        <el-button class="save-btn" @click="handleSave">保 存</el-button></slot
-      >
+      <slot name="footer">
+        <div v-if="type === 'default'" class="footer-btn">
+          <el-button @click="handleClose">取 消</el-button>
+          <el-button type="primary" plain @click="handleSave">保 存</el-button>
+        </div>
+        <div v-if="type === 'info'" class="footer-btn">
+          <el-button type="primary" plain @click="handleClose">确 定</el-button>
+        </div>
+      </slot>
     </template>
   </el-dialog>
 </template>
@@ -38,10 +48,25 @@ export default {
       type: String,
       default: '50%'
     },
+    // body的最小高度
+    minHight: {
+      type: String,
+      default: '200px'
+    },
+    // body的最大高度
+    maxHight: {
+      type: String,
+      default: '50vh'
+    },
     // 是否可以通过点击 modal 关闭 Dialog
     closeOnClickModal: {
       type: Boolean,
       default: false
+    },
+    // 类型：default:默认显示取消和保存；info:默认显示确定
+    type: {
+      type: String,
+      default: 'default'
     }
   },
   data() {
@@ -80,7 +105,6 @@ $spacing16: 16px;
     }
   }
   .el-dialog__body {
-    max-height: 50vh;
     padding: 20px 24px;
     overflow: auto;
   }
@@ -93,10 +117,6 @@ $spacing16: 16px;
     border-top: 1px solid #e5e5e5;
     .el-button + .el-button {
       margin-left: 6px;
-    }
-    .save-btn {
-      color: #2f63b9;
-      border: 1px solid rgba(47, 99, 185, 0.5);
     }
   }
 }
