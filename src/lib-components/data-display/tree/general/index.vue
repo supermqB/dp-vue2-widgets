@@ -297,8 +297,8 @@ export default {
     align-items: center;
     box-sizing: border-box;
     font-size: 13px;
-    overflow: hidden;
     padding-right: 6px;
+    overflow: hidden;
     .content-left {
       flex: 1;
       display: flex;
@@ -350,7 +350,7 @@ export default {
   }
   &.tree-red-dot {
     ::v-deep .el-tree-node__expand-icon {
-      padding: 0 2px 0 6px;
+      margin: 0 2px 0 6px;
     }
   }
 }
@@ -361,7 +361,8 @@ export default {
     position: relative;
   }
   .el-tree-node__expand-icon {
-    padding: 0 4px 0 6px;
+    padding: 0;
+    margin: 0 4px 0 6px;
   }
   &.is-current > .el-tree-node__content {
     background-color: #f2f6ff !important;
