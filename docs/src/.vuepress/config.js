@@ -133,7 +133,7 @@ module.exports = {
         {
           title: '导航 navigation',
           collapsable: false,
-          children: getPaths('navigation', ['header-nav'])
+          children: getPaths('navigation', ['header-nav', 'pagination'])
         }
       ],
       '/': ['']

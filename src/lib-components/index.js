@@ -25,26 +25,29 @@ export { default as DpHeaderNav } from './layout/header-nav'
 export { default as DpDefaultPage } from './DefaultPage'
 export { default as DpLoginPage } from './LoginPage'
 
-/* common */
-// title
+/* common 通用*/
+// title 标题
 export { default as DpTitle } from './common/title/main' // 标题
 export { default as DpSubtitle } from './common/title/sub' // 副标题
-// button
+// button 按钮
 export { default as DpIconButton } from './common/button/DpIconButton' // 带图标按钮
 
-/* data-input */
-// form
+/* data-input 数据输入 */
+// form 表单
 export { default as DpForm } from './data-input/form/index' // 基础表单
 export { default as DpSearchBar } from './data-input/form/search-bar' // 检索框
 export { default as DpQueryBar } from './data-input/form/query-bar'
 
-/* data-display */
-// table
+/* data-display 数据显示 */
+// table 表格
 export { default as DpStatisticsTable } from './data-display/table/statistics' // 统计表格
 export { default as DpGeneralTable } from './data-display/table/general' // 通用表格
 
-// tree
+// tree 树状结构数据
 export { default as DpTree } from './data-display/tree/general' // 通用树形
 
-// interaction
+/* interaction 交互 */
 export { default as DpDialog } from './interaction/dialog' // 对话框
+
+/* navigation 导航 */
+export { default as DpPagination } from './navigation/pagination' // 分页
