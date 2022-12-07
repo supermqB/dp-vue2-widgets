@@ -3,7 +3,7 @@
     <el-header v-if="hasSlot.header" :height="headerHeight">
       <slot name="header" />
     </el-header>
-    <el-main v-if="hasSlot.main">
+    <el-main v-if="hasSlot.main" style="overflow: hidden">
       <slot name="main" />
     </el-main>
     <el-footer v-if="hasSlot.footer" :height="footerHeight">
