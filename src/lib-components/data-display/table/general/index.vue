@@ -166,7 +166,10 @@ export default {
         this.tableData.length,
         (this.pageInfo && this.pageInfo.totalSize) || 0
       )
-      return totalSize > this.autopageThreshold && this.pageInfo != null
+      return (
+        !this.autopageThreshold ||
+        (totalSize > this.autopageThreshold && this.pageInfo != null)
+      )
     }
   },
   watch: {
