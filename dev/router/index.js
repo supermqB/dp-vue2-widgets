@@ -68,6 +68,12 @@ const routesConfig = [
         name: 'statistics',
         meta: { title: '统计表格' },
         component: () => import('../views/table/statistics')
+      },
+      {
+        path: 'page',
+        name: 'page',
+        meta: { title: '分页' },
+        component: () => import('../views/table/page')
       }
     ]
   },
