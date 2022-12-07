@@ -181,7 +181,7 @@ export default {
     },
     rowDblClickHandler({ row, column }) {
       if (!row) return
-      this.$emit('row-dblclick', { row, column })
+      this.$emit('row-dbl-click', { row, column })
     },
     rowChangeHandler(rowData) {
       if (rowData == null) {
