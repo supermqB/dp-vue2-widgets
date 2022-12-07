@@ -50,9 +50,12 @@ export default Vue.extend({
       >
       <DpDialog
         :dialogVisible.sync="dialogVisible"
+        type="info"
         @handleSave="handleSave"
         @open="handleOpen"
-      ></DpDialog>
+      >
+        我是body部分
+      </DpDialog>
     </div>
   </div>
 </template>

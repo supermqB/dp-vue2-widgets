@@ -309,7 +309,7 @@ export default {
         width: 5px;
         height: 5px;
         border-radius: 5px;
-        margin: 0 4px 0 6px;
+        margin-right: 1px;
         &.red-circle {
           background-color: #f56c6c;
         }
@@ -350,12 +350,7 @@ export default {
   }
   &.tree-red-dot {
     ::v-deep .el-tree-node__expand-icon {
-      padding: 0 4px 0 0;
-    }
-    .content-left {
-      .blank {
-        margin: 0 4px 0 0;
-      }
+      padding: 0 2px 0 6px;
     }
   }
 }

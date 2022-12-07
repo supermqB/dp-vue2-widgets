@@ -179,10 +179,10 @@ export default {
               {
                 id: '1-3-1',
                 label: '我是一级1-3-1',
-                icon: 'el-icon-delete'
+                icon: 'el-icon-delete',
+                state: true
               }
             ],
-            state: true,
             number: '200+'
           }
         ],
