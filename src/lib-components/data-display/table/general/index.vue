@@ -14,6 +14,7 @@
         height="100%"
         width="100%"
         highlight-current-row
+        @row-dblclick="rowDblClickHandler"
         @current-change="rowChangeHandler"
         @selection-change="selChgHandler"
         border
@@ -177,6 +178,10 @@ export default {
     rowAction({ rowIdx, row, column }, callback) {
       if (!callback) return
       callback(row.index, this.tableData, row)
+    },
+    rowDblClickHandler({ row, column }) {
+      if (!row) return
+      this.$emit('row-dblclick', { row, column })
     },
     rowChangeHandler(rowData) {
       if (rowData == null) {

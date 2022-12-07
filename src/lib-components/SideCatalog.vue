@@ -109,7 +109,6 @@ export default {
         ) {
           this.expandParents(this.$refs.sideTree.getNode(selected).parent)
         }
-        this.emitItemSelected()
         this.filter(this.searchText)
       })
     },
@@ -152,6 +151,7 @@ export default {
     },
     data() {
       this.setCurrent()
+      this.emitItemSelected()
     }
   }
 }
