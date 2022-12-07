@@ -167,8 +167,8 @@ export default {
         (this.pageInfo && this.pageInfo.totalSize) || 0
       )
       return (
-        !this.autopageThreshold ||
-        (totalSize > this.autopageThreshold && this.pageInfo != null)
+        this.pageInfo != null &&
+        (!this.autopageThreshold || totalSize > this.autopageThreshold)
       )
     }
   },
