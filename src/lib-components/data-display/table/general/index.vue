@@ -182,7 +182,7 @@ export default {
       if (!callback) return
       callback(row.index, this.tableData, row)
     },
-    rowDblClickHandler({ row, column }) {
+    rowDblClickHandler(row, column) {
       if (!row) return
       this.$emit('row-dbl-click', { row, column })
     },
