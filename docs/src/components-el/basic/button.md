@@ -9,17 +9,21 @@
 ```html
 <template>
   <el-row>
-    <el-col :span="3">默认按钮</el-col>
+    <el-col :span="3">可用状态</el-col>
     <el-col :span="21">
-      <el-button type="primary">小按钮</el-button>
-      <el-button type="primary">两字</el-button>
+      <el-button type="primary">按钮</el-button>
+      <el-button type="primary">三个字</el-button>
+      <el-button type="primary">四个文字</el-button>
+      <el-button type="primary">五个长文字</el-button>
     </el-col>
   </el-row>
   <el-row>
-    <el-col :span="3">危险按钮</el-col>
+    <el-col :span="3">禁用状态</el-col>
     <el-col :span="21">
-      <el-button type="danger">小按钮</el-button>
-      <el-button type="danger">两字</el-button>
+      <el-button type="primary" disabled>按钮</el-button>
+      <el-button type="primary" disabled>三个字</el-button>
+      <el-button type="primary" disabled>四个文字</el-button>
+      <el-button type="primary" disabled>五个长文字</el-button>
     </el-col>
   </el-row>
 </template>
@@ -34,72 +38,26 @@
 ::: demo
 
 ```html
-<el-row>
-  <el-col :span="3">默认按钮</el-col>
-  <el-col :span="21">
-    <el-button plain>次要按钮</el-button>
-    <el-button plain>次按钮</el-button>
-  </el-col>
-</el-row>
-<el-row>
-  <el-col :span="3">危险按钮</el-col>
-  <el-col :span="21">
-    <el-button type="danger" plain>次要按钮</el-button>
-    <el-button type="danger" plain>三个字</el-button>
-  </el-col>
-</el-row>
-```
-
-:::
-
-### 虚框按钮
-
-常用于添加操作
-
-::: demo
-
-```html
-<el-row>
-  <el-col :span="3">默认按钮</el-col>
-  <el-col :span="21">
-    <el-button class="is-dash">次要按钮</el-button>
-    <el-button class="is-dash">次按钮</el-button>
-    <el-button class="is-dash">两字</el-button>
-  </el-col>
-</el-row>
-<el-row>
-  <el-col :span="3">危险按钮</el-col>
-  <el-col :span="21">
-    <el-button type="danger" plain class="is-dash">次要按钮</el-button>
-    <el-button type="danger" plain class="is-dash">三个字</el-button>
-    <el-button type="danger" plain class="is-dash">三个字</el-button>
-  </el-col>
-</el-row>
-```
-
-:::
-
-### 禁用状态
-
-常用于不可用状态
-
-::: demo
-
-```html
-<el-row>
-  <el-col :span="3">默认按钮</el-col>
-  <el-col :span="21">
-    <el-button disabled type="primary">小按钮</el-button>
-    <el-button disabled plain>失效按钮</el-button>
-  </el-col>
-</el-row>
-<el-row>
-  <el-col :span="3">危险按钮</el-col>
-  <el-col :span="21">
-    <el-button type="danger" disabled plain class="is-dash">四字按钮</el-button>
-    <el-button type="danger" disabled>两字</el-button>
-  </el-col>
-</el-row>
+<template>
+  <el-row>
+    <el-col :span="3">可用状态</el-col>
+    <el-col :span="21">
+      <el-button>按钮</el-button>
+      <el-button>三个字</el-button>
+      <el-button>四个文字</el-button>
+      <el-button>五个长文字</el-button>
+    </el-col>
+  </el-row>
+  <el-row>
+    <el-col :span="3">禁用状态</el-col>
+    <el-col :span="21">
+      <el-button disabled>按钮</el-button>
+      <el-button disabled>三个字</el-button>
+      <el-button disabled>四个文字</el-button>
+      <el-button disabled>五个长文字</el-button>
+    </el-col>
+  </el-row>
+</template>
 ```
 
 :::
@@ -111,8 +69,20 @@
 :::demo
 
 ```html
-<el-button type="text">文字按钮</el-button>
-<el-button type="text" disabled>文字按钮</el-button>
+<template>
+  <el-row>
+    <el-col :span="3">可用状态</el-col>
+    <el-col :span="21">
+      <el-button type="text">文字按钮</el-button>
+    </el-col>
+  </el-row>
+  <el-row>
+    <el-col :span="3">禁用状态</el-col>
+    <el-col :span="21">
+      <el-button type="text" disabled>文字按钮</el-button>
+    </el-col>
+  </el-row>
+</template>
 ```
 
 :::
@@ -126,7 +96,7 @@
 <el-button type="text" disabled>文字按钮</el-button>
 ```
 ::: -->
-
+<!--
 ### 加载中
 
 点击按钮后进行加载操作，在按钮上显示加载状态
@@ -137,4 +107,11 @@
 <el-button type="primary" :loading="true">加载中</el-button>
 ```
 
-:::
+::: -->
+
+属性参数
+
+| 参数     | 说明                                       | 类型    | 可选值               | 默认值  |
+| -------- | ------------------------------------------ | ------- | -------------------- | ------- |
+| type     | 按钮类型:<br/>主要按钮、次要按钮、文字按钮 | String  | primary/default/text | default |
+| disabled | 是否禁用                                   | Boolean | --                   | false   |

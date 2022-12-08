@@ -41,6 +41,7 @@ export default {
   }
   &__icon {
     margin-left: 3px;
+    margin-top: 3px;
     width: 12px;
     height: 12px;
     display: block;
@@ -48,7 +49,7 @@ export default {
     position: relative;
     > img {
       position: absolute;
-      top: 1px;
+      // top: 1px;
     }
   }
 

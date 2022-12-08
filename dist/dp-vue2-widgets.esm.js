@@ -20182,7 +20182,7 @@ var script$8 = {
   }
 };
 
-var css_248z$6 = ".icon-button[data-v-afbf66be]{padding-left:8px;padding-right:8px}.icon-button[data-v-afbf66be] >span{min-width:auto;display:flex}.icon-button__text[data-v-afbf66be]{min-width:26px;display:block}.icon-button__icon[data-v-afbf66be]{margin-left:3px;width:12px;height:12px;display:block;flex:0 0 12px;position:relative}.icon-button__icon>img[data-v-afbf66be]{position:absolute;top:1px}.icon-button.is-disabled .icon-button__icon[data-v-afbf66be]{opacity:.5}";
+var css_248z$6 = ".icon-button[data-v-0d4cd692]{padding-left:8px;padding-right:8px}.icon-button[data-v-0d4cd692] >span{min-width:auto;display:flex}.icon-button__text[data-v-0d4cd692]{min-width:26px;display:block}.icon-button__icon[data-v-0d4cd692]{margin-left:3px;margin-top:3px;width:12px;height:12px;display:block;flex:0 0 12px;position:relative}.icon-button__icon>img[data-v-0d4cd692]{position:absolute}.icon-button.is-disabled .icon-button__icon[data-v-0d4cd692]{opacity:.5}";
 styleInject(css_248z$6);
 
 /* script */
@@ -20217,7 +20217,7 @@ var __vue_staticRenderFns__$8 = [];
 /* style */
 const __vue_inject_styles__$8 = undefined;
 /* scoped */
-const __vue_scope_id__$8 = "data-v-afbf66be";
+const __vue_scope_id__$8 = "data-v-0d4cd692";
 /* module identifier */
 const __vue_module_identifier__$8 = undefined;
 /* functional template */
