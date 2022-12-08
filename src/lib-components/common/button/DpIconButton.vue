@@ -38,6 +38,7 @@ export default {
   &__text {
     min-width: 26px;
     display: block;
+    font-weight: 500;
   }
   &__icon {
     margin-left: 3px;

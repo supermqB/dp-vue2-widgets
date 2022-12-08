@@ -1,3 +1,6 @@
+body {
+  -webkit-font-smoothing: initial !important;
+}
 @import './button.scss';
 @import './icon.scss';
 @import './input.scss';
