@@ -7,22 +7,26 @@
     min-width: 33px;
     text-align: justify;
     text-align-last: justify;
+    line-height: 18px;
   }
 }
 .el-button,
 .el-button.is-round {
-  padding: 6.5px 12px;
+  padding: 4px 12px;
 }
 
 .el-button.is-circle {
-  padding: 6.5px;
+  padding: 4px;
+  > span {
+    min-width: auto;
+  }
 }
-
-// 次要按钮
+// 主要按钮
+.el-button--primary,
 .el-button--primary.is-plain {
   color: $--color-primary;
   background: $--color-white;
-  border-color: $--color-primary;
+  border-color: mix($--color-white, $--color-primary, 50%);
 
   &:hover,
   &:focus {
@@ -32,11 +36,12 @@
       $--color-white,
       $--button-active-shade-percent
     );
-    border-color: $--color-primary;
+    border-color: mix($--color-white, $--color-primary, 50%);
   }
 
   &:active {
-    color: $--color-primary;
+    // color: $--color-primary;
+    color: #2958a7;
     background: mix(
       $--color-primary,
       $--color-white,
@@ -64,8 +69,37 @@
   }
 }
 
+// 次要按钮
+.el-button--default,
 .el-button--default.is-plain {
-  border: 1px solid #dcdfe6;
+  color: #606266;
+  background: $--color-white;
+  border-color: mix($--color-black, $--color-white, 15%);
+
+  &:hover,
+  &:focus {
+    color: $--color-primary;
+    background: $--color-white;
+    border-color: mix($--color-white, $--color-primary, 50%);
+  }
+
+  &:active {
+    // color: $--color-primary;
+    color: #2958a7;
+    background: $--color-white;
+    border-color: $--color-primary;
+  }
+
+  &.is-disabled {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      color: mix($--color-white, #606266, 50%);
+      background-color: $--color-white;
+      border-color: mix($--color-black, $--color-white, 10%);
+    }
+  }
 }
 
 .el-button--danger.is-plain,
