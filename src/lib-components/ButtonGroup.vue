@@ -84,6 +84,7 @@ export default {
   .group {
     height: 28px;
     line-height: 24px;
+    white-space: nowrap;
     .el-button + .el-button {
       margin-left: 6px;
     }

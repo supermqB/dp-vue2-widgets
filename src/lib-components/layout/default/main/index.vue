@@ -42,6 +42,7 @@ export default {
   mounted() {
     this.setZoomStyle()
     window.addEventListener('resize', this.setZoomStyle)
+    window.updateViewZoom = this.setZoomStyle.bind(this)
   },
   unmounted() {
     window.removeEventListener('resize', this.setZoomStyle)
