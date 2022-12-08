@@ -3,12 +3,11 @@
     ref="dpDialog"
     class="dp-dailog"
     :title="title"
-    :visible="dialogVisible"
+    :visible.sync="_visible"
     :width="width"
     :close-on-click-modal="closeOnClickModal"
     v-bind="$attrs"
     v-on="$listeners"
-    @close="handleClose"
   >
     <template #default>
       <div
@@ -21,11 +20,13 @@
     <template #footer>
       <slot name="footer">
         <div v-if="type === 'default'" class="footer-btn">
-          <el-button @click="handleClose">取 消</el-button>
+          <el-button @click="_visible = false">取 消</el-button>
           <el-button type="primary" plain @click="handleSave">保 存</el-button>
         </div>
         <div v-if="type === 'info'" class="footer-btn">
-          <el-button type="primary" plain @click="handleClose">确 定</el-button>
+          <el-button type="primary" plain @click="_visible = false"
+            >确 定</el-button
+          >
         </div>
       </slot>
     </template>
@@ -36,29 +37,32 @@
 export default {
   name: 'DpDialog',
   props: {
+    // Dialog的标题
     title: {
       type: String,
       default: '标题'
     },
-    dialogVisible: {
+    // 是否显示Dialog
+    visible: {
       type: Boolean,
       default: false
     },
+    // Dialog的宽度
     width: {
       type: String,
       default: '50%'
     },
-    // body的最小高度
+    // Dialog-body的最小高度
     minHight: {
       type: String,
       default: '200px'
     },
-    // body的最大高度
+    // Dialog-body的最大高度
     maxHight: {
       type: String,
       default: '50vh'
     },
-    // 是否可以通过点击 modal 关闭 Dialog
+    // 是否可以通过点击 modal(遮罩，弹窗外部区域) 关闭 Dialog
     closeOnClickModal: {
       type: Boolean,
       default: false
@@ -72,14 +76,20 @@ export default {
   data() {
     return {}
   },
+  computed: {
+    _visible: {
+      get() {
+        return this.visible
+      },
+      set(v) {
+        this.$emit('update:visible', v)
+      }
+    }
+  },
   methods: {
-    // 关闭弹窗
-    handleClose() {
-      this.$emit('update:dialogVisible', false)
-    },
     // 保存
     handleSave() {
-      this.$emit('handleSave')
+      this.$emit('save')
     }
   }
 }

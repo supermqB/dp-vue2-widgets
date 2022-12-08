@@ -9,12 +9,10 @@
 ```html
 <template>
   <div>
-    <el-button type="primary" @click="openDialog">打开DpDialog弹框</el-button>
-    <dp-dialog
-      :dialogVisible.sync="dialogVisible"
-      @handleSave="handleSave"
-      @open="handleOpen"
+    <el-button type="primary" plain @click="openDialog"
+      >打开DpDialog弹框</el-button
     >
+    <dp-dialog :visible.sync="visible" @save="handleSave" @open="handleOpen">
       <div>我是内容</div>
     </dp-dialog>
   </div>
@@ -23,12 +21,12 @@
   export default {
     data() {
       return {
-        dialogVisible: false
+        visible: false
       }
     },
     methods: {
       openDialog() {
-        this.dialogVisible = true
+        this.visible = true
       },
       handleSave() {
         console.log('保存')
@@ -50,12 +48,10 @@
 ```html
 <template>
   <div>
-    <el-button type="primary" @click="openDialog">打开DpDialog弹框</el-button>
-    <dp-dialog
-      :dialogVisible.sync="dialogVisible"
-      type="info"
-      @handleSave="handleSave"
+    <el-button type="primary" plain @click="openDialog"
+      >打开DpDialog弹框</el-button
     >
+    <dp-dialog :visible.sync="visible" type="info" @save="handleSave">
       <div>我是内容</div>
     </dp-dialog>
   </div>
@@ -64,12 +60,12 @@
   export default {
     data() {
       return {
-        dialogVisible: false
+        visible: false
       }
     },
     methods: {
       openDialog() {
-        this.dialogVisible = true
+        this.visible = true
       }
     }
   }
@@ -85,8 +81,10 @@
 ```html
 <template>
   <div>
-    <el-button type="primary" @click="openDialog">打开DpDialog弹框</el-button>
-    <dp-dialog :dialogVisible.sync="dialogVisible">
+    <el-button type="primary" plain @click="openDialog"
+      >打开DpDialog弹框</el-button
+    >
+    <dp-dialog :visible.sync="visible">
       <div>我是内容</div>
       <template #footer>
         <el-button plain @click="handleClose">关 闭</el-button>
@@ -100,15 +98,15 @@
   export default {
     data() {
       return {
-        dialogVisible: false
+        visible: false
       }
     },
     methods: {
       openDialog() {
-        this.dialogVisible = true
+        this.visible = true
       },
       handleClose() {
-        this.dialogVisible = false
+        this.visible = false
       }
     }
   }
@@ -122,7 +120,7 @@
 | 参数              | 说明                           | 类型    | 可选值 | 默认值  |
 | ----------------- | ------------------------------ | ------- | ------ | ------- |
 | title             | 标题                           | String  | --     | 标题    |
-| dialogVisible     | 显示弹框的标识                 | Boolean | --     | false   |
+| visible           | 显示弹框的标识，支持.sync 修饰 | Boolean | --     | false   |
 | width             | 弹框宽度                       | String  | --     | 50%     |
 | closeOnClickModal | 是否允许点击外侧遮罩来关闭弹窗 | Boolean | --     | false   |
 | minHeight         | 弹框 body 最小高度             | String  | --     | 200px   |
@@ -131,7 +129,13 @@
 
 ### 事件说明 event
 
-| 参数        | 说明         | 类型     | 可选值 | 默认值 |
-| ----------- | ------------ | -------- | ------ | ------ |
-| handleClose | 关闭弹窗     | Function | --     | --     |
-| handleSave  | 默认保存方法 | Function | --     | --     |
+| 参数 | 说明                       | 回调函数 |
+| ---- | -------------------------- | -------- |
+| save | 默认的保存按钮被点击时触发 | --       |
+
+<el-alert
+    title="支持element-ui原生的属性和事件"
+    type="warning"
+    :closable="false" />
+
+[element-ui](https://element.eleme.cn/#/zh-CN/component/dialog)

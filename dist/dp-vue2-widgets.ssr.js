@@ -21275,33 +21275,37 @@ var __vue_component__$2 = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
 
 var script$1 = {
   name: 'DpDialog',
   props: {
+    // Dialog的标题
     title: {
       type: String,
       default: '标题'
     },
-    dialogVisible: {
+    // 是否显示Dialog
+    visible: {
       type: Boolean,
       default: false
     },
+    // Dialog的宽度
     width: {
       type: String,
       default: '50%'
     },
-    // body的最小高度
+    // Dialog-body的最小高度
     minHight: {
       type: String,
       default: '200px'
     },
-    // body的最大高度
+    // Dialog-body的最大高度
     maxHight: {
       type: String,
       default: '50vh'
     },
-    // 是否可以通过点击 modal 关闭 Dialog
+    // 是否可以通过点击 modal(遮罩，弹窗外部区域) 关闭 Dialog
     closeOnClickModal: {
       type: Boolean,
       default: false
@@ -21315,14 +21319,20 @@ var script$1 = {
   data: function data() {
     return {};
   },
+  computed: {
+    _visible: {
+      get: function get() {
+        return this.visible;
+      },
+      set: function set(v) {
+        this.$emit('update:visible', v);
+      }
+    }
+  },
   methods: {
-    // 关闭弹窗
-    handleClose: function handleClose() {
-      this.$emit('update:dialogVisible', false);
-    },
     // 保存
     handleSave: function handleSave() {
-      this.$emit('handleSave');
+      this.$emit('save');
     }
   }
 };/* script */
@@ -21338,12 +21348,14 @@ var __vue_render__$1 = function __vue_render__() {
     staticClass: "dp-dailog",
     attrs: {
       "title": _vm.title,
-      "visible": _vm.dialogVisible,
+      "visible": _vm._visible,
       "width": _vm.width,
       "close-on-click-modal": _vm.closeOnClickModal
     },
     on: {
-      "close": _vm.handleClose
+      "update:visible": function updateVisible($event) {
+        _vm._visible = $event;
+      }
     },
     scopedSlots: _vm._u([{
       key: "default",
@@ -21365,7 +21377,9 @@ var __vue_render__$1 = function __vue_render__() {
             staticClass: "footer-btn"
           }, [_c('el-button', {
             on: {
-              "click": _vm.handleClose
+              "click": function click($event) {
+                _vm._visible = false;
+              }
             }
           }, [_vm._v("取 消")]), _vm._v(" "), _c('el-button', {
             attrs: {
@@ -21383,7 +21397,9 @@ var __vue_render__$1 = function __vue_render__() {
               "plain": ""
             },
             on: {
-              "click": _vm.handleClose
+              "click": function click($event) {
+                _vm._visible = false;
+              }
             }
           }, [_vm._v("确 定")])], 1) : _vm._e()];
         })];
@@ -21397,16 +21413,16 @@ var __vue_staticRenderFns__$1 = [];
 /* style */
 var __vue_inject_styles__$1 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-7d698ad5_0", {
-    source: "[data-v-7d698ad5] .el-dialog .el-dialog__header{height:46px;padding:16px 16px 0;box-sizing:border-box;border-bottom:1px solid #e5e5e5}[data-v-7d698ad5] .el-dialog .el-dialog__header .el-dialog__title{font-size:16px;color:#303133;font-weight:600;line-height:normal}[data-v-7d698ad5] .el-dialog .el-dialog__header .el-dialog__headerbtn{top:16px;right:16px}[data-v-7d698ad5] .el-dialog .el-dialog__body{padding:20px 24px;overflow:auto}[data-v-7d698ad5] .el-dialog .el-dialog__footer{height:40px;display:flex;justify-content:flex-end;align-items:center;padding:0 16px;border-top:1px solid #e5e5e5}[data-v-7d698ad5] .el-dialog .el-dialog__footer .el-button+.el-button{margin-left:6px}",
+  inject("data-v-26620d18_0", {
+    source: "[data-v-26620d18] .el-dialog .el-dialog__header{height:46px;padding:16px 16px 0;box-sizing:border-box;border-bottom:1px solid #e5e5e5}[data-v-26620d18] .el-dialog .el-dialog__header .el-dialog__title{font-size:16px;color:#303133;font-weight:600;line-height:normal}[data-v-26620d18] .el-dialog .el-dialog__header .el-dialog__headerbtn{top:16px;right:16px}[data-v-26620d18] .el-dialog .el-dialog__body{padding:20px 24px;overflow:auto}[data-v-26620d18] .el-dialog .el-dialog__footer{height:40px;display:flex;justify-content:flex-end;align-items:center;padding:0 16px;border-top:1px solid #e5e5e5}[data-v-26620d18] .el-dialog .el-dialog__footer .el-button+.el-button{margin-left:6px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$1 = "data-v-7d698ad5";
+var __vue_scope_id__$1 = "data-v-26620d18";
 /* module identifier */
-var __vue_module_identifier__$1 = "data-v-7d698ad5";
+var __vue_module_identifier__$1 = "data-v-26620d18";
 /* functional template */
 var __vue_is_functional_template__$1 = false;
 /* style inject shadow dom */
