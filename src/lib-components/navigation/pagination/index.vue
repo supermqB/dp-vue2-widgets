@@ -86,6 +86,9 @@ export default {
   line-height: 20px;
   overflow: hidden;
   ::v-deep {
+    * {
+      font-size: 12px !important;
+    }
     span:not([class*='suffix']),
     button {
       height: 20px;
@@ -107,6 +110,9 @@ export default {
     .el-pager li {
       height: 20px;
       line-height: 20px;
+    }
+    .el-pager li:not(.active) {
+      font-weight: normal;
     }
     .el-pager .more::before {
       line-height: 20px;
