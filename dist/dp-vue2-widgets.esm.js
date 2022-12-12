@@ -18523,6 +18523,14 @@ var script$p = {
       default: () => {
         return [];
       }
+    },
+    hideSearchInput: {
+      type: Boolean,
+      default: false
+    },
+    placeholder: {
+      type: String,
+      default: '请输入'
     }
   },
   data: () => {
@@ -18535,16 +18543,19 @@ var script$p = {
   },
   computed: {
     searchFormConfig() {
-      let cfg = [...this.inputConfigs, {
-        type: 'el-input',
-        label: '',
-        id: 'searchText',
-        elOptions: {
-          clearable: true,
-          placeholder: '请输入',
-          suffixIcon: 'el-icon-search'
-        }
-      }];
+      let cfg = this.inputConfigs;
+      if (!this.hideSearchInput) {
+        cfg = [...cfg, {
+          type: 'el-input',
+          label: '',
+          id: 'searchText',
+          elOptions: {
+            clearable: true,
+            placeholder: this.placeholder,
+            suffixIcon: 'el-icon-search'
+          }
+        }];
+      }
       this.searchForm = keysObject(cfg, 'id', 'defaultValue');
       return cfg;
     }
@@ -18580,7 +18591,7 @@ var script$p = {
   }
 };
 
-var css_248z$j = ".dpui_searchBar[data-v-49e23094]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-49e23094] .el-form{display:flex}.dpui_searchBar[data-v-49e23094] .el-form .el-form-item{margin-right:4px;margin-bottom:0}.dpui_searchBar .searchBtn[data-v-49e23094]{padding:5px 8px}.dpui_searchBar .searchBtn .filter[data-v-49e23094]{display:inline-block;position:relative;margin-left:2px;top:1px;left:1px;height:12px;width:12px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAADKADAAQAAAABAAAADAAAAAATDPpdAAABOElEQVQoFWM0SNm18j8DgxfD//9ACg9gBAKG/+tYgMpMmBmYQs/NddmBRzmDUfJO37+MjD1MTCxMQMbffsOU3RXYNAAtZtRP3Vnzl4Ghm5mBMYARpMg4bTf/37//lwKZ38QE/yfu6nH/ChJ3yNrP8/7nrwVAx3AyMzFGnZ3l+pEJJAFinJ/j6svIwHjz1XvGZSAxEPjw6/cOoMNvBMi4+oLUgMTANoAYMGCQvOv9hblugiCnGKTuesvEyJD17x/DLJA8UPE9FphCXDQ/K9uWz3/+OYDkgX79TFDDp99/Hf79/1cMNfANQQ3/mRjuMfxh2A7WwMT4nqAGxr8MLP+Y/rOBNDD+Z2DD9HTKrv0MDP9vsTOwNf/8//sCMABEoM6BWILMAbE5eXmAyYThwY//v07/Z2RYgC4PAO+kcziBu3W7AAAAAElFTkSuQmCC)}";
+var css_248z$j = ".dpui_searchBar[data-v-36b341ac]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-36b341ac] .el-form{display:flex}.dpui_searchBar[data-v-36b341ac] .el-form .el-form-item{margin-right:4px;margin-bottom:0}.dpui_searchBar .searchBtn[data-v-36b341ac]{padding:5px 8px}.dpui_searchBar .searchBtn .filter[data-v-36b341ac]{display:inline-block;position:relative;margin-left:2px;top:1px;left:1px;height:12px;width:12px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAADKADAAQAAAABAAAADAAAAAATDPpdAAABOElEQVQoFWM0SNm18j8DgxfD//9ACg9gBAKG/+tYgMpMmBmYQs/NddmBRzmDUfJO37+MjD1MTCxMQMbffsOU3RXYNAAtZtRP3Vnzl4Ghm5mBMYARpMg4bTf/37//lwKZ38QE/yfu6nH/ChJ3yNrP8/7nrwVAx3AyMzFGnZ3l+pEJJAFinJ/j6svIwHjz1XvGZSAxEPjw6/cOoMNvBMi4+oLUgMTANoAYMGCQvOv9hblugiCnGKTuesvEyJD17x/DLJA8UPE9FphCXDQ/K9uWz3/+OYDkgX79TFDDp99/Hf79/1cMNfANQQ3/mRjuMfxh2A7WwMT4nqAGxr8MLP+Y/rOBNDD+Z2DD9HTKrv0MDP9vsTOwNf/8//sCMABEoM6BWILMAbE5eXmAyYThwY//v07/Z2RYgC4PAO+kcziBu3W7AAAAAElFTkSuQmCC)}";
 styleInject(css_248z$j);
 
 /* script */
@@ -18615,7 +18626,7 @@ var __vue_staticRenderFns__$q = [];
 /* style */
 const __vue_inject_styles__$q = undefined;
 /* scoped */
-const __vue_scope_id__$q = "data-v-49e23094";
+const __vue_scope_id__$q = "data-v-36b341ac";
 /* module identifier */
 const __vue_module_identifier__$q = undefined;
 /* functional template */
@@ -19258,15 +19269,13 @@ var script$i = {
   },
   methods: {
     handleSelect(idx, idxPath, item) {
-      var _item$$attrs;
       if (idx != null) {
         this.$router.push({
           name: idx
         });
-      } else if ((_item$$attrs = item.$attrs) !== null && _item$$attrs !== void 0 && _item$$attrs.redirect) {
-        var _item$$attrs2;
+      } else if (item.$attrs?.redirect) {
         this.$router.push({
-          path: (_item$$attrs2 = item.$attrs) === null || _item$$attrs2 === void 0 ? void 0 : _item$$attrs2.redirect
+          path: item.$attrs?.redirect
         });
       }
       // this.$router.push({ name: idx })
