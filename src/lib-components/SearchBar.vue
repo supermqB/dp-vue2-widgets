@@ -18,7 +18,15 @@ export default {
       default: () => {
         return []
       }
-    }
+    },
+    hideSearchInput: {
+      type: Boolean,
+      default: false
+    },
+    placeholder: {
+      type: String,
+      default: '请输入'
+    },
   },
   data: () => {
     return {
@@ -28,19 +36,21 @@ export default {
   },
   computed: {
     searchFormConfig() {
-      let cfg = [
-        ...this.inputConfigs,
-        {
-          type: 'el-input',
-          label: '',
-          id: 'searchText',
-          elOptions: {
-            clearable: true,
-            placeholder: '请输入',
-            suffixIcon: 'el-icon-search'
-          }
-        }
-      ]
+      let cfg = this.inputConfigs
+      if (!this.hideSearchInput) {
+        cfg = [
+          ...cfg,
+          {
+            type: 'el-input',
+            label: '',
+            id: 'searchText',
+            elOptions: {
+              clearable: true,
+              placeholder: this.placeholder,
+              suffixIcon: 'el-icon-search'
+            }
+          }]
+      }
       this.searchForm = keysObject(cfg, 'id', 'defaultValue')
       return cfg
     }
