@@ -21297,12 +21297,12 @@ var script$1 = {
       default: '50%'
     },
     // Dialog-body的最小高度
-    minHight: {
+    minHeight: {
       type: String,
       default: '200px'
     },
     // Dialog-body的最大高度
-    maxHight: {
+    maxHeight: {
       type: String,
       default: '50vh'
     },
@@ -21364,8 +21364,8 @@ var __vue_render__$1 = function __vue_render__() {
         return [_c('div', {
           staticClass: "dialog-body",
           style: {
-            'min-height': _vm.minHight,
-            'max-height': _vm.maxHight
+            'min-height': _vm.minHeight,
+            'max-height': _vm.maxHeight
           }
         }, [_vm._t("default")], 2)];
       },
@@ -21414,16 +21414,16 @@ var __vue_staticRenderFns__$1 = [];
 /* style */
 var __vue_inject_styles__$1 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-26620d18_0", {
-    source: "[data-v-26620d18] .el-dialog .el-dialog__header{height:46px;padding:16px 16px 0;box-sizing:border-box;border-bottom:1px solid #e5e5e5}[data-v-26620d18] .el-dialog .el-dialog__header .el-dialog__title{font-size:16px;color:#303133;font-weight:600;line-height:normal}[data-v-26620d18] .el-dialog .el-dialog__header .el-dialog__headerbtn{top:16px;right:16px}[data-v-26620d18] .el-dialog .el-dialog__body{padding:20px 24px;overflow:auto}[data-v-26620d18] .el-dialog .el-dialog__footer{height:40px;display:flex;justify-content:flex-end;align-items:center;padding:0 16px;border-top:1px solid #e5e5e5}[data-v-26620d18] .el-dialog .el-dialog__footer .el-button+.el-button{margin-left:6px}",
+  inject("data-v-00a731d8_0", {
+    source: "[data-v-00a731d8] .el-dialog .el-dialog__header{height:46px;padding:16px 16px 0;box-sizing:border-box;border-bottom:1px solid #e5e5e5}[data-v-00a731d8] .el-dialog .el-dialog__header .el-dialog__title{font-size:16px;color:#303133;font-weight:600;line-height:normal}[data-v-00a731d8] .el-dialog .el-dialog__header .el-dialog__headerbtn{top:16px;right:16px}[data-v-00a731d8] .el-dialog .el-dialog__body{padding:20px 24px;overflow:auto}[data-v-00a731d8] .el-dialog .el-dialog__footer{height:40px;display:flex;justify-content:flex-end;align-items:center;padding:0 16px;border-top:1px solid #e5e5e5}[data-v-00a731d8] .el-dialog .el-dialog__footer .el-button+.el-button{margin-left:6px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$1 = "data-v-26620d18";
+var __vue_scope_id__$1 = "data-v-00a731d8";
 /* module identifier */
-var __vue_module_identifier__$1 = "data-v-26620d18";
+var __vue_module_identifier__$1 = "data-v-00a731d8";
 /* functional template */
 var __vue_is_functional_template__$1 = false;
 /* style inject shadow dom */
