@@ -205,9 +205,9 @@ export default {
       this.pageInfo.pageSize = pageSize
       this.$emit('page-changed', { pageSize, curPage: 1 })
     },
-    pageChangeHandler(currentPage) {
-      this.pageInfo.curPage = currentPage
-      this.$emit('page-changed', { curPage: currentPage })
+    pageChangeHandler(curPage) {
+      let { pageSize } = this.pageInfo
+      this.$emit('page-changed', { pageSize, curPage })
     },
     setCurrentRow(row) {
       this.$refs.el_table.setCurrentRow(row)
