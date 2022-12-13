@@ -483,6 +483,7 @@ const __vue_component__$u = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
 
 var script$s = {
   props: {
@@ -526,6 +527,10 @@ var script$s = {
       /* lazy to show pagination, and has auto height according to items' count. */
       type: Number,
       default: () => 0
+    },
+    pagerCount: {
+      type: Number,
+      default: 7
     }
   },
   data() {
@@ -600,7 +605,7 @@ var script$s = {
   }
 };
 
-var css_248z$m = ".el_table_wrapper[data-v-587c9a44]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-587c9a44]{flex-grow:1;padding:0 6px;box-sizing:border-box}";
+var css_248z$m = ".el_table_wrapper[data-v-32ef0084]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-32ef0084]{flex-grow:1;padding:0 6px;box-sizing:border-box}";
 styleInject(css_248z$m);
 
 var css_248z$l = ".el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}";
@@ -734,6 +739,7 @@ var __vue_render__$t = function () {
       "current-page": _vm.pageInfo.curPage,
       "page-sizes": [5, 10, 20, 50],
       "page-size": _vm.pageInfo.pageSize,
+      "pager-count": _vm.pagerCount,
       "layout": "total, sizes, prev, pager, next, jumper",
       "total": _vm.pageInfo.totalSize
     },
@@ -754,7 +760,7 @@ var __vue_staticRenderFns__$t = [];
 /* style */
 const __vue_inject_styles__$t = undefined;
 /* scoped */
-const __vue_scope_id__$t = "data-v-587c9a44";
+const __vue_scope_id__$t = "data-v-32ef0084";
 /* module identifier */
 const __vue_module_identifier__$t = undefined;
 /* functional template */

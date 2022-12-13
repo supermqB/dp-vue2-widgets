@@ -91,6 +91,7 @@
         :current-page.sync="pageInfo.curPage"
         :page-sizes="[5, 10, 20, 50]"
         :page-size="pageInfo.pageSize"
+        :pager-count="pagerCount"
         layout="total, sizes, prev, pager, next, jumper"
         :total="pageInfo.totalSize"
       >
@@ -141,6 +142,10 @@ export default {
       /* lazy to show pagination, and has auto height according to items' count. */
       type: Number,
       default: () => 0
+    },
+    pagerCount: {
+      type: Number,
+      default: 7
     }
   },
   data() {
