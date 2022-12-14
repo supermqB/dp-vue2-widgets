@@ -27,7 +27,10 @@
             <span v-else class="blank"></span>
             <span>{{ data.label }}</span>
           </span>
-          <span>{{ 'number' in data ? unitFmt(data.number) : '' }}</span>
+          <span>
+            <span>{{ 'number' in data ? unitFmt(data.number) : '' }}</span>
+            <span>{{ data.endText }}</span>
+          </span>
         </p>
         <div class="disabled" v-if="!node.isLeaf"></div>
       </div>
