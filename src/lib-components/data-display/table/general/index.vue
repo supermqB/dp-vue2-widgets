@@ -162,7 +162,7 @@ export default {
               : 2) /* show 2 rows if there is no item*/ *
               36 +
             36 /* table header */ +
-            7 /* table vertical padding. */
+            1 /* table vertical padding. */
           }px`
         : '300px'
     },
@@ -232,7 +232,7 @@ export default {
   .table_container {
     flex-grow: 1;
     padding: 0 6px;
-    box-sizing: border-box;
+    box-sizing: content-box;
   }
 }
 </style>
