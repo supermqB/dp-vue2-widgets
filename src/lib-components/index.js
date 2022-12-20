@@ -35,6 +35,7 @@ export { default as DpIconButton } from './common/button/DpIconButton' // 带图
 /* data-input 数据输入 */
 // form 表单
 export { default as DpForm } from './data-input/form/index' // 基础表单
+export { default as DpFormInline } from './data-input/form/inline' // 行内表单 （用于按行显示，换行显示）
 export { default as DpSearchBar } from './data-input/form/search-bar' // 检索框
 export { default as DpQueryBar } from './data-input/form/query-bar'
 
