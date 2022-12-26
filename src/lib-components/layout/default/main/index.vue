@@ -19,7 +19,7 @@ const DEFAULT_DIMS = {
 export default {
   name: 'AppMain',
   data() {
-    return { zoomStyle: { ...DEFAULT_DIMS } }
+    return { zoomStyle: {} }
   },
   methods: {
     getZoomRatio() {

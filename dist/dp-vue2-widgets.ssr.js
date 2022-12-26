@@ -19608,7 +19608,7 @@ var script$f = {
   name: 'AppMain',
   data: function data() {
     return {
-      zoomStyle: _objectSpread2({}, DEFAULT_DIMS)
+      zoomStyle: {}
     };
   },
   methods: {
@@ -19664,7 +19664,7 @@ var __vue_inject_styles__$g = undefined;
 /* scoped */
 var __vue_scope_id__$g = undefined;
 /* module identifier */
-var __vue_module_identifier__$g = "data-v-75f820de";
+var __vue_module_identifier__$g = "data-v-4e7d984e";
 /* functional template */
 var __vue_is_functional_template__$g = false;
 /* style inject */

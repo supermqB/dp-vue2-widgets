@@ -19516,9 +19516,7 @@ var script$f = {
   name: 'AppMain',
   data() {
     return {
-      zoomStyle: {
-        ...DEFAULT_DIMS
-      }
+      zoomStyle: {}
     };
   },
   methods: {
