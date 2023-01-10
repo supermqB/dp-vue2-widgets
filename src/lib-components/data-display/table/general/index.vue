@@ -91,6 +91,7 @@
         :current-page.sync="pageInfo.curPage"
         :page-sizes="[5, 10, 20, 50]"
         :page-size="pageInfo.pageSize"
+        :pager-count="pagerCount"
         layout="total, sizes, prev, pager, next, jumper"
         :total="pageInfo.totalSize"
       >
@@ -141,6 +142,10 @@ export default {
       /* lazy to show pagination, and has auto height according to items' count. */
       type: Number,
       default: () => 0
+    },
+    pagerCount: {
+      type: Number,
+      default: () => 5
     }
   },
   data() {
@@ -157,7 +162,7 @@ export default {
               : 2) /* show 2 rows if there is no item*/ *
               36 +
             36 /* table header */ +
-            7 /* table vertical padding. */
+            1 /* table vertical padding. */
           }px`
         : 'auto'
     },
@@ -200,9 +205,9 @@ export default {
       this.pageInfo.pageSize = pageSize
       this.$emit('page-changed', { pageSize, curPage: 1 })
     },
-    pageChangeHandler(currentPage) {
-      this.pageInfo.curPage = currentPage
-      this.$emit('page-changed', { curPage: currentPage })
+    pageChangeHandler(curPage) {
+      let { pageSize } = this.pageInfo
+      this.$emit('page-changed', { pageSize, curPage })
     },
     setCurrentRow(row) {
       this.$refs.el_table.setCurrentRow(row)
@@ -227,7 +232,7 @@ export default {
   .table_container {
     flex-grow: 1;
     padding: 0 6px;
-    box-sizing: border-box;
+    box-sizing: content-box;
   }
 }
 </style>

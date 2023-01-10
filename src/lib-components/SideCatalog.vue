@@ -15,20 +15,24 @@
     >
       <div
         class="treeNode"
+        :ref="'dom' + data.id"
         slot-scope="{ data, node }"
         @click="
           event =>
             isDisabledByType(data.type) ? event.stopPropagation() : null
         "
       >
-        <p class="label">
-          <span>
+        <div class="label">
+          <span class="front">
             <i v-if="data.state"></i>
             <span v-else class="blank"></span>
             <span>{{ data.label }}</span>
           </span>
-          <span>{{ 'number' in data ? unitFmt(data.number) : '' }}</span>
-        </p>
+          <span>
+            <span>{{ 'number' in data ? unitFmt(data.number) : '' }}</span>
+            <span>{{ data.endText }}</span>
+          </span>
+        </div>
         <div class="disabled" v-if="!node.isLeaf"></div>
       </div>
     </el-tree>
@@ -125,14 +129,19 @@ export default {
           if (!node) return
           const list = getTreeParentNodes(this.treeList, node.id)
           const { id, type, label } = node
+          const dom = this.$refs[`dom${id}`]
           const ids = id.split('-')
-          this.$emit('onItemSelected', {
-            id: ids.length > 1 ? ids[1] : ids[0],
-            type,
-            label,
-            list: list.map(item => item.id).join('.')
-          })
-          this.$emit('onNodeSelected', { ...node })
+          this.$emit(
+            'onItemSelected',
+            {
+              id: ids.length > 1 ? ids[1] : ids[0],
+              type,
+              label,
+              list: list.map(item => item.id).join('.')
+            },
+            dom
+          )
+          this.$emit('onNodeSelected', { ...node }, dom)
         }
       })
     }
@@ -178,28 +187,32 @@ export default {
   box-sizing: border-box;
   justify-content: space-between;
   align-items: center;
+  overflow: hidden;
   font-size: 13px;
   .label {
     width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    overflow: hidden;
+    .front {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
     i {
       display: inline-block;
       width: 5px;
       height: 5px;
-      margin-right: 3px;
-      margin-bottom: 2px;
+      padding-right: 3px;
+      padding-bottom: 2px;
       border-radius: 5px;
       background-color: #f56c6c;
     }
     .blank {
       display: inline-block;
-      margin-right: 3px;
-      margin-bottom: 2px;
+      padding-right: 3px;
+      padding-bottom: 2px;
       width: 5px;
       height: 5px;
     }

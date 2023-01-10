@@ -12,7 +12,7 @@
     <template #default>
       <div
         class="dialog-body"
-        :style="{ 'min-height': minHight, 'max-height': maxHight }"
+        :style="{ 'min-height': minHeight, 'max-height': maxHeight }"
       >
         <slot></slot>
       </div>
@@ -53,12 +53,12 @@ export default {
       default: '50%'
     },
     // Dialog-body的最小高度
-    minHight: {
+    minHeight: {
       type: String,
       default: '200px'
     },
     // Dialog-body的最大高度
-    maxHight: {
+    maxHeight: {
       type: String,
       default: '50vh'
     },
