@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <dp-layout-container drag>
     <template #asideLeft>
       <div class="section asideLeft">
@@ -16,4 +16,76 @@
 export default {}
 </script>
 
-<style></style>
+<style></style> -->
+<template>
+  <div class="test-tag">
+    <div class="big">
+      <dp-tag type="start" sizeType="big" @click="handleClick">新任务/待分配</dp-tag>
+
+      <dp-tag type="process" sizeType="big">审核/加工</dp-tag>
+
+      <dp-tag type="recall" sizeType="big">已撤回</dp-tag>
+
+      <dp-tag type="done" sizeType="big">已审核/已加工</dp-tag>
+    </div>
+
+    <div class="medium">
+      <dp-tag type="start" sizeType="medium">新任务/待分配</dp-tag>
+
+      <dp-tag type="process" sizeType="medium">审核/加工</dp-tag>
+
+      <dp-tag type="recall" sizeType="medium">已撤回</dp-tag>
+
+      <dp-tag type="done" sizeType="medium">已审核/已加工</dp-tag>
+    </div>
+
+    <div class="default">
+      <dp-tag type="start">新任务/待分配</dp-tag>
+
+      <dp-tag type="process">审核/加工</dp-tag>
+
+      <dp-tag type="recall">已撤回</dp-tag>
+
+      <dp-tag type="done">已审核/已加工</dp-tag>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      arr: ['标签一', '标签二', '标签三'],
+      val: ''
+    }
+  },
+  methods: {
+    blurFn() {
+      if (this.val === '') return
+      this.arr.push(this.val)
+      this.val = ''
+    },
+    handleClose(tag) {
+      // 找到点击的是哪个
+      let i = this.arr.findIndex(item => {
+        return tag === item
+      })
+      // 删除之
+      this.arr.splice(i, 1)
+    },
+    handleClick(tag) {
+      console.log('点击标签啦', tag)
+    }
+  }
+}
+</script>
+
+<style scoped>
+.test-tag {
+  height: 100px;
+  margin: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+</style>

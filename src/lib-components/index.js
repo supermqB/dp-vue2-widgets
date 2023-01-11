@@ -31,6 +31,8 @@ export { default as DpTitle } from './common/title/main' // 标题
 export { default as DpSubtitle } from './common/title/sub' // 副标题
 // button 按钮
 export { default as DpIconButton } from './common/button/DpIconButton' // 带图标按钮
+//tag标签
+export { default as DpTag } from './common/tag' // tag标签
 
 /* data-input 数据输入 */
 // form 表单
