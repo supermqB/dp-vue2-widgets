@@ -34,4 +34,4 @@ export default {
 | 参数 | 说明         | 类型   | 可选值 | 默认值   |
 | ---- | ------------ | ------ | ------ | -------- |
 | type | 标签类型 | String | start, process, recall, done  | - |
-| size | 标签大小 | String | big, medium | - |
+| size | 标签大小 | String | big, medium | 13px |
