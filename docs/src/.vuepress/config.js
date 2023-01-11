@@ -108,7 +108,8 @@ module.exports = {
             'layout-root', // 根节点布局
             'layout-container', // 页面布局容器
             'title', // 标题
-            'icon-button' // 带图标按钮
+            'icon-button', // 带图标按钮
+            'tag' //标签
           ])
         },
         {
@@ -126,7 +127,7 @@ module.exports = {
           children: getPaths('data-display', [
             'general-table', // 通用表格
             'statistics-table', // 统计表格
-            'tree' // 树形控件
+            'tree', // 树形控件
           ])
         },
         {
