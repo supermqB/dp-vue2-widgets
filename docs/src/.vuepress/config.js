@@ -102,28 +102,32 @@ module.exports = {
       '/components-dp/': [
         '',
         {
-          title: '基础 basic',
+          title: '通用 basic',
           collapsable: false,
           children: getPaths('basic', [
-            'layout-root',
-            'layout-container',
-            'title',
-            'icon-button'
+            'layout-root', // 根节点布局
+            'layout-container', // 页面布局容器
+            'title', // 标题
+            'icon-button', // 带图标按钮
+            'tag' //标签
           ])
         },
         {
-          title: '数据输入 data-input',
+          title: '数据录入 data-input',
           collapsable: false,
-          children: getPaths('data-input', ['search-bar', 'query-bar', 'form'])
+          children: getPaths('data-input', [
+            'form', // 表单
+            'search-bar', // 检索栏
+            'query-bar' // 表单查询
+          ])
         },
         {
-          title: '数据显示 data-display',
+          title: '数据展示 data-display',
           collapsable: false,
           children: getPaths('data-display', [
-            'general-table',
-            'statistics-table',
-            'tree',
-            'tag'
+            'general-table', // 通用表格
+            'statistics-table', // 统计表格
+            'tree', // 树形控件
           ])
         },
         {
