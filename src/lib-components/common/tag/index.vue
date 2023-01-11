@@ -13,7 +13,7 @@ export default {
       type: String,
       validator(val) {
         return typeArr.includes(val) // 校验类型
-      }
+      },
     },
     // 三种标签大小
     sizeType: {

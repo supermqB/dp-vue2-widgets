@@ -60,19 +60,19 @@ export default {
     }
   },
   methods: {
-    blurFn() {
-      if (this.val === '') return
-      this.arr.push(this.val)
-      this.val = ''
-    },
-    handleClose(tag) {
-      // 找到点击的是哪个
-      let i = this.arr.findIndex(item => {
-        return tag === item
-      })
-      // 删除之
-      this.arr.splice(i, 1)
-    },
+    // blurFn() {
+    //   if (this.val === '') return
+    //   this.arr.push(this.val)
+    //   this.val = ''
+    // },
+    // handleClose(tag) {
+    //   // 找到点击的是哪个
+    //   let i = this.arr.findIndex(item => {
+    //     return tag === item
+    //   })
+    //   // 删除之
+    //   this.arr.splice(i, 1)
+    // },
     handleClick(tag) {
       console.log('点击标签啦', tag)
     }
