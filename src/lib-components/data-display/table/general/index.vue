@@ -164,7 +164,7 @@ export default {
             36 /* table header */ +
             1 /* table vertical padding. */
           }px`
-        : '300px'
+        : 'auto'
     },
     showPaging() {
       let totalSize = Math.max(

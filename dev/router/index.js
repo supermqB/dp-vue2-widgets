@@ -84,10 +84,22 @@ const routesConfig = [
     component: DpLayoutBlank,
     children: [
       {
+        path: 'index',
+        name: 'form/index',
+        meta: { title: '表单 dp-form' },
+        component: () => import('../views/form/index')
+      },
+      {
         path: 'search-bar',
         name: 'search-bar',
-        meta: { title: '检索框' },
+        meta: { title: '检索框 dp-search-bar' },
         component: () => import('../views/form/search-bar')
+      },
+      {
+        path: 'multi-line',
+        name: 'form/multi-line',
+        meta: { title: '多行表单' },
+        component: () => import('../views/form/multi-line')
       }
     ]
   }
