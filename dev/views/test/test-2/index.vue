@@ -20,23 +20,23 @@ export default {}
 <template>
   <div class="test-tag">
     <div class="big">
-      <dp-tag type="start" sizeType="big" @click="handleClick">新任务/待分配</dp-tag>
+      <dp-tag type="start" size="big" @click="handleClick">新任务/待分配</dp-tag>
 
-      <dp-tag type="process" sizeType="big">审核/加工</dp-tag>
+      <dp-tag type="process" size="big">审核/加工</dp-tag>
 
-      <dp-tag type="recall" sizeType="big">已撤回</dp-tag>
+      <dp-tag type="recall" size="big">已撤回</dp-tag>
 
-      <dp-tag type="done" sizeType="big">已审核/已加工</dp-tag>
+      <dp-tag type="done" size="big">已审核/已加工</dp-tag>
     </div>
 
     <div class="medium">
-      <dp-tag type="start" sizeType="medium">新任务/待分配</dp-tag>
+      <dp-tag type="start" size="medium">新任务/待分配</dp-tag>
 
-      <dp-tag type="process" sizeType="medium">审核/加工</dp-tag>
+      <dp-tag type="process" size="medium">审核/加工</dp-tag>
 
-      <dp-tag type="recall" sizeType="medium">已撤回</dp-tag>
+      <dp-tag type="recall" size="medium">已撤回</dp-tag>
 
-      <dp-tag type="done" sizeType="medium">已审核/已加工</dp-tag>
+      <dp-tag type="done" size="medium">已审核/已加工</dp-tag>
     </div>
 
     <div class="default">

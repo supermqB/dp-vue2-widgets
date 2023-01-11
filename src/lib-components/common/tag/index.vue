@@ -1,54 +1,42 @@
+<template>
+  <span :class="classArr" @click="handleClick">
+    <slot></slot>
+  </span>
+</template>
 
 <script>
 const typeArr = ['start', 'process', 'recall', 'done', 'error'] // 标签类型数组
-const sizeType = ['big', 'medium', 'small'] // 标签大小数组
+const size = ['big', 'medium', 'small'] // 标签大小数组
 export default {
   name: 'DpTag',
   props: {
     color: String, // 标签文字的颜色
-    bgColor: String, // 标签背景色
-    borderColor: String, // 标签边框颜色
+    //bgColor: String, // 标签背景色
+    //borderColor: String, // 标签边框颜色
     // 五种标签类型
     type: {
       type: String,
       validator(val) {
         return typeArr.includes(val) // 校验类型
-      },
+      }
     },
     // 三种标签大小
-    sizeType: {
+    size: {
       type: String,
       validator(val) {
-        return sizeType.includes(val) // 校验大小
+        return size.includes(val) // 校验大小
       }
+    }
+  },
+  data() {
+    return {
+      classArr: ['dp-tag', this.type, this.size]
     }
   },
   methods: {
     handleClick(event) {
       this.$emit('click', event)
     }
-  },
-  // render函数jsx语法更加灵活
-  render(h) {
-    // 1. 准备样式类 class绑定classArr数组常用样式，style绑定props变量自定义样式
-    const classArr = ['dp-tag', this.type, this.sizeType]
-    // 2. 准备一个dom，并绑定相关class、style、event
-    const tagEl = (
-      <span
-        class={classArr}
-        style={{
-          //backgroundColor: this.bgColor,
-          color: this.color
-          //borderColor: this.borderColor,
-        }}
-        on-click={this.handleClick}
-      >
-        {/* 默认插槽渲染内容即dp-tag标签中的文字 */}
-        {this.$slots.default}
-      </span>
-    )
-    // 3. 返回render渲染
-    return tagEl
   }
 }
 </script>
@@ -65,7 +53,6 @@ $border-color: #ffffff;
   font-size: 13px;
   white-space: nowrap;
   height: auto;
-  cursor: pointer;
 }
 
 /* 5种类型标签样式 */

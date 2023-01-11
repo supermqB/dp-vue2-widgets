@@ -122,7 +122,8 @@ module.exports = {
           children: getPaths('data-display', [
             'general-table',
             'statistics-table',
-            'tree'
+            'tree',
+            'tag'
           ])
         },
         {
