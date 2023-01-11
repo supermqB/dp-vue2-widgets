@@ -65,6 +65,7 @@
   },
   "dependencies": {
     "cp-cli": "^2.0.0",
+    "element-resize-detector": "^1.2.4",
     "js-sha512": "^0.8.0",
     "vue-router": "^3.5.1"
   }
