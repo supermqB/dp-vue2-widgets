@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100%">
     <Title :title="'test'" />
     <el-button @click="openDlg">open dialog</el-button>
     <Dialog :title="'弹框标题'" ref="dlg">test</Dialog>

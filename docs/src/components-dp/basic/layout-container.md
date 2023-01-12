@@ -82,9 +82,9 @@
 
 :::
 
-| 参数              | 说明                 | 类型   | 可选值 | 默认值 |
-| ----------------- | -------------------- | ------ | ------ | ------ |
-| asideLeftWidth    | 左侧侧边栏宽度       | String | --     | 25%    |
-| asideLeftMaxWidth | 左侧侧边栏宽度最大值 | String | --     | auto   |
-| asideRightWidth   | 右侧侧边栏宽度       | String | --     | 35%    |
-| mainBottomHeight  | 主体内容下侧栏目高度 | String | --     | 50%    |
+| 参数                 | 说明                 | 类型   | 可选值 | 默认值 |
+| -------------------- | -------------------- | ------ | ------ | ------ |
+| aside-left-width     | 左侧侧边栏宽度       | String | --     | 25%    |
+| aside-left-max-width | 左侧侧边栏宽度最大值 | String | --     | auto   |
+| aside-right-width    | 右侧侧边栏宽度       | String | --     | 35%    |
+| main-bottom-height   | 主体内容下侧栏目高度 | String | --     | 50%    |
