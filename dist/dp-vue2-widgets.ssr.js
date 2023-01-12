@@ -19396,15 +19396,13 @@ var script$l = {
   },
   methods: {
     handleSelect: function handleSelect(idx, idxPath, item) {
-      var _item$$attrs;
       if (idx != null) {
         this.$router.push({
           name: idx
         });
-      } else if ((_item$$attrs = item.$attrs) !== null && _item$$attrs !== void 0 && _item$$attrs.redirect) {
-        var _item$$attrs2;
+      } else if (item.$attrs && item.$attrs.redirect) {
         this.$router.push({
-          path: (_item$$attrs2 = item.$attrs) === null || _item$$attrs2 === void 0 ? void 0 : _item$$attrs2.redirect
+          path: item.$attrs.redirect
         });
       }
       // this.$router.push({ name: idx })
@@ -19435,16 +19433,16 @@ var __vue_staticRenderFns__$m = [];
 /* style */
 var __vue_inject_styles__$m = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-b6662dce_0", {
-    source: ".header-menu[data-v-b6662dce]{text-align:center}",
+  inject("data-v-5ae33ce2_0", {
+    source: ".header-menu[data-v-5ae33ce2]{text-align:center}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$m = "data-v-b6662dce";
+var __vue_scope_id__$m = "data-v-5ae33ce2";
 /* module identifier */
-var __vue_module_identifier__$m = "data-v-b6662dce";
+var __vue_module_identifier__$m = "data-v-5ae33ce2";
 /* functional template */
 var __vue_is_functional_template__$m = false;
 /* style inject shadow dom */

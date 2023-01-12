@@ -19281,9 +19281,9 @@ var script$l = {
         this.$router.push({
           name: idx
         });
-      } else if (item.$attrs?.redirect) {
+      } else if (item.$attrs && item.$attrs.redirect) {
         this.$router.push({
-          path: item.$attrs?.redirect
+          path: item.$attrs.redirect
         });
       }
       // this.$router.push({ name: idx })
@@ -19291,7 +19291,7 @@ var script$l = {
   }
 };
 
-var css_248z$f = ".header-menu[data-v-b6662dce]{text-align:center}";
+var css_248z$f = ".header-menu[data-v-5ae33ce2]{text-align:center}";
 styleInject(css_248z$f);
 
 /* script */
@@ -19318,7 +19318,7 @@ var __vue_staticRenderFns__$m = [];
 /* style */
 const __vue_inject_styles__$m = undefined;
 /* scoped */
-const __vue_scope_id__$m = "data-v-b6662dce";
+const __vue_scope_id__$m = "data-v-5ae33ce2";
 /* module identifier */
 const __vue_module_identifier__$m = undefined;
 /* functional template */

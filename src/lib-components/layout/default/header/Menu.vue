@@ -25,8 +25,8 @@ export default {
     handleSelect(idx, idxPath, item) {
       if (idx != null) {
         this.$router.push({ name: idx })
-      } else if (item.$attrs?.redirect) {
-        this.$router.push({ path: item.$attrs?.redirect })
+      } else if (item.$attrs && item.$attrs.redirect) {
+        this.$router.push({ path: item.$attrs.redirect })
       }
       // this.$router.push({ name: idx })
     }
