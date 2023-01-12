@@ -1,9 +1,9 @@
 <template>
-  <el-container class="dp-layout-root" :style="{ minWidth }">
+  <el-container :style="{ minWidth }">
     <el-header v-if="hasSlot.header" :height="headerHeight">
       <slot name="header" />
     </el-header>
-    <el-main v-if="hasSlot.main" style="overflow: hidden">
+    <el-main v-if="hasSlot.main">
       <slot name="main" />
     </el-main>
     <el-footer v-if="hasSlot.footer" :height="footerHeight">
@@ -41,13 +41,16 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.el-container.dp-layout-root {
+<style lang="scss" scoped>
+.el-container {
   height: 100%;
   .el-header,
   .el-main,
   .el-footer {
     padding: 0;
+  }
+  .el-main {
+    overflow: auto;
   }
 }
 </style>

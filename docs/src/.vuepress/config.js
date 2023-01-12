@@ -109,7 +109,7 @@ module.exports = {
             'layout-container', // 页面布局容器
             'title', // 标题
             'icon-button', // 带图标按钮
-            'tag' //标签
+            'status' // 状态标签
           ])
         },
         {
@@ -127,7 +127,7 @@ module.exports = {
           children: getPaths('data-display', [
             'general-table', // 通用表格
             'statistics-table', // 统计表格
-            'tree', // 树形控件
+            'tree' // 树形控件
           ])
         },
         {

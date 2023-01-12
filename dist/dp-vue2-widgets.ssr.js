@@ -19130,7 +19130,6 @@ var __vue_render__$p = function __vue_render__() {
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c('el-container', {
-    staticClass: "dp-layout-root",
     style: {
       minWidth: _vm.minWidth
     }
@@ -19138,11 +19137,7 @@ var __vue_render__$p = function __vue_render__() {
     attrs: {
       "height": _vm.headerHeight
     }
-  }, [_vm._t("header")], 2) : _vm._e(), _vm._v(" "), _vm.hasSlot.main ? _c('el-main', {
-    staticStyle: {
-      "overflow": "hidden"
-    }
-  }, [_vm._t("main")], 2) : _vm._e(), _vm._v(" "), _vm.hasSlot.footer ? _c('el-footer', {
+  }, [_vm._t("header")], 2) : _vm._e(), _vm._v(" "), _vm.hasSlot.main ? _c('el-main', [_vm._t("main")], 2) : _vm._e(), _vm._v(" "), _vm.hasSlot.footer ? _c('el-footer', {
     attrs: {
       "height": _vm.footerHeight
     }
@@ -19153,16 +19148,16 @@ var __vue_staticRenderFns__$p = [];
 /* style */
 var __vue_inject_styles__$p = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-01db0870_0", {
-    source: ".el-container.dp-layout-root{height:100%}.el-container.dp-layout-root .el-footer,.el-container.dp-layout-root .el-header,.el-container.dp-layout-root .el-main{padding:0}",
+  inject("data-v-2ae0697a_0", {
+    source: ".el-container[data-v-2ae0697a]{height:100%}.el-container .el-footer[data-v-2ae0697a],.el-container .el-header[data-v-2ae0697a],.el-container .el-main[data-v-2ae0697a]{padding:0}.el-container .el-main[data-v-2ae0697a]{overflow:auto}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$p = undefined;
+var __vue_scope_id__$p = "data-v-2ae0697a";
 /* module identifier */
-var __vue_module_identifier__$p = "data-v-01db0870";
+var __vue_module_identifier__$p = "data-v-2ae0697a";
 /* functional template */
 var __vue_is_functional_template__$p = false;
 /* style inject shadow dom */
@@ -20317,7 +20312,7 @@ var __vue_component__$b = /*#__PURE__*/normalizeComponent({
 var typeArr = ['start', 'process', 'recall', 'done', 'error']; // 标签类型数组
 var size = ['big', 'medium', 'small']; // 标签大小数组
 var script$a = {
-  name: 'DpTag',
+  name: 'DpStatus',
   props: {
     color: String,
     // 标签文字的颜色
@@ -20369,16 +20364,16 @@ var __vue_staticRenderFns__$a = [];
 /* style */
 var __vue_inject_styles__$a = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-be09dab8_0", {
-    source: "@charset \"UTF-8\";.dp-tag[data-v-be09dab8]{display:inline-block;box-sizing:border-box;padding:0 8px;color:#252525;background-color:#fff;font-size:13px;white-space:nowrap;height:auto}.start[data-v-be09dab8]{color:#00f;border:1px solid #fff;background-color:#fff}.process[data-v-be09dab8]{background-color:#fff;border-color:#fff;color:#d9001b}.recall[data-v-be09dab8]{background-color:#fff;border-color:#fff;color:#f59a23}.done[data-v-be09dab8]{background-color:#fff;border-color:#fff;color:#27b937}.error[data-v-be09dab8]{background-color:#fff;border-color:#fff;color:#f56c6c}.big[data-v-be09dab8]{font-size:24px}.medium[data-v-be09dab8]{font-size:18px}",
+  inject("data-v-df46bda6_0", {
+    source: "@charset \"UTF-8\";.dp-tag[data-v-df46bda6]{display:inline-block;box-sizing:border-box;padding:0 8px;color:#252525;background-color:#fff;font-size:13px;white-space:nowrap;height:auto}.start[data-v-df46bda6]{color:#00f}.process[data-v-df46bda6]{color:#d9001b}.recall[data-v-df46bda6]{color:#f59a23}.done[data-v-df46bda6]{color:#27b937}.error[data-v-df46bda6]{color:#f56c6c}.big[data-v-df46bda6]{font-size:24px}.medium[data-v-df46bda6]{font-size:18px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$a = "data-v-be09dab8";
+var __vue_scope_id__$a = "data-v-df46bda6";
 /* module identifier */
-var __vue_module_identifier__$a = "data-v-be09dab8";
+var __vue_module_identifier__$a = "data-v-df46bda6";
 /* functional template */
 var __vue_is_functional_template__$a = false;
 /* style inject shadow dom */
@@ -23589,7 +23584,7 @@ var __vue_component__ = /*#__PURE__*/normalizeComponent({
   staticRenderFns: __vue_staticRenderFns__
 }, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, false, undefined, createInjectorSSR, undefined);/* eslint-disable import/prefer-default-export */
  // 分页
-var components$1=/*#__PURE__*/Object.freeze({__proto__:null,Title:__vue_component__$y,ButtonGroup:__vue_component__$x,DpButtonGroup:__vue_component__$x,GeneralTable:__vue_component__$w,SideCatalog:__vue_component__$v,DpSideCatalog:__vue_component__$v,Form:__vue_component__$u,SearchBar:__vue_component__$t,Statistics:__vue_component__$s,DpStatistics:__vue_component__$s,Dialog:__vue_component__$r,CatalogButtons:__vue_component__$q,DpCatalogButtons:__vue_component__$q,DpLayoutRoot:__vue_component__$p,DpLayoutContainer:__vue_component__$o,DpLayout:__vue_component__$h,DpLayoutBlank:__vue_component__$g,DpHeaderNav:__vue_component__$e,DpDefaultPage:__vue_component__$d,DpLoginPage:__vue_component__$c,DpTitle:__vue_component__$A,DpSubtitle:__vue_component__$z,DpIconButton:__vue_component__$b,DpTag:__vue_component__$a,DpForm:__vue_component__$9,DpFormItem:__vue_component__$8,DpFormMultiLine:__vue_component__$7,DpSearchBar:__vue_component__$6,DpQueryBar:__vue_component__$5,DpStatisticsTable:__vue_component__$3,DpGeneralTable:__vue_component__$w,DpTree:__vue_component__$2,DpDialog:__vue_component__$1,DpPagination:__vue_component__});// v-draggable: 拖拽容器
+var components$1=/*#__PURE__*/Object.freeze({__proto__:null,Title:__vue_component__$y,ButtonGroup:__vue_component__$x,DpButtonGroup:__vue_component__$x,GeneralTable:__vue_component__$w,SideCatalog:__vue_component__$v,DpSideCatalog:__vue_component__$v,Form:__vue_component__$u,SearchBar:__vue_component__$t,Statistics:__vue_component__$s,DpStatistics:__vue_component__$s,Dialog:__vue_component__$r,CatalogButtons:__vue_component__$q,DpCatalogButtons:__vue_component__$q,DpLayoutRoot:__vue_component__$p,DpLayoutContainer:__vue_component__$o,DpLayout:__vue_component__$h,DpLayoutBlank:__vue_component__$g,DpHeaderNav:__vue_component__$e,DpDefaultPage:__vue_component__$d,DpLoginPage:__vue_component__$c,DpTitle:__vue_component__$A,DpSubtitle:__vue_component__$z,DpIconButton:__vue_component__$b,DpStatus:__vue_component__$a,DpForm:__vue_component__$9,DpFormItem:__vue_component__$8,DpFormMultiLine:__vue_component__$7,DpSearchBar:__vue_component__$6,DpQueryBar:__vue_component__$5,DpStatisticsTable:__vue_component__$3,DpGeneralTable:__vue_component__$w,DpTree:__vue_component__$2,DpDialog:__vue_component__$1,DpPagination:__vue_component__});// v-draggable: 拖拽容器
 var draggable = {
   name: 'draggable',
   value: {
@@ -23643,7 +23638,7 @@ var install = function installDpVue2Widgets(Vue) {
       Vue.directive(directive.name, directive.value);
     }
   });
-};var components=/*#__PURE__*/Object.freeze({__proto__:null,'default':install,Title:__vue_component__$y,ButtonGroup:__vue_component__$x,DpButtonGroup:__vue_component__$x,GeneralTable:__vue_component__$w,SideCatalog:__vue_component__$v,DpSideCatalog:__vue_component__$v,Form:__vue_component__$u,SearchBar:__vue_component__$t,Statistics:__vue_component__$s,DpStatistics:__vue_component__$s,Dialog:__vue_component__$r,CatalogButtons:__vue_component__$q,DpCatalogButtons:__vue_component__$q,DpLayoutRoot:__vue_component__$p,DpLayoutContainer:__vue_component__$o,DpLayout:__vue_component__$h,DpLayoutBlank:__vue_component__$g,DpHeaderNav:__vue_component__$e,DpDefaultPage:__vue_component__$d,DpLoginPage:__vue_component__$c,DpTitle:__vue_component__$A,DpSubtitle:__vue_component__$z,DpIconButton:__vue_component__$b,DpTag:__vue_component__$a,DpForm:__vue_component__$9,DpFormItem:__vue_component__$8,DpFormMultiLine:__vue_component__$7,DpSearchBar:__vue_component__$6,DpQueryBar:__vue_component__$5,DpStatisticsTable:__vue_component__$3,DpGeneralTable:__vue_component__$w,DpTree:__vue_component__$2,DpDialog:__vue_component__$1,DpPagination:__vue_component__});var generateMenuItems = function generateMenuItems(routesConfig) {
+};var components=/*#__PURE__*/Object.freeze({__proto__:null,'default':install,Title:__vue_component__$y,ButtonGroup:__vue_component__$x,DpButtonGroup:__vue_component__$x,GeneralTable:__vue_component__$w,SideCatalog:__vue_component__$v,DpSideCatalog:__vue_component__$v,Form:__vue_component__$u,SearchBar:__vue_component__$t,Statistics:__vue_component__$s,DpStatistics:__vue_component__$s,Dialog:__vue_component__$r,CatalogButtons:__vue_component__$q,DpCatalogButtons:__vue_component__$q,DpLayoutRoot:__vue_component__$p,DpLayoutContainer:__vue_component__$o,DpLayout:__vue_component__$h,DpLayoutBlank:__vue_component__$g,DpHeaderNav:__vue_component__$e,DpDefaultPage:__vue_component__$d,DpLoginPage:__vue_component__$c,DpTitle:__vue_component__$A,DpSubtitle:__vue_component__$z,DpIconButton:__vue_component__$b,DpStatus:__vue_component__$a,DpForm:__vue_component__$9,DpFormItem:__vue_component__$8,DpFormMultiLine:__vue_component__$7,DpSearchBar:__vue_component__$6,DpQueryBar:__vue_component__$5,DpStatisticsTable:__vue_component__$3,DpGeneralTable:__vue_component__$w,DpTree:__vue_component__$2,DpDialog:__vue_component__$1,DpPagination:__vue_component__});var generateMenuItems = function generateMenuItems(routesConfig) {
   var items = [];
   routesConfig.map(function (v) {
     if (v.hidden !== true) {
@@ -23723,4 +23718,4 @@ var generateRouter = function generateRouter(config) {
   if (componentName !== 'default') {
     install[componentName] = component;
   }
-});exports.ButtonGroup=__vue_component__$x;exports.CatalogButtons=__vue_component__$q;exports.Dialog=__vue_component__$r;exports.DpButtonGroup=__vue_component__$x;exports.DpCatalogButtons=__vue_component__$q;exports.DpDefaultPage=__vue_component__$d;exports.DpDialog=__vue_component__$1;exports.DpForm=__vue_component__$9;exports.DpFormItem=__vue_component__$8;exports.DpFormMultiLine=__vue_component__$7;exports.DpGeneralTable=__vue_component__$w;exports.DpHeaderNav=__vue_component__$e;exports.DpIconButton=__vue_component__$b;exports.DpLayout=__vue_component__$h;exports.DpLayoutBlank=__vue_component__$g;exports.DpLayoutContainer=__vue_component__$o;exports.DpLayoutRoot=__vue_component__$p;exports.DpLoginPage=__vue_component__$c;exports.DpPagination=__vue_component__;exports.DpQueryBar=__vue_component__$5;exports.DpSearchBar=__vue_component__$6;exports.DpSideCatalog=__vue_component__$v;exports.DpStatistics=__vue_component__$s;exports.DpStatisticsTable=__vue_component__$3;exports.DpSubtitle=__vue_component__$z;exports.DpTag=__vue_component__$a;exports.DpTitle=__vue_component__$A;exports.DpTree=__vue_component__$2;exports.Form=__vue_component__$u;exports.GeneralTable=__vue_component__$w;exports.SearchBar=__vue_component__$t;exports.SideCatalog=__vue_component__$v;exports.Statistics=__vue_component__$s;exports.Title=__vue_component__$y;exports["default"]=install;exports.utils=index;
+});exports.ButtonGroup=__vue_component__$x;exports.CatalogButtons=__vue_component__$q;exports.Dialog=__vue_component__$r;exports.DpButtonGroup=__vue_component__$x;exports.DpCatalogButtons=__vue_component__$q;exports.DpDefaultPage=__vue_component__$d;exports.DpDialog=__vue_component__$1;exports.DpForm=__vue_component__$9;exports.DpFormItem=__vue_component__$8;exports.DpFormMultiLine=__vue_component__$7;exports.DpGeneralTable=__vue_component__$w;exports.DpHeaderNav=__vue_component__$e;exports.DpIconButton=__vue_component__$b;exports.DpLayout=__vue_component__$h;exports.DpLayoutBlank=__vue_component__$g;exports.DpLayoutContainer=__vue_component__$o;exports.DpLayoutRoot=__vue_component__$p;exports.DpLoginPage=__vue_component__$c;exports.DpPagination=__vue_component__;exports.DpQueryBar=__vue_component__$5;exports.DpSearchBar=__vue_component__$6;exports.DpSideCatalog=__vue_component__$v;exports.DpStatistics=__vue_component__$s;exports.DpStatisticsTable=__vue_component__$3;exports.DpStatus=__vue_component__$a;exports.DpSubtitle=__vue_component__$z;exports.DpTitle=__vue_component__$A;exports.DpTree=__vue_component__$2;exports.Form=__vue_component__$u;exports.GeneralTable=__vue_component__$w;exports.SearchBar=__vue_component__$t;exports.SideCatalog=__vue_component__$v;exports.Statistics=__vue_component__$s;exports.Title=__vue_component__$y;exports["default"]=install;exports.utils=index;

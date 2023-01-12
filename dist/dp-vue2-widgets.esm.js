@@ -18991,7 +18991,7 @@ var script$o = {
   }
 };
 
-var css_248z$i = ".el-container.dp-layout-root{height:100%}.el-container.dp-layout-root .el-footer,.el-container.dp-layout-root .el-header,.el-container.dp-layout-root .el-main{padding:0}";
+var css_248z$i = ".el-container[data-v-2ae0697a]{height:100%}.el-container .el-footer[data-v-2ae0697a],.el-container .el-header[data-v-2ae0697a],.el-container .el-main[data-v-2ae0697a]{padding:0}.el-container .el-main[data-v-2ae0697a]{overflow:auto}";
 styleInject(css_248z$i);
 
 /* script */
@@ -19002,7 +19002,6 @@ var __vue_render__$p = function () {
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c('el-container', {
-    staticClass: "dp-layout-root",
     style: {
       minWidth: _vm.minWidth
     }
@@ -19010,11 +19009,7 @@ var __vue_render__$p = function () {
     attrs: {
       "height": _vm.headerHeight
     }
-  }, [_vm._t("header")], 2) : _vm._e(), _vm._v(" "), _vm.hasSlot.main ? _c('el-main', {
-    staticStyle: {
-      "overflow": "hidden"
-    }
-  }, [_vm._t("main")], 2) : _vm._e(), _vm._v(" "), _vm.hasSlot.footer ? _c('el-footer', {
+  }, [_vm._t("header")], 2) : _vm._e(), _vm._v(" "), _vm.hasSlot.main ? _c('el-main', [_vm._t("main")], 2) : _vm._e(), _vm._v(" "), _vm.hasSlot.footer ? _c('el-footer', {
     attrs: {
       "height": _vm.footerHeight
     }
@@ -19025,7 +19020,7 @@ var __vue_staticRenderFns__$p = [];
 /* style */
 const __vue_inject_styles__$p = undefined;
 /* scoped */
-const __vue_scope_id__$p = undefined;
+const __vue_scope_id__$p = "data-v-2ae0697a";
 /* module identifier */
 const __vue_module_identifier__$p = undefined;
 /* functional template */
@@ -20264,7 +20259,7 @@ const __vue_component__$b = /*#__PURE__*/normalizeComponent({
 const typeArr = ['start', 'process', 'recall', 'done', 'error']; // 标签类型数组
 const size = ['big', 'medium', 'small']; // 标签大小数组
 var script$a = {
-  name: 'DpTag',
+  name: 'DpStatus',
   props: {
     color: String,
     // 标签文字的颜色
@@ -20299,7 +20294,7 @@ var script$a = {
   }
 };
 
-var css_248z$8 = "@charset \"UTF-8\";.dp-tag[data-v-be09dab8]{display:inline-block;box-sizing:border-box;padding:0 8px;color:#252525;background-color:#fff;font-size:13px;white-space:nowrap;height:auto}.start[data-v-be09dab8]{color:#00f;border:1px solid #fff;background-color:#fff}.process[data-v-be09dab8]{background-color:#fff;border-color:#fff;color:#d9001b}.recall[data-v-be09dab8]{background-color:#fff;border-color:#fff;color:#f59a23}.done[data-v-be09dab8]{background-color:#fff;border-color:#fff;color:#27b937}.error[data-v-be09dab8]{background-color:#fff;border-color:#fff;color:#f56c6c}.big[data-v-be09dab8]{font-size:24px}.medium[data-v-be09dab8]{font-size:18px}";
+var css_248z$8 = "@charset \"UTF-8\";.dp-tag[data-v-df46bda6]{display:inline-block;box-sizing:border-box;padding:0 8px;color:#252525;background-color:#fff;font-size:13px;white-space:nowrap;height:auto}.start[data-v-df46bda6]{color:#00f}.process[data-v-df46bda6]{color:#d9001b}.recall[data-v-df46bda6]{color:#f59a23}.done[data-v-df46bda6]{color:#27b937}.error[data-v-df46bda6]{color:#f56c6c}.big[data-v-df46bda6]{font-size:24px}.medium[data-v-df46bda6]{font-size:18px}";
 styleInject(css_248z$8);
 
 /* script */
@@ -20321,7 +20316,7 @@ var __vue_staticRenderFns__$a = [];
 /* style */
 const __vue_inject_styles__$a = undefined;
 /* scoped */
-const __vue_scope_id__$a = "data-v-be09dab8";
+const __vue_scope_id__$a = "data-v-df46bda6";
 /* module identifier */
 const __vue_module_identifier__$a = undefined;
 /* functional template */
@@ -23617,7 +23612,7 @@ var components$1 = /*#__PURE__*/Object.freeze({
   DpTitle: __vue_component__$A,
   DpSubtitle: __vue_component__$z,
   DpIconButton: __vue_component__$b,
-  DpTag: __vue_component__$a,
+  DpStatus: __vue_component__$a,
   DpForm: __vue_component__$9,
   DpFormItem: __vue_component__$8,
   DpFormMultiLine: __vue_component__$7,
@@ -23716,7 +23711,7 @@ var components = /*#__PURE__*/Object.freeze({
   DpTitle: __vue_component__$A,
   DpSubtitle: __vue_component__$z,
   DpIconButton: __vue_component__$b,
-  DpTag: __vue_component__$a,
+  DpStatus: __vue_component__$a,
   DpForm: __vue_component__$9,
   DpFormItem: __vue_component__$8,
   DpFormMultiLine: __vue_component__$7,
@@ -23813,4 +23808,4 @@ Object.entries(components).forEach(_ref => {
   }
 });
 
-export { __vue_component__$x as ButtonGroup, __vue_component__$q as CatalogButtons, __vue_component__$r as Dialog, __vue_component__$x as DpButtonGroup, __vue_component__$q as DpCatalogButtons, __vue_component__$d as DpDefaultPage, __vue_component__$1 as DpDialog, __vue_component__$9 as DpForm, __vue_component__$8 as DpFormItem, __vue_component__$7 as DpFormMultiLine, __vue_component__$w as DpGeneralTable, __vue_component__$e as DpHeaderNav, __vue_component__$b as DpIconButton, __vue_component__$h as DpLayout, __vue_component__$g as DpLayoutBlank, __vue_component__$o as DpLayoutContainer, __vue_component__$p as DpLayoutRoot, __vue_component__$c as DpLoginPage, __vue_component__ as DpPagination, __vue_component__$5 as DpQueryBar, __vue_component__$6 as DpSearchBar, __vue_component__$v as DpSideCatalog, __vue_component__$s as DpStatistics, __vue_component__$3 as DpStatisticsTable, __vue_component__$z as DpSubtitle, __vue_component__$a as DpTag, __vue_component__$A as DpTitle, __vue_component__$2 as DpTree, __vue_component__$u as Form, __vue_component__$w as GeneralTable, __vue_component__$t as SearchBar, __vue_component__$v as SideCatalog, __vue_component__$s as Statistics, __vue_component__$y as Title, install as default, index as utils };
+export { __vue_component__$x as ButtonGroup, __vue_component__$q as CatalogButtons, __vue_component__$r as Dialog, __vue_component__$x as DpButtonGroup, __vue_component__$q as DpCatalogButtons, __vue_component__$d as DpDefaultPage, __vue_component__$1 as DpDialog, __vue_component__$9 as DpForm, __vue_component__$8 as DpFormItem, __vue_component__$7 as DpFormMultiLine, __vue_component__$w as DpGeneralTable, __vue_component__$e as DpHeaderNav, __vue_component__$b as DpIconButton, __vue_component__$h as DpLayout, __vue_component__$g as DpLayoutBlank, __vue_component__$o as DpLayoutContainer, __vue_component__$p as DpLayoutRoot, __vue_component__$c as DpLoginPage, __vue_component__ as DpPagination, __vue_component__$5 as DpQueryBar, __vue_component__$6 as DpSearchBar, __vue_component__$v as DpSideCatalog, __vue_component__$s as DpStatistics, __vue_component__$3 as DpStatisticsTable, __vue_component__$a as DpStatus, __vue_component__$z as DpSubtitle, __vue_component__$A as DpTitle, __vue_component__$2 as DpTree, __vue_component__$u as Form, __vue_component__$w as GeneralTable, __vue_component__$t as SearchBar, __vue_component__$v as SideCatalog, __vue_component__$s as Statistics, __vue_component__$y as Title, install as default, index as utils };

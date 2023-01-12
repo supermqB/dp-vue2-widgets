@@ -32,12 +32,6 @@ const routesConfig = [
         component: () => import('../views/test/test-1')
       },
       {
-        path: 'test2',
-        name: 'test2',
-        meta: { title: 'test2' },
-        component: () => import('../views/test/test-2')
-      },
-      {
         path: 'gulingjun',
         name: 'gulingjun',
         meta: { title: 'gulingjun' },
@@ -46,10 +40,24 @@ const routesConfig = [
     ]
   },
   {
-    path: 'button',
-    name: 'button',
-    meta: { title: '按钮' },
-    component: () => import('../views/Button.vue')
+    path: 'basic',
+    name: 'basic',
+    meta: { title: '通用' },
+    component: DpLayoutBlank,
+    children: [
+      {
+        path: 'button',
+        name: 'basic/button',
+        meta: { title: '按钮' },
+        component: () => import('../views/basic/button')
+      },
+      {
+        path: 'status',
+        name: 'basic/status',
+        meta: { title: '状态标签' },
+        component: () => import('../views/basic/status')
+      }
+    ]
   },
   {
     path: 'table',
