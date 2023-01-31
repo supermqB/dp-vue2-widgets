@@ -224,7 +224,7 @@ export default {
 
         this.$nextTick(() => {
           this.$refs.dpTree.setCurrentKey(this.curNodeKey)
-          this.handleNodeClick()
+          if (this.curNodeKey != '') this.handleNodeClick()
         })
       },
       deep: true
