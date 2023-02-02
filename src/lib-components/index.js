@@ -25,6 +25,9 @@ export { default as DpHeaderNav } from './layout/header-nav'
 export { default as DpDefaultPage } from './DefaultPage'
 export { default as DpLoginPage } from './LoginPage'
 
+export { default as DpBlocks } from './layout/blocks'
+export { default as DpBlock } from './layout/block'
+
 /* common 通用*/
 // title 标题
 export { default as DpTitle } from './common/title/main' // 标题

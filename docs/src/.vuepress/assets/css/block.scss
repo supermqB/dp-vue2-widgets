@@ -1,0 +1,14 @@
+.demo-block\.html {
+  .blocks {
+    border: 1px solid #e1e1e1;
+    height: 300px !important;
+    background-color: #ffffff;
+    color: #333;
+  }
+  .block-body {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
