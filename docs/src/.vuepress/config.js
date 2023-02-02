@@ -105,11 +105,18 @@ module.exports = {
           title: '通用 basic',
           collapsable: false,
           children: getPaths('basic', [
-            'layout-root', // 根节点布局
-            'layout-container', // 页面布局容器
             'title', // 标题
             'icon-button', // 带图标按钮
             'status' // 状态标签
+          ])
+        },
+        {
+          title: '布局 layout',
+          collapsable: false,
+          children: getPaths('layout', [
+            'layout-root', // 根节点布局
+            'layout-container', // 页面布局容器
+            'block' // 块
           ])
         },
         {
