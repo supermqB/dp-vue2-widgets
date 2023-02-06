@@ -135,7 +135,11 @@ module.exports = {
             'general-table', // 通用表格
             'statistics-table', // 统计表格
             'tree' // 树形控件
-          ])
+          ]).concat({
+            title: '模块组件',
+            collapsable: false,
+            children: getPaths('data-display/module', ['catalog'])
+          })
         },
         {
           title: '交互 interaction',

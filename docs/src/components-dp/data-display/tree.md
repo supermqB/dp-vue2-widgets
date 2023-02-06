@@ -1,9 +1,9 @@
-# Tree 树形控件
+# Tree 树形结构列表
 
 该组件可以使用 ElementUI 里 Tree 内部传参和方法。
 可以在 data 里配置 state(是否单个显示红点标识)、number(右侧数字)、btns(按钮或图标集合)，也可以使用默认插槽或具名插槽处理业务逻辑，使用方式可以看以下示例。
 
-### 树状带异常标识
+### 基础用法
 
 ::: demo
 
@@ -236,27 +236,27 @@
 
 :::
 
-### 参数说明 props
+### Props
 
-| 参数               | 说明                                 | 类型     | 可选值 | 默认值  |
-| ------------------ | ------------------------------------ | -------- | ------ | ------- |
-| data               | 展示数据                             | array    | -      | -       |
-| bind               | 其他传参                             | object   | -      | -       |
-| nodeKey            | 每个树节点用来作为唯一标识的属性     | string   | -      | id      |
-| expandOnClickNode  | 是否在点击节点的时候展开或者收缩节点 | boolean  | -      | true    |
-| defaultExpandAll   | 是否默认展开所有节点                 | boolean  | -      | false   |
-| indent             | 相邻级节点间的水平缩进，单位为像素   | number   | -      | 12      |
-| showState          | 是否显示状态标识                     | boolean  | -      | true    |
-| numTransform       | 是否进行数字转换                     | boolean  | -      | true    |
-| numTransformFunc   | 数字转换使用的方法                   | Function | -      | unitFmt |
-| slotWidth          | 右侧插槽宽度                         | string   | -      | auto    |
-| allowSelectNonleaf | 是否允许选中非叶节点                 | boolean  | -      | false   |
-| currentNodeKey     | 当前选中的节点                       | string   | -      | -       |
-| searchText         | 模糊搜索传值                         | string   | -      | -       |
-| isList             | 是否是纯列表                         | boolean  | -      | false   |
+| 参数                 | 说明                                 | 类型     | 可选值 | 默认值  |
+| -------------------- | ------------------------------------ | -------- | ------ | ------- |
+| data                 | 展示数据                             | array    | -      | -       |
+| node-key             | 每个树节点用来作为唯一标识的属性     | string   | -      | id      |
+| expand-on-click-node | 是否在点击节点的时候展开或者收缩节点 | boolean  | -      | true    |
+| default-expand-all   | 是否默认展开所有节点                 | boolean  | -      | false   |
+| indent               | 相邻级节点间的水平缩进，单位为像素   | number   | -      | 12      |
+| show-state           | 是否显示状态标识                     | boolean  | -      | true    |
+| num-transform        | 是否进行数字转换                     | boolean  | -      | true    |
+| num-transform-func   | 数字转换使用的方法                   | function | -      | unitFmt |
+| slot-width           | 右侧插槽宽度                         | string   | -      | auto    |
+| allow-select-nonleaf | 是否允许选中非叶节点                 | boolean  | -      | false   |
+| current-node-key     | 当前选中的节点                       | string   | -      | -       |
+| search-text          | 模糊搜索传值                         | string   | -      | -       |
+| is-list              | 是否是纯列表                         | boolean  | -      | false   |
 
-### 事件说明 event
+### Event
 
-| 参数           | 说明               | 类型           | 可选值 | 默认值                     |
-| -------------- | ------------------ | -------------- | ------ | -------------------------- |
-| onNodeSelected | 节点被点击时的回调 | function(node) | -      | 参数为：该节点所对应的对象 |
+| 事件名称                   | 说明             | 回调参数       |
+| -------------------------- | ---------------- | -------------- |
+| node-selected              | 节点被选中时触发 | node: 节点内容 |
+| onNodeSelected(不建议使用) | 节点被选中时触发 | node: 节点内容 |
