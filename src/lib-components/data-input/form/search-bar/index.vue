@@ -60,7 +60,8 @@ export default {
               placeholder: this.placeholder,
               suffixIcon: 'el-icon-search'
             }
-          }]
+          }
+        ]
       }
       return config
     }
@@ -89,6 +90,7 @@ export default {
   methods: {
     onSearch() {
       this.$emit('onSearch', this.lastSearchForm)
+      this.$emit('search', this.lastSearchForm)
     }
   }
 }

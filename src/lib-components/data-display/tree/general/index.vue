@@ -1,7 +1,7 @@
 <template>
   <el-tree
     ref="dpTree"
-    v-bind="bind"
+    v-bind="$attrs"
     :class="['tree-wrap', { 'tree-red-dot': showState, 'tree-list': isList }]"
     :node-key="nodeKey"
     :data="treeList"
@@ -88,7 +88,7 @@ const getDefaultNode = (
 }
 
 export default {
-  name: 'GeneralTree',
+  name: 'DpTree',
   props: {
     /**
      * id-String:唯一标识
@@ -102,11 +102,11 @@ export default {
       type: Array,
       default: () => []
     },
-    // 其他传参
-    bind: {
-      type: Object,
-      default: () => {}
-    },
+    // // 其他传参
+    // bind: {
+    //   type: Object,
+    //   default: () => {}
+    // },
     // 每个树节点用来作为唯一标识的属性
     nodeKey: {
       type: String,
@@ -269,6 +269,7 @@ export default {
           }
           this.curNodeKey = node[this.nodeKey]
           this.$emit('onNodeSelected', { ...node })
+          this.$emit('node-selected', { ...node })
         }
       })
     },
