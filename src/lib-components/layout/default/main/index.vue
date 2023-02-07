@@ -29,11 +29,12 @@ export default {
     setZoomStyle() {
       let keepWHRatio = this.$route.meta.keepWHRatio
       let ratio = this.getZoomRatio()
+      let { width: w, } = document.body.getBoundingClientRect()
       this.zoomStyle = keepWHRatio
         ? {
             ...DEFAULT_DIMS,
             transform: `scale(${ratio})`,
-            left: `${(-1920 * (1 - ratio)) / 2}px`,
+            left: `${(w-1920) / 2}px`,
             top: `${(-893 * (1 - ratio)) / 2}px`
           }
         : {}
