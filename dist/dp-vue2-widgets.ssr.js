@@ -19963,9 +19963,11 @@ var script$l = {
     setZoomStyle: function setZoomStyle() {
       var keepWHRatio = this.$route.meta.keepWHRatio;
       var ratio = this.getZoomRatio();
+      var _document$body$getBou2 = document.body.getBoundingClientRect(),
+        w = _document$body$getBou2.width;
       this.zoomStyle = keepWHRatio ? _objectSpread2(_objectSpread2({}, DEFAULT_DIMS), {}, {
         transform: "scale(".concat(ratio, ")"),
-        left: "".concat(-1920 * (1 - ratio) / 2, "px"),
+        left: "".concat((w - 1920) / 2, "px"),
         top: "".concat(-893 * (1 - ratio) / 2, "px")
       }) : {};
     }
@@ -20006,7 +20008,7 @@ var __vue_inject_styles__$m = undefined;
 /* scoped */
 var __vue_scope_id__$m = undefined;
 /* module identifier */
-var __vue_module_identifier__$m = "data-v-06890e3d";
+var __vue_module_identifier__$m = "data-v-1a38cc09";
 /* functional template */
 var __vue_is_functional_template__$m = false;
 /* style inject */

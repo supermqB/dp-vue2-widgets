@@ -553,12 +553,11 @@ var script$y = {
     }
   },
   methods: {
-    rowAction(_ref, callback) {
-      let {
-        rowIdx,
-        row,
-        column
-      } = _ref;
+    rowAction({
+      rowIdx,
+      row,
+      column
+    }, callback) {
       if (!callback) return;
       callback(row.index, this.tableData, row);
     },
@@ -822,8 +821,7 @@ function getMaxNumber(value, len) {
   }
   return max;
 }
-function treeTraverse(tree, func) {
-  let deep = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+function treeTraverse(tree, func, deep = true) {
   tree.forEach(node => {
     !deep && func(node);
     node.children && treeTraverse(node.children, func, deep);
@@ -924,8 +922,7 @@ function getFirstLeafNode(tree, type) {
   }
   return null;
 }
-const objectKeysToNull = function (obj) {
-  let exclude = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+const objectKeysToNull = (obj, exclude = []) => {
   Object.keys(obj).forEach(key => {
     if (exclude.indexOf(key) === -1) {
       obj[key] = null;
@@ -18576,8 +18573,7 @@ var script$v = {
   watch: {
     searchForm: {
       handler(newForm) {
-        if (Object.entries(newForm).some(_ref => {
-          let [ok, ov] = _ref;
+        if (Object.entries(newForm).some(([ok, ov]) => {
           return this.lastSearchForm[ok] != ov;
         })) {
           this.__onSearch();
@@ -19523,10 +19519,13 @@ var script$l = {
     setZoomStyle() {
       let keepWHRatio = this.$route.meta.keepWHRatio;
       let ratio = this.getZoomRatio();
+      let {
+        width: w
+      } = document.body.getBoundingClientRect();
       this.zoomStyle = keepWHRatio ? {
         ...DEFAULT_DIMS,
         transform: `scale(${ratio})`,
-        left: `${-1920 * (1 - ratio) / 2}px`,
+        left: `${(w - 1920) / 2}px`,
         top: `${-893 * (1 - ratio) / 2}px`
       } : {};
     }
@@ -22613,8 +22612,7 @@ var script$7 = {
   watch: {
     searchForm: {
       handler(newForm) {
-        if (Object.entries(newForm).some(_ref => {
-          let [ok, ov] = _ref;
+        if (Object.entries(newForm).some(([ok, ov]) => {
           return this.lastSearchForm[ok] != ov;
         })) {
           this.lastSearchForm = {
@@ -22727,8 +22725,7 @@ var script$6 = {
   watch: {
     searchForm: {
       handler(newForm) {
-        if (Object.entries(newForm).some(_ref => {
-          let [ok, ov] = _ref;
+        if (Object.entries(newForm).some(([ok, ov]) => {
           return this.lastSearchForm[ok] != ov;
         })) {
           this.lastSearchForm = {
@@ -22972,13 +22969,12 @@ var script$4 = {
       }
     },
     // 当前行row、当前列column、当前行号rowIndex、当前列号columnIndex四个属性
-    spanMethod(_ref) {
-      let {
-        row,
-        column,
-        rowIndex,
-        columnIndex
-      } = _ref;
+    spanMethod({
+      row,
+      column,
+      rowIndex,
+      columnIndex
+    }) {
       if (typeof this.callback === 'function') {
         // 有自定义使用自定义
         return this.callback({
@@ -23077,9 +23073,7 @@ const __vue_component__$4 = /*#__PURE__*/normalizeComponent({
  * @param {*} keyId 唯一标识属性，默认id
  * @returns
  */
-const getDefaultNode = function (listData, parentKeys) {
-  let allowSelectNonleaf = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  let keyId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'id';
+const getDefaultNode = (listData, parentKeys, allowSelectNonleaf = false, keyId = 'id') => {
   let res = '';
   // let _parentKeys = [...parentKeys]
   listData.forEach(item => {
@@ -23952,8 +23946,7 @@ const directives = [draggable];
 
 // install function executed by Vue.use()
 const install = function installDpVue2Widgets(Vue) {
-  Object.entries(components$1).forEach(_ref => {
-    let [componentName, component] = _ref;
+  Object.entries(components$1).forEach(([componentName, component]) => {
     Vue.component(componentName, component);
   });
 
@@ -24089,8 +24082,7 @@ var index = {
   vueRouter
 };
 
-Object.entries(components).forEach(_ref => {
-  let [componentName, component] = _ref;
+Object.entries(components).forEach(([componentName, component]) => {
   if (componentName !== 'default') {
     install[componentName] = component;
   }
