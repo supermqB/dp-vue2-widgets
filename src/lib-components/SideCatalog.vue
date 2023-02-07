@@ -63,6 +63,10 @@ export default {
       type: String,
       default: ''
     },
+    immediatelyFlag:{
+      type: Boolean,
+      default: true
+    },
     defaultExpandAll: {
       type: Boolean,
       default: false
@@ -159,8 +163,10 @@ export default {
       immediate: true
     },
     data() {
-      this.setCurrent()
-      this.emitItemSelected()
+      if (this.immediatelyFlag) {
+        this.setCurrent()
+        this.emitItemSelected()
+      }
     }
   }
 }
