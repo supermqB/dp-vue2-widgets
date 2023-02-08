@@ -46,6 +46,8 @@ export { default as DpFormMultiLine } from './data-input/form/multi-line' // 多
 export { default as DpSearchBar } from './data-input/form/search-bar' // 检索框
 export { default as DpQueryBar } from './data-input/form/query-bar'
 
+export { default as DpSearchForm } from './data-input/search-form' // 检索表单
+
 /* data-display 数据显示 */
 // table 表格
 export { default as DpStatisticsTable } from './data-display/table/statistics' // 统计表格
