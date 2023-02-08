@@ -9,7 +9,7 @@
     <template #main>
       <div style="padding: 6px">
         <div class="line" style="background: #eee">
-          <dp-form-inline :configs="formConfigs" :model="form" />
+          <!-- <dp-form-inline :configs="formConfigs" :model="form" /> -->
         </div>
         <div class="line">
           <dp-query-bar :inputConfigs="formConfigs" :searchForm="form" inline />

@@ -108,6 +108,12 @@ const routesConfig = [
         name: 'form/multi-line',
         meta: { title: '多行表单' },
         component: () => import('../views/form/multi-line')
+      },
+      {
+        path: 'search-form',
+        name: 'search-form',
+        meta: { title: '检索表单 dp-search-form' },
+        component: () => import('../views/form/search-form')
       }
     ]
   }

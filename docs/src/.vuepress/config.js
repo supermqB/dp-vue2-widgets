@@ -125,7 +125,8 @@ module.exports = {
           children: getPaths('data-input', [
             'form', // 表单
             'search-bar', // 检索栏
-            'query-bar' // 表单查询
+            'query-bar', // 表单查询
+            'search-form' // 检索表单
           ])
         },
         {
