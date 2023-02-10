@@ -19226,6 +19226,12 @@ var script$u = {
         return true;
       }
     },
+    customClass: {
+      type: String,
+      default: function _default() {
+        return '';
+      }
+    },
     appendToBody: {
       type: Boolean,
       default: function _default() {
@@ -19278,6 +19284,7 @@ var __vue_render__$v = function __vue_render__() {
   return _c('el-dialog', {
     staticClass: "dp_dialog",
     attrs: {
+      "custom-class": _vm.customClass,
       "visible": _vm.isOpen,
       "top": _vm.top,
       "close-on-click-modal": false,
@@ -19329,7 +19336,7 @@ var __vue_staticRenderFns__$v = [];
 /* style */
 var __vue_inject_styles__$v = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-556a49e6_0", {
+  inject("data-v-aa977f4e_0", {
     source: ".dpui_dialogTitle{height:23px!important;position:relative;bottom:4px}.dpui_dialogTitle .dp-subtitle__text{font-size:15px;top:5px;color:#333}",
     map: undefined,
     media: undefined
@@ -19338,7 +19345,7 @@ var __vue_inject_styles__$v = function __vue_inject_styles__(inject) {
 /* scoped */
 var __vue_scope_id__$v = undefined;
 /* module identifier */
-var __vue_module_identifier__$v = "data-v-556a49e6";
+var __vue_module_identifier__$v = "data-v-aa977f4e";
 /* functional template */
 var __vue_is_functional_template__$v = false;
 /* style inject shadow dom */
