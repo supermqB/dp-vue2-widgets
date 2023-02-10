@@ -1,10 +1,14 @@
 <template>
-  <dp-layout-container>
+  <dp-layout-container drag>
     <template #asideLeft>
-      <div class="section asideLeft">
-        <dp-title text="大标题22" />
-        <dp-subtitle text="小标题22" />
-      </div>
+      <dp-blocks>
+        <dp-block>
+          <template slot="header">
+            <dp-title text="目录" />
+          </template>
+          <aside-catalog />
+        </dp-block>
+      </dp-blocks>
     </template>
     <template #main>
       <dp-blocks>
@@ -53,7 +57,9 @@
 </template>
 
 <script>
+import AsideCatalog from './AsideCatalog'
 export default {
+  components: { AsideCatalog },
   data() {
     return {
       containerWidth: '800',
@@ -166,7 +172,7 @@ export default {
   },
   methods: {
     handleChange(v) {
-      console.log({ change137: v })
+      console.log({ change: v })
     }
   }
 }

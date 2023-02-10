@@ -269,7 +269,7 @@ export default {
           }
           this.curNodeKey = node[this.nodeKey]
           this.$emit('onNodeSelected', { ...node })
-          this.$emit('node-selected', { ...node })
+          this.$emit('node-selected', node)
         }
       })
     },

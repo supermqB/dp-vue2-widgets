@@ -1,11 +1,21 @@
 <template>
   <dp-blocks class="catalog">
-    <!-- catalog__search-bar: 目录模块中search-bar区域 检索栏 -->
-    <dp-block class="catalog__search-bar" height="40px">
-      <dp-search-bar v-model="searchForm" @search="handleSearch" />
+    <!-- catalog__search-form: 目录模块中search-form区域 检索表单 -->
+    <dp-block class="catalog__search-form" height="40px">
+      <!-- <dp-search-form
+        :configs="searchConfigs"
+        :model="searchModel"
+        @change="handleChange"
+      />
+       -->
+      <search-form
+        :configs="searchConfigs"
+        :model="searchModel"
+        @change="handleSearchChange"
+      />
     </dp-block>
     <!-- catalog__tree-list: 目录模块中tree-list区域 树状列表 -->
-    <dp-block class="catalog__tree-list" noBorder>
+    <dp-block class="catalog__tree-list">
       <dp-tree
         :data="data"
         @node-selected="handleNodeSelected"
@@ -16,9 +26,21 @@
 </template>
 
 <script>
+import SearchForm from './SearchForm'
 export default {
   name: 'DpCatalog',
+  components: { SearchForm },
   props: {
+    // searchConfigs: 检索表单配置项
+    searchConfigs: {
+      type: Array,
+      default: () => []
+    },
+    // searchModel: 检索表单数据对象
+    searchModel: {
+      type: Object,
+      default: () => ({})
+    },
     // load: 获取目录数据的方法 传入搜索栏参数 返回目录数据
     load: {
       type: Function,
@@ -27,28 +49,27 @@ export default {
   },
   data() {
     return {
-      searchForm: {
-        searchText: ''
-      },
       data: [],
       loading: false
     }
   },
+
   mounted() {
     this.getData()
   },
   methods: {
     async getData() {
+      this.data = []
+      this.loading = true
       try {
-        this.loading = true
-        this.data = await this.load(this.searchForm)
+        this.data = await this.load(this.searchModel)
         this.loading = false
       } catch (e) {
         this.loading = false
         this.$message({ type: 'error', message: '系统错误' })
       }
     },
-    handleSearch() {
+    handleSearchChange() {
       this.getData()
     },
     handleNodeSelected(v) {
@@ -58,12 +79,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.catalog {
-  &__search-bar {
-    padding: 0 6px;
-  }
-  // &__tree-list {
-  // }
-}
-</style>
+<style lang="scss" scoped></style>

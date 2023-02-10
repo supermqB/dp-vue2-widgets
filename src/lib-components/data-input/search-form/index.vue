@@ -28,8 +28,7 @@
         <el-button slot="reference">更多</el-button>
       </el-popover>
     </div>
-
-    <dp-form id="form" :configs="configs" :model="model" inline />
+    <dp-form ref="form" :configs="configs" :model="model" inline />
   </div>
 </template>
 <script>
@@ -38,18 +37,10 @@ import elementResizeDetectorMaker from 'element-resize-detector'
 export default {
   props: {
     // 表单项配置
-    configs: {
-      type: Array,
-      default: () => {
-        return []
-      }
-    },
+    configs: Array,
     // 表单数据对象
-    model: {
-      type: Object,
-      default: () => ({})
-    },
-    // 触发change的防抖延迟时长(单位:毫秒ms)
+    model: Object,
+    // 触发change事件的防抖延迟时长(单位:毫秒ms)
     debounceWait: {
       type: Number,
       default: 200
@@ -83,10 +74,12 @@ export default {
 
     this.erd = elementResizeDetectorMaker()
     this.$nextTick(() => {
-      this.erd.listenTo(document.getElementById('form'), el => {
+      // console.log({ s: this, t: document.getElementById('form') })
+      this.erd.listenTo(this.$refs.form.$el, el => {
         // console.log({ el, ss: el.children })
         let cfgLen = this.configs.length // 配置项数量
         let w = el.offsetWidth // 容器宽度
+        // console.log({ w, cfgLen })
         // console.log('========')
         // console.log('容器宽: ' + w)
 
