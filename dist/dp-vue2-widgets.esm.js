@@ -18748,6 +18748,12 @@ var script$u = {
         return true;
       }
     },
+    customClass: {
+      type: String,
+      default: () => {
+        return '';
+      }
+    },
     appendToBody: {
       type: Boolean,
       default: () => {
@@ -18804,6 +18810,7 @@ var __vue_render__$v = function () {
   return _c('el-dialog', {
     staticClass: "dp_dialog",
     attrs: {
+      "custom-class": _vm.customClass,
       "visible": _vm.isOpen,
       "top": _vm.top,
       "close-on-click-modal": false,

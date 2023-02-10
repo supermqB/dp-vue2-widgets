@@ -1,5 +1,6 @@
 <template>
   <el-dialog
+    :custom-class="customClass"
     :visible.sync="isOpen"
     class="dp_dialog"
     :top="top"
@@ -32,6 +33,12 @@ export default {
       type: Boolean,
       default: () => {
         return true
+      }
+    },
+    customClass: {
+      type: String,
+      default: () => {
+        return ''
       }
     },
     appendToBody: {
