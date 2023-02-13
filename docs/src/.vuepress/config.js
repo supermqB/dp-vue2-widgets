@@ -136,11 +136,13 @@ module.exports = {
             'general-table', // 通用表格
             'statistics-table', // 统计表格
             'tree' // 树形控件
-          ]).concat({
-            title: '模块组件',
-            collapsable: false,
-            children: getPaths('data-display/module', ['catalog'])
-          })
+          ])
+
+          // .concat({
+          //   title: '',
+          //   collapsable: false,
+          //   children: getPaths('data-display/module', ['catalog'])
+          // })
         },
         {
           title: '交互 interaction',
@@ -151,6 +153,11 @@ module.exports = {
           title: '导航 navigation',
           collapsable: false,
           children: getPaths('navigation', ['header-nav', 'pagination'])
+        },
+        {
+          title: '模块组件 module',
+          collapsable: false,
+          children: getPaths('module', ['catalog'])
         }
       ],
       '/': ['']
