@@ -6,14 +6,21 @@
       </div>
     </template>
     <template #main>
-      <div class="main">
+      <dp-blocks>
+        <dp-title text="Main" #header />
+        <dp-blocks direction="row">
+          <dp-block :flex="1">ssss</dp-block>
+          <dp-block size="1100px">ssss222</dp-block>
+        </dp-blocks>
+      </dp-blocks>
+      <!-- <div class="main">
         <div class="main__header">
           <dp-title text="Main" />
         </div>
         <div class="main__content">
           <div class="content">content</div>
         </div>
-      </div>
+      </div> -->
     </template>
   </dp-layout-container>
 </template>
