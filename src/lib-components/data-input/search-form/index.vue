@@ -37,9 +37,15 @@ import elementResizeDetectorMaker from 'element-resize-detector'
 export default {
   props: {
     // 表单项配置
-    configs: Array,
+    configs: {
+      type: Array,
+      default: () => []
+    },
     // 表单数据对象
-    model: Object,
+    model: {
+      type: Object,
+      default: () => ({})
+    },
     // 触发change事件的防抖延迟时长(单位:毫秒ms)
     debounceWait: {
       type: Number,

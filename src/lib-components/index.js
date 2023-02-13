@@ -53,6 +53,10 @@ export { default as DpSearchForm } from './data-input/search-form' // 检索表�
 export { default as DpStatisticsTable } from './data-display/table/statistics' // 统计表格
 export { default as DpGeneralTable } from './data-display/table/general' // 通用表格
 
+export { default as DpTable } from './data-display/table/common' // 表格
+export { default as DpTableColumnCommon } from './data-display/table/column/Common' // 表格通用列
+export { default as DpTableColumnSelection } from './data-display/table/column/Selection' // 表格多选按钮列
+
 // tree 树状结构数据
 export { default as DpTree } from './data-display/tree/general' // 通用树形
 

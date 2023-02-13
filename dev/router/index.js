@@ -82,6 +82,12 @@ const routesConfig = [
         name: 'page',
         meta: { title: '分页' },
         component: () => import('../views/table/page')
+      },
+      {
+        path: 'search',
+        name: 'search',
+        meta: { title: '带检索(样例)' },
+        component: () => import('../views/table/search')
       }
     ]
   },
