@@ -3,10 +3,12 @@
     :class="[
       'dp-block',
       height != 'auto' ? 'set-height' : '',
+      size != 'auto' ? 'set-size' : '',
+      flex != 1 ? 'set-flex' : '',
       hasSlot.header ? 'has-header' : '',
       noBorder ? 'no-border' : ''
     ]"
-    :style="{ '--height': height }"
+    :style="{ '--height': height, '--size': size, '--flex': flex }"
   >
     <template v-if="hasSlot.header">
       <div
@@ -33,6 +35,16 @@ export default {
     height: {
       type: String,
       default: 'auto'
+    },
+    // 整体区块(block)的尺寸  垂直为高度/水平为宽度 (在flex的样式值中使用,默认值'auto')
+    size: {
+      type: String,
+      default: 'auto'
+    },
+    // 整体区块(block) flex的值(份额)
+    flex: {
+      type: Number,
+      default: 1
     },
     // 头部区域(header)高度 (在flex的样式值中使用,默认值'auto')
     headerHeight: {
@@ -64,6 +76,18 @@ export default {
   &.set-height {
     flex: 0 0 var(--height);
     min-height: 0;
+    overflow: hidden;
+  }
+
+  &.set-size {
+    flex: 0 0 var(--size);
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  &.set-flex {
+    flex: var(--flex);
     overflow: hidden;
   }
 

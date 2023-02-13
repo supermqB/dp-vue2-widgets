@@ -20192,12 +20192,22 @@ const __vue_component__$k = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
 
 var script$j = {
-  name: 'DpBlocks'
+  name: 'DpBlocks',
+  props: {
+    // 子容器的排列方式  column 垂直 / row 水平  同css的 flex-direction的值
+    direction: {
+      type: String,
+      default: 'column'
+    }
+  }
 };
 
-var css_248z$g = ".dp-blocks[data-v-236918b0]{height:100%;display:flex;flex-direction:column}.dp-blocks .dp-block+.dp-block[data-v-236918b0]:not(.no-border){border-top:1px solid #e5e5e5}";
+var css_248z$g = ".dp-blocks[data-v-14246588]{height:100%;display:flex;flex-direction:var(--direction)}.dp-blocks__column>.dp-block+.dp-block[data-v-14246588]:not(.no-border){border-top:1px solid #e5e5e5}.dp-blocks__row>.dp-block+.dp-block[data-v-14246588]:not(.no-border){border-left:1px solid #e5e5e5}";
 styleInject(css_248z$g);
 
 /* script */
@@ -20208,7 +20218,10 @@ var __vue_render__$j = function () {
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c('div', {
-    staticClass: "dp-blocks"
+    class: ['dp-blocks', 'dp-blocks__' + _vm.direction],
+    style: {
+      '--direction': _vm.direction
+    }
   }, [_vm._t("default")], 2);
 };
 var __vue_staticRenderFns__$j = [];
@@ -20216,7 +20229,7 @@ var __vue_staticRenderFns__$j = [];
 /* style */
 const __vue_inject_styles__$j = undefined;
 /* scoped */
-const __vue_scope_id__$j = "data-v-236918b0";
+const __vue_scope_id__$j = "data-v-14246588";
 /* module identifier */
 const __vue_module_identifier__$j = undefined;
 /* functional template */
@@ -20259,6 +20272,8 @@ const __vue_component__$j = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
 
 var script$i = {
   name: 'DpBlock',
@@ -20267,6 +20282,16 @@ var script$i = {
     height: {
       type: String,
       default: 'auto'
+    },
+    // 整体区块(block)的尺寸  垂直为高度/水平为宽度 (在flex的样式值中使用,默认值'auto')
+    size: {
+      type: String,
+      default: 'auto'
+    },
+    // 整体区块(block) flex的值(份额)
+    flex: {
+      type: Number,
+      default: 1
     },
     // 头部区域(header)高度 (在flex的样式值中使用,默认值'auto')
     headerHeight: {
@@ -20288,7 +20313,7 @@ var script$i = {
   }
 };
 
-var css_248z$f = ".dp-block[data-v-515bb20c]{flex:1;min-height:0;overflow:auto}.dp-block.set-height[data-v-515bb20c]{flex:0 0 var(--height);min-height:0;overflow:hidden}.dp-block.has-header[data-v-515bb20c]{display:flex;flex-direction:column}.dp-block__header[data-v-515bb20c]{flex:0 0 var(--header-height);overflow:hidden}.dp-block__body[data-v-515bb20c]{flex:1;min-height:0;overflow:auto}";
+var css_248z$f = ".dp-block[data-v-a975b9ae]{flex:1;min-height:0;overflow:auto}.dp-block.set-height[data-v-a975b9ae]{flex:0 0 var(--height);min-height:0;overflow:hidden}.dp-block.set-size[data-v-a975b9ae]{flex:0 0 var(--size);min-width:0;min-height:0;overflow:hidden}.dp-block.set-flex[data-v-a975b9ae]{flex:var(--flex);overflow:hidden}.dp-block.has-header[data-v-a975b9ae]{display:flex;flex-direction:column}.dp-block__header[data-v-a975b9ae]{flex:0 0 var(--header-height);overflow:hidden}.dp-block__body[data-v-a975b9ae]{flex:1;min-height:0;overflow:auto}";
 styleInject(css_248z$f);
 
 /* script */
@@ -20299,9 +20324,11 @@ var __vue_render__$i = function () {
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c('div', {
-    class: ['dp-block', _vm.height != 'auto' ? 'set-height' : '', _vm.hasSlot.header ? 'has-header' : '', _vm.noBorder ? 'no-border' : ''],
+    class: ['dp-block', _vm.height != 'auto' ? 'set-height' : '', _vm.size != 'auto' ? 'set-size' : '', _vm.flex != 1 ? 'set-flex' : '', _vm.hasSlot.header ? 'has-header' : '', _vm.noBorder ? 'no-border' : ''],
     style: {
-      '--height': _vm.height
+      '--height': _vm.height,
+      '--size': _vm.size,
+      '--flex': _vm.flex
     }
   }, [_vm.hasSlot.header ? [_c('div', {
     staticClass: "dp-block__header",
@@ -20317,7 +20344,7 @@ var __vue_staticRenderFns__$i = [];
 /* style */
 const __vue_inject_styles__$i = undefined;
 /* scoped */
-const __vue_scope_id__$i = "data-v-515bb20c";
+const __vue_scope_id__$i = "data-v-a975b9ae";
 /* module identifier */
 const __vue_module_identifier__$i = undefined;
 /* functional template */
