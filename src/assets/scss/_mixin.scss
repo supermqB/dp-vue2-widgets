@@ -7,4 +7,5 @@
 @mixin tableArea {
   margin-top: -1px;
   flex: 1;
+  min-height: 0px; /* hack for flex grow issue. */
 }

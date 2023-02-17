@@ -1,31 +1,4 @@
-'use strict';Object.defineProperty(exports,'__esModule',{value:true});function _iterableToArrayLimit(arr, i) {
-  var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
-  if (null != _i) {
-    var _s,
-      _e,
-      _x,
-      _r,
-      _arr = [],
-      _n = !0,
-      _d = !1;
-    try {
-      if (_x = (_i = _i.call(arr)).next, 0 === i) {
-        if (Object(_i) !== _i) return;
-        _n = !1;
-      } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
-    } catch (err) {
-      _d = !0, _e = err;
-    } finally {
-      try {
-        if (!_n && null != _i.return && (_r = _i.return(), Object(_r) !== _r)) return;
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-    return _arr;
-  }
-}
-function ownKeys(object, enumerableOnly) {
+'use strict';Object.defineProperty(exports,'__esModule',{value:true});var elementResizeDetectorMaker=require('element-resize-detector');function _interopDefaultLegacy(e){return e&&typeof e==='object'&&'default'in e?e:{'default':e}}var elementResizeDetectorMaker__default=/*#__PURE__*/_interopDefaultLegacy(elementResizeDetectorMaker);function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object);
@@ -181,9 +154,14 @@ function _regeneratorRuntime() {
     };
   }
   function maybeInvokeDelegate(delegate, context) {
-    var methodName = context.method,
-      method = delegate.iterator[methodName];
-    if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator.return && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel;
+    var method = delegate.iterator[context.method];
+    if (undefined === method) {
+      if (context.delegate = null, "throw" === context.method) {
+        if (delegate.iterator.return && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel;
+        context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method");
+      }
+      return ContinueSentinel;
+    }
     var record = tryCatch(method, delegate.iterator, context.arg);
     if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel;
     var info = record.arg;
@@ -378,7 +356,6 @@ function _asyncToGenerator(fn) {
   };
 }
 function _defineProperty(obj, key, value) {
-  key = _toPropertyKey(key);
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -405,6 +382,30 @@ function _arrayWithHoles(arr) {
 }
 function _iterableToArray(iter) {
   if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _iterableToArrayLimit(arr, i) {
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _s, _e;
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+  return _arr;
 }
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
@@ -475,20 +476,6 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
       }
     }
   };
-}
-function _toPrimitive(input, hint) {
-  if (typeof input !== "object" || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || "default");
-    if (typeof res !== "object") return res;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return (hint === "string" ? String : Number)(input);
-}
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, "string");
-  return typeof key === "symbol" ? key : String(key);
 }//
 //
 //
@@ -627,23 +614,23 @@ var __vue_render__$I = function __vue_render__() {
   var _c = _vm._self._c || _h;
   return _c('div', {
     staticClass: "dp-title"
-  }, [_vm._ssrNode("<div class=\"dp-title__text\" data-v-aba42a78>" + _vm._ssrEscape(_vm._s(_vm.text)) + "</div>")]);
+  }, [_vm._ssrNode("<div class=\"dp-title__text\" data-v-49f05622>" + _vm._ssrEscape(_vm._s(_vm.text)) + "</div>")]);
 };
 var __vue_staticRenderFns__$I = [];
 
 /* style */
 var __vue_inject_styles__$I = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-aba42a78_0", {
-    source: ".dp-title[data-v-aba42a78]{height:40px;box-sizing:border-box;border-bottom:1px solid #e5e5e5;position:relative}.dp-title__text[data-v-aba42a78]{color:#333;height:39px;font-size:15px;line-height:39px;padding-left:12px}.dp-title__text[data-v-aba42a78]:before{content:\" \";position:absolute;width:4px;height:13px;background-color:#2f63b9;left:4px;top:13px}.dp-title__wrapper[data-v-aba42a78]{position:absolute;height:calc(100% + 1px);display:inline-block;box-sizing:border-box;padding-left:6px;padding-right:16px;border-bottom:2px solid #2f63b9}.dp-title__wrapper-text[data-v-aba42a78]{color:#333;font-size:15px;font-weight:700;position:relative;top:50%;transform:translateY(-50%)}",
+  inject("data-v-49f05622_0", {
+    source: ".dp-title[data-v-49f05622]{height:40px;box-sizing:border-box;border-bottom:1px solid #e5e5e5;position:relative}.dp-title__text[data-v-49f05622]{color:#333;height:39px;font-size:15px;line-height:39px;padding-left:12px}.dp-title__text[data-v-49f05622]:before{content:\" \";position:absolute;width:4px;height:13px;background-color:#2f63b9;left:4px;top:13px}.dp-title__wrapper[data-v-49f05622]{position:absolute;height:calc(100% + 1px);display:inline-block;box-sizing:border-box;padding-left:6px;padding-right:16px;border-bottom:2px solid #2f63b9}.dp-title__wrapper-text[data-v-49f05622]{color:#333;font-size:15px;font-weight:700;position:relative;top:50%;transform:translateY(-50%)}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$I = "data-v-aba42a78";
+var __vue_scope_id__$I = "data-v-49f05622";
 /* module identifier */
-var __vue_module_identifier__$I = "data-v-aba42a78";
+var __vue_module_identifier__$I = "data-v-49f05622";
 /* functional template */
 var __vue_is_functional_template__$I = false;
 /* style inject shadow dom */
@@ -677,23 +664,23 @@ var __vue_render__$H = function __vue_render__() {
   var _c = _vm._self._c || _h;
   return _c('div', {
     staticClass: "dp-subtitle"
-  }, [_vm._ssrNode("<div class=\"dp-subtitle__text\" data-v-25fe7820>" + _vm._ssrEscape(_vm._s(_vm.text)) + "</div> <div class=\"dp-subtitle__line\" data-v-25fe7820></div>")]);
+  }, [_vm._ssrNode("<div class=\"dp-subtitle__text\" data-v-63b398ff>" + _vm._ssrEscape(_vm._s(_vm.text)) + "</div> <div class=\"dp-subtitle__line\" data-v-63b398ff></div>")]);
 };
 var __vue_staticRenderFns__$H = [];
 
 /* style */
 var __vue_inject_styles__$H = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-25fe7820_0", {
-    source: ".dp-subtitle[data-v-25fe7820]{height:40px;display:flex;align-items:center}.dp-subtitle__text[data-v-25fe7820]{font-size:13px;padding-left:12px;padding-right:10px;color:#333}.dp-subtitle__line[data-v-25fe7820]{flex:1;content:\" \";display:block;border-bottom:1px solid #f1f1f4}",
+  inject("data-v-63b398ff_0", {
+    source: ".dp-subtitle[data-v-63b398ff]{height:40px;display:flex;align-items:center}.dp-subtitle__text[data-v-63b398ff]{font-size:13px;padding-left:12px;padding-right:10px;color:#333}.dp-subtitle__line[data-v-63b398ff]{flex:1;content:\" \";display:block;border-bottom:1px solid #f1f1f4}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$H = "data-v-25fe7820";
+var __vue_scope_id__$H = "data-v-63b398ff";
 /* module identifier */
-var __vue_module_identifier__$H = "data-v-25fe7820";
+var __vue_module_identifier__$H = "data-v-63b398ff";
 /* functional template */
 var __vue_is_functional_template__$H = false;
 /* style inject shadow dom */
@@ -742,16 +729,16 @@ var __vue_staticRenderFns__$G = [];
 /* style */
 var __vue_inject_styles__$G = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-4a8f264b_0", {
-    source: ".dptitle_wrapper[data-v-4a8f264b] .dp-title.l2 .dp-title__text{font-size:13px;color:#303133}.dptitle_wrapper[data-v-4a8f264b] .dp-title.l2 .dp-title__text::before{background-color:rgba(47,99,185,.4);height:10px;width:3px}",
+  inject("data-v-74906470_0", {
+    source: ".dptitle_wrapper[data-v-74906470] .dp-title.l2 .dp-title__text{font-size:13px;color:#303133}.dptitle_wrapper[data-v-74906470] .dp-title.l2 .dp-title__text::before{background-color:rgba(47,99,185,.4);height:10px;width:3px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$G = "data-v-4a8f264b";
+var __vue_scope_id__$G = "data-v-74906470";
 /* module identifier */
-var __vue_module_identifier__$G = "data-v-4a8f264b";
+var __vue_module_identifier__$G = "data-v-74906470";
 /* functional template */
 var __vue_is_functional_template__$G = false;
 /* style inject shadow dom */
@@ -849,7 +836,7 @@ var __vue_staticRenderFns__$F = [];
 /* style */
 var __vue_inject_styles__$F = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-43790872_0", {
+  inject("data-v-4781d9a8_0", {
     source: ".btn_grp_wrapper{display:flex;padding:0 6px;height:100%;align-items:center}.btn_grp_wrapper .group{height:28px;line-height:24px;white-space:nowrap}.btn_grp_wrapper .group .el-button+.el-button{margin-left:6px}.btn_grp_wrapper .group+.group{border-left:1px solid #95a8c7;padding-left:6px;margin-left:6px}",
     map: undefined,
     media: undefined
@@ -858,7 +845,7 @@ var __vue_inject_styles__$F = function __vue_inject_styles__(inject) {
 /* scoped */
 var __vue_scope_id__$F = undefined;
 /* module identifier */
-var __vue_module_identifier__$F = "data-v-43790872";
+var __vue_module_identifier__$F = "data-v-4781d9a8";
 /* functional template */
 var __vue_is_functional_template__$F = false;
 /* style inject shadow dom */
@@ -1123,7 +1110,7 @@ var __vue_render__$E = function __vue_render__() {
   }, [_vm._ssrNode("<div class=\"table_container\"" + _vm._ssrStyle(null, {
     height: _vm.tableHeight,
     paddingBottom: _vm.showPaging ? '0' : '6px'
-  }, null) + " data-v-6c70f85c>", "</div>", [_c('el-table', _vm._g(_vm._b({
+  }, null) + " data-v-981d4422>", "</div>", [_c('el-table', _vm._g(_vm._b({
     ref: "el_table",
     attrs: {
       "data": _vm.tableData,
@@ -1221,7 +1208,7 @@ var __vue_render__$E = function __vue_render__() {
     }, [_c('i', {
       staticClass: "el-icon-warning-outline"
     })])], 1) : _vm._e()], 2);
-  }), _vm._v(" "), _vm._t("default")], 2)], 1), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"table_footer\" data-v-6c70f85c>", "</div>", [_vm._ssrNode("<div class=\"bottomTip\" data-v-6c70f85c>" + _vm._s(_vm.bottomTip) + "</div> "), _vm.showPaging ? _c('el-pagination', {
+  }), _vm._v(" "), _vm._t("default")], 2)], 1), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"table_footer\" data-v-981d4422>", "</div>", [_vm._ssrNode("<div class=\"bottomTip\" data-v-981d4422>" + _vm._s(_vm.bottomTip) + "</div> "), _vm.showPaging ? _c('el-pagination', {
     attrs: {
       "current-page": _vm.pageInfo.curPage,
       "page-sizes": [5, 10, 20, 50],
@@ -1247,20 +1234,20 @@ var __vue_staticRenderFns__$E = [];
 /* style */
 var __vue_inject_styles__$E = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-6c70f85c_0", {
-    source: ".el_table_wrapper[data-v-6c70f85c]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-6c70f85c]{flex-grow:1;padding:0 6px;box-sizing:content-box}",
+  inject("data-v-981d4422_0", {
+    source: ".el_table_wrapper[data-v-981d4422]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-981d4422]{flex-grow:1;padding:0 6px;box-sizing:content-box}",
     map: undefined,
     media: undefined
-  }), inject("data-v-6c70f85c_1", {
+  }), inject("data-v-981d4422_1", {
     source: ".el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$E = "data-v-6c70f85c";
+var __vue_scope_id__$E = "data-v-981d4422";
 /* module identifier */
-var __vue_module_identifier__$E = "data-v-6c70f85c";
+var __vue_module_identifier__$E = "data-v-981d4422";
 /* functional template */
 var __vue_is_functional_template__$E = false;
 /* style inject shadow dom */
@@ -1676,16 +1663,16 @@ var __vue_staticRenderFns__$D = [];
 /* style */
 var __vue_inject_styles__$D = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-87f8c370_0", {
-    source: ".wrap[data-v-87f8c370]{width:100%;height:100%;overflow-x:hidden;display:flex;flex-direction:column}.wrap .treeWrap[data-v-87f8c370]{flex:1;overflow:auto}.treeNode[data-v-87f8c370]{width:100%;height:100%;padding-top:2px;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;overflow:hidden;font-size:13px}.treeNode .label[data-v-87f8c370]{width:100%;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.treeNode .label .front[data-v-87f8c370]{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.treeNode .label i[data-v-87f8c370]{display:inline-block;width:5px;height:5px;padding-right:3px;padding-bottom:2px;border-radius:5px;background-color:#f56c6c}.treeNode .label .blank[data-v-87f8c370]{display:inline-block;padding-right:3px;padding-bottom:2px;width:5px;height:5px}.disabled[data-v-87f8c370]{position:absolute;left:0;width:100%;height:100%;z-index:10}[data-v-87f8c370] .el-tree-node__content{height:36px;position:relative}[data-v-87f8c370] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-87f8c370] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-87f8c370] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}",
+  inject("data-v-aa0b9848_0", {
+    source: ".wrap[data-v-aa0b9848]{width:100%;height:100%;overflow-x:hidden;display:flex;flex-direction:column}.wrap .treeWrap[data-v-aa0b9848]{flex:1;overflow:auto}.treeNode[data-v-aa0b9848]{width:100%;height:100%;padding-top:2px;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;overflow:hidden;font-size:13px}.treeNode .label[data-v-aa0b9848]{width:100%;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.treeNode .label .front[data-v-aa0b9848]{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.treeNode .label i[data-v-aa0b9848]{display:inline-block;width:5px;height:5px;padding-right:3px;padding-bottom:2px;border-radius:5px;background-color:#f56c6c}.treeNode .label .blank[data-v-aa0b9848]{display:inline-block;padding-right:3px;padding-bottom:2px;width:5px;height:5px}.disabled[data-v-aa0b9848]{position:absolute;left:0;width:100%;height:100%;z-index:10}[data-v-aa0b9848] .el-tree-node__content{height:36px;position:relative}[data-v-aa0b9848] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-aa0b9848] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-aa0b9848] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$D = "data-v-87f8c370";
+var __vue_scope_id__$D = "data-v-aa0b9848";
 /* module identifier */
-var __vue_module_identifier__$D = "data-v-87f8c370";
+var __vue_module_identifier__$D = "data-v-aa0b9848";
 /* functional template */
 var __vue_is_functional_template__$D = false;
 /* style inject shadow dom */
@@ -1811,7 +1798,7 @@ var __vue_inject_styles__$C = undefined;
 /* scoped */
 var __vue_scope_id__$C = undefined;
 /* module identifier */
-var __vue_module_identifier__$C = "data-v-2457af58";
+var __vue_module_identifier__$C = "data-v-4001680d";
 /* functional template */
 var __vue_is_functional_template__$C = false;
 /* style inject */
@@ -19133,16 +19120,16 @@ var __vue_staticRenderFns__$B = [];
 /* style */
 var __vue_inject_styles__$B = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-36b341ac_0", {
-    source: ".dpui_searchBar[data-v-36b341ac]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-36b341ac] .el-form{display:flex}.dpui_searchBar[data-v-36b341ac] .el-form .el-form-item{margin-right:4px;margin-bottom:0}.dpui_searchBar .searchBtn[data-v-36b341ac]{padding:5px 8px}.dpui_searchBar .searchBtn .filter[data-v-36b341ac]{display:inline-block;position:relative;margin-left:2px;top:1px;left:1px;height:12px;width:12px;background-image:url(../assets/images/icons/filter.png)}",
+  inject("data-v-2bc327d1_0", {
+    source: ".dpui_searchBar[data-v-2bc327d1]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-2bc327d1] .el-form{display:flex}.dpui_searchBar[data-v-2bc327d1] .el-form .el-form-item{margin-right:4px;margin-bottom:0}.dpui_searchBar .searchBtn[data-v-2bc327d1]{padding:5px 8px}.dpui_searchBar .searchBtn .filter[data-v-2bc327d1]{display:inline-block;position:relative;margin-left:2px;top:1px;left:1px;height:12px;width:12px;background-image:url(../assets/images/icons/filter.png)}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$B = "data-v-36b341ac";
+var __vue_scope_id__$B = "data-v-2bc327d1";
 /* module identifier */
-var __vue_module_identifier__$B = "data-v-36b341ac";
+var __vue_module_identifier__$B = "data-v-2bc327d1";
 /* functional template */
 var __vue_is_functional_template__$B = false;
 /* style inject shadow dom */
@@ -19190,8 +19177,8 @@ var __vue_render__$A = function __vue_render__() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('div', [_vm._t("default"), _vm._ssrNode(" <ul data-v-37a385d9>" + _vm._ssrList(_vm.options, function (item, index) {
-    return "<li data-v-37a385d9><span class=\"label\" data-v-37a385d9>" + _vm._ssrEscape(_vm._s(item.label + ":")) + "</span> <span class=\"value\" data-v-37a385d9>" + (item['data'] ? "<span data-v-37a385d9><span class=\"numerator\" data-v-37a385d9>" + _vm._ssrEscape(_vm._s("" + _vm.unitFmt(item['data'][0]))) + "</span> " + (item['data'][1] ? "<span data-v-37a385d9>" + _vm._ssrEscape(_vm._s("/" + _vm.unitFmt(item['data'][1]))) + "</span>" : "<!---->") + "</span>" : "<span data-v-37a385d9></span>") + " <span class=\"unit\" data-v-37a385d9>" + _vm._ssrEscape(_vm._s(item.unit)) + "</span></span></li>";
+  return _c('div', [_vm._t("default"), _vm._ssrNode(" <ul data-v-52bb8dcc>" + _vm._ssrList(_vm.options, function (item, index) {
+    return "<li data-v-52bb8dcc><span class=\"label\" data-v-52bb8dcc>" + _vm._ssrEscape(_vm._s(item.label + ":")) + "</span> <span class=\"value\" data-v-52bb8dcc>" + (item['data'] ? "<span data-v-52bb8dcc><span class=\"numerator\" data-v-52bb8dcc>" + _vm._ssrEscape(_vm._s("" + _vm.unitFmt(item['data'][0]))) + "</span> " + (item['data'][1] ? "<span data-v-52bb8dcc>" + _vm._ssrEscape(_vm._s("/" + _vm.unitFmt(item['data'][1]))) + "</span>" : "<!---->") + "</span>" : "<span data-v-52bb8dcc></span>") + " <span class=\"unit\" data-v-52bb8dcc>" + _vm._ssrEscape(_vm._s(item.unit)) + "</span></span></li>";
   }) + "</ul>")], 2);
 };
 var __vue_staticRenderFns__$A = [];
@@ -19199,16 +19186,16 @@ var __vue_staticRenderFns__$A = [];
 /* style */
 var __vue_inject_styles__$A = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-37a385d9_0", {
-    source: "ul[data-v-37a385d9]{padding:3px 1px 5px 12px;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:center;font-size:12px}ul li[data-v-37a385d9]{padding:6px;width:50%;max-width:150px;display:flex;align-items:center}ul li .label[data-v-37a385d9]{color:#999}ul li .value[data-v-37a385d9]{padding-left:6px}ul li .numerator[data-v-37a385d9]{color:#2f63b9}ul li .unit[data-v-37a385d9]{margin-left:3px}",
+  inject("data-v-52bb8dcc_0", {
+    source: "ul[data-v-52bb8dcc]{padding:3px 1px 5px 12px;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:center;font-size:12px}ul li[data-v-52bb8dcc]{padding:6px;width:50%;max-width:150px;display:flex;align-items:center}ul li .label[data-v-52bb8dcc]{color:#999}ul li .value[data-v-52bb8dcc]{padding-left:6px}ul li .numerator[data-v-52bb8dcc]{color:#2f63b9}ul li .unit[data-v-52bb8dcc]{margin-left:3px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$A = "data-v-37a385d9";
+var __vue_scope_id__$A = "data-v-52bb8dcc";
 /* module identifier */
-var __vue_module_identifier__$A = "data-v-37a385d9";
+var __vue_module_identifier__$A = "data-v-52bb8dcc";
 /* functional template */
 var __vue_is_functional_template__$A = false;
 /* style inject shadow dom */
@@ -19336,7 +19323,7 @@ var __vue_staticRenderFns__$z = [];
 /* style */
 var __vue_inject_styles__$z = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-aa977f4e_0", {
+  inject("data-v-59794f03_0", {
     source: ".dpui_dialogTitle{height:23px!important;position:relative;bottom:4px}.dpui_dialogTitle .dp-subtitle__text{font-size:15px;top:5px;color:#333}",
     map: undefined,
     media: undefined
@@ -19345,7 +19332,7 @@ var __vue_inject_styles__$z = function __vue_inject_styles__(inject) {
 /* scoped */
 var __vue_scope_id__$z = undefined;
 /* module identifier */
-var __vue_module_identifier__$z = "data-v-aa977f4e";
+var __vue_module_identifier__$z = "data-v-59794f03";
 /* functional template */
 var __vue_is_functional_template__$z = false;
 /* style inject shadow dom */
@@ -19400,7 +19387,7 @@ var __vue_render__$y = function __vue_render__() {
   return _c('ul', {
     staticClass: "dpui_catalogbuttons_wraper"
   }, [_vm._ssrNode(_vm._ssrList(_vm.list, function (item) {
-    return "<li" + _vm._ssrAttr("title", _vm.labels[item]) + _vm._ssrClass(null, item) + " data-v-428d9105></li>";
+    return "<li" + _vm._ssrAttr("title", _vm.labels[item]) + _vm._ssrClass(null, item) + " data-v-e351e4ea></li>";
   }))]);
 };
 var __vue_staticRenderFns__$y = [];
@@ -19408,16 +19395,16 @@ var __vue_staticRenderFns__$y = [];
 /* style */
 var __vue_inject_styles__$y = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-428d9105_0", {
-    source: "ul[data-v-428d9105]{display:flex;flex-direction:row;justify-content:flex-start;align-items:center}ul li[data-v-428d9105]{width:16px;height:16px;margin-left:2px;cursor:pointer;background-size:cover}ul li.add[data-v-428d9105]{background-image:url(../assets/images/icons/add.svg)}ul li.add[data-v-428d9105]:hover{background-image:url(../assets/images/icons/add_hover.svg)}ul li.delete[data-v-428d9105]{background-image:url(../assets/images/icons/delete.svg)}ul li.delete[data-v-428d9105]:hover{background-image:url(../assets/images/icons/delete_hover.svg)}",
+  inject("data-v-e351e4ea_0", {
+    source: "ul[data-v-e351e4ea]{display:flex;flex-direction:row;justify-content:flex-start;align-items:center}ul li[data-v-e351e4ea]{width:16px;height:16px;margin-left:2px;cursor:pointer;background-size:cover}ul li.add[data-v-e351e4ea]{background-image:url(../assets/images/icons/add.svg)}ul li.add[data-v-e351e4ea]:hover{background-image:url(../assets/images/icons/add_hover.svg)}ul li.delete[data-v-e351e4ea]{background-image:url(../assets/images/icons/delete.svg)}ul li.delete[data-v-e351e4ea]:hover{background-image:url(../assets/images/icons/delete_hover.svg)}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$y = "data-v-428d9105";
+var __vue_scope_id__$y = "data-v-e351e4ea";
 /* module identifier */
-var __vue_module_identifier__$y = "data-v-428d9105";
+var __vue_module_identifier__$y = "data-v-e351e4ea";
 /* functional template */
 var __vue_is_functional_template__$y = false;
 /* style inject shadow dom */
@@ -19492,16 +19479,16 @@ var __vue_staticRenderFns__$x = [];
 /* style */
 var __vue_inject_styles__$x = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-2ae0697a_0", {
-    source: ".el-container[data-v-2ae0697a]{height:100%}.el-container .el-footer[data-v-2ae0697a],.el-container .el-header[data-v-2ae0697a],.el-container .el-main[data-v-2ae0697a]{padding:0}.el-container .el-main[data-v-2ae0697a]{overflow:auto}",
+  inject("data-v-46299e29_0", {
+    source: ".el-container[data-v-46299e29]{height:100%}.el-container .el-footer[data-v-46299e29],.el-container .el-header[data-v-46299e29],.el-container .el-main[data-v-46299e29]{padding:0}.el-container .el-main[data-v-46299e29]{overflow:auto}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$x = "data-v-2ae0697a";
+var __vue_scope_id__$x = "data-v-46299e29";
 /* module identifier */
-var __vue_module_identifier__$x = "data-v-2ae0697a";
+var __vue_module_identifier__$x = "data-v-46299e29";
 /* functional template */
 var __vue_is_functional_template__$x = false;
 /* style inject shadow dom */
@@ -19651,7 +19638,7 @@ var __vue_staticRenderFns__$w = [];
 /* style */
 var __vue_inject_styles__$w = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-6f755543_0", {
+  inject("data-v-9f56aca8_0", {
     source: ".el-container.dp-layout-container{height:100%;background-color:#eef0f5;position:relative}.el-container.dp-layout-container .el-aside,.el-container.dp-layout-container .el-main{background-color:#fff;position:relative;overflow:hidden}.el-container.dp-layout-container .el-main{padding:0}.el-container.dp-layout-container .drag{width:3px;height:100%;background:0 0;position:absolute;top:0;z-index:2}.el-container.dp-layout-container .drag:hover{background:#2f63b9}.el-container.dp-layout-container .el-aside.aside-left{border-right:1px solid #e5e5e5}.el-container.dp-layout-container .el-aside.aside-right{border-left:1px solid #e5e5e5}.el-container.dp-layout-container .el-container.is-vertical{height:100%;background-color:#eef0f5}.el-container.dp-layout-container .el-container.is-vertical .el-main{padding:0;background-color:#fff;flex-basis:0%;flex-grow:1;flex-shrink:0;min-height:0}.el-container.dp-layout-container .el-container.is-vertical .el-main+.el-main{flex-grow:0;flex-shrink:1;flex-basis:50%;min-height:0;border-top:1px solid #e5e5e5}",
     map: undefined,
     media: undefined
@@ -19660,7 +19647,7 @@ var __vue_inject_styles__$w = function __vue_inject_styles__(inject) {
 /* scoped */
 var __vue_scope_id__$w = undefined;
 /* module identifier */
-var __vue_module_identifier__$w = "data-v-6f755543";
+var __vue_module_identifier__$w = "data-v-9f56aca8";
 /* functional template */
 var __vue_is_functional_template__$w = false;
 /* style inject shadow dom */
@@ -19691,23 +19678,23 @@ var __vue_render__$v = function __vue_render__() {
   var _c = _vm._self._c || _h;
   return _c('div', {
     staticClass: "header-title"
-  }, [_vm._ssrNode("<div class=\"header-title__logo\" data-v-5bb36298></div> <div class=\"header-title__text\" data-v-5bb36298>" + _vm._ssrEscape(_vm._s(_vm.titleText)) + "</div>")]);
+  }, [_vm._ssrNode("<div class=\"header-title__logo\" data-v-50578fe1></div> <div class=\"header-title__text\" data-v-50578fe1>" + _vm._ssrEscape(_vm._s(_vm.titleText)) + "</div>")]);
 };
 var __vue_staticRenderFns__$v = [];
 
 /* style */
 var __vue_inject_styles__$v = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-5bb36298_0", {
-    source: ".header-title[data-v-5bb36298]{position:relative;width:128px;display:flex;align-items:center;justify-content:space-between}.header-title__logo[data-v-5bb36298]{margin-left:16px;width:20px;height:20px;border-radius:50%;background:#d8d8d8;border:1px solid #979797}.header-title__text[data-v-5bb36298]{font-family:PingFangSC-Medium;font-size:16px;color:#fff;letter-spacing:.16px;width:124px;line-height:22px;margin-left:12px;white-space:nowrap}",
+  inject("data-v-50578fe1_0", {
+    source: ".header-title[data-v-50578fe1]{position:relative;width:128px;display:flex;align-items:center;justify-content:space-between}.header-title__logo[data-v-50578fe1]{margin-left:16px;width:20px;height:20px;border-radius:50%;background:#d8d8d8;border:1px solid #979797}.header-title__text[data-v-50578fe1]{font-family:PingFangSC-Medium;font-size:16px;color:#fff;letter-spacing:.16px;width:124px;line-height:22px;margin-left:12px;white-space:nowrap}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$v = "data-v-5bb36298";
+var __vue_scope_id__$v = "data-v-50578fe1";
 /* module identifier */
-var __vue_module_identifier__$v = "data-v-5bb36298";
+var __vue_module_identifier__$v = "data-v-50578fe1";
 /* functional template */
 var __vue_is_functional_template__$v = false;
 /* style inject shadow dom */
@@ -19777,16 +19764,16 @@ var __vue_staticRenderFns__$u = [];
 /* style */
 var __vue_inject_styles__$u = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-5ae33ce2_0", {
-    source: ".header-menu[data-v-5ae33ce2]{text-align:center}",
+  inject("data-v-227e68ca_0", {
+    source: ".header-menu[data-v-227e68ca]{text-align:center}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$u = "data-v-5ae33ce2";
+var __vue_scope_id__$u = "data-v-227e68ca";
 /* module identifier */
-var __vue_module_identifier__$u = "data-v-5ae33ce2";
+var __vue_module_identifier__$u = "data-v-227e68ca";
 /* functional template */
 var __vue_is_functional_template__$u = false;
 /* style inject shadow dom */
@@ -19862,16 +19849,16 @@ var __vue_staticRenderFns__$t = [];
 /* style */
 var __vue_inject_styles__$t = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-155d0989_0", {
-    source: ".header-user[data-v-155d0989]{width:56px;display:flex;align-items:center}.header-user__info[data-v-155d0989]{color:#fff;margin:16px}.header-user__avatar[data-v-155d0989]{width:16px;height:16px;padding:4px;border-radius:50%;margin-right:20px}.header-user__avatar i[data-v-155d0989]{font-size:16px;color:rgba(255,255,255,.7)}",
+  inject("data-v-6e997556_0", {
+    source: ".header-user[data-v-6e997556]{width:56px;display:flex;align-items:center}.header-user__info[data-v-6e997556]{color:#fff;margin:16px}.header-user__avatar[data-v-6e997556]{width:16px;height:16px;padding:4px;border-radius:50%;margin-right:20px}.header-user__avatar i[data-v-6e997556]{font-size:16px;color:rgba(255,255,255,.7)}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$t = "data-v-155d0989";
+var __vue_scope_id__$t = "data-v-6e997556";
 /* module identifier */
-var __vue_module_identifier__$t = "data-v-155d0989";
+var __vue_module_identifier__$t = "data-v-6e997556";
 /* functional template */
 var __vue_is_functional_template__$t = false;
 /* style inject shadow dom */
@@ -19924,16 +19911,16 @@ var __vue_staticRenderFns__$s = [];
 /* style */
 var __vue_inject_styles__$s = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-2d57ea9a_0", {
-    source: ".header[data-v-2d57ea9a]{height:100%;background:#2f63b9;display:flex;justify-content:space-between}.header-title[data-v-2d57ea9a]{justify-content:flex-start;width:280px;flex:none}.header-user[data-v-2d57ea9a]{justify-content:flex-end;width:200px;flex:none}.header-menu[data-v-2d57ea9a]{flex-grow:1;overflow:auto}",
+  inject("data-v-309b7ca0_0", {
+    source: ".header[data-v-309b7ca0]{height:100%;background:#2f63b9;display:flex;justify-content:space-between}.header-title[data-v-309b7ca0]{justify-content:flex-start;width:280px;flex:none}.header-user[data-v-309b7ca0]{justify-content:flex-end;width:200px;flex:none}.header-menu[data-v-309b7ca0]{flex-grow:1;overflow:auto}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$s = "data-v-2d57ea9a";
+var __vue_scope_id__$s = "data-v-309b7ca0";
 /* module identifier */
-var __vue_module_identifier__$s = "data-v-2d57ea9a";
+var __vue_module_identifier__$s = "data-v-309b7ca0";
 /* functional template */
 var __vue_is_functional_template__$s = false;
 /* style inject shadow dom */
@@ -20021,7 +20008,7 @@ var __vue_inject_styles__$r = undefined;
 /* scoped */
 var __vue_scope_id__$r = undefined;
 /* module identifier */
-var __vue_module_identifier__$r = "data-v-1a38cc09";
+var __vue_module_identifier__$r = "data-v-3c7122bd";
 /* functional template */
 var __vue_is_functional_template__$r = false;
 /* style inject */
@@ -20053,23 +20040,23 @@ var __vue_render__$q = function __vue_render__() {
   var _c = _vm._self._c || _h;
   return _c('div', {
     staticClass: "footer"
-  }, [_vm._ssrNode("<div class=\"tags\" data-v-b31e7a1c></div> <div class=\"version\" data-v-b31e7a1c>联仁健康医疗大数据科技股份有限公司 V1.1.0</div>")]);
+  }, [_vm._ssrNode("<div class=\"tags\" data-v-741643b4></div> <div class=\"version\" data-v-741643b4>联仁健康医疗大数据科技股份有限公司 V1.1.0</div>")]);
 };
 var __vue_staticRenderFns__$q = [];
 
 /* style */
 var __vue_inject_styles__$q = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-b31e7a1c_0", {
-    source: ".footer[data-v-b31e7a1c]{height:32px;background:#fff;display:flex;justify-content:space-between;border-top:1px solid #f5f5f5;z-index:9;box-sizing:border-box}.footer .tabs[data-v-b31e7a1c]{justify-content:flex-start}.footer .version[data-v-b31e7a1c]{justify-content:flex-end;width:300px;font-family:PingFangSC-Regular;font-size:12px;padding-right:16px;line-height:31px;color:rgba(0,0,0,.45);text-align:right}",
+  inject("data-v-741643b4_0", {
+    source: ".footer[data-v-741643b4]{height:32px;background:#fff;display:flex;justify-content:space-between;border-top:1px solid #f5f5f5;z-index:9;box-sizing:border-box}.footer .tabs[data-v-741643b4]{justify-content:flex-start}.footer .version[data-v-741643b4]{justify-content:flex-end;width:300px;font-family:PingFangSC-Regular;font-size:12px;padding-right:16px;line-height:31px;color:rgba(0,0,0,.45);text-align:right}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$q = "data-v-b31e7a1c";
+var __vue_scope_id__$q = "data-v-741643b4";
 /* module identifier */
-var __vue_module_identifier__$q = "data-v-b31e7a1c";
+var __vue_module_identifier__$q = "data-v-741643b4";
 /* functional template */
 var __vue_is_functional_template__$q = false;
 /* style inject shadow dom */
@@ -20142,7 +20129,7 @@ var __vue_inject_styles__$p = undefined;
 /* scoped */
 var __vue_scope_id__$p = undefined;
 /* module identifier */
-var __vue_module_identifier__$p = "data-v-57a3adfe";
+var __vue_module_identifier__$p = "data-v-ce785584";
 /* functional template */
 var __vue_is_functional_template__$p = false;
 /* style inject */
@@ -20172,7 +20159,7 @@ var __vue_inject_styles__$o = undefined;
 /* scoped */
 var __vue_scope_id__$o = undefined;
 /* module identifier */
-var __vue_module_identifier__$o = "data-v-58d2a3da";
+var __vue_module_identifier__$o = "data-v-3e3f0182";
 /* functional template */
 var __vue_is_functional_template__$o = false;
 /* style inject */
@@ -20262,7 +20249,7 @@ var __vue_inject_styles__$n = undefined;
 /* scoped */
 var __vue_scope_id__$n = undefined;
 /* module identifier */
-var __vue_module_identifier__$n = "data-v-7961916b";
+var __vue_module_identifier__$n = "data-v-43bf60d9";
 /* functional template */
 var __vue_is_functional_template__$n = false;
 /* style inject */
@@ -20346,7 +20333,7 @@ var __vue_inject_styles__$m = undefined;
 /* scoped */
 var __vue_scope_id__$m = undefined;
 /* module identifier */
-var __vue_module_identifier__$m = "data-v-7d624804";
+var __vue_module_identifier__$m = "data-v-89a28a4a";
 /* functional template */
 var __vue_is_functional_template__$m = false;
 /* style inject */
@@ -20383,23 +20370,23 @@ var __vue_render__$l = function __vue_render__() {
   var _c = _vm._self._c || _h;
   return _c('div', {
     staticClass: "dp-default-page"
-  }, [_vm._ssrNode("<div data-v-78650cbe>" + _vm._ssrEscape(_vm._s(_vm.text)) + "</div>")]);
+  }, [_vm._ssrNode("<div data-v-dd906cf2>" + _vm._ssrEscape(_vm._s(_vm.text)) + "</div>")]);
 };
 var __vue_staticRenderFns__$l = [];
 
 /* style */
 var __vue_inject_styles__$l = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-78650cbe_0", {
-    source: ".dp-default-page[data-v-78650cbe]{display:flex;height:100%;align-items:center}.dp-default-page div[data-v-78650cbe]{flex:1;color:rgba(0,0,0,.5);text-align:center}",
+  inject("data-v-dd906cf2_0", {
+    source: ".dp-default-page[data-v-dd906cf2]{display:flex;height:100%;align-items:center}.dp-default-page div[data-v-dd906cf2]{flex:1;color:rgba(0,0,0,.5);text-align:center}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$l = "data-v-78650cbe";
+var __vue_scope_id__$l = "data-v-dd906cf2";
 /* module identifier */
-var __vue_module_identifier__$l = "data-v-78650cbe";
+var __vue_module_identifier__$l = "data-v-dd906cf2";
 /* functional template */
 var __vue_is_functional_template__$l = false;
 /* style inject shadow dom */
@@ -20474,7 +20461,7 @@ var __vue_render__$k = function __vue_render__() {
     style: {
       backgroundImage: 'url(' + _vm.bgImg + ')'
     }
-  }, [_vm._ssrNode("<header class=\"login-logo\" data-v-6c91326c><span data-v-6c91326c>" + _vm._ssrEscape(_vm._s(_vm.appTitle)) + "</span></header> "), _vm._ssrNode("<section class=\"login-middle\" data-v-6c91326c>", "</section>", [_vm._ssrNode("<article class=\"intro\" data-v-6c91326c><p class=\"title\" data-v-6c91326c>让数据更简便，让管理更高效</p> <p data-v-6c91326c>健康医疗数字化服务运营商</p> <i class=\"triangle\" data-v-6c91326c></i></article> "), _c('el-form', {
+  }, [_vm._ssrNode("<header class=\"login-logo\" data-v-6fa15df7><span data-v-6fa15df7>" + _vm._ssrEscape(_vm._s(_vm.appTitle)) + "</span></header> "), _vm._ssrNode("<section class=\"login-middle\" data-v-6fa15df7>", "</section>", [_vm._ssrNode("<article class=\"intro\" data-v-6fa15df7><p class=\"title\" data-v-6fa15df7>让数据更简便，让管理更高效</p> <p data-v-6fa15df7>健康医疗数字化服务运营商</p> <i class=\"triangle\" data-v-6fa15df7></i></article> "), _c('el-form', {
     ref: "loginForm",
     staticClass: "login-form",
     attrs: {
@@ -20546,23 +20533,23 @@ var __vue_render__$k = function __vue_render__() {
         return _vm.handleLogin.apply(null, arguments);
       }
     }
-  }, [!_vm.loading ? _c('span', [_vm._v("登 录")]) : _c('span', [_vm._v("登 录 中...")])])], 1)], 1)], 2), _vm._ssrNode(" <footer class=\"login-footer\" data-v-6c91326c><span data-v-6c91326c>Copyright © 2018-2022 lianren.vip All Rights Reserved</span></footer>")], 2);
+  }, [!_vm.loading ? _c('span', [_vm._v("登 录")]) : _c('span', [_vm._v("登 录 中...")])])], 1)], 1)], 2), _vm._ssrNode(" <footer class=\"login-footer\" data-v-6fa15df7><span data-v-6fa15df7>Copyright © 2018-2022 lianren.vip All Rights Reserved</span></footer>")], 2);
 };
 var __vue_staticRenderFns__$k = [];
 
 /* style */
 var __vue_inject_styles__$k = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-6c91326c_0", {
-    source: ".dp-login-page[data-v-6c91326c]{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;height:100%;background-size:cover}.dp-login-page .login-logo[data-v-6c91326c]{display:flex;align-items:center;height:88px;padding:20px 0;margin-left:1.46%}.dp-login-page .login-logo img[data-v-6c91326c]{width:26px}.dp-login-page .login-logo span[data-v-6c91326c]{padding-left:10px;font-family:PingFangSC-Semibold;font-size:20px;color:#fff;font-weight:600}.dp-login-page .login-middle[data-v-6c91326c]{flex:1;display:flex;justify-content:space-between;align-self:center;align-items:center;width:76.65%;margin-left:8px}.dp-login-page .login-middle .intro[data-v-6c91326c]{display:flex;flex-direction:column;justify-content:flex-start}.dp-login-page .login-middle .intro img[data-v-6c91326c]{width:52px;margin-bottom:34px}.dp-login-page .login-middle .intro p[data-v-6c91326c]{margin-bottom:10px;font-family:PingFangSC-Regular;font-size:18px;color:#fff;font-weight:400}.dp-login-page .login-middle .intro .title[data-v-6c91326c]{font-family:PingFangSC-Semibold;font-size:40px;color:#fff;font-weight:600}.dp-login-page .login-middle .intro .triangle[data-v-6c91326c]{margin-top:30px}.dp-login-page .login-form[data-v-6c91326c]{background:rgba(255,255,255,.24);box-shadow:0 0 38px 0 rgba(22,42,46,.14);border-radius:8px;width:380px;padding:30px}.dp-login-page .login-form .title[data-v-6c91326c]{margin:0 auto 30px auto;text-align:center;color:#fff;font-size:28px;font-weight:600}.dp-login-page .login-form .el-form-item[data-v-6c91326c]{margin-bottom:24px}.dp-login-page .login-form .el-input[data-v-6c91326c]{height:36px;font-size:14px}.dp-login-page .login-form .el-input input[data-v-6c91326c]{height:36px}.dp-login-page .login-form .login-code[data-v-6c91326c]{width:33%;height:36px;float:right}.dp-login-page .login-form .login-code img[data-v-6c91326c]{float:right;cursor:pointer;vertical-align:middle}.dp-login-page .login-form .login-code-img[data-v-6c91326c]{height:100%;border-radius:6px}.dp-login-page .login-form .login-btn-login[data-v-6c91326c]{width:100%;height:48px;background-image:linear-gradient(270deg,#0ccaf0 0,#01abe5 100%);border:none;font-family:PingFangSC-Semibold;font-size:20px;color:#fff;font-weight:600;text-align:center}.dp-login-page .login-form .login-remember-pwd[data-v-6c91326c]{margin:0;color:#fff}.dp-login-page .login-form .login-remember-pwd[data-v-6c91326c]  .el-checkbox__inner{width:12px;height:12px;background-color:transparent;border-color:#e7e7e7}.dp-login-page .login-form .login-remember-pwd[data-v-6c91326c]  .el-checkbox__label{font-size:12px}.dp-login-page .login-form .login-remember-pwd[data-v-6c91326c]  .el-checkbox__input.is-checked+.el-checkbox__label{color:#fff;font-weight:700}.dp-login-page .login-tip[data-v-6c91326c]{font-size:13px;text-align:center;color:#bfbfbf}.dp-login-page .login-footer[data-v-6c91326c]{display:flex;justify-content:center;align-items:flex-end;height:108px;padding-bottom:20px;line-height:12px;width:100%;text-align:center;font-family:PingFangSC-Regular;color:#fff;font-size:12px;letter-spacing:1px}@media (max-width:1200px){.dp-login-page .login-middle .intro .title[data-v-6c91326c]{font-size:36px}}@media (max-width:768px){.dp-login-page .login-middle[data-v-6c91326c]{justify-content:center;margin-left:0}.dp-login-page .login-middle .intro[data-v-6c91326c]{display:none}}@media (max-width:1024px){.dp-login-page .login-middle .intro img[data-v-6c91326c]{width:44px;margin-bottom:28px}.dp-login-page .login-middle .intro p[data-v-6c91326c]{font-size:14px}.dp-login-page .login-middle .intro .title[data-v-6c91326c]{font-size:28px}.dp-login-page .login-middle .intro .triangle[data-v-6c91326c]{margin-top:26px}}",
+  inject("data-v-6fa15df7_0", {
+    source: ".dp-login-page[data-v-6fa15df7]{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;height:100%;background-size:cover}.dp-login-page .login-logo[data-v-6fa15df7]{display:flex;align-items:center;height:88px;padding:20px 0;margin-left:1.46%}.dp-login-page .login-logo img[data-v-6fa15df7]{width:26px}.dp-login-page .login-logo span[data-v-6fa15df7]{padding-left:10px;font-family:PingFangSC-Semibold;font-size:20px;color:#fff;font-weight:600}.dp-login-page .login-middle[data-v-6fa15df7]{flex:1;display:flex;justify-content:space-between;align-self:center;align-items:center;width:76.65%;margin-left:8px}.dp-login-page .login-middle .intro[data-v-6fa15df7]{display:flex;flex-direction:column;justify-content:flex-start}.dp-login-page .login-middle .intro img[data-v-6fa15df7]{width:52px;margin-bottom:34px}.dp-login-page .login-middle .intro p[data-v-6fa15df7]{margin-bottom:10px;font-family:PingFangSC-Regular;font-size:18px;color:#fff;font-weight:400}.dp-login-page .login-middle .intro .title[data-v-6fa15df7]{font-family:PingFangSC-Semibold;font-size:40px;color:#fff;font-weight:600}.dp-login-page .login-middle .intro .triangle[data-v-6fa15df7]{margin-top:30px}.dp-login-page .login-form[data-v-6fa15df7]{background:rgba(255,255,255,.24);box-shadow:0 0 38px 0 rgba(22,42,46,.14);border-radius:8px;width:380px;padding:30px}.dp-login-page .login-form .title[data-v-6fa15df7]{margin:0 auto 30px auto;text-align:center;color:#fff;font-size:28px;font-weight:600}.dp-login-page .login-form .el-form-item[data-v-6fa15df7]{margin-bottom:24px}.dp-login-page .login-form .el-input[data-v-6fa15df7]{height:36px;font-size:14px}.dp-login-page .login-form .el-input input[data-v-6fa15df7]{height:36px}.dp-login-page .login-form .login-code[data-v-6fa15df7]{width:33%;height:36px;float:right}.dp-login-page .login-form .login-code img[data-v-6fa15df7]{float:right;cursor:pointer;vertical-align:middle}.dp-login-page .login-form .login-code-img[data-v-6fa15df7]{height:100%;border-radius:6px}.dp-login-page .login-form .login-btn-login[data-v-6fa15df7]{width:100%;height:48px;background-image:linear-gradient(270deg,#0ccaf0 0,#01abe5 100%);border:none;font-family:PingFangSC-Semibold;font-size:20px;color:#fff;font-weight:600;text-align:center}.dp-login-page .login-form .login-remember-pwd[data-v-6fa15df7]{margin:0;color:#fff}.dp-login-page .login-form .login-remember-pwd[data-v-6fa15df7]  .el-checkbox__inner{width:12px;height:12px;background-color:transparent;border-color:#e7e7e7}.dp-login-page .login-form .login-remember-pwd[data-v-6fa15df7]  .el-checkbox__label{font-size:12px}.dp-login-page .login-form .login-remember-pwd[data-v-6fa15df7]  .el-checkbox__input.is-checked+.el-checkbox__label{color:#fff;font-weight:700}.dp-login-page .login-tip[data-v-6fa15df7]{font-size:13px;text-align:center;color:#bfbfbf}.dp-login-page .login-footer[data-v-6fa15df7]{display:flex;justify-content:center;align-items:flex-end;height:108px;padding-bottom:20px;line-height:12px;width:100%;text-align:center;font-family:PingFangSC-Regular;color:#fff;font-size:12px;letter-spacing:1px}@media (max-width:1200px){.dp-login-page .login-middle .intro .title[data-v-6fa15df7]{font-size:36px}}@media (max-width:768px){.dp-login-page .login-middle[data-v-6fa15df7]{justify-content:center;margin-left:0}.dp-login-page .login-middle .intro[data-v-6fa15df7]{display:none}}@media (max-width:1024px){.dp-login-page .login-middle .intro img[data-v-6fa15df7]{width:44px;margin-bottom:28px}.dp-login-page .login-middle .intro p[data-v-6fa15df7]{font-size:14px}.dp-login-page .login-middle .intro .title[data-v-6fa15df7]{font-size:28px}.dp-login-page .login-middle .intro .triangle[data-v-6fa15df7]{margin-top:26px}}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$k = "data-v-6c91326c";
+var __vue_scope_id__$k = "data-v-6fa15df7";
 /* module identifier */
-var __vue_module_identifier__$k = "data-v-6c91326c";
+var __vue_module_identifier__$k = "data-v-6fa15df7";
 /* functional template */
 var __vue_is_functional_template__$k = false;
 /* style inject shadow dom */
@@ -20609,16 +20596,16 @@ var __vue_staticRenderFns__$j = [];
 /* style */
 var __vue_inject_styles__$j = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-14246588_0", {
-    source: ".dp-blocks[data-v-14246588]{height:100%;display:flex;flex-direction:var(--direction)}.dp-blocks__column>.dp-block+.dp-block[data-v-14246588]:not(.no-border){border-top:1px solid #e5e5e5}.dp-blocks__row>.dp-block+.dp-block[data-v-14246588]:not(.no-border){border-left:1px solid #e5e5e5}",
+  inject("data-v-35dd4ee4_0", {
+    source: ".dp-blocks[data-v-35dd4ee4]{height:100%;display:flex;flex-direction:var(--direction)}.dp-blocks__column>.dp-block+.dp-block[data-v-35dd4ee4]:not(.no-border){border-top:1px solid #e5e5e5}.dp-blocks__row>.dp-block+.dp-block[data-v-35dd4ee4]:not(.no-border){border-left:1px solid #e5e5e5}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$j = "data-v-14246588";
+var __vue_scope_id__$j = "data-v-35dd4ee4";
 /* module identifier */
-var __vue_module_identifier__$j = "data-v-14246588";
+var __vue_module_identifier__$j = "data-v-35dd4ee4";
 /* functional template */
 var __vue_is_functional_template__$j = false;
 /* style inject shadow dom */
@@ -20709,23 +20696,23 @@ var __vue_render__$i = function __vue_render__() {
     }
   }, [_vm.hasSlot.header ? [_vm._ssrNode("<div class=\"dp-block__header\"" + _vm._ssrStyle(null, {
     '--header-height': _vm.headerHeight
-  }, null) + " data-v-a975b9ae>", "</div>", [_vm._t("header")], 2), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"dp-block__body\" data-v-a975b9ae>", "</div>", [_vm._t("default")], 2)] : [_vm._t("default")]], 2);
+  }, null) + " data-v-344a62f3>", "</div>", [_vm._t("header")], 2), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"dp-block__body\" data-v-344a62f3>", "</div>", [_vm._t("default")], 2)] : [_vm._t("default")]], 2);
 };
 var __vue_staticRenderFns__$i = [];
 
 /* style */
 var __vue_inject_styles__$i = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-a975b9ae_0", {
-    source: ".dp-block[data-v-a975b9ae]{flex:1;min-height:0;overflow:auto}.dp-block.set-height[data-v-a975b9ae]{flex:0 0 var(--height);min-height:0;overflow:hidden}.dp-block.set-size[data-v-a975b9ae]{flex:0 0 var(--size);min-width:0;min-height:0;overflow:hidden}.dp-block.set-flex[data-v-a975b9ae]{flex:var(--flex);overflow:hidden}.dp-block.has-header[data-v-a975b9ae]{display:flex;flex-direction:column}.dp-block__header[data-v-a975b9ae]{flex:0 0 var(--header-height);overflow:hidden}.dp-block__body[data-v-a975b9ae]{flex:1;min-height:0;overflow:auto}",
+  inject("data-v-344a62f3_0", {
+    source: ".dp-block[data-v-344a62f3]{flex:1;min-height:0;overflow:auto}.dp-block.set-height[data-v-344a62f3]{flex:0 0 var(--height);min-height:0;overflow:hidden}.dp-block.set-size[data-v-344a62f3]{flex:0 0 var(--size);min-width:0;min-height:0;overflow:hidden}.dp-block.set-flex[data-v-344a62f3]{flex:var(--flex);overflow:hidden}.dp-block.has-header[data-v-344a62f3]{display:flex;flex-direction:column}.dp-block__header[data-v-344a62f3]{flex:0 0 var(--header-height);overflow:hidden}.dp-block__body[data-v-344a62f3]{flex:1;min-height:0;overflow:auto}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$i = "data-v-a975b9ae";
+var __vue_scope_id__$i = "data-v-344a62f3";
 /* module identifier */
-var __vue_module_identifier__$i = "data-v-a975b9ae";
+var __vue_module_identifier__$i = "data-v-344a62f3";
 /* functional template */
 var __vue_is_functional_template__$i = false;
 /* style inject shadow dom */
@@ -20792,16 +20779,16 @@ var __vue_staticRenderFns__$h = [];
 /* style */
 var __vue_inject_styles__$h = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-73bb740a_0", {
-    source: ".icon-button[data-v-73bb740a]{padding-left:8px;padding-right:8px}.icon-button[data-v-73bb740a] >span{min-width:auto;display:flex}.icon-button__text[data-v-73bb740a]{min-width:26px;display:block;font-weight:500}.icon-button__icon[data-v-73bb740a]{margin-left:3px;margin-top:3px;width:12px;height:12px;display:block;flex:0 0 12px;position:relative}.icon-button__icon>img[data-v-73bb740a]{position:absolute}.icon-button.is-disabled .icon-button__icon[data-v-73bb740a]{opacity:.5}",
+  inject("data-v-d56ca0e8_0", {
+    source: ".icon-button[data-v-d56ca0e8]{padding-left:8px;padding-right:8px}.icon-button[data-v-d56ca0e8] >span{min-width:auto;display:flex}.icon-button__text[data-v-d56ca0e8]{min-width:26px;display:block;font-weight:500}.icon-button__icon[data-v-d56ca0e8]{margin-left:3px;margin-top:3px;width:12px;height:12px;display:block;flex:0 0 12px;position:relative}.icon-button__icon>img[data-v-d56ca0e8]{position:absolute}.icon-button.is-disabled .icon-button__icon[data-v-d56ca0e8]{opacity:.5}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$h = "data-v-73bb740a";
+var __vue_scope_id__$h = "data-v-d56ca0e8";
 /* module identifier */
-var __vue_module_identifier__$h = "data-v-73bb740a";
+var __vue_module_identifier__$h = "data-v-d56ca0e8";
 /* functional template */
 var __vue_is_functional_template__$h = false;
 /* style inject shadow dom */
@@ -20871,16 +20858,16 @@ var __vue_staticRenderFns__$g = [];
 /* style */
 var __vue_inject_styles__$g = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-df46bda6_0", {
-    source: "@charset \"UTF-8\";.dp-tag[data-v-df46bda6]{display:inline-block;box-sizing:border-box;padding:0 8px;color:#252525;background-color:#fff;font-size:13px;white-space:nowrap;height:auto}.start[data-v-df46bda6]{color:#00f}.process[data-v-df46bda6]{color:#d9001b}.recall[data-v-df46bda6]{color:#f59a23}.done[data-v-df46bda6]{color:#27b937}.error[data-v-df46bda6]{color:#f56c6c}.big[data-v-df46bda6]{font-size:24px}.medium[data-v-df46bda6]{font-size:18px}",
+  inject("data-v-5449285b_0", {
+    source: "@charset \"UTF-8\";.dp-tag[data-v-5449285b]{display:inline-block;box-sizing:border-box;padding:0 8px;color:#252525;background-color:#fff;font-size:13px;white-space:nowrap;height:auto}.start[data-v-5449285b]{color:#00f}.process[data-v-5449285b]{color:#d9001b}.recall[data-v-5449285b]{color:#f59a23}.done[data-v-5449285b]{color:#27b937}.error[data-v-5449285b]{color:#f56c6c}.big[data-v-5449285b]{font-size:24px}.medium[data-v-5449285b]{font-size:18px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$g = "data-v-df46bda6";
+var __vue_scope_id__$g = "data-v-5449285b";
 /* module identifier */
-var __vue_module_identifier__$g = "data-v-df46bda6";
+var __vue_module_identifier__$g = "data-v-5449285b";
 /* functional template */
 var __vue_is_functional_template__$g = false;
 /* style inject shadow dom */
@@ -21017,7 +21004,7 @@ var __vue_inject_styles__$f = undefined;
 /* scoped */
 var __vue_scope_id__$f = undefined;
 /* module identifier */
-var __vue_module_identifier__$f = "data-v-06131080";
+var __vue_module_identifier__$f = "data-v-205cb9c7";
 /* functional template */
 var __vue_is_functional_template__$f = false;
 /* style inject */
@@ -21105,9 +21092,9 @@ var __vue_staticRenderFns__$e = [];
 /* style */
 var __vue_inject_styles__$e = undefined;
 /* scoped */
-var __vue_scope_id__$e = "data-v-2f102b9d";
+var __vue_scope_id__$e = "data-v-cbef3b40";
 /* module identifier */
-var __vue_module_identifier__$e = "data-v-2f102b9d";
+var __vue_module_identifier__$e = "data-v-cbef3b40";
 /* functional template */
 var __vue_is_functional_template__$e = false;
 /* style inject */
@@ -21119,1656 +21106,7 @@ var __vue_is_functional_template__$e = false;
 var __vue_component__$e = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$e,
   staticRenderFns: __vue_staticRenderFns__$e
-}, __vue_inject_styles__$e, __vue_script__$e, __vue_scope_id__$e, __vue_is_functional_template__$e, __vue_module_identifier__$e, false, undefined, undefined, undefined);var collectionUtils = createCommonjsModule(function (module) {
-
-var utils = module.exports = {};
-
-/**
- * Loops through the collection and calls the callback for each element. if the callback returns truthy, the loop is broken and returns the same value.
- * @public
- * @param {*} collection The collection to loop through. Needs to have a length property set and have indices set from 0 to length - 1.
- * @param {function} callback The callback to be called for each element. The element will be given as a parameter to the callback. If this callback returns truthy, the loop is broken and the same value is returned.
- * @returns {*} The value that a callback has returned (if truthy). Otherwise nothing.
- */
-utils.forEach = function(collection, callback) {
-    for(var i = 0; i < collection.length; i++) {
-        var result = callback(collection[i]);
-        if(result) {
-            return result;
-        }
-    }
-};
-});var elementUtils = function(options) {
-    var getState = options.stateHandler.getState;
-
-    /**
-     * Tells if the element has been made detectable and ready to be listened for resize events.
-     * @public
-     * @param {element} The element to check.
-     * @returns {boolean} True or false depending on if the element is detectable or not.
-     */
-    function isDetectable(element) {
-        var state = getState(element);
-        return state && !!state.isDetectable;
-    }
-
-    /**
-     * Marks the element that it has been made detectable and ready to be listened for resize events.
-     * @public
-     * @param {element} The element to mark.
-     */
-    function markAsDetectable(element) {
-        getState(element).isDetectable = true;
-    }
-
-    /**
-     * Tells if the element is busy or not.
-     * @public
-     * @param {element} The element to check.
-     * @returns {boolean} True or false depending on if the element is busy or not.
-     */
-    function isBusy(element) {
-        return !!getState(element).busy;
-    }
-
-    /**
-     * Marks the object is busy and should not be made detectable.
-     * @public
-     * @param {element} element The element to mark.
-     * @param {boolean} busy If the element is busy or not.
-     */
-    function markBusy(element, busy) {
-        getState(element).busy = !!busy;
-    }
-
-    return {
-        isDetectable: isDetectable,
-        markAsDetectable: markAsDetectable,
-        isBusy: isBusy,
-        markBusy: markBusy
-    };
-};var listenerHandler = function(idHandler) {
-    var eventListeners = {};
-
-    /**
-     * Gets all listeners for the given element.
-     * @public
-     * @param {element} element The element to get all listeners for.
-     * @returns All listeners for the given element.
-     */
-    function getListeners(element) {
-        var id = idHandler.get(element);
-
-        if (id === undefined) {
-            return [];
-        }
-
-        return eventListeners[id] || [];
-    }
-
-    /**
-     * Stores the given listener for the given element. Will not actually add the listener to the element.
-     * @public
-     * @param {element} element The element that should have the listener added.
-     * @param {function} listener The callback that the element has added.
-     */
-    function addListener(element, listener) {
-        var id = idHandler.get(element);
-
-        if(!eventListeners[id]) {
-            eventListeners[id] = [];
-        }
-
-        eventListeners[id].push(listener);
-    }
-
-    function removeListener(element, listener) {
-        var listeners = getListeners(element);
-        for (var i = 0, len = listeners.length; i < len; ++i) {
-            if (listeners[i] === listener) {
-              listeners.splice(i, 1);
-              break;
-            }
-        }
-    }
-
-    function removeAllListeners(element) {
-      var listeners = getListeners(element);
-      if (!listeners) { return; }
-      listeners.length = 0;
-    }
-
-    return {
-        get: getListeners,
-        add: addListener,
-        removeListener: removeListener,
-        removeAllListeners: removeAllListeners
-    };
-};var idGenerator = function() {
-    var idCount = 1;
-
-    /**
-     * Generates a new unique id in the context.
-     * @public
-     * @returns {number} A unique id in the context.
-     */
-    function generate() {
-        return idCount++;
-    }
-
-    return {
-        generate: generate
-    };
-};var idHandler = function(options) {
-    var idGenerator     = options.idGenerator;
-    var getState        = options.stateHandler.getState;
-
-    /**
-     * Gets the resize detector id of the element.
-     * @public
-     * @param {element} element The target element to get the id of.
-     * @returns {string|number|null} The id of the element. Null if it has no id.
-     */
-    function getId(element) {
-        var state = getState(element);
-
-        if (state && state.id !== undefined) {
-            return state.id;
-        }
-
-        return null;
-    }
-
-    /**
-     * Sets the resize detector id of the element. Requires the element to have a resize detector state initialized.
-     * @public
-     * @param {element} element The target element to set the id of.
-     * @returns {string|number|null} The id of the element.
-     */
-    function setId(element) {
-        var state = getState(element);
-
-        if (!state) {
-            throw new Error("setId required the element to have a resize detection state.");
-        }
-
-        var id = idGenerator.generate();
-
-        state.id = id;
-
-        return id;
-    }
-
-    return {
-        get: getId,
-        set: setId
-    };
-};/* global console: false */
-
-/**
- * Reporter that handles the reporting of logs, warnings and errors.
- * @public
- * @param {boolean} quiet Tells if the reporter should be quiet or not.
- */
-var reporter = function(quiet) {
-    function noop() {
-        //Does nothing.
-    }
-
-    var reporter = {
-        log: noop,
-        warn: noop,
-        error: noop
-    };
-
-    if(!quiet && window.console) {
-        var attachFunction = function(reporter, name) {
-            //The proxy is needed to be able to call the method with the console context,
-            //since we cannot use bind.
-            reporter[name] = function reporterProxy() {
-                var f = console[name];
-                if (f.apply) { //IE9 does not support console.log.apply :)
-                    f.apply(console, arguments);
-                } else {
-                    for (var i = 0; i < arguments.length; i++) {
-                        f(arguments[i]);
-                    }
-                }
-            };
-        };
-
-        attachFunction(reporter, "log");
-        attachFunction(reporter, "warn");
-        attachFunction(reporter, "error");
-    }
-
-    return reporter;
-};var browserDetector = createCommonjsModule(function (module) {
-
-var detector = module.exports = {};
-
-detector.isIE = function(version) {
-    function isAnyIeVersion() {
-        var agent = navigator.userAgent.toLowerCase();
-        return agent.indexOf("msie") !== -1 || agent.indexOf("trident") !== -1 || agent.indexOf(" edge/") !== -1;
-    }
-
-    if(!isAnyIeVersion()) {
-        return false;
-    }
-
-    if(!version) {
-        return true;
-    }
-
-    //Shamelessly stolen from https://gist.github.com/padolsey/527683
-    var ieVersion = (function(){
-        var undef,
-            v = 3,
-            div = document.createElement("div"),
-            all = div.getElementsByTagName("i");
-
-        do {
-            div.innerHTML = "<!--[if gt IE " + (++v) + "]><i></i><![endif]-->";
-        }
-        while (all[0]);
-
-        return v > 4 ? v : undef;
-    }());
-
-    return version === ieVersion;
-};
-
-detector.isLegacyOpera = function() {
-    return !!window.opera;
-};
-});var utils_1 = createCommonjsModule(function (module) {
-
-var utils = module.exports = {};
-
-utils.getOption = getOption;
-
-function getOption(options, name, defaultValue) {
-    var value = options[name];
-
-    if((value === undefined || value === null) && defaultValue !== undefined) {
-        return defaultValue;
-    }
-
-    return value;
-}
-});var batchProcessor = function batchProcessorMaker(options) {
-    options             = options || {};
-    var reporter        = options.reporter;
-    var asyncProcess    = utils_1.getOption(options, "async", true);
-    var autoProcess     = utils_1.getOption(options, "auto", true);
-
-    if(autoProcess && !asyncProcess) {
-        reporter && reporter.warn("Invalid options combination. auto=true and async=false is invalid. Setting async=true.");
-        asyncProcess = true;
-    }
-
-    var batch = Batch();
-    var asyncFrameHandler;
-    var isProcessing = false;
-
-    function addFunction(level, fn) {
-        if(!isProcessing && autoProcess && asyncProcess && batch.size() === 0) {
-            // Since this is async, it is guaranteed to be executed after that the fn is added to the batch.
-            // This needs to be done before, since we're checking the size of the batch to be 0.
-            processBatchAsync();
-        }
-
-        batch.add(level, fn);
-    }
-
-    function processBatch() {
-        // Save the current batch, and create a new batch so that incoming functions are not added into the currently processing batch.
-        // Continue processing until the top-level batch is empty (functions may be added to the new batch while processing, and so on).
-        isProcessing = true;
-        while (batch.size()) {
-            var processingBatch = batch;
-            batch = Batch();
-            processingBatch.process();
-        }
-        isProcessing = false;
-    }
-
-    function forceProcessBatch(localAsyncProcess) {
-        if (isProcessing) {
-            return;
-        }
-
-        if(localAsyncProcess === undefined) {
-            localAsyncProcess = asyncProcess;
-        }
-
-        if(asyncFrameHandler) {
-            cancelFrame(asyncFrameHandler);
-            asyncFrameHandler = null;
-        }
-
-        if(localAsyncProcess) {
-            processBatchAsync();
-        } else {
-            processBatch();
-        }
-    }
-
-    function processBatchAsync() {
-        asyncFrameHandler = requestFrame(processBatch);
-    }
-
-    function cancelFrame(listener) {
-        // var cancel = window.cancelAnimationFrame || window.mozCancelAnimationFrame || window.webkitCancelAnimationFrame || window.clearTimeout;
-        var cancel = clearTimeout;
-        return cancel(listener);
-    }
-
-    function requestFrame(callback) {
-        // var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || function(fn) { return window.setTimeout(fn, 20); };
-        var raf = function(fn) { return setTimeout(fn, 0); };
-        return raf(callback);
-    }
-
-    return {
-        add: addFunction,
-        force: forceProcessBatch
-    };
-};
-
-function Batch() {
-    var batch       = {};
-    var size        = 0;
-    var topLevel    = 0;
-    var bottomLevel = 0;
-
-    function add(level, fn) {
-        if(!fn) {
-            fn = level;
-            level = 0;
-        }
-
-        if(level > topLevel) {
-            topLevel = level;
-        } else if(level < bottomLevel) {
-            bottomLevel = level;
-        }
-
-        if(!batch[level]) {
-            batch[level] = [];
-        }
-
-        batch[level].push(fn);
-        size++;
-    }
-
-    function process() {
-        for(var level = bottomLevel; level <= topLevel; level++) {
-            var fns = batch[level];
-
-            for(var i = 0; i < fns.length; i++) {
-                var fn = fns[i];
-                fn();
-            }
-        }
-    }
-
-    function getSize() {
-        return size;
-    }
-
-    return {
-        add: add,
-        process: process,
-        size: getSize
-    };
-}var prop = "_erd";
-
-function initState(element) {
-    element[prop] = {};
-    return getState(element);
-}
-
-function getState(element) {
-    return element[prop];
-}
-
-function cleanState(element) {
-    delete element[prop];
-}
-
-var stateHandler = {
-    initState: initState,
-    getState: getState,
-    cleanState: cleanState
-};var object = function(options) {
-    options             = options || {};
-    var reporter        = options.reporter;
-    var batchProcessor  = options.batchProcessor;
-    var getState        = options.stateHandler.getState;
-
-    if(!reporter) {
-        throw new Error("Missing required dependency: reporter.");
-    }
-
-    /**
-     * Adds a resize event listener to the element.
-     * @public
-     * @param {element} element The element that should have the listener added.
-     * @param {function} listener The listener callback to be called for each resize event of the element. The element will be given as a parameter to the listener callback.
-     */
-    function addListener(element, listener) {
-        function listenerProxy() {
-            listener(element);
-        }
-
-        if(browserDetector.isIE(8)) {
-            //IE 8 does not support object, but supports the resize event directly on elements.
-            getState(element).object = {
-                proxy: listenerProxy
-            };
-            element.attachEvent("onresize", listenerProxy);
-        } else {
-            var object = getObject(element);
-
-            if(!object) {
-                throw new Error("Element is not detectable by this strategy.");
-            }
-
-            object.contentDocument.defaultView.addEventListener("resize", listenerProxy);
-        }
-    }
-
-    function buildCssTextString(rules) {
-        var seperator = options.important ? " !important; " : "; ";
-
-        return (rules.join(seperator) + seperator).trim();
-    }
-
-    /**
-     * Makes an element detectable and ready to be listened for resize events. Will call the callback when the element is ready to be listened for resize changes.
-     * @private
-     * @param {object} options Optional options object.
-     * @param {element} element The element to make detectable
-     * @param {function} callback The callback to be called when the element is ready to be listened for resize changes. Will be called with the element as first parameter.
-     */
-    function makeDetectable(options, element, callback) {
-        if (!callback) {
-            callback = element;
-            element = options;
-            options = null;
-        }
-
-        options = options || {};
-        options.debug;
-
-        function injectObject(element, callback) {
-            var OBJECT_STYLE = buildCssTextString(["display: block", "position: absolute", "top: 0", "left: 0", "width: 100%", "height: 100%", "border: none", "padding: 0", "margin: 0", "opacity: 0", "z-index: -1000", "pointer-events: none"]);
-
-            //The target element needs to be positioned (everything except static) so the absolute positioned object will be positioned relative to the target element.
-
-            // Position altering may be performed directly or on object load, depending on if style resolution is possible directly or not.
-            var positionCheckPerformed = false;
-
-            // The element may not yet be attached to the DOM, and therefore the style object may be empty in some browsers.
-            // Since the style object is a reference, it will be updated as soon as the element is attached to the DOM.
-            var style = window.getComputedStyle(element);
-            var width = element.offsetWidth;
-            var height = element.offsetHeight;
-
-            getState(element).startSize = {
-                width: width,
-                height: height
-            };
-
-            function mutateDom() {
-                function alterPositionStyles() {
-                    if(style.position === "static") {
-                        element.style.setProperty("position", "relative", options.important ? "important" : "");
-
-                        var removeRelativeStyles = function(reporter, element, style, property) {
-                            function getNumericalValue(value) {
-                                return value.replace(/[^-\d\.]/g, "");
-                            }
-
-                            var value = style[property];
-
-                            if(value !== "auto" && getNumericalValue(value) !== "0") {
-                                reporter.warn("An element that is positioned static has style." + property + "=" + value + " which is ignored due to the static positioning. The element will need to be positioned relative, so the style." + property + " will be set to 0. Element: ", element);
-                                element.style.setProperty(property, "0", options.important ? "important" : "");
-                            }
-                        };
-
-                        //Check so that there are no accidental styles that will make the element styled differently now that is is relative.
-                        //If there are any, set them to 0 (this should be okay with the user since the style properties did nothing before [since the element was positioned static] anyway).
-                        removeRelativeStyles(reporter, element, style, "top");
-                        removeRelativeStyles(reporter, element, style, "right");
-                        removeRelativeStyles(reporter, element, style, "bottom");
-                        removeRelativeStyles(reporter, element, style, "left");
-                    }
-                }
-
-                function onObjectLoad() {
-                    // The object has been loaded, which means that the element now is guaranteed to be attached to the DOM.
-                    if (!positionCheckPerformed) {
-                        alterPositionStyles();
-                    }
-
-                    /*jshint validthis: true */
-
-                    function getDocument(element, callback) {
-                        //Opera 12 seem to call the object.onload before the actual document has been created.
-                        //So if it is not present, poll it with an timeout until it is present.
-                        //TODO: Could maybe be handled better with object.onreadystatechange or similar.
-                        if(!element.contentDocument) {
-                            var state = getState(element);
-                            if (state.checkForObjectDocumentTimeoutId) {
-                                window.clearTimeout(state.checkForObjectDocumentTimeoutId);
-                            }
-                            state.checkForObjectDocumentTimeoutId = setTimeout(function checkForObjectDocument() {
-                                state.checkForObjectDocumentTimeoutId = 0;
-                                getDocument(element, callback);
-                            }, 100);
-
-                            return;
-                        }
-
-                        callback(element.contentDocument);
-                    }
-
-                    //Mutating the object element here seems to fire another load event.
-                    //Mutating the inner document of the object element is fine though.
-                    var objectElement = this;
-
-                    //Create the style element to be added to the object.
-                    getDocument(objectElement, function onObjectDocumentReady(objectDocument) {
-                        //Notify that the element is ready to be listened to.
-                        callback(element);
-                    });
-                }
-
-                // The element may be detached from the DOM, and some browsers does not support style resolving of detached elements.
-                // The alterPositionStyles needs to be delayed until we know the element has been attached to the DOM (which we are sure of when the onObjectLoad has been fired), if style resolution is not possible.
-                if (style.position !== "") {
-                    alterPositionStyles();
-                    positionCheckPerformed = true;
-                }
-
-                //Add an object element as a child to the target element that will be listened to for resize events.
-                var object = document.createElement("object");
-                object.style.cssText = OBJECT_STYLE;
-                object.tabIndex = -1;
-                object.type = "text/html";
-                object.setAttribute("aria-hidden", "true");
-                object.onload = onObjectLoad;
-
-                //Safari: This must occur before adding the object to the DOM.
-                //IE: Does not like that this happens before, even if it is also added after.
-                if(!browserDetector.isIE()) {
-                    object.data = "about:blank";
-                }
-
-                if (!getState(element)) {
-                    // The element has been uninstalled before the actual loading happened.
-                    return;
-                }
-
-                element.appendChild(object);
-                getState(element).object = object;
-
-                //IE: This must occur after adding the object to the DOM.
-                if(browserDetector.isIE()) {
-                    object.data = "about:blank";
-                }
-            }
-
-            if(batchProcessor) {
-                batchProcessor.add(mutateDom);
-            } else {
-                mutateDom();
-            }
-        }
-
-        if(browserDetector.isIE(8)) {
-            //IE 8 does not support objects properly. Luckily they do support the resize event.
-            //So do not inject the object and notify that the element is already ready to be listened to.
-            //The event handler for the resize event is attached in the utils.addListener instead.
-            callback(element);
-        } else {
-            injectObject(element, callback);
-        }
-    }
-
-    /**
-     * Returns the child object of the target element.
-     * @private
-     * @param {element} element The target element.
-     * @returns The object element of the target.
-     */
-    function getObject(element) {
-        return getState(element).object;
-    }
-
-    function uninstall(element) {
-        if (!getState(element)) {
-            return;
-        }
-
-        var object = getObject(element);
-
-        if (!object) {
-            return;
-        }
-
-        if (browserDetector.isIE(8)) {
-            element.detachEvent("onresize", object.proxy);
-        } else {
-            element.removeChild(object);
-        }
-
-        if (getState(element).checkForObjectDocumentTimeoutId) {
-            window.clearTimeout(getState(element).checkForObjectDocumentTimeoutId);
-        }
-
-        delete getState(element).object;
-    }
-
-    return {
-        makeDetectable: makeDetectable,
-        addListener: addListener,
-        uninstall: uninstall
-    };
-};var forEach$1 = collectionUtils.forEach;
-
-var scroll = function(options) {
-    options             = options || {};
-    var reporter        = options.reporter;
-    var batchProcessor  = options.batchProcessor;
-    var getState        = options.stateHandler.getState;
-    options.stateHandler.hasState;
-    var idHandler       = options.idHandler;
-
-    if (!batchProcessor) {
-        throw new Error("Missing required dependency: batchProcessor");
-    }
-
-    if (!reporter) {
-        throw new Error("Missing required dependency: reporter.");
-    }
-
-    //TODO: Could this perhaps be done at installation time?
-    var scrollbarSizes = getScrollbarSizes();
-
-    var styleId = "erd_scroll_detection_scrollbar_style";
-    var detectionContainerClass = "erd_scroll_detection_container";
-
-    function initDocument(targetDocument) {
-        // Inject the scrollbar styling that prevents them from appearing sometimes in Chrome.
-        // The injected container needs to have a class, so that it may be styled with CSS (pseudo elements).
-        injectScrollStyle(targetDocument, styleId, detectionContainerClass);
-    }
-
-    initDocument(window.document);
-
-    function buildCssTextString(rules) {
-        var seperator = options.important ? " !important; " : "; ";
-
-        return (rules.join(seperator) + seperator).trim();
-    }
-
-    function getScrollbarSizes() {
-        var width = 500;
-        var height = 500;
-
-        var child = document.createElement("div");
-        child.style.cssText = buildCssTextString(["position: absolute", "width: " + width*2 + "px", "height: " + height*2 + "px", "visibility: hidden", "margin: 0", "padding: 0"]);
-
-        var container = document.createElement("div");
-        container.style.cssText = buildCssTextString(["position: absolute", "width: " + width + "px", "height: " + height + "px", "overflow: scroll", "visibility: none", "top: " + -width*3 + "px", "left: " + -height*3 + "px", "visibility: hidden", "margin: 0", "padding: 0"]);
-
-        container.appendChild(child);
-
-        document.body.insertBefore(container, document.body.firstChild);
-
-        var widthSize = width - container.clientWidth;
-        var heightSize = height - container.clientHeight;
-
-        document.body.removeChild(container);
-
-        return {
-            width: widthSize,
-            height: heightSize
-        };
-    }
-
-    function injectScrollStyle(targetDocument, styleId, containerClass) {
-        function injectStyle(style, method) {
-            method = method || function (element) {
-                targetDocument.head.appendChild(element);
-            };
-
-            var styleElement = targetDocument.createElement("style");
-            styleElement.innerHTML = style;
-            styleElement.id = styleId;
-            method(styleElement);
-            return styleElement;
-        }
-
-        if (!targetDocument.getElementById(styleId)) {
-            var containerAnimationClass = containerClass + "_animation";
-            var containerAnimationActiveClass = containerClass + "_animation_active";
-            var style = "/* Created by the element-resize-detector library. */\n";
-            style += "." + containerClass + " > div::-webkit-scrollbar { " + buildCssTextString(["display: none"]) + " }\n\n";
-            style += "." + containerAnimationActiveClass + " { " + buildCssTextString(["-webkit-animation-duration: 0.1s", "animation-duration: 0.1s", "-webkit-animation-name: " + containerAnimationClass, "animation-name: " + containerAnimationClass]) + " }\n";
-            style += "@-webkit-keyframes " + containerAnimationClass +  " { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }\n";
-            style += "@keyframes " + containerAnimationClass +          " { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }";
-            injectStyle(style);
-        }
-    }
-
-    function addAnimationClass(element) {
-        element.className += " " + detectionContainerClass + "_animation_active";
-    }
-
-    function addEvent(el, name, cb) {
-        if (el.addEventListener) {
-            el.addEventListener(name, cb);
-        } else if(el.attachEvent) {
-            el.attachEvent("on" + name, cb);
-        } else {
-            return reporter.error("[scroll] Don't know how to add event listeners.");
-        }
-    }
-
-    function removeEvent(el, name, cb) {
-        if (el.removeEventListener) {
-            el.removeEventListener(name, cb);
-        } else if(el.detachEvent) {
-            el.detachEvent("on" + name, cb);
-        } else {
-            return reporter.error("[scroll] Don't know how to remove event listeners.");
-        }
-    }
-
-    function getExpandElement(element) {
-        return getState(element).container.childNodes[0].childNodes[0].childNodes[0];
-    }
-
-    function getShrinkElement(element) {
-        return getState(element).container.childNodes[0].childNodes[0].childNodes[1];
-    }
-
-    /**
-     * Adds a resize event listener to the element.
-     * @public
-     * @param {element} element The element that should have the listener added.
-     * @param {function} listener The listener callback to be called for each resize event of the element. The element will be given as a parameter to the listener callback.
-     */
-    function addListener(element, listener) {
-        var listeners = getState(element).listeners;
-
-        if (!listeners.push) {
-            throw new Error("Cannot add listener to an element that is not detectable.");
-        }
-
-        getState(element).listeners.push(listener);
-    }
-
-    /**
-     * Makes an element detectable and ready to be listened for resize events. Will call the callback when the element is ready to be listened for resize changes.
-     * @private
-     * @param {object} options Optional options object.
-     * @param {element} element The element to make detectable
-     * @param {function} callback The callback to be called when the element is ready to be listened for resize changes. Will be called with the element as first parameter.
-     */
-    function makeDetectable(options, element, callback) {
-        if (!callback) {
-            callback = element;
-            element = options;
-            options = null;
-        }
-
-        options = options || {};
-
-        function debug() {
-            if (options.debug) {
-                var args = Array.prototype.slice.call(arguments);
-                args.unshift(idHandler.get(element), "Scroll: ");
-                if (reporter.log.apply) {
-                    reporter.log.apply(null, args);
-                } else {
-                    for (var i = 0; i < args.length; i++) {
-                        reporter.log(args[i]);
-                    }
-                }
-            }
-        }
-
-        function isDetached(element) {
-            function isInDocument(element) {
-                var isInShadowRoot = element.getRootNode && element.getRootNode().contains(element);
-                return element === element.ownerDocument.body || element.ownerDocument.body.contains(element) || isInShadowRoot;
-            }
-
-            if (!isInDocument(element)) {
-                return true;
-            }
-
-            // FireFox returns null style in hidden iframes. See https://github.com/wnr/element-resize-detector/issues/68 and https://bugzilla.mozilla.org/show_bug.cgi?id=795520
-            if (window.getComputedStyle(element) === null) {
-                return true;
-            }
-
-            return false;
-        }
-
-        function isUnrendered(element) {
-            // Check the absolute positioned container since the top level container is display: inline.
-            var container = getState(element).container.childNodes[0];
-            var style = window.getComputedStyle(container);
-            return !style.width || style.width.indexOf("px") === -1; //Can only compute pixel value when rendered.
-        }
-
-        function getStyle() {
-            // Some browsers only force layouts when actually reading the style properties of the style object, so make sure that they are all read here,
-            // so that the user of the function can be sure that it will perform the layout here, instead of later (important for batching).
-            var elementStyle            = window.getComputedStyle(element);
-            var style                   = {};
-            style.position              = elementStyle.position;
-            style.width                 = element.offsetWidth;
-            style.height                = element.offsetHeight;
-            style.top                   = elementStyle.top;
-            style.right                 = elementStyle.right;
-            style.bottom                = elementStyle.bottom;
-            style.left                  = elementStyle.left;
-            style.widthCSS              = elementStyle.width;
-            style.heightCSS             = elementStyle.height;
-            return style;
-        }
-
-        function storeStartSize() {
-            var style = getStyle();
-            getState(element).startSize = {
-                width: style.width,
-                height: style.height
-            };
-            debug("Element start size", getState(element).startSize);
-        }
-
-        function initListeners() {
-            getState(element).listeners = [];
-        }
-
-        function storeStyle() {
-            debug("storeStyle invoked.");
-            if (!getState(element)) {
-                debug("Aborting because element has been uninstalled");
-                return;
-            }
-
-            var style = getStyle();
-            getState(element).style = style;
-        }
-
-        function storeCurrentSize(element, width, height) {
-            getState(element).lastWidth = width;
-            getState(element).lastHeight  = height;
-        }
-
-        function getExpandChildElement(element) {
-            return getExpandElement(element).childNodes[0];
-        }
-
-        function getWidthOffset() {
-            return 2 * scrollbarSizes.width + 1;
-        }
-
-        function getHeightOffset() {
-            return 2 * scrollbarSizes.height + 1;
-        }
-
-        function getExpandWidth(width) {
-            return width + 10 + getWidthOffset();
-        }
-
-        function getExpandHeight(height) {
-            return height + 10 + getHeightOffset();
-        }
-
-        function getShrinkWidth(width) {
-            return width * 2 + getWidthOffset();
-        }
-
-        function getShrinkHeight(height) {
-            return height * 2 + getHeightOffset();
-        }
-
-        function positionScrollbars(element, width, height) {
-            var expand          = getExpandElement(element);
-            var shrink          = getShrinkElement(element);
-            var expandWidth     = getExpandWidth(width);
-            var expandHeight    = getExpandHeight(height);
-            var shrinkWidth     = getShrinkWidth(width);
-            var shrinkHeight    = getShrinkHeight(height);
-            expand.scrollLeft   = expandWidth;
-            expand.scrollTop    = expandHeight;
-            shrink.scrollLeft   = shrinkWidth;
-            shrink.scrollTop    = shrinkHeight;
-        }
-
-        function injectContainerElement() {
-            var container = getState(element).container;
-
-            if (!container) {
-                container                   = document.createElement("div");
-                container.className         = detectionContainerClass;
-                container.style.cssText     = buildCssTextString(["visibility: hidden", "display: inline", "width: 0px", "height: 0px", "z-index: -1", "overflow: hidden", "margin: 0", "padding: 0"]);
-                getState(element).container = container;
-                addAnimationClass(container);
-                element.appendChild(container);
-
-                var onAnimationStart = function () {
-                    getState(element).onRendered && getState(element).onRendered();
-                };
-
-                addEvent(container, "animationstart", onAnimationStart);
-
-                // Store the event handler here so that they may be removed when uninstall is called.
-                // See uninstall function for an explanation why it is needed.
-                getState(element).onAnimationStart = onAnimationStart;
-            }
-
-            return container;
-        }
-
-        function injectScrollElements() {
-            function alterPositionStyles() {
-                var style = getState(element).style;
-
-                if(style.position === "static") {
-                    element.style.setProperty("position", "relative",options.important ? "important" : "");
-
-                    var removeRelativeStyles = function(reporter, element, style, property) {
-                        function getNumericalValue(value) {
-                            return value.replace(/[^-\d\.]/g, "");
-                        }
-
-                        var value = style[property];
-
-                        if(value !== "auto" && getNumericalValue(value) !== "0") {
-                            reporter.warn("An element that is positioned static has style." + property + "=" + value + " which is ignored due to the static positioning. The element will need to be positioned relative, so the style." + property + " will be set to 0. Element: ", element);
-                            element.style[property] = 0;
-                        }
-                    };
-
-                    //Check so that there are no accidental styles that will make the element styled differently now that is is relative.
-                    //If there are any, set them to 0 (this should be okay with the user since the style properties did nothing before [since the element was positioned static] anyway).
-                    removeRelativeStyles(reporter, element, style, "top");
-                    removeRelativeStyles(reporter, element, style, "right");
-                    removeRelativeStyles(reporter, element, style, "bottom");
-                    removeRelativeStyles(reporter, element, style, "left");
-                }
-            }
-
-            function getLeftTopBottomRightCssText(left, top, bottom, right) {
-                left = (!left ? "0" : (left + "px"));
-                top = (!top ? "0" : (top + "px"));
-                bottom = (!bottom ? "0" : (bottom + "px"));
-                right = (!right ? "0" : (right + "px"));
-
-                return ["left: " + left, "top: " + top, "right: " + right, "bottom: " + bottom];
-            }
-
-            debug("Injecting elements");
-
-            if (!getState(element)) {
-                debug("Aborting because element has been uninstalled");
-                return;
-            }
-
-            alterPositionStyles();
-
-            var rootContainer = getState(element).container;
-
-            if (!rootContainer) {
-                rootContainer = injectContainerElement();
-            }
-
-            // Due to this WebKit bug https://bugs.webkit.org/show_bug.cgi?id=80808 (currently fixed in Blink, but still present in WebKit browsers such as Safari),
-            // we need to inject two containers, one that is width/height 100% and another that is left/top -1px so that the final container always is 1x1 pixels bigger than
-            // the targeted element.
-            // When the bug is resolved, "containerContainer" may be removed.
-
-            // The outer container can occasionally be less wide than the targeted when inside inline elements element in WebKit (see https://bugs.webkit.org/show_bug.cgi?id=152980).
-            // This should be no problem since the inner container either way makes sure the injected scroll elements are at least 1x1 px.
-
-            var scrollbarWidth          = scrollbarSizes.width;
-            var scrollbarHeight         = scrollbarSizes.height;
-            var containerContainerStyle = buildCssTextString(["position: absolute", "flex: none", "overflow: hidden", "z-index: -1", "visibility: hidden", "width: 100%", "height: 100%", "left: 0px", "top: 0px"]);
-            var containerStyle          = buildCssTextString(["position: absolute", "flex: none", "overflow: hidden", "z-index: -1", "visibility: hidden"].concat(getLeftTopBottomRightCssText(-(1 + scrollbarWidth), -(1 + scrollbarHeight), -scrollbarHeight, -scrollbarWidth)));
-            var expandStyle             = buildCssTextString(["position: absolute", "flex: none", "overflow: scroll", "z-index: -1", "visibility: hidden", "width: 100%", "height: 100%"]);
-            var shrinkStyle             = buildCssTextString(["position: absolute", "flex: none", "overflow: scroll", "z-index: -1", "visibility: hidden", "width: 100%", "height: 100%"]);
-            var expandChildStyle        = buildCssTextString(["position: absolute", "left: 0", "top: 0"]);
-            var shrinkChildStyle        = buildCssTextString(["position: absolute", "width: 200%", "height: 200%"]);
-
-            var containerContainer      = document.createElement("div");
-            var container               = document.createElement("div");
-            var expand                  = document.createElement("div");
-            var expandChild             = document.createElement("div");
-            var shrink                  = document.createElement("div");
-            var shrinkChild             = document.createElement("div");
-
-            // Some browsers choke on the resize system being rtl, so force it to ltr. https://github.com/wnr/element-resize-detector/issues/56
-            // However, dir should not be set on the top level container as it alters the dimensions of the target element in some browsers.
-            containerContainer.dir              = "ltr";
-
-            containerContainer.style.cssText    = containerContainerStyle;
-            containerContainer.className        = detectionContainerClass;
-            container.className                 = detectionContainerClass;
-            container.style.cssText             = containerStyle;
-            expand.style.cssText                = expandStyle;
-            expandChild.style.cssText           = expandChildStyle;
-            shrink.style.cssText                = shrinkStyle;
-            shrinkChild.style.cssText           = shrinkChildStyle;
-
-            expand.appendChild(expandChild);
-            shrink.appendChild(shrinkChild);
-            container.appendChild(expand);
-            container.appendChild(shrink);
-            containerContainer.appendChild(container);
-            rootContainer.appendChild(containerContainer);
-
-            function onExpandScroll() {
-                var state = getState(element);
-                if (state && state.onExpand) {
-                    state.onExpand();
-                } else {
-                    debug("Aborting expand scroll handler: element has been uninstalled");
-                }
-            }
-
-            function onShrinkScroll() {
-                var state = getState(element);
-                if (state && state.onShrink) {
-                    state.onShrink();
-                } else {
-                    debug("Aborting shrink scroll handler: element has been uninstalled");
-                }
-            }
-
-            addEvent(expand, "scroll", onExpandScroll);
-            addEvent(shrink, "scroll", onShrinkScroll);
-
-            // Store the event handlers here so that they may be removed when uninstall is called.
-            // See uninstall function for an explanation why it is needed.
-            getState(element).onExpandScroll = onExpandScroll;
-            getState(element).onShrinkScroll = onShrinkScroll;
-        }
-
-        function registerListenersAndPositionElements() {
-            function updateChildSizes(element, width, height) {
-                var expandChild             = getExpandChildElement(element);
-                var expandWidth             = getExpandWidth(width);
-                var expandHeight            = getExpandHeight(height);
-                expandChild.style.setProperty("width", expandWidth + "px", options.important ? "important" : "");
-                expandChild.style.setProperty("height", expandHeight + "px", options.important ? "important" : "");
-            }
-
-            function updateDetectorElements(done) {
-                var width           = element.offsetWidth;
-                var height          = element.offsetHeight;
-
-                // Check whether the size has actually changed since last time the algorithm ran. If not, some steps may be skipped.
-                var sizeChanged = width !== getState(element).lastWidth || height !== getState(element).lastHeight;
-
-                debug("Storing current size", width, height);
-
-                // Store the size of the element sync here, so that multiple scroll events may be ignored in the event listeners.
-                // Otherwise the if-check in handleScroll is useless.
-                storeCurrentSize(element, width, height);
-
-                // Since we delay the processing of the batch, there is a risk that uninstall has been called before the batch gets to execute.
-                // Since there is no way to cancel the fn executions, we need to add an uninstall guard to all fns of the batch.
-
-                batchProcessor.add(0, function performUpdateChildSizes() {
-                    if (!sizeChanged) {
-                        return;
-                    }
-
-                    if (!getState(element)) {
-                        debug("Aborting because element has been uninstalled");
-                        return;
-                    }
-
-                    if (!areElementsInjected()) {
-                        debug("Aborting because element container has not been initialized");
-                        return;
-                    }
-
-                    if (options.debug) {
-                        var w = element.offsetWidth;
-                        var h = element.offsetHeight;
-
-                        if (w !== width || h !== height) {
-                            reporter.warn(idHandler.get(element), "Scroll: Size changed before updating detector elements.");
-                        }
-                    }
-
-                    updateChildSizes(element, width, height);
-                });
-
-                batchProcessor.add(1, function updateScrollbars() {
-                    // This function needs to be invoked event though the size is unchanged. The element could have been resized very quickly and then
-                    // been restored to the original size, which will have changed the scrollbar positions.
-
-                    if (!getState(element)) {
-                        debug("Aborting because element has been uninstalled");
-                        return;
-                    }
-
-                    if (!areElementsInjected()) {
-                        debug("Aborting because element container has not been initialized");
-                        return;
-                    }
-
-                    positionScrollbars(element, width, height);
-                });
-
-                if (sizeChanged && done) {
-                    batchProcessor.add(2, function () {
-                        if (!getState(element)) {
-                            debug("Aborting because element has been uninstalled");
-                            return;
-                        }
-
-                        if (!areElementsInjected()) {
-                          debug("Aborting because element container has not been initialized");
-                          return;
-                        }
-
-                        done();
-                    });
-                }
-            }
-
-            function areElementsInjected() {
-                return !!getState(element).container;
-            }
-
-            function notifyListenersIfNeeded() {
-                function isFirstNotify() {
-                    return getState(element).lastNotifiedWidth === undefined;
-                }
-
-                debug("notifyListenersIfNeeded invoked");
-
-                var state = getState(element);
-
-                // Don't notify if the current size is the start size, and this is the first notification.
-                if (isFirstNotify() && state.lastWidth === state.startSize.width && state.lastHeight === state.startSize.height) {
-                    return debug("Not notifying: Size is the same as the start size, and there has been no notification yet.");
-                }
-
-                // Don't notify if the size already has been notified.
-                if (state.lastWidth === state.lastNotifiedWidth && state.lastHeight === state.lastNotifiedHeight) {
-                    return debug("Not notifying: Size already notified");
-                }
-
-
-                debug("Current size not notified, notifying...");
-                state.lastNotifiedWidth = state.lastWidth;
-                state.lastNotifiedHeight = state.lastHeight;
-                forEach$1(getState(element).listeners, function (listener) {
-                    listener(element);
-                });
-            }
-
-            function handleRender() {
-                debug("startanimation triggered.");
-
-                if (isUnrendered(element)) {
-                    debug("Ignoring since element is still unrendered...");
-                    return;
-                }
-
-                debug("Element rendered.");
-                var expand = getExpandElement(element);
-                var shrink = getShrinkElement(element);
-                if (expand.scrollLeft === 0 || expand.scrollTop === 0 || shrink.scrollLeft === 0 || shrink.scrollTop === 0) {
-                    debug("Scrollbars out of sync. Updating detector elements...");
-                    updateDetectorElements(notifyListenersIfNeeded);
-                }
-            }
-
-            function handleScroll() {
-                debug("Scroll detected.");
-
-                if (isUnrendered(element)) {
-                    // Element is still unrendered. Skip this scroll event.
-                    debug("Scroll event fired while unrendered. Ignoring...");
-                    return;
-                }
-
-                updateDetectorElements(notifyListenersIfNeeded);
-            }
-
-            debug("registerListenersAndPositionElements invoked.");
-
-            if (!getState(element)) {
-                debug("Aborting because element has been uninstalled");
-                return;
-            }
-
-            getState(element).onRendered = handleRender;
-            getState(element).onExpand = handleScroll;
-            getState(element).onShrink = handleScroll;
-
-            var style = getState(element).style;
-            updateChildSizes(element, style.width, style.height);
-        }
-
-        function finalizeDomMutation() {
-            debug("finalizeDomMutation invoked.");
-
-            if (!getState(element)) {
-                debug("Aborting because element has been uninstalled");
-                return;
-            }
-
-            var style = getState(element).style;
-            storeCurrentSize(element, style.width, style.height);
-            positionScrollbars(element, style.width, style.height);
-        }
-
-        function ready() {
-            callback(element);
-        }
-
-        function install() {
-            debug("Installing...");
-            initListeners();
-            storeStartSize();
-
-            batchProcessor.add(0, storeStyle);
-            batchProcessor.add(1, injectScrollElements);
-            batchProcessor.add(2, registerListenersAndPositionElements);
-            batchProcessor.add(3, finalizeDomMutation);
-            batchProcessor.add(4, ready);
-        }
-
-        debug("Making detectable...");
-
-        if (isDetached(element)) {
-            debug("Element is detached");
-
-            injectContainerElement();
-
-            debug("Waiting until element is attached...");
-
-            getState(element).onRendered = function () {
-                debug("Element is now attached");
-                install();
-            };
-        } else {
-            install();
-        }
-    }
-
-    function uninstall(element) {
-        var state = getState(element);
-
-        if (!state) {
-            // Uninstall has been called on a non-erd element.
-            return;
-        }
-
-        // Uninstall may have been called in the following scenarios:
-        // (1) Right between the sync code and async batch (here state.busy = true, but nothing have been registered or injected).
-        // (2) In the ready callback of the last level of the batch by another element (here, state.busy = true, but all the stuff has been injected).
-        // (3) After the installation process (here, state.busy = false and all the stuff has been injected).
-        // So to be on the safe side, let's check for each thing before removing.
-
-        // We need to remove the event listeners, because otherwise the event might fire on an uninstall element which results in an error when trying to get the state of the element.
-        state.onExpandScroll && removeEvent(getExpandElement(element), "scroll", state.onExpandScroll);
-        state.onShrinkScroll && removeEvent(getShrinkElement(element), "scroll", state.onShrinkScroll);
-        state.onAnimationStart && removeEvent(state.container, "animationstart", state.onAnimationStart);
-
-        state.container && element.removeChild(state.container);
-    }
-
-    return {
-        makeDetectable: makeDetectable,
-        addListener: addListener,
-        uninstall: uninstall,
-        initDocument: initDocument
-    };
-};var forEach                 = collectionUtils.forEach;
-
-
-
-
-
-
-
-
-
-//Detection strategies.
-
-
-
-function isCollection(obj) {
-    return Array.isArray(obj) || obj.length !== undefined;
-}
-
-function toArray(collection) {
-    if (!Array.isArray(collection)) {
-        var array = [];
-        forEach(collection, function (obj) {
-            array.push(obj);
-        });
-        return array;
-    } else {
-        return collection;
-    }
-}
-
-function isElement(obj) {
-    return obj && obj.nodeType === 1;
-}
-
-/**
- * @typedef idHandler
- * @type {object}
- * @property {function} get Gets the resize detector id of the element.
- * @property {function} set Generate and sets the resize detector id of the element.
- */
-
-/**
- * @typedef Options
- * @type {object}
- * @property {boolean} callOnAdd    Determines if listeners should be called when they are getting added.
-                                    Default is true. If true, the listener is guaranteed to be called when it has been added.
-                                    If false, the listener will not be guarenteed to be called when it has been added (does not prevent it from being called).
- * @property {idHandler} idHandler  A custom id handler that is responsible for generating, setting and retrieving id's for elements.
-                                    If not provided, a default id handler will be used.
- * @property {reporter} reporter    A custom reporter that handles reporting logs, warnings and errors.
-                                    If not provided, a default id handler will be used.
-                                    If set to false, then nothing will be reported.
- * @property {boolean} debug        If set to true, the the system will report debug messages as default for the listenTo method.
- */
-
-/**
- * Creates an element resize detector instance.
- * @public
- * @param {Options?} options Optional global options object that will decide how this instance will work.
- */
-var elementResizeDetector = function(options) {
-    options = options || {};
-
-    //idHandler is currently not an option to the listenTo function, so it should not be added to globalOptions.
-    var idHandler$1;
-
-    if (options.idHandler) {
-        // To maintain compatability with idHandler.get(element, readonly), make sure to wrap the given idHandler
-        // so that readonly flag always is true when it's used here. This may be removed next major version bump.
-        idHandler$1 = {
-            get: function (element) { return options.idHandler.get(element, true); },
-            set: options.idHandler.set
-        };
-    } else {
-        var idGenerator$1 = idGenerator();
-        var defaultIdHandler = idHandler({
-            idGenerator: idGenerator$1,
-            stateHandler: stateHandler
-        });
-        idHandler$1 = defaultIdHandler;
-    }
-
-    //reporter is currently not an option to the listenTo function, so it should not be added to globalOptions.
-    var reporter$1 = options.reporter;
-
-    if(!reporter$1) {
-        //If options.reporter is false, then the reporter should be quiet.
-        var quiet = reporter$1 === false;
-        reporter$1 = reporter(quiet);
-    }
-
-    //batchProcessor is currently not an option to the listenTo function, so it should not be added to globalOptions.
-    var batchProcessor$1 = getOption(options, "batchProcessor", batchProcessor({ reporter: reporter$1 }));
-
-    //Options to be used as default for the listenTo function.
-    var globalOptions = {};
-    globalOptions.callOnAdd     = !!getOption(options, "callOnAdd", true);
-    globalOptions.debug         = !!getOption(options, "debug", false);
-
-    var eventListenerHandler    = listenerHandler(idHandler$1);
-    var elementUtils$1            = elementUtils({
-        stateHandler: stateHandler
-    });
-
-    //The detection strategy to be used.
-    var detectionStrategy;
-    var desiredStrategy = getOption(options, "strategy", "object");
-    var importantCssRules = getOption(options, "important", false);
-    var strategyOptions = {
-        reporter: reporter$1,
-        batchProcessor: batchProcessor$1,
-        stateHandler: stateHandler,
-        idHandler: idHandler$1,
-        important: importantCssRules
-    };
-
-    if(desiredStrategy === "scroll") {
-        if (browserDetector.isLegacyOpera()) {
-            reporter$1.warn("Scroll strategy is not supported on legacy Opera. Changing to object strategy.");
-            desiredStrategy = "object";
-        } else if (browserDetector.isIE(9)) {
-            reporter$1.warn("Scroll strategy is not supported on IE9. Changing to object strategy.");
-            desiredStrategy = "object";
-        }
-    }
-
-    if(desiredStrategy === "scroll") {
-        detectionStrategy = scroll(strategyOptions);
-    } else if(desiredStrategy === "object") {
-        detectionStrategy = object(strategyOptions);
-    } else {
-        throw new Error("Invalid strategy name: " + desiredStrategy);
-    }
-
-    //Calls can be made to listenTo with elements that are still being installed.
-    //Also, same elements can occur in the elements list in the listenTo function.
-    //With this map, the ready callbacks can be synchronized between the calls
-    //so that the ready callback can always be called when an element is ready - even if
-    //it wasn't installed from the function itself.
-    var onReadyCallbacks = {};
-
-    /**
-     * Makes the given elements resize-detectable and starts listening to resize events on the elements. Calls the event callback for each event for each element.
-     * @public
-     * @param {Options?} options Optional options object. These options will override the global options. Some options may not be overriden, such as idHandler.
-     * @param {element[]|element} elements The given array of elements to detect resize events of. Single element is also valid.
-     * @param {function} listener The callback to be executed for each resize event for each element.
-     */
-    function listenTo(options, elements, listener) {
-        function onResizeCallback(element) {
-            var listeners = eventListenerHandler.get(element);
-            forEach(listeners, function callListenerProxy(listener) {
-                listener(element);
-            });
-        }
-
-        function addListener(callOnAdd, element, listener) {
-            eventListenerHandler.add(element, listener);
-
-            if(callOnAdd) {
-                listener(element);
-            }
-        }
-
-        //Options object may be omitted.
-        if(!listener) {
-            listener = elements;
-            elements = options;
-            options = {};
-        }
-
-        if(!elements) {
-            throw new Error("At least one element required.");
-        }
-
-        if(!listener) {
-            throw new Error("Listener required.");
-        }
-
-        if (isElement(elements)) {
-            // A single element has been passed in.
-            elements = [elements];
-        } else if (isCollection(elements)) {
-            // Convert collection to array for plugins.
-            // TODO: May want to check so that all the elements in the collection are valid elements.
-            elements = toArray(elements);
-        } else {
-            return reporter$1.error("Invalid arguments. Must be a DOM element or a collection of DOM elements.");
-        }
-
-        var elementsReady = 0;
-
-        var callOnAdd = getOption(options, "callOnAdd", globalOptions.callOnAdd);
-        var onReadyCallback = getOption(options, "onReady", function noop() {});
-        var debug = getOption(options, "debug", globalOptions.debug);
-
-        forEach(elements, function attachListenerToElement(element) {
-            if (!stateHandler.getState(element)) {
-                stateHandler.initState(element);
-                idHandler$1.set(element);
-            }
-
-            var id = idHandler$1.get(element);
-
-            debug && reporter$1.log("Attaching listener to element", id, element);
-
-            if(!elementUtils$1.isDetectable(element)) {
-                debug && reporter$1.log(id, "Not detectable.");
-                if(elementUtils$1.isBusy(element)) {
-                    debug && reporter$1.log(id, "System busy making it detectable");
-
-                    //The element is being prepared to be detectable. Do not make it detectable.
-                    //Just add the listener, because the element will soon be detectable.
-                    addListener(callOnAdd, element, listener);
-                    onReadyCallbacks[id] = onReadyCallbacks[id] || [];
-                    onReadyCallbacks[id].push(function onReady() {
-                        elementsReady++;
-
-                        if(elementsReady === elements.length) {
-                            onReadyCallback();
-                        }
-                    });
-                    return;
-                }
-
-                debug && reporter$1.log(id, "Making detectable...");
-                //The element is not prepared to be detectable, so do prepare it and add a listener to it.
-                elementUtils$1.markBusy(element, true);
-                return detectionStrategy.makeDetectable({ debug: debug, important: importantCssRules }, element, function onElementDetectable(element) {
-                    debug && reporter$1.log(id, "onElementDetectable");
-
-                    if (stateHandler.getState(element)) {
-                        elementUtils$1.markAsDetectable(element);
-                        elementUtils$1.markBusy(element, false);
-                        detectionStrategy.addListener(element, onResizeCallback);
-                        addListener(callOnAdd, element, listener);
-
-                        // Since the element size might have changed since the call to "listenTo", we need to check for this change,
-                        // so that a resize event may be emitted.
-                        // Having the startSize object is optional (since it does not make sense in some cases such as unrendered elements), so check for its existance before.
-                        // Also, check the state existance before since the element may have been uninstalled in the installation process.
-                        var state = stateHandler.getState(element);
-                        if (state && state.startSize) {
-                            var width = element.offsetWidth;
-                            var height = element.offsetHeight;
-                            if (state.startSize.width !== width || state.startSize.height !== height) {
-                                onResizeCallback(element);
-                            }
-                        }
-
-                        if(onReadyCallbacks[id]) {
-                            forEach(onReadyCallbacks[id], function(callback) {
-                                callback();
-                            });
-                        }
-                    } else {
-                        // The element has been unisntalled before being detectable.
-                        debug && reporter$1.log(id, "Element uninstalled before being detectable.");
-                    }
-
-                    delete onReadyCallbacks[id];
-
-                    elementsReady++;
-                    if(elementsReady === elements.length) {
-                        onReadyCallback();
-                    }
-                });
-            }
-
-            debug && reporter$1.log(id, "Already detecable, adding listener.");
-
-            //The element has been prepared to be detectable and is ready to be listened to.
-            addListener(callOnAdd, element, listener);
-            elementsReady++;
-        });
-
-        if(elementsReady === elements.length) {
-            onReadyCallback();
-        }
-    }
-
-    function uninstall(elements) {
-        if(!elements) {
-            return reporter$1.error("At least one element is required.");
-        }
-
-        if (isElement(elements)) {
-            // A single element has been passed in.
-            elements = [elements];
-        } else if (isCollection(elements)) {
-            // Convert collection to array for plugins.
-            // TODO: May want to check so that all the elements in the collection are valid elements.
-            elements = toArray(elements);
-        } else {
-            return reporter$1.error("Invalid arguments. Must be a DOM element or a collection of DOM elements.");
-        }
-
-        forEach(elements, function (element) {
-            eventListenerHandler.removeAllListeners(element);
-            detectionStrategy.uninstall(element);
-            stateHandler.cleanState(element);
-        });
-    }
-
-    function initDocument(targetDocument) {
-        detectionStrategy.initDocument && detectionStrategy.initDocument(targetDocument);
-    }
-
-    return {
-        listenTo: listenTo,
-        removeListener: eventListenerHandler.removeListener,
-        removeAllListeners: eventListenerHandler.removeAllListeners,
-        uninstall: uninstall,
-        initDocument: initDocument
-    };
-};
-
-function getOption(options, name, defaultValue) {
-    var value = options[name];
-
-    if((value === undefined || value === null) && defaultValue !== undefined) {
-        return defaultValue;
-    }
-
-    return value;
-}var script$d = {
+}, __vue_inject_styles__$e, __vue_script__$e, __vue_scope_id__$e, __vue_is_functional_template__$e, __vue_module_identifier__$e, false, undefined, undefined, undefined);var script$d = {
   props: {
     // 表单项配置
     configs: {
@@ -22819,7 +21157,7 @@ function getOption(options, name, defaultValue) {
     var _this = this;
     // console.log(this.$attrs)
 
-    this.erd = elementResizeDetector();
+    this.erd = elementResizeDetectorMaker__default["default"]();
     this.$nextTick(function () {
       _this.erd.listenTo(document.getElementById('form'), function (element) {
         // console.log({ element })
@@ -22910,16 +21248,16 @@ var __vue_staticRenderFns__$d = [];
 /* style */
 var __vue_inject_styles__$d = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-798eaeaa_0", {
-    source: ".el-form[data-v-798eaeaa] {display:flex;flex-wrap:wrap}.el-form[data-v-798eaeaa]  .el-form-item{margin-right:12px;padding-right:0;margin-bottom:0;flex:1 0 var(--item-min-width);max-width:var(--item-max-width);display:flex;justify-content:flex-start;align-items:center;box-sizing:border-box;height:40px}.el-form[data-v-798eaeaa]  .el-form-item .el-form-item__label{display:block;height:28px;line-height:28px;flex:0 0 var(--label-width);padding-right:6px;margin:0;text-align:right;overflow:hidden}.el-form[data-v-798eaeaa]  .el-form-item .el-form-item__content{display:block;flex:1;min-width:0}.el-form[data-v-798eaeaa]  .el-form-item .el-form-item__content>.el-input{display:block;width:100%}.el-form[data-v-798eaeaa]  .el-form-item .el-form-item__content>.el-select{display:block;width:100%}",
+  inject("data-v-2657094b_0", {
+    source: ".el-form[data-v-2657094b] {display:flex;flex-wrap:wrap}.el-form[data-v-2657094b]  .el-form-item{margin-right:12px;padding-right:0;margin-bottom:0;flex:1 0 var(--item-min-width);max-width:var(--item-max-width);display:flex;justify-content:flex-start;align-items:center;box-sizing:border-box;height:40px}.el-form[data-v-2657094b]  .el-form-item .el-form-item__label{display:block;height:28px;line-height:28px;flex:0 0 var(--label-width);padding-right:6px;margin:0;text-align:right;overflow:hidden}.el-form[data-v-2657094b]  .el-form-item .el-form-item__content{display:block;flex:1;min-width:0}.el-form[data-v-2657094b]  .el-form-item .el-form-item__content>.el-input{display:block;width:100%}.el-form[data-v-2657094b]  .el-form-item .el-form-item__content>.el-select{display:block;width:100%}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$d = "data-v-798eaeaa";
+var __vue_scope_id__$d = "data-v-2657094b";
 /* module identifier */
-var __vue_module_identifier__$d = "data-v-798eaeaa";
+var __vue_module_identifier__$d = "data-v-2657094b";
 /* functional template */
 var __vue_is_functional_template__$d = false;
 /* style inject shadow dom */
@@ -23042,16 +21380,16 @@ var __vue_staticRenderFns__$c = [];
 /* style */
 var __vue_inject_styles__$c = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-1708f677_0", {
-    source: ".dpui_searchBar[data-v-1708f677]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-1708f677]  .el-form{display:flex}.dpui_searchBar[data-v-1708f677]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}",
+  inject("data-v-dadaeec0_0", {
+    source: ".dpui_searchBar[data-v-dadaeec0]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-dadaeec0]  .el-form{display:flex}.dpui_searchBar[data-v-dadaeec0]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$c = "data-v-1708f677";
+var __vue_scope_id__$c = "data-v-dadaeec0";
 /* module identifier */
-var __vue_module_identifier__$c = "data-v-1708f677";
+var __vue_module_identifier__$c = "data-v-dadaeec0";
 /* functional template */
 var __vue_is_functional_template__$c = false;
 /* style inject shadow dom */
@@ -23155,16 +21493,16 @@ var __vue_staticRenderFns__$b = [];
 /* style */
 var __vue_inject_styles__$b = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-773ff9ca_0", {
-    source: ".dpui_searchBar[data-v-773ff9ca]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-773ff9ca]  .el-form{display:flex}.dpui_searchBar[data-v-773ff9ca]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}",
+  inject("data-v-6465be0d_0", {
+    source: ".dpui_searchBar[data-v-6465be0d]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-6465be0d]  .el-form{display:flex}.dpui_searchBar[data-v-6465be0d]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$b = "data-v-773ff9ca";
+var __vue_scope_id__$b = "data-v-6465be0d";
 /* module identifier */
-var __vue_module_identifier__$b = "data-v-773ff9ca";
+var __vue_module_identifier__$b = "data-v-6465be0d";
 /* functional template */
 var __vue_is_functional_template__$b = false;
 /* style inject shadow dom */
@@ -23223,7 +21561,7 @@ var script$a = {
       _this.$emit('change', v);
       if (_this.moreFormVisible) _this.moreFormVisible = false;
     }, this.debounceWait);
-    this.erd = elementResizeDetector();
+    this.erd = elementResizeDetectorMaker__default["default"]();
     this.$nextTick(function () {
       // console.log({ s: this, t: document.getElementById('form') })
       _this.erd.listenTo(_this.$refs.form.$el, function (el) {
@@ -23279,7 +21617,7 @@ var __vue_render__$a = function __vue_render__() {
     }
   }), _vm._ssrNode(" "), _vm.configs.length > _vm.itemVisibleNum ? _vm._ssrNode("<div class=\"display-more\"" + _vm._ssrStyle(null, {
     left: _vm.formVisibile + 6 + 'px'
-  }, null) + " data-v-76015526>", "</div>", [_c('el-popover', {
+  }, null) + " data-v-2bae9a54>", "</div>", [_c('el-popover', {
     attrs: {
       "placement": "bottom-end",
       "width": "300",
@@ -23320,20 +21658,20 @@ var __vue_staticRenderFns__$a = [];
 /* style */
 var __vue_inject_styles__$a = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-76015526_0", {
-    source: ".dp-search-form[data-v-76015526]{position:relative;height:40px;overflow:hidden}.dp-search-form[data-v-76015526]  .el-form .el-form-item{margin-bottom:0;margin-right:0;padding-right:12px}.dp-search-form[data-v-76015526]  .el-form .el-form-item__label{padding-right:6px}.dp-search-form[data-v-76015526]  .el-form:not(.form-visible)>:nth-last-child(2){padding-right:0}.dp-search-form[data-v-76015526]  .el-form.form-visible>:nth-last-child(1){padding-right:0}.dp-search-form .display-more[data-v-76015526]{position:absolute;top:0;height:40px;display:flex;align-items:center}",
+  inject("data-v-2bae9a54_0", {
+    source: ".dp-search-form[data-v-2bae9a54]{position:relative;height:40px;overflow:hidden}.dp-search-form[data-v-2bae9a54]  .el-form .el-form-item{margin-bottom:0;margin-right:0;padding-right:12px}.dp-search-form[data-v-2bae9a54]  .el-form .el-form-item__label{padding-right:6px}.dp-search-form[data-v-2bae9a54]  .el-form:not(.form-visible)>:nth-last-child(2){padding-right:0}.dp-search-form[data-v-2bae9a54]  .el-form.form-visible>:nth-last-child(1){padding-right:0}.dp-search-form .display-more[data-v-2bae9a54]{position:absolute;top:0;height:40px;display:flex;align-items:center}",
     map: undefined,
     media: undefined
-  }), inject("data-v-76015526_1", {
+  }), inject("data-v-2bae9a54_1", {
     source: ".dp-search-form__popper .el-form .el-form-item{margin-bottom:0}.dp-search-form__popper .el-form .el-form-item__label{padding-right:6px;max-width:110px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$a = "data-v-76015526";
+var __vue_scope_id__$a = "data-v-2bae9a54";
 /* module identifier */
-var __vue_module_identifier__$a = "data-v-76015526";
+var __vue_module_identifier__$a = "data-v-2bae9a54";
 /* functional template */
 var __vue_is_functional_template__$a = false;
 /* style inject shadow dom */
@@ -23404,9 +21742,9 @@ var __vue_staticRenderFns__$9 = [];
 /* style */
 var __vue_inject_styles__$9 = undefined;
 /* scoped */
-var __vue_scope_id__$9 = "data-v-405a918c";
+var __vue_scope_id__$9 = "data-v-d880f49c";
 /* module identifier */
-var __vue_module_identifier__$9 = "data-v-405a918c";
+var __vue_module_identifier__$9 = "data-v-d880f49c";
 /* functional template */
 var __vue_is_functional_template__$9 = false;
 /* style inject */
@@ -23584,7 +21922,7 @@ var __vue_inject_styles__$8 = undefined;
 /* scoped */
 var __vue_scope_id__$8 = undefined;
 /* module identifier */
-var __vue_module_identifier__$8 = "data-v-eee6cdee";
+var __vue_module_identifier__$8 = "data-v-0a68e79a";
 /* functional template */
 var __vue_is_functional_template__$8 = false;
 /* style inject */
@@ -23702,7 +22040,7 @@ var __vue_inject_styles__$7 = undefined;
 /* scoped */
 var __vue_scope_id__$7 = undefined;
 /* module identifier */
-var __vue_module_identifier__$7 = "data-v-5857b85d";
+var __vue_module_identifier__$7 = "data-v-f0c81124";
 /* functional template */
 var __vue_is_functional_template__$7 = false;
 /* style inject */
@@ -23836,7 +22174,7 @@ var __vue_inject_styles__$6 = undefined;
 /* scoped */
 var __vue_scope_id__$6 = undefined;
 /* module identifier */
-var __vue_module_identifier__$6 = "data-v-87c208ac";
+var __vue_module_identifier__$6 = "data-v-ac7c2ca4";
 /* functional template */
 var __vue_is_functional_template__$6 = false;
 /* style inject */
@@ -23883,7 +22221,7 @@ var __vue_inject_styles__$5 = undefined;
 /* scoped */
 var __vue_scope_id__$5 = undefined;
 /* module identifier */
-var __vue_module_identifier__$5 = "data-v-378664b3";
+var __vue_module_identifier__$5 = "data-v-6a519a38";
 /* functional template */
 var __vue_is_functional_template__$5 = false;
 /* style inject */
@@ -24216,16 +22554,16 @@ var __vue_staticRenderFns__$4 = [];
 /* style */
 var __vue_inject_styles__$4 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-3fbc01ed_0", {
-    source: ".tree-wrap[data-v-3fbc01ed]{height:100%;overflow-x:hidden;overflow-y:auto}.tree-wrap .tree-node[data-v-3fbc01ed]{width:100%;height:100%;display:flex;justify-content:space-between;align-items:center;box-sizing:border-box;font-size:13px;padding-right:6px;overflow:hidden}.tree-wrap .tree-node .content-left[data-v-3fbc01ed]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-wrap .tree-node .content-left .blank[data-v-3fbc01ed]{width:5px;height:5px;border-radius:5px;margin-right:1px}.tree-wrap .tree-node .content-left .blank.red-circle[data-v-3fbc01ed]{background-color:#f56c6c}.tree-wrap .tree-node .content-left .label[data-v-3fbc01ed]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-wrap .tree-node .content-right[data-v-3fbc01ed]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-wrap .tree-node .content-right .el-button[data-v-3fbc01ed],.tree-wrap .tree-node .content-right .el-link[data-v-3fbc01ed],.tree-wrap .tree-node .content-right i[data-v-3fbc01ed],.tree-wrap .tree-node .content-right img[data-v-3fbc01ed]{margin-left:10px}.tree-wrap.tree-list[data-v-3fbc01ed]  .el-tree-node__expand-icon{display:none}.tree-wrap.tree-list .tree-node[data-v-3fbc01ed]{padding:0 12px}.tree-wrap.tree-list.tree-red-dot .tree-node[data-v-3fbc01ed]{padding:0 6px}.tree-wrap.tree-red-dot[data-v-3fbc01ed]  .el-tree-node__expand-icon{margin:0 2px 0 6px}[data-v-3fbc01ed] .el-tree-node .el-tree-node__content{height:36px;position:relative}[data-v-3fbc01ed] .el-tree-node .el-tree-node__expand-icon{padding:0;margin:0 4px 0 6px}[data-v-3fbc01ed] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important;color:#303133;font-weight:700}[data-v-3fbc01ed] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}",
+  inject("data-v-d9a1e2d8_0", {
+    source: ".tree-wrap[data-v-d9a1e2d8]{height:100%;overflow-x:hidden;overflow-y:auto}.tree-wrap .tree-node[data-v-d9a1e2d8]{width:100%;height:100%;display:flex;justify-content:space-between;align-items:center;box-sizing:border-box;font-size:13px;padding-right:6px;overflow:hidden}.tree-wrap .tree-node .content-left[data-v-d9a1e2d8]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-wrap .tree-node .content-left .blank[data-v-d9a1e2d8]{width:5px;height:5px;border-radius:5px;margin-right:1px}.tree-wrap .tree-node .content-left .blank.red-circle[data-v-d9a1e2d8]{background-color:#f56c6c}.tree-wrap .tree-node .content-left .label[data-v-d9a1e2d8]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-wrap .tree-node .content-right[data-v-d9a1e2d8]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-wrap .tree-node .content-right .el-button[data-v-d9a1e2d8],.tree-wrap .tree-node .content-right .el-link[data-v-d9a1e2d8],.tree-wrap .tree-node .content-right i[data-v-d9a1e2d8],.tree-wrap .tree-node .content-right img[data-v-d9a1e2d8]{margin-left:10px}.tree-wrap.tree-list[data-v-d9a1e2d8]  .el-tree-node__expand-icon{display:none}.tree-wrap.tree-list .tree-node[data-v-d9a1e2d8]{padding:0 12px}.tree-wrap.tree-list.tree-red-dot .tree-node[data-v-d9a1e2d8]{padding:0 6px}.tree-wrap.tree-red-dot[data-v-d9a1e2d8]  .el-tree-node__expand-icon{margin:0 2px 0 6px}[data-v-d9a1e2d8] .el-tree-node .el-tree-node__content{height:36px;position:relative}[data-v-d9a1e2d8] .el-tree-node .el-tree-node__expand-icon{padding:0;margin:0 4px 0 6px}[data-v-d9a1e2d8] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important;color:#303133;font-weight:700}[data-v-d9a1e2d8] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$4 = "data-v-3fbc01ed";
+var __vue_scope_id__$4 = "data-v-d9a1e2d8";
 /* module identifier */
-var __vue_module_identifier__$4 = "data-v-3fbc01ed";
+var __vue_module_identifier__$4 = "data-v-d9a1e2d8";
 /* functional template */
 var __vue_is_functional_template__$4 = false;
 /* style inject shadow dom */
@@ -24405,16 +22743,16 @@ var __vue_staticRenderFns__$3 = [];
 /* style */
 var __vue_inject_styles__$3 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-00a731d8_0", {
-    source: "[data-v-00a731d8] .el-dialog .el-dialog__header{height:46px;padding:16px 16px 0;box-sizing:border-box;border-bottom:1px solid #e5e5e5}[data-v-00a731d8] .el-dialog .el-dialog__header .el-dialog__title{font-size:16px;color:#303133;font-weight:600;line-height:normal}[data-v-00a731d8] .el-dialog .el-dialog__header .el-dialog__headerbtn{top:16px;right:16px}[data-v-00a731d8] .el-dialog .el-dialog__body{padding:20px 24px;overflow:auto}[data-v-00a731d8] .el-dialog .el-dialog__footer{height:40px;display:flex;justify-content:flex-end;align-items:center;padding:0 16px;border-top:1px solid #e5e5e5}[data-v-00a731d8] .el-dialog .el-dialog__footer .el-button+.el-button{margin-left:6px}",
+  inject("data-v-a8969d9e_0", {
+    source: "[data-v-a8969d9e] .el-dialog .el-dialog__header{height:46px;padding:16px 16px 0;box-sizing:border-box;border-bottom:1px solid #e5e5e5}[data-v-a8969d9e] .el-dialog .el-dialog__header .el-dialog__title{font-size:16px;color:#303133;font-weight:600;line-height:normal}[data-v-a8969d9e] .el-dialog .el-dialog__header .el-dialog__headerbtn{top:16px;right:16px}[data-v-a8969d9e] .el-dialog .el-dialog__body{padding:20px 24px;overflow:auto}[data-v-a8969d9e] .el-dialog .el-dialog__footer{height:40px;display:flex;justify-content:flex-end;align-items:center;padding:0 16px;border-top:1px solid #e5e5e5}[data-v-a8969d9e] .el-dialog .el-dialog__footer .el-button+.el-button{margin-left:6px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$3 = "data-v-00a731d8";
+var __vue_scope_id__$3 = "data-v-a8969d9e";
 /* module identifier */
-var __vue_module_identifier__$3 = "data-v-00a731d8";
+var __vue_module_identifier__$3 = "data-v-a8969d9e";
 /* functional template */
 var __vue_is_functional_template__$3 = false;
 /* style inject shadow dom */
@@ -24542,16 +22880,16 @@ var __vue_staticRenderFns__$2 = [];
 /* style */
 var __vue_inject_styles__$2 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-86f35dee_0", {
-    source: ".el-pagination[data-v-86f35dee]{height:20px;line-height:20px;overflow:hidden}.el-pagination[data-v-86f35dee]  *{font-size:12px!important}.el-pagination[data-v-86f35dee]  button,.el-pagination[data-v-86f35dee]  span:not([class*=suffix]){height:20px;line-height:20px}.el-pagination[data-v-86f35dee]  .el-select .el-input{width:85px}.el-pagination[data-v-86f35dee]  .el-input--mini,.el-pagination[data-v-86f35dee]  .el-input--mini .el-input__inner{height:20px}.el-pagination[data-v-86f35dee]  .el-input__suffix{height:28px;top:-4px}.el-pagination[data-v-86f35dee]  .el-pager,.el-pagination[data-v-86f35dee]  .el-pager li{height:20px;line-height:20px}.el-pagination[data-v-86f35dee]  .el-pager li:not(.active){font-weight:400}.el-pagination[data-v-86f35dee]  .el-pager .more::before{line-height:20px}.el-pagination[data-v-86f35dee]  .el-pagination__editor.el-input{height:20px}.el-pagination[data-v-86f35dee]  .el-pagination__editor.el-input .el-input__inner{height:20px}",
+  inject("data-v-5b7b51d0_0", {
+    source: ".el-pagination[data-v-5b7b51d0]{height:20px;line-height:20px;overflow:hidden}.el-pagination[data-v-5b7b51d0]  *{font-size:12px!important}.el-pagination[data-v-5b7b51d0]  button,.el-pagination[data-v-5b7b51d0]  span:not([class*=suffix]){height:20px;line-height:20px}.el-pagination[data-v-5b7b51d0]  .el-select .el-input{width:85px}.el-pagination[data-v-5b7b51d0]  .el-input--mini,.el-pagination[data-v-5b7b51d0]  .el-input--mini .el-input__inner{height:20px}.el-pagination[data-v-5b7b51d0]  .el-input__suffix{height:28px;top:-4px}.el-pagination[data-v-5b7b51d0]  .el-pager,.el-pagination[data-v-5b7b51d0]  .el-pager li{height:20px;line-height:20px}.el-pagination[data-v-5b7b51d0]  .el-pager li:not(.active){font-weight:400}.el-pagination[data-v-5b7b51d0]  .el-pager .more::before{line-height:20px}.el-pagination[data-v-5b7b51d0]  .el-pagination__editor.el-input{height:20px}.el-pagination[data-v-5b7b51d0]  .el-pagination__editor.el-input .el-input__inner{height:20px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$2 = "data-v-86f35dee";
+var __vue_scope_id__$2 = "data-v-5b7b51d0";
 /* module identifier */
-var __vue_module_identifier__$2 = "data-v-86f35dee";
+var __vue_module_identifier__$2 = "data-v-5b7b51d0";
 /* functional template */
 var __vue_is_functional_template__$2 = false;
 /* style inject shadow dom */
@@ -24687,16 +23025,16 @@ var __vue_staticRenderFns__$1 = [];
 /* style */
 var __vue_inject_styles__$1 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-be2946b6_0", {
-    source: ".el-form[data-v-be2946b6]{padding:0 6px;display:flex}.el-form[data-v-be2946b6]  .el-form-item{flex:1;margin-bottom:0;padding-right:6px}.el-form[data-v-be2946b6]  .el-form-item.set-width{flex:0 0 var(--width)}.el-form[data-v-be2946b6]  .el-form-item:last-child{padding-right:0}",
+  inject("data-v-72222b3e_0", {
+    source: ".el-form[data-v-72222b3e]{padding:0 6px;display:flex}.el-form[data-v-72222b3e]  .el-form-item{flex:1;margin-bottom:0;padding-right:6px}.el-form[data-v-72222b3e]  .el-form-item.set-width{flex:0 0 var(--width)}.el-form[data-v-72222b3e]  .el-form-item:last-child{padding-right:0}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$1 = "data-v-be2946b6";
+var __vue_scope_id__$1 = "data-v-72222b3e";
 /* module identifier */
-var __vue_module_identifier__$1 = "data-v-be2946b6";
+var __vue_module_identifier__$1 = "data-v-72222b3e";
 /* functional template */
 var __vue_is_functional_template__$1 = false;
 /* style inject shadow dom */
@@ -24744,29 +23082,31 @@ var __vue_component__$1 = /*#__PURE__*/normalizeComponent({
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
-            case 0:
-              _this.data = [];
-              _this.loading = true;
-              _context.prev = 2;
-              _context.next = 5;
-              return _this.load(_this.searchModel);
-            case 5:
-              _this.data = _context.sent;
-              _this.loading = false;
-              _context.next = 13;
-              break;
-            case 9:
-              _context.prev = 9;
-              _context.t0 = _context["catch"](2);
-              _this.loading = false;
-              _this.$message({
-                type: 'error',
-                message: '系统错误'
-              });
-            case 13:
-            case "end":
-              return _context.stop();
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.data = [];
+                _this.loading = true;
+                _context.prev = 2;
+                _context.next = 5;
+                return _this.load(_this.searchModel);
+              case 5:
+                _this.data = _context.sent;
+                _this.loading = false;
+                _context.next = 13;
+                break;
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](2);
+                _this.loading = false;
+                _this.$message({
+                  type: 'error',
+                  message: '系统错误'
+                });
+              case 13:
+              case "end":
+                return _context.stop();
+            }
           }
         }, _callee, null, [[2, 9]]);
       }))();
@@ -24823,9 +23163,9 @@ var __vue_staticRenderFns__ = [];
 /* style */
 var __vue_inject_styles__ = undefined;
 /* scoped */
-var __vue_scope_id__ = "data-v-3e3c1cfc";
+var __vue_scope_id__ = "data-v-15251640";
 /* module identifier */
-var __vue_module_identifier__ = "data-v-3e3c1cfc";
+var __vue_module_identifier__ = "data-v-15251640";
 /* functional template */
 var __vue_is_functional_template__ = false;
 /* style inject */
