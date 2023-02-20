@@ -68,3 +68,5 @@ export { default as DpPagination } from './navigation/pagination' // 分页
 
 /* module 模块组件  : 由基础组件组合成的模块化组件 */
 export { default as DpCatalog } from './module/catalog' // 目录模块 (带搜索，树形结构展示目录数据)
+
+export { default as DpPopup } from './Popup'
