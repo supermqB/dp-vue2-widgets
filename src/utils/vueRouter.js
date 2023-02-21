@@ -7,6 +7,7 @@ const generateMenuItems = routesConfig => {
       items.push({
         value: v.name,
         label: v.meta && v.meta.title ? v.meta.title : v.name,
+        meta: v.meta,
         children: v.children ? generateMenuItems(v.children) : undefined
       })
     }

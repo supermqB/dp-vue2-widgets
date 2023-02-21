@@ -19796,11 +19796,30 @@ const __vue_component__$p = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
 
 var script$o = {
   name: 'menuItem',
   props: {
     item: Object
+  },
+  computed: {
+    roles() {
+      const roles = this.$store.getters['auth/info'].roles;
+      return roles ? roles : [];
+    }
+  },
+  methods: {
+    hasPermission(userRoles, routerPermissions) {
+      if (!routerPermissions) return true;
+      let res = false;
+      userRoles.forEach(i => {
+        if (routerPermissions.includes(i)) res = true;
+      });
+      return res;
+    }
   }
 };
 
@@ -19812,7 +19831,7 @@ var __vue_render__$o = function () {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('span', {
+  return _vm.hasPermission(_vm.roles, _vm.item.meta ? _vm.item.meta.permissions : []) ? _c('span', {
     staticClass: "menu-item"
   }, [!_vm.item.children || _vm.item.children.length == 0 ? [_c('el-menu-item', {
     key: _vm.item.value,
@@ -19837,7 +19856,7 @@ var __vue_render__$o = function () {
         "item": subitem
       }
     })];
-  })], 2)] : _vm._e()], 2);
+  })], 2)] : _vm._e()], 2) : _vm._e();
 };
 var __vue_staticRenderFns__$o = [];
 
@@ -24932,6 +24951,7 @@ const generateMenuItems = routesConfig => {
       items.push({
         value: v.name,
         label: v.meta && v.meta.title ? v.meta.title : v.name,
+        meta: v.meta,
         children: v.children ? generateMenuItems(v.children) : undefined
       });
     }

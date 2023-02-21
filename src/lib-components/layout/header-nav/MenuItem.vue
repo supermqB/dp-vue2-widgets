@@ -1,5 +1,8 @@
 <template>
-  <span class="menu-item">
+  <span
+    class="menu-item"
+    v-if="hasPermission(roles, item.meta ? item.meta.permissions : [])"
+  >
     <template v-if="!item.children || item.children.length == 0">
       <el-menu-item
         :index="item.value"
@@ -33,6 +36,22 @@ export default {
   name: 'menuItem',
   props: {
     item: Object
+  },
+  computed: {
+    roles() {
+      const roles = this.$store.getters['auth/info'].roles
+      return roles ? roles : []
+    }
+  },
+  methods: {
+    hasPermission(userRoles, routerPermissions) {
+      if (!routerPermissions) return true
+      let res = false
+      userRoles.forEach(i => {
+        if (routerPermissions.includes(i)) res = true
+      })
+      return res
+    }
   }
 }
 </script>

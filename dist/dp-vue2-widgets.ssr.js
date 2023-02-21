@@ -20214,11 +20214,30 @@ var __vue_component__$p = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
 
 var script$o = {
   name: 'menuItem',
   props: {
     item: Object
+  },
+  computed: {
+    roles: function roles() {
+      var roles = this.$store.getters['auth/info'].roles;
+      return roles ? roles : [];
+    }
+  },
+  methods: {
+    hasPermission: function hasPermission(userRoles, routerPermissions) {
+      if (!routerPermissions) return true;
+      var res = false;
+      userRoles.forEach(function (i) {
+        if (routerPermissions.includes(i)) res = true;
+      });
+      return res;
+    }
   }
 };/* script */
 var __vue_script__$o = script$o;
@@ -20228,7 +20247,7 @@ var __vue_render__$o = function __vue_render__() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('span', {
+  return _vm.hasPermission(_vm.roles, _vm.item.meta ? _vm.item.meta.permissions : []) ? _c('span', {
     staticClass: "menu-item"
   }, [!_vm.item.children || _vm.item.children.length == 0 ? [_c('el-menu-item', {
     key: _vm.item.value,
@@ -20253,7 +20272,7 @@ var __vue_render__$o = function __vue_render__() {
         "item": subitem
       }
     })];
-  })], 2)] : _vm._e()], 2);
+  })], 2)] : _vm._e()], 2) : _vm._e();
 };
 var __vue_staticRenderFns__$o = [];
 
@@ -20262,7 +20281,7 @@ var __vue_inject_styles__$o = undefined;
 /* scoped */
 var __vue_scope_id__$o = undefined;
 /* module identifier */
-var __vue_module_identifier__$o = "data-v-7961916b";
+var __vue_module_identifier__$o = "data-v-4d25871f";
 /* functional template */
 var __vue_is_functional_template__$o = false;
 /* style inject */
@@ -24744,31 +24763,29 @@ var __vue_component__$2 = /*#__PURE__*/normalizeComponent({
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _this.data = [];
-                _this.loading = true;
-                _context.prev = 2;
-                _context.next = 5;
-                return _this.load(_this.searchModel);
-              case 5:
-                _this.data = _context.sent;
-                _this.loading = false;
-                _context.next = 13;
-                break;
-              case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](2);
-                _this.loading = false;
-                _this.$message({
-                  type: 'error',
-                  message: '系统错误'
-                });
-              case 13:
-              case "end":
-                return _context.stop();
-            }
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _this.data = [];
+              _this.loading = true;
+              _context.prev = 2;
+              _context.next = 5;
+              return _this.load(_this.searchModel);
+            case 5:
+              _this.data = _context.sent;
+              _this.loading = false;
+              _context.next = 13;
+              break;
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](2);
+              _this.loading = false;
+              _this.$message({
+                type: 'error',
+                message: '系统错误'
+              });
+            case 13:
+            case "end":
+              return _context.stop();
           }
         }, _callee, null, [[2, 9]]);
       }))();
@@ -25127,6 +25144,7 @@ var install = function installDpVue2Widgets(Vue) {
       items.push({
         value: v.name,
         label: v.meta && v.meta.title ? v.meta.title : v.name,
+        meta: v.meta,
         children: v.children ? generateMenuItems(v.children) : undefined
       });
     }
