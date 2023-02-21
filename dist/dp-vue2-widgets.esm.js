@@ -19807,8 +19807,8 @@ var script$o = {
   },
   computed: {
     roles() {
-      const roles = this.$store.getters['auth/info'].roles;
-      return roles ? roles : [];
+      const authInfo = this.$store.getters['auth/info'];
+      return authInfo && authInfo.roles ? authInforoles : [];
     }
   },
   methods: {
