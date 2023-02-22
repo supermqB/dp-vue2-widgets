@@ -82,6 +82,7 @@ export default {
     },
     close() {
       this.visible = false
+      this.$emit('onClose')
       document.removeEventListener('click', this.onOutClick)
     },
     setPopupPos(target) {
@@ -103,7 +104,7 @@ export default {
       if (!this.visible || !this.$refs.popup) return
       if (!this.$refs.popup.contains(e.target)) {
         this.close()
-        this.$emit('onClose')
+        // this.$emit('onClose')
       }
     },
     leftStyle({ x, y, w, h, offset, width, height }) {
