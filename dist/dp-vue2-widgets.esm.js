@@ -24625,6 +24625,7 @@ var script = {
     },
     close() {
       this.visible = false;
+      this.$emit('onClose');
       document.removeEventListener('click', this.onOutClick);
     },
     setPopupPos(target) {
@@ -24652,9 +24653,10 @@ var script = {
       if (!this.visible || !this.$refs.popup) return;
       if (!this.$refs.popup.contains(e.target)) {
         this.close();
-        this.$emit('onClose');
+        // this.$emit('onClose')
       }
     },
+
     leftStyle(_ref) {
       let {
         x,
@@ -24740,7 +24742,7 @@ var script = {
   }
 };
 
-var css_248z = ".popupWrap[data-v-47339268]{position:fixed;padding:1px;min-width:50px;border:1px solid #eee;border-radius:4px;background:#fff;border:1px solid #e4e7ed;box-shadow:0 2px 12px 0 rgba(0,0,0,.06);z-index:100}.popup[data-v-47339268]{width:100%;height:100%;overflow:auto}.anchor[data-v-47339268]{display:inline-block;height:10px;width:10px;background-color:#fff;border:1px solid #eee;position:absolute;transform:rotate(45deg)}.anchor.bottom[data-v-47339268]{border-right:0;border-bottom:0;top:-5px}.anchor.left[data-v-47339268]{border-left:0;border-bottom:0;right:-6px}.anchor.right[data-v-47339268]{border-right:0;border-top:0;left:-6px}.anchor.top[data-v-47339268]{border-left:0;border-top:0;bottom:-5px}";
+var css_248z = ".popupWrap[data-v-6ccb6628]{position:fixed;padding:1px;min-width:50px;border:1px solid #eee;border-radius:4px;background:#fff;border:1px solid #e4e7ed;box-shadow:0 2px 12px 0 rgba(0,0,0,.06);z-index:100}.popup[data-v-6ccb6628]{width:100%;height:100%;overflow:auto}.anchor[data-v-6ccb6628]{display:inline-block;height:10px;width:10px;background-color:#fff;border:1px solid #eee;position:absolute;transform:rotate(45deg)}.anchor.bottom[data-v-6ccb6628]{border-right:0;border-bottom:0;top:-5px}.anchor.left[data-v-6ccb6628]{border-left:0;border-bottom:0;right:-6px}.anchor.right[data-v-6ccb6628]{border-right:0;border-top:0;left:-6px}.anchor.top[data-v-6ccb6628]{border-left:0;border-top:0;bottom:-5px}";
 styleInject(css_248z);
 
 /* script */
@@ -24773,7 +24775,7 @@ var __vue_staticRenderFns__ = [];
 /* style */
 const __vue_inject_styles__ = undefined;
 /* scoped */
-const __vue_scope_id__ = "data-v-47339268";
+const __vue_scope_id__ = "data-v-6ccb6628";
 /* module identifier */
 const __vue_module_identifier__ = undefined;
 /* functional template */

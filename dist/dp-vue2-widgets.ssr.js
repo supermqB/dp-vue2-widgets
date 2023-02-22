@@ -24763,29 +24763,31 @@ var __vue_component__$2 = /*#__PURE__*/normalizeComponent({
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
-            case 0:
-              _this.data = [];
-              _this.loading = true;
-              _context.prev = 2;
-              _context.next = 5;
-              return _this.load(_this.searchModel);
-            case 5:
-              _this.data = _context.sent;
-              _this.loading = false;
-              _context.next = 13;
-              break;
-            case 9:
-              _context.prev = 9;
-              _context.t0 = _context["catch"](2);
-              _this.loading = false;
-              _this.$message({
-                type: 'error',
-                message: '系统错误'
-              });
-            case 13:
-            case "end":
-              return _context.stop();
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.data = [];
+                _this.loading = true;
+                _context.prev = 2;
+                _context.next = 5;
+                return _this.load(_this.searchModel);
+              case 5:
+                _this.data = _context.sent;
+                _this.loading = false;
+                _context.next = 13;
+                break;
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](2);
+                _this.loading = false;
+                _this.$message({
+                  type: 'error',
+                  message: '系统错误'
+                });
+              case 13:
+              case "end":
+                return _context.stop();
+            }
           }
         }, _callee, null, [[2, 9]]);
       }))();
@@ -24938,6 +24940,7 @@ var script = {
     },
     close: function close() {
       this.visible = false;
+      this.$emit('onClose');
       document.removeEventListener('click', this.onOutClick);
     },
     setPopupPos: function setPopupPos(target) {
@@ -24963,7 +24966,7 @@ var script = {
       if (!this.visible || !this.$refs.popup) return;
       if (!this.$refs.popup.contains(e.target)) {
         this.close();
-        this.$emit('onClose');
+        // this.$emit('onClose')
       }
     },
     leftStyle: function leftStyle(_ref) {
@@ -25059,23 +25062,23 @@ var __vue_render__ = function __vue_render__() {
     ref: "popup",
     staticClass: "popupWrap",
     style: Object.assign({}, _vm.popupPos, _vm.popupSize)
-  }, [_vm._ssrNode("<i" + _vm._ssrClass("anchor", [_vm.placement]) + _vm._ssrStyle(null, _vm.anchorOffset, null) + " data-v-47339268></i> "), _vm.visible ? _vm._ssrNode("<div class=\"popup\" data-v-47339268>", "</div>", [_vm._t("default")], 2) : _vm._e()], 2);
+  }, [_vm._ssrNode("<i" + _vm._ssrClass("anchor", [_vm.placement]) + _vm._ssrStyle(null, _vm.anchorOffset, null) + " data-v-6ccb6628></i> "), _vm.visible ? _vm._ssrNode("<div class=\"popup\" data-v-6ccb6628>", "</div>", [_vm._t("default")], 2) : _vm._e()], 2);
 };
 var __vue_staticRenderFns__ = [];
 
 /* style */
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-47339268_0", {
-    source: ".popupWrap[data-v-47339268]{position:fixed;padding:1px;min-width:50px;border:1px solid #eee;border-radius:4px;background:#fff;border:1px solid #e4e7ed;box-shadow:0 2px 12px 0 rgba(0,0,0,.06);z-index:100}.popup[data-v-47339268]{width:100%;height:100%;overflow:auto}.anchor[data-v-47339268]{display:inline-block;height:10px;width:10px;background-color:#fff;border:1px solid #eee;position:absolute;transform:rotate(45deg)}.anchor.bottom[data-v-47339268]{border-right:0;border-bottom:0;top:-5px}.anchor.left[data-v-47339268]{border-left:0;border-bottom:0;right:-6px}.anchor.right[data-v-47339268]{border-right:0;border-top:0;left:-6px}.anchor.top[data-v-47339268]{border-left:0;border-top:0;bottom:-5px}",
+  inject("data-v-6ccb6628_0", {
+    source: ".popupWrap[data-v-6ccb6628]{position:fixed;padding:1px;min-width:50px;border:1px solid #eee;border-radius:4px;background:#fff;border:1px solid #e4e7ed;box-shadow:0 2px 12px 0 rgba(0,0,0,.06);z-index:100}.popup[data-v-6ccb6628]{width:100%;height:100%;overflow:auto}.anchor[data-v-6ccb6628]{display:inline-block;height:10px;width:10px;background-color:#fff;border:1px solid #eee;position:absolute;transform:rotate(45deg)}.anchor.bottom[data-v-6ccb6628]{border-right:0;border-bottom:0;top:-5px}.anchor.left[data-v-6ccb6628]{border-left:0;border-bottom:0;right:-6px}.anchor.right[data-v-6ccb6628]{border-right:0;border-top:0;left:-6px}.anchor.top[data-v-6ccb6628]{border-left:0;border-top:0;bottom:-5px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__ = "data-v-47339268";
+var __vue_scope_id__ = "data-v-6ccb6628";
 /* module identifier */
-var __vue_module_identifier__ = "data-v-47339268";
+var __vue_module_identifier__ = "data-v-6ccb6628";
 /* functional template */
 var __vue_is_functional_template__ = false;
 /* style inject shadow dom */
