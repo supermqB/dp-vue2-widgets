@@ -40,7 +40,7 @@ export default {
   computed: {
     roles() {
       const authInfo = this.$store.getters['auth/info']
-      return authInfo && authInfo.roles ? authInforoles : []
+      return authInfo && authInfo.roles ? authInfo.roles : []
     }
   },
   methods: {

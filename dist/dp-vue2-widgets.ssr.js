@@ -20226,7 +20226,7 @@ var script$o = {
   computed: {
     roles: function roles() {
       var authInfo = this.$store.getters['auth/info'];
-      return authInfo && authInfo.roles ? authInforoles : [];
+      return authInfo && authInfo.roles ? authInfo.roles : [];
     }
   },
   methods: {
@@ -20281,7 +20281,7 @@ var __vue_inject_styles__$o = undefined;
 /* scoped */
 var __vue_scope_id__$o = undefined;
 /* module identifier */
-var __vue_module_identifier__$o = "data-v-1a964f4a";
+var __vue_module_identifier__$o = "data-v-0178ad25";
 /* functional template */
 var __vue_is_functional_template__$o = false;
 /* style inject */
