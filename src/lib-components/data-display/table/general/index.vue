@@ -43,7 +43,7 @@
           v-for="col in tableConfig"
           v-bind="col.colConfig"
           :key="col.colConfig.property"
-          show-overflow-tooltip
+          :show-overflow-tooltip=" !col.colConfig.hideTooltip"
         >
           <template v-if="col.header" slot="header">
             <span :style="{ 'margin-right': '5px' }">{{
