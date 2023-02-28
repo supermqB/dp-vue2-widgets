@@ -5,17 +5,19 @@
       height != 'auto' ? 'set-height' : '',
       size != 'auto' ? 'set-size' : '',
       flex != 1 ? 'set-flex' : '',
-      hasSlot.header ? 'has-header' : '',
+      hasSlot.header || titleText ? 'has-header' : '',
       noBorder ? 'no-border' : ''
     ]"
     :style="{ '--height': height, '--size': size, '--flex': flex }"
   >
-    <template v-if="hasSlot.header">
+    <template v-if="hasSlot.header || titleText">
       <div
         class="dp-block__header"
         :style="{ '--header-height': headerHeight }"
       >
-        <slot name="header" />
+        <slot name="header">
+          <dp-title :text="titleText" />
+        </slot>
       </div>
       <div class="dp-block__body">
         <slot />
@@ -45,6 +47,11 @@ export default {
     flex: {
       type: Number,
       default: 1
+    },
+    // 标题内容，默认使用dp-title组件，如需自定义title 使用header具名插槽
+    titleText: {
+      type: String,
+      default: ''
     },
     // 头部区域(header)高度 (在flex的样式值中使用,默认值'auto')
     headerHeight: {

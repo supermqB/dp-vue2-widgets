@@ -20225,7 +20225,7 @@ var script$o = {
   },
   computed: {
     roles: function roles() {
-      var authInfo = this.$store.getters['auth/info'];
+      var authInfo = this.$store ? this.$store.getters['auth/info'] : false;
       return authInfo && authInfo.roles ? authInfo.roles : [];
     }
   },
@@ -20281,7 +20281,7 @@ var __vue_inject_styles__$o = undefined;
 /* scoped */
 var __vue_scope_id__$o = undefined;
 /* module identifier */
-var __vue_module_identifier__$o = "data-v-0178ad25";
+var __vue_module_identifier__$o = "data-v-63a4d4f6";
 /* functional template */
 var __vue_is_functional_template__$o = false;
 /* style inject */
@@ -20674,6 +20674,8 @@ var __vue_component__$k = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
 
 var script$j = {
   name: 'DpBlock',
@@ -20692,6 +20694,11 @@ var script$j = {
     flex: {
       type: Number,
       default: 1
+    },
+    // 标题内容，默认使用dp-title组件，如需自定义title 使用header具名插槽
+    titleText: {
+      type: String,
+      default: ''
     },
     // 头部区域(header)高度 (在flex的样式值中使用,默认值'auto')
     headerHeight: {
@@ -20720,31 +20727,37 @@ var __vue_render__$j = function __vue_render__() {
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c('div', {
-    class: ['dp-block', _vm.height != 'auto' ? 'set-height' : '', _vm.size != 'auto' ? 'set-size' : '', _vm.flex != 1 ? 'set-flex' : '', _vm.hasSlot.header ? 'has-header' : '', _vm.noBorder ? 'no-border' : ''],
+    class: ['dp-block', _vm.height != 'auto' ? 'set-height' : '', _vm.size != 'auto' ? 'set-size' : '', _vm.flex != 1 ? 'set-flex' : '', _vm.hasSlot.header || _vm.titleText ? 'has-header' : '', _vm.noBorder ? 'no-border' : ''],
     style: {
       '--height': _vm.height,
       '--size': _vm.size,
       '--flex': _vm.flex
     }
-  }, [_vm.hasSlot.header ? [_vm._ssrNode("<div class=\"dp-block__header\"" + _vm._ssrStyle(null, {
+  }, [_vm.hasSlot.header || _vm.titleText ? [_vm._ssrNode("<div class=\"dp-block__header\"" + _vm._ssrStyle(null, {
     '--header-height': _vm.headerHeight
-  }, null) + " data-v-a975b9ae>", "</div>", [_vm._t("header")], 2), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"dp-block__body\" data-v-a975b9ae>", "</div>", [_vm._t("default")], 2)] : [_vm._t("default")]], 2);
+  }, null) + " data-v-667a894b>", "</div>", [_vm._t("header", function () {
+    return [_c('dp-title', {
+      attrs: {
+        "text": _vm.titleText
+      }
+    })];
+  })], 2), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"dp-block__body\" data-v-667a894b>", "</div>", [_vm._t("default")], 2)] : [_vm._t("default")]], 2);
 };
 var __vue_staticRenderFns__$j = [];
 
 /* style */
 var __vue_inject_styles__$j = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-a975b9ae_0", {
-    source: ".dp-block[data-v-a975b9ae]{flex:1;min-height:0;overflow:auto}.dp-block.set-height[data-v-a975b9ae]{flex:0 0 var(--height);min-height:0;overflow:hidden}.dp-block.set-size[data-v-a975b9ae]{flex:0 0 var(--size);min-width:0;min-height:0;overflow:hidden}.dp-block.set-flex[data-v-a975b9ae]{flex:var(--flex);overflow:hidden}.dp-block.has-header[data-v-a975b9ae]{display:flex;flex-direction:column}.dp-block__header[data-v-a975b9ae]{flex:0 0 var(--header-height);overflow:hidden}.dp-block__body[data-v-a975b9ae]{flex:1;min-height:0;overflow:auto}",
+  inject("data-v-667a894b_0", {
+    source: ".dp-block[data-v-667a894b]{flex:1;min-height:0;overflow:auto}.dp-block.set-height[data-v-667a894b]{flex:0 0 var(--height);min-height:0;overflow:hidden}.dp-block.set-size[data-v-667a894b]{flex:0 0 var(--size);min-width:0;min-height:0;overflow:hidden}.dp-block.set-flex[data-v-667a894b]{flex:var(--flex);overflow:hidden}.dp-block.has-header[data-v-667a894b]{display:flex;flex-direction:column}.dp-block__header[data-v-667a894b]{flex:0 0 var(--header-height);overflow:hidden}.dp-block__body[data-v-667a894b]{flex:1;min-height:0;overflow:auto}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$j = "data-v-a975b9ae";
+var __vue_scope_id__$j = "data-v-667a894b";
 /* module identifier */
-var __vue_module_identifier__$j = "data-v-a975b9ae";
+var __vue_module_identifier__$j = "data-v-667a894b";
 /* functional template */
 var __vue_is_functional_template__$j = false;
 /* style inject shadow dom */
