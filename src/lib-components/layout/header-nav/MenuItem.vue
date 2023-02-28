@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     roles() {
-      const authInfo = this.$store.getters['auth/info']
+      const authInfo = this.$store ? this.$store.getters['auth/info'] : false
       return authInfo && authInfo.roles ? authInfo.roles : []
     }
   },
