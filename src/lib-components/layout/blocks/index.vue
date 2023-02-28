@@ -23,6 +23,7 @@ export default {
 <style lang="scss" scoped>
 .dp-blocks {
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: var(--direction);
   &__column {

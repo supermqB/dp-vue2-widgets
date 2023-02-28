@@ -2,10 +2,7 @@
   <dp-layout-container drag>
     <template #asideLeft>
       <dp-blocks>
-        <dp-block>
-          <template slot="header">
-            <dp-title text="目录" />
-          </template>
+        <dp-block :title-text="titleText">
           <aside-catalog />
         </dp-block>
       </dp-blocks>
@@ -62,6 +59,7 @@ export default {
   components: { AsideCatalog },
   data() {
     return {
+      titleText: '',
       containerWidth: '800',
       formModel: {
         name: '222'
@@ -161,6 +159,11 @@ export default {
         }
       ]
     }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.titleText = 'ss'
+    }, 1999)
   },
   watch: {
     // formModel: {

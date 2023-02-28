@@ -2,11 +2,10 @@
   <div
     :class="[
       'dp-block',
-      height != 'auto' ? 'set-height' : '',
-      size != 'auto' ? 'set-size' : '',
-      flex != 1 ? 'set-flex' : '',
-      hasSlot.header || titleText ? 'has-header' : '',
-      noBorder ? 'no-border' : ''
+      size != defaults.size ? 'set-size' : '',
+      flex != defaults.flex ? 'set-flex' : '',
+      noBorder ? 'no-border' : '',
+      height != defaults.height ? 'set-height' : ''
     ]"
     :style="{ '--height': height, '--size': size, '--flex': flex }"
   >
@@ -19,34 +18,37 @@
           <dp-title :text="titleText" />
         </slot>
       </div>
-      <div class="dp-block__body">
-        <slot />
-      </div>
     </template>
-    <template v-else>
+    <div class="dp-block__body">
       <slot />
-    </template>
+    </div>
   </div>
 </template>
 
 <script>
+const defaults = {
+  size: 'auto',
+  flex: 1,
+  height: 'auto'
+}
+
 export default {
   name: 'DpBlock',
+  data() {
+    return {
+      defaults
+    }
+  },
   props: {
-    // 整体区块(block)高度 (在flex的样式值中使用,默认值'auto')
-    height: {
-      type: String,
-      default: 'auto'
-    },
     // 整体区块(block)的尺寸  垂直为高度/水平为宽度 (在flex的样式值中使用,默认值'auto')
     size: {
       type: String,
-      default: 'auto'
+      default: defaults.size
     },
     // 整体区块(block) flex的值(份额)
     flex: {
       type: Number,
-      default: 1
+      default: defaults.flex
     },
     // 标题内容，默认使用dp-title组件，如需自定义title 使用header具名插槽
     titleText: {
@@ -62,6 +64,11 @@ export default {
     noBorder: {
       type: Boolean,
       default: false
+    },
+    // 整体区块(block)高度 (在flex的样式值中使用,默认值'auto')  即将移除
+    height: {
+      type: String,
+      default: defaults.height
     }
   },
   computed: {
@@ -79,6 +86,8 @@ export default {
   flex: 1;
   min-height: 0;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 
   &.set-height {
     flex: 0 0 var(--height);
@@ -96,11 +105,6 @@ export default {
   &.set-flex {
     flex: var(--flex);
     overflow: hidden;
-  }
-
-  &.has-header {
-    display: flex;
-    flex-direction: column;
   }
 
   &__header {
