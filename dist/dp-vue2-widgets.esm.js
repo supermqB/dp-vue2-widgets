@@ -20491,11 +20491,6 @@ var script$h = {
     }
   },
 
-  data() {
-    return {
-      // classArr: ['dp-tag', this.type, this.size]
-    };
-  },
   computed: {
     classArr() {
       return ['dp-tag', this.type, this.size];
@@ -20508,7 +20503,7 @@ var script$h = {
   }
 };
 
-var css_248z$e = "@charset \"UTF-8\";.dp-tag[data-v-6918d626]{display:inline-block;box-sizing:border-box;padding:0 8px;color:#252525;background-color:#fff;font-size:13px;white-space:nowrap;height:auto}.start[data-v-6918d626]{color:#00f}.process[data-v-6918d626]{color:#d9001b}.recall[data-v-6918d626]{color:#f59a23}.done[data-v-6918d626]{color:#27b937}.error[data-v-6918d626]{color:#f56c6c}.big[data-v-6918d626]{font-size:24px}.medium[data-v-6918d626]{font-size:18px}";
+var css_248z$e = "@charset \"UTF-8\";.dp-tag[data-v-59115297]{display:inline-block;box-sizing:border-box;padding:0 8px;color:#252525;background-color:#fff;font-size:13px;white-space:nowrap;height:auto}.start[data-v-59115297]{color:#00f}.process[data-v-59115297]{color:#d9001b}.recall[data-v-59115297]{color:#f59a23}.done[data-v-59115297]{color:#27b937}.error[data-v-59115297]{color:#f56c6c}.big[data-v-59115297]{font-size:24px}.medium[data-v-59115297]{font-size:18px}";
 styleInject(css_248z$e);
 
 /* script */
@@ -20530,7 +20525,7 @@ var __vue_staticRenderFns__$h = [];
 /* style */
 const __vue_inject_styles__$h = undefined;
 /* scoped */
-const __vue_scope_id__$h = "data-v-6918d626";
+const __vue_scope_id__$h = "data-v-59115297";
 /* module identifier */
 const __vue_module_identifier__$h = undefined;
 /* functional template */
