@@ -20628,16 +20628,16 @@ var __vue_staticRenderFns__$k = [];
 /* style */
 var __vue_inject_styles__$k = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-14246588_0", {
-    source: ".dp-blocks[data-v-14246588]{height:100%;display:flex;flex-direction:var(--direction)}.dp-blocks__column>.dp-block+.dp-block[data-v-14246588]:not(.no-border){border-top:1px solid #e5e5e5}.dp-blocks__row>.dp-block+.dp-block[data-v-14246588]:not(.no-border){border-left:1px solid #e5e5e5}",
+  inject("data-v-1fa956d8_0", {
+    source: ".dp-blocks[data-v-1fa956d8]{height:100%;width:100%;display:flex;flex-direction:var(--direction)}.dp-blocks__column>.dp-block+.dp-block[data-v-1fa956d8]:not(.no-border){border-top:1px solid #e5e5e5}.dp-blocks__row>.dp-block+.dp-block[data-v-1fa956d8]:not(.no-border){border-left:1px solid #e5e5e5}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$k = "data-v-14246588";
+var __vue_scope_id__$k = "data-v-1fa956d8";
 /* module identifier */
-var __vue_module_identifier__$k = "data-v-14246588";
+var __vue_module_identifier__$k = "data-v-1fa956d8";
 /* functional template */
 var __vue_is_functional_template__$k = false;
 /* style inject shadow dom */
@@ -20672,28 +20672,29 @@ var __vue_component__$k = /*#__PURE__*/normalizeComponent({
 //
 //
 //
-//
-//
-//
-//
 
+var defaults = {
+  size: 'auto',
+  flex: 1,
+  height: 'auto'
+};
 var script$j = {
   name: 'DpBlock',
+  data: function data() {
+    return {
+      defaults: defaults
+    };
+  },
   props: {
-    // 整体区块(block)高度 (在flex的样式值中使用,默认值'auto')
-    height: {
-      type: String,
-      default: 'auto'
-    },
     // 整体区块(block)的尺寸  垂直为高度/水平为宽度 (在flex的样式值中使用,默认值'auto')
     size: {
       type: String,
-      default: 'auto'
+      default: defaults.size
     },
     // 整体区块(block) flex的值(份额)
     flex: {
       type: Number,
-      default: 1
+      default: defaults.flex
     },
     // 标题内容，默认使用dp-title组件，如需自定义title 使用header具名插槽
     titleText: {
@@ -20709,6 +20710,11 @@ var script$j = {
     noBorder: {
       type: Boolean,
       default: false
+    },
+    // 整体区块(block)高度 (在flex的样式值中使用,默认值'auto')  即将移除
+    height: {
+      type: String,
+      default: defaults.height
     }
   },
   computed: {
@@ -20727,7 +20733,7 @@ var __vue_render__$j = function __vue_render__() {
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c('div', {
-    class: ['dp-block', _vm.height != 'auto' ? 'set-height' : '', _vm.size != 'auto' ? 'set-size' : '', _vm.flex != 1 ? 'set-flex' : '', _vm.hasSlot.header || _vm.titleText ? 'has-header' : '', _vm.noBorder ? 'no-border' : ''],
+    class: ['dp-block', _vm.size != _vm.defaults.size ? 'set-size' : '', _vm.flex != _vm.defaults.flex ? 'set-flex' : '', _vm.noBorder ? 'no-border' : '', _vm.height != _vm.defaults.height ? 'set-height' : ''],
     style: {
       '--height': _vm.height,
       '--size': _vm.size,
@@ -20735,29 +20741,29 @@ var __vue_render__$j = function __vue_render__() {
     }
   }, [_vm.hasSlot.header || _vm.titleText ? [_vm._ssrNode("<div class=\"dp-block__header\"" + _vm._ssrStyle(null, {
     '--header-height': _vm.headerHeight
-  }, null) + " data-v-667a894b>", "</div>", [_vm._t("header", function () {
+  }, null) + " data-v-ab37d7fe>", "</div>", [_vm._t("header", function () {
     return [_c('dp-title', {
       attrs: {
         "text": _vm.titleText
       }
     })];
-  })], 2), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"dp-block__body\" data-v-667a894b>", "</div>", [_vm._t("default")], 2)] : [_vm._t("default")]], 2);
+  })], 2)] : _vm._e(), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"dp-block__body\" data-v-ab37d7fe>", "</div>", [_vm._t("default")], 2)], 2);
 };
 var __vue_staticRenderFns__$j = [];
 
 /* style */
 var __vue_inject_styles__$j = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-667a894b_0", {
-    source: ".dp-block[data-v-667a894b]{flex:1;min-height:0;overflow:auto}.dp-block.set-height[data-v-667a894b]{flex:0 0 var(--height);min-height:0;overflow:hidden}.dp-block.set-size[data-v-667a894b]{flex:0 0 var(--size);min-width:0;min-height:0;overflow:hidden}.dp-block.set-flex[data-v-667a894b]{flex:var(--flex);overflow:hidden}.dp-block.has-header[data-v-667a894b]{display:flex;flex-direction:column}.dp-block__header[data-v-667a894b]{flex:0 0 var(--header-height);overflow:hidden}.dp-block__body[data-v-667a894b]{flex:1;min-height:0;overflow:auto}",
+  inject("data-v-ab37d7fe_0", {
+    source: ".dp-block[data-v-ab37d7fe]{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column}.dp-block.set-height[data-v-ab37d7fe]{flex:0 0 var(--height);min-height:0;overflow:hidden}.dp-block.set-size[data-v-ab37d7fe]{flex:0 0 var(--size);min-width:0;min-height:0;overflow:hidden}.dp-block.set-flex[data-v-ab37d7fe]{flex:var(--flex);overflow:hidden}.dp-block__header[data-v-ab37d7fe]{flex:0 0 var(--header-height);overflow:hidden}.dp-block__body[data-v-ab37d7fe]{flex:1;min-height:0;overflow:auto}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$j = "data-v-667a894b";
+var __vue_scope_id__$j = "data-v-ab37d7fe";
 /* module identifier */
-var __vue_module_identifier__$j = "data-v-667a894b";
+var __vue_module_identifier__$j = "data-v-ab37d7fe";
 /* functional template */
 var __vue_is_functional_template__$j = false;
 /* style inject shadow dom */
