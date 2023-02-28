@@ -28,10 +28,11 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      classArr: ['dp-tag', this.type, this.size]
+  computed:{
+    classArr(){
+      return ['dp-tag', this.type, this.size]
     }
+
   },
   methods: {
     handleClick(event) {
