@@ -1,5 +1,5 @@
 <template>
-  <div class="expand_div" :style="zoomStyle">
+  <div class="expand_div" :style="zoomStyle" ref="expandDiv">
     <transition name="el-fade-in">
       <keep-alive>
         <router-view v-if="$route.meta.keepAlive"></router-view>
@@ -12,9 +12,8 @@
 </template>
 <script>
 const DEFAULT_DIMS = {
-  width: '1920px',
-  height: '893px',
-  position: 'relative'
+  w: 1920,
+  h: 893
 }
 export default {
   name: 'AppMain',
@@ -23,19 +22,22 @@ export default {
   },
   methods: {
     getZoomRatio() {
-      let { width: w, height: h } = document.body.getBoundingClientRect()
-      return Math.min(w / 1920, h / 976)
+      let { width: w, height: h } =
+        this.$refs.expandDiv.parentNode.getBoundingClientRect()
+      return Math.min(w / DEFAULT_DIMS.w, h / DEFAULT_DIMS.h)
     },
     setZoomStyle() {
       let keepWHRatio = this.$route.meta.keepWHRatio
       let ratio = this.getZoomRatio()
-      let { width: w, } = document.body.getBoundingClientRect()
+      let { width: w } = document.body.getBoundingClientRect()
       this.zoomStyle = keepWHRatio
         ? {
-            ...DEFAULT_DIMS,
+            width: `${DEFAULT_DIMS.w}px`,
+            height: `${DEFAULT_DIMS.h}px`,
+            position: 'relative',
             transform: `scale(${ratio})`,
-            left: `${(w-1920) / 2}px`,
-            top: `${(-893 * (1 - ratio)) / 2}px`
+            left: `${(w - DEFAULT_DIMS.w) / 2}px`,
+            top: `${(-DEFAULT_DIMS.h * (1 - ratio)) / 2}px`
           }
         : {}
     }
