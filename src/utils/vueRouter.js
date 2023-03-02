@@ -29,6 +29,7 @@ const generateRouter = config => {
       : process.env.VUE_APP_REAL_ROUTER_BASE
   } = config
 
+  if (!layout) layout = DpLayout
   if (!!isQiankun) {
     layout = DpLayoutBlank
   }

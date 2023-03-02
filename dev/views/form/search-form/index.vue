@@ -161,9 +161,10 @@ export default {
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.titleText = 'ss'
-    }, 1999)
+    this.titleText = 'ss'
+    // setTimeout(() => {
+    //   this.titleText = 'ss'
+    // }, 1999)
   },
   watch: {
     // formModel: {

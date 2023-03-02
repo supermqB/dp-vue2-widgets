@@ -8,6 +8,7 @@
   "unpkg": "dist/dp-vue2-widgets.min.js",
   "scripts": {
     "serve": "vue-cli-service serve dev/serve.js",
+    "serve:ps": "vue-cli-service serve dev/serve.js --mode ps",
     "prebuild": "rimraf ./dist",
     "dist:component": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
     "dist:theme": "gulp build --gulpfile src/theme/theme-dp-ui/gulpfile.js && cp-cli src/theme/theme-dp-ui/lib dist/theme-dp-ui",

@@ -2,12 +2,11 @@
   <div
     :class="[
       'dp-block',
-      size != defaults.size ? 'set-size' : '',
-      flex != defaults.flex ? 'set-flex' : '',
-      noBorder ? 'no-border' : '',
-      height != defaults.height ? 'set-height' : ''
+      setSize ? 'set-size' : '',
+      setFlex ? 'set-flex' : '',
+      noBorder ? 'no-border' : ''
     ]"
-    :style="{ '--height': height, '--size': size, '--flex': flex }"
+    :style="{ '--size': setSize ? size : '', '--flex': setFlex ? flex : '' }"
   >
     <template v-if="hasSlot.header || titleText">
       <div
@@ -27,9 +26,11 @@
 
 <script>
 const defaults = {
-  size: 'auto',
+  size: '',
   flex: 1,
-  height: 'auto'
+  titleText: '',
+  headerHeight: 'auto',
+  noBorder: false
 }
 
 export default {
@@ -40,7 +41,7 @@ export default {
     }
   },
   props: {
-    // 整体区块(block)的尺寸  垂直为高度/水平为宽度 (在flex的样式值中使用,默认值'auto')
+    // 整体区块(block)的尺寸  垂直为高度/水平为宽度(像素)  !设置为auto时，由内部元素尺寸撑开
     size: {
       type: String,
       default: defaults.size
@@ -53,22 +54,17 @@ export default {
     // 标题内容，默认使用dp-title组件，如需自定义title 使用header具名插槽
     titleText: {
       type: String,
-      default: ''
+      default: defaults.titleText
     },
     // 头部区域(header)高度 (在flex的样式值中使用,默认值'auto')
     headerHeight: {
       type: String,
-      default: 'auto'
+      default: defaults.headerHeight
     },
     // 区块(block)间是否不显示边框 (控制是否带上'no-border'类名，默认值'false'，表示)
     noBorder: {
       type: Boolean,
-      default: false
-    },
-    // 整体区块(block)高度 (在flex的样式值中使用,默认值'auto')  即将移除
-    height: {
-      type: String,
-      default: defaults.height
+      default: defaults.noBorder
     }
   },
   computed: {
@@ -76,6 +72,21 @@ export default {
       return {
         header: typeof this.$slots.header !== 'undefined'
       }
+    },
+    // size 设置的优先级比 flex 高， 只要size设置了值，就忽略flex设置的值
+    setSize() {
+      return (
+        // props.size 不等于 size默认值
+        this.size !== this.defaults.size
+      )
+    },
+    setFlex() {
+      return (
+        // props.flez 不等于 flez默认值
+        this.flex !== this.defaults.flex &&
+        // 且props.size 等于 size默认值
+        this.size === this.defaults.size
+      )
     }
   }
 }
@@ -83,28 +94,25 @@ export default {
 
 <style lang="scss" scoped>
 .dp-block {
+  // 默认flex:1
   flex: 1;
+  min-width: 0;
   min-height: 0;
   overflow: auto;
+
+  // 控制header / body 的flex布局
   display: flex;
   flex-direction: column;
 
-  &.set-height {
-    flex: 0 0 var(--height);
-    min-height: 0;
-    overflow: hidden;
-  }
-
+  // 设置了size
   &.set-size {
     flex: 0 0 var(--size);
-    min-width: 0;
-    min-height: 0;
     overflow: hidden;
   }
 
+  // 设置了flex
   &.set-flex {
     flex: var(--flex);
-    overflow: hidden;
   }
 
   &__header {

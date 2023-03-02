@@ -4,7 +4,7 @@ Vue.use(VueRouter)
 
 import { utils } from '@/entry'
 
-import { DpDefaultPage, DpLayoutBlank } from '@/entry'
+import { DpDefaultPage, DpLayoutBlank, DpLayoutProductStyle } from '@/entry'
 
 const routesConfig = [
   {
@@ -136,11 +136,16 @@ const blankRoutesConfig = [
 
 const title = '示例系统'
 
+const layout =
+  process.env.VUE_APP_LAYOUT == 'product-style'
+    ? DpLayoutProductStyle
+    : undefined
+
 export default utils.vueRouter.generateRouter({
   VueRouter, // VueRouter对象
   routesConfig, // routes配置
   blankRoutesConfig, // routes配置(nolayout)
-  // layout, // 布局组件
+  layout, // 布局组件
   title // 系统标题
   // base: process.env.BASE_URL // router BaseUrl
 })

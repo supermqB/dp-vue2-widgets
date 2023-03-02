@@ -19,6 +19,7 @@ export { default as DpLayoutRoot } from './layout/Root'
 export { default as DpLayoutContainer } from './layout/Container'
 export { default as DpLayout } from './layout/default'
 export { default as DpLayoutBlank } from './layout/Blank'
+export { default as DpLayoutProductStyle } from './layout/product-style'
 
 export { default as DpHeaderNav } from './layout/header-nav'
 
