@@ -19955,9 +19955,8 @@ var __vue_component__$B = /*#__PURE__*/normalizeComponent({
 //
 
 var DEFAULT_DIMS = {
-  width: '1920px',
-  height: '893px',
-  position: 'relative'
+  w: 1920,
+  h: 893
 };
 var script$z = {
   name: 'AppMain',
@@ -19968,21 +19967,24 @@ var script$z = {
   },
   methods: {
     getZoomRatio: function getZoomRatio() {
-      var _document$body$getBou = document.body.getBoundingClientRect(),
-        w = _document$body$getBou.width,
-        h = _document$body$getBou.height;
-      return Math.min(w / 1920, h / 976);
+      var _this$$refs$expandDiv = this.$refs.expandDiv.parentNode.getBoundingClientRect(),
+        w = _this$$refs$expandDiv.width,
+        h = _this$$refs$expandDiv.height;
+      return Math.min(w / DEFAULT_DIMS.w, h / DEFAULT_DIMS.h);
     },
     setZoomStyle: function setZoomStyle() {
       var keepWHRatio = this.$route.meta.keepWHRatio;
       var ratio = this.getZoomRatio();
-      var _document$body$getBou2 = document.body.getBoundingClientRect(),
-        w = _document$body$getBou2.width;
-      this.zoomStyle = keepWHRatio ? _objectSpread2(_objectSpread2({}, DEFAULT_DIMS), {}, {
+      var _document$body$getBou = document.body.getBoundingClientRect(),
+        w = _document$body$getBou.width;
+      this.zoomStyle = keepWHRatio ? {
+        width: "".concat(DEFAULT_DIMS.w, "px"),
+        height: "".concat(DEFAULT_DIMS.h, "px"),
+        position: 'relative',
         transform: "scale(".concat(ratio, ")"),
-        left: "".concat((w - 1920) / 2, "px"),
-        top: "".concat(-893 * (1 - ratio) / 2, "px")
-      }) : {};
+        left: "".concat((w - DEFAULT_DIMS.w) / 2, "px"),
+        top: "".concat(-DEFAULT_DIMS.h * (1 - ratio) / 2, "px")
+      } : {};
     }
   },
   mounted: function mounted() {
@@ -20002,6 +20004,7 @@ var __vue_render__$A = function __vue_render__() {
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c('div', {
+    ref: "expandDiv",
     staticClass: "expand_div",
     style: _vm.zoomStyle
   }, [_c('transition', {
@@ -20021,7 +20024,7 @@ var __vue_inject_styles__$A = undefined;
 /* scoped */
 var __vue_scope_id__$A = undefined;
 /* module identifier */
-var __vue_module_identifier__$A = "data-v-1a38cc09";
+var __vue_module_identifier__$A = "data-v-1f327d39";
 /* functional template */
 var __vue_is_functional_template__$A = false;
 /* style inject */

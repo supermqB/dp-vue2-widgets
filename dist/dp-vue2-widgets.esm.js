@@ -19514,9 +19514,8 @@ const __vue_component__$B = /*#__PURE__*/normalizeComponent({
 //
 
 const DEFAULT_DIMS = {
-  width: '1920px',
-  height: '893px',
-  position: 'relative'
+  w: 1920,
+  h: 893
 };
 var script$z = {
   name: 'AppMain',
@@ -19530,8 +19529,8 @@ var script$z = {
       let {
         width: w,
         height: h
-      } = document.body.getBoundingClientRect();
-      return Math.min(w / 1920, h / 976);
+      } = this.$refs.expandDiv.parentNode.getBoundingClientRect();
+      return Math.min(w / DEFAULT_DIMS.w, h / DEFAULT_DIMS.h);
     },
     setZoomStyle() {
       let keepWHRatio = this.$route.meta.keepWHRatio;
@@ -19540,10 +19539,12 @@ var script$z = {
         width: w
       } = document.body.getBoundingClientRect();
       this.zoomStyle = keepWHRatio ? {
-        ...DEFAULT_DIMS,
+        width: `${DEFAULT_DIMS.w}px`,
+        height: `${DEFAULT_DIMS.h}px`,
+        position: 'relative',
         transform: `scale(${ratio})`,
-        left: `${(w - 1920) / 2}px`,
-        top: `${-893 * (1 - ratio) / 2}px`
+        left: `${(w - DEFAULT_DIMS.w) / 2}px`,
+        top: `${-DEFAULT_DIMS.h * (1 - ratio) / 2}px`
       } : {};
     }
   },
@@ -19566,6 +19567,7 @@ var __vue_render__$A = function () {
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c('div', {
+    ref: "expandDiv",
     staticClass: "expand_div",
     style: _vm.zoomStyle
   }, [_c('transition', {
