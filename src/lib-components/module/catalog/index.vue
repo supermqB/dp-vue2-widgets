@@ -1,13 +1,7 @@
 <template>
   <dp-blocks class="catalog">
     <!-- catalog__search-form: 目录模块中search-form区域 检索表单 -->
-    <dp-block class="catalog__search-form" size="40px">
-      <!-- <dp-search-form
-        :configs="searchConfigs"
-        :model="searchModel"
-        @change="handleChange"
-      />
-       -->
+    <dp-block class="catalog__search-form" size="40px" style="padding: 0 6px">
       <search-form
         :configs="searchConfigs"
         :model="searchModel"

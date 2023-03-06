@@ -10,13 +10,13 @@
             <dp-title text="数据表格" />
           </template>
           <dp-blocks>
-            <dp-block class="main-header" height="40px">
+            <dp-block class="main-header" size="40px">
               <main-header @change="handleSearchChange" />
             </dp-block>
             <dp-block class="main-table" no-border>
               <main-table ref="table" />
             </dp-block>
-            <dp-block class="main-footer" height="40px" no-border>
+            <dp-block class="main-footer" size="40px" no-border>
               <main-footer
                 :current-page.sync="currentPage"
                 :page-size.sync="pageSize"

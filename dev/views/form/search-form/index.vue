@@ -14,7 +14,7 @@
             <dp-title text="检索表单" />
           </template>
           <dp-blocks>
-            <dp-block height="100px">
+            <dp-block size="40px">
               <div>
                 容器宽度
                 <input

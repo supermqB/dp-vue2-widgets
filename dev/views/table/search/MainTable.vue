@@ -34,5 +34,6 @@ export default {
 <style lang="scss" scoped>
 .main-table {
   padding: 0 6px;
+  box-sizing: border-box;
 }
 </style>

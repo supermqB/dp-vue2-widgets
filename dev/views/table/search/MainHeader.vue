@@ -57,5 +57,6 @@ export default {
 <style lang="scss" scoped>
 .main-header {
   padding: 0 6px;
+  box-sizing: border-box;
 }
 </style>

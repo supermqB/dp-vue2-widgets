@@ -1,28 +1,30 @@
 <template>
-  <el-form ref="form" :model="model" @submit.native.prevent>
-    <el-form-item
-      v-for="cfg in _configs"
-      :label="cfg.label"
-      :prop="cfg.id"
-      :key="cfg.id"
-      :style="{ '--width': cfg.width }"
-      :class="[cfg.width ? 'set-width' : '']"
-    >
-      <component
-        :is="cfg.type"
-        v-bind="cfg.elOptions"
-        v-on="cfg.elEvents"
-        v-model="model[cfg.id]"
+  <div class="search-form">
+    <el-form ref="form" :model="model" @submit.native.prevent>
+      <el-form-item
+        v-for="cfg in _configs"
+        :label="cfg.label"
+        :prop="cfg.id"
+        :key="cfg.id"
+        :style="{ '--width': cfg.width }"
+        :class="[cfg.width ? 'set-width' : '']"
       >
-        <el-option
-          v-for="(opt, index) in cfg.options"
-          v-bind="opt"
-          :key="index"
+        <component
+          :is="cfg.type"
+          v-bind="cfg.elOptions"
+          v-on="cfg.elEvents"
+          v-model="model[cfg.id]"
         >
-        </el-option>
-      </component>
-    </el-form-item>
-  </el-form>
+          <el-option
+            v-for="(opt, index) in cfg.options"
+            v-bind="opt"
+            :key="index"
+          >
+          </el-option>
+        </component>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
@@ -100,8 +102,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.search-form {
+  width: 100%;
+  height: 40px;
+  overflow: hidden;
+}
 .el-form {
-  padding: 0 6px;
   display: flex;
   ::v-deep {
     .el-form-item {

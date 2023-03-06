@@ -49,6 +49,7 @@ export default {
 <style lang="scss" scoped>
 .main-footer {
   padding: 0 6px;
+  box-sizing: border-box;
 }
 .page-container {
   display: flex;
