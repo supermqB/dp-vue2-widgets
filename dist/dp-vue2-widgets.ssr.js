@@ -25153,6 +25153,11 @@ var script$8 = {
   name: 'LayoutProductStyleAsideLogo',
   props: {
     collapsed: Boolean
+  },
+  computed: {
+    appName: function appName() {
+      return process.env.VUE_APP_APP_NAME || '系统名称';
+    }
   }
 };/* script */
 var __vue_script__$8 = script$8;
@@ -25182,11 +25187,11 @@ var __vue_render__$8 = function __vue_render__() {
     attrs: {
       "no-border": ""
     }
-  }, [_vm._v(" 数据汇聚管理 ")])], 1)], 1) : _c('dp-block', [_c('el-tooltip', {
+  }, [_vm._v(_vm._s(_vm.appName))])], 1)], 1) : _c('dp-block', [_c('el-tooltip', {
     staticClass: "item",
     attrs: {
       "effect": "dark",
-      "content": "数据汇聚管理",
+      "content": _vm.appName,
       "placement": "right"
     }
   }, [_c('div', {
@@ -25198,16 +25203,16 @@ var __vue_staticRenderFns__$8 = [];
 /* style */
 var __vue_inject_styles__$8 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-22a62c30_0", {
-    source: ".logo[data-v-22a62c30]{background:#3257a4;color:#fff;padding:0 14px;align-items:center;box-sizing:border-box;border-start-end-radius:25px;overflow:hidden}.logo-collapsed[data-v-22a62c30]{padding-right:2px;cursor:pointer}.logo-icon[data-v-22a62c30]{width:22px;height:22px;background-image:url(logo.png)}.logo-title[data-v-22a62c30]{margin-left:10px;font-size:16px}",
+  inject("data-v-56203d14_0", {
+    source: ".logo[data-v-56203d14]{background:#3257a4;color:#fff;padding:0 14px;align-items:center;box-sizing:border-box;border-start-end-radius:25px;overflow:hidden}.logo-collapsed[data-v-56203d14]{padding-right:2px;cursor:pointer}.logo-icon[data-v-56203d14]{width:22px;height:22px;background-image:url(logo.png)}.logo-title[data-v-56203d14]{margin-left:10px;font-size:16px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$8 = "data-v-22a62c30";
+var __vue_scope_id__$8 = "data-v-56203d14";
 /* module identifier */
-var __vue_module_identifier__$8 = "data-v-22a62c30";
+var __vue_module_identifier__$8 = "data-v-56203d14";
 /* functional template */
 var __vue_is_functional_template__$8 = false;
 /* style inject shadow dom */

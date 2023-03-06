@@ -8,14 +8,14 @@
         <dp-block size="auto">
           <div class="logo-icon"></div>
         </dp-block>
-        <dp-block no-border class="logo-title"> 数据汇聚管理 </dp-block>
+        <dp-block no-border class="logo-title">{{ appName }}</dp-block>
       </dp-blocks>
     </dp-block>
     <dp-block v-else>
       <el-tooltip
         class="item"
         effect="dark"
-        content="数据汇聚管理"
+        :content="appName"
         placement="right"
       >
         <div class="logo-icon"></div>
@@ -29,6 +29,11 @@ export default {
   name: 'LayoutProductStyleAsideLogo',
   props: {
     collapsed: Boolean
+  },
+  computed: {
+    appName() {
+      return process.env.VUE_APP_APP_NAME || '系统名称'
+    }
   }
 }
 </script>
