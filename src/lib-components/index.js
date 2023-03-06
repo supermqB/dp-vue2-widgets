@@ -19,7 +19,6 @@ export { default as DpLayoutRoot } from './layout/Root'
 export { default as DpLayoutContainer } from './layout/Container'
 export { default as DpLayout } from './layout/default'
 export { default as DpLayoutBlank } from './layout/Blank'
-export { default as DpLayoutProductStyle } from './layout/product-style'
 
 export { default as DpHeaderNav } from './layout/header-nav'
 
@@ -71,3 +70,8 @@ export { default as DpPagination } from './navigation/pagination' // 分页
 export { default as DpCatalog } from './module/catalog' // 目录模块 (带搜索，树形结构展示目录数据)
 
 export { default as DpPopup } from './Popup'
+
+// product-style 产品风格 布局 菜单 集成路由等
+export { default as DpProductStyleLayout } from './product-style/layout'
+export { default as DpProductStyleLoginPage } from './product-style/login-page'
+export { generateRouter as DpProductStyleGenerateRouter } from './product-style/generate'

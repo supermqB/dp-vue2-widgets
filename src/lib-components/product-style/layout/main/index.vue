@@ -2,7 +2,7 @@
   <dp-blocks>
     <dp-block size="48px">
       <!-- header -->
-      <block-header />
+      <block-header :collapsed.sync="_collapsed" />
     </dp-block>
     <dp-block>
       <!-- main -->
@@ -22,6 +22,19 @@ import BlockFooter from './footer'
 
 export default {
   name: 'LayoutProductStyleMain',
-  components: { BlockHeader, BlockMain, BlockFooter }
+  components: { BlockHeader, BlockMain, BlockFooter },
+  props: {
+    collapsed: Boolean
+  },
+  computed: {
+    _collapsed: {
+      get() {
+        return this.collapsed
+      },
+      set(v) {
+        this.$emit('update:collapsed', v)
+      }
+    }
+  }
 }
 </script>
