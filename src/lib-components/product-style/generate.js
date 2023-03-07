@@ -1,4 +1,4 @@
-import { DpLayout, DpLayoutBlank, DpDefaultPage } from 'dp-vue2-widgets'
+import { DpLayout, DpLayoutBlank, DpDefaultPage } from '@/entry'
 
 const generateMenuItems = routesConfig => {
   let items = []
