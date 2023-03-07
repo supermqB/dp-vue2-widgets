@@ -1,10 +1,10 @@
 <template>
   <span
-    class="menu-item"
+    class="menu-item ss"
     v-if="
       hasPermission(
         roles,
-        item.meta && item.meta.permissions ? item.meta.permissions : []
+        item.meta && item.meta.permissions ? item.meta.permissions : false
       )
     "
   >
@@ -50,11 +50,7 @@ export default {
   },
   methods: {
     hasPermission(userRoles, routerPermissions) {
-      if (
-        !routerPermissions ||
-        (routerPermissions.length && routerPermissions.length === 0)
-      )
-        return true
+      if (!routerPermissions) return true
       let res = false
       userRoles.forEach(i => {
         if (routerPermissions.includes(i)) res = true

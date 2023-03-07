@@ -20239,7 +20239,7 @@ var script$x = {
   },
   methods: {
     hasPermission: function hasPermission(userRoles, routerPermissions) {
-      if (!routerPermissions || routerPermissions.length && routerPermissions.length === 0) return true;
+      if (!routerPermissions) return true;
       var res = false;
       userRoles.forEach(function (i) {
         if (routerPermissions.includes(i)) res = true;
@@ -20255,8 +20255,8 @@ var __vue_render__$x = function __vue_render__() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _vm.hasPermission(_vm.roles, _vm.item.meta && _vm.item.meta.permissions ? _vm.item.meta.permissions : []) ? _c('span', {
-    staticClass: "menu-item"
+  return _vm.hasPermission(_vm.roles, _vm.item.meta && _vm.item.meta.permissions ? _vm.item.meta.permissions : false) ? _c('span', {
+    staticClass: "menu-item ss"
   }, [!_vm.item.children || _vm.item.children.length == 0 ? [_c('el-menu-item', {
     key: _vm.item.value,
     attrs: {
@@ -20289,7 +20289,7 @@ var __vue_inject_styles__$x = undefined;
 /* scoped */
 var __vue_scope_id__$x = undefined;
 /* module identifier */
-var __vue_module_identifier__$x = "data-v-2d34dc93";
+var __vue_module_identifier__$x = "data-v-293dd4be";
 /* functional template */
 var __vue_is_functional_template__$x = false;
 /* style inject */

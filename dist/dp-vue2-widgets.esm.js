@@ -19820,7 +19820,7 @@ var script$x = {
   },
   methods: {
     hasPermission(userRoles, routerPermissions) {
-      if (!routerPermissions || routerPermissions.length && routerPermissions.length === 0) return true;
+      if (!routerPermissions) return true;
       let res = false;
       userRoles.forEach(i => {
         if (routerPermissions.includes(i)) res = true;
@@ -19838,8 +19838,8 @@ var __vue_render__$x = function () {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _vm.hasPermission(_vm.roles, _vm.item.meta && _vm.item.meta.permissions ? _vm.item.meta.permissions : []) ? _c('span', {
-    staticClass: "menu-item"
+  return _vm.hasPermission(_vm.roles, _vm.item.meta && _vm.item.meta.permissions ? _vm.item.meta.permissions : false) ? _c('span', {
+    staticClass: "menu-item ss"
   }, [!_vm.item.children || _vm.item.children.length == 0 ? [_c('el-menu-item', {
     key: _vm.item.value,
     attrs: {
