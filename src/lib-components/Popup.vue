@@ -35,6 +35,10 @@ export default {
     offset: {
       type: Number,
       default: 0
+    },
+    space: {
+      type: Number,
+      default: 0
     }
   },
   computed: {
@@ -111,7 +115,7 @@ export default {
       const top = Math.max(y + h / 2 - height / 2 + offset, 0)
       return {
         popupPos: {
-          left: `${x - width - 10}px`,
+          left: `${x - width - (10 + this.space)}px`,
           top: `${top}px`
         },
         anchorOffset: {
@@ -123,7 +127,7 @@ export default {
       const top = Math.max(y + h / 2 - height / 2 + offset, 0)
       return {
         popupPos: {
-          left: `${x + w + 10}px`,
+          left: `${x + w + (10 + this.space)}px`,
           top: `${top}px`
         },
         anchorOffset: {
@@ -136,7 +140,7 @@ export default {
       return {
         popupPos: {
           left: `${left}px`,
-          top: `${y - height - 0.5 * h}px`
+          top: `${y - height - 0.5 * h - this.space}px`
         },
         anchorOffset: {
           left: `${left > 0 ? width / 2 - 5 - offset : x + w / 2 - 5}px`
@@ -148,7 +152,7 @@ export default {
       return {
         popupPos: {
           left: `${left}px`,
-          top: `${y + 1.5 * h}px`
+          top: `${y + 1.5 * h + this.space}px`
         },
         anchorOffset: {
           left: `${left > 0 ? width / 2 - 5 - offset : x + w / 2 - 5}px`
