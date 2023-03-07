@@ -19820,7 +19820,7 @@ var script$x = {
   },
   methods: {
     hasPermission(userRoles, routerPermissions) {
-      if (!routerPermissions) return true;
+      if (!routerPermissions || routerPermissions.length && routerPermissions.length === 0) return true;
       let res = false;
       userRoles.forEach(i => {
         if (routerPermissions.includes(i)) res = true;

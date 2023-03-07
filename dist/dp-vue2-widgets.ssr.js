@@ -20239,7 +20239,7 @@ var script$x = {
   },
   methods: {
     hasPermission: function hasPermission(userRoles, routerPermissions) {
-      if (!routerPermissions) return true;
+      if (!routerPermissions || routerPermissions.length && routerPermissions.length === 0) return true;
       var res = false;
       userRoles.forEach(function (i) {
         if (routerPermissions.includes(i)) res = true;
@@ -20289,7 +20289,7 @@ var __vue_inject_styles__$x = undefined;
 /* scoped */
 var __vue_scope_id__$x = undefined;
 /* module identifier */
-var __vue_module_identifier__$x = "data-v-6c15f163";
+var __vue_module_identifier__$x = "data-v-2d34dc93";
 /* functional template */
 var __vue_is_functional_template__$x = false;
 /* style inject */
