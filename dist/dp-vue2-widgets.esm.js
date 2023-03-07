@@ -24611,6 +24611,10 @@ var script$9 = {
     offset: {
       type: Number,
       default: 0
+    },
+    space: {
+      type: Number,
+      default: 0
     }
   },
   computed: {
@@ -24708,7 +24712,7 @@ var script$9 = {
       const top = Math.max(y + h / 2 - height / 2 + offset, 0);
       return {
         popupPos: {
-          left: `${x - width - 10}px`,
+          left: `${x - width - (10 + this.space)}px`,
           top: `${top}px`
         },
         anchorOffset: {
@@ -24728,7 +24732,7 @@ var script$9 = {
       const top = Math.max(y + h / 2 - height / 2 + offset, 0);
       return {
         popupPos: {
-          left: `${x + w + 10}px`,
+          left: `${x + w + (10 + this.space)}px`,
           top: `${top}px`
         },
         anchorOffset: {
@@ -24750,7 +24754,7 @@ var script$9 = {
       return {
         popupPos: {
           left: `${left}px`,
-          top: `${y - height - 0.5 * h}px`
+          top: `${y - height - 0.5 * h - this.space}px`
         },
         anchorOffset: {
           left: `${left > 0 ? width / 2 - 5 - offset : x + w / 2 - 5}px`
@@ -24770,7 +24774,7 @@ var script$9 = {
       return {
         popupPos: {
           left: `${left}px`,
-          top: `${y + 1.5 * h}px`
+          top: `${y + 1.5 * h + this.space}px`
         },
         anchorOffset: {
           left: `${left > 0 ? width / 2 - 5 - offset : x + w / 2 - 5}px`
@@ -24780,7 +24784,7 @@ var script$9 = {
   }
 };
 
-var css_248z$4 = ".popupWrap[data-v-6ccb6628]{position:fixed;padding:1px;min-width:50px;border:1px solid #eee;border-radius:4px;background:#fff;border:1px solid #e4e7ed;box-shadow:0 2px 12px 0 rgba(0,0,0,.06);z-index:100}.popup[data-v-6ccb6628]{width:100%;height:100%;overflow:auto}.anchor[data-v-6ccb6628]{display:inline-block;height:10px;width:10px;background-color:#fff;border:1px solid #eee;position:absolute;transform:rotate(45deg)}.anchor.bottom[data-v-6ccb6628]{border-right:0;border-bottom:0;top:-5px}.anchor.left[data-v-6ccb6628]{border-left:0;border-bottom:0;right:-6px}.anchor.right[data-v-6ccb6628]{border-right:0;border-top:0;left:-6px}.anchor.top[data-v-6ccb6628]{border-left:0;border-top:0;bottom:-5px}";
+var css_248z$4 = ".popupWrap[data-v-5153e9b8]{position:fixed;padding:1px;min-width:50px;border:1px solid #eee;border-radius:4px;background:#fff;border:1px solid #e4e7ed;box-shadow:0 2px 12px 0 rgba(0,0,0,.06);z-index:100}.popup[data-v-5153e9b8]{width:100%;height:100%;overflow:auto}.anchor[data-v-5153e9b8]{display:inline-block;height:10px;width:10px;background-color:#fff;border:1px solid #eee;position:absolute;transform:rotate(45deg)}.anchor.bottom[data-v-5153e9b8]{border-right:0;border-bottom:0;top:-5px}.anchor.left[data-v-5153e9b8]{border-left:0;border-bottom:0;right:-6px}.anchor.right[data-v-5153e9b8]{border-right:0;border-top:0;left:-6px}.anchor.top[data-v-5153e9b8]{border-left:0;border-top:0;bottom:-5px}";
 styleInject(css_248z$4);
 
 /* script */
@@ -24813,7 +24817,7 @@ var __vue_staticRenderFns__$9 = [];
 /* style */
 const __vue_inject_styles__$9 = undefined;
 /* scoped */
-const __vue_scope_id__$9 = "data-v-6ccb6628";
+const __vue_scope_id__$9 = "data-v-5153e9b8";
 /* module identifier */
 const __vue_module_identifier__$9 = undefined;
 /* functional template */
