@@ -1,4 +1,4 @@
-'use strict';Object.defineProperty(exports,'__esModule',{value:true});var dpVue2Widgets=require('dp-vue2-widgets');function _iterableToArrayLimit(arr, i) {
+'use strict';Object.defineProperty(exports,'__esModule',{value:true});function _iterableToArrayLimit(arr, i) {
   var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
   if (null != _i) {
     var _s,
@@ -20220,6 +20220,11 @@ var __vue_component__$y = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
 
 var script$x = {
   name: 'menuItem',
@@ -20250,7 +20255,7 @@ var __vue_render__$x = function __vue_render__() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _vm.hasPermission(_vm.roles, _vm.item.meta ? _vm.item.meta.permissions : []) ? _c('span', {
+  return _vm.hasPermission(_vm.roles, _vm.item.meta && _vm.item.meta.permissions ? _vm.item.meta.permissions : []) ? _c('span', {
     staticClass: "menu-item"
   }, [!_vm.item.children || _vm.item.children.length == 0 ? [_c('el-menu-item', {
     key: _vm.item.value,
@@ -20284,7 +20289,7 @@ var __vue_inject_styles__$x = undefined;
 /* scoped */
 var __vue_scope_id__$x = undefined;
 /* module identifier */
-var __vue_module_identifier__$x = "data-v-63a4d4f6";
+var __vue_module_identifier__$x = "data-v-6c15f163";
 /* functional template */
 var __vue_is_functional_template__$x = false;
 /* style inject */
@@ -24798,31 +24803,29 @@ var __vue_component__$b = /*#__PURE__*/normalizeComponent({
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _this.data = [];
-                _this.loading = true;
-                _context.prev = 2;
-                _context.next = 5;
-                return _this.load(_this.searchModel);
-              case 5:
-                _this.data = _context.sent;
-                _this.loading = false;
-                _context.next = 13;
-                break;
-              case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](2);
-                _this.loading = false;
-                _this.$message({
-                  type: 'error',
-                  message: '系统错误'
-                });
-              case 13:
-              case "end":
-                return _context.stop();
-            }
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _this.data = [];
+              _this.loading = true;
+              _context.prev = 2;
+              _context.next = 5;
+              return _this.load(_this.searchModel);
+            case 5:
+              _this.data = _context.sent;
+              _this.loading = false;
+              _context.next = 13;
+              break;
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](2);
+              _this.loading = false;
+              _this.$message({
+                type: 'error',
+                message: '系统错误'
+              });
+            case 13:
+            case "end":
+              return _context.stop();
           }
         }, _callee, null, [[2, 9]]);
       }))();
@@ -26304,7 +26307,7 @@ var generateRouter$1 = function generateRouter(config) {
     _config$isQiankun = config.isQiankun,
     isQiankun = _config$isQiankun === void 0 ? window.__POWERED_BY_QIANKUN__ : _config$isQiankun,
     _config$layout = config.layout,
-    layout = _config$layout === void 0 ? dpVue2Widgets.DpLayout : _config$layout,
+    layout = _config$layout === void 0 ? __vue_component__$z : _config$layout,
     _config$logoutEvent = config.logoutEvent,
     logoutEvent = _config$logoutEvent === void 0 ? function () {} : _config$logoutEvent,
     _config$title = config.title,
@@ -26312,7 +26315,7 @@ var generateRouter$1 = function generateRouter(config) {
     _config$base = config.base,
     base = _config$base === void 0 ? window.__POWERED_BY_QIANKUN__ ? process.env.VUE_APP_QIANKUN_ROUTER_BASE : process.env.VUE_APP_REAL_ROUTER_BASE : _config$base;
   if (!!isQiankun) {
-    layout = dpVue2Widgets.DpLayoutBlank;
+    layout = __vue_component__$y;
   }
   var redirectName = routesConfig[0] ? routesConfig[0].name : '';
   var router = new VueRouter({
@@ -26340,7 +26343,7 @@ var generateRouter$1 = function generateRouter(config) {
         meta: {
           title: '404'
         },
-        component: dpVue2Widgets.DpDefaultPage
+        component: __vue_component__$v
       }]
     }])
   });

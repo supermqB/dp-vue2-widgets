@@ -1,5 +1,3 @@
-import { DpLayout, DpLayoutBlank, DpDefaultPage } from 'dp-vue2-widgets';
-
 //
 //
 //
@@ -19803,6 +19801,11 @@ const __vue_component__$y = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
 
 var script$x = {
   name: 'menuItem',
@@ -19835,7 +19838,7 @@ var __vue_render__$x = function () {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _vm.hasPermission(_vm.roles, _vm.item.meta ? _vm.item.meta.permissions : []) ? _c('span', {
+  return _vm.hasPermission(_vm.roles, _vm.item.meta && _vm.item.meta.permissions ? _vm.item.meta.permissions : []) ? _c('span', {
     staticClass: "menu-item"
   }, [!_vm.item.children || _vm.item.children.length == 0 ? [_c('el-menu-item', {
     key: _vm.item.value,
@@ -26069,13 +26072,13 @@ const generateRouter$1 = config => {
     blankRoutesConfig = [],
     // 空白路由配置 （没有layout视图包裹, 常用于登录页面),
     isQiankun = window.__POWERED_BY_QIANKUN__,
-    layout = DpLayout,
+    layout = __vue_component__$z,
     logoutEvent = () => {},
     title = '',
     base = window.__POWERED_BY_QIANKUN__ ? process.env.VUE_APP_QIANKUN_ROUTER_BASE : process.env.VUE_APP_REAL_ROUTER_BASE
   } = config;
   if (!!isQiankun) {
-    layout = DpLayoutBlank;
+    layout = __vue_component__$y;
   }
   const redirectName = routesConfig[0] ? routesConfig[0].name : '';
   const router = new VueRouter({
@@ -26103,7 +26106,7 @@ const generateRouter$1 = config => {
         meta: {
           title: '404'
         },
-        component: DpDefaultPage
+        component: __vue_component__$v
       }]
     }])
   });
