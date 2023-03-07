@@ -1,7 +1,12 @@
 <template>
   <span
     class="menu-item"
-    v-if="hasPermission(roles, item.meta ? item.meta.permissions : [])"
+    v-if="
+      hasPermission(
+        roles,
+        item.meta && item.meta.permissions ? item.meta.permissions : []
+      )
+    "
   >
     <template v-if="!item.children || item.children.length == 0">
       <el-menu-item
