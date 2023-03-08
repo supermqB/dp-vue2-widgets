@@ -24935,13 +24935,10 @@ var script$9 = {
     space: {
       type: Number,
       default: 0
-<<<<<<< HEAD
     },
     baseWindow: {
       type: Boolean,
       default: false
-=======
->>>>>>> master
     }
   },
   computed: {
@@ -25118,38 +25115,23 @@ var __vue_render__$9 = function __vue_render__() {
     ref: "popup",
     staticClass: "popupWrap",
     style: Object.assign({}, _vm.popupPos, _vm.popupSize)
-<<<<<<< HEAD
   }, [_vm._ssrNode("<i" + _vm._ssrClass("anchor", [_vm.placement]) + _vm._ssrStyle(null, _vm.anchorOffset, null) + " data-v-496dc427></i> "), _vm.visible ? _vm._ssrNode("<div class=\"popup\" data-v-496dc427>", "</div>", [_vm._t("default")], 2) : _vm._e()], 2);
-=======
-  }, [_vm._ssrNode("<i" + _vm._ssrClass("anchor", [_vm.placement]) + _vm._ssrStyle(null, _vm.anchorOffset, null) + " data-v-5153e9b8></i> "), _vm.visible ? _vm._ssrNode("<div class=\"popup\" data-v-5153e9b8>", "</div>", [_vm._t("default")], 2) : _vm._e()], 2);
->>>>>>> master
 };
 var __vue_staticRenderFns__$9 = [];
 
 /* style */
 var __vue_inject_styles__$9 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-<<<<<<< HEAD
   inject("data-v-496dc427_0", {
     source: ".popupWrap[data-v-496dc427]{position:fixed;padding:1px;min-width:50px;border:1px solid #eee;border-radius:4px;background:#fff;border:1px solid #e4e7ed;box-shadow:0 2px 12px 0 rgba(0,0,0,.06);z-index:100}.popup[data-v-496dc427]{width:100%;height:100%;overflow:auto}.anchor[data-v-496dc427]{display:inline-block;height:10px;width:10px;background-color:#fff;border:1px solid #eee;position:absolute;transform:rotate(45deg)}.anchor.bottom[data-v-496dc427]{border-right:0;border-bottom:0;top:-5px}.anchor.left[data-v-496dc427]{border-left:0;border-bottom:0;right:-6px}.anchor.right[data-v-496dc427]{border-right:0;border-top:0;left:-6px}.anchor.top[data-v-496dc427]{border-left:0;border-top:0;bottom:-5px}",
-=======
-  inject("data-v-5153e9b8_0", {
-    source: ".popupWrap[data-v-5153e9b8]{position:fixed;padding:1px;min-width:50px;border:1px solid #eee;border-radius:4px;background:#fff;border:1px solid #e4e7ed;box-shadow:0 2px 12px 0 rgba(0,0,0,.06);z-index:100}.popup[data-v-5153e9b8]{width:100%;height:100%;overflow:auto}.anchor[data-v-5153e9b8]{display:inline-block;height:10px;width:10px;background-color:#fff;border:1px solid #eee;position:absolute;transform:rotate(45deg)}.anchor.bottom[data-v-5153e9b8]{border-right:0;border-bottom:0;top:-5px}.anchor.left[data-v-5153e9b8]{border-left:0;border-bottom:0;right:-6px}.anchor.right[data-v-5153e9b8]{border-right:0;border-top:0;left:-6px}.anchor.top[data-v-5153e9b8]{border-left:0;border-top:0;bottom:-5px}",
->>>>>>> master
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-<<<<<<< HEAD
 var __vue_scope_id__$9 = "data-v-496dc427";
 /* module identifier */
 var __vue_module_identifier__$9 = "data-v-496dc427";
-=======
-var __vue_scope_id__$9 = "data-v-5153e9b8";
-/* module identifier */
-var __vue_module_identifier__$9 = "data-v-5153e9b8";
->>>>>>> master
 /* functional template */
 var __vue_is_functional_template__$9 = false;
 /* style inject shadow dom */
