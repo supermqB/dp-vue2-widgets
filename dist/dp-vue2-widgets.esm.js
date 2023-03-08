@@ -24618,6 +24618,13 @@ var script$9 = {
     space: {
       type: Number,
       default: 0
+<<<<<<< HEAD
+    },
+    baseWindow: {
+      type: Boolean,
+      default: false
+=======
+>>>>>>> master
     }
   },
   computed: {
@@ -24637,8 +24644,10 @@ var script$9 = {
     };
   },
   mounted() {
-    const popupParentNode = this.getPopupParentNode();
-    popupParentNode.style.transform = 'rotate(0deg)';
+    if (!this.baseWindow) {
+      const popupParentNode = this.getPopupParentNode();
+      popupParentNode.style.transform = 'rotate(0deg)';
+    }
   },
   methods: {
     getPopupParentNode() {
@@ -24787,7 +24796,11 @@ var script$9 = {
   }
 };
 
+<<<<<<< HEAD
+var css_248z$4 = ".popupWrap[data-v-496dc427]{position:fixed;padding:1px;min-width:50px;border:1px solid #eee;border-radius:4px;background:#fff;border:1px solid #e4e7ed;box-shadow:0 2px 12px 0 rgba(0,0,0,.06);z-index:100}.popup[data-v-496dc427]{width:100%;height:100%;overflow:auto}.anchor[data-v-496dc427]{display:inline-block;height:10px;width:10px;background-color:#fff;border:1px solid #eee;position:absolute;transform:rotate(45deg)}.anchor.bottom[data-v-496dc427]{border-right:0;border-bottom:0;top:-5px}.anchor.left[data-v-496dc427]{border-left:0;border-bottom:0;right:-6px}.anchor.right[data-v-496dc427]{border-right:0;border-top:0;left:-6px}.anchor.top[data-v-496dc427]{border-left:0;border-top:0;bottom:-5px}";
+=======
 var css_248z$4 = ".popupWrap[data-v-5153e9b8]{position:fixed;padding:1px;min-width:50px;border:1px solid #eee;border-radius:4px;background:#fff;border:1px solid #e4e7ed;box-shadow:0 2px 12px 0 rgba(0,0,0,.06);z-index:100}.popup[data-v-5153e9b8]{width:100%;height:100%;overflow:auto}.anchor[data-v-5153e9b8]{display:inline-block;height:10px;width:10px;background-color:#fff;border:1px solid #eee;position:absolute;transform:rotate(45deg)}.anchor.bottom[data-v-5153e9b8]{border-right:0;border-bottom:0;top:-5px}.anchor.left[data-v-5153e9b8]{border-left:0;border-bottom:0;right:-6px}.anchor.right[data-v-5153e9b8]{border-right:0;border-top:0;left:-6px}.anchor.top[data-v-5153e9b8]{border-left:0;border-top:0;bottom:-5px}";
+>>>>>>> master
 styleInject(css_248z$4);
 
 /* script */
@@ -24820,7 +24833,11 @@ var __vue_staticRenderFns__$9 = [];
 /* style */
 const __vue_inject_styles__$9 = undefined;
 /* scoped */
+<<<<<<< HEAD
+const __vue_scope_id__$9 = "data-v-496dc427";
+=======
 const __vue_scope_id__$9 = "data-v-5153e9b8";
+>>>>>>> master
 /* module identifier */
 const __vue_module_identifier__$9 = undefined;
 /* functional template */
