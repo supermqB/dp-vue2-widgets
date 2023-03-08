@@ -39,6 +39,10 @@ export default {
     space: {
       type: Number,
       default: 0
+    },
+    baseWindow: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -58,8 +62,10 @@ export default {
     }
   },
   mounted() {
-    const popupParentNode = this.getPopupParentNode()
-    popupParentNode.style.transform = 'rotate(0deg)'
+    if (!this.baseWindow) {
+      const popupParentNode = this.getPopupParentNode()
+      popupParentNode.style.transform = 'rotate(0deg)'
+    }
   },
   methods: {
     getPopupParentNode() {
