@@ -1,5 +1,6 @@
 // Import vue components
 import * as components from '@/lib-components/index'
+
 import directives from './directives'
 
 // install function executed by Vue.use()

@@ -13,10 +13,20 @@ import '../src/theme/theme-dp-ui/src/index.scss'
 import '../src/theme/theme-dp-ui/scrollbar.scss'
 
 import router from './router'
+import store from './store'
 
 Vue.config.productionTip = false
 
+import { productStyle } from '@/entry'
+const {
+  utils: { permission }
+} = productStyle
+router.beforeEach((to, from, next) =>
+  permission.beforeEach({ to, from, next }, store)
+)
+
 new Vue({
   router,
+  store,
   render: h => h(Dev)
 }).$mount('#app')

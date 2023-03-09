@@ -4,7 +4,7 @@
       <img :src="require('./assets/images/title.png')" alt="title" />
     </div>
     <div class="login-page__bg">
-      <!-- <CanvasBg v-if="isChrome" /> -->
+      <CanvasBg v-if="isChrome" />
     </div>
     <div :class="['login-body', isMiniBody ? 'login-body--mini' : '']">
       <div class="login-body__title">
@@ -83,7 +83,7 @@
 </template>
 
 <script>
-// import { getCodeImg } from '@/api/auth'
+import { getCodeImg } from '../../api/auth'
 // import CanvasBg from './components/canvas-bg.vue'
 import { md5 } from './utils/md5'
 
@@ -99,6 +99,9 @@ export default {
     apis: Object
   },
   // components: { CanvasBg },
+  props: {
+    redirectUrl: String
+  },
   data() {
     return {
       loginTab: 'account',
@@ -121,9 +124,9 @@ export default {
   },
   created() {
     // 非chrome不展示动画
-    if (navigator.userAgent.indexOf('Chrome') > -1) {
-      this.isChrome = true
-    }
+    // if (navigator.userAgent.indexOf('Chrome') > -1) {
+    //   this.isChrome = true
+    // }
     // 小屏幕电脑渲染缩小
     if (document.body.clientHeight < 700) {
       this.isMiniBody = true
@@ -132,7 +135,8 @@ export default {
   },
   methods: {
     getCode() {
-      this.apis.getCodeImg().then(res => {
+      // this.apis.getCodeImg().then(res => {
+      getCodeImg().then(res => {
         const { captchaOnOff, img, uuid } = res.data
         this.captchaOnOff = captchaOnOff === undefined ? true : captchaOnOff
         if (this.captchaOnOff) {
@@ -149,7 +153,6 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          // const sha512 = require("js-sha512").sha512;
           this.$store
             .dispatch('auth/login', {
               ...this.loginForm,
@@ -157,26 +160,21 @@ export default {
               password: md5(`l!anren@d0ctor$2020-${this.loginForm.password}`)
             })
             .then(r => {
-              if (r?.success) {
-                // this.$store.dispatch('system/getUserList')
-                // this.$store.dispatch('system/getMenuList')
-                // this.$store.dispatch('system/getRoleList')
-
-                // this.$store.dispatch('dict/getAssignStatus')
-                // this.$store.dispatch('dict/getHandleStatus')
-                // this.$store.dispatch('dict/getTaskType')
-                // this.$store.dispatch('dict/getOrganList')
-                // this.$store.dispatch('dict/getRoleUserList')
-
-                this.$router.push({ name: 'overview' })
+              this.loading = false
+              if (r && r.success) {
+                // console.log({ redirectUrl: this.redirectUrl })
+                // this.$router.push({ name: 'overview' })
+                window.location.href = this.redirectUrl
+                  ? this.redirectUrl
+                  : window.location.origin + this.$router.history.base
               } else {
-                this.loading = false
                 if (this.captchaOnOff) {
                   this.getCode()
                 }
               }
             })
-            .catch(() => {
+            .catch(err => {
+              console.log('登录的错误信息：' + err)
               this.loading = false
               if (this.captchaOnOff) {
                 this.getCode()

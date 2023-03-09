@@ -2,14 +2,22 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
-import { utils } from '@/entry'
-
 import {
-  DpDefaultPage,
+  utils,
+  /* DpDefaultPage, */
   DpLayoutBlank,
-  DpProductStyleLayout,
-  DpProductStyleGenerateRouter
+  productStyle
 } from '@/entry'
+
+const {
+  components: {
+    layout: DpProductStyleLayout,
+    loginPage: DpProductStyleLoginPage
+  },
+  utils: { generateRouter: productStyleGenerateRouter }
+} = productStyle
+
+const isProductStyle = process.env.VUE_APP_LAYOUT == 'product-style'
 
 const routesConfig = [
   {
@@ -130,26 +138,25 @@ const routesConfig = [
   }
 ]
 
-const blankRoutesConfig = [
-  {
-    path: '/login',
-    name: 'login',
-    meta: { title: '登录' },
-    component: () => import('../views/Login.vue')
-  }
-]
-
+const blankRoutesConfig = isProductStyle
+  ? [
+      {
+        path: '/login',
+        name: 'login',
+        meta: { title: '登录' },
+        props: { redirectUrl: process.env.VUE_APP_LOGIN_REDIRECT_URL },
+        component: DpProductStyleLoginPage //() => import('../views/Login.vue')
+      }
+    ]
+  : []
+// console.log({ productStyle, s: productStyle.components })
 const title = '示例系统'
 
-const layout =
-  process.env.VUE_APP_LAYOUT == 'product-style'
-    ? DpProductStyleLayout
-    : undefined
+const layout = isProductStyle ? DpProductStyleLayout : undefined
 
-const generate =
-  process.env.VUE_APP_LAYOUT == 'product-style'
-    ? DpProductStyleGenerateRouter
-    : utils.vueRouter.generateRouter
+const generate = isProductStyle
+  ? productStyleGenerateRouter
+  : utils.vueRouter.generateRouter
 
 export default generate({
   VueRouter, // VueRouter对象

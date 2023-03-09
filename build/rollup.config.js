@@ -8,10 +8,12 @@ import resolve from '@rollup/plugin-node-resolve'
 import replace from '@rollup/plugin-replace'
 import babel from '@rollup/plugin-babel'
 import image from '@rollup/plugin-image'
+import json from '@rollup/plugin-json'
 import { terser } from 'rollup-plugin-terser'
 import minimist from 'minimist'
 import postcss from 'rollup-plugin-postcss'
 import url from 'postcss-url'
+import nodePolyfills from 'rollup-plugin-polyfill-node'
 
 // Get browserslist config and remove ie from es build targets
 const esbrowserslist = fs
@@ -61,7 +63,23 @@ const baseConfig = {
       exclude: 'node_modules/**',
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       babelHelpers: 'bundled'
-    }
+    },
+    plugins: [
+      json(),
+      nodePolyfills({
+        include: [
+          'http',
+          // 'https',
+          'url',
+          'stream',
+          'assert',
+          'tty',
+          'util',
+          'zlib',
+          'path'
+        ]
+      })
+    ]
   }
 }
 
@@ -70,7 +88,8 @@ const baseConfig = {
 const external = [
   // list external dependencies, exactly the way it is written in the import statement.
   // eg. 'jquery'
-  'vue'
+  'vue',
+  'axios'
 ]
 
 // UMD/IIFE shared settings: output.globals
@@ -116,7 +135,8 @@ if (!argv.format || argv.format === 'es') {
           ]
         ]
       }),
-      image()
+      image(),
+      ...baseConfig.plugins.plugins
     ]
   }
   buildFormats.push(esConfig)
@@ -153,7 +173,8 @@ if (!argv.format || argv.format === 'cjs') {
       }),
       ...baseConfig.plugins.postVue,
       babel(baseConfig.plugins.babel),
-      image()
+      image(),
+      ...baseConfig.plugins.plugins
     ]
   }
   buildFormats.push(umdConfig)
@@ -189,7 +210,8 @@ if (!argv.format || argv.format === 'iife') {
         output: {
           ecma: 5
         }
-      })
+      }),
+      ...baseConfig.plugins.plugins
     ]
   }
   buildFormats.push(unpkgConfig)
