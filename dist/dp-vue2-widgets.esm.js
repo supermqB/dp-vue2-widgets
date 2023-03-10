@@ -26590,7 +26590,7 @@ const generateRouter = config => {
     blankRoutesConfig = [],
     // 空白路由配置 （没有layout视图包裹, 常用于登录页面),
     isQiankun = window.__POWERED_BY_QIANKUN__,
-    layout = __vue_component__$z,
+    layout = __vue_component__$1,
     logoutEvent = () => {},
     title = '',
     base = window.__POWERED_BY_QIANKUN__ ? process.env.VUE_APP_QIANKUN_ROUTER_BASE : process.env.VUE_APP_REAL_ROUTER_BASE

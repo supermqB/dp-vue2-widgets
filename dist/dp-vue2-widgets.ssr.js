@@ -26701,7 +26701,7 @@ var generateRouter = function generateRouter(config) {
     _config$isQiankun = config.isQiankun,
     isQiankun = _config$isQiankun === void 0 ? window.__POWERED_BY_QIANKUN__ : _config$isQiankun,
     _config$layout = config.layout,
-    layout = _config$layout === void 0 ? __vue_component__$z : _config$layout,
+    layout = _config$layout === void 0 ? __vue_component__$1 : _config$layout,
     _config$logoutEvent = config.logoutEvent,
     logoutEvent = _config$logoutEvent === void 0 ? function () {} : _config$logoutEvent,
     _config$title = config.title,

@@ -1,5 +1,6 @@
-import { DpLayout, DpLayoutBlank, DpDefaultPage } from '@/entry'
+import { DpLayoutBlank, DpDefaultPage } from '@/entry'
 
+import Layout from '../components/layout'
 import LoginPage from '../components/login-page'
 
 const generateMenuItems = routesConfig => {
@@ -23,7 +24,7 @@ const generateRouter = config => {
     routesConfig = [], // 路由配置 (放在layout下)
     blankRoutesConfig = [], // 空白路由配置 （没有layout视图包裹, 常用于登录页面),
     isQiankun = window.__POWERED_BY_QIANKUN__,
-    layout = DpLayout,
+    layout = Layout,
     logoutEvent = () => {},
     title = '',
     base = window.__POWERED_BY_QIANKUN__
