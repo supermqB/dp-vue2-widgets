@@ -1,5 +1,7 @@
 import { DpLayout, DpLayoutBlank, DpDefaultPage } from '@/entry'
 
+import LoginPage from '../components/login-page'
+
 const generateMenuItems = routesConfig => {
   let items = []
   routesConfig.map(v => {
@@ -35,6 +37,7 @@ const generateRouter = config => {
 
   const redirectName = routesConfig[0] ? routesConfig[0].name : ''
 
+  blankRoutesConfig.concat()
   const router = new VueRouter({
     mode: 'history',
     base,
@@ -51,7 +54,15 @@ const generateRouter = config => {
         children: routesConfig
       }
     ]
-      .concat(blankRoutesConfig)
+      .concat(
+        blankRoutesConfig.concat({
+          path: '/login',
+          name: 'login',
+          meta: { title: '登录' },
+          props: { redirectUrl: process.env.VUE_APP_LOGIN_REDIRECT_URL },
+          component: LoginPage
+        })
+      )
       .concat([
         {
           path: '*',

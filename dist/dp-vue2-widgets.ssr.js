@@ -26712,6 +26712,7 @@ var generateRouter = function generateRouter(config) {
     layout = __vue_component__$y;
   }
   var redirectName = routesConfig[0] ? routesConfig[0].name : '';
+  blankRoutesConfig.concat();
   var router = new VueRouter({
     mode: 'history',
     base: base,
@@ -26727,7 +26728,17 @@ var generateRouter = function generateRouter(config) {
         logoutEvent: logoutEvent
       },
       children: routesConfig
-    }].concat(blankRoutesConfig).concat([{
+    }].concat(blankRoutesConfig.concat({
+      path: '/login',
+      name: 'login',
+      meta: {
+        title: '登录'
+      },
+      props: {
+        redirectUrl: process.env.VUE_APP_LOGIN_REDIRECT_URL
+      },
+      component: __vue_component__
+    })).concat([{
       path: '*',
       hidden: true,
       component: layout,

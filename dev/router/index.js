@@ -140,13 +140,13 @@ const routesConfig = [
 
 const blankRoutesConfig = isProductStyle
   ? [
-      {
-        path: '/login',
-        name: 'login',
-        meta: { title: '登录' },
-        props: { redirectUrl: process.env.VUE_APP_LOGIN_REDIRECT_URL },
-        component: DpProductStyleLoginPage //() => import('../views/Login.vue')
-      }
+      // {
+      //   path: '/login',
+      //   name: 'login',
+      //   meta: { title: '登录' },
+      //   props: { redirectUrl: process.env.VUE_APP_LOGIN_REDIRECT_URL },
+      //   component: DpProductStyleLoginPage //() => import('../views/Login.vue')
+      // }
     ]
   : []
 // console.log({ productStyle, s: productStyle.components })
