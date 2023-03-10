@@ -4,7 +4,7 @@ const whiteList = ['login']
 
 const loginRouter = { name: 'login' }
 
-const beforeEach = async ({ to, from, next }, store) => {
+const beforeEach = async ({ to, from, next }, store, init = () => {}) => {
   // console.log({ to, from, next, token: getToken() })
   if (getToken()) {
     // console.log({ isLogin: store.getters.isLogin })
@@ -17,6 +17,9 @@ const beforeEach = async ({ to, from, next }, store) => {
         removeToken()
         next(loginRouter)
         return false
+      } else {
+        // 用户认证完成后，项目初始化的内容
+        init()
       }
     }
 

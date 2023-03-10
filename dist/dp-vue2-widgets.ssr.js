@@ -26790,31 +26790,38 @@ var loginRouter = {
 };
 var beforeEach = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(_ref, store) {
-    var to, next;
+    var to,
+      next,
+      init,
+      _args = arguments;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           to = _ref.to, _ref.from, next = _ref.next;
+          init = _args.length > 2 && _args[2] !== undefined ? _args[2] : function () {};
           if (!getToken()) {
-            _context.next = 12;
+            _context.next = 16;
             break;
           }
           if (store.getters['auth/isLogin']) {
-            _context.next = 9;
+            _context.next = 13;
             break;
           }
-          _context.next = 5;
+          _context.next = 6;
           return store.dispatch('auth/getInfo');
-        case 5:
+        case 6:
           if (store.getters['auth/isLogin']) {
-            _context.next = 9;
+            _context.next = 12;
             break;
           }
           // getInfo 失败 跳到登录页
           removeToken();
           next(loginRouter);
           return _context.abrupt("return", false);
-        case 9:
+        case 12:
+          // 用户认证完成后，项目初始化的内容
+          init();
+        case 13:
           /* has token*/
           if (to.name === loginRouter.name) {
             next('/');
@@ -26842,9 +26849,9 @@ var beforeEach = /*#__PURE__*/function () {
             //   next()
             // }
           }
-          _context.next = 14;
+          _context.next = 18;
           break;
-        case 12:
+        case 16:
           // 没有token
           if (store.getters['auth/isLogin'] == true) {
             store.commit('auth/clear');
@@ -26855,7 +26862,7 @@ var beforeEach = /*#__PURE__*/function () {
           } else {
             next(loginRouter); // 否则全部重定向到登录页
           }
-        case 14:
+        case 18:
         case "end":
           return _context.stop();
       }

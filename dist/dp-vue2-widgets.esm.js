@@ -26675,12 +26675,13 @@ const whiteList = ['login'];
 const loginRouter = {
   name: 'login'
 };
-const beforeEach = async (_ref, store) => {
+const beforeEach = async function (_ref, store) {
   let {
     to,
     from,
     next
   } = _ref;
+  let init = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : () => {};
   // console.log({ to, from, next, token: getToken() })
   if (getToken()) {
     // console.log({ isLogin: store.getters.isLogin })
@@ -26693,6 +26694,9 @@ const beforeEach = async (_ref, store) => {
         removeToken();
         next(loginRouter);
         return false;
+      } else {
+        // 用户认证完成后，项目初始化的内容
+        init();
       }
     }
 
