@@ -1,13 +1,18 @@
 const { defineConfig } = require('@vue/cli-service')
 
+const apiBasePath =
+  process.env.BASE_URL.replace(/\/$/, '') +
+  (process.env.VUE_APP_BASE_API ?? '/api')
+
 module.exports = defineConfig({
+  publicPath: process.env.BASE_URL,
   devServer: {
     proxy: {
-      '/api': {
+      [apiBasePath]: {
         changeOrigin: true,
-        target: 'http://172.16.29.4:19200',
+        target: process.env.DEV_SERVER_PROXY_HOST,
         pathRewrite: {
-          '^/api': ''
+          ['^' + apiBasePath]: ''
         }
       }
     }

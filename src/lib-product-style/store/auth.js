@@ -50,7 +50,7 @@ const actions = {
   },
   async getInfo({ commit }) {
     const r = await authApi.getInfo()
-    console.log({ getInfo: r })
+    // console.log({ getInfo: r })
     if (r?.code == 200) {
       commit('set', {
         id: r.data.id,

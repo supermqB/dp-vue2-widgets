@@ -26589,15 +26589,11 @@ const generateRouter = config => {
     // 路由配置 (放在layout下)
     blankRoutesConfig = [],
     // 空白路由配置 （没有layout视图包裹, 常用于登录页面),
-    isQiankun = window.__POWERED_BY_QIANKUN__,
     layout = __vue_component__$1,
     logoutEvent = () => {},
-    title = '',
-    base = window.__POWERED_BY_QIANKUN__ ? process.env.VUE_APP_QIANKUN_ROUTER_BASE : process.env.VUE_APP_REAL_ROUTER_BASE
+    title = '系统名称',
+    base = process.env.BASE_URL
   } = config;
-  if (!!isQiankun) {
-    layout = __vue_component__$y;
-  }
   const redirectName = routesConfig[0] ? routesConfig[0].name : '';
   blankRoutesConfig.concat();
   const router = new VueRouter({
@@ -26766,9 +26762,7 @@ const actions = {
       commit
     } = _ref2;
     const r = await getInfo();
-    console.log({
-      getInfo: r
-    });
+    // console.log({ getInfo: r })
     if (r?.code == 200) {
       commit('set', {
         id: r.data.id,

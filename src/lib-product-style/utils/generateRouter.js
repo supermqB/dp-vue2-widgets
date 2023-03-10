@@ -1,4 +1,4 @@
-import { DpLayoutBlank, DpDefaultPage } from '@/entry'
+import { DpDefaultPage } from '@/entry'
 
 import Layout from '../components/layout'
 import LoginPage from '../components/login-page'
@@ -23,18 +23,11 @@ const generateRouter = config => {
     VueRouter,
     routesConfig = [], // 路由配置 (放在layout下)
     blankRoutesConfig = [], // 空白路由配置 （没有layout视图包裹, 常用于登录页面),
-    isQiankun = window.__POWERED_BY_QIANKUN__,
     layout = Layout,
     logoutEvent = () => {},
-    title = '',
-    base = window.__POWERED_BY_QIANKUN__
-      ? process.env.VUE_APP_QIANKUN_ROUTER_BASE
-      : process.env.VUE_APP_REAL_ROUTER_BASE
+    title = '系统名称',
+    base = process.env.BASE_URL
   } = config
-
-  if (!!isQiankun) {
-    layout = DpLayoutBlank
-  }
 
   const redirectName = routesConfig[0] ? routesConfig[0].name : ''
 

@@ -26698,19 +26698,14 @@ var generateRouter = function generateRouter(config) {
     routesConfig = _config$routesConfig === void 0 ? [] : _config$routesConfig,
     _config$blankRoutesCo = config.blankRoutesConfig,
     blankRoutesConfig = _config$blankRoutesCo === void 0 ? [] : _config$blankRoutesCo,
-    _config$isQiankun = config.isQiankun,
-    isQiankun = _config$isQiankun === void 0 ? window.__POWERED_BY_QIANKUN__ : _config$isQiankun,
     _config$layout = config.layout,
     layout = _config$layout === void 0 ? __vue_component__$1 : _config$layout,
     _config$logoutEvent = config.logoutEvent,
     logoutEvent = _config$logoutEvent === void 0 ? function () {} : _config$logoutEvent,
     _config$title = config.title,
-    title = _config$title === void 0 ? '' : _config$title,
+    title = _config$title === void 0 ? '系统名称' : _config$title,
     _config$base = config.base,
-    base = _config$base === void 0 ? window.__POWERED_BY_QIANKUN__ ? process.env.VUE_APP_QIANKUN_ROUTER_BASE : process.env.VUE_APP_REAL_ROUTER_BASE : _config$base;
-  if (!!isQiankun) {
-    layout = __vue_component__$y;
-  }
+    base = _config$base === void 0 ? process.env.BASE_URL : _config$base;
   var redirectName = routesConfig[0] ? routesConfig[0].name : '';
   blankRoutesConfig.concat();
   var router = new VueRouter({
@@ -26913,9 +26908,7 @@ var actions = {
             return getInfo();
           case 3:
             r = _context2.sent;
-            console.log({
-              getInfo: r
-            });
+            // console.log({ getInfo: r })
             if ((r === null || r === void 0 ? void 0 : r.code) == 200) {
               commit('set', {
                 id: r.data.id,
@@ -26928,7 +26921,7 @@ var actions = {
               commit('clear');
               // console.log({ removeToken: removeToken() })
             }
-          case 6:
+          case 5:
           case "end":
             return _context2.stop();
         }

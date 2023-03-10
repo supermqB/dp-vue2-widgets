@@ -158,11 +158,13 @@ const generate = isProductStyle
   ? productStyleGenerateRouter
   : utils.vueRouter.generateRouter
 
+console.log({ baseUrl: process.env.BASE_URL })
+
 export default generate({
   VueRouter, // VueRouter对象
   routesConfig, // routes配置
   blankRoutesConfig, // routes配置(nolayout)
   layout, // 布局组件
-  title // 系统标题
-  // base: process.env.BASE_URL // router BaseUrl
+  title, // 系统标题
+  base: process.env.BASE_URL // router BaseUrl
 })
