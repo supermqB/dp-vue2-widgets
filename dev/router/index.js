@@ -158,7 +158,7 @@ const generate = isProductStyle
   ? productStyleGenerateRouter
   : utils.vueRouter.generateRouter
 
-console.log({ baseUrl: process.env.BASE_URL })
+// console.log({ baseUrl: process.env.BASE_URL })
 
 export default generate({
   VueRouter, // VueRouter对象

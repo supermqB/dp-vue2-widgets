@@ -25600,16 +25600,33 @@ var __vue_component__$6 = /*#__PURE__*/normalizeComponent({
 //
 //
 //
-//
 
 var script$5 = {
   name: 'LayoutProductStyleMainHeader',
   props: {
     collapsed: Boolean
   },
+  data: function data() {
+    return {
+      portalUrl: 'http://172.16.29.16:12201'
+    };
+  },
   methods: {
-    handleClick: function handleClick() {
+    handleClickCollapsed: function handleClickCollapsed() {
       this.$emit('update:collapsed', !this.collapsed);
+    },
+    handleClickBack: function handleClickBack() {
+      window.location.href = this.portalUrl;
+    },
+    handleClickExit: function handleClickExit() {
+      var _this = this;
+      if (confirm('确定要退出登录吗')) {
+        this.$store.dispatch('auth/logout').then(function (r) {
+          if (r.success) {
+            window.location.href = window.location.origin + _this.$router.history.base;
+          }
+        });
+      }
     }
   }
 };/* script */
@@ -25622,7 +25639,6 @@ var __vue_render__$5 = function __vue_render__() {
   var _c = _vm._self._c || _h;
   return _c('dp-blocks', {
     staticStyle: {
-      "justify-content": "flex-start",
       "padding": "0 10px",
       "align-items": "center",
       "box-sizing": "border-box"
@@ -25630,18 +25646,32 @@ var __vue_render__$5 = function __vue_render__() {
     attrs: {
       "direction": "row"
     }
-  }, [_c('dp-block', {
-    attrs: {
-      "size": "auto"
-    }
-  }, [_c('el-button', {
+  }, [_c('dp-block', [_c('el-button', {
     attrs: {
       "type": "text"
     },
     on: {
-      "click": _vm.handleClick
+      "click": _vm.handleClickCollapsed
     }
-  }, [_vm._v("\n      " + _vm._s(_vm.collapsed ? '展开' : '收起') + "\n    ")])], 1)], 1);
+  }, [_vm._v("\n      " + _vm._s(_vm.collapsed ? '展开' : '收起') + "\n    ")])], 1), _vm._v(" "), _c('dp-block', {
+    attrs: {
+      "size": "200px"
+    }
+  }, [_c('el-button', {
+    attrs: {
+      "type": "primary"
+    },
+    on: {
+      "click": _vm.handleClickBack
+    }
+  }, [_vm._v(" 返回首页 ")]), _vm._v(" "), _c('el-button', {
+    attrs: {
+      "type": "primary"
+    },
+    on: {
+      "click": _vm.handleClickExit
+    }
+  }, [_vm._v(" 退出 ")])], 1)], 1);
 };
 var __vue_staticRenderFns__$5 = [];
 
@@ -25650,7 +25680,7 @@ var __vue_inject_styles__$5 = undefined;
 /* scoped */
 var __vue_scope_id__$5 = undefined;
 /* module identifier */
-var __vue_module_identifier__$5 = "data-v-580e24f2";
+var __vue_module_identifier__$5 = "data-v-bc9209ea";
 /* functional template */
 var __vue_is_functional_template__$5 = false;
 /* style inject */
@@ -26160,7 +26190,7 @@ function getInfo() {
 }
 function logout() {
   return service({
-    url: authApiPath + '/user/logout',
+    url: authApiPath + '/api/auth/user/logout',
     method: 'get'
   });
 }

@@ -25416,16 +25416,32 @@ const __vue_component__$6 = /*#__PURE__*/normalizeComponent({
 //
 //
 //
-//
 
 var script$5 = {
   name: 'LayoutProductStyleMainHeader',
   props: {
     collapsed: Boolean
   },
+  data() {
+    return {
+      portalUrl: 'http://172.16.29.16:12201'
+    };
+  },
   methods: {
-    handleClick() {
+    handleClickCollapsed() {
       this.$emit('update:collapsed', !this.collapsed);
+    },
+    handleClickBack() {
+      window.location.href = this.portalUrl;
+    },
+    handleClickExit() {
+      if (confirm('确定要退出登录吗')) {
+        this.$store.dispatch('auth/logout').then(r => {
+          if (r.success) {
+            window.location.href = window.location.origin + this.$router.history.base;
+          }
+        });
+      }
     }
   }
 };
@@ -25440,7 +25456,6 @@ var __vue_render__$5 = function () {
   var _c = _vm._self._c || _h;
   return _c('dp-blocks', {
     staticStyle: {
-      "justify-content": "flex-start",
       "padding": "0 10px",
       "align-items": "center",
       "box-sizing": "border-box"
@@ -25448,18 +25463,32 @@ var __vue_render__$5 = function () {
     attrs: {
       "direction": "row"
     }
-  }, [_c('dp-block', {
-    attrs: {
-      "size": "auto"
-    }
-  }, [_c('el-button', {
+  }, [_c('dp-block', [_c('el-button', {
     attrs: {
       "type": "text"
     },
     on: {
-      "click": _vm.handleClick
+      "click": _vm.handleClickCollapsed
     }
-  }, [_vm._v("\n      " + _vm._s(_vm.collapsed ? '展开' : '收起') + "\n    ")])], 1)], 1);
+  }, [_vm._v("\n      " + _vm._s(_vm.collapsed ? '展开' : '收起') + "\n    ")])], 1), _vm._v(" "), _c('dp-block', {
+    attrs: {
+      "size": "200px"
+    }
+  }, [_c('el-button', {
+    attrs: {
+      "type": "primary"
+    },
+    on: {
+      "click": _vm.handleClickBack
+    }
+  }, [_vm._v(" 返回首页 ")]), _vm._v(" "), _c('el-button', {
+    attrs: {
+      "type": "primary"
+    },
+    on: {
+      "click": _vm.handleClickExit
+    }
+  }, [_vm._v(" 退出 ")])], 1)], 1);
 };
 var __vue_staticRenderFns__$5 = [];
 
@@ -26005,7 +26034,7 @@ function getInfo() {
 }
 function logout() {
   return service({
-    url: authApiPath + '/user/logout',
+    url: authApiPath + '/api/auth/user/logout',
     method: 'get'
   });
 }
