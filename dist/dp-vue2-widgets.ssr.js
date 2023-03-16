@@ -502,6 +502,10 @@ var script$R = {
     text: {
       type: String,
       default: '标题内容'
+    },
+    showUnderLine: {
+      type: Boolean,
+      default: true
     }
   }
 };function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier /* server only */, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
@@ -626,24 +630,27 @@ var __vue_render__$S = function __vue_render__() {
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c('div', {
-    staticClass: "dp-title"
-  }, [_vm._ssrNode("<div class=\"dp-title__text\" data-v-aba42a78>" + _vm._ssrEscape(_vm._s(_vm.text)) + "</div>")]);
+    staticClass: "dp-title",
+    class: {
+      underline: _vm.showUnderLine
+    }
+  }, [_vm._ssrNode("<div class=\"dp-title__text\" data-v-45fe4e81>" + _vm._ssrEscape(_vm._s(_vm.text)) + "</div>")]);
 };
 var __vue_staticRenderFns__$S = [];
 
 /* style */
 var __vue_inject_styles__$S = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-aba42a78_0", {
-    source: ".dp-title[data-v-aba42a78]{height:40px;box-sizing:border-box;border-bottom:1px solid #e5e5e5;position:relative}.dp-title__text[data-v-aba42a78]{color:#333;height:39px;font-size:15px;line-height:39px;padding-left:12px}.dp-title__text[data-v-aba42a78]:before{content:\" \";position:absolute;width:4px;height:13px;background-color:#2f63b9;left:4px;top:13px}.dp-title__wrapper[data-v-aba42a78]{position:absolute;height:calc(100% + 1px);display:inline-block;box-sizing:border-box;padding-left:6px;padding-right:16px;border-bottom:2px solid #2f63b9}.dp-title__wrapper-text[data-v-aba42a78]{color:#333;font-size:15px;font-weight:700;position:relative;top:50%;transform:translateY(-50%)}",
+  inject("data-v-45fe4e81_0", {
+    source: ".dp-title[data-v-45fe4e81]{height:40px;box-sizing:border-box;position:relative}.dp-title__text[data-v-45fe4e81]{color:#333;height:39px;font-size:15px;line-height:39px;padding-left:12px}.dp-title__text[data-v-45fe4e81]:before{content:\" \";position:absolute;width:4px;height:13px;background-color:#2f63b9;left:4px;top:13px}.dp-title__wrapper[data-v-45fe4e81]{position:absolute;height:calc(100% + 1px);display:inline-block;box-sizing:border-box;padding-left:6px;padding-right:16px;border-bottom:2px solid #2f63b9}.dp-title__wrapper-text[data-v-45fe4e81]{color:#333;font-size:15px;font-weight:700;position:relative;top:50%;transform:translateY(-50%)}.underline[data-v-45fe4e81]{border-bottom:1px solid #e5e5e5}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$S = "data-v-aba42a78";
+var __vue_scope_id__$S = "data-v-45fe4e81";
 /* module identifier */
-var __vue_module_identifier__$S = "data-v-aba42a78";
+var __vue_module_identifier__$S = "data-v-45fe4e81";
 /* functional template */
 var __vue_is_functional_template__$S = false;
 /* style inject shadow dom */
@@ -705,6 +712,10 @@ var __vue_component__$R = /*#__PURE__*/normalizeComponent({
 var script$P = {
   props: {
     title: String,
+    showUnderLine: {
+      type: Boolean,
+      default: true
+    },
     size: {
       type: String /*l1, l2, l3*/,
       default: function _default() {
@@ -729,7 +740,8 @@ var __vue_render__$Q = function __vue_render__() {
   }, [_vm.size == 'l1' || _vm.size == 'l2' ? _c('DpTitle', {
     class: _vm.size,
     attrs: {
-      "text": _vm.title
+      "text": _vm.title,
+      "showUnderLine": _vm.showUnderLine
     }
   }) : _vm._e(), _vm._ssrNode(" "), _vm.size == 'l3' ? _c('DpSubtitle', {
     attrs: {
@@ -742,16 +754,16 @@ var __vue_staticRenderFns__$Q = [];
 /* style */
 var __vue_inject_styles__$Q = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-4a8f264b_0", {
-    source: ".dptitle_wrapper[data-v-4a8f264b] .dp-title.l2 .dp-title__text{font-size:13px;color:#303133}.dptitle_wrapper[data-v-4a8f264b] .dp-title.l2 .dp-title__text::before{background-color:rgba(47,99,185,.4);height:10px;width:3px}",
+  inject("data-v-57819a00_0", {
+    source: ".dptitle_wrapper[data-v-57819a00] .dp-title.l2 .dp-title__text{font-size:13px;color:#303133}.dptitle_wrapper[data-v-57819a00] .dp-title.l2 .dp-title__text::before{background-color:rgba(47,99,185,.4);height:10px;width:3px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$Q = "data-v-4a8f264b";
+var __vue_scope_id__$Q = "data-v-57819a00";
 /* module identifier */
-var __vue_module_identifier__$Q = "data-v-4a8f264b";
+var __vue_module_identifier__$Q = "data-v-57819a00";
 /* functional template */
 var __vue_is_functional_template__$Q = false;
 /* style inject shadow dom */
@@ -24803,29 +24815,31 @@ var __vue_component__$b = /*#__PURE__*/normalizeComponent({
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
-            case 0:
-              _this.data = [];
-              _this.loading = true;
-              _context.prev = 2;
-              _context.next = 5;
-              return _this.load(_this.searchModel);
-            case 5:
-              _this.data = _context.sent;
-              _this.loading = false;
-              _context.next = 13;
-              break;
-            case 9:
-              _context.prev = 9;
-              _context.t0 = _context["catch"](2);
-              _this.loading = false;
-              _this.$message({
-                type: 'error',
-                message: '系统错误'
-              });
-            case 13:
-            case "end":
-              return _context.stop();
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.data = [];
+                _this.loading = true;
+                _context.prev = 2;
+                _context.next = 5;
+                return _this.load(_this.searchModel);
+              case 5:
+                _this.data = _context.sent;
+                _this.loading = false;
+                _context.next = 13;
+                break;
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](2);
+                _this.loading = false;
+                _this.$message({
+                  type: 'error',
+                  message: '系统错误'
+                });
+              case 13:
+              case "end":
+                return _context.stop();
+            }
           }
         }, _callee, null, [[2, 9]]);
       }))();
@@ -26795,76 +26809,78 @@ var beforeEach = /*#__PURE__*/function () {
       init,
       _args = arguments;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
-      while (1) switch (_context.prev = _context.next) {
-        case 0:
-          to = _ref.to, _ref.from, next = _ref.next;
-          init = _args.length > 2 && _args[2] !== undefined ? _args[2] : function () {};
-          if (!getToken()) {
-            _context.next = 16;
-            break;
-          }
-          if (store.getters['auth/isLogin']) {
-            _context.next = 13;
-            break;
-          }
-          _context.next = 6;
-          return store.dispatch('auth/getInfo');
-        case 6:
-          if (store.getters['auth/isLogin']) {
-            _context.next = 12;
-            break;
-          }
-          // getInfo 失败 跳到登录页
-          removeToken();
-          next(loginRouter);
-          return _context.abrupt("return", false);
-        case 12:
-          // 用户认证完成后，项目初始化的内容
-          init();
-        case 13:
-          /* has token*/
-          if (to.name === loginRouter.name) {
-            next('/');
-          } else {
-            next();
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            to = _ref.to, _ref.from, next = _ref.next;
+            init = _args.length > 2 && _args[2] !== undefined ? _args[2] : function () {};
+            if (!getToken()) {
+              _context.next = 16;
+              break;
+            }
+            if (store.getters['auth/isLogin']) {
+              _context.next = 13;
+              break;
+            }
+            _context.next = 6;
+            return store.dispatch('auth/getInfo');
+          case 6:
+            if (store.getters['auth/isLogin']) {
+              _context.next = 12;
+              break;
+            }
+            // getInfo 失败 跳到登录页
+            removeToken();
+            next(loginRouter);
+            return _context.abrupt("return", false);
+          case 12:
+            // 用户认证完成后，项目初始化的内容
+            init();
+          case 13:
+            /* has token*/
+            if (to.name === loginRouter.name) {
+              next('/');
+            } else {
+              next();
 
-            // if (store.getters.roles.length === 0) {
-            //   isRelogin.show = true
-            //   // 判断当前用户是否已拉取完user_info信息
-            //   store.dispatch('GetInfo').then(() => {
-            //     isRelogin.show = false
-            //     store.dispatch('GenerateRoutes').then(accessRoutes => {
-            //       // 根据roles权限生成可访问的路由表
-            //       router.addRoutes(accessRoutes) // 动态添加可访问路由表
-            //       next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
-            //     })
-            //   }).catch(err => {
-            //     // store.dispatch('LogOut').then(() => {
-            //     store.dispatch('FedLogOut').then(() => {
-            //       Message.error(err)
-            //       next({ path: '/' })
-            //     })
-            //   })
-            // } else {
-            //   next()
-            // }
-          }
-          _context.next = 18;
-          break;
-        case 16:
-          // 没有token
-          if (store.getters['auth/isLogin'] == true) {
-            store.commit('auth/clear');
-          }
-          if (whiteList.indexOf(to.name) !== -1) {
-            // 在免登录白名单，直接进入
-            next();
-          } else {
-            next(loginRouter); // 否则全部重定向到登录页
-          }
-        case 18:
-        case "end":
-          return _context.stop();
+              // if (store.getters.roles.length === 0) {
+              //   isRelogin.show = true
+              //   // 判断当前用户是否已拉取完user_info信息
+              //   store.dispatch('GetInfo').then(() => {
+              //     isRelogin.show = false
+              //     store.dispatch('GenerateRoutes').then(accessRoutes => {
+              //       // 根据roles权限生成可访问的路由表
+              //       router.addRoutes(accessRoutes) // 动态添加可访问路由表
+              //       next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
+              //     })
+              //   }).catch(err => {
+              //     // store.dispatch('LogOut').then(() => {
+              //     store.dispatch('FedLogOut').then(() => {
+              //       Message.error(err)
+              //       next({ path: '/' })
+              //     })
+              //   })
+              // } else {
+              //   next()
+              // }
+            }
+            _context.next = 18;
+            break;
+          case 16:
+            // 没有token
+            if (store.getters['auth/isLogin'] == true) {
+              store.commit('auth/clear');
+            }
+            if (whiteList.indexOf(to.name) !== -1) {
+              // 在免登录白名单，直接进入
+              next();
+            } else {
+              next(loginRouter); // 否则全部重定向到登录页
+            }
+          case 18:
+          case "end":
+            return _context.stop();
+        }
       }
     }, _callee);
   }));
@@ -26905,31 +26921,33 @@ var actions = {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
       var requestParams, r;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
-        while (1) switch (_context.prev = _context.next) {
-          case 0:
-            _ref.commit;
-            requestParams = _objectSpread2({}, data);
-            _context.next = 4;
-            return login(requestParams);
-          case 4:
-            r = _context.sent;
-            if (!(r && r.code == 200)) {
-              _context.next = 10;
-              break;
-            }
-            // commit('set', r.data.loginUser)
-            setToken(r.data.access_token);
-            return _context.abrupt("return", {
-              success: true
-            });
-          case 10:
-            return _context.abrupt("return", {
-              success: false,
-              msg: r.msg
-            });
-          case 11:
-          case "end":
-            return _context.stop();
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _ref.commit;
+              requestParams = _objectSpread2({}, data);
+              _context.next = 4;
+              return login(requestParams);
+            case 4:
+              r = _context.sent;
+              if (!(r && r.code == 200)) {
+                _context.next = 10;
+                break;
+              }
+              // commit('set', r.data.loginUser)
+              setToken(r.data.access_token);
+              return _context.abrupt("return", {
+                success: true
+              });
+            case 10:
+              return _context.abrupt("return", {
+                success: false,
+                msg: r.msg
+              });
+            case 11:
+            case "end":
+              return _context.stop();
+          }
         }
       }, _callee);
     }))();
@@ -26938,29 +26956,31 @@ var actions = {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
       var commit, r;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-        while (1) switch (_context2.prev = _context2.next) {
-          case 0:
-            commit = _ref2.commit;
-            _context2.next = 3;
-            return getInfo();
-          case 3:
-            r = _context2.sent;
-            // console.log({ getInfo: r })
-            if ((r === null || r === void 0 ? void 0 : r.code) == 200) {
-              commit('set', {
-                id: r.data.id,
-                name: r.data.userName,
-                roles: r.data.userRoles,
-                permissions: r.data.permissions,
-                userData: r.data
-              });
-            } else {
-              commit('clear');
-              // console.log({ removeToken: removeToken() })
-            }
-          case 5:
-          case "end":
-            return _context2.stop();
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return getInfo();
+            case 3:
+              r = _context2.sent;
+              // console.log({ getInfo: r })
+              if ((r === null || r === void 0 ? void 0 : r.code) == 200) {
+                commit('set', {
+                  id: r.data.id,
+                  name: r.data.userName,
+                  roles: r.data.userRoles,
+                  permissions: r.data.permissions,
+                  userData: r.data
+                });
+              } else {
+                commit('clear');
+                // console.log({ removeToken: removeToken() })
+              }
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
         }
       }, _callee2);
     }))();
@@ -26969,29 +26989,31 @@ var actions = {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
       var commit, r;
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-        while (1) switch (_context3.prev = _context3.next) {
-          case 0:
-            commit = _ref3.commit;
-            _context3.next = 3;
-            return logout();
-          case 3:
-            r = _context3.sent;
-            if (!((r === null || r === void 0 ? void 0 : r.code) == 200)) {
-              _context3.next = 10;
-              break;
-            }
-            commit('clear');
-            removeToken();
-            return _context3.abrupt("return", {
-              success: true
-            });
-          case 10:
-            return _context3.abrupt("return", {
-              success: false
-            });
-          case 11:
-          case "end":
-            return _context3.stop();
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
+              return logout();
+            case 3:
+              r = _context3.sent;
+              if (!((r === null || r === void 0 ? void 0 : r.code) == 200)) {
+                _context3.next = 10;
+                break;
+              }
+              commit('clear');
+              removeToken();
+              return _context3.abrupt("return", {
+                success: true
+              });
+            case 10:
+              return _context3.abrupt("return", {
+                success: false
+              });
+            case 11:
+            case "end":
+              return _context3.stop();
+          }
         }
       }, _callee3);
     }))();

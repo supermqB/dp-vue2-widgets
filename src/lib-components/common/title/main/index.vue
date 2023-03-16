@@ -1,5 +1,5 @@
 <template>
-  <div class="dp-title">
+  <div class="dp-title" :class="{ underline: showUnderLine }">
     <div class="dp-title__text">{{ text }}</div>
   </div>
 </template>
@@ -11,6 +11,10 @@ export default {
     text: {
       type: String,
       default: '标题内容'
+    },
+    showUnderLine: {
+      type: Boolean,
+      default: true
     }
   }
 }
@@ -19,7 +23,7 @@ export default {
 .dp-title {
   height: 40px;
   box-sizing: border-box;
-  border-bottom: 1px solid #e5e5e5;
+  /* border-bottom: 1px solid #e5e5e5; */
   position: relative;
   &__text {
     color: #333;
@@ -55,5 +59,8 @@ export default {
       transform: translateY(-50%);
     }
   }
+}
+.underline {
+  border-bottom: 1px solid #e5e5e5;
 }
 </style>
