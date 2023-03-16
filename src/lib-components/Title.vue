@@ -1,6 +1,11 @@
 <template>
   <div class="dptitle_wrapper">
-    <DpTitle :text="title" v-if="size == 'l1' || size == 'l2'" :class="size" />
+    <DpTitle
+      :text="title"
+      :showUnderLine="showUnderLine"
+      v-if="size == 'l1' || size == 'l2'"
+      :class="size"
+    />
     <DpSubtitle :text="title" v-if="size == 'l3'" />
   </div>
 </template>
@@ -10,6 +15,10 @@ import DpSubtitle from '@/lib-components/common/title/sub'
 export default {
   props: {
     title: String,
+    showUnderLine: {
+      type: Boolean,
+      default: true
+    },
     size: {
       type: String /*l1, l2, l3*/,
       default: () => 'l1'
