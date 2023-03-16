@@ -2,7 +2,7 @@
   <div class="dptitle_wrapper">
     <DpTitle
       :text="title"
-      :showUnderLine="showUnderLine"
+      :showUnderline="showUnderline"
       v-if="size == 'l1' || size == 'l2'"
       :class="size"
     />
@@ -15,7 +15,7 @@ import DpSubtitle from '@/lib-components/common/title/sub'
 export default {
   props: {
     title: String,
-    showUnderLine: {
+    showUnderline: {
       type: Boolean,
       default: true
     },

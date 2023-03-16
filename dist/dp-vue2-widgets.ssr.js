@@ -503,7 +503,7 @@ var script$R = {
       type: String,
       default: '标题内容'
     },
-    showUnderLine: {
+    showUnderline: {
       type: Boolean,
       default: true
     }
@@ -632,25 +632,25 @@ var __vue_render__$S = function __vue_render__() {
   return _c('div', {
     staticClass: "dp-title",
     class: {
-      underline: _vm.showUnderLine
+      underline: _vm.showUnderline
     }
-  }, [_vm._ssrNode("<div class=\"dp-title__text\" data-v-45fe4e81>" + _vm._ssrEscape(_vm._s(_vm.text)) + "</div>")]);
+  }, [_vm._ssrNode("<div class=\"dp-title__text\" data-v-99e25afe>" + _vm._ssrEscape(_vm._s(_vm.text)) + "</div>")]);
 };
 var __vue_staticRenderFns__$S = [];
 
 /* style */
 var __vue_inject_styles__$S = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-45fe4e81_0", {
-    source: ".dp-title[data-v-45fe4e81]{height:40px;box-sizing:border-box;position:relative}.dp-title__text[data-v-45fe4e81]{color:#333;height:39px;font-size:15px;line-height:39px;padding-left:12px}.dp-title__text[data-v-45fe4e81]:before{content:\" \";position:absolute;width:4px;height:13px;background-color:#2f63b9;left:4px;top:13px}.dp-title__wrapper[data-v-45fe4e81]{position:absolute;height:calc(100% + 1px);display:inline-block;box-sizing:border-box;padding-left:6px;padding-right:16px;border-bottom:2px solid #2f63b9}.dp-title__wrapper-text[data-v-45fe4e81]{color:#333;font-size:15px;font-weight:700;position:relative;top:50%;transform:translateY(-50%)}.underline[data-v-45fe4e81]{border-bottom:1px solid #e5e5e5}",
+  inject("data-v-99e25afe_0", {
+    source: ".dp-title[data-v-99e25afe]{height:40px;box-sizing:border-box;position:relative}.dp-title__text[data-v-99e25afe]{color:#333;height:39px;font-size:15px;line-height:39px;padding-left:12px}.dp-title__text[data-v-99e25afe]:before{content:\" \";position:absolute;width:4px;height:13px;background-color:#2f63b9;left:4px;top:13px}.dp-title__wrapper[data-v-99e25afe]{position:absolute;height:calc(100% + 1px);display:inline-block;box-sizing:border-box;padding-left:6px;padding-right:16px;border-bottom:2px solid #2f63b9}.dp-title__wrapper-text[data-v-99e25afe]{color:#333;font-size:15px;font-weight:700;position:relative;top:50%;transform:translateY(-50%)}.underline[data-v-99e25afe]{border-bottom:1px solid #e5e5e5}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$S = "data-v-45fe4e81";
+var __vue_scope_id__$S = "data-v-99e25afe";
 /* module identifier */
-var __vue_module_identifier__$S = "data-v-45fe4e81";
+var __vue_module_identifier__$S = "data-v-99e25afe";
 /* functional template */
 var __vue_is_functional_template__$S = false;
 /* style inject shadow dom */
@@ -712,7 +712,7 @@ var __vue_component__$R = /*#__PURE__*/normalizeComponent({
 var script$P = {
   props: {
     title: String,
-    showUnderLine: {
+    showUnderline: {
       type: Boolean,
       default: true
     },
@@ -741,7 +741,7 @@ var __vue_render__$Q = function __vue_render__() {
     class: _vm.size,
     attrs: {
       "text": _vm.title,
-      "showUnderLine": _vm.showUnderLine
+      "showUnderline": _vm.showUnderline
     }
   }) : _vm._e(), _vm._ssrNode(" "), _vm.size == 'l3' ? _c('DpSubtitle', {
     attrs: {
@@ -754,16 +754,16 @@ var __vue_staticRenderFns__$Q = [];
 /* style */
 var __vue_inject_styles__$Q = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-57819a00_0", {
-    source: ".dptitle_wrapper[data-v-57819a00] .dp-title.l2 .dp-title__text{font-size:13px;color:#303133}.dptitle_wrapper[data-v-57819a00] .dp-title.l2 .dp-title__text::before{background-color:rgba(47,99,185,.4);height:10px;width:3px}",
+  inject("data-v-d721cc40_0", {
+    source: ".dptitle_wrapper[data-v-d721cc40] .dp-title.l2 .dp-title__text{font-size:13px;color:#303133}.dptitle_wrapper[data-v-d721cc40] .dp-title.l2 .dp-title__text::before{background-color:rgba(47,99,185,.4);height:10px;width:3px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$Q = "data-v-57819a00";
+var __vue_scope_id__$Q = "data-v-d721cc40";
 /* module identifier */
-var __vue_module_identifier__$Q = "data-v-57819a00";
+var __vue_module_identifier__$Q = "data-v-d721cc40";
 /* functional template */
 var __vue_is_functional_template__$Q = false;
 /* style inject shadow dom */

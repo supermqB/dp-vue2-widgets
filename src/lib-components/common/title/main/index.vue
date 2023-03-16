@@ -1,5 +1,5 @@
 <template>
-  <div class="dp-title" :class="{ underline: showUnderLine }">
+  <div class="dp-title" :class="{ underline: showUnderline }">
     <div class="dp-title__text">{{ text }}</div>
   </div>
 </template>
@@ -12,7 +12,7 @@ export default {
       type: String,
       default: '标题内容'
     },
-    showUnderLine: {
+    showUnderline: {
       type: Boolean,
       default: true
     }
