@@ -14,7 +14,7 @@ var script$R = {
       type: String,
       default: '标题内容'
     },
-    showUnderLine: {
+    showUnderline: {
       type: Boolean,
       default: true
     }
@@ -48,7 +48,7 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z$F = ".dp-title[data-v-45fe4e81]{height:40px;box-sizing:border-box;position:relative}.dp-title__text[data-v-45fe4e81]{color:#333;height:39px;font-size:15px;line-height:39px;padding-left:12px}.dp-title__text[data-v-45fe4e81]:before{content:\" \";position:absolute;width:4px;height:13px;background-color:#2f63b9;left:4px;top:13px}.dp-title__wrapper[data-v-45fe4e81]{position:absolute;height:calc(100% + 1px);display:inline-block;box-sizing:border-box;padding-left:6px;padding-right:16px;border-bottom:2px solid #2f63b9}.dp-title__wrapper-text[data-v-45fe4e81]{color:#333;font-size:15px;font-weight:700;position:relative;top:50%;transform:translateY(-50%)}.underline[data-v-45fe4e81]{border-bottom:1px solid #e5e5e5}";
+var css_248z$F = ".dp-title[data-v-99e25afe]{height:40px;box-sizing:border-box;position:relative}.dp-title__text[data-v-99e25afe]{color:#333;height:39px;font-size:15px;line-height:39px;padding-left:12px}.dp-title__text[data-v-99e25afe]:before{content:\" \";position:absolute;width:4px;height:13px;background-color:#2f63b9;left:4px;top:13px}.dp-title__wrapper[data-v-99e25afe]{position:absolute;height:calc(100% + 1px);display:inline-block;box-sizing:border-box;padding-left:6px;padding-right:16px;border-bottom:2px solid #2f63b9}.dp-title__wrapper-text[data-v-99e25afe]{color:#333;font-size:15px;font-weight:700;position:relative;top:50%;transform:translateY(-50%)}.underline[data-v-99e25afe]{border-bottom:1px solid #e5e5e5}";
 styleInject(css_248z$F);
 
 function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier /* server only */, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
@@ -136,7 +136,7 @@ var __vue_render__$S = function () {
   return _c('div', {
     staticClass: "dp-title",
     class: {
-      underline: _vm.showUnderLine
+      underline: _vm.showUnderline
     }
   }, [_c('div', {
     staticClass: "dp-title__text"
@@ -147,7 +147,7 @@ var __vue_staticRenderFns__$S = [];
 /* style */
 const __vue_inject_styles__$S = undefined;
 /* scoped */
-const __vue_scope_id__$S = "data-v-45fe4e81";
+const __vue_scope_id__$S = "data-v-99e25afe";
 /* module identifier */
 const __vue_module_identifier__$S = undefined;
 /* functional template */
@@ -224,7 +224,7 @@ const __vue_component__$R = /*#__PURE__*/normalizeComponent({
 var script$P = {
   props: {
     title: String,
-    showUnderLine: {
+    showUnderline: {
       type: Boolean,
       default: true
     },
@@ -239,7 +239,7 @@ var script$P = {
   }
 };
 
-var css_248z$D = ".dptitle_wrapper[data-v-57819a00] .dp-title.l2 .dp-title__text{font-size:13px;color:#303133}.dptitle_wrapper[data-v-57819a00] .dp-title.l2 .dp-title__text::before{background-color:rgba(47,99,185,.4);height:10px;width:3px}";
+var css_248z$D = ".dptitle_wrapper[data-v-d721cc40] .dp-title.l2 .dp-title__text{font-size:13px;color:#303133}.dptitle_wrapper[data-v-d721cc40] .dp-title.l2 .dp-title__text::before{background-color:rgba(47,99,185,.4);height:10px;width:3px}";
 styleInject(css_248z$D);
 
 /* script */
@@ -255,7 +255,7 @@ var __vue_render__$Q = function () {
     class: _vm.size,
     attrs: {
       "text": _vm.title,
-      "showUnderLine": _vm.showUnderLine
+      "showUnderline": _vm.showUnderline
     }
   }) : _vm._e(), _vm._v(" "), _vm.size == 'l3' ? _c('DpSubtitle', {
     attrs: {
@@ -268,7 +268,7 @@ var __vue_staticRenderFns__$Q = [];
 /* style */
 const __vue_inject_styles__$Q = undefined;
 /* scoped */
-const __vue_scope_id__$Q = "data-v-57819a00";
+const __vue_scope_id__$Q = "data-v-d721cc40";
 /* module identifier */
 const __vue_module_identifier__$Q = undefined;
 /* functional template */
