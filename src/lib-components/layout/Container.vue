@@ -51,7 +51,7 @@ export default {
     },
     asideLeftMaxWidth: {
       type: String,
-      default: 'auto'
+      default: '345px'
     },
     asideRightWidth: {
       type: String,
