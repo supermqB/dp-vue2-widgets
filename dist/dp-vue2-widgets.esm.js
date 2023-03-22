@@ -23904,7 +23904,7 @@ var script$e = {
   }
 };
 
-var css_248z$9 = ".tree-wrap[data-v-d9a1e2d8]{height:100%;overflow-x:hidden;overflow-y:auto}.tree-wrap .tree-node[data-v-d9a1e2d8]{width:100%;height:100%;display:flex;justify-content:space-between;align-items:center;box-sizing:border-box;font-size:13px;padding-right:6px;overflow:hidden}.tree-wrap .tree-node .content-left[data-v-d9a1e2d8]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-wrap .tree-node .content-left .blank[data-v-d9a1e2d8]{width:5px;height:5px;border-radius:5px;margin-right:1px}.tree-wrap .tree-node .content-left .blank.red-circle[data-v-d9a1e2d8]{background-color:#f56c6c}.tree-wrap .tree-node .content-left .label[data-v-d9a1e2d8]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-wrap .tree-node .content-right[data-v-d9a1e2d8]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-wrap .tree-node .content-right .el-button[data-v-d9a1e2d8],.tree-wrap .tree-node .content-right .el-link[data-v-d9a1e2d8],.tree-wrap .tree-node .content-right i[data-v-d9a1e2d8],.tree-wrap .tree-node .content-right img[data-v-d9a1e2d8]{margin-left:10px}.tree-wrap.tree-list[data-v-d9a1e2d8]  .el-tree-node__expand-icon{display:none}.tree-wrap.tree-list .tree-node[data-v-d9a1e2d8]{padding:0 12px}.tree-wrap.tree-list.tree-red-dot .tree-node[data-v-d9a1e2d8]{padding:0 6px}.tree-wrap.tree-red-dot[data-v-d9a1e2d8]  .el-tree-node__expand-icon{margin:0 2px 0 6px}[data-v-d9a1e2d8] .el-tree-node .el-tree-node__content{height:36px;position:relative}[data-v-d9a1e2d8] .el-tree-node .el-tree-node__expand-icon{padding:0;margin:0 4px 0 6px}[data-v-d9a1e2d8] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important;color:#303133;font-weight:700}[data-v-d9a1e2d8] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}";
+var css_248z$9 = ".tree-wrap[data-v-4127dcb6]{height:100%;overflow-x:hidden;overflow-y:auto}.tree-wrap .tree-node[data-v-4127dcb6]{width:100%;height:100%;display:flex;justify-content:space-between;align-items:center;box-sizing:border-box;font-size:13px;padding-right:6px;overflow:hidden}.tree-wrap .tree-node .content-left[data-v-4127dcb6]{flex:1;display:flex;align-items:center;margin-right:10px;overflow:hidden}.tree-wrap .tree-node .content-left .blank[data-v-4127dcb6]{width:5px;height:5px;border-radius:5px;margin-right:1px}.tree-wrap .tree-node .content-left .blank.red-circle[data-v-4127dcb6]{background-color:#f56c6c}.tree-wrap .tree-node .content-left .label[data-v-4127dcb6]{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-wrap .tree-node .content-right[data-v-4127dcb6]{min-width:10px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden}.tree-wrap .tree-node .content-right .el-button[data-v-4127dcb6],.tree-wrap .tree-node .content-right .el-link[data-v-4127dcb6],.tree-wrap .tree-node .content-right i[data-v-4127dcb6],.tree-wrap .tree-node .content-right img[data-v-4127dcb6]{margin-left:10px}.tree-wrap.tree-list[data-v-4127dcb6]  .el-tree-node__expand-icon{display:none}.tree-wrap.tree-list .tree-node[data-v-4127dcb6]{padding:0 12px}.tree-wrap.tree-list.tree-red-dot .tree-node[data-v-4127dcb6]{padding:0 6px}.tree-wrap.tree-red-dot[data-v-4127dcb6]  .el-tree-node__expand-icon{margin:0 2px 0 6px}[data-v-4127dcb6] .el-tree-node .el-tree-node__content{height:36px;position:relative}[data-v-4127dcb6] .el-tree-node .el-tree-node__expand-icon{padding:0;margin:0 4px 0 6px}[data-v-4127dcb6] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important;color:#303133;font-weight:700}[data-v-4127dcb6] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}";
 styleInject(css_248z$9);
 
 /* script */
@@ -23948,7 +23948,10 @@ var __vue_render__$e = function () {
             'red-circle': data.state
           }]
         }) : _vm._e(), _vm._v(" "), _c('span', {
-          staticClass: "label"
+          staticClass: "label",
+          attrs: {
+            "title": data.label
+          }
         }, [_vm._v(_vm._s(data.label))])]), _vm._v(" "), _c('div', {
           staticClass: "content-right",
           style: {
@@ -23982,7 +23985,7 @@ var __vue_staticRenderFns__$e = [];
 /* style */
 const __vue_inject_styles__$e = undefined;
 /* scoped */
-const __vue_scope_id__$e = "data-v-d9a1e2d8";
+const __vue_scope_id__$e = "data-v-4127dcb6";
 /* module identifier */
 const __vue_module_identifier__$e = undefined;
 /* functional template */

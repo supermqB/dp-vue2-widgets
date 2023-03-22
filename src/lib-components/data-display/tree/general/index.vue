@@ -21,7 +21,7 @@
           v-if="showState"
           :class="['blank', { 'red-circle': data.state }]"
         ></span>
-        <span class="label">{{ data.label }}</span>
+        <span class="label" :title="data.label">{{ data.label }}</span>
       </div>
       <div class="content-right" :style="{ width: slotWidth }">
         <span v-if="data.number !== undefined && data.number !== null">{{
