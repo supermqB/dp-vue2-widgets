@@ -2,7 +2,7 @@
   <el-dialog
     :custom-class="customClass"
     :visible.sync="isOpen"
-    class="dp_dialog"
+    class="dpui_dialog"
     :top="top"
     :close-on-click-modal="false"
     :append-to-body="appendToBody"
@@ -83,14 +83,40 @@ export default {
 }
 </script>
 <style lang="scss">
-.dpui_dialogTitle {
-  height: 23px !important;
-  position: relative;
-  bottom: 4px;
-  .dp-subtitle__text {
-    font-size: 15px;
-    top: 5px;
-    color: #333;
+.dpui_dialog {
+  .el-dialog__header {
+    padding: 8px 16px 11px;
+    border-bottom: 1px solid #e5e5e5;
+    height: 46px;
+    box-sizing: border-box;
+    .dp-title.underline {
+      border-bottom: unset;
+    }
+  }
+  .el-dialog__headerbtn {
+    top: 12px;
+    right: 12px;
+  }
+  .dpui_dialogTitle {
+    height: 23px !important;
+    position: relative;
+    bottom: 4px;
+    .dp-subtitle__text {
+      font-size: 15px;
+      top: 5px;
+      color: #333;
+    }
+  }
+  .el-dialog__body {
+    padding: 20px 24px;
+  }
+  .el-dialog__footer {
+    height: 40px;
+    border-top: 1px solid #e5e5e5;
+    padding: 6px 16px;
+    .el-button + .el-button {
+      margin-left: 6px;
+    }
   }
 }
 </style>
