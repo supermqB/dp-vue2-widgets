@@ -114,6 +114,10 @@ export default {
     height: 40px;
     border-top: 1px solid #e5e5e5;
     padding: 6px 16px;
+    .dialog-footer {
+      display: flex;
+      justify-content: flex-end;
+    }
     .el-button + .el-button {
       margin-left: 6px;
     }

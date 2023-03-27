@@ -18811,7 +18811,7 @@ var script$I = {
   }
 };
 
-var css_248z$w = ".dpui_dialog .el-dialog__header{padding:8px 16px 11px;border-bottom:1px solid #e5e5e5;height:46px;box-sizing:border-box}.dpui_dialog .el-dialog__header .dp-title.underline{border-bottom:unset}.dpui_dialog .el-dialog__headerbtn{top:12px;right:12px}.dpui_dialog .dpui_dialogTitle{height:23px!important;position:relative;bottom:4px}.dpui_dialog .dpui_dialogTitle .dp-subtitle__text{font-size:15px;top:5px;color:#333}.dpui_dialog .el-dialog__body{padding:20px 24px}.dpui_dialog .el-dialog__footer{height:40px;border-top:1px solid #e5e5e5;padding:6px 16px}.dpui_dialog .el-dialog__footer .el-button+.el-button{margin-left:6px}";
+var css_248z$w = ".dpui_dialog .el-dialog__header{padding:8px 16px 11px;border-bottom:1px solid #e5e5e5;height:46px;box-sizing:border-box}.dpui_dialog .el-dialog__header .dp-title.underline{border-bottom:unset}.dpui_dialog .el-dialog__headerbtn{top:12px;right:12px}.dpui_dialog .dpui_dialogTitle{height:23px!important;position:relative;bottom:4px}.dpui_dialog .dpui_dialogTitle .dp-subtitle__text{font-size:15px;top:5px;color:#333}.dpui_dialog .el-dialog__body{padding:20px 24px}.dpui_dialog .el-dialog__footer{height:40px;border-top:1px solid #e5e5e5;padding:6px 16px}.dpui_dialog .el-dialog__footer .dialog-footer{display:flex;justify-content:flex-end}.dpui_dialog .el-dialog__footer .el-button+.el-button{margin-left:6px}";
 styleInject(css_248z$w);
 
 /* script */
