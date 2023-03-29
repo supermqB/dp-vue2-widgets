@@ -17,13 +17,13 @@ import store from './store'
 
 Vue.config.productionTip = false
 
-import { productStyle } from '@/entry'
-const {
-  utils: { permission }
-} = productStyle
-router.beforeEach((to, from, next) =>
-  permission.beforeEach({ to, from, next }, store)
-)
+// import { productStyle } from '@/entry'
+// const {
+//   utils: { permission }
+// } = productStyle
+// router.beforeEach((to, from, next) =>
+//   permission.beforeEach({ to, from, next }, store)
+// )
 
 new Vue({
   router,

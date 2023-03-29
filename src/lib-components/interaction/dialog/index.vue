@@ -108,6 +108,16 @@ $spacing16: 16px;
       color: #303133;
       font-weight: 600;
       line-height: normal;
+
+      &:before {
+        content: ' ';
+        // position: absolute;
+        display: inline-block;
+        width: 4px;
+        height: 13px;
+        margin-right: 4px;
+        background-color: #2f63b9;
+      }
     }
     .el-dialog__headerbtn {
       top: $spacing16;

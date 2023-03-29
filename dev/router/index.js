@@ -170,7 +170,7 @@ const router = generate({
   base: process.env.BASE_URL // router BaseUrl
 })
 
-if (productStyle) {
+if (isProductStyle) {
   router.beforeEach((to, from, next) =>
     permission.beforeEach({ to, from, next }, store, () => {
       console.log(1)
