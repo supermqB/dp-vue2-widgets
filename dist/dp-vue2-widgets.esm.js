@@ -22694,6 +22694,10 @@ var script$m = {
     hideSearchInput: {
       type: Boolean,
       default: false
+    },
+    showSearchBtn: {
+      type: Boolean,
+      default: true
     }
   },
   data: () => {
@@ -22754,7 +22758,7 @@ var script$m = {
   }
 };
 
-var css_248z$f = ".dpui_searchBar[data-v-dadaeec0]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-dadaeec0]  .el-form{display:flex}.dpui_searchBar[data-v-dadaeec0]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}";
+var css_248z$f = ".dpui_searchBar[data-v-f5e21e78]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-f5e21e78]  .el-form{display:flex}.dpui_searchBar[data-v-f5e21e78]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}";
 styleInject(css_248z$f);
 
 /* script */
@@ -22771,7 +22775,7 @@ var __vue_render__$m = function () {
       "configs": _vm.searchFormConfig,
       "model": _vm.searchForm
     }
-  }), _vm._v(" "), _c('dp-icon-button', {
+  }), _vm._v(" "), _vm.showSearchBtn ? _c('dp-icon-button', {
     staticClass: "searchBtn",
     attrs: {
       "text": "检索",
@@ -22780,14 +22784,14 @@ var __vue_render__$m = function () {
     on: {
       "click": _vm.onSearch
     }
-  })], 1);
+  }) : _vm._e()], 1);
 };
 var __vue_staticRenderFns__$m = [];
 
 /* style */
 const __vue_inject_styles__$m = undefined;
 /* scoped */
-const __vue_scope_id__$m = "data-v-dadaeec0";
+const __vue_scope_id__$m = "data-v-f5e21e78";
 /* module identifier */
 const __vue_module_identifier__$m = undefined;
 /* functional template */
