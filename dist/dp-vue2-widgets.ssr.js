@@ -23022,6 +23022,10 @@ var script$m = {
     hideSearchInput: {
       type: Boolean,
       default: false
+    },
+    showSearchBtn: {
+      type: Boolean,
+      default: true
     }
   },
   data: function data() {
@@ -23095,7 +23099,7 @@ var __vue_render__$m = function __vue_render__() {
       "configs": _vm.searchFormConfig,
       "model": _vm.searchForm
     }
-  }), _vm._ssrNode(" "), _c('dp-icon-button', {
+  }), _vm._ssrNode(" "), _vm.showSearchBtn ? _c('dp-icon-button', {
     staticClass: "searchBtn",
     attrs: {
       "text": "检索",
@@ -23104,23 +23108,23 @@ var __vue_render__$m = function __vue_render__() {
     on: {
       "click": _vm.onSearch
     }
-  })], 2);
+  }) : _vm._e()], 2);
 };
 var __vue_staticRenderFns__$m = [];
 
 /* style */
 var __vue_inject_styles__$m = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-dadaeec0_0", {
-    source: ".dpui_searchBar[data-v-dadaeec0]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-dadaeec0]  .el-form{display:flex}.dpui_searchBar[data-v-dadaeec0]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}",
+  inject("data-v-f5e21e78_0", {
+    source: ".dpui_searchBar[data-v-f5e21e78]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-f5e21e78]  .el-form{display:flex}.dpui_searchBar[data-v-f5e21e78]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$m = "data-v-dadaeec0";
+var __vue_scope_id__$m = "data-v-f5e21e78";
 /* module identifier */
-var __vue_module_identifier__$m = "data-v-dadaeec0";
+var __vue_module_identifier__$m = "data-v-f5e21e78";
 /* functional template */
 var __vue_is_functional_template__$m = false;
 /* style inject shadow dom */

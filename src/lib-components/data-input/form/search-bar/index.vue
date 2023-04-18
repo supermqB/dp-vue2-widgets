@@ -1,7 +1,7 @@
 <template>
   <div class="dpui_searchBar">
     <dp-form :configs="searchFormConfig" :model="searchForm" />
-    <dp-icon-button
+    <dp-icon-button v-if="showSearchBtn"
       text="检索"
       class="searchBtn"
       :icon="searchIcon"
@@ -37,6 +37,10 @@ export default {
     hideSearchInput: {
       type: Boolean,
       default: false
+    },
+    showSearchBtn: {
+      type: Boolean,
+      default: true
     }
   },
   data: () => {
