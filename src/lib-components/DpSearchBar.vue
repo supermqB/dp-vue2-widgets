@@ -5,6 +5,7 @@
       >检索<span class="filter"></span
     ></el-button> -->
     <dp-icon-button
+      v-if="showSearchBtn"
       text="检索"
       class="searchBtn"
       :icon="searchIcon"
@@ -33,6 +34,10 @@ export default {
     searchForm: {
       type: Object,
       default: () => ({})
+    },
+    showSearchBtn: {
+      type: Boolean,
+      default: true
     }
   },
   data: () => {
