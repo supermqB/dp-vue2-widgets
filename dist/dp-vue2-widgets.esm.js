@@ -622,7 +622,7 @@ var script$N = {
   }
 };
 
-var css_248z$B = ".el_table_wrapper[data-v-8db2732c]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-8db2732c]{flex-grow:1;padding:0 6px;box-sizing:content-box}";
+var css_248z$B = ".el_table_wrapper[data-v-596cac1a]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-596cac1a]{flex-grow:1;padding:0 6px;box-sizing:content-box}";
 styleInject(css_248z$B);
 
 var css_248z$A = ".el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}";
@@ -710,7 +710,6 @@ var __vue_render__$O = function () {
               tag: "component",
               nativeOn: {
                 "click": function ($event) {
-                  $event.preventDefault();
                   return _vm.rowAction({
                     rowIdx: rowIdx,
                     row: row,
@@ -777,7 +776,7 @@ var __vue_staticRenderFns__$O = [];
 /* style */
 const __vue_inject_styles__$O = undefined;
 /* scoped */
-const __vue_scope_id__$O = "data-v-8db2732c";
+const __vue_scope_id__$O = "data-v-596cac1a";
 /* module identifier */
 const __vue_module_identifier__$O = undefined;
 /* functional template */

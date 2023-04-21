@@ -43,7 +43,7 @@
           v-for="col in tableConfig"
           v-bind="col.colConfig"
           :key="col.colConfig.property"
-          :show-overflow-tooltip=" !col.colConfig.hideTooltip"
+          :show-overflow-tooltip="!col.colConfig.hideTooltip"
         >
           <template v-if="col.header" slot="header">
             <span :style="{ 'margin-right': '5px' }">{{
@@ -67,7 +67,7 @@
               :is="action.type"
               v-model="row[action.id]"
               v-bind="typeProps(action.typeProps, row)"
-              @click.native.prevent="
+              @click.native="
                 rowAction({ rowIdx, row, column }, action.callback)
               "
             >
