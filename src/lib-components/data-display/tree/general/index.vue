@@ -2,7 +2,14 @@
   <el-tree
     ref="dpTree"
     v-bind="$attrs"
-    :class="['tree-wrap', { 'tree-red-dot': showState, 'tree-list': isList }]"
+    :class="[
+      'tree-wrap',
+      {
+        'tree-red-dot': showState,
+        'tree-list': isList,
+        flatItems: !hasDescendant
+      }
+    ]"
     :node-key="nodeKey"
     :data="treeList"
     :current-node-key="curNodeKey"
@@ -197,6 +204,9 @@ export default {
       }
 
       return buildTree(this.data)
+    },
+    hasDescendant() {
+      return this.data.some(item => item.children && item.children.length)
     }
   },
   watch: {
@@ -365,13 +375,20 @@ export default {
     padding: 0;
     margin: 0 4px 0 6px;
   }
-  &.is-current > .el-tree-node__content {
+  /*   &.is-current > .el-tree-node__content {
     background-color: #f2f6ff !important;
     color: #303133;
     font-weight: bold;
-  }
+  } */
   &:focus > .el-tree-node__content {
     background-color: transparent;
   }
+}
+
+::v-deep.el-tree.flatItems
+  .el-tree-node
+  .el-tree-node__content
+  .el-tree-node__expand-icon {
+  width: 0px;
 }
 </style>

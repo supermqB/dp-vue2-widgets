@@ -1,7 +1,6 @@
 <template>
   <div class="dpui_sideCatalog_wrapper">
     <el-tree
-      class="treeWrap"
       ref="sideTree"
       node-key="id"
       :current-node-key="currentNodeKey"
@@ -9,6 +8,7 @@
       :data="treeList"
       :expand-on-click-node="false"
       :default-expand-all="defaultExpandAll"
+      :class="['treeWrap', { flatItems: !hasDescendant }]"
       @node-click="handleNodeClick"
       :indent="11"
       highlight-current
@@ -63,7 +63,7 @@ export default {
       type: String,
       default: ''
     },
-    immediatelyFlag:{
+    immediatelyFlag: {
       type: Boolean,
       default: true
     },
@@ -83,6 +83,9 @@ export default {
   computed: {
     treeList() {
       return reMapTree(this.data, reMapFunc)
+    },
+    hasDescendant() {
+      return this.data.some(item => item.children && item.children.length)
     }
   },
   methods: {
@@ -236,6 +239,9 @@ export default {
 ::v-deep .el-tree-node__content {
   height: 36px;
   position: relative;
+  .treeNode .label .blank {
+    display: none;
+  }
 }
 
 ::v-deep .el-tree-node__content > .el-tree-node__expand-icon {
@@ -252,5 +258,13 @@ export default {
 }
 ::v-deep .el-tree-node:focus > .el-tree-node__content {
   background-color: transparent;
+}
+
+::v-deep
+  .el-tree.flatItems
+  .el-tree-node
+  .el-tree-node__content
+  .el-tree-node__expand-icon {
+  width: 0px;
 }
 </style>
