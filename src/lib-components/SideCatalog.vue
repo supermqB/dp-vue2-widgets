@@ -239,9 +239,6 @@ export default {
 ::v-deep .el-tree-node__content {
   height: 36px;
   position: relative;
-  .treeNode .label .blank {
-    display: none;
-  }
 }
 
 ::v-deep .el-tree-node__content > .el-tree-node__expand-icon {
