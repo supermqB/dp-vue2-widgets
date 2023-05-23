@@ -375,11 +375,11 @@ export default {
     padding: 0;
     margin: 0 4px 0 6px;
   }
-  /*   &.is-current > .el-tree-node__content {
+  &.is-current > .el-tree-node__content {
     background-color: #f2f6ff !important;
-    color: #303133;
-    font-weight: bold;
-  } */
+    /*     color: #303133;
+    font-weight: bold; */
+  }
   &:focus > .el-tree-node__content {
     background-color: transparent;
   }
