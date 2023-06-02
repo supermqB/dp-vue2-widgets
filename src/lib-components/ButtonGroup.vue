@@ -86,13 +86,13 @@ export default {
     line-height: 24px;
     white-space: nowrap;
     .el-button + .el-button {
-      margin-left: 6px;
+      margin-left: 4px;
     }
   }
   .group + .group {
     border-left: 1px solid #95a8c7;
-    padding-left: 6px;
-    margin-left: 6px;
+    padding-left: 4px;
+    margin-left: 4px;
   }
 }
 </style>

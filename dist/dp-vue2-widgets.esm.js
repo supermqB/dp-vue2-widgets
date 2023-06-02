@@ -344,7 +344,7 @@ var script$O = {
   }
 };
 
-var css_248z$C = ".btn_grp_wrapper{display:flex;padding:0 6px;height:100%;align-items:center}.btn_grp_wrapper .group{height:28px;line-height:24px;white-space:nowrap}.btn_grp_wrapper .group .el-button+.el-button{margin-left:6px}.btn_grp_wrapper .group+.group{border-left:1px solid #95a8c7;padding-left:6px;margin-left:6px}";
+var css_248z$C = ".btn_grp_wrapper{display:flex;padding:0 6px;height:100%;align-items:center}.btn_grp_wrapper .group{height:28px;line-height:24px;white-space:nowrap}.btn_grp_wrapper .group .el-button+.el-button{margin-left:4px}.btn_grp_wrapper .group+.group{border-left:1px solid #95a8c7;padding-left:4px;margin-left:4px}";
 styleInject(css_248z$C);
 
 /* script */
