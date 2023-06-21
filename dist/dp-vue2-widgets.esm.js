@@ -18711,7 +18711,7 @@ var script$J = {
   }
 };
 
-var css_248z$x = "ul[data-v-52bb8dcc]{padding:3px 1px 5px 12px;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:center;font-size:12px}ul li[data-v-52bb8dcc]{padding:6px;width:50%;max-width:150px;display:flex;align-items:center}ul li .label[data-v-52bb8dcc]{color:#999}ul li .value[data-v-52bb8dcc]{padding-left:6px}ul li .numerator[data-v-52bb8dcc]{color:#2f63b9}ul li .unit[data-v-52bb8dcc]{margin-left:3px}";
+var css_248z$x = "ul[data-v-7032293c]{padding:3px 1px 5px 12px;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:center;font-size:12px;white-space:nowrap}ul li[data-v-7032293c]{padding:6px;width:50%;max-width:150px;display:flex;align-items:center}ul li .label[data-v-7032293c]{color:#999}ul li .value[data-v-7032293c]{padding-left:6px}ul li .numerator[data-v-7032293c]{color:#2f63b9}ul li .unit[data-v-7032293c]{margin-left:3px}";
 styleInject(css_248z$x);
 
 /* script */
@@ -18740,7 +18740,7 @@ var __vue_staticRenderFns__$K = [];
 /* style */
 const __vue_inject_styles__$K = undefined;
 /* scoped */
-const __vue_scope_id__$K = "data-v-52bb8dcc";
+const __vue_scope_id__$K = "data-v-7032293c";
 /* module identifier */
 const __vue_module_identifier__$K = undefined;
 /* functional template */

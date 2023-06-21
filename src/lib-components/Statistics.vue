@@ -66,6 +66,7 @@ ul {
   justify-content: flex-start;
   align-items: center;
   font-size: 12px;
+  white-space: nowrap;
   li {
     padding: 6px;
     width: 50%;
@@ -76,7 +77,7 @@ ul {
       color: #999999;
     }
     .value {
-        padding-left: 6px;
+      padding-left: 6px;
     }
     .numerator {
       color: #2f63b9;

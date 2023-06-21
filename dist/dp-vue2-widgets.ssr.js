@@ -19208,8 +19208,8 @@ var __vue_render__$K = function __vue_render__() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c('div', [_vm._t("default"), _vm._ssrNode(" <ul data-v-52bb8dcc>" + _vm._ssrList(_vm.options, function (item, index) {
-    return "<li data-v-52bb8dcc><span class=\"label\" data-v-52bb8dcc>" + _vm._ssrEscape(_vm._s(item.label + ":")) + "</span> <span class=\"value\" data-v-52bb8dcc>" + (item['data'] ? "<span data-v-52bb8dcc><span class=\"numerator\" data-v-52bb8dcc>" + _vm._ssrEscape(_vm._s("" + _vm.unitFmt(item['data'][0]))) + "</span> " + (item['data'][1] ? "<span data-v-52bb8dcc>" + _vm._ssrEscape(_vm._s("/" + _vm.unitFmt(item['data'][1]))) + "</span>" : "<!---->") + "</span>" : "<span data-v-52bb8dcc></span>") + " <span class=\"unit\" data-v-52bb8dcc>" + _vm._ssrEscape(_vm._s(item.unit)) + "</span></span></li>";
+  return _c('div', [_vm._t("default"), _vm._ssrNode(" <ul data-v-7032293c>" + _vm._ssrList(_vm.options, function (item, index) {
+    return "<li data-v-7032293c><span class=\"label\" data-v-7032293c>" + _vm._ssrEscape(_vm._s(item.label + ":")) + "</span> <span class=\"value\" data-v-7032293c>" + (item['data'] ? "<span data-v-7032293c><span class=\"numerator\" data-v-7032293c>" + _vm._ssrEscape(_vm._s("" + _vm.unitFmt(item['data'][0]))) + "</span> " + (item['data'][1] ? "<span data-v-7032293c>" + _vm._ssrEscape(_vm._s("/" + _vm.unitFmt(item['data'][1]))) + "</span>" : "<!---->") + "</span>" : "<span data-v-7032293c></span>") + " <span class=\"unit\" data-v-7032293c>" + _vm._ssrEscape(_vm._s(item.unit)) + "</span></span></li>";
   }) + "</ul>")], 2);
 };
 var __vue_staticRenderFns__$K = [];
@@ -19217,16 +19217,16 @@ var __vue_staticRenderFns__$K = [];
 /* style */
 var __vue_inject_styles__$K = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-52bb8dcc_0", {
-    source: "ul[data-v-52bb8dcc]{padding:3px 1px 5px 12px;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:center;font-size:12px}ul li[data-v-52bb8dcc]{padding:6px;width:50%;max-width:150px;display:flex;align-items:center}ul li .label[data-v-52bb8dcc]{color:#999}ul li .value[data-v-52bb8dcc]{padding-left:6px}ul li .numerator[data-v-52bb8dcc]{color:#2f63b9}ul li .unit[data-v-52bb8dcc]{margin-left:3px}",
+  inject("data-v-7032293c_0", {
+    source: "ul[data-v-7032293c]{padding:3px 1px 5px 12px;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:center;font-size:12px;white-space:nowrap}ul li[data-v-7032293c]{padding:6px;width:50%;max-width:150px;display:flex;align-items:center}ul li .label[data-v-7032293c]{color:#999}ul li .value[data-v-7032293c]{padding-left:6px}ul li .numerator[data-v-7032293c]{color:#2f63b9}ul li .unit[data-v-7032293c]{margin-left:3px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$K = "data-v-52bb8dcc";
+var __vue_scope_id__$K = "data-v-7032293c";
 /* module identifier */
-var __vue_module_identifier__$K = "data-v-52bb8dcc";
+var __vue_module_identifier__$K = "data-v-7032293c";
 /* functional template */
 var __vue_is_functional_template__$K = false;
 /* style inject shadow dom */
