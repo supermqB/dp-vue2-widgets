@@ -14,12 +14,13 @@
       <Title :title="title" class="dpui_dialogTitle" />
     </span>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="isOpen = false">取消</el-button>
+      <el-button v-show="!!cancelText" @click="isOpen = false">{{cancelText}}</el-button>
       <el-button
         type="primary"
+        v-show="!!confirmText"
         @click="finishHandler"
         :disabled="!enableConfirm"
-        >确定</el-button
+        >{{confirmText}}</el-button
       >
     </span>
   </el-dialog>
@@ -60,6 +61,14 @@ export default {
     top: {
       type: String,
       default: '15vh'
+    },
+    cancelText: {
+      type: String,
+      default: '取消'
+    },
+    confirmText: {
+      type: String,
+      default: '确定'
     }
   },
   data() {
