@@ -18791,6 +18791,14 @@ var script$I = {
     top: {
       type: String,
       default: '15vh'
+    },
+    cancelText: {
+      type: String,
+      default: '取消'
+    },
+    confirmText: {
+      type: String,
+      default: '确定'
     }
   },
   data() {
@@ -18860,12 +18868,24 @@ var __vue_render__$J = function () {
     },
     slot: "footer"
   }, [_c('el-button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: !!_vm.cancelText,
+      expression: "!!cancelText"
+    }],
     on: {
       "click": function ($event) {
         _vm.isOpen = false;
       }
     }
-  }, [_vm._v("取消")]), _vm._v(" "), _c('el-button', {
+  }, [_vm._v(_vm._s(_vm.cancelText))]), _vm._v(" "), _c('el-button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: !!_vm.confirmText,
+      expression: "!!confirmText"
+    }],
     attrs: {
       "type": "primary",
       "disabled": !_vm.enableConfirm
@@ -18873,7 +18893,7 @@ var __vue_render__$J = function () {
     on: {
       "click": _vm.finishHandler
     }
-  }, [_vm._v("确定")])], 1)], 2);
+  }, [_vm._v(_vm._s(_vm.confirmText))])], 1)], 2);
 };
 var __vue_staticRenderFns__$J = [];
 
