@@ -51,9 +51,10 @@
             }}</span>
             <el-tooltip
               effect="dark"
-              :content="col.header.content"
               placement="top"
+              popper-class="table_header_tip"
             >
+              <div slot="content" v-html="col.header.content"></div>
               <i class="el-icon-warning-outline"></i>
             </el-tooltip>
           </template>
@@ -238,6 +239,9 @@ export default {
 </style>
 
 <style lang="scss">
+.el-tooltip__popper.table_header_tip > div {
+  line-height: 18px;
+}
 .el-table__body tr.current-row > td {
   background-color: #f2f6ff !important;
 }

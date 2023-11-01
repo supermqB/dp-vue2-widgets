@@ -498,6 +498,7 @@ const __vue_component__$P = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
 
 var script$N = {
   props: {
@@ -622,10 +623,10 @@ var script$N = {
   }
 };
 
-var css_248z$B = ".el_table_wrapper[data-v-596cac1a]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-596cac1a]{flex-grow:1;padding:0 6px;box-sizing:content-box}";
+var css_248z$B = ".el_table_wrapper[data-v-1b4bdd4c]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-1b4bdd4c]{flex-grow:1;padding:0 6px;box-sizing:content-box}";
 styleInject(css_248z$B);
 
-var css_248z$A = ".el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}";
+var css_248z$A = ".el-tooltip__popper.table_header_tip>div{line-height:18px}.el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}";
 styleInject(css_248z$A);
 
 /* script */
@@ -737,10 +738,18 @@ var __vue_render__$O = function () {
     }, [_vm._v(_vm._s(col.header.name || col.colConfig.label))]), _vm._v(" "), _c('el-tooltip', {
       attrs: {
         "effect": "dark",
-        "content": col.header.content,
-        "placement": "top"
+        "placement": "top",
+        "popper-class": "table_header_tip"
       }
-    }, [_c('i', {
+    }, [_c('div', {
+      attrs: {
+        "slot": "content"
+      },
+      domProps: {
+        "innerHTML": _vm._s(col.header.content)
+      },
+      slot: "content"
+    }), _vm._v(" "), _c('i', {
       staticClass: "el-icon-warning-outline"
     })])], 1) : _vm._e()], 2);
   }), _vm._v(" "), _vm._t("default")], 2)], 1), _vm._v(" "), _c('div', {
@@ -776,7 +785,7 @@ var __vue_staticRenderFns__$O = [];
 /* style */
 const __vue_inject_styles__$O = undefined;
 /* scoped */
-const __vue_scope_id__$O = "data-v-596cac1a";
+const __vue_scope_id__$O = "data-v-1b4bdd4c";
 /* module identifier */
 const __vue_module_identifier__$O = undefined;
 /* functional template */
