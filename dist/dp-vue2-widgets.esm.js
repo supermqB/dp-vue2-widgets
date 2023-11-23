@@ -338,7 +338,6 @@ var script$O = {
   },
   methods: {
     btnClickHandler(name) {
-      console.log(name);
       this.$emit(`${name}Clicked`);
     }
   }

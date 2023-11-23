@@ -825,7 +825,6 @@ var script$O = {
   },
   methods: {
     btnClickHandler: function btnClickHandler(name) {
-      console.log(name);
       this.$emit("".concat(name, "Clicked"));
     }
   }
@@ -861,7 +860,7 @@ var __vue_staticRenderFns__$P = [];
 /* style */
 var __vue_inject_styles__$P = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-ec2449ac_0", {
+  inject("data-v-8296429e_0", {
     source: ".btn_grp_wrapper{display:flex;padding:0 6px;height:100%;align-items:center}.btn_grp_wrapper .group{height:28px;line-height:24px;white-space:nowrap}.btn_grp_wrapper .group .el-button+.el-button{margin-left:4px}.btn_grp_wrapper .group+.group{border-left:1px solid #95a8c7;padding-left:4px;margin-left:4px}",
     map: undefined,
     media: undefined
@@ -870,7 +869,7 @@ var __vue_inject_styles__$P = function __vue_inject_styles__(inject) {
 /* scoped */
 var __vue_scope_id__$P = undefined;
 /* module identifier */
-var __vue_module_identifier__$P = "data-v-ec2449ac";
+var __vue_module_identifier__$P = "data-v-8296429e";
 /* functional template */
 var __vue_is_functional_template__$P = false;
 /* style inject shadow dom */
