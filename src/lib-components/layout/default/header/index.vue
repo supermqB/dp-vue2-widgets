@@ -24,7 +24,6 @@ export default {
 <style lang="scss" scoped>
 .header {
   height: 100%;
-  // background: #001529;
   background: rgb(47, 99, 185);
   display: flex;
   justify-content: space-between;
@@ -36,12 +35,12 @@ export default {
   }
   &-user {
     justify-content: flex-end;
+    padding: 0 10px;
     width: 200px;
     flex: none;
   }
   &-menu {
     flex-grow: 1;
-    // flex-basis: 228 288;
     overflow: auto;
   }
 }

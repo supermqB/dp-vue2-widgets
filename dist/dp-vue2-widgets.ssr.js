@@ -19881,7 +19881,7 @@ var __vue_render__$D = function __vue_render__() {
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c('div', {
-    staticClass: "header-user"
+    staticClass: "user-wrapper"
   }, [_c('el-dropdown', {
     on: {
       "command": _vm.handleCommand
@@ -19889,10 +19889,11 @@ var __vue_render__$D = function __vue_render__() {
   }, [_c('span', {
     staticClass: "el-dropdown-link"
   }, [_c('div', {
-    staticClass: "header-user__avatar"
+    staticClass: "avatar"
   }, [_c('i', {
     staticClass: "el-icon-user-solid"
   })])]), _vm._v(" "), _c('el-dropdown-menu', {
+    staticClass: "header-user-menu",
     attrs: {
       "slot": "dropdown"
     },
@@ -19908,16 +19909,16 @@ var __vue_staticRenderFns__$D = [];
 /* style */
 var __vue_inject_styles__$D = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-6e997556_0", {
-    source: ".header-user[data-v-6e997556]{width:56px;display:flex;align-items:center}.header-user__info[data-v-6e997556]{color:#fff;margin:16px}.header-user__avatar[data-v-6e997556]{width:16px;height:16px;padding:4px;border-radius:50%;margin-right:20px}.header-user__avatar i[data-v-6e997556]{font-size:16px;color:rgba(255,255,255,.7)}",
+  inject("data-v-85c8a50c_0", {
+    source: ".user-wrapper[data-v-85c8a50c]{display:flex;align-items:center}.user-wrapper .avatar[data-v-85c8a50c]{width:16px;height:16px;padding:4px;border-radius:50%}.user-wrapper .avatar i[data-v-85c8a50c]{font-size:16px;color:rgba(255,255,255,.7);cursor:pointer}.header-user-menu[data-v-85c8a50c].el-dropdown-menu{padding:5px 0}.header-user-menu[data-v-85c8a50c] .popper__arrow{left:49px!important}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$D = "data-v-6e997556";
+var __vue_scope_id__$D = "data-v-85c8a50c";
 /* module identifier */
-var __vue_module_identifier__$D = "data-v-6e997556";
+var __vue_module_identifier__$D = "data-v-85c8a50c";
 /* functional template */
 var __vue_is_functional_template__$D = false;
 /* style inject shadow dom */
@@ -19970,16 +19971,16 @@ var __vue_staticRenderFns__$C = [];
 /* style */
 var __vue_inject_styles__$C = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-309b7ca0_0", {
-    source: ".header[data-v-309b7ca0]{height:100%;background:#2f63b9;display:flex;justify-content:space-between}.header-title[data-v-309b7ca0]{justify-content:flex-start;width:280px;flex:none}.header-user[data-v-309b7ca0]{justify-content:flex-end;width:200px;flex:none}.header-menu[data-v-309b7ca0]{flex-grow:1;overflow:auto}",
+  inject("data-v-6f7f6cf7_0", {
+    source: ".header[data-v-6f7f6cf7]{height:100%;background:#2f63b9;display:flex;justify-content:space-between}.header-title[data-v-6f7f6cf7]{justify-content:flex-start;width:280px;flex:none}.header-user[data-v-6f7f6cf7]{justify-content:flex-end;padding:0 10px;width:200px;flex:none}.header-menu[data-v-6f7f6cf7]{flex-grow:1;overflow:auto}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$C = "data-v-309b7ca0";
+var __vue_scope_id__$C = "data-v-6f7f6cf7";
 /* module identifier */
-var __vue_module_identifier__$C = "data-v-309b7ca0";
+var __vue_module_identifier__$C = "data-v-6f7f6cf7";
 /* functional template */
 var __vue_is_functional_template__$C = false;
 /* style inject shadow dom */
