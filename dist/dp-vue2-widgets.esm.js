@@ -18875,33 +18875,35 @@ var __vue_render__$J = function () {
       "slot": "footer"
     },
     slot: "footer"
-  }, [_c('el-button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: !!_vm.cancelText,
-      expression: "!!cancelText"
-    }],
-    on: {
-      "click": function ($event) {
-        _vm.isOpen = false;
+  }, [_vm._t("footer", function () {
+    return [_c('el-button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: !!_vm.cancelText,
+        expression: "!!cancelText"
+      }],
+      on: {
+        "click": function ($event) {
+          _vm.isOpen = false;
+        }
       }
-    }
-  }, [_vm._v(_vm._s(_vm.cancelText))]), _vm._v(" "), _c('el-button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: !!_vm.confirmText,
-      expression: "!!confirmText"
-    }],
-    attrs: {
-      "type": "primary",
-      "disabled": !_vm.enableConfirm
-    },
-    on: {
-      "click": _vm.finishHandler
-    }
-  }, [_vm._v(_vm._s(_vm.confirmText))])], 1)], 2);
+    }, [_vm._v(_vm._s(_vm.cancelText))]), _vm._v(" "), _c('el-button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: !!_vm.confirmText,
+        expression: "!!confirmText"
+      }],
+      attrs: {
+        "type": "primary",
+        "disabled": !_vm.enableConfirm
+      },
+      on: {
+        "click": _vm.finishHandler
+      }
+    }, [_vm._v(_vm._s(_vm.confirmText))])];
+  })], 2)], 2);
 };
 var __vue_staticRenderFns__$J = [];
 

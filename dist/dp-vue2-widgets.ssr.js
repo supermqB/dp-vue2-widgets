@@ -19349,40 +19349,42 @@ var __vue_render__$J = function __vue_render__() {
       "slot": "footer"
     },
     slot: "footer"
-  }, [_c('el-button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: !!_vm.cancelText,
-      expression: "!!cancelText"
-    }],
-    on: {
-      "click": function click($event) {
-        _vm.isOpen = false;
+  }, [_vm._t("footer", function () {
+    return [_c('el-button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: !!_vm.cancelText,
+        expression: "!!cancelText"
+      }],
+      on: {
+        "click": function click($event) {
+          _vm.isOpen = false;
+        }
       }
-    }
-  }, [_vm._v(_vm._s(_vm.cancelText))]), _vm._v(" "), _c('el-button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: !!_vm.confirmText,
-      expression: "!!confirmText"
-    }],
-    attrs: {
-      "type": "primary",
-      "disabled": !_vm.enableConfirm
-    },
-    on: {
-      "click": _vm.finishHandler
-    }
-  }, [_vm._v(_vm._s(_vm.confirmText))])], 1)], 2);
+    }, [_vm._v(_vm._s(_vm.cancelText))]), _vm._v(" "), _c('el-button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: !!_vm.confirmText,
+        expression: "!!confirmText"
+      }],
+      attrs: {
+        "type": "primary",
+        "disabled": !_vm.enableConfirm
+      },
+      on: {
+        "click": _vm.finishHandler
+      }
+    }, [_vm._v(_vm._s(_vm.confirmText))])];
+  })], 2)], 2);
 };
 var __vue_staticRenderFns__$J = [];
 
 /* style */
 var __vue_inject_styles__$J = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-c9c3e328_0", {
+  inject("data-v-0f82a88e_0", {
     source: ".dpui_dialog .el-dialog__header{padding:8px 16px 11px;border-bottom:1px solid #e5e5e5;height:46px;box-sizing:border-box}.dpui_dialog .el-dialog__header .dp-title.underline{border-bottom:unset}.dpui_dialog .el-dialog__headerbtn{top:12px;right:12px}.dpui_dialog .dpui_dialogTitle{height:23px!important;position:relative;bottom:4px}.dpui_dialog .dpui_dialogTitle .dp-subtitle__text{font-size:15px;top:5px;color:#333}.dpui_dialog .el-dialog__body{padding:20px 24px}.dpui_dialog .el-dialog__footer{height:40px;border-top:1px solid #e5e5e5;padding:6px 16px}.dpui_dialog .el-dialog__footer .dialog-footer{display:flex;justify-content:flex-end}.dpui_dialog .el-dialog__footer .el-button+.el-button{margin-left:6px}",
     map: undefined,
     media: undefined
@@ -19391,7 +19393,7 @@ var __vue_inject_styles__$J = function __vue_inject_styles__(inject) {
 /* scoped */
 var __vue_scope_id__$J = undefined;
 /* module identifier */
-var __vue_module_identifier__$J = "data-v-c9c3e328";
+var __vue_module_identifier__$J = "data-v-0f82a88e";
 /* functional template */
 var __vue_is_functional_template__$J = false;
 /* style inject shadow dom */
