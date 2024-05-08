@@ -23070,7 +23070,8 @@ var script$m = {
       searchIcon: img$2,
       lastSearchForm: {
         searchText: ''
-      }
+      },
+      shrunk: true
     };
   },
   computed: {
@@ -23089,6 +23090,19 @@ var script$m = {
         }]);
       }
       return config;
+    },
+    shrinkable: function shrinkable() {
+      return this.searchFormConfig.some(function (cfg) {
+        return cfg.shrinkable != null;
+      });
+    },
+    filteredSearchConfig: function filteredSearchConfig() {
+      if (!this.shrinkable || !this.shrunk) {
+        return this.searchFormConfig;
+      }
+      return this.searchFormConfig.filter(function (cfg) {
+        return !cfg.shrinkable;
+      });
     }
   },
   watch: {
@@ -23119,6 +23133,12 @@ var script$m = {
     onSearch: function onSearch() {
       this.$emit('onSearch', this.lastSearchForm);
       this.$emit('search', this.lastSearchForm);
+    },
+    shrink: function shrink() {
+      this.shrunk = true;
+    },
+    expand: function expand() {
+      this.shrunk = false;
     }
   }
 };/* script */
@@ -23133,7 +23153,7 @@ var __vue_render__$m = function __vue_render__() {
     staticClass: "dpui_searchBar"
   }, [_c('dp-form', {
     attrs: {
-      "configs": _vm.searchFormConfig,
+      "configs": _vm.filteredSearchConfig,
       "model": _vm.searchForm
     }
   }), _vm._ssrNode(" "), _vm.showSearchBtn ? _c('dp-icon-button', {
@@ -23145,23 +23165,23 @@ var __vue_render__$m = function __vue_render__() {
     on: {
       "click": _vm.onSearch
     }
-  }) : _vm._e()], 2);
+  }) : _vm._e(), _vm._ssrNode(" " + (_vm.shrinkable ? "<div class=\"shrink-box\" data-v-121e8d62>" + (_vm.shrunk ? "<div data-v-121e8d62><div class=\"expand-icon icon\" data-v-121e8d62></div></div>" : "<!---->") + " " + (!_vm.shrunk ? "<div data-v-121e8d62><div class=\"shrink-icon icon\" data-v-121e8d62></div></div>" : "<!---->") + "</div>" : "<!---->"))], 2);
 };
 var __vue_staticRenderFns__$m = [];
 
 /* style */
 var __vue_inject_styles__$m = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-f5e21e78_0", {
-    source: ".dpui_searchBar[data-v-f5e21e78]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-f5e21e78]  .el-form{display:flex}.dpui_searchBar[data-v-f5e21e78]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}",
+  inject("data-v-121e8d62_0", {
+    source: ".dpui_searchBar[data-v-121e8d62]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-121e8d62]  .el-form{display:flex}.dpui_searchBar[data-v-121e8d62]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}.dpui_searchBar .shrink-box[data-v-121e8d62]{margin-left:6px}.dpui_searchBar .shrink-box .icon[data-v-121e8d62]{width:12px;height:11px}.dpui_searchBar .shrink-box .icon.shrink-icon[data-v-121e8d62]{background-image:url(@/assets/images/icons/double_arrow_right.svg);transform:rotate(180deg)}.dpui_searchBar .shrink-box .icon.expand-icon[data-v-121e8d62]{background-image:url(@/assets/images/icons/double_arrow_right.svg)}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$m = "data-v-f5e21e78";
+var __vue_scope_id__$m = "data-v-121e8d62";
 /* module identifier */
-var __vue_module_identifier__$m = "data-v-f5e21e78";
+var __vue_module_identifier__$m = "data-v-121e8d62";
 /* functional template */
 var __vue_is_functional_template__$m = false;
 /* style inject shadow dom */

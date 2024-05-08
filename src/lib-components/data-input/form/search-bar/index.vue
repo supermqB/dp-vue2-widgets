@@ -1,12 +1,20 @@
 <template>
   <div class="dpui_searchBar">
-    <dp-form :configs="searchFormConfig" :model="searchForm" />
+    <dp-form :configs="filteredSearchConfig" :model="searchForm" />
     <dp-icon-button v-if="showSearchBtn"
       text="检索"
       class="searchBtn"
       :icon="searchIcon"
       @click="onSearch"
     />
+    <div v-if="shrinkable" class="shrink-box">
+      <div v-if="shrunk" @click="expand">
+        <div class="expand-icon icon"></div>
+      </div>
+      <div v-if="!shrunk" @click="shrink">
+        <div class="shrink-icon icon"></div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -46,7 +54,8 @@ export default {
   data: () => {
     return {
       searchIcon,
-      lastSearchForm: { searchText: '' }
+      lastSearchForm: { searchText: '' },
+      shrunk: true
     }
   },
   computed: {
@@ -68,6 +77,19 @@ export default {
         ]
       }
       return config
+    },
+    shrinkable() {
+      return this.searchFormConfig.some(cfg => {
+        return cfg.shrinkable != null;
+      });
+    },
+    filteredSearchConfig() {
+      if (!this.shrinkable || !this.shrunk) {
+        return this.searchFormConfig;
+      }
+      return this.searchFormConfig.filter(cfg => {
+        return !cfg.shrinkable;
+      });
     }
   },
   watch: {
@@ -95,6 +117,12 @@ export default {
     onSearch() {
       this.$emit('onSearch', this.lastSearchForm)
       this.$emit('search', this.lastSearchForm)
+    },
+    shrink() {
+      this.shrunk = true;
+    },
+    expand() {
+      this.shrunk = false;
     }
   }
 }
@@ -110,6 +138,21 @@ export default {
       margin-right: 4px;
       margin-bottom: 0;
     }
+  }
+  .shrink-box {
+    margin-left: 6px;
+    .icon {
+      width: 12px;
+      height: 11px;
+      &.shrink-icon {
+        background-image: url("@/assets/images/icons/double_arrow_right.svg");
+        transform: rotate(180deg);
+      }
+      &.expand-icon {
+        background-image: url("@/assets/images/icons/double_arrow_right.svg");
+      }
+    }
+
   }
 }
 </style>

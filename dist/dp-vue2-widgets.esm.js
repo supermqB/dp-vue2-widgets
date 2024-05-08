@@ -22740,7 +22740,8 @@ var script$m = {
       searchIcon: img$2,
       lastSearchForm: {
         searchText: ''
-      }
+      },
+      shrunk: true
     };
   },
   computed: {
@@ -22759,6 +22760,19 @@ var script$m = {
         }];
       }
       return config;
+    },
+    shrinkable() {
+      return this.searchFormConfig.some(cfg => {
+        return cfg.shrinkable != null;
+      });
+    },
+    filteredSearchConfig() {
+      if (!this.shrinkable || !this.shrunk) {
+        return this.searchFormConfig;
+      }
+      return this.searchFormConfig.filter(cfg => {
+        return !cfg.shrinkable;
+      });
     }
   },
   watch: {
@@ -22789,11 +22803,17 @@ var script$m = {
     onSearch() {
       this.$emit('onSearch', this.lastSearchForm);
       this.$emit('search', this.lastSearchForm);
+    },
+    shrink() {
+      this.shrunk = true;
+    },
+    expand() {
+      this.shrunk = false;
     }
   }
 };
 
-var css_248z$f = ".dpui_searchBar[data-v-f5e21e78]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-f5e21e78]  .el-form{display:flex}.dpui_searchBar[data-v-f5e21e78]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}";
+var css_248z$f = ".dpui_searchBar[data-v-121e8d62]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-121e8d62]  .el-form{display:flex}.dpui_searchBar[data-v-121e8d62]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}.dpui_searchBar .shrink-box[data-v-121e8d62]{margin-left:6px}.dpui_searchBar .shrink-box .icon[data-v-121e8d62]{width:12px;height:11px}.dpui_searchBar .shrink-box .icon.shrink-icon[data-v-121e8d62]{background-image:url(@/assets/images/icons/double_arrow_right.svg);transform:rotate(180deg)}.dpui_searchBar .shrink-box .icon.expand-icon[data-v-121e8d62]{background-image:url(@/assets/images/icons/double_arrow_right.svg)}";
 styleInject(css_248z$f);
 
 /* script */
@@ -22807,7 +22827,7 @@ var __vue_render__$m = function () {
     staticClass: "dpui_searchBar"
   }, [_c('dp-form', {
     attrs: {
-      "configs": _vm.searchFormConfig,
+      "configs": _vm.filteredSearchConfig,
       "model": _vm.searchForm
     }
   }), _vm._v(" "), _vm.showSearchBtn ? _c('dp-icon-button', {
@@ -22819,14 +22839,28 @@ var __vue_render__$m = function () {
     on: {
       "click": _vm.onSearch
     }
-  }) : _vm._e()], 1);
+  }) : _vm._e(), _vm._v(" "), _vm.shrinkable ? _c('div', {
+    staticClass: "shrink-box"
+  }, [_vm.shrunk ? _c('div', {
+    on: {
+      "click": _vm.expand
+    }
+  }, [_c('div', {
+    staticClass: "expand-icon icon"
+  })]) : _vm._e(), _vm._v(" "), !_vm.shrunk ? _c('div', {
+    on: {
+      "click": _vm.shrink
+    }
+  }, [_c('div', {
+    staticClass: "shrink-icon icon"
+  })]) : _vm._e()]) : _vm._e()], 1);
 };
 var __vue_staticRenderFns__$m = [];
 
 /* style */
 const __vue_inject_styles__$m = undefined;
 /* scoped */
-const __vue_scope_id__$m = "data-v-f5e21e78";
+const __vue_scope_id__$m = "data-v-121e8d62";
 /* module identifier */
 const __vue_module_identifier__$m = undefined;
 /* functional template */
