@@ -14,14 +14,16 @@
       <Title :title="title" class="dpui_dialogTitle" />
     </span>
     <span slot="footer" class="dialog-footer">
-      <el-button v-show="!!cancelText" @click="isOpen = false">{{cancelText}}</el-button>
-      <el-button
-        type="primary"
-        v-show="!!confirmText"
-        @click="finishHandler"
-        :disabled="!enableConfirm"
-        >{{confirmText}}</el-button
-      >
+      <slot name="footer">
+        <el-button v-show="!!cancelText" @click="isOpen = false">{{cancelText}}</el-button>
+        <el-button
+          type="primary"
+          v-show="!!confirmText"
+          @click="finishHandler"
+          :disabled="!enableConfirm"
+          >{{confirmText}}</el-button
+        >
+      </slot>
     </span>
   </el-dialog>
 </template>

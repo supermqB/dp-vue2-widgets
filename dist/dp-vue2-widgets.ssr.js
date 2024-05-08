@@ -19349,40 +19349,42 @@ var __vue_render__$J = function __vue_render__() {
       "slot": "footer"
     },
     slot: "footer"
-  }, [_c('el-button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: !!_vm.cancelText,
-      expression: "!!cancelText"
-    }],
-    on: {
-      "click": function click($event) {
-        _vm.isOpen = false;
+  }, [_vm._t("footer", function () {
+    return [_c('el-button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: !!_vm.cancelText,
+        expression: "!!cancelText"
+      }],
+      on: {
+        "click": function click($event) {
+          _vm.isOpen = false;
+        }
       }
-    }
-  }, [_vm._v(_vm._s(_vm.cancelText))]), _vm._v(" "), _c('el-button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: !!_vm.confirmText,
-      expression: "!!confirmText"
-    }],
-    attrs: {
-      "type": "primary",
-      "disabled": !_vm.enableConfirm
-    },
-    on: {
-      "click": _vm.finishHandler
-    }
-  }, [_vm._v(_vm._s(_vm.confirmText))])], 1)], 2);
+    }, [_vm._v(_vm._s(_vm.cancelText))]), _vm._v(" "), _c('el-button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: !!_vm.confirmText,
+        expression: "!!confirmText"
+      }],
+      attrs: {
+        "type": "primary",
+        "disabled": !_vm.enableConfirm
+      },
+      on: {
+        "click": _vm.finishHandler
+      }
+    }, [_vm._v(_vm._s(_vm.confirmText))])];
+  })], 2)], 2);
 };
 var __vue_staticRenderFns__$J = [];
 
 /* style */
 var __vue_inject_styles__$J = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-c9c3e328_0", {
+  inject("data-v-0f82a88e_0", {
     source: ".dpui_dialog .el-dialog__header{padding:8px 16px 11px;border-bottom:1px solid #e5e5e5;height:46px;box-sizing:border-box}.dpui_dialog .el-dialog__header .dp-title.underline{border-bottom:unset}.dpui_dialog .el-dialog__headerbtn{top:12px;right:12px}.dpui_dialog .dpui_dialogTitle{height:23px!important;position:relative;bottom:4px}.dpui_dialog .dpui_dialogTitle .dp-subtitle__text{font-size:15px;top:5px;color:#333}.dpui_dialog .el-dialog__body{padding:20px 24px}.dpui_dialog .el-dialog__footer{height:40px;border-top:1px solid #e5e5e5;padding:6px 16px}.dpui_dialog .el-dialog__footer .dialog-footer{display:flex;justify-content:flex-end}.dpui_dialog .el-dialog__footer .el-button+.el-button{margin-left:6px}",
     map: undefined,
     media: undefined
@@ -19391,7 +19393,7 @@ var __vue_inject_styles__$J = function __vue_inject_styles__(inject) {
 /* scoped */
 var __vue_scope_id__$J = undefined;
 /* module identifier */
-var __vue_module_identifier__$J = "data-v-c9c3e328";
+var __vue_module_identifier__$J = "data-v-0f82a88e";
 /* functional template */
 var __vue_is_functional_template__$J = false;
 /* style inject shadow dom */
@@ -23068,7 +23070,8 @@ var script$m = {
       searchIcon: img$2,
       lastSearchForm: {
         searchText: ''
-      }
+      },
+      shrunk: true
     };
   },
   computed: {
@@ -23087,6 +23090,19 @@ var script$m = {
         }]);
       }
       return config;
+    },
+    shrinkable: function shrinkable() {
+      return this.searchFormConfig.some(function (cfg) {
+        return cfg.shrinkable != null;
+      });
+    },
+    filteredSearchConfig: function filteredSearchConfig() {
+      if (!this.shrinkable || !this.shrunk) {
+        return this.searchFormConfig;
+      }
+      return this.searchFormConfig.filter(function (cfg) {
+        return !cfg.shrinkable;
+      });
     }
   },
   watch: {
@@ -23117,6 +23133,12 @@ var script$m = {
     onSearch: function onSearch() {
       this.$emit('onSearch', this.lastSearchForm);
       this.$emit('search', this.lastSearchForm);
+    },
+    shrink: function shrink() {
+      this.shrunk = true;
+    },
+    expand: function expand() {
+      this.shrunk = false;
     }
   }
 };/* script */
@@ -23131,7 +23153,7 @@ var __vue_render__$m = function __vue_render__() {
     staticClass: "dpui_searchBar"
   }, [_c('dp-form', {
     attrs: {
-      "configs": _vm.searchFormConfig,
+      "configs": _vm.filteredSearchConfig,
       "model": _vm.searchForm
     }
   }), _vm._ssrNode(" "), _vm.showSearchBtn ? _c('dp-icon-button', {
@@ -23143,23 +23165,23 @@ var __vue_render__$m = function __vue_render__() {
     on: {
       "click": _vm.onSearch
     }
-  }) : _vm._e()], 2);
+  }) : _vm._e(), _vm._ssrNode(" " + (_vm.shrinkable ? "<div class=\"shrink-box\" data-v-121e8d62>" + (_vm.shrunk ? "<div data-v-121e8d62><div class=\"expand-icon icon\" data-v-121e8d62></div></div>" : "<!---->") + " " + (!_vm.shrunk ? "<div data-v-121e8d62><div class=\"shrink-icon icon\" data-v-121e8d62></div></div>" : "<!---->") + "</div>" : "<!---->"))], 2);
 };
 var __vue_staticRenderFns__$m = [];
 
 /* style */
 var __vue_inject_styles__$m = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-f5e21e78_0", {
-    source: ".dpui_searchBar[data-v-f5e21e78]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-f5e21e78]  .el-form{display:flex}.dpui_searchBar[data-v-f5e21e78]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}",
+  inject("data-v-121e8d62_0", {
+    source: ".dpui_searchBar[data-v-121e8d62]{display:flex;align-items:center;height:100%}.dpui_searchBar[data-v-121e8d62]  .el-form{display:flex}.dpui_searchBar[data-v-121e8d62]  .el-form .el-form-item{margin-right:4px;margin-bottom:0}.dpui_searchBar .shrink-box[data-v-121e8d62]{margin-left:6px}.dpui_searchBar .shrink-box .icon[data-v-121e8d62]{width:12px;height:11px}.dpui_searchBar .shrink-box .icon.shrink-icon[data-v-121e8d62]{background-image:url(@/assets/images/icons/double_arrow_right.svg);transform:rotate(180deg)}.dpui_searchBar .shrink-box .icon.expand-icon[data-v-121e8d62]{background-image:url(@/assets/images/icons/double_arrow_right.svg)}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$m = "data-v-f5e21e78";
+var __vue_scope_id__$m = "data-v-121e8d62";
 /* module identifier */
-var __vue_module_identifier__$m = "data-v-f5e21e78";
+var __vue_module_identifier__$m = "data-v-121e8d62";
 /* functional template */
 var __vue_is_functional_template__$m = false;
 /* style inject shadow dom */

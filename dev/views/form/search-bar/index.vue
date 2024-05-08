@@ -14,13 +14,44 @@
         <div class="line">
           <dp-search-bar hideSearchInput />
         </div>
+        <div>
+          <dp-search-bar :input-configs="shrinkCfgs" />
+        </div>
       </div>
     </template>
   </dp-layout-container>
 </template>
 
 <script>
-export default {}
+export default {
+  computed: {
+    shrinkCfgs() {
+      return [
+        {
+          type: 'el-input',
+          id: 'name',
+          label: '名称'
+        },
+        {
+          type: 'el-select',
+          id: 'gender',
+          label: '性别',
+          shrinkable: true,
+          options: [
+            {
+              label: '男',
+              value: 'M'
+            },
+            {
+              label: '女',
+              value: 'F'
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
 </script>
 
 <style lang="scss" scope>
