@@ -145,11 +145,11 @@ export default {
       width: 12px;
       height: 11px;
       &.shrink-icon {
-        background-image: url("@/assets/images/icons/double_arrow_right.svg");
+        background-image: url("../../../../assets/images/icons/double_arrow_right.svg");
         transform: rotate(180deg);
       }
       &.expand-icon {
-        background-image: url("@/assets/images/icons/double_arrow_right.svg");
+        background-image: url("../../../../assets/images/icons/double_arrow_right.svg");
       }
     }
 
