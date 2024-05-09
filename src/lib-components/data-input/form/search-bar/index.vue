@@ -141,6 +141,7 @@ export default {
   }
   .shrink-box {
     margin-left: 6px;
+    cursor: pointer;
     .icon {
       width: 12px;
       height: 11px;
