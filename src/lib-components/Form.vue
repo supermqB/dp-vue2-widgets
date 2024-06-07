@@ -5,6 +5,7 @@
     v-bind="$attrs"
     :rules="formRule"
     :show-message="false"
+    @submit.native.prevent
   >
     <el-form-item
       v-for="cfg in formCfg"

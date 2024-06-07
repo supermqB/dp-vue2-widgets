@@ -26,7 +26,7 @@ export default {
     placeholder: {
       type: String,
       default: '请输入'
-    },
+    }
   },
   data: () => {
     return {
@@ -49,7 +49,8 @@ export default {
               placeholder: this.placeholder,
               suffixIcon: 'el-icon-search'
             }
-          }]
+          }
+        ]
       }
       this.searchForm = keysObject(cfg, 'id', 'defaultValue')
       return cfg
@@ -93,6 +94,10 @@ export default {
   ::v-deep.el-form {
     display: flex;
     .el-form-item {
+      .el-input__icon {
+        width: 18px;
+      }
+
       margin-right: 4px;
       margin-bottom: 0;
     }

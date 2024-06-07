@@ -1,7 +1,8 @@
 <template>
   <div class="dpui_searchBar">
     <dp-form :configs="filteredSearchConfig" :model="searchForm" />
-    <dp-icon-button v-if="showSearchBtn"
+    <dp-icon-button
+      v-if="showSearchBtn"
       text="检索"
       class="searchBtn"
       :icon="searchIcon"
@@ -80,16 +81,16 @@ export default {
     },
     shrinkable() {
       return this.searchFormConfig.some(cfg => {
-        return cfg.shrinkable != null;
-      });
+        return cfg.shrinkable != null
+      })
     },
     filteredSearchConfig() {
       if (!this.shrinkable || !this.shrunk) {
-        return this.searchFormConfig;
+        return this.searchFormConfig
       }
       return this.searchFormConfig.filter(cfg => {
-        return !cfg.shrinkable;
-      });
+        return !cfg.shrinkable
+      })
     }
   },
   watch: {
@@ -119,10 +120,10 @@ export default {
       this.$emit('search', this.lastSearchForm)
     },
     shrink() {
-      this.shrunk = true;
+      this.shrunk = true
     },
     expand() {
-      this.shrunk = false;
+      this.shrunk = false
     }
   }
 }
@@ -135,6 +136,10 @@ export default {
   ::v-deep .el-form {
     display: flex;
     .el-form-item {
+      .el-input__icon {
+        width: 18px;
+      }
+
       margin-right: 4px;
       margin-bottom: 0;
     }
@@ -146,14 +151,13 @@ export default {
       width: 12px;
       height: 11px;
       &.shrink-icon {
-        background-image: url("../../../../assets/images/icons/double_arrow_right.svg");
+        background-image: url('../../../../assets/images/icons/double_arrow_right.svg');
         transform: rotate(180deg);
       }
       &.expand-icon {
-        background-image: url("../../../../assets/images/icons/double_arrow_right.svg");
+        background-image: url('../../../../assets/images/icons/double_arrow_right.svg');
       }
     }
-
   }
 }
 </style>
