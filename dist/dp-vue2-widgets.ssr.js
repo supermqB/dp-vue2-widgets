@@ -1580,7 +1580,14 @@ var script$M = {
     },
     filterNodeMethod: function filterNodeMethod(value, data) {
       if (!value) return true;
-      return data.label.indexOf(value) > -1;
+      var pNode = this.treeList.find(function (item) {
+        return item.children && item.children.find(function (l2Item) {
+          return l2Item.id == data.id;
+        });
+      });
+      var pNodeMatched = pNode && pNode.label.indexOf(value) > -1;
+      var selfMatched = data.label.indexOf(value) > -1;
+      return pNodeMatched || selfMatched;
     },
     setCurrent: function setCurrent() {
       var _this = this;
@@ -1702,16 +1709,16 @@ var __vue_staticRenderFns__$N = [];
 /* style */
 var __vue_inject_styles__$N = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-fff985e6_0", {
-    source: ".wrap[data-v-fff985e6]{width:100%;height:100%;overflow-x:hidden;display:flex;flex-direction:column}.wrap .treeWrap[data-v-fff985e6]{flex:1;overflow:auto}.treeNode[data-v-fff985e6]{width:100%;height:100%;padding-top:2px;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;overflow:hidden;font-size:13px}.treeNode .label[data-v-fff985e6]{width:100%;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.treeNode .label .front[data-v-fff985e6]{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.treeNode .label i[data-v-fff985e6]{display:inline-block;width:5px;height:5px;padding-right:3px;padding-bottom:2px;border-radius:5px;background-color:#f56c6c}.treeNode .label .blank[data-v-fff985e6]{display:inline-block;padding-right:3px;padding-bottom:2px;width:5px;height:5px}.disabled[data-v-fff985e6]{position:absolute;left:0;width:100%;height:100%;z-index:10}[data-v-fff985e6] .el-tree-node__content{height:36px;position:relative}[data-v-fff985e6] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-fff985e6] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-fff985e6] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}[data-v-fff985e6] .el-tree.flatItems .el-tree-node .el-tree-node__content .el-tree-node__expand-icon{width:0}",
+  inject("data-v-aaf0cb9a_0", {
+    source: ".wrap[data-v-aaf0cb9a]{width:100%;height:100%;overflow-x:hidden;display:flex;flex-direction:column}.wrap .treeWrap[data-v-aaf0cb9a]{flex:1;overflow:auto}.treeNode[data-v-aaf0cb9a]{width:100%;height:100%;padding-top:2px;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;overflow:hidden;font-size:13px}.treeNode .label[data-v-aaf0cb9a]{width:100%;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.treeNode .label .front[data-v-aaf0cb9a]{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.treeNode .label i[data-v-aaf0cb9a]{display:inline-block;width:5px;height:5px;padding-right:3px;padding-bottom:2px;border-radius:5px;background-color:#f56c6c}.treeNode .label .blank[data-v-aaf0cb9a]{display:inline-block;padding-right:3px;padding-bottom:2px;width:5px;height:5px}.disabled[data-v-aaf0cb9a]{position:absolute;left:0;width:100%;height:100%;z-index:10}[data-v-aaf0cb9a] .el-tree-node__content{height:36px;position:relative}[data-v-aaf0cb9a] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-aaf0cb9a] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-aaf0cb9a] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}[data-v-aaf0cb9a] .el-tree.flatItems .el-tree-node .el-tree-node__content .el-tree-node__expand-icon{width:0}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$N = "data-v-fff985e6";
+var __vue_scope_id__$N = "data-v-aaf0cb9a";
 /* module identifier */
-var __vue_module_identifier__$N = "data-v-fff985e6";
+var __vue_module_identifier__$N = "data-v-aaf0cb9a";
 /* functional template */
 var __vue_is_functional_template__$N = false;
 /* style inject shadow dom */

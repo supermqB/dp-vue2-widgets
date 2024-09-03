@@ -107,7 +107,10 @@ export default {
     },
     filterNodeMethod(value, data) {
       if (!value) return true
-      return data.label.indexOf(value) > -1
+      const pNode = this.treeList.find(item => item.children && item.children.find(l2Item => l2Item.id == data.id));
+      const pNodeMatched = pNode && pNode.label.indexOf(value) > -1;
+      const selfMatched = data.label.indexOf(value) > -1;
+      return pNodeMatched || selfMatched;
     },
     setCurrent() {
       this.$nextTick(() => {
