@@ -213,6 +213,12 @@ export default {
     setCurrentRow(row) {
       this.$refs.el_table.setCurrentRow(row)
     },
+    setRowSelection(row, selected) {
+      this.$refs.el_table.toggleRowSelection(row, selected)
+    },
+    clearSelection() {
+      this.$refs.el_table.clearSelection()
+    },
     typeProps(propDefs, row) {
       let props = {}
       for (let key in propDefs) {
