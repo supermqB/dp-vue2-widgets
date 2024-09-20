@@ -964,6 +964,12 @@ var __vue_component__$P = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var script$N = {
   props: {
@@ -1126,7 +1132,7 @@ var __vue_render__$O = function __vue_render__() {
   }, [_vm._ssrNode("<div class=\"table_container\"" + _vm._ssrStyle(null, {
     height: _vm.tableHeight,
     paddingBottom: _vm.showPaging ? '0' : '6px'
-  }, null) + " data-v-db387166>", "</div>", [_c('el-table', _vm._g(_vm._b({
+  }, null) + " data-v-2cc49592>", "</div>", [_c('el-table', _vm._g(_vm._b({
     ref: "el_table",
     attrs: {
       "data": _vm.tableData,
@@ -1230,8 +1236,12 @@ var __vue_render__$O = function __vue_render__() {
       slot: "content"
     }), _vm._v(" "), _c('i', {
       staticClass: "el-icon-warning-outline"
-    })])], 1) : _vm._e()], 2);
-  }), _vm._v(" "), _vm._t("default")], 2)], 1), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"table_footer\" data-v-db387166>", "</div>", [_vm._ssrNode("<div class=\"bottomTip\" data-v-db387166>" + _vm._s(_vm.bottomTip) + "</div> "), _vm.showPaging ? _c('el-pagination', {
+    })])], 1) : _vm._e(), _vm._v(" "), col.headerAction ? _c('template', {
+      slot: "header"
+    }, [_c(col.headerAction.type, _vm._b({
+      tag: "component"
+    }, 'component', col.headerAction.props, false))], 1) : _vm._e()], 2);
+  }), _vm._v(" "), _vm._t("default")], 2)], 1), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"table_footer\" data-v-2cc49592>", "</div>", [_vm._ssrNode("<div class=\"bottomTip\" data-v-2cc49592>" + _vm._s(_vm.bottomTip) + "</div> "), _vm.showPaging ? _c('el-pagination', {
     attrs: {
       "current-page": _vm.pageInfo.curPage,
       "page-sizes": [5, 10, 20, 50],
@@ -1257,20 +1267,20 @@ var __vue_staticRenderFns__$O = [];
 /* style */
 var __vue_inject_styles__$O = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-db387166_0", {
-    source: ".el_table_wrapper[data-v-db387166]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-db387166]{flex-grow:1;padding:0 6px;box-sizing:content-box}",
+  inject("data-v-2cc49592_0", {
+    source: ".el_table_wrapper[data-v-2cc49592]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-2cc49592]{flex-grow:1;padding:0 6px;box-sizing:content-box}",
     map: undefined,
     media: undefined
-  }), inject("data-v-db387166_1", {
+  }), inject("data-v-2cc49592_1", {
     source: ".el-tooltip__popper.table_header_tip>div{line-height:18px}.el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}",
     map: undefined,
     media: undefined
   });
 };
 /* scoped */
-var __vue_scope_id__$O = "data-v-db387166";
+var __vue_scope_id__$O = "data-v-2cc49592";
 /* module identifier */
-var __vue_module_identifier__$O = "data-v-db387166";
+var __vue_module_identifier__$O = "data-v-2cc49592";
 /* functional template */
 var __vue_is_functional_template__$O = false;
 /* style inject shadow dom */

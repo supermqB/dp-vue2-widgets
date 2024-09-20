@@ -58,6 +58,12 @@
               <i class="el-icon-warning-outline"></i>
             </el-tooltip>
           </template>
+          <template v-if="col.headerAction" slot="header">
+            <component
+              :is="col.headerAction.type"
+              v-bind="col.headerAction.props"
+            />
+          </template>
           <template
             #default="{ $index: rowIdx, row, column }"
             v-if="col.actions != null"

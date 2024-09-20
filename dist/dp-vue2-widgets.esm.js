@@ -498,6 +498,12 @@ const __vue_component__$P = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var script$N = {
   props: {
@@ -627,7 +633,7 @@ var script$N = {
   }
 };
 
-var css_248z$B = ".el_table_wrapper[data-v-db387166]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-db387166]{flex-grow:1;padding:0 6px;box-sizing:content-box}";
+var css_248z$B = ".el_table_wrapper[data-v-2cc49592]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-2cc49592]{flex-grow:1;padding:0 6px;box-sizing:content-box}";
 styleInject(css_248z$B);
 
 var css_248z$A = ".el-tooltip__popper.table_header_tip>div{line-height:18px}.el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}";
@@ -755,7 +761,11 @@ var __vue_render__$O = function () {
       slot: "content"
     }), _vm._v(" "), _c('i', {
       staticClass: "el-icon-warning-outline"
-    })])], 1) : _vm._e()], 2);
+    })])], 1) : _vm._e(), _vm._v(" "), col.headerAction ? _c('template', {
+      slot: "header"
+    }, [_c(col.headerAction.type, _vm._b({
+      tag: "component"
+    }, 'component', col.headerAction.props, false))], 1) : _vm._e()], 2);
   }), _vm._v(" "), _vm._t("default")], 2)], 1), _vm._v(" "), _c('div', {
     staticClass: "table_footer"
   }, [_c('div', {
@@ -789,7 +799,7 @@ var __vue_staticRenderFns__$O = [];
 /* style */
 const __vue_inject_styles__$O = undefined;
 /* scoped */
-const __vue_scope_id__$O = "data-v-db387166";
+const __vue_scope_id__$O = "data-v-2cc49592";
 /* module identifier */
 const __vue_module_identifier__$O = undefined;
 /* functional template */
