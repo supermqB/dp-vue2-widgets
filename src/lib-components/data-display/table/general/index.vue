@@ -69,8 +69,8 @@
             v-if="col.actions != null"
           >
             <component
-              v-for="action in col.actions"
-              :key="action.id"
+              v-for="(action, idx) in col.actions"
+              :key="`${action.id}-${idx}`"
               :is="action.type"
               v-model="row[action.id]"
               v-bind="typeProps(action.typeProps, row)"
