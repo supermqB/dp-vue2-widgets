@@ -78,6 +78,12 @@
                 rowAction({ rowIdx, row, column }, action.callback)
               "
             >
+              <el-option
+                v-for="(opt, index) in action.options"
+                v-bind="prepareOpt(opt)"
+                :key="index"
+              >
+              </el-option>
               {{
                 typeof action.name == 'function'
                   ? action.name(row)
@@ -234,6 +240,18 @@ export default {
             : propDefs[key]
       }
       return props
+    },
+    prepareOpt(opt) {
+      return opt.label != null
+        ? {
+            ...opt,
+            key: opt.value
+          }
+        : {
+            key: opt,
+            label: opt,
+            value: opt
+          }
     }
   }
 }
