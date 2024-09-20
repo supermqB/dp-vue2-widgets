@@ -504,6 +504,12 @@ const __vue_component__$P = /*#__PURE__*/normalizeComponent({
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var script$N = {
   props: {
@@ -629,11 +635,21 @@ var script$N = {
         props[key] = typeof propDefs[key] == 'function' ? propDefs[key](row) : propDefs[key];
       }
       return props;
+    },
+    prepareOpt(opt) {
+      return opt.label != null ? {
+        ...opt,
+        key: opt.value
+      } : {
+        key: opt,
+        label: opt,
+        value: opt
+      };
     }
   }
 };
 
-var css_248z$B = ".el_table_wrapper[data-v-2cc49592]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-2cc49592]{flex-grow:1;padding:0 6px;box-sizing:content-box}";
+var css_248z$B = ".el_table_wrapper[data-v-71ba5232]{display:flex;flex-direction:column}.el_table_wrapper .table_container[data-v-71ba5232]{flex-grow:1;padding:0 6px;box-sizing:content-box}";
 styleInject(css_248z$B);
 
 var css_248z$A = ".el-tooltip__popper.table_header_tip>div{line-height:18px}.el-table__body tr.current-row>td{background-color:#f2f6ff!important}.el_table_wrapper .table_container{overflow:auto}.el_table_wrapper .table_container .el-table{font-size:13px}.el_table_wrapper .table_container .el-table .el-table__body-wrapper.is-scrolling-right{padding-right:6px}.el_table_wrapper .table_container .el-table .el-table_1_column_1 .el-radio__label{display:none}.el_table_wrapper .table_container .el-table .cell .el-button{padding:0}.el_table_wrapper .table_footer{display:flex;align-items:center;justify-content:space-between;padding:0 6px}.el_table_wrapper .table_footer .bottomTip{font-size:12px;color:#9c9c9c}.el_table_wrapper .table_footer .bottomTip .highlight{color:red}.el_table_wrapper .table_footer .el-pagination .el-select .el-input{width:85px}.el_table_wrapper .table_footer .el-input--mini .el-input__inner{height:20px;line-height:20px}.el_table_wrapper .table_footer .el-pagination__editor.el-input{width:40px}.el_table_wrapper .table_footer .el-pagination__editor.el-input .el-input__inner{height:20px}";
@@ -735,7 +751,11 @@ var __vue_render__$O = function () {
                 },
                 expression: "row[action.id]"
               }
-            }, 'component', _vm.typeProps(action.typeProps, row), false), [_vm._v("\n            " + _vm._s(typeof action.name == 'function' ? action.name(row) : action.name) + "\n          ")]);
+            }, 'component', _vm.typeProps(action.typeProps, row), false), [_vm._l(action.options, function (opt, index) {
+              return _c('el-option', _vm._b({
+                key: index
+              }, 'el-option', _vm.prepareOpt(opt), false));
+            }), _vm._v("\n            " + _vm._s(typeof action.name == 'function' ? action.name(row) : action.name) + "\n          ")], 2);
           });
         }
       } : null], null, true)
@@ -799,7 +819,7 @@ var __vue_staticRenderFns__$O = [];
 /* style */
 const __vue_inject_styles__$O = undefined;
 /* scoped */
-const __vue_scope_id__$O = "data-v-2cc49592";
+const __vue_scope_id__$O = "data-v-71ba5232";
 /* module identifier */
 const __vue_module_identifier__$O = undefined;
 /* functional template */
