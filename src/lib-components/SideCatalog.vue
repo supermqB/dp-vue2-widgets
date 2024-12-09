@@ -28,12 +28,14 @@
             <span v-else class="blank"></span>
             <span>{{ data.label }}</span>
           </span>
-          <span>
-            <span>{{ 'number' in data ? unitFmt(data.number) : '' }}</span>
-            <span>{{ data.endText }}</span>
-          </span>
+          <slot name="actions" :data="data">
+            <span>
+              <span>{{ 'number' in data ? unitFmt(data.number) : '' }}</span>
+              <span>{{ data.endText }}</span>
+            </span>
+          </slot>
         </div>
-        <div class="disabled" v-if="!node.isLeaf"></div>
+        <div class="disabled" v-if="!node.isLeaf" />
       </div>
     </el-tree>
   </div>
@@ -107,10 +109,13 @@ export default {
     },
     filterNodeMethod(value, data) {
       if (!value) return true
-      const pNode = this.treeList.find(item => item.children && item.children.find(l2Item => l2Item.id == data.id));
-      const pNodeMatched = pNode && pNode.label.indexOf(value) > -1;
-      const selfMatched = data.label.indexOf(value) > -1;
-      return pNodeMatched || selfMatched;
+      const pNode = this.treeList.find(
+        item =>
+          item.children && item.children.find(l2Item => l2Item.id == data.id)
+      )
+      const pNodeMatched = pNode && pNode.label.indexOf(value) > -1
+      const selfMatched = data.label.indexOf(value) > -1
+      return pNodeMatched || selfMatched
     },
     setCurrent() {
       this.$nextTick(() => {
