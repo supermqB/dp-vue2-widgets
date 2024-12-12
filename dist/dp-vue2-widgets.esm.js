@@ -7,7 +7,7 @@ import axios from 'axios';
 //
 //
 
-var script$R = {
+var script$S = {
   name: 'DpTitle',
   props: {
     text: {
@@ -48,8 +48,8 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z$F = ".dp-title[data-v-99e25afe]{height:40px;box-sizing:border-box;position:relative}.dp-title__text[data-v-99e25afe]{color:#333;height:39px;font-size:15px;line-height:39px;padding-left:12px}.dp-title__text[data-v-99e25afe]:before{content:\" \";position:absolute;width:4px;height:13px;background-color:#2f63b9;left:4px;top:13px}.dp-title__wrapper[data-v-99e25afe]{position:absolute;height:calc(100% + 1px);display:inline-block;box-sizing:border-box;padding-left:6px;padding-right:16px;border-bottom:2px solid #2f63b9}.dp-title__wrapper-text[data-v-99e25afe]{color:#333;font-size:15px;font-weight:700;position:relative;top:50%;transform:translateY(-50%)}.underline[data-v-99e25afe]{border-bottom:1px solid #e5e5e5}";
-styleInject(css_248z$F);
+var css_248z$G = ".dp-title[data-v-99e25afe]{height:40px;box-sizing:border-box;position:relative}.dp-title__text[data-v-99e25afe]{color:#333;height:39px;font-size:15px;line-height:39px;padding-left:12px}.dp-title__text[data-v-99e25afe]:before{content:\" \";position:absolute;width:4px;height:13px;background-color:#2f63b9;left:4px;top:13px}.dp-title__wrapper[data-v-99e25afe]{position:absolute;height:calc(100% + 1px);display:inline-block;box-sizing:border-box;padding-left:6px;padding-right:16px;border-bottom:2px solid #2f63b9}.dp-title__wrapper-text[data-v-99e25afe]{color:#333;font-size:15px;font-weight:700;position:relative;top:50%;transform:translateY(-50%)}.underline[data-v-99e25afe]{border-bottom:1px solid #e5e5e5}";
+styleInject(css_248z$G);
 
 function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier /* server only */, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
     if (typeof shadowMode !== 'boolean') {
@@ -127,9 +127,9 @@ function normalizeComponent(template, style, script, scopeId, isFunctionalTempla
 }
 
 /* script */
-const __vue_script__$R = script$R;
+const __vue_script__$S = script$S;
 /* template */
-var __vue_render__$S = function () {
+var __vue_render__$T = function () {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -142,12 +142,69 @@ var __vue_render__$S = function () {
     staticClass: "dp-title__text"
   }, [_vm._v(_vm._s(_vm.text))])]);
 };
+var __vue_staticRenderFns__$T = [];
+
+/* style */
+const __vue_inject_styles__$T = undefined;
+/* scoped */
+const __vue_scope_id__$T = "data-v-99e25afe";
+/* module identifier */
+const __vue_module_identifier__$T = undefined;
+/* functional template */
+const __vue_is_functional_template__$T = false;
+/* style inject */
+
+/* style inject SSR */
+
+/* style inject shadow dom */
+
+const __vue_component__$T = /*#__PURE__*/normalizeComponent({
+  render: __vue_render__$T,
+  staticRenderFns: __vue_staticRenderFns__$T
+}, __vue_inject_styles__$T, __vue_script__$S, __vue_scope_id__$T, __vue_is_functional_template__$T, __vue_module_identifier__$T, false, undefined, undefined, undefined);
+
+//
+//
+//
+//
+//
+//
+//
+
+var script$R = {
+  name: 'DpSubtitle',
+  props: {
+    text: {
+      type: String,
+      default: '标题内容'
+    }
+  }
+};
+
+var css_248z$F = ".dp-subtitle[data-v-25fe7820]{height:40px;display:flex;align-items:center}.dp-subtitle__text[data-v-25fe7820]{font-size:13px;padding-left:12px;padding-right:10px;color:#333}.dp-subtitle__line[data-v-25fe7820]{flex:1;content:\" \";display:block;border-bottom:1px solid #f1f1f4}";
+styleInject(css_248z$F);
+
+/* script */
+const __vue_script__$R = script$R;
+/* template */
+var __vue_render__$S = function () {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c('div', {
+    staticClass: "dp-subtitle"
+  }, [_c('div', {
+    staticClass: "dp-subtitle__text"
+  }, [_vm._v(_vm._s(_vm.text))]), _vm._v(" "), _c('div', {
+    staticClass: "dp-subtitle__line"
+  })]);
+};
 var __vue_staticRenderFns__$S = [];
 
 /* style */
 const __vue_inject_styles__$S = undefined;
 /* scoped */
-const __vue_scope_id__$S = "data-v-99e25afe";
+const __vue_scope_id__$S = "data-v-25fe7820";
 /* module identifier */
 const __vue_module_identifier__$S = undefined;
 /* functional template */
@@ -164,64 +221,7 @@ const __vue_component__$S = /*#__PURE__*/normalizeComponent({
 }, __vue_inject_styles__$S, __vue_script__$R, __vue_scope_id__$S, __vue_is_functional_template__$S, __vue_module_identifier__$S, false, undefined, undefined, undefined);
 
 //
-//
-//
-//
-//
-//
-//
-
 var script$Q = {
-  name: 'DpSubtitle',
-  props: {
-    text: {
-      type: String,
-      default: '标题内容'
-    }
-  }
-};
-
-var css_248z$E = ".dp-subtitle[data-v-25fe7820]{height:40px;display:flex;align-items:center}.dp-subtitle__text[data-v-25fe7820]{font-size:13px;padding-left:12px;padding-right:10px;color:#333}.dp-subtitle__line[data-v-25fe7820]{flex:1;content:\" \";display:block;border-bottom:1px solid #f1f1f4}";
-styleInject(css_248z$E);
-
-/* script */
-const __vue_script__$Q = script$Q;
-/* template */
-var __vue_render__$R = function () {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c('div', {
-    staticClass: "dp-subtitle"
-  }, [_c('div', {
-    staticClass: "dp-subtitle__text"
-  }, [_vm._v(_vm._s(_vm.text))]), _vm._v(" "), _c('div', {
-    staticClass: "dp-subtitle__line"
-  })]);
-};
-var __vue_staticRenderFns__$R = [];
-
-/* style */
-const __vue_inject_styles__$R = undefined;
-/* scoped */
-const __vue_scope_id__$R = "data-v-25fe7820";
-/* module identifier */
-const __vue_module_identifier__$R = undefined;
-/* functional template */
-const __vue_is_functional_template__$R = false;
-/* style inject */
-
-/* style inject SSR */
-
-/* style inject shadow dom */
-
-const __vue_component__$R = /*#__PURE__*/normalizeComponent({
-  render: __vue_render__$R,
-  staticRenderFns: __vue_staticRenderFns__$R
-}, __vue_inject_styles__$R, __vue_script__$Q, __vue_scope_id__$R, __vue_is_functional_template__$R, __vue_module_identifier__$R, false, undefined, undefined, undefined);
-
-//
-var script$P = {
   props: {
     title: String,
     showUnderline: {
@@ -234,18 +234,18 @@ var script$P = {
     }
   },
   components: {
-    DpTitle: __vue_component__$S,
-    DpSubtitle: __vue_component__$R
+    DpTitle: __vue_component__$T,
+    DpSubtitle: __vue_component__$S
   }
 };
 
-var css_248z$D = ".dptitle_wrapper[data-v-d721cc40] .dp-title.l2 .dp-title__text{font-size:13px;color:#303133}.dptitle_wrapper[data-v-d721cc40] .dp-title.l2 .dp-title__text::before{background-color:rgba(47,99,185,.4);height:10px;width:3px}";
-styleInject(css_248z$D);
+var css_248z$E = ".dptitle_wrapper[data-v-d721cc40] .dp-title.l2 .dp-title__text{font-size:13px;color:#303133}.dptitle_wrapper[data-v-d721cc40] .dp-title.l2 .dp-title__text::before{background-color:rgba(47,99,185,.4);height:10px;width:3px}";
+styleInject(css_248z$E);
 
 /* script */
-const __vue_script__$P = script$P;
+const __vue_script__$Q = script$Q;
 /* template */
-var __vue_render__$Q = function () {
+var __vue_render__$R = function () {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -263,12 +263,141 @@ var __vue_render__$Q = function () {
     }
   }) : _vm._e()], 1);
 };
+var __vue_staticRenderFns__$R = [];
+
+/* style */
+const __vue_inject_styles__$R = undefined;
+/* scoped */
+const __vue_scope_id__$R = "data-v-d721cc40";
+/* module identifier */
+const __vue_module_identifier__$R = undefined;
+/* functional template */
+const __vue_is_functional_template__$R = false;
+/* style inject */
+
+/* style inject SSR */
+
+/* style inject shadow dom */
+
+const __vue_component__$R = /*#__PURE__*/normalizeComponent({
+  render: __vue_render__$R,
+  staticRenderFns: __vue_staticRenderFns__$R
+}, __vue_inject_styles__$R, __vue_script__$Q, __vue_scope_id__$R, __vue_is_functional_template__$R, __vue_module_identifier__$R, false, undefined, undefined, undefined);
+
+//
+var script$P = {
+  components: {
+    Title: __vue_component__$R
+  },
+  props: {
+    title: {
+      type: String,
+      default: () => 'drawer title'
+    },
+    validate: {
+      type: Function,
+      default: () => {
+        return () => true;
+      }
+    },
+    cancelText: {
+      type: String,
+      default: '取消'
+    },
+    confirmText: {
+      type: String,
+      default: '保存'
+    }
+  },
+  data() {
+    return {
+      visible: false
+    };
+  },
+  methods: {
+    toggleOpen(open = undefined) {
+      this.visible = open != undefined ? open : !this.visible;
+    },
+    handleSave() {
+      if (!this.validate()) return;
+      this.$emit('drawer-save');
+      this.toggleOpen(false);
+    }
+  }
+};
+
+var css_248z$D = "[data-v-1d406f6e].dp_drawer .el-drawer__header{padding:3px 0 2px 16px;margin-bottom:unset;border-bottom:1px solid #e5e5e5}[data-v-1d406f6e].dp_drawer .el-drawer__header .el-drawer__close-btn{font-size:16px;padding-right:12px}[data-v-1d406f6e].dp_drawer .el-drawer__body{display:flex;flex-direction:column}[data-v-1d406f6e].dp_drawer .el-drawer__body .content{flex:1;min-height:0;overflow:auto}[data-v-1d406f6e].dp_drawer .el-drawer__body .footer .footer_btn{height:40px;display:flex;align-items:center;border-top:1px solid #e5e5e5;justify-content:flex-end;padding-right:16px}";
+styleInject(css_248z$D);
+
+/* script */
+const __vue_script__$P = script$P;
+/* template */
+var __vue_render__$Q = function () {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c('el-drawer', _vm._g(_vm._b({
+    staticClass: "dp_drawer",
+    attrs: {
+      "visible": _vm.visible
+    },
+    on: {
+      "update:visible": function ($event) {
+        _vm.visible = $event;
+      }
+    },
+    scopedSlots: _vm._u([{
+      key: "title",
+      fn: function () {
+        return [_c('Title', {
+          attrs: {
+            "title": _vm.title,
+            "show-underline": false
+          }
+        })];
+      },
+      proxy: true
+    }, {
+      key: "default",
+      fn: function () {
+        return [_c('div', {
+          staticClass: "content"
+        }, [_vm._t("default", function () {
+          return [_vm._v(" drawer content ")];
+        })], 2), _vm._v(" "), _c('div', {
+          staticClass: "footer"
+        }, [_vm._t("footer", function () {
+          return [_c('div', {
+            staticClass: "footer_btn"
+          }, [!!_vm.cancelText ? _c('el-button', {
+            on: {
+              "click": function ($event) {
+                return _vm.toggleOpen(false);
+              }
+            }
+          }, [_vm._v(_vm._s(_vm.cancelText))]) : _vm._e(), _vm._v(" "), !!_vm.confirmText ? _c('el-button', {
+            attrs: {
+              "type": "primary",
+              "plain": ""
+            },
+            on: {
+              "click": function ($event) {
+                return _vm.handleSave();
+              }
+            }
+          }, [_vm._v(_vm._s(_vm.confirmText))]) : _vm._e()], 1)];
+        })], 2)];
+      },
+      proxy: true
+    }], null, true)
+  }, 'el-drawer', _vm.$attrs, false), _vm.$listeners));
+};
 var __vue_staticRenderFns__$Q = [];
 
 /* style */
 const __vue_inject_styles__$Q = undefined;
 /* scoped */
-const __vue_scope_id__$Q = "data-v-d721cc40";
+const __vue_scope_id__$Q = "data-v-1d406f6e";
 /* module identifier */
 const __vue_module_identifier__$Q = undefined;
 /* functional template */
@@ -1178,7 +1307,7 @@ var script$M = {
   }
 };
 
-var css_248z$z = ".wrap[data-v-4ad5c404]{width:100%;height:100%;overflow-x:hidden;display:flex;flex-direction:column}.wrap .treeWrap[data-v-4ad5c404]{flex:1;overflow:auto}.treeNode[data-v-4ad5c404]{width:100%;height:100%;padding-top:2px;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;overflow:hidden;font-size:13px}.treeNode .label[data-v-4ad5c404]{width:100%;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.treeNode .label .front[data-v-4ad5c404]{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.treeNode .label i[data-v-4ad5c404]{display:inline-block;width:5px;height:5px;padding-right:3px;padding-bottom:2px;border-radius:5px;background-color:#f56c6c}.treeNode .label .blank[data-v-4ad5c404]{display:inline-block;padding-right:3px;padding-bottom:2px;width:5px;height:5px}.disabled[data-v-4ad5c404]{position:absolute;left:0;width:100%;height:100%;z-index:10}[data-v-4ad5c404] .el-tree-node__content{height:36px;position:relative}[data-v-4ad5c404] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-4ad5c404] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-4ad5c404] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}[data-v-4ad5c404] .el-tree.flatItems .el-tree-node .el-tree-node__content .el-tree-node__expand-icon{width:0}";
+var css_248z$z = ".wrap[data-v-7bdbe3fe]{width:100%;height:100%;overflow-x:hidden;display:flex;flex-direction:column}.wrap .treeWrap[data-v-7bdbe3fe]{flex:1;overflow:auto}.treeNode[data-v-7bdbe3fe]{width:100%;height:100%;padding-top:2px;padding-right:10px;display:flex;box-sizing:border-box;justify-content:space-between;align-items:center;overflow:hidden;font-size:13px}.treeNode .label[data-v-7bdbe3fe]{width:100%;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.treeNode .label .front[data-v-7bdbe3fe]{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.treeNode .label i[data-v-7bdbe3fe]{display:inline-block;width:5px;height:5px;padding-right:3px;padding-bottom:2px;border-radius:5px;background-color:#f56c6c}.treeNode .label .blank[data-v-7bdbe3fe]{display:inline-block;padding-right:3px;padding-bottom:2px;width:5px;height:5px}.disabled[data-v-7bdbe3fe]{position:absolute;left:0;width:100%;height:100%;z-index:10}[data-v-7bdbe3fe] .el-tree-node__content{height:36px;position:relative}[data-v-7bdbe3fe] .el-tree-node__content>.el-tree-node__expand-icon{z-index:12;padding:4px;display:inline-block}[data-v-7bdbe3fe] .el-tree-node.is-current>.el-tree-node__content{background-color:#f2f6ff!important}[data-v-7bdbe3fe] .el-tree-node:focus>.el-tree-node__content{background-color:transparent}[data-v-7bdbe3fe] .el-tree.flatItems .el-tree-node .el-tree-node__content .el-tree-node__expand-icon{width:0}";
 styleInject(css_248z$z);
 
 /* script */
@@ -1230,7 +1359,8 @@ var __vue_render__$N = function () {
         }), _vm._v(" "), _c('span', [_vm._v(_vm._s(data.label))])]), _vm._v(" "), _vm._t("actions", function () {
           return [_c('span', [_c('span', [_vm._v(_vm._s('number' in data ? _vm.unitFmt(data.number) : ''))]), _vm._v(" "), _c('span', [_vm._v(_vm._s(data.endText))])])];
         }, {
-          "data": data
+          "data": data,
+          "node": node
         })], 2), _vm._v(" "), !node.isLeaf ? _c('div', {
           staticClass: "disabled"
         }) : _vm._e()]);
@@ -1243,7 +1373,7 @@ var __vue_staticRenderFns__$N = [];
 /* style */
 const __vue_inject_styles__$N = undefined;
 /* scoped */
-const __vue_scope_id__$N = "data-v-4ad5c404";
+const __vue_scope_id__$N = "data-v-7bdbe3fe";
 /* module identifier */
 const __vue_module_identifier__$N = undefined;
 /* functional template */
@@ -18870,7 +19000,7 @@ var script$I = {
     }
   },
   components: {
-    Title: __vue_component__$Q
+    Title: __vue_component__$R
   }
 };
 
@@ -24964,7 +25094,8 @@ const __vue_component__$9 = /*#__PURE__*/normalizeComponent({
 
 var components$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  Title: __vue_component__$Q,
+  DpDrawer: __vue_component__$Q,
+  Title: __vue_component__$R,
   ButtonGroup: __vue_component__$P,
   DpButtonGroup: __vue_component__$P,
   GeneralTable: __vue_component__$O,
@@ -24986,8 +25117,8 @@ var components$1 = /*#__PURE__*/Object.freeze({
   DpLoginPage: __vue_component__$u,
   DpBlocks: __vue_component__$t,
   DpBlock: __vue_component__$s,
-  DpTitle: __vue_component__$S,
-  DpSubtitle: __vue_component__$R,
+  DpTitle: __vue_component__$T,
+  DpSubtitle: __vue_component__$S,
   DpIconButton: __vue_component__$r,
   DpStatus: __vue_component__$q,
   DpForm: __vue_component__$p,
@@ -25070,7 +25201,8 @@ const install = function installDpVue2Widgets(Vue) {
 var components = /*#__PURE__*/Object.freeze({
   __proto__: null,
   'default': install,
-  Title: __vue_component__$Q,
+  DpDrawer: __vue_component__$Q,
+  Title: __vue_component__$R,
   ButtonGroup: __vue_component__$P,
   DpButtonGroup: __vue_component__$P,
   GeneralTable: __vue_component__$O,
@@ -25092,8 +25224,8 @@ var components = /*#__PURE__*/Object.freeze({
   DpLoginPage: __vue_component__$u,
   DpBlocks: __vue_component__$t,
   DpBlock: __vue_component__$s,
-  DpTitle: __vue_component__$S,
-  DpSubtitle: __vue_component__$R,
+  DpTitle: __vue_component__$T,
+  DpSubtitle: __vue_component__$S,
   DpIconButton: __vue_component__$r,
   DpStatus: __vue_component__$q,
   DpForm: __vue_component__$p,
@@ -26983,4 +27115,4 @@ Object.entries(components).forEach(([componentName, component]) => {
   }
 });
 
-export { __vue_component__$P as ButtonGroup, __vue_component__$I as CatalogButtons, __vue_component__$J as Dialog, __vue_component__$s as DpBlock, __vue_component__$t as DpBlocks, __vue_component__$P as DpButtonGroup, __vue_component__$a as DpCatalog, __vue_component__$I as DpCatalogButtons, __vue_component__$v as DpDefaultPage, __vue_component__$d as DpDialog, __vue_component__$p as DpForm, __vue_component__$o as DpFormItem, __vue_component__$n as DpFormMultiLine, __vue_component__$O as DpGeneralTable, __vue_component__$w as DpHeaderNav, __vue_component__$r as DpIconButton, __vue_component__$z as DpLayout, __vue_component__$y as DpLayoutBlank, __vue_component__$G as DpLayoutContainer, __vue_component__$H as DpLayoutRoot, __vue_component__$u as DpLoginPage, __vue_component__$c as DpPagination, __vue_component__$9 as DpPopup, __vue_component__$l as DpQueryBar, __vue_component__$m as DpSearchBar, __vue_component__$k as DpSearchForm, __vue_component__$N as DpSideCatalog, __vue_component__$K as DpStatistics, __vue_component__$i as DpStatisticsTable, __vue_component__$q as DpStatus, __vue_component__$R as DpSubtitle, __vue_component__$h as DpTable, __vue_component__$g as DpTableColumnCommon, __vue_component__$f as DpTableColumnSelection, __vue_component__$S as DpTitle, __vue_component__$e as DpTree, __vue_component__$M as Form, __vue_component__$O as GeneralTable, __vue_component__$L as SearchBar, __vue_component__$N as SideCatalog, __vue_component__$K as Statistics, __vue_component__$Q as Title, install as default, index as productStyle, index$1 as utils };
+export { __vue_component__$P as ButtonGroup, __vue_component__$I as CatalogButtons, __vue_component__$J as Dialog, __vue_component__$s as DpBlock, __vue_component__$t as DpBlocks, __vue_component__$P as DpButtonGroup, __vue_component__$a as DpCatalog, __vue_component__$I as DpCatalogButtons, __vue_component__$v as DpDefaultPage, __vue_component__$d as DpDialog, __vue_component__$Q as DpDrawer, __vue_component__$p as DpForm, __vue_component__$o as DpFormItem, __vue_component__$n as DpFormMultiLine, __vue_component__$O as DpGeneralTable, __vue_component__$w as DpHeaderNav, __vue_component__$r as DpIconButton, __vue_component__$z as DpLayout, __vue_component__$y as DpLayoutBlank, __vue_component__$G as DpLayoutContainer, __vue_component__$H as DpLayoutRoot, __vue_component__$u as DpLoginPage, __vue_component__$c as DpPagination, __vue_component__$9 as DpPopup, __vue_component__$l as DpQueryBar, __vue_component__$m as DpSearchBar, __vue_component__$k as DpSearchForm, __vue_component__$N as DpSideCatalog, __vue_component__$K as DpStatistics, __vue_component__$i as DpStatisticsTable, __vue_component__$q as DpStatus, __vue_component__$S as DpSubtitle, __vue_component__$h as DpTable, __vue_component__$g as DpTableColumnCommon, __vue_component__$f as DpTableColumnSelection, __vue_component__$T as DpTitle, __vue_component__$e as DpTree, __vue_component__$M as Form, __vue_component__$O as GeneralTable, __vue_component__$L as SearchBar, __vue_component__$N as SideCatalog, __vue_component__$K as Statistics, __vue_component__$R as Title, install as default, index as productStyle, index$1 as utils };

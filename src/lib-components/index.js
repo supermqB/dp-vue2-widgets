@@ -1,4 +1,5 @@
 /* eslint-disable import/prefer-default-export */
+export { default as DpDrawer } from './Drawer.vue'
 export { default as Title } from './Title.vue'
 export { default as ButtonGroup } from './ButtonGroup.vue'
 export { default as DpButtonGroup } from './ButtonGroup.vue'

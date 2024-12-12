@@ -28,7 +28,7 @@
             <span v-else class="blank"></span>
             <span>{{ data.label }}</span>
           </span>
-          <slot name="actions" :data="data">
+          <slot name="actions" :data="data" :node="node">
             <span>
               <span>{{ 'number' in data ? unitFmt(data.number) : '' }}</span>
               <span>{{ data.endText }}</span>
